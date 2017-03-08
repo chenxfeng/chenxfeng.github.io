@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>chenfeng&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="不应当使用虚函数的情况标签： C++
+
+关于是否应该所有成员函数缺省为虚函数的争论
+只有涉及继承时，才需要考虑与此相关的问题
+适用的情况
+基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数
+
+不适用的情况
+虚函数代价并不是非常高，当时会带来一定的额外开销
+
+有些情况下非虚函数能够正确运行而虚函数不能
+
+有些类并非为继承而设计(设计时并不兼容被继承)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chenfeng's blog">
+<meta property="og:url" content="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/不应当使用虚函数的情况/index.html">
+<meta property="og:site_name" content="chenfeng's blog">
+<meta property="og:description" content="不应当使用虚函数的情况标签： C++
+
+关于是否应该所有成员函数缺省为虚函数的争论
+只有涉及继承时，才需要考虑与此相关的问题
+适用的情况
+基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数
+
+不适用的情况
+虚函数代价并不是非常高，当时会带来一定的额外开销
+
+有些情况下非虚函数能够正确运行而虚函数不能
+
+有些类并非为继承而设计(设计时并不兼容被继承)">
+<meta property="og:updated_time" content="2017-03-08T04:10:41.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chenfeng's blog">
+<meta name="twitter:description" content="不应当使用虚函数的情况标签： C++
+
+关于是否应该所有成员函数缺省为虚函数的争论
+只有涉及继承时，才需要考虑与此相关的问题
+适用的情况
+基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数
+
+不适用的情况
+虚函数代价并不是非常高，当时会带来一定的额外开销
+
+有些情况下非虚函数能够正确运行而虚函数不能
+
+有些类并非为继承而设计(设计时并不兼容被继承)">
+  
+    <link rel="alternate" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chenfeng&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://chenfeng.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Cplusplus_thinking/不应当使用虚函数的情况" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/08/Cplusplus_thinking/不应当使用虚函数的情况/" class="article-date">
+  <time datetime="2017-03-08T04:10:41.252Z" itemprop="datePublished">2017-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="不应当使用虚函数的情况"><a href="#不应当使用虚函数的情况" class="headerlink" title="不应当使用虚函数的情况"></a>不应当使用虚函数的情况</h1><p>标签： C++</p>
+<hr>
+<p>关于是否应该所有成员函数缺省为虚函数的争论</p>
+<p><em>只有涉及继承时，才需要考虑与此相关的问题</em></p>
+<h2 id="适用的情况"><a href="#适用的情况" class="headerlink" title="适用的情况"></a>适用的情况</h2><ul>
+<li>基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数</li>
+</ul>
+<h2 id="不适用的情况"><a href="#不适用的情况" class="headerlink" title="不适用的情况"></a>不适用的情况</h2><ul>
+<li><p>虚函数代价并不是非常高，当时会带来一定的额外开销</p>
+</li>
+<li><p>有些情况下非虚函数能够正确运行而虚函数不能</p>
+</li>
+<li><p>有些类并非为继承而设计(设计时并不兼容被继承)</p>
+</li>
+</ul>
+<h3 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h3><p><strong>程序调用显式提供的对象的虚拟成员函数，优秀的编译器不带来额外的开销(与调用非虚函数相同)</strong><br>如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">T x;</div><div class="line">x.f();</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>在这里，f是否虚函数应该没有影响；产生对T::f的直接调用</p>
+</li>
+<li><p><em>若所有对成员函数的调用都是通过显式指定的对象进行的则成员函数是否是虚函数就无关紧要了</em></p>
+</li>
+<li><em>一旦通过指针或引用进行调用就是有意义的</em></li>
+<li>虚函数会产生额外的开销</li>
+</ul>
+<p>用内存引用(memory reference)计数衡量大概的开销</p>
+<blockquote>
+<p>随着微处理器的速度越来越快，内存应用耗时占比会越高，此项指标更精确；<br>但高速缓存的更广泛更大量的使用也使得这项粗糙的估计更不准确；<br>但在这儿这样估计是必要的。</p>
+</blockquote>
+<p>如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>&amp; IntArray::<span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">    <span class="keyword">if</span> (n &gt;= arraysize)</div><div class="line">        <span class="keyword">throw</span> <span class="string">"subscript out of range"</span>;</div><div class="line">    <span class="keyword">return</span> data[n];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>设函数为内联函数，好的实现在直接通过对象使用operator[]时不引入新开销</p>
+</li>
+<li><p>通过指针或引用调用operator[]的开销与三个内存引用相关:</p>
+</li>
+</ul>
+<ol>
+<li>对指针本身</li>
+<li>为此成员函数初始化this指针</li>
+<li>用于调用返回序列</li>
+</ol>
+<ul>
+<li>调用虚函数则通常需要多出另外的三个内存应用:</li>
+</ul>
+<ol>
+<li>从对象取出描述对象类型的表的地址值</li>
+<li>取出虚函数的地址</li>
+<li>在可能的较大外围对象中，取出本对象的偏移量</li>
+</ol>
+<p><strong>成员函数很大时，这样的开销远小于函数执行所需开销，额外的开销不成问题</strong></p>
+<p>一个潜在开销很大的例子及改进策略：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> InputBuffer &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">//...</span></div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// all derived class of InputBuffer can override get()</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">countlines</span><span class="params">(InputBuffer&amp; b)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> c;</div><div class="line"></div><div class="line">    <span class="comment">// get() would be called a lot of times</span></div><div class="line">    <span class="keyword">while</span> ((c = b.get()) != EOF) &#123;</div><div class="line">        <span class="keyword">if</span> (c == <span class="string">'\n'</span>) ++n;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> n;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// imroved version</span></div><div class="line"><span class="keyword">class</span> InputBuffer &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">//...</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// call a virtual function only in specified condition</span></div><div class="line">        <span class="keyword">if</span> (next &gt;= limit)</div><div class="line">            <span class="keyword">return</span> refill();</div><div class="line">        <span class="keyword">return</span> *next++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">protected</span>:</div><div class="line">    <span class="comment">// read in plenty of characters</span></div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">refill</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">char</span>* next;</div><div class="line">    <span class="keyword">char</span>* limit;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="行为"><a href="#行为" class="headerlink" title="行为"></a>行为</h3><p><strong>当派生类并不严格扩展基类行为时，成员函数定义为虚函数会导致不正确的结果</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> IntArray &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    IntArray(<span class="keyword">unsigned</span>);</div><div class="line">    <span class="keyword">int</span>&amp; <span class="keyword">operator</span>[] (<span class="keyword">unsigned</span>);</div><div class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">class</span> IntBlock: <span class="keyword">public</span> Int Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    IntBlock(<span class="keyword">int</span> l, <span class="keyword">int</span> h): low(l), high(h), IntArray(l &gt; h ? <span class="number">0</span> : h - l + <span class="number">1</span>) &#123;&#125;</div><div class="line">    <span class="keyword">int</span>&amp; <span class="keyword">operator</span>[](<span class="keyword">int</span> n) &#123;</div><div class="line">        <span class="keyword">return</span> IntArray::<span class="keyword">operator</span>[](n - low);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> low, high;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(IntArray&amp; x)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; x.size(); ++i)</div><div class="line">        result += x[i];</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>当将一个实际类型为IntBlock的对象传给sum()时，只有operator[]为非虚函数才有正确的行为</li>
+</ul>
+<h3 id="有些函数只为特定有限制的用途而设计"><a href="#有些函数只为特定有限制的用途而设计" class="headerlink" title="有些函数只为特定有限制的用途而设计"></a>有些函数只为特定有限制的用途而设计</h3><ul>
+<li><p>类的接口可以有两种用户：使用该类对象的人和从这个类派生新类的人</p>
+</li>
+<li><p>有的类会故意不考虑其他人如何通过继承改变它的行为</p>
+</li>
+</ul>
+<h2 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h2><ul>
+<li>有需要自定义的析构函数</li>
+<li>存在此种情形：指向基类的指针或引用都有其静态类型，并实际上都指向派生类的对象</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/不应当使用虚函数的情况/" data-id="cj00g5scf0001ewq1qswtcj5k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/08/Cplusplus_thinking/代理类/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/08/test/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/经济学基础知识/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/现代经济中的市场和政府/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/宏观经济现象鸟瞰/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/宏观经济学鸟瞰/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 chenxf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

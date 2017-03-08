@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>chenfeng&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="chenfeng's blog">
+<meta property="og:url" content="https://chenfeng.github.io/page/2/index.html">
+<meta property="og:site_name" content="chenfeng's blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chenfeng's blog">
+  
+    <link rel="alternate" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chenfeng&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://chenfeng.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Cplusplus_thinking/句柄类(handle)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/08/Cplusplus_thinking/句柄类(handle)/" class="article-date">
+  <time datetime="2017-03-08T04:10:41.255Z" itemprop="datePublished">2017-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="句柄类-handle"><a href="#句柄类-handle" class="headerlink" title="句柄类(handle)"></a>句柄类(handle)</h1><p>标签： C++</p>
+<hr>
+<p>创建代理会复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
+<h3 id="某些类应当避免复制："><a href="#某些类应当避免复制：" class="headerlink" title="某些类应当避免复制："></a>某些类应当避免复制：</h3><ul>
+<li>对象很大，资源消耗多</li>
+<li>每个对象代表一种不能被轻易复制的资源，如文件</li>
+<li>其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大</li>
+<li>对象代表位于网络连接另一端的其他对象</li>
+<li>多态性环境中只知对象基类类型而不知对象本身类型</li>
+</ul>
+<h3 id="避免使用指针复制对象："><a href="#避免使用指针复制对象：" class="headerlink" title="避免使用指针复制对象："></a>避免使用指针复制对象：</h3><ul>
+<li>使用对象指针比直接使用对象要困难</li>
+<li>未初始化的指针非常危险且难以防范</li>
+<li>管理内存的硬件总要检查被复制的指针是否真的指向程序所分配的内存位置上</li>
+<li><p>复制未初始化指的针会导致硬件陷阱<br>例如: </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// copy a pointer without initialization</span></div><div class="line">    <span class="comment">// would crash a program</span></div><div class="line">    <span class="keyword">int</span>* p;  <span class="comment">// without initialization</span></div><div class="line">    <span class="keyword">int</span>* q = p; <span class="comment">// not being definited</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>多个指针指向同一个对象时应考虑何时删除此对象</p>
+</li>
+</ul>
+<h2 id="handle-classe-句柄类"><a href="#handle-classe-句柄类" class="headerlink" title="handle classe(句柄类)"></a>handle classe(句柄类)</h2><ul>
+<li>有时也称为smart pointer(智能指针)</li>
+<li>绑定到所控制的类的对象上</li>
+</ul>
+<h3 id="简单示例类"><a href="#简单示例类" class="headerlink" title="简单示例类"></a>简单示例类</h3><p>表示点平面坐标的类<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Point &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Point(): xval(<span class="number">0</span>), yval(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Point(<span class="keyword">int</span> x, <span class="keyword">int</span> y): xval(x), yval(y) &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> xval; &#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> yval; &#125;</div><div class="line">    <span class="function">Point&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span> xv)</span> </span>&#123; xval = xv; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</div><div class="line">    <span class="function">Point&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span> yv)</span> </span>&#123; yval = yv; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p><strong>使用一个无参构造函数和一个两个参数的构造函数而非一个缺省参数的构造函数</strong><br><code>Point(int x = 0, int y = 0): xval(x), yval(y) {}</code><br><em>后者允许只用一个参数(另一个缺省为零)构造Point对象，而这几乎是错的</em></p>
+<h3 id="绑定到句柄"><a href="#绑定到句柄" class="headerlink" title="绑定到句柄"></a>绑定到句柄</h3><p>将句柄h直接绑定到对象上<br><code>Point p;</code><br><code>Handle h(p);</code></p>
+<ul>
+<li>删除p后应该使handle无效</li>
+<li>handle应该控制它所绑定的对象(创建和销毁)</li>
+<li>从效果上说handle就是一种只包含单个对象的容器</li>
+</ul>
+<h3 id="获取对象"><a href="#获取对象" class="headerlink" title="获取对象"></a>获取对象</h3><ul>
+<li>handle行为上类似一个指针</li>
+<li>应阻止使用者直接获得对象的实际地址</li>
+<li>过多暴露内存分配策略，不利于改变分配的策略</li>
+<li>隐蔽真正的对象地址，避免直接重载 operator-&gt;<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Handle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Point* <span class="keyword">operator</span>-&gt;();</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">Point* addr = h.<span class="keyword">operator</span>-&gt;(); <span class="comment">// get the object address</span></div><div class="line">                              <span class="comment">// overloading operator-&gt; is to blame</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="引用计数型句柄-UPoint"><a href="#引用计数型句柄-UPoint" class="headerlink" title="引用计数型句柄(UPoint)"></a><strong>引用计数</strong>型句柄(UPoint)</h3><ul>
+<li>了解有多少句柄绑定在同一个对象上以确定何时删除对象</li>
+<li><p>引用计数(use count)不能是句柄的一部分或对象的一部分</p>
+</li>
+<li><p>定义新的类容纳引用计数和Point对象</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> UPoint &#123;</div><div class="line">    <span class="comment">// all the members are private</span></div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Handle;</div><div class="line">    Point p;</div><div class="line">    <span class="keyword">int</span> u;</div><div class="line"></div><div class="line">    UPoint(): u(<span class="number">1</span>) &#123;&#125;</div><div class="line">    UPoint(<span class="keyword">int</span> x, <span class="keyword">int</span> y): P(x, y), u(<span class="number">1</span>) &#123;&#125;</div><div class="line">    UPoint(<span class="keyword">const</span> Point&amp; p0): p(p0), u(<span class="number">1</span>) &#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>一个简单的Handle类实现</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Handle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Handle();</div><div class="line">    Handle(<span class="keyword">int</span>, <span class="keyword">int</span>);</div><div class="line">    Handle(<span class="keyword">const</span> Point&amp;);</div><div class="line">    Handle(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    Handle&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    ~Handle();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Upoint * up;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Handle::Handle(): up(<span class="keyword">new</span> UPoint) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">int</span> x, <span class="keyword">int</span> y): up(<span class="keyword">new</span> UPoint(x, y)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">const</span> Point&amp; p): up(<span class="keyword">new</span> UPoint(p)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::~Handle() &#123;</div><div class="line">    <span class="keyword">if</span> (--up-&gt;u == <span class="number">0</span>)</div><div class="line">        <span class="keyword">delete</span> up;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// just increase the use count by 1</span></div><div class="line">Handle::Handle(<span class="keyword">const</span> Handle&amp; h): up(h.up) &#123; ++up-&gt;up; &#125;</div><div class="line"></div><div class="line"><span class="comment">// make sure it works when two handles use the same UPoint object</span></div><div class="line">Handle&amp; Handle::<span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp; h) &#123;</div><div class="line">    ++h.up-&gt;u;</div><div class="line">    <span class="keyword">if</span> (--up-&gt;u == <span class="number">0</span>)</div><div class="line">        <span class="keyword">delete</span> up;</div><div class="line">    up = h.up;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Handle::x() <span class="keyword">const</span> &#123; <span class="keyword">return</span> up-&gt;p.x(); &#125;</div><div class="line"><span class="keyword">int</span> Handle::y() <span class="keyword">const</span> &#123; <span class="keyword">return</span> up-&gt;p.y(); &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="写时复制-copy-on-write"><a href="#写时复制-copy-on-write" class="headerlink" title="写时复制(copy on write)"></a>写时复制(copy on write)</h3><p>handle改动性函数两种不同语义<br><code>Handle h(3, 4);</code><br><code>Handle h2 = h;</code><br><code>h2.x(5);</code><br><code>int n = h.x(); // 3 or 5 ?</code></p>
+<ul>
+<li>句柄为<strong>指针语义</strong>，n = 5</li>
+<li><p>handle表现像指针或引用，h和h2绑定到同一对象</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Handle&amp; Handle::x(<span class="keyword">int</span> x0) &#123;</div><div class="line">    up-&gt;p.x(x0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Handle&amp; Handle::y(<span class="keyword">int</span> y0) &#123;</div><div class="line">    up-&gt;p.y(y0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>句柄为<strong>值语义</strong>，n = 3</p>
+</li>
+<li>改变h2的内容不该影响h的值</li>
+<li>必须保证所改动的UPont对象不同时被其它Handle所引用，否则复制UPoint<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Handle&amp; Handle::x(<span class="keyword">int</span> x0) &#123;</div><div class="line">    <span class="keyword">if</span> (up-&gt;u != <span class="number">1</span>) &#123;</div><div class="line">        --up-&gt;u;</div><div class="line">        up = <span class="keyword">new</span> UPoint(up-&gt;p);</div><div class="line">    &#125;</div><div class="line">    up-&gt;p.x(x0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Handle&amp; Handle::y(<span class="keyword">int</span> y0) &#123;</div><div class="line">    <span class="keyword">if</span> (up-&gt;u != <span class="number">1</span>) &#123;</div><div class="line">        --up-&gt;u;</div><div class="line">        up = <span class="keyword">new</span> UPoint(up-&gt;p);</div><div class="line">    &#125;</div><div class="line">    up-&gt;p.y(y0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>if (up-&gt;u != 1) {</code><br><code>--up-&gt;u;</code><br><code>up = new UPoint(up-&gt;p);</code><br><code>}</code></p>
+<ul>
+<li>此代码片段需要在每个改变UPoint对象的成员函数中重复(可设计为Handle的私有成员函数)</li>
+<li>写时复制优点：在绝对必要时才进行复制，额外开销小</li>
+</ul>
+<h2 id="句柄类的改进"><a href="#句柄类的改进" class="headerlink" title="句柄类的改进"></a>句柄类的改进</h2><ul>
+<li>前述实现的缺点：把句柄捆绑到类T的对象上必须先定义具有类型T的成员的新类</li>
+<li>当捆绑句柄到继承自T的静态类型未知的类的对象上时难以实现</li>
+</ul>
+<h3 id="将应用计数从数据中分离出来作为独立的对象"><a href="#将应用计数从数据中分离出来作为独立的对象" class="headerlink" title="将应用计数从数据中分离出来作为独立的对象"></a>将应用计数从数据中分离出来作为独立的对象</h3><ul>
+<li><p>抽象地表示应用计数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> UseCount &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    UseCount();</div><div class="line">    UseCount(<span class="keyword">const</span> UseCount&amp;);</div><div class="line">    ~UseCount();</div><div class="line"></div><div class="line">    <span class="comment">// judge whether use count would become zero</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">only</span><span class="params">()</span></span>; </div><div class="line"></div><div class="line">    <span class="comment">// judge whether use count should be deleted</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">reattach</span><span class="params">(<span class="keyword">const</span> UseCount&amp;)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">// provide a method to make this handle to be the only one</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">makeonly</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span>* p;</div><div class="line">    <span class="comment">// make assignment illegal</span></div><div class="line">    UseCount&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> UseCount&amp;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">UseCount::UseCount(): p(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>)) &#123;&#125;</div><div class="line"></div><div class="line">UseCount::UseCount(<span class="keyword">const</span> UseCount&amp; u): p(u.p) &#123; ++*p; &#125;</div><div class="line"></div><div class="line">UseCount::~UseCount() &#123;</div><div class="line">    <span class="keyword">if</span> (--*p == <span class="number">0</span>)</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> UseCount::only() &#123; <span class="keyword">return</span> *p == <span class="number">1</span>; &#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> UseCount::reattach(<span class="keyword">const</span> UseCount&amp; u) &#123;</div><div class="line">    <span class="comment">// increase u.p first to make it work when self-assignment</span></div><div class="line">    ++*u.p; </div><div class="line">    <span class="keyword">if</span> (--*p == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">        p = u.p;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    p = u.p;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> UseCount::makeonly() &#123;</div><div class="line">    <span class="keyword">if</span> (*p == <span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    --*p;</div><div class="line">    p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>);</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>重写Handle类</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Handle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">// the same with previous definition</span></div><div class="line">    Handle();</div><div class="line">    Handle(<span class="keyword">int</span>, <span class="keyword">int</span>);</div><div class="line">    Handle(<span class="keyword">const</span> Point&amp;);</div><div class="line">    Handle(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    Handle&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    ~Handle();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Point* p;</div><div class="line">    UseCount u;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Handle::Handle(): p(<span class="keyword">new</span> Point) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">int</span> x, <span class="keyword">int</span> y): p(<span class="keyword">new</span> Point(x, y)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">const</span> Point&amp; p0): p(<span class="keyword">new</span> Point(p0)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">const</span> Handle&amp; h): u(h.u), p(h.p) &#123;&#125;</div><div class="line"></div><div class="line">Handle::~Handle() &#123;</div><div class="line">    <span class="keyword">if</span> (u.only())</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Handle&amp; Handle::<span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp; h) &#123;</div><div class="line">    <span class="keyword">if</span> (u.reattach(h.u))</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">    p = h.p;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Handle::x() <span class="keyword">const</span> () &#123;</div><div class="line">    <span class="keyword">return</span> p-&gt;x();</div><div class="line">&#125;</div><div class="line"><span class="keyword">int</span> Handle::y() <span class="keyword">const</span> () &#123;</div><div class="line">    <span class="keyword">return</span> p-&gt;y();</div><div class="line">&#125;</div><div class="line"></div><div class="line">Handle&amp; Handle::x(<span class="keyword">int</span> x0) &#123;</div><div class="line">    <span class="keyword">if</span> (u.makeonly())</div><div class="line">        p = <span class="keyword">new</span> Point(*P);</div><div class="line">    p-&gt;x(x0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Handle&amp; Handle::y(<span class="keyword">int</span> y0) &#123;</div><div class="line">    <span class="keyword">if</span> (u.makeonly())</div><div class="line">        p = <span class="keyword">new</span> Point(*P);</div><div class="line">    p-&gt;y(y0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>通过引入引用计数使得handle类能灵活地设计出来，<br>而将引用计数抽象化表示使handle类能协同不同数据结构工作</li>
+<li>UseCount类简化了实现中特定的子问题：接口设计只为简化引用计算句柄实现，<br>而不为终端用户(end user)所用</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/句柄类(handle)/" data-id="cj00g5scm0003ewq1zkkmcqwq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Cplusplus_thinking/模板（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/08/Cplusplus_thinking/模板（一）/" class="article-date">
+  <time datetime="2017-03-08T04:10:41.255Z" itemprop="datePublished">2017-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="模板（一）"><a href="#模板（一）" class="headerlink" title="模板（一）"></a>模板（一）</h1><p>标签：C++</p>
+<hr>
+<h2 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h2><p>容器：保存值的集合的数据结构</p>
+<ul>
+<li>语言内建容器：数组、结构体</li>
+<li><p>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</p>
+</li>
+<li><p>容器包含对象</p>
+</li>
+<li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
+</li>
+<li><p>函数传参数方式 void f(const Container<t>&amp;)避免大对象的复制</t></p>
+</li>
+<li><p>区分读和写</p>
+</li>
+</ul>
+<p>operator[]只用于取数</p>
+<p>用成员函数update(i, x)修改索引为i的元素为x</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Container &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T <span class="keyword">operator</span>[](Index) <span class="keyword">const</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">Container&lt; Container&lt;<span class="keyword">int</span>&gt; &gt;c;</div><div class="line">Index i, j;</div><div class="line"><span class="keyword">int</span> k = c[i][j];</div><div class="line"><span class="comment">// only way to modify the element in Container</span></div><div class="line"><span class="comment">// c[i][j]</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="comment">// hard to deal with much more dimension</span></div><div class="line"><span class="comment">// c[i] return type T instead of T&amp;</span></div><div class="line"><span class="comment">// c[i].update(j, new_value) does not work</span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>获取容器的元素严格分清类型T(作右值)和类型T&amp;(作左值)</p>
+</li>
+<li><p>容器增长：按区块(chunk)增加容器大小的分配策略</p>
+</li>
+<li><p>容器操作<br>容器数组：必须有缺省构造函数<br>“顺序地”遍历容器中所有元素：先给元素强制规定顺序(解决方案：迭代器(iterator))</p>
+</li>
+<li><p>容器元素的类型</p>
+</li>
+</ul>
+<ol>
+<li><p>类型为T的元素可以进行行为正确的复制、赋值和销毁<br>T::T(const T&amp;)</p>
+</li>
+<li><p>可以判定两个元素是否相等<br>operator==(const T&amp;, cosnt T&amp;)</p>
+</li>
+<li><p>为增加性能，有关于偏序关系或全序关系的定义(如set)<br>operator&lt;(const T&amp;, const T&amp;)</p>
+</li>
+<li><p>考虑是否重载operator&lt;&lt;(ostream&amp;, const Container<t>&amp;)<br>兼顾不使用标准输入输出操作库或不用输入输出操作的用户，提供遍历整个容器的机制</t></p>
+</li>
+</ol>
+<ul>
+<li>容器不可通过继承关联起来<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// if Container&lt;Airplane&gt; is derived from Container&lt;Vehicle&gt;</span></div><div class="line">Vehicle v;</div><div class="line">Container&lt;Airplane&gt; ca;</div><div class="line"></div><div class="line">Container&lt;Vehicle&gt;&amp; vp = ca;</div><div class="line">vp.insert(v);</div><div class="line"><span class="comment">// that does not make any sence</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Demo-an-array-like-class"><a href="#Demo-an-array-like-class" class="headerlink" title="Demo : an array-like class"></a>Demo : an array-like class</h3><ul>
+<li>使用指针和使用下标的差别</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// by index</span></div><div class="line"><span class="keyword">int</span> i;</div><div class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    f(x[i]);</div><div class="line"></div><div class="line"><span class="comment">// by pointer</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">for</span> (p = x; p &lt; x + N; ++p)</div><div class="line">    f(*p);</div><div class="line"><span class="comment">// a simplified version</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">while</span> (p &lt; x + N)</div><div class="line">    f(*p++);</div></pre></td></tr></table></figure>
+<p>区别：</p>
+<ol>
+<li>下标值本身就有意义，与是否用作下标无关：通过下标进行元素访问的程序要另外知道<br>正在使用的数组(才能访问整个数组)</li>
+<li>要访问容器的元素没必要知道容器的标识，指针本身就包含所有的必要信息：程序只要<br>拥有拥有一个指向数组元素的指针就能访问整个数组</li>
+</ol>
+<p>这些影响设计，比”下标易于理解，指针效率高”的区别更为重要</p>
+<ul>
+<li><p>禁止(数组)复制和赋值</p>
+</li>
+<li><p>使用operator[]存取元素</p>
+</li>
+<li><p>关于扩展：定长</p>
+</li>
+<li><p>缺省构造函数：可以创建包含数组的数组</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Array(): data(<span class="number">0</span>), sz(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Array(<span class="keyword">unsigned</span> size): sz(size), data(<span class="keyword">new</span> T(size)) &#123;&#125;</div><div class="line">    ~Array() &#123; <span class="keyword">delete</span> [] data; &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> <span class="keyword">const</span> T*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> T*() &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    T* data;</div><div class="line">    <span class="keyword">unsigned</span> sz;</div><div class="line">    Array(<span class="keyword">const</span> Array* a);</div><div class="line">    Array&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array&amp;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>缺陷</li>
+</ul>
+<ol>
+<li><p>(也存在于内建数组中)包含元素的Array消失后，它的元素地址还在</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> *p;</div><div class="line">    &#123;</div><div class="line">        Array&lt;<span class="keyword">int</span>&gt; x(<span class="number">20</span>);</div><div class="line">        p = &amp;x[<span class="number">10</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; *p; <span class="comment">// no exist</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>允许用户访问它的元素地址，透露太多内部运作的信息，违背了封装理念</p>
+</li>
+</ol>
+<ul>
+<li>允许Array被构造后改变长度会导致旧指针失效</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/模板（一）/" data-id="cj00g5scp0004ewq1lwfedaxs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Cplusplus_thinking/代理类" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/08/Cplusplus_thinking/代理类/" class="article-date">
+  <time datetime="2017-03-08T04:10:41.253Z" itemprop="datePublished">2017-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="代理类"><a href="#代理类" class="headerlink" title="代理类"></a>代理类</h1><p>标签： C++</p>
+<hr>
+<p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
+<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
+<ul>
+<li>surrogate是handle(句柄)类中最简单的一种</li>
+</ul>
+<h2 id="一个表示不同交通工具的类派生层次"><a href="#一个表示不同交通工具的类派生层次" class="headerlink" title="一个表示不同交通工具的类派生层次"></a>一个表示不同交通工具的类派生层次</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="comment">// pure virtual function</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> RoadVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> AutoVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Aircraft : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Helicopter : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div></pre></td></tr></table></figure>
+<h2 id="一个容器"><a href="#一个容器" class="headerlink" title="一个容器"></a>一个容器</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle parking_lot[<span class="number">1000</span>]; <span class="comment">// error</span></div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = x;</div></pre></td></tr></table></figure>
+<ul>
+<li>Vehicle是虚基类，不能实例化</li>
+<li>子类对象转化为父类对象会丢失父类中没有的成员</li>
+<li>parking_lot是Vehicle的集合而不是所有继承自Vehicle的对象的集合</li>
+</ul>
+<h2 id="间接层-indirection"><a href="#间接层-indirection" class="headerlink" title="间接层 indirection"></a>间接层 indirection</h2><p>存储指针替代存储对象本身<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* parking_lot[<span class="number">1000</span>];</div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = &amp;x;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>x是局部变量，释放之后parking_pot指向未知</p>
+</li>
+<li><p>存储副本的指针而非原对象的指针</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = <span class="keyword">new</span> AutoVehicle(x);</div></pre></td></tr></table></figure>
+</li>
+<li><p>带来动态内存管理的负担</p>
+</li>
+<li>必须知道要放入parking_lot中的对象的静态类型<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (p != q) &#123;</div><div class="line">    <span class="keyword">delete</span> parking_pot[p];</div><div class="line">    parking_pot[p] = <span class="keyword">new</span> Vehicle(parking_pot[q]);</div><div class="line">&#125;   <span class="comment">// virtual base class has no instance</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="虚复制函数"><a href="#虚复制函数" class="headerlink" title="虚复制函数"></a>虚复制函数</h2><p>在Vehicle中增加合适的纯虚函数来复制编译时类型未知的对象<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="function"><span class="keyword">virtual</span> Vehicle* <span class="title">copy</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="keyword">virtual</span> ~Vehicle() &#123;&#125; <span class="comment">// virtual destructor</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在Vehicle的所有派生类中添加成员函数copy，若vp指向Vehicle不确定的子类的对象，vp-&gt;copy()返回指向该对象新建副本的指针。<br>例如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* Trunk::copy() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Truck(*<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="定义代理类"><a href="#定义代理类" class="headerlink" title="定义代理类"></a>定义代理类</h2><ul>
+<li>用类表示概念<br>避免显示处理内存分配且能保持父类在运行时绑定的属性</li>
+<li>定义一个行为与Vehicle对象相似而又潜在地表示所有继承自Vehicle对象的东西 —— 代理（surrogate）</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> VehicleSurrogate &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    VehicleSurrogate();</div><div class="line">    VehicleSurrogate(<span class="keyword">const</span> Vehicle&amp;); </div><div class="line">    ~VehicleSurrogate();</div><div class="line">    VehicleSurrogate(<span class="keyword">const</span> VehicleSurrogate&amp;);</div><div class="line">    VehicleSurrogate&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> VehicleSurrogate&amp;);</div><div class="line">    <span class="comment">// object fuctions of Vehicle</span></div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Vehicle* vp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>空代理(empty surrogate)的行为类似于空指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">VehicleSurrogate::VehicleSurrogate(): vp(<span class="number">0</span>) &#123;&#125; <span class="comment">// empty surrogate</span></div><div class="line"></div><div class="line">VehicleSurrogate::VehicleSurrogate(<span class="keyword">const</span> Vehicle&amp; v): vp(v.copy()) &#123;&#125;</div><div class="line"></div><div class="line">VehicleSurrogate::~VehicleSurrogate() &#123;</div><div class="line">    <span class="keyword">delete</span> vp;</div><div class="line">&#125;</div><div class="line"></div><div class="line">VehicleSurrogate::VehicleSurrogate(<span class="keyword">const</span> VehicleSurrogate&amp; v): vp(v.vp ? v.vp-&gt;copy() : <span class="number">0</span>) &#123;&#125;</div><div class="line"></div><div class="line">VehicleSurrogate&amp; VehicleSurrogate::<span class="keyword">operator</span>=(<span class="keyword">const</span> VehicleSurrogate&amp; v) &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;v) &#123;</div><div class="line">        <span class="keyword">delete</span> vp;</div><div class="line">        vp = (v.vp ? v.vp-&gt;copy() : <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// call the corresponding object functions</span></div><div class="line"><span class="keyword">double</span> VehicleSurrogate::weight() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">if</span> (vp == <span class="number">0</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="string">"empty VehicleSurrogate.weight()"</span>;</div><div class="line">    <span class="keyword">return</span> vp-&gt;weight();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> VehicleSurrogate::start() &#123;</div><div class="line">    <span class="keyword">if</span> (vp == <span class="number">0</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="string">"empty VehicleSurrogate.start()"</span>;</div><div class="line">    vp-&gt;start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="tip"><a href="#tip" class="headerlink" title="tip:"></a>tip:</h3><ul>
+<li>每次对copy的调用都是一个虚拟调用。类Vehicle的对象并不存在</li>
+<li>赋值构造函数和赋值操作符中v.vp非零的检测是必需的</li>
+<li>赋值操作符确保没有将代理赋值给自身</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最开始的parking_pot容器可设计为：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">VehicleSurrogate parking_lot[<span class="number">1000</span>];</div><div class="line">Automobile x;</div><div class="line">parking_pot[num_vehicles++] = x;</div></pre></td></tr></table></figure></p>
+<p>将继承和容器共用需要处理两个问题：</p>
+<ul>
+<li>控制内存分配</li>
+<li>把不同类型的对象放进同一个容器中</li>
+</ul>
+<p>采用基础C++技术，在现有的继承层次上加上一层抽象，合适地解决了这些问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/代理类/" data-id="cj00g5sci0002ewq111yaoj1z" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Cplusplus_thinking/不应当使用虚函数的情况" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/08/Cplusplus_thinking/不应当使用虚函数的情况/" class="article-date">
+  <time datetime="2017-03-08T04:10:41.252Z" itemprop="datePublished">2017-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="不应当使用虚函数的情况"><a href="#不应当使用虚函数的情况" class="headerlink" title="不应当使用虚函数的情况"></a>不应当使用虚函数的情况</h1><p>标签： C++</p>
+<hr>
+<p>关于是否应该所有成员函数缺省为虚函数的争论</p>
+<p><em>只有涉及继承时，才需要考虑与此相关的问题</em></p>
+<h2 id="适用的情况"><a href="#适用的情况" class="headerlink" title="适用的情况"></a>适用的情况</h2><ul>
+<li>基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数</li>
+</ul>
+<h2 id="不适用的情况"><a href="#不适用的情况" class="headerlink" title="不适用的情况"></a>不适用的情况</h2><ul>
+<li><p>虚函数代价并不是非常高，当时会带来一定的额外开销</p>
+</li>
+<li><p>有些情况下非虚函数能够正确运行而虚函数不能</p>
+</li>
+<li><p>有些类并非为继承而设计(设计时并不兼容被继承)</p>
+</li>
+</ul>
+<h3 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h3><p><strong>程序调用显式提供的对象的虚拟成员函数，优秀的编译器不带来额外的开销(与调用非虚函数相同)</strong><br>如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">T x;</div><div class="line">x.f();</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>在这里，f是否虚函数应该没有影响；产生对T::f的直接调用</p>
+</li>
+<li><p><em>若所有对成员函数的调用都是通过显式指定的对象进行的则成员函数是否是虚函数就无关紧要了</em></p>
+</li>
+<li><em>一旦通过指针或引用进行调用就是有意义的</em></li>
+<li>虚函数会产生额外的开销</li>
+</ul>
+<p>用内存引用(memory reference)计数衡量大概的开销</p>
+<blockquote>
+<p>随着微处理器的速度越来越快，内存应用耗时占比会越高，此项指标更精确；<br>但高速缓存的更广泛更大量的使用也使得这项粗糙的估计更不准确；<br>但在这儿这样估计是必要的。</p>
+</blockquote>
+<p>如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>&amp; IntArray::<span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">    <span class="keyword">if</span> (n &gt;= arraysize)</div><div class="line">        <span class="keyword">throw</span> <span class="string">"subscript out of range"</span>;</div><div class="line">    <span class="keyword">return</span> data[n];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>设函数为内联函数，好的实现在直接通过对象使用operator[]时不引入新开销</p>
+</li>
+<li><p>通过指针或引用调用operator[]的开销与三个内存引用相关:</p>
+</li>
+</ul>
+<ol>
+<li>对指针本身</li>
+<li>为此成员函数初始化this指针</li>
+<li>用于调用返回序列</li>
+</ol>
+<ul>
+<li>调用虚函数则通常需要多出另外的三个内存应用:</li>
+</ul>
+<ol>
+<li>从对象取出描述对象类型的表的地址值</li>
+<li>取出虚函数的地址</li>
+<li>在可能的较大外围对象中，取出本对象的偏移量</li>
+</ol>
+<p><strong>成员函数很大时，这样的开销远小于函数执行所需开销，额外的开销不成问题</strong></p>
+<p>一个潜在开销很大的例子及改进策略：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> InputBuffer &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">//...</span></div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;;</div><div class="line"><span class="comment">// all derived class of InputBuffer can override get()</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">countlines</span><span class="params">(InputBuffer&amp; b)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> c;</div><div class="line"></div><div class="line">    <span class="comment">// get() would be called a lot of times</span></div><div class="line">    <span class="keyword">while</span> ((c = b.get()) != EOF) &#123;</div><div class="line">        <span class="keyword">if</span> (c == <span class="string">'\n'</span>) ++n;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> n;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// imroved version</span></div><div class="line"><span class="keyword">class</span> InputBuffer &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">//...</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// call a virtual function only in specified condition</span></div><div class="line">        <span class="keyword">if</span> (next &gt;= limit)</div><div class="line">            <span class="keyword">return</span> refill();</div><div class="line">        <span class="keyword">return</span> *next++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">protected</span>:</div><div class="line">    <span class="comment">// read in plenty of characters</span></div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">refill</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">char</span>* next;</div><div class="line">    <span class="keyword">char</span>* limit;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="行为"><a href="#行为" class="headerlink" title="行为"></a>行为</h3><p><strong>当派生类并不严格扩展基类行为时，成员函数定义为虚函数会导致不正确的结果</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> IntArray &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    IntArray(<span class="keyword">unsigned</span>);</div><div class="line">    <span class="keyword">int</span>&amp; <span class="keyword">operator</span>[] (<span class="keyword">unsigned</span>);</div><div class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">class</span> IntBlock: <span class="keyword">public</span> Int Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    IntBlock(<span class="keyword">int</span> l, <span class="keyword">int</span> h): low(l), high(h), IntArray(l &gt; h ? <span class="number">0</span> : h - l + <span class="number">1</span>) &#123;&#125;</div><div class="line">    <span class="keyword">int</span>&amp; <span class="keyword">operator</span>[](<span class="keyword">int</span> n) &#123;</div><div class="line">        <span class="keyword">return</span> IntArray::<span class="keyword">operator</span>[](n - low);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> low, high;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(IntArray&amp; x)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; x.size(); ++i)</div><div class="line">        result += x[i];</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>当将一个实际类型为IntBlock的对象传给sum()时，只有operator[]为非虚函数才有正确的行为</li>
+</ul>
+<h3 id="有些函数只为特定有限制的用途而设计"><a href="#有些函数只为特定有限制的用途而设计" class="headerlink" title="有些函数只为特定有限制的用途而设计"></a>有些函数只为特定有限制的用途而设计</h3><ul>
+<li><p>类的接口可以有两种用户：使用该类对象的人和从这个类派生新类的人</p>
+</li>
+<li><p>有的类会故意不考虑其他人如何通过继承改变它的行为</p>
+</li>
+</ul>
+<h2 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h2><ul>
+<li>有需要自定义的析构函数</li>
+<li>存在此种情形：指向基类的指针或引用都有其静态类型，并实际上都指向派生类的对象</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/不应当使用虚函数的情况/" data-id="cj00g5scf0001ewq1qswtcj5k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/08/test/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/经济学基础知识/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/现代经济中的市场和政府/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/宏观经济现象鸟瞰/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/宏观经济学鸟瞰/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 chenxf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

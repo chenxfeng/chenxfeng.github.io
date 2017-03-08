@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>chenfeng&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="代理类标签： C++
+
+如何设计C++容器，能够包含类型不同而彼此相关的对象如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？(将容器和继承运用在一起)
+代理 surrogate允许将整个派生层次压缩在一个对象类型中
+
+surrogate是handle(句柄)类中最简单的一种
+
+一个表示不同交通工具的类派生层次1234567891011class Vehicle &amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chenfeng's blog">
+<meta property="og:url" content="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/代理类/index.html">
+<meta property="og:site_name" content="chenfeng's blog">
+<meta property="og:description" content="代理类标签： C++
+
+如何设计C++容器，能够包含类型不同而彼此相关的对象如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？(将容器和继承运用在一起)
+代理 surrogate允许将整个派生层次压缩在一个对象类型中
+
+surrogate是handle(句柄)类中最简单的一种
+
+一个表示不同交通工具的类派生层次1234567891011class Vehicle &amp;#1">
+<meta property="og:updated_time" content="2017-03-08T04:10:41.253Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chenfeng's blog">
+<meta name="twitter:description" content="代理类标签： C++
+
+如何设计C++容器，能够包含类型不同而彼此相关的对象如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？(将容器和继承运用在一起)
+代理 surrogate允许将整个派生层次压缩在一个对象类型中
+
+surrogate是handle(句柄)类中最简单的一种
+
+一个表示不同交通工具的类派生层次1234567891011class Vehicle &amp;#1">
+  
+    <link rel="alternate" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chenfeng&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://chenfeng.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Cplusplus_thinking/代理类" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/08/Cplusplus_thinking/代理类/" class="article-date">
+  <time datetime="2017-03-08T04:10:41.253Z" itemprop="datePublished">2017-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="代理类"><a href="#代理类" class="headerlink" title="代理类"></a>代理类</h1><p>标签： C++</p>
+<hr>
+<p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
+<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
+<ul>
+<li>surrogate是handle(句柄)类中最简单的一种</li>
+</ul>
+<h2 id="一个表示不同交通工具的类派生层次"><a href="#一个表示不同交通工具的类派生层次" class="headerlink" title="一个表示不同交通工具的类派生层次"></a>一个表示不同交通工具的类派生层次</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="comment">// pure virtual function</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> RoadVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> AutoVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Aircraft : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Helicopter : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div></pre></td></tr></table></figure>
+<h2 id="一个容器"><a href="#一个容器" class="headerlink" title="一个容器"></a>一个容器</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle parking_lot[<span class="number">1000</span>]; <span class="comment">// error</span></div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = x;</div></pre></td></tr></table></figure>
+<ul>
+<li>Vehicle是虚基类，不能实例化</li>
+<li>子类对象转化为父类对象会丢失父类中没有的成员</li>
+<li>parking_lot是Vehicle的集合而不是所有继承自Vehicle的对象的集合</li>
+</ul>
+<h2 id="间接层-indirection"><a href="#间接层-indirection" class="headerlink" title="间接层 indirection"></a>间接层 indirection</h2><p>存储指针替代存储对象本身<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* parking_lot[<span class="number">1000</span>];</div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = &amp;x;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>x是局部变量，释放之后parking_pot指向未知</p>
+</li>
+<li><p>存储副本的指针而非原对象的指针</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = <span class="keyword">new</span> AutoVehicle(x);</div></pre></td></tr></table></figure>
+</li>
+<li><p>带来动态内存管理的负担</p>
+</li>
+<li>必须知道要放入parking_lot中的对象的静态类型<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (p != q) &#123;</div><div class="line">    <span class="keyword">delete</span> parking_pot[p];</div><div class="line">    parking_pot[p] = <span class="keyword">new</span> Vehicle(parking_pot[q]);</div><div class="line">&#125;   <span class="comment">// virtual base class has no instance</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="虚复制函数"><a href="#虚复制函数" class="headerlink" title="虚复制函数"></a>虚复制函数</h2><p>在Vehicle中增加合适的纯虚函数来复制编译时类型未知的对象<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="function"><span class="keyword">virtual</span> Vehicle* <span class="title">copy</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="keyword">virtual</span> ~Vehicle() &#123;&#125; <span class="comment">// virtual destructor</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在Vehicle的所有派生类中添加成员函数copy，若vp指向Vehicle不确定的子类的对象，vp-&gt;copy()返回指向该对象新建副本的指针。<br>例如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* Trunk::copy() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Truck(*<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="定义代理类"><a href="#定义代理类" class="headerlink" title="定义代理类"></a>定义代理类</h2><ul>
+<li>用类表示概念<br>避免显示处理内存分配且能保持父类在运行时绑定的属性</li>
+<li>定义一个行为与Vehicle对象相似而又潜在地表示所有继承自Vehicle对象的东西 —— 代理（surrogate）</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> VehicleSurrogate &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    VehicleSurrogate();</div><div class="line">    VehicleSurrogate(<span class="keyword">const</span> Vehicle&amp;); </div><div class="line">    ~VehicleSurrogate();</div><div class="line">    VehicleSurrogate(<span class="keyword">const</span> VehicleSurrogate&amp;);</div><div class="line">    VehicleSurrogate&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> VehicleSurrogate&amp;);</div><div class="line">    <span class="comment">// object fuctions of Vehicle</span></div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Vehicle* vp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>空代理(empty surrogate)的行为类似于空指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">VehicleSurrogate::VehicleSurrogate(): vp(<span class="number">0</span>) &#123;&#125; <span class="comment">// empty surrogate</span></div><div class="line"></div><div class="line">VehicleSurrogate::VehicleSurrogate(<span class="keyword">const</span> Vehicle&amp; v): vp(v.copy()) &#123;&#125;</div><div class="line"></div><div class="line">VehicleSurrogate::~VehicleSurrogate() &#123;</div><div class="line">    <span class="keyword">delete</span> vp;</div><div class="line">&#125;</div><div class="line"></div><div class="line">VehicleSurrogate::VehicleSurrogate(<span class="keyword">const</span> VehicleSurrogate&amp; v): vp(v.vp ? v.vp-&gt;copy() : <span class="number">0</span>) &#123;&#125;</div><div class="line"></div><div class="line">VehicleSurrogate&amp; VehicleSurrogate::<span class="keyword">operator</span>=(<span class="keyword">const</span> VehicleSurrogate&amp; v) &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;v) &#123;</div><div class="line">        <span class="keyword">delete</span> vp;</div><div class="line">        vp = (v.vp ? v.vp-&gt;copy() : <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// call the corresponding object functions</span></div><div class="line"><span class="keyword">double</span> VehicleSurrogate::weight() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">if</span> (vp == <span class="number">0</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="string">"empty VehicleSurrogate.weight()"</span>;</div><div class="line">    <span class="keyword">return</span> vp-&gt;weight();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> VehicleSurrogate::start() &#123;</div><div class="line">    <span class="keyword">if</span> (vp == <span class="number">0</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="string">"empty VehicleSurrogate.start()"</span>;</div><div class="line">    vp-&gt;start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="tip"><a href="#tip" class="headerlink" title="tip:"></a>tip:</h3><ul>
+<li>每次对copy的调用都是一个虚拟调用。类Vehicle的对象并不存在</li>
+<li>赋值构造函数和赋值操作符中v.vp非零的检测是必需的</li>
+<li>赋值操作符确保没有将代理赋值给自身</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最开始的parking_pot容器可设计为：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">VehicleSurrogate parking_lot[<span class="number">1000</span>];</div><div class="line">Automobile x;</div><div class="line">parking_pot[num_vehicles++] = x;</div></pre></td></tr></table></figure></p>
+<p>将继承和容器共用需要处理两个问题：</p>
+<ul>
+<li>控制内存分配</li>
+<li>把不同类型的对象放进同一个容器中</li>
+</ul>
+<p>采用基础C++技术，在现有的继承层次上加上一层抽象，合适地解决了这些问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/代理类/" data-id="cj00g5sci0002ewq111yaoj1z" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/08/Cplusplus_thinking/模板（一）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/08/Cplusplus_thinking/不应当使用虚函数的情况/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/08/test/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/经济学基础知识/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/现代经济中的市场和政府/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/宏观经济现象鸟瞰/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/宏观经济学鸟瞰/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 chenxf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

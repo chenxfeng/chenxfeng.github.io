@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>chenfeng&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="模板（三）标签：C++
+
+迭代器
+已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用指针
+
+进一步取代指针，需实现加法、减法和关系运算符
+
+
+‘’’C++void f() {    int a[10];    int pa = a;    int end = pa + 10;    while (pa != end)        *pa++ = 0;}‘’’">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chenfeng's blog">
+<meta property="og:url" content="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/模板（三）/index.html">
+<meta property="og:site_name" content="chenfeng's blog">
+<meta property="og:description" content="模板（三）标签：C++
+
+迭代器
+已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用指针
+
+进一步取代指针，需实现加法、减法和关系运算符
+
+
+‘’’C++void f() {    int a[10];    int pa = a;    int end = pa + 10;    while (pa != end)        *pa++ = 0;}‘’’">
+<meta property="og:updated_time" content="2017-03-08T04:10:41.256Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chenfeng's blog">
+<meta name="twitter:description" content="模板（三）标签：C++
+
+迭代器
+已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用指针
+
+进一步取代指针，需实现加法、减法和关系运算符
+
+
+‘’’C++void f() {    int a[10];    int pa = a;    int end = pa + 10;    while (pa != end)        *pa++ = 0;}‘’’">
+  
+    <link rel="alternate" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chenfeng&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://chenfeng.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Cplusplus_thinking/模板（三）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/08/Cplusplus_thinking/模板（三）/" class="article-date">
+  <time datetime="2017-03-08T04:10:41.256Z" itemprop="datePublished">2017-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="模板（三）"><a href="#模板（三）" class="headerlink" title="模板（三）"></a>模板（三）</h1><p>标签：C++</p>
+<hr>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
+<li><p>已经定义Array<t>、Pointer<t>和Ptr_to_const<t>使得能部分确保安全性避免使用<br>指针</t></t></t></p>
+</li>
+<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
+</li>
+</ul>
+<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
+<ul>
+<li>基类及派生类都要定义这些操作</li>
+</ul>
+<p>‘’’C++<br>template <class t=""> class Pointer: public Ptr_to_const<t> {<br>public:<br>    Pointer&amp; operator++() {<br>        ++sub;<br>        return *this;<br>    }</t></class></p>
+<pre><code>Pointer&amp; operator--() {
+    --sub;
+    return *this;
+}
+
+Pointer&amp; operator++(int) {
+    Pointer ret = *this;
+    ++sub;
+    return ret;
+}
+
+Pointer&amp; operator--(int) {
+    Pointer ret = *this;
+    --sub;
+    return ret;
+}
+
+Pointer&amp; operator+=(int n) {
+    sub += n;
+    return *this;
+}
+
+Pointer&amp; operator-=(int n) {
+    sub -= n;
+    return *this;
+}
+// ...
+</code></pre><p>};</p>
+<p>template <class t=""> Pointer<t> operator+(const Pointer<t>&amp; p, int n) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
+<p>template <class t=""> Pointer<t> operator+(int n, const Pointer<t>&amp; p) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
+<p>// subtration is similar<br>‘’’</p>
+<ul>
+<li>两个指针当且仅当指向同一个Array的同一个元素(或都不指向任何Array)时才相等</li>
+</ul>
+<p>‘’’C++<br>template <class t=""><br>int operator==(const Ptr_to_const<t>&amp; op1, cosnt Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        return 0;<br>    return (op1.sub == op2.sub);<br>}</t></t></class></p>
+<p>template <class t=""><br>int operator&lt;(const Ptr_to_const<t>&amp; op1, const Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        throw “&lt; on different Arrays”;<br>    return op1.sub &lt; op2.sub;<br>}<br>‘’’</t></t></class></p>
+<ul>
+<li>迭代器能在不暴露容器内部结构的情况下访问容器的元素</li>
+</ul>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
+<li><p>当元素不存在时的处理方法</p>
+</li>
+<li><p>禁止从容器中删除单个元素(可以删除整个容器)</p>
+</li>
+<li><p>在每个容器对象中保存一个有效迭代器的列表，删除一个元素则正好删除刚好指向这个<br>被删除元素的迭代器</p>
+</li>
+<li><p>对容器中每个元素采用引用计数，删除任何一个元素都必须等到最后一个指向该元素的<br>引用都不存在</p>
+</li>
+<li><p>让迭代器指向容器中元素与元素之间的位置上(难以实现；影响先有代码)</p>
+</li>
+</ul>
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><ul>
+<li><p>容器本身已不存在，还有活动的迭代器的解决方法</p>
+</li>
+<li><p>删除操作延后到最后一个迭代器失效</p>
+</li>
+<li><p>采用处理删除单个元素的思想</p>
+</li>
+<li><p>用户确保一旦容器删除就不再使用迭代器</p>
+</li>
+<li><p>只要有活动迭代器存在就禁止删除容器本身</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/模板（三）/" data-id="cj00g5scr0005ewq1s28tft2l" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/08/Cplusplus_thinking/模板（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/08/Cplusplus_thinking/句柄类(handle)/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/08/test/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/经济学基础知识/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/现代经济中的市场和政府/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/宏观经济现象鸟瞰/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/08/economics/宏观经济学鸟瞰/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 chenxf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

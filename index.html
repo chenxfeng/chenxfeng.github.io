@@ -61,10 +61,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-computer_network_1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/03/08/test/" class="article-date">
-  <time datetime="2017-03-08T04:10:41.266Z" itemprop="datePublished">2017-03-08</time>
+    <a href="/2017/03/10/computer_network_1/" class="article-date">
+  <time datetime="2017-03-10T14:49:29.200Z" itemprop="datePublished">2017-03-10</time>
 </a>
     
   </div>
@@ -73,18 +73,566 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最开始的parking_pot容器可设计为：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">VehicleSurrogate parking_lot[<span class="number">1000</span>];</div><div class="line">Automobile x;</div><div class="line">parking_pot[num_vehicles++] = x;</div></pre></td></tr></table></figure></p>
-<p>将继承和容器共用需要处理两个问题：</p>
+        <h1 id="计算机网络和因特网"><a href="#计算机网络和因特网" class="headerlink" title="计算机网络和因特网"></a>计算机网络和因特网</h1><hr>
+<h2 id="因特网"><a href="#因特网" class="headerlink" title="因特网"></a>因特网</h2><p>连接到因特网的设备：主机(host)或端系统(end system)</p>
+<p>端系统通过通信链路(communication link)和分组交换机(parket switch)连接到一起</p>
+<p>路由器(router) 链路层交换机(link-layer switch)</p>
+<p>端系统通过因特网服务提供商(Internet Service Provider, ISP)接入因特网</p>
+<p>因特网部件运行一系列协议(protocol),协议控制因特网中信息的接受和发送</p>
+<ol>
+<li><p>Reliable Stream Transport Service:<br>Sends a large amount of data across a reliable “connection”</p>
+</li>
+<li><p>Connectionless Packet Delivery Service:<br>Routes small messages from one computer to another</p>
+</li>
+</ol>
+<p>TCP(Transmission Control Protocol, 传输控制协议)</p>
+<p>IP(Internet Protocol, 网际协议)定义在路由器和端系统之间发送和接受的分组格式</p>
+<p>因特网标准(Internet standard)由因特网工程任务组(Internet Engineering task Force, IETF)研发</p>
+<p>IETF标准文档称请求评论(Request For Comment, RFC)</p>
+<p>分布式应用程序(distributed application)涉及多台相互交换数据的端系统</p>
+<p>应用程序编程接口(Application Programming Interface, API)</p>
+<h2 id="网络边缘"><a href="#网络边缘" class="headerlink" title="网络边缘"></a>网络边缘</h2><p>主机(hosts) = 端系统: 客户(client)和服务器(server)</p>
+<p>数据中心(data center)由许多服务器构成</p>
+<p>接入网(access network)指将端系统连接到其边缘路由器(edge router)的物理链路</p>
+<ol>
+<li>residential access nets</li>
+<li>institutional access networks (school, company)</li>
+<li>mobile access networks</li>
+</ol>
+<p>bandwidth(bit per second, bps); shared / dedicated(专用)</p>
+<p>数字用户线(Digital Subscriber Line, DSL): </p>
 <ul>
-<li>控制内存分配</li>
-<li>把不同类型的对象放进同一个容器中</li>
+<li>existing telephone line to central office DSLAM</li>
+<li>&lt; 2.5 Mbps upstream transmission rate (typically &lt; 1 Mbps)</li>
+<li>&lt; 24 Mbps downstream transmission rate (typically &lt; 10 Mbps)</li>
+<li>frequency division multiplexing: different channels transmitted<br>in different frequency bands</li>
 </ul>
-<p>采用基础C++技术，在现有的继承层次上加上一层抽象，合适地解决了这些问题。</p>
+<p>电缆因特网接入(cable Internet access) 有线电视</p>
+<p>HFC: hybrid fiber coax</p>
+<ul>
+<li>asymmetric: up to 30Mbps downstream transmission rate, 2 Mbps upstream transmission rate</li>
+</ul>
+<p>以太网Ethernet</p>
+<p>光纤到户(Fiber To The Home, FTTH)</p>
+<ul>
+<li>光纤分布体系结构：主动光纤网络(Active Optical Network, AON)和被动光纤网络(Passive Optical Network, PON)</li>
+</ul>
+<p>光纤网络端接器(Optical Network Terminator, ONT)</p>
+<p>分配器(splitter)</p>
+<p>光纤线路端接器(Optical Line Terminator, OLT)</p>
+<p>wireless network</p>
+<p>wireless LANs:</p>
+<ul>
+<li>within building (100 ft.)</li>
+<li>802.11b/g/n (WiFi): 11, 54, 450 Mbps transmission rate</li>
+</ul>
+<p>wide-area wireless access</p>
+<ul>
+<li>provided by telco (cellular) operator, 10’s km</li>
+<li>between 1 and 10 Mbps </li>
+<li>3G, 4G: LTE</li>
+</ul>
+<p>host sending function:</p>
+<ul>
+<li>takes application message</li>
+<li>breaks into smaller chunks, known as packets, of length L bits</li>
+<li>transmits packet into access network at transmission rate R</li>
+<li>link transmission rate, aka link capacity, aka link bandwidth</li>
+</ul>
+<ul>
+<li>物理媒体(physical medium): 双绞铜线、同轴电缆、多模光纤缆、陆地无线电频谱、卫星无线电频谱</li>
+</ul>
+<ul>
+<li>bit: propagates between transmitter/receiver pairs</li>
+<li>physical link: what lies between transmitter &amp; receiver</li>
+</ul>
+<p>导引型媒体(guided media): </p>
+<ul>
+<li>signals propagate in solid media: copper, fiber, coax</li>
+</ul>
+<p>非导引型媒体(unguided media): </p>
+<ul>
+<li>signals propagate freely, e.g., radio</li>
+</ul>
+<p>双绞铜线 twisted pair (TP): </p>
+<ul>
+<li>two insulated copper wires</li>
+<li>Category 5: 100 Mbps, 1 Gbps Ethernet</li>
+<li>Category 6: 10Gbps</li>
+</ul>
+<p>两根隔离的铜线以规则的螺旋形式排列组成；两根线绞合起来以减少邻近类似双绞线的电气干扰</p>
+<p>一对电线构成一个通信链路；通常许多双绞线捆扎在一起成电缆</p>
+<p>无屏蔽双绞线(Unshielded Twisted Pair, UTP) 常用于建筑物内网络</p>
+<p>同轴电缆 coaxial cable: </p>
+<ul>
+<li>two concentric copper conductors</li>
+<li>bidirectional</li>
+<li>broadband:</li>
+<li>multiple channels on cable</li>
+<li>HFC</li>
+</ul>
+<p>光纤 fiber optic cable: </p>
+<ul>
+<li>glass fiber carrying light pulses, each pulse a bit</li>
+<li>high-speed operation:<br>high-speed point-to-point transmission (e.g., 10’s-100’s Gbps transmission rate)</li>
+<li>low error rate: </li>
+</ul>
+<ol>
+<li>repeaters spaced far apart </li>
+<li>immune to electromagnetic noise(不受电磁干扰)</li>
+</ol>
+<p>单模光纤速率高，价格贵; 多模光纤速率低，价格便宜</p>
+<p>电磁波 ratio</p>
+<ul>
+<li>signal carried in electromagnetic spectrum</li>
+<li>no physical “wire”</li>
+<li>bidirectional</li>
+<li>propagation environment effects:</li>
+</ul>
+<ol>
+<li>reflection </li>
+<li>obstruction by objects</li>
+<li>interference</li>
+</ol>
+<p>adio link types:</p>
+<ul>
+<li>terrestrial  microwave<br>e.g. up to 45 Mbps channels</li>
+<li>LAN (e.g., WiFi)<br>54 Mbps</li>
+<li>wide-area (e.g., cellular)<br>4G cellular: ~ 10 Mbps</li>
+<li>satellite</li>
+</ul>
+<ol>
+<li>Kbps to 45Mbps channel (or multiple smaller channels)</li>
+<li>270 msec end-end delay</li>
+<li>geosynchronous versus low altitude</li>
+</ol>
+<p>同步卫星(geostationary satellite); 近地轨道(Low-Earth Orbiting, LEO)卫星</p>
+<h3 id="编码-encoding"><a href="#编码-encoding" class="headerlink" title="编码(encoding)"></a>编码(encoding)</h3><p>Non-return to Zero Inverted (NRZI):</p>
+<ul>
+<li>make a transition from current signal to encode a one; stay at current signal to encode a zero</li>
+<li>solves the problem of consecutive ones</li>
+</ul>
+<p>经网络传输数据会产生时钟同步问题</p>
+<p>Manchester: </p>
+<ul>
+<li>transmit XOR of the NRZ encoded data and the clock</li>
+<li>only 50% efficient (bit rate = 1/2 baud rate)</li>
+</ul>
+<p>包含丰富的时钟信息</p>
+<p>4B/5B: </p>
+<ul>
+<li>every 4 bits of data encoded in a 5-bit code</li>
+<li>5-bit codes selected to have no more than one leading 0 and no more than two trailing 0s </li>
+<li>thus,  never get more than three consecutive 0s</li>
+<li>resulting 5-bit codes are transmitted using NRZI </li>
+<li>achieves 80% efficiency</li>
+</ul>
+<h3 id="数据帧化Framing"><a href="#数据帧化Framing" class="headerlink" title="数据帧化Framing"></a>数据帧化Framing</h3><ul>
+<li>Break sequence of bits into a frame</li>
+<li>Typically implemented by network adaptor</li>
+</ul>
+<p>Sentinel-based: </p>
+<ul>
+<li>delineate frame with special pattern: 01111110</li>
+<li>e.g., HDLC, SDLC, PPP</li>
+</ul>
+<p>Beginning sequence(8) + Header(16) + Body + CRC(16) + Ending sequence(8)</p>
+<ul>
+<li>problem: special pattern appears in the payload</li>
+<li>solution: bit stuffing</li>
+<li>sender: insert 0 after five consecutive 1s</li>
+<li>receiver: delete 0 that follows five consecutive 1s</li>
+</ul>
+<p>Counter-based: </p>
+<ul>
+<li>include payload length in header</li>
+<li>e.g., DDCMP</li>
+</ul>
+<p>SYN(8) + SYN(8) + Class(8) + Count(14) + Header(42) + Body + CRC(16)</p>
+<ul>
+<li>problem: count field corrupted</li>
+<li>solution: catch when CRC fails</li>
+</ul>
+<p>Clock-based: </p>
+<ul>
+<li>each frame is 125us long</li>
+<li>e.g., SONET: Synchronous Optical Network</li>
+<li>STS-n (STS-1 = 51.84 Mbps)</li>
+</ul>
+<h2 id="网络核心"><a href="#网络核心" class="headerlink" title="网络核心"></a>网络核心</h2><p>Communication networks can be classified based on the way in which the nodes exchange information:</p>
+<p>Communication Network: </p>
+<ul>
+<li><p>Broadcast Communication Network</p>
+</li>
+<li><p>Switched Communication Network</p>
+</li>
+</ul>
+<ol>
+<li><p>Circuit-Switched Communication Network</p>
+</li>
+<li><p>Packet-Switched Communication Network</p>
+</li>
+</ol>
+<ul>
+<li>Datagram Network</li>
+<li>Virtual Circuit Network</li>
+</ul>
+<h3 id="Connection-Oriented-面向连接"><a href="#Connection-Oriented-面向连接" class="headerlink" title="Connection Oriented(面向连接)"></a>Connection Oriented(面向连接)</h3><p>Has connection establish and release procedures</p>
+<ul>
+<li>Similar to circuit switched</li>
+</ul>
+<p>Transmission in order</p>
+<p>Bandwidth <em>may</em> be guaranteed</p>
+<p>Flow control <em>may</em> exist</p>
+<p>Error control <em>may</em> exist</p>
+<h3 id="Connectionless-无连接"><a href="#Connectionless-无连接" class="headerlink" title="Connectionless(无连接)"></a>Connectionless(无连接)</h3><p>Each datagram may take a different path</p>
+<p>Datagrams may arrive out of order</p>
+<p>Link failures not a problem</p>
+<ul>
+<li><p>problem in a Generic Switch</p>
+</li>
+<li><p>incoming links : how to demultiplex</p>
+</li>
+<li><p>switch : how to switch</p>
+</li>
+<li><p>outgoing links : how to multiplex</p>
+</li>
+</ul>
+<h3 id="Packet-Switching-分组交换"><a href="#Packet-Switching-分组交换" class="headerlink" title="Packet Switching(分组交换)"></a>Packet Switching(分组交换)</h3><p>各种网络应用中，端系统彼此交换报文(message)</p>
+<p>分组(packet swicth): 源端系统像目的端系统发送报文，源将报文划分为较小的数据块</p>
+<p>每个分组通过通信链路和分组交换机(packet switch)传送</p>
+<ul>
+<li>两类交换机: 路由器和链路层交换机</li>
+</ul>
+<p>packet-switching:<br>hosts break application-layer messages into packets</p>
+<p>Data from any conversation can be transmitted at any given time</p>
+<ul>
+<li>A single conversation can use the entire link capacity if it is alone</li>
+</ul>
+<p>How to demultiplex?</p>
+<ul>
+<li>Use meta-data (header) to describe data</li>
+</ul>
+<p>Data are sent as formatted bit-sequences</p>
+<ul>
+<li>so-called packets.</li>
+</ul>
+<p>Packets have the following structure:</p>
+<ul>
+<li>Header + Data + Tailer</li>
+<li>Header and Trailer carry control information</li>
+<li>e.g., destination address, check sum</li>
+</ul>
+<p>Store-and-Forward Networks(存储转发传输): </p>
+<ul>
+<li>At each node the entire packet is received, stored briefly, and </li>
+<li>then forwarded to the next node based on the header information </li>
+<li>Allows statistical(统计的) multiplexing</li>
+</ul>
+<p>在接收完所有的比特后进行查错，无误在再进行转发</p>
+<p>“热土豆”传输: 一边接收，一边转发</p>
+<ul>
+<li>适用于网络质量好，出错概率低的情况</li>
+</ul>
+<p>通过N条速率均为R的链路组成的路径(源和目的地之间有N-1台路由器)发送一个分组，端到端时延: </p>
+<p>$$d_{EndToEnd} = N \frac{L}{R}$$</p>
+<p>takes L/R seconds to transmit </p>
+<ul>
+<li>L-bit packet into link at R bps</li>
+</ul>
+<p>one-hop numerical example:</p>
+<ul>
+<li>L = 7.5 Mbits</li>
+<li>R = 1.5 Mbps</li>
+<li>one-hop transmission delay = 5 sec</li>
+</ul>
+<p>packet-switching</p>
+<ul>
+<li>forward packets from one router to the next</li>
+<li>across links on path from source to destination</li>
+<li>Each packet is independently switched</li>
+<li>header contains destination address</li>
+</ul>
+<ul>
+<li>Two key network-core functions</li>
+</ul>
+<ol>
+<li>routing: determines source-destination route taken by packets</li>
+</ol>
+<ul>
+<li>routing algorithms</li>
+</ul>
+<ol>
+<li>forwarding: move packets from router’s input to appropriate router output</li>
+</ol>
+<p>输出缓存(output buffer)(输出队列 output queue):<br>用于存储路由器准备发往相连的链路的分组;</p>
+<p>排队时延(queue delay):<br>到达的分组在链路忙于传输其他分组时必须在输出缓存中等待;</p>
+<p>分组丢失(丢包 packet lost):<br>一个分组到达时缓存已被其他等待传输的分组完全充满，到达的分组或已经排队的分组之一将被丢弃</p>
+<p>queuing and loss: </p>
+<ul>
+<li>if arrival rate exceeds transmission rate of link for a period of time</li>
+<li>packets will queue, wait to be transmitted on link </li>
+<li>can be dropped (lost) if memory (buffer) fills up</li>
+</ul>
+<h3 id="Circuit-Switching-电路交换"><a href="#Circuit-Switching-电路交换" class="headerlink" title="Circuit Switching(电路交换)"></a>Circuit Switching(电路交换)</h3><p>两台主机通信时网络在两台主机之间创建一条专用的端到端连接(end-to-end connection)</p>
+<p>频分复用(Frequency-Division Multiplexing, FDM):<br>链路的频谱由跨越链路创建的所有连接所共享; 在连接期间链路为每条连接专用一个频段</p>
+<p>时分复用(Time-Division Multiplexing, TDM):<br>时间被划分为固定区间的帧(frame)，每帧划分为固定数量的时隙;<br>网络跨越一条链路创建一条连接时在每个帧中为该连接指定一个时隙(slot)</p>
+<p>Time divided in frames and frames divided in slots</p>
+<p>Relative slot <strong>position</strong> inside a frame determines which conversation the data belongs to </p>
+<p>Needs <strong>synchronization</strong>(同步) between sender and receiver</p>
+<p>If a conversation does not use its circuit the capacity is lost</p>
+<p>Three phases(三个阶段)</p>
+<ol>
+<li>circuit establishment</li>
+<li>data transfer</li>
+<li>circuit termination</li>
+</ol>
+<p>If circuit not available: busy</p>
+<p>Examples</p>
+<ul>
+<li>Telephone networks</li>
+<li>ISDN (Integrated Services Digital Networks)(综合业务数字网)</li>
+</ul>
+<p>end-end resources allocated to, reserved for “call” between source &amp; dest</p>
+<p>dedicated resources: no sharing</p>
+<ul>
+<li>circuit-like (guaranteed) performance</li>
+</ul>
+<p>circuit segment idle(闲置) if not used by call (no sharing)</p>
+<h3 id="Packet-Switching-vs-Circuit-Switching"><a href="#Packet-Switching-vs-Circuit-Switching" class="headerlink" title="Packet-Switching vs. Circuit-Switching"></a>Packet-Switching vs. Circuit-Switching</h3><p>Most important advantage of packet-switching: </p>
+<ul>
+<li>Ability to exploit statistical multiplexing</li>
+<li>More efficient bandwidth usage</li>
+</ul>
+<p>However, packet-switching needs to buffer and deal with congestion</p>
+<ul>
+<li>More complex switches</li>
+<li>Harder to provide good network services (e.g., delay and bandwidth guarantees)</li>
+</ul>
+<p>packet switching allows more users to use network</p>
+<p>example:</p>
+<ul>
+<li>1 Mb/s link<br>each user: </li>
+<li>100 kb/s when “active”</li>
+<li><p>active 10% of time</p>
+</li>
+<li><p>circuit-switching: 10 users</p>
+</li>
+<li>packet switching: with 35 users, probability &gt; 10 active at same time is less than .0004 *</li>
+</ul>
+<p>packet switching: </p>
+<p>great for bursty data</p>
+<ul>
+<li>resource sharing</li>
+<li>simpler, no call setup</li>
+</ul>
+<p>excessive congestion possible: </p>
+<ul>
+<li>packet delay and loss</li>
+<li>protocols needed for reliable data transfer, congestion control</li>
+</ul>
+<p>Q: How to provide circuit-like behavior?</p>
+<ul>
+<li>bandwidth guarantees needed for audio/video apps</li>
+</ul>
+<h3 id="Virtual-Circuit-Packet-Switching-虚电路交换"><a href="#Virtual-Circuit-Packet-Switching-虚电路交换" class="headerlink" title="Virtual-Circuit Packet Switching(虚电路交换)"></a>Virtual-Circuit Packet Switching(虚电路交换)</h3><p>Hybrid of circuit switching and packet switching</p>
+<ul>
+<li>Data is transmitted as packets</li>
+<li>All packets from one packet stream are sent along a pre-established path (=virtual circuit)</li>
+<li>Guarantees in-sequence delivery of packets</li>
+</ul>
+<p>Packet header only contains local virtual circuit identifier (VCI)</p>
+<p>Demultiplexing and switching based on VCI</p>
+<ul>
+<li>Note: packet headers don’t need to contain the full destination address of the packet </li>
+</ul>
+<p>Example: ATM networks</p>
+<p>Communication with virtual circuits takes place in three phases </p>
+<ol>
+<li>VC establishment</li>
+<li>data transfer</li>
+<li>VC disconnect</li>
+</ol>
+<h3 id="Internet-structure-network-of-networks-网络的网络"><a href="#Internet-structure-network-of-networks-网络的网络" class="headerlink" title="Internet structure: network of networks(网络的网络)"></a>Internet structure: network of networks(网络的网络)</h3><p>End systems connect to Internet via access ISPs (Internet Service Providers)</p>
+<ul>
+<li>residential, company and university ISPs</li>
+</ul>
+<p>Access ISPs in turn must be interconnected. </p>
+<ul>
+<li>so that any two hosts can send packets to each other</li>
+</ul>
+<p>Resulting network of networks is very complex</p>
+<ul>
+<li>evolution was driven by economics and national policies</li>
+</ul>
+<p>Question: given millions of access ISPs, how to connect them together?<br>Option: connect each access ISP to every other access ISP?<br>Option: connect each access ISP to one global transit ISP? </p>
+<ul>
+<li>Customer and provider ISPs have economic agreement.</li>
+</ul>
+<p>at center: small # of well-connected large networks</p>
+<ul>
+<li>“tier-1” commercial ISPs (e.g., Level 3, Sprint, AT&amp;T, NTT), national &amp; international coverage</li>
+<li>content provider network (e.g., Google): private network that connects it data centers to Internet, often bypassing tier-1, regional ISPs</li>
+</ul>
+<h2 id="分组交换网中的时延、丢包和吞吐量-delay-loss-throughput-in-networks"><a href="#分组交换网中的时延、丢包和吞吐量-delay-loss-throughput-in-networks" class="headerlink" title="分组交换网中的时延、丢包和吞吐量(delay, loss, throughput in networks)"></a>分组交换网中的时延、丢包和吞吐量(delay, loss, throughput in networks)</h2><h3 id="时延"><a href="#时延" class="headerlink" title="时延"></a>时延</h3><p>结点处理时延(nodal processing delay): 检查分组首部和决定出口链路、查错校验</p>
+<p>排队时延(queuing delay): 分组在出口链路队列上等待传输</p>
+<p>传输时延(transmission delay): L/R(分组长度/链路传输速率); 将所有分组比特推(传输)向链路所需时间</p>
+<p>传播时延(propagation delay): d/s(距离/传播速率)，介质相关</p>
+<p>结点总时延(total nodal delay)</p>
+<p>$$d<em>{nodal} = d</em>{proc} + d<em>{queue} + d</em>{trans} + d_{prop}$$</p>
+<p>How do loss and delay occur:<br>packets queue in router buffers </p>
+<ul>
+<li>packet arrival rate to link (temporarily) exceeds output link capacity</li>
+<li>packets queue, wait for turn</li>
+</ul>
+<p>$d_{proc}$: nodal processing </p>
+<ul>
+<li>check bit errors</li>
+<li>determine output link</li>
+<li>typically &lt; msec</li>
+</ul>
+<p>$d_{queue}$: queueing delay</p>
+<ul>
+<li>time waiting at output link for transmission </li>
+<li>depends on congestion level of router</li>
+</ul>
+<p>$d_{trans}$: transmission delay</p>
+<ul>
+<li>L: packet length (bits) </li>
+<li>R: link bandwidth (bps)</li>
+<li>$d_{trans} = L/R$</li>
+</ul>
+<p>$d_{prop}$: propagation delay</p>
+<ul>
+<li>d: length of physical link</li>
+<li>s: propagation speed (~2x108 m/sec)</li>
+<li>$d_{prop} = d/s$</li>
+</ul>
+<p>$d<em>{trans}$ and $d</em>{prop}$ are very different</p>
+<h3 id="排队时延和丢包"><a href="#排队时延和丢包" class="headerlink" title="排队时延和丢包"></a>排队时延和丢包</h3><p>流量强度(traffic intensity): La/R; </p>
+<ul>
+<li>a: 分组到达队列的平均速率(pkt/s)(a: average packet arrival rate)</li>
+<li>R: link bandwidth (bps)</li>
+<li><p>L: packet length (bits)</p>
+</li>
+<li><p>La/R ~ 0: avg. queueing delay small</p>
+</li>
+<li>La/R -&gt; 1: avg. queueing delay large</li>
+<li>La/R &gt; 1: more “work” arriving<br> than can be serviced, average delay infinite!</li>
+</ul>
+<ul>
+<li>设计系统时流量强度不能大于1</li>
+</ul>
+<p>随着流量强度接近于1，平均排队时延迅速增加</p>
+<p>丢包: 分组到达时路由器链路队列已满，路由器丢弃(drop)该分组，该分组会丢失(lost)</p>
+<ul>
+<li>queue (aka buffer) preceding link in buffer has finite capacity</li>
+<li>packet arriving to full queue dropped (aka lost)</li>
+<li>lost packet may be retransmitted by previous node, by source end system, or not at all</li>
+</ul>
+<h3 id="吞吐量-throughput"><a href="#吞吐量-throughput" class="headerlink" title="吞吐量(throughput)"></a>吞吐量(throughput)</h3><p>瞬时吞吐量(instantaneous throughput): 主机接收到文件的速率(bps)</p>
+<p>平均吞吐量(average throughput): F/T秒; 接收总共F比特用去T秒</p>
+<p>瓶颈链路(bottleneck link): 系统中传输速率最小的链路</p>
+<p>throughput: rate (bits/time unit) at which bits transferred between sender/receiver</p>
+<ul>
+<li>instantaneous: rate at given point in time</li>
+<li>average: rate over longer period of time</li>
+</ul>
+<p>bottleneck link:<br>link on end-end path that constrains end-end throughput</p>
+<h2 id="协议层次-服务模型-protocol-layers-service-models"><a href="#协议层次-服务模型-protocol-layers-service-models" class="headerlink" title="协议层次 服务模型(protocol layers, service models)"></a>协议层次 服务模型(protocol layers, service models)</h2><p>分层(layer)</p>
+<p>layers: each layer implements a service</p>
+<ul>
+<li>via its own internal-layer actions</li>
+<li>relying on services provided by layer below</li>
+</ul>
+<p>协议栈(protocol stack)</p>
+<p>应用层(第七层): <http、smtp、ftp、dns...> 报文(message)</http、smtp、ftp、dns...></p>
+<p>运输层(四层): <tcp udp=""> 报文段(segment)</tcp></p>
+<p>网络层(三层): <ip>数据报(datagram)</ip></p>
+<p>链路层(二层): 帧(frame)</p>
+<p>物理层(一层): 将帧中的比特一个一个从一个结点移动到下一个结点</p>
+<p>OSI(Open System Interconnect Reference Model, 开放系统互联参考模型)</p>
+<p>表示层: 数据压缩、数据加密、数据描述</p>
+<p>会话层: 数据交换定界、同步功能，建立检查点和恢复方案</p>
+<p>Internet protocol stack: </p>
+<p>application: supporting network applications</p>
+<ul>
+<li>FTP, SMTP, HTTP</li>
+</ul>
+<p>transport: process-process data transfer</p>
+<ul>
+<li>TCP, UDP</li>
+</ul>
+<p>network: routing of datagrams from source to destination</p>
+<ul>
+<li>IP, routing protocols</li>
+</ul>
+<p>link: data transfer between neighboring  network elements</p>
+<ul>
+<li>Ethernet, 802.111 (WiFi), PPP</li>
+</ul>
+<p>physical: bits “on the wire</p>
+<p>ISO/OSI reference model: (two more layer)</p>
+<ul>
+<li><p>presentation: allow applications to interpret meaning of data, e.g., encryption, compression, machine-specific conventions</p>
+</li>
+<li><p>session: synchronization, checkpointing, recovery of data exchange<br>Internet stack “missing” these layers!</p>
+</li>
+<li><p>these services, if needed, must be implemented in application</p>
+</li>
+</ul>
+<p>封装(encaosulation)</p>
+<p>应用层报文(application-layer message) -&gt; 运输层报文段(transport-layer segment) -&gt; 网络层数据报(network-layer datagram) -&gt; 链路层帧(link-layer frame)</p>
+<p>分组 : 首部字段 + 有效载荷字段(payload field)(来自上一层的分组)</p>
+<h2 id="面对攻击的网络-networks-under-attack-security"><a href="#面对攻击的网络-networks-under-attack-security" class="headerlink" title="面对攻击的网络(networks under attack: security)"></a>面对攻击的网络(networks under attack: security)</h2><p>Internet not originally designed with (much) security in mind</p>
+<ul>
+<li>original vision: “a group of mutually trusting users attached to a transparent network” </li>
+<li>Internet protocol designers playing “catch-up”</li>
+<li>security considerations in all layers!</li>
+</ul>
+<p>恶意软件(malware)</p>
+<p>僵尸网络(botnet)</p>
+<p>病毒(virus): 需要某种形式的用户交互感染用户设备的恶意软件</p>
+<p>蠕虫(worm): 无需任何明显用户交互就能进入设备的恶意软件</p>
+<p>malware can get in host from:</p>
+<ul>
+<li>virus: self-replicating infection by receiving/executing object (e.g., e-mail attachment)</li>
+<li>worm: self-replicating infection by passively receiving object that gets itself executed</li>
+</ul>
+<p><strong>spyware malware</strong> can record keystrokes, web sites visited, upload info to collection site</p>
+<p>infected host can be enrolled in <strong>botnet</strong>, used for spam. DDoS attacks</p>
+<p>拒绝服务攻击(Denial-of-Service (DoS) attack)</p>
+<ul>
+<li>弱点攻击: 向一台目标主机上运行的易受攻击的应用程序或操作系统发送制作精细的报文</li>
+<li>带宽洪泛: 向目标主机发送大量的分组使目标接入链路拥塞</li>
+<li>连接洪泛: 在目标主机中创建大量半开或全开TCP连接</li>
+</ul>
+<p>分布式Dos(Distributed DoS, DDoS): 攻击者控制多个源向目标发送大量流量</p>
+<p>Denial of Service(DoS): attackers make resources (server, bandwidth) unavailable to legitimate traffic by overwhelming resource with bogus traffic</p>
+<ol>
+<li><p>select target</p>
+</li>
+<li><p>break into hosts around the network (see botnet)</p>
+</li>
+<li><p>send packets to target from compromised hosts</p>
+</li>
+</ol>
+<p>分组嗅探器(packet sniffer)</p>
+<p>packet “sniffing”: </p>
+<ul>
+<li>broadcast media (shared Ethernet, wireless)</li>
+<li>promiscuous network interface reads/records all packets (e.g., including passwords!) passing by</li>
+<li>wireshark software is a (free) packet-sniffer</li>
+</ul>
+<p>IP哄骗(IP spooning)</p>
+<p>IP spoofing: send packet with false source address</p>
+<hr>
+<p>~ history</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/test/" data-id="cj00g5sbu0000ewq1pqmaw4sa" class="article-share-link">Share</a>
+      <a data-url="https://chenfeng.github.io/2017/03/10/computer_network_1/" data-id="cj03xvmsy0000zso96enh464n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -177,7 +725,138 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/economics/经济学基础知识/" data-id="cj00g5sdt000dewq14ktd51ll" class="article-share-link">Share</a>
+      <a data-url="https://chenfeng.github.io/2017/03/08/economics/经济学基础知识/" data-id="cj03xvmvb000ezso9d3uehnlx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/08/test/" class="article-date">
+  <time datetime="2017-03-08T04:10:41.266Z" itemprop="datePublished">2017-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最开始的parking_pot容器可设计为：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">VehicleSurrogate parking_lot[<span class="number">1000</span>];</div><div class="line">Automobile x;</div><div class="line">parking_pot[num_vehicles++] = x;</div></pre></td></tr></table></figure></p>
+<p>将继承和容器共用需要处理两个问题：</p>
+<ul>
+<li>控制内存分配</li>
+<li>把不同类型的对象放进同一个容器中</li>
+</ul>
+<p>采用基础C++技术，在现有的继承层次上加上一层抽象，合适地解决了这些问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chenfeng.github.io/2017/03/08/test/" data-id="cj03xvmt60001zso9wh8thkfa" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-economics/宏观经济现象鸟瞰" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/08/economics/宏观经济现象鸟瞰/" class="article-date">
+  <time datetime="2017-03-08T04:10:41.265Z" itemprop="datePublished">2017-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="宏观经济现象鸟瞰"><a href="#宏观经济现象鸟瞰" class="headerlink" title="宏观经济现象鸟瞰"></a>宏观经济现象鸟瞰</h1><p>标签： 宏观经济学</p>
+<hr>
+<h2 id="三个重要的宏观经济变量"><a href="#三个重要的宏观经济变量" class="headerlink" title="三个重要的宏观经济变量"></a>三个重要的宏观经济变量</h2><ul>
+<li><p>实际国内生产总值(real GDP<gross domestic="" product="">):<br>经济体内所有人的实际总收入。<br>人均国内生产总值(GDP per capita): 经济体内平均而言每个人的实际收入。</gross></p>
+</li>
+<li><p>通货膨胀率(inflation rate):<br>物价水平变动的百分比。(物价指数)<br>用消费者价格指数(consumer price index, CPI)或GDP缩减指数(GDP deflator index)<br>衡量。</p>
+</li>
+<li><p>失业率(unemployment rate):<br>经济体中没有工作当正在积极找工作的劳动力比重。</p>
+</li>
+</ul>
+<h3 id="GDP：衡量经济活动创造的价值"><a href="#GDP：衡量经济活动创造的价值" class="headerlink" title="GDP：衡量经济活动创造的价值"></a>GDP：衡量经济活动创造的价值</h3><p>经济体在既定时期内生产的所有的最终产品和服务的当期市场总值</p>
+<ul>
+<li>核算GDP三种方法</li>
+</ul>
+<ul>
+<li>生产法<br>把GDP作为经济体里当期所生产的最终产品与服务的总值</li>
+<li>收入法<br>把GDP作为经济体中所有人的总收入<br>国内顾客的购买总值=企业的总收益=工资+资本所得+中间投入品的购买<br>最终消费=增加值=工资+资本所得<br>(in China)增加值=劳动者报酬+生产税净额+固定资产折旧+营业盈额</li>
+<li>支出法<br>把GDP作为经济体里对产品与服务的总支出<br>Y=C+I+G(GDP、消费、投资、政府购买)<br>开放经济条件下Y=Cd+Id+Gd+EX<br>(国内产品和服务的消费、国内产品和服务的投资、国内产品和服务的政府采购、国内产品和服务的出口)<br>国外产品和服务的消费Cf=C-Cd<br>国外产品和服务的投资If=I-Id<br>国外产品和服务的政府采购Gf=G-Gd<br>国外产品和服务的进口IM=Cf+If+Gf<br>净出口(net export)NEX=EX-IM<br>国民经济核算表达式Y=C+I+G+NEX</li>
+</ul>
+<ul>
+<li>国民生产总值(gross national product,GNP)<br>一国居民在一个既定时期内所获得的总收入<br>GNP=GDP+来自国外的生产要素收入-对国外的生产要素支付</li>
+</ul>
+<h3 id="物价水平：衡量生活费用"><a href="#物价水平：衡量生活费用" class="headerlink" title="物价水平：衡量生活费用"></a>物价水平：衡量生活费用</h3><p>通货膨胀：物价水平上升</p>
+<ul>
+<li>消费者价格指数(CPI)<br>最常用的度量物价水平的指标</li>
+</ul>
+<ol>
+<li>选定一个开始时期(基期)</li>
+<li>选定一个<em>典型消费者</em>所购买的一篮子产品和服务的种类和数量</li>
+<li>计算每一期购买同样一篮子产品和服务的支出</li>
+<li>计算每一期的CPI(CPI=当期与基期一篮子产品和服务支出的<strong>比值</strong>)</li>
+</ol>
+<p>通货膨胀率 = (CPI(后一期)-CPI(前一期))/CPI(前一期)</p>
+<ul>
+<li>生产者价格指数(producer price index, PPI)<br>度量物价水平的另一指标</li>
+</ul>
+<ul>
+<li><em>典型生产者</em>购买的一篮子产品和服务</li>
+</ul>
+<ul>
+<li>GDP缩减指数</li>
+</ul>
+<p>名义GDP(nominal GDP)：按照当期价格度量的GDP<br>实际GDP(real GDP)：按照不变价格度量的GDP(尽可能反映经济体生产能力的变化)</p>
+<p>GDP缩减指数=名义GDP/实际GDP * 100%</p>
+<p>名义GDP剔除通货膨胀的影响得到实际GDP</p>
+<h3 id="失业率：度量经济体痛苦程度"><a href="#失业率：度量经济体痛苦程度" class="headerlink" title="失业率：度量经济体痛苦程度"></a>失业率：度量经济体痛苦程度</h3><p>就业：在一定年龄段的经济活动主体从事有报酬的活动</p>
+<p>失业者：有劳动能力并愿意就业但找不到工作的经济活动主体</p>
+<ul>
+<li>劳动力人口 = 劳动年龄(16~65)人口 - 不在劳动力(not in labor force)人口</li>
+<li>劳动参与率 = 劳动力人口 / 劳动年龄人口</li>
+<li>失业率 = 失业人口 / 劳动力人口</li>
+</ul>
+<ul>
+<li>测算失业人口两种方法</li>
+</ul>
+<ul>
+<li>收集失业者在劳动行政部门申报的数据<br>大多数失业者有申报动机：失业申报可以领取失业救济金、获得再就业信息等</li>
+<li>定期抽样调查估计失业人口</li>
+</ul>
+<h2 id="数据查找"><a href="#数据查找" class="headerlink" title="数据查找"></a>数据查找</h2><ul>
+<li>中国国家统计局网站 <a href="http://www.stats.gov.cn" target="_blank" rel="external">http://www.stats.gov.cn</a></li>
+<li><p>中国经济学教育科研网 <a href="http://www.cenet.org.cn/cn/" target="_blank" rel="external">http://www.cenet.org.cn/cn/</a></p>
+</li>
+<li><p>美国 总统经济报告 www.access.gpo.gov/eop/</p>
+</li>
+<li><p>美国统计概要 www.census.gov/compendia/statab</p>
+</li>
+<li><p>经济合作与发展组织 www.oecd.org</p>
+</li>
+<li>宾夕法尼亚大学国际比较中心 <a href="http://pwt.econ.upenn.edu/" target="_blank" rel="external">http://pwt.econ.upenn.edu/</a></li>
+<li>哈佛商学院宏观经济学资源网站 www.hbs.edu/units/bgie/internet</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chenfeng.github.io/2017/03/08/economics/宏观经济现象鸟瞰/" data-id="cj03xvmv9000dzso9hy5psc8o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -363,105 +1042,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/economics/现代经济中的市场和政府/" data-id="cj00g5sdj000cewq1nv400cad" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-economics/宏观经济现象鸟瞰" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/08/economics/宏观经济现象鸟瞰/" class="article-date">
-  <time datetime="2017-03-08T04:10:41.265Z" itemprop="datePublished">2017-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="宏观经济现象鸟瞰"><a href="#宏观经济现象鸟瞰" class="headerlink" title="宏观经济现象鸟瞰"></a>宏观经济现象鸟瞰</h1><p>标签： 宏观经济学</p>
-<hr>
-<h2 id="三个重要的宏观经济变量"><a href="#三个重要的宏观经济变量" class="headerlink" title="三个重要的宏观经济变量"></a>三个重要的宏观经济变量</h2><ul>
-<li><p>实际国内生产总值(real GDP<gross domestic="" product="">):<br>经济体内所有人的实际总收入。<br>人均国内生产总值(GDP per capita): 经济体内平均而言每个人的实际收入。</gross></p>
-</li>
-<li><p>通货膨胀率(inflation rate):<br>物价水平变动的百分比。(物价指数)<br>用消费者价格指数(consumer price index, CPI)或GDP缩减指数(GDP deflator index)<br>衡量。</p>
-</li>
-<li><p>失业率(unemployment rate):<br>经济体中没有工作当正在积极找工作的劳动力比重。</p>
-</li>
-</ul>
-<h3 id="GDP：衡量经济活动创造的价值"><a href="#GDP：衡量经济活动创造的价值" class="headerlink" title="GDP：衡量经济活动创造的价值"></a>GDP：衡量经济活动创造的价值</h3><p>经济体在既定时期内生产的所有的最终产品和服务的当期市场总值</p>
-<ul>
-<li>核算GDP三种方法</li>
-</ul>
-<ul>
-<li>生产法<br>把GDP作为经济体里当期所生产的最终产品与服务的总值</li>
-<li>收入法<br>把GDP作为经济体中所有人的总收入<br>国内顾客的购买总值=企业的总收益=工资+资本所得+中间投入品的购买<br>最终消费=增加值=工资+资本所得<br>(in China)增加值=劳动者报酬+生产税净额+固定资产折旧+营业盈额</li>
-<li>支出法<br>把GDP作为经济体里对产品与服务的总支出<br>Y=C+I+G(GDP、消费、投资、政府购买)<br>开放经济条件下Y=Cd+Id+Gd+EX<br>(国内产品和服务的消费、国内产品和服务的投资、国内产品和服务的政府采购、国内产品和服务的出口)<br>国外产品和服务的消费Cf=C-Cd<br>国外产品和服务的投资If=I-Id<br>国外产品和服务的政府采购Gf=G-Gd<br>国外产品和服务的进口IM=Cf+If+Gf<br>净出口(net export)NEX=EX-IM<br>国民经济核算表达式Y=C+I+G+NEX</li>
-</ul>
-<ul>
-<li>国民生产总值(gross national product,GNP)<br>一国居民在一个既定时期内所获得的总收入<br>GNP=GDP+来自国外的生产要素收入-对国外的生产要素支付</li>
-</ul>
-<h3 id="物价水平：衡量生活费用"><a href="#物价水平：衡量生活费用" class="headerlink" title="物价水平：衡量生活费用"></a>物价水平：衡量生活费用</h3><p>通货膨胀：物价水平上升</p>
-<ul>
-<li>消费者价格指数(CPI)<br>最常用的度量物价水平的指标</li>
-</ul>
-<ol>
-<li>选定一个开始时期(基期)</li>
-<li>选定一个<em>典型消费者</em>所购买的一篮子产品和服务的种类和数量</li>
-<li>计算每一期购买同样一篮子产品和服务的支出</li>
-<li>计算每一期的CPI(CPI=当期与基期一篮子产品和服务支出的<strong>比值</strong>)</li>
-</ol>
-<p>通货膨胀率 = (CPI(后一期)-CPI(前一期))/CPI(前一期)</p>
-<ul>
-<li>生产者价格指数(producer price index, PPI)<br>度量物价水平的另一指标</li>
-</ul>
-<ul>
-<li><em>典型生产者</em>购买的一篮子产品和服务</li>
-</ul>
-<ul>
-<li>GDP缩减指数</li>
-</ul>
-<p>名义GDP(nominal GDP)：按照当期价格度量的GDP<br>实际GDP(real GDP)：按照不变价格度量的GDP(尽可能反映经济体生产能力的变化)</p>
-<p>GDP缩减指数=名义GDP/实际GDP * 100%</p>
-<p>名义GDP剔除通货膨胀的影响得到实际GDP</p>
-<h3 id="失业率：度量经济体痛苦程度"><a href="#失业率：度量经济体痛苦程度" class="headerlink" title="失业率：度量经济体痛苦程度"></a>失业率：度量经济体痛苦程度</h3><p>就业：在一定年龄段的经济活动主体从事有报酬的活动</p>
-<p>失业者：有劳动能力并愿意就业但找不到工作的经济活动主体</p>
-<ul>
-<li>劳动力人口 = 劳动年龄(16~65)人口 - 不在劳动力(not in labor force)人口</li>
-<li>劳动参与率 = 劳动力人口 / 劳动年龄人口</li>
-<li>失业率 = 失业人口 / 劳动力人口</li>
-</ul>
-<ul>
-<li>测算失业人口两种方法</li>
-</ul>
-<ul>
-<li>收集失业者在劳动行政部门申报的数据<br>大多数失业者有申报动机：失业申报可以领取失业救济金、获得再就业信息等</li>
-<li>定期抽样调查估计失业人口</li>
-</ul>
-<h2 id="数据查找"><a href="#数据查找" class="headerlink" title="数据查找"></a>数据查找</h2><ul>
-<li>中国国家统计局网站 <a href="http://www.stats.gov.cn" target="_blank" rel="external">http://www.stats.gov.cn</a></li>
-<li><p>中国经济学教育科研网 <a href="http://www.cenet.org.cn/cn/" target="_blank" rel="external">http://www.cenet.org.cn/cn/</a></p>
-</li>
-<li><p>美国 总统经济报告 www.access.gpo.gov/eop/</p>
-</li>
-<li><p>美国统计概要 www.census.gov/compendia/statab</p>
-</li>
-<li><p>经济合作与发展组织 www.oecd.org</p>
-</li>
-<li>宾夕法尼亚大学国际比较中心 <a href="http://pwt.econ.upenn.edu/" target="_blank" rel="external">http://pwt.econ.upenn.edu/</a></li>
-<li>哈佛商学院宏观经济学资源网站 www.hbs.edu/units/bgie/internet</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/economics/宏观经济现象鸟瞰/" data-id="cj00g5sdh000bewq1aghmjuzo" class="article-share-link">Share</a>
+      <a data-url="https://chenfeng.github.io/2017/03/08/economics/现代经济中的市场和政府/" data-id="cj03xvmv7000czso908jqk20n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -474,7 +1055,7 @@
     <article id="post-economics/宏观经济学鸟瞰" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/08/economics/宏观经济学鸟瞰/" class="article-date">
-  <time datetime="2017-03-08T04:10:41.265Z" itemprop="datePublished">2017-03-08</time>
+  <time datetime="2017-03-08T04:10:41.264Z" itemprop="datePublished">2017-03-08</time>
 </a>
     
   </div>
@@ -711,7 +1292,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/economics/宏观经济学鸟瞰/" data-id="cj00g5sde000aewq1chtrx5wz" class="article-share-link">Share</a>
+      <a data-url="https://chenfeng.github.io/2017/03/08/economics/宏观经济学鸟瞰/" data-id="cj03xvmv5000bzso9a4b1phcs" class="article-share-link">Share</a>
       
       
     </footer>
@@ -859,7 +1440,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/economics/供给与需求的基本原理/" data-id="cj00g5sdc0009ewq1ff8yox4x" class="article-share-link">Share</a>
+      <a data-url="https://chenfeng.github.io/2017/03/08/economics/供给与需求的基本原理/" data-id="cj03xvmv3000azso9z0v3tolj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -943,7 +1524,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/面向对象编程/" data-id="cj00g5sdb0008ewq114nmm19f" class="article-share-link">Share</a>
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/面向对象编程/" data-id="cj03xvmv10009zso9c9ettrul" class="article-share-link">Share</a>
       
       
     </footer>
@@ -999,7 +1580,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/类设计者的核查表/" data-id="cj00g5sd50007ewq18s3th9p8" class="article-share-link">Share</a>
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/类设计者的核查表/" data-id="cj03xvmus0007zso9w26e3dst" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1012,7 +1593,7 @@
     <article id="post-Cplusplus_thinking/模板（二）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/08/Cplusplus_thinking/模板（二）/" class="article-date">
-  <time datetime="2017-03-08T04:10:41.258Z" itemprop="datePublished">2017-03-08</time>
+  <time datetime="2017-03-08T04:10:41.257Z" itemprop="datePublished">2017-03-08</time>
 </a>
     
   </div>
@@ -1091,109 +1672,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/模板（二）/" data-id="cj00g5sct0006ewq1fvjnvnoh" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Cplusplus_thinking/模板（三）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/03/08/Cplusplus_thinking/模板（三）/" class="article-date">
-  <time datetime="2017-03-08T04:10:41.256Z" itemprop="datePublished">2017-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="模板（三）"><a href="#模板（三）" class="headerlink" title="模板（三）"></a>模板（三）</h1><p>标签：C++</p>
-<hr>
-<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
-<li><p>已经定义Array<t>、Pointer<t>和Ptr_to_const<t>使得能部分确保安全性避免使用<br>指针</t></t></t></p>
-</li>
-<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
-</li>
-</ul>
-<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
-<ul>
-<li>基类及派生类都要定义这些操作</li>
-</ul>
-<p>‘’’C++<br>template <class t=""> class Pointer: public Ptr_to_const<t> {<br>public:<br>    Pointer&amp; operator++() {<br>        ++sub;<br>        return *this;<br>    }</t></class></p>
-<pre><code>Pointer&amp; operator--() {
-    --sub;
-    return *this;
-}
-
-Pointer&amp; operator++(int) {
-    Pointer ret = *this;
-    ++sub;
-    return ret;
-}
-
-Pointer&amp; operator--(int) {
-    Pointer ret = *this;
-    --sub;
-    return ret;
-}
-
-Pointer&amp; operator+=(int n) {
-    sub += n;
-    return *this;
-}
-
-Pointer&amp; operator-=(int n) {
-    sub -= n;
-    return *this;
-}
-// ...
-</code></pre><p>};</p>
-<p>template <class t=""> Pointer<t> operator+(const Pointer<t>&amp; p, int n) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
-<p>template <class t=""> Pointer<t> operator+(int n, const Pointer<t>&amp; p) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
-<p>// subtration is similar<br>‘’’</p>
-<ul>
-<li>两个指针当且仅当指向同一个Array的同一个元素(或都不指向任何Array)时才相等</li>
-</ul>
-<p>‘’’C++<br>template <class t=""><br>int operator==(const Ptr_to_const<t>&amp; op1, cosnt Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        return 0;<br>    return (op1.sub == op2.sub);<br>}</t></t></class></p>
-<p>template <class t=""><br>int operator&lt;(const Ptr_to_const<t>&amp; op1, const Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        throw “&lt; on different Arrays”;<br>    return op1.sub &lt; op2.sub;<br>}<br>‘’’</t></t></class></p>
-<ul>
-<li>迭代器能在不暴露容器内部结构的情况下访问容器的元素</li>
-</ul>
-<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
-<li><p>当元素不存在时的处理方法</p>
-</li>
-<li><p>禁止从容器中删除单个元素(可以删除整个容器)</p>
-</li>
-<li><p>在每个容器对象中保存一个有效迭代器的列表，删除一个元素则正好删除刚好指向这个<br>被删除元素的迭代器</p>
-</li>
-<li><p>对容器中每个元素采用引用计数，删除任何一个元素都必须等到最后一个指向该元素的<br>引用都不存在</p>
-</li>
-<li><p>让迭代器指向容器中元素与元素之间的位置上(难以实现；影响先有代码)</p>
-</li>
-</ul>
-<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><ul>
-<li><p>容器本身已不存在，还有活动的迭代器的解决方法</p>
-</li>
-<li><p>删除操作延后到最后一个迭代器失效</p>
-</li>
-<li><p>采用处理删除单个元素的思想</p>
-</li>
-<li><p>用户确保一旦容器删除就不再使用迭代器</p>
-</li>
-<li><p>只要有活动迭代器存在就禁止删除容器本身</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/模板（三）/" data-id="cj00g5scr0005ewq1s28tft2l" class="article-share-link">Share</a>
+      <a data-url="https://chenfeng.github.io/2017/03/08/Cplusplus_thinking/模板（二）/" data-id="cj03xvmuz0008zso9bqeh5rzp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1237,7 +1716,7 @@ Pointer&amp; operator-=(int n) {
       <ul>
         
           <li>
-            <a href="/2017/03/08/test/">(no title)</a>
+            <a href="/2017/03/10/computer_network_1/">(no title)</a>
           </li>
         
           <li>
@@ -1245,7 +1724,7 @@ Pointer&amp; operator-=(int n) {
           </li>
         
           <li>
-            <a href="/2017/03/08/economics/现代经济中的市场和政府/">(no title)</a>
+            <a href="/2017/03/08/test/">(no title)</a>
           </li>
         
           <li>
@@ -1253,7 +1732,7 @@ Pointer&amp; operator-=(int n) {
           </li>
         
           <li>
-            <a href="/2017/03/08/economics/宏观经济学鸟瞰/">(no title)</a>
+            <a href="/2017/03/08/economics/现代经济中的市场和政府/">(no title)</a>
           </li>
         
       </ul>

@@ -165,17 +165,7 @@
 <li>反复利用跳转步数翻倍和跳转结果记录的技巧，可以在O（log N）的时间内把跳转步数扩大为N</li>
 </ul>
 <p>T = O(logn); W = O(nlogn)<br>并不比串行算法(linear, O(n))更优</p>
-<p>Algorithm 3.1<br>‘’’C++</p>
-<h1 id="List-Ranking-Using-Pointer-Jumping"><a href="#List-Ranking-Using-Pointer-Jumping" class="headerlink" title="List Ranking Using Pointer Jumping"></a>List Ranking Using Pointer Jumping</h1><p>Input: A linked list of n nodes such that (1)the successor of each node i is given by S(i), and (2)the S value of the last node on the list is euqal to 0.</p>
-<p>Output: For each 1 &lt;= i &lt;= n, the distance R(i) of node i from the end of the list.</p>
-<p>begin</p>
-<ol>
-<li>for 1 &lt;= i &lt;= n pardo<br> if (S(i) != 0) then set R(i):= 1<pre><code>else set R(i):= 0
-</code></pre></li>
-<li>for 1 &lt;= i &lt;= n pardo<br> set Q(i) := S(i)<br> while (Q(i) ！= 0 and Q(Q(i)) != 0) do<pre><code>set R(i) := R(i) + R(Q(i))
-set Q(i) := Q(Q(i))
-</code></pre>end<br>‘’’</li>
-</ol>
+<p>Algorithm 3.1<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># List Ranking Using Pointer Jumping</div><div class="line"></div><div class="line">Input: A linked list of n nodes such that (1)the successor of each node i is given by S(i), and (2)the S value of the last node on the list is euqal to 0.</div><div class="line"></div><div class="line">Output: For each 1 &lt;= i &lt;= n, the distance R(i) of node i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    if (S(i) != 0) then set R(i):= 1</div><div class="line">                   else set R(i):= 0</div><div class="line">2. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set Q(i) := S(i)</div><div class="line">    while (Q(i) ！= 0 and Q(Q(i)) != 0) do</div><div class="line">        set R(i) := R(i) + R(Q(i))</div><div class="line">        set Q(i) := Q(Q(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
 <p>优化思路: </p>
 <ul>
 <li>用快速并行算法把链表长度缩短为n/log n</li>
@@ -201,14 +191,8 @@ set Q(i) := Q(Q(i))
 <li>A set I of nodes is independent if, whenever i belongs to I, S(i) not belongs to I.</li>
 </ul>
 <p>缩减的列表结点必须构成一个独立集，即不相邻</p>
-<p>Algorithm 3.2<br>‘’’C++</p>
-<h1 id="removing-nodes-of-an-independent-set"><a href="#removing-nodes-of-an-independent-set" class="headerlink" title="removing nodes of an independent set"></a>removing nodes of an independent set</h1><p>Input: (1)Arrays S and P of length n representing, respectively, the successor and predecessor relations of linked list; (2)an independent set I of nodes such that P(i), S(i) != 0; (3)a value R(i) for each node i.</p>
-<p>Output: The list obtained after removal of all the nodes in I with the updated R values.</p>
-<p>begin</p>
-<ol>
-<li>Assign consecutive serial numbers N(i) to the elements of I, where 1 &lt;= N(i) &lt;= |I| = n’.</li>
-<li>for for all i belongs to I pardo<br> set U(N(i)) := (i, S(i), R(i))<br> set R(P(i)) := R(P(i) + R(i))<br> set S(P(i)) := S(i)<br> set P(S(i)) := P(i)<br>end<br>‘’’<br>删除独立顶点集并合并其权重到剩余顶点的并行复杂度: T=O(1) W=O(n)</li>
-</ol>
+<p>Algorithm 3.2<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># removing nodes of an independent set</div><div class="line"></div><div class="line">Input: (1)Arrays S and P of length n representing, respectively, the successor and predecessor relations of linked list; (2)an independent set I of nodes such that P(i), S(i) != 0; (3)a value R(i) for each node i.</div><div class="line"></div><div class="line">Output: The list obtained after removal of all the nodes in I with the updated R values.</div><div class="line"></div><div class="line">begin</div><div class="line">1. Assign consecutive serial numbers N(i) to the elements of I, where 1 &lt;= N(i) &lt;= |I| = n'.</div><div class="line">2. for for all i belongs to I pardo </div><div class="line">    set U(N(i)) := (i, S(i), R(i))</div><div class="line">    set R(P(i)) := R(P(i) + R(i))</div><div class="line">    set S(P(i)) := S(i)</div><div class="line">    set P(S(i)) := P(i)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>删除独立顶点集并合并其权重到剩余顶点的并行复杂度: T=O(1) W=O(n)</p>
 <h3 id="Determination-of-an-Independent-Set"><a href="#Determination-of-an-Independent-Set" class="headerlink" title="Determination of an Independent Set"></a>Determination of an Independent Set</h3><p>独立集合充分大：存在常数c，c属于(0, 1)，使集合包含顶点数不少于c×n</p>
 <ul>
 <li>保证快速地迭代缩短链表</li>
@@ -221,20 +205,11 @@ set Q(i) := Q(Q(i))
 <li>3-color 算法收敛很快，每次调用算法，<br>着色的色数都变小为原色数的对数比例，这里的对数以2为基底</li>
 <li>要把色数变小为3，T几乎是O(1)</li>
 </ul>
-<p>Algorithm 3.3<br>‘’’C++</p>
-<h1 id="simple-optimal-list-ranking"><a href="#simple-optimal-list-ranking" class="headerlink" title="simple optimal list ranking"></a>simple optimal list ranking</h1><p>Input: A linked list with n nodes suc that the successor of each node i is given by S(i).</p>
-<p>Output: For each node i, the distance of i from the end of the list.</p>
-<p>begin</p>
-<ol>
-<li>set n_0 := n, k := 0</li>
-<li>while n_k &gt; n/logn do<br> 2.1 set k := k + 1<br> 2.2 color the list with three colors and identify the set I of local minima.<br> 2.3 remove the nodes in I, and store the appropriate information regarding the removed nodes(Algorithm 3.2).<br> 2.4 let n_k be the size of the remaining list. compact the list into consecutive memory locations.</li>
-<li>apply the pointer jumping technique (Algorithm 3.1) to the resulting list.</li>
-<li>restore the original list and rank all the removed nodes by reversing the process performed in step2.<br>end<br>‘’’</li>
-</ol>
+<p>Algorithm 3.3<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># simple optimal list ranking</div><div class="line"></div><div class="line">Input: A linked list with n nodes suc that the successor of each node i is given by S(i).</div><div class="line"></div><div class="line">Output: For each node i, the distance of i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. set n_0 := n, k := 0</div><div class="line">2. while n_k &gt; n/logn do</div><div class="line">    2.1 set k := k + 1</div><div class="line">    2.2 color the list with three colors and identify the set I of local minima.</div><div class="line">    2.3 remove the nodes in I, and store the appropriate information regarding the removed nodes(Algorithm 3.2).</div><div class="line">    2.4 let n_k be the size of the remaining list. compact the list into consecutive memory locations.</div><div class="line">3. apply the pointer jumping technique (Algorithm 3.1) to the resulting list.</div><div class="line">4. restore the original list and rank all the removed nodes by reversing the process performed in step2.</div><div class="line">end</div></pre></td></tr></table></figure></p>
 <p>缩短链表和恢复链表：T = O(log logn), W = O(n)</p>
 <ul>
 <li>把长度为n的链表缩短为n/logn，只需不超过log_1-c(logn)的T</li>
-<li>第一次迭代W = O(n), 第二次迭代W = O((1 - c)c), …</li>
+<li>第一次迭代W = O(n), 第二次迭代W = O((1 - c)*c), …</li>
 <li>W = O(n + (1 - c)n + (1 - c)^2 *n + …) = O(n/c) = O(n)</li>
 <li>恢复和缩短是对称的，T和W都相同</li>
 </ul>
@@ -263,50 +238,26 @@ set Q(i) := Q(Q(i))
 <ul>
 <li>用链表求序来对这些弧定序</li>
 </ul>
-<p>树的一个欧拉回路为L[r] = <u_0, u_1,="" ...="" ,="" u_d-1=""></u_0,></p>
-<p>设s(<u_d-1, r="">) = 0，将欧拉回路从r处截断，得到一条始于r，遍历所有顶点一次，终于r的欧拉路径</u_d-1,></p>
-<p>Algorithm 3.5<br>‘’’C++</p>
-<h1 id="rooting-a-tree"><a href="#rooting-a-tree" class="headerlink" title="rooting a tree"></a>rooting a tree</h1><p>Input: (1)a tree T defined by the adjacency lists of its vertices, (2)an Euler tour defined by the successor function s, and (3)a special vertex r</p>
-<p>Output: For each vertex v != r, the parent p(v) of v in the tree rooted at r.</p>
-<p>begin</p>
-<ol>
-<li>Identify the last vertex u appearing on the adjacency list of r. set s(<u, r="">) = 0</u,></li>
-<li>Assign a weight of 1 to each arc <x, y="">, and apply parallel prefix on the list of arcs defined by s.</x,></li>
-<li>For each arc <x, y="">, set x = p(y) whenever the prefix sum of <x, y=""> is smaller than the prefix sum of <y, x="">.<br>end<br>‘’’</y,></x,></x,></li>
-</ol>
+<p>树的一个欧拉回路为L[r] = &lt; u_0, u_1, … , u_d-1 &gt;</p>
+<p>设s(&lt; u_d-1, r &gt;) = 0，将欧拉回路从r处截断，得到一条始于r，遍历所有顶点一次，终于r的欧拉路径</p>
+<p>Algorithm 3.5<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># rooting a tree</span></div><div class="line"></div><div class="line">Input: (<span class="number">1</span>)a tree T defined by the adjacency lists of its vertices, (<span class="number">2</span>)an Euler tour defined by the successor function s, and (<span class="number">3</span>)a special vertex r</div><div class="line"></div><div class="line">Output: For each vertex v != r, the parent p(v) of v in the tree rooted at r.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> Identify the last vertex u appearing on the adjacency <span class="built_in">list</span> of r. <span class="built_in">set</span> s(&lt;u, r&gt;) = <span class="number">0</span></div><div class="line"><span class="number">2.</span> Assign a weight of <span class="number">1</span> to each arc &lt;x, y&gt;, and apply parallel prefix on the <span class="built_in">list</span> of arcs defined by s.</div><div class="line"><span class="number">3.</span> For each arc &lt;x, y&gt;, <span class="built_in">set</span> x = p(y) whenever the prefix sum of &lt;x, y&gt; is smaller than the prefix sum of &lt;y, x&gt;.</div><div class="line">end</div></pre></td></tr></table></figure></p>
 <p>并行复杂度与链表求序相同：</p>
 <ul>
 <li>T=O(log n log log n) ？？？</li>
 <li>W=O(n)</li>
 <li>这里n是顶点数（树的边数是顶点数减一）</li>
 </ul>
-<ol>
-<li>Postorder Numbering 后序遍历的序数</li>
-</ol>
+<p>1、Postorder Numbering 后序遍历的序数</p>
 <p>往下走的弧的权重为0，往上走的弧的权重为1，然后用链表中求前缀和的方法来算出后序遍历编号</p>
-<p>Algorithm 3.6<br>‘’’C++</p>
-<h1 id="Postorder-Numbering"><a href="#Postorder-Numbering" class="headerlink" title="Postorder Numbering"></a>Postorder Numbering</h1><p>Input: (1)A rooted binary tree with root r, and (2)the coresponding Euler path defined by the function s</p>
-<p>Output: The postorder number post(v) of each vertex v</p>
-<p>begin</p>
-<ol>
-<li>For each vertex v != r, assign the weights w(<v, p(v)="">) = 1 and w(<p(v>, v) = 0</p(v></v,></li>
-<li>Perform parallel prefix on the list of arcs defined by s.</li>
-<li><p>For each vertex v != r, set post(v) equal to the prefix sum of <v, p(v)="">. For v = r, set post(v) = n, where n is the number of vertices in the given tree.<br>end<br>‘’’</v,></p>
-</li>
-<li><p>Computing the Vertex level 结点层数</p>
-</li>
-</ol>
+<p>Algorithm 3.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Postorder Numbering</div><div class="line"></div><div class="line">Input: (1)A rooted binary tree with root r, and (2)the coresponding Euler path defined by the function s</div><div class="line"></div><div class="line">Output: The postorder number post(v) of each vertex v</div><div class="line"></div><div class="line">begin</div><div class="line">1. For each vertex v != r, assign the weights w(&lt;v, p(v)&gt;) = 1 and w(&lt;p(v&gt;, v) = 0</div><div class="line">2. Perform parallel prefix on the list of arcs defined by s.</div><div class="line">3. For each vertex v != r, set post(v) equal to the prefix sum of &lt;v, p(v)&gt;. For v = r, set post(v) = n, where n is the number of vertices in the given tree.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>2、Computing the Vertex level 结点层数</p>
 <p>可用类似Algorithm 3.6的算法，1和3做改动: w(<p(v), v="">) = +1; w(<v, p(v)="">) = -1。level(v) = <p(v), v="">的前缀和</p(v),></v,></p(v),></p>
-<ol>
-<li>Computing the preorder Number </li>
-</ol>
-<p>w(<p(v), v="">) = 1; w(<v, p(v)="">) = 0; </v,></p(v),></p>
-<p>preorder(v) = <p(v), v="">前缀和 + 1;  preorder(r) = 1</p(v),></p>
-<ol>
-<li>Computing the Number of Descendants</li>
-</ol>
-<p>w(<p(v), v="">) = 1; w(<v, p(v)="">) = 0;</v,></p(v),></p>
-<p>desc(v) = <v, p(v)="">前缀和 - <p(v), v="">前缀和; desc(r) = n - 1</p(v),></v,></p>
+<p>3、Computing the preorder Number </p>
+<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0; </p>
+<p>preorder(v) = &lt; p(v), v &gt;前缀和 + 1;  preorder(r) = 1</p>
+<p>4、Computing the Number of Descendants</p>
+<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0;</p>
+<p>desc(v) = &lt; v, p(v) &gt;前缀和 - &lt; p(v), v &gt;前缀和; desc(r) = n - 1</p>
 <p>以上四个并行算法:<br>T = O(logn); W = O(n)（由平衡树方法求前缀和的平行算法所决定）</p>
 <ul>
 <li>*Tree Contraction(树收缩) ……</li>
@@ -1036,6 +987,201 @@ set Q(i) := Q(Q(i))
 
 
   
+    <article id="post-economics/现代经济中的市场和政府" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="现代经济中的市场和政府"><a href="#现代经济中的市场和政府" class="headerlink" title="现代经济中的市场和政府"></a>现代经济中的市场和政府</h1><p>标签：微观经济学</p>
+<hr>
+<h3 id="什么是市场"><a href="#什么是市场" class="headerlink" title="什么是市场"></a>什么是市场</h3><ul>
+<li><p>市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制</p>
+</li>
+<li><p>在市场中，是价格在协调生产者和消费者的决策。较高的价格趋于抑制消费者购买，<br>同时会刺激生产；而较低的价格则鼓励消费，同时抑制生产。价格(price)在市场机制<br>中起着平衡的作用</p>
+</li>
+<li><p>市场不断地解决生产什么、如何生产和为谁生产的问题，当平衡了所有影响经济的力量<br>时，市场就达到了供给和需求的市场均衡(market equilibrium of supply and demand)。</p>
+</li>
+<li><p>市场均衡代表了所有不同的买者和卖者之间的一种平衡。在某一价格水平上，买者所愿<br>意购买的数量正好等于卖者所愿意出售的数量，这一价格就达成了供给和需求的均衡。</p>
+</li>
+<li><p>市场如何解决三大经济问题</p>
+</li>
+</ul>
+<ol>
+<li><p>生产什么商品和劳务取决于消费者的货币选票——每天的购买决策。企业会受到利润<br>(profit，净收益，等于总销售额和总成本之间的差额)最大化愿望的驱使。</p>
+</li>
+<li><p>如何生产取决于不同生产者之间的竞争。生产者的最佳方法是采用效率最高的生产<br>技术以将成本降到最低点。</p>
+</li>
+<li><p>为谁生产主要取决于生产要素市场上的供给与需求。要素市场决定了工资、地租、利<br>息和利润的水平(要素价格)。收入在消费者之间的分配取决于他们所拥有的要素的数量和<br>价格。</p>
+</li>
+</ol>
+<ul>
+<li><p>经济的核心控制者是偏好和技术。消费者根据自己先天或后天的偏好(并以其货币选票<br>加以表达)解决社会资源的最终用途，即在生产可能性边界上的各个点之间作决定。</p>
+</li>
+<li><p>可供利用的资源和技术对消费者的选择构成了一种基本的约束，经济不能超越于它的生<br>产可能性边界。经济资源与可供利用的科学技术加在一起，限定了消费者花钱消费的对象</p>
+</li>
+</ul>
+<ul>
+<li><p>追逐个人利益的结果，是经常地增进社会的利益，其效果要比真的想要增进社会的利益<br>时更好。(“看不见的手”在引导)(亚当·斯密《国富论》)</p>
+</li>
+<li><p>在一定条件下，完全竞争经济是有效率的(经济效率指的是无法在不损害其他人经济福<br>利的前提下增进某个人的经济福利)</p>
+</li>
+<li><p>市场不灵的一种情况是垄断以及其他形式的不完全竞争。</p>
+</li>
+<li><p>第二种不灵表现为市场的外溢效果或外部性：正面的外部性包括科学发现等，而负面的<br>外溢效果应包括环境污染。</p>
+</li>
+<li><p>市场的收入分配的后果在政治上或道义上时无法接受的。</p>
+</li>
+</ul>
+<h3 id="贸易、货币和资本"><a href="#贸易、货币和资本" class="headerlink" title="贸易、货币和资本"></a>贸易、货币和资本</h3><ul>
+<li><p>发达经济以细密的贸易网络(基于大量的专业化和精细的劳动分工)为特征</p>
+</li>
+<li><p>当今的经济都大量使用货币(支付手段)</p>
+</li>
+<li><p>现代工业技术依赖于大规模的资本运用: 精密的机器、大型的工厂和库存</p>
+</li>
+</ul>
+<ul>
+<li><p>贸易、专业化和劳动分工</p>
+</li>
+<li><p>专业化是指让个人或国家各自集中精力去完成某一种(或一系列)任务，使得每个人或<br>国家都能够发挥其特殊技能和资源优势</p>
+</li>
+<li><p>发达经济致力于专业化和劳动分工，因而能提高其资源的生产率。个人和国家用自己专<br>业化生产的物品自愿地交换其他人的产品，能极大地增加消费品的范围和数量，并提高每<br>个人的生活水平。</p>
+</li>
+</ul>
+<ul>
+<li><p>货币(money)是一种支付手段或交换媒介，即购物时所支付的现金和支票。</p>
+</li>
+<li><p>货币是供应适度是各国宏观经济政策的主要任务之一。</p>
+</li>
+</ul>
+<ul>
+<li><p>资本(capital)，一种被生产出来的要素，一种本身就是由经济过程产出的耐用的投<br>入品</p>
+</li>
+<li><p>三大生产要素：资本、土地和劳动。</p>
+</li>
+<li><p>基本生产要素：土地和劳动，其供给主要取决于非经济要素。</p>
+</li>
+<li><p>资本使用之前必须首先被生产出来。资本在本质上意味着时间的耗费和间接的生产手<br>段。</p>
+</li>
+<li><p>靠牺牲当前消费而获得的增长 许多经济活动都涉及到放弃现时消费以增加资本，提高<br>经济未来的生产率，进而增加未来的消费</p>
+</li>
+</ul>
+<ul>
+<li><p>资本和私有财产</p>
+</li>
+<li><p>在市场经济中资本主要归私人拥有，从投资中得到的收益也归个人所有</p>
+</li>
+<li><p>产权赋予资本使用者使用、交换、装修、挖掘、钻探等利用其资本品的权利</p>
+</li>
+<li><p>个人占有资本并能从中获取利润，是资本主义的实质之所在</p>
+</li>
+<li><p>最有价值的经济资源，即劳动，不能像私人财产那样成为可以买卖的商品。人不能自由<br>地卖出自己，只能在某个工资价位上将自己租借出去</p>
+</li>
+</ul>
+<h3 id="政府的经济职能"><a href="#政府的经济职能" class="headerlink" title="政府的经济职能"></a>政府的经济职能</h3><ul>
+<li><p>现实世界中还不曾有一种经济能够完全依照“看不见的手”的原则而顺利地运行</p>
+</li>
+<li><p>政府对市场经济主要行使三项职能：提高效率、增进公平以及促进宏观经济的稳定与<br>增长</p>
+</li>
+</ul>
+<ol>
+<li><p>政府通过促进竞争、控制诸如污染这类外部性问题，以及提供公共品等活动来提高经济<br>效率</p>
+</li>
+<li><p>政府通过财政税收和预算支出等手段，向某些团体进行有倾斜的收入再分配，从而增进<br>公平</p>
+</li>
+<li><p>政府通过财政政策和货币政策促进宏观经济的稳定和增长，在鼓励经济增长的同时减少<br>失业和降低通货膨胀</p>
+</li>
+</ol>
+<ul>
+<li><p>效率</p>
+</li>
+<li><p>只有在完全竞争成立时，市场机制的优点才能充分体现出来</p>
+</li>
+<li><p>完全竞争(perfect competition)指的是所有的物品和劳务都有一个价格并都在市场上<br>交易。意味着没有一家企业或一位消费者足以影响整个市场的价格</p>
+</li>
+<li><p>不完全竞争(imperfect competition)，当买者或卖者能够左右一种商品的价格时；<br>社会的产出将会从生产可能性边界上移至边界之内，物品的产出就会低于有效率的水平。</p>
+</li>
+<li><p>不完全竞争导致价格高于成本，消费者购买量低于效率水平。过高的价格和过低的产出<br>是伴随不完全竞争而来的非效率的标志</p>
+</li>
+<li><p>不完全竞争的极端情况是垄断，唯一的卖者独自决定某种物品或劳务的价格水平</p>
+</li>
+</ul>
+<ul>
+<li><p>外部性(溢出效应)</p>
+</li>
+<li><p>外部性(externalities)指的是企业或个人向市场之外的其他人所强加的成本或效益</p>
+</li>
+<li><p>一个行动可能在市场交易之外有助于或有损于其他人的利益，也即存在着根本不发生经<br>济支付的经济交易</p>
+</li>
+<li><p>负的外部性已逐渐由微小的麻烦变成巨大的威胁，是政府进行干预的地方。</p>
+</li>
+</ul>
+<ul>
+<li><p>公共品</p>
+</li>
+<li><p>正外部性的极端情况是公共品</p>
+</li>
+<li><p>公共品(public goods)指一类商品：将该商品的效用扩展与他人的成本为零(非相克<br>性)；无法排除他人参与共享(非相斥性)。</p>
+</li>
+<li><p>税收：政府对个人和公司的收入、工资、消费品销售额和其他项目所征收的税款。政府<br>的收入来源，以提供公共品和实施收入再分配计划</p>
+</li>
+</ul>
+<ul>
+<li><p>公平</p>
+</li>
+<li><p>市场并不必然能够带来公平的收入分配。市场经济可能会产生令人难以接受的收入水平<br>和消费水平的巨大差异</p>
+</li>
+<li><p>收入取决于一系列因素，包括努力程度、教育、继承权、要素价格和运气；由此导致的<br>收入分配可能会同公平的结果相悖</p>
+</li>
+<li><p>物品追随的是货币选票而不是最大满足</p>
+</li>
+<li><p>累进税</p>
+</li>
+<li><p>转移支付，帮助根本没有收入的人</p>
+</li>
+</ul>
+<ul>
+<li><p>宏观经济增长与稳定</p>
+</li>
+<li><p>资本主义自产生以来不时地受通货膨胀(价格上升)和萧条(高失业率)的周期性困扰。这<br>些波动被称为商业周期。</p>
+</li>
+<li><p>通过审慎地运用财政和货币政策，政府能够影响产出、就业和通货膨胀的水平</p>
+</li>
+<li><p>政府的财政政策是税收权力和预算支出权力</p>
+</li>
+<li><p>货币政策涉及到货币供应量和利率水平， 进而影响到资本品的投资和其他利率敏感性<br>的支出(影响利率和信贷条件)</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/08/economics/现代经济中的市场和政府/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-economics/宏观经济现象鸟瞰" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1385,201 +1531,6 @@ set Q(i) := Q(Q(i))
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/08/economics/宏观经济学鸟瞰/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-economics/现代经济中的市场和政府" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="现代经济中的市场和政府"><a href="#现代经济中的市场和政府" class="headerlink" title="现代经济中的市场和政府"></a>现代经济中的市场和政府</h1><p>标签：微观经济学</p>
-<hr>
-<h3 id="什么是市场"><a href="#什么是市场" class="headerlink" title="什么是市场"></a>什么是市场</h3><ul>
-<li><p>市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制</p>
-</li>
-<li><p>在市场中，是价格在协调生产者和消费者的决策。较高的价格趋于抑制消费者购买，<br>同时会刺激生产；而较低的价格则鼓励消费，同时抑制生产。价格(price)在市场机制<br>中起着平衡的作用</p>
-</li>
-<li><p>市场不断地解决生产什么、如何生产和为谁生产的问题，当平衡了所有影响经济的力量<br>时，市场就达到了供给和需求的市场均衡(market equilibrium of supply and demand)。</p>
-</li>
-<li><p>市场均衡代表了所有不同的买者和卖者之间的一种平衡。在某一价格水平上，买者所愿<br>意购买的数量正好等于卖者所愿意出售的数量，这一价格就达成了供给和需求的均衡。</p>
-</li>
-<li><p>市场如何解决三大经济问题</p>
-</li>
-</ul>
-<ol>
-<li><p>生产什么商品和劳务取决于消费者的货币选票——每天的购买决策。企业会受到利润<br>(profit，净收益，等于总销售额和总成本之间的差额)最大化愿望的驱使。</p>
-</li>
-<li><p>如何生产取决于不同生产者之间的竞争。生产者的最佳方法是采用效率最高的生产<br>技术以将成本降到最低点。</p>
-</li>
-<li><p>为谁生产主要取决于生产要素市场上的供给与需求。要素市场决定了工资、地租、利<br>息和利润的水平(要素价格)。收入在消费者之间的分配取决于他们所拥有的要素的数量和<br>价格。</p>
-</li>
-</ol>
-<ul>
-<li><p>经济的核心控制者是偏好和技术。消费者根据自己先天或后天的偏好(并以其货币选票<br>加以表达)解决社会资源的最终用途，即在生产可能性边界上的各个点之间作决定。</p>
-</li>
-<li><p>可供利用的资源和技术对消费者的选择构成了一种基本的约束，经济不能超越于它的生<br>产可能性边界。经济资源与可供利用的科学技术加在一起，限定了消费者花钱消费的对象</p>
-</li>
-</ul>
-<ul>
-<li><p>追逐个人利益的结果，是经常地增进社会的利益，其效果要比真的想要增进社会的利益<br>时更好。(“看不见的手”在引导)(亚当·斯密《国富论》)</p>
-</li>
-<li><p>在一定条件下，完全竞争经济是有效率的(经济效率指的是无法在不损害其他人经济福<br>利的前提下增进某个人的经济福利)</p>
-</li>
-<li><p>市场不灵的一种情况是垄断以及其他形式的不完全竞争。</p>
-</li>
-<li><p>第二种不灵表现为市场的外溢效果或外部性：正面的外部性包括科学发现等，而负面的<br>外溢效果应包括环境污染。</p>
-</li>
-<li><p>市场的收入分配的后果在政治上或道义上时无法接受的。</p>
-</li>
-</ul>
-<h3 id="贸易、货币和资本"><a href="#贸易、货币和资本" class="headerlink" title="贸易、货币和资本"></a>贸易、货币和资本</h3><ul>
-<li><p>发达经济以细密的贸易网络(基于大量的专业化和精细的劳动分工)为特征</p>
-</li>
-<li><p>当今的经济都大量使用货币(支付手段)</p>
-</li>
-<li><p>现代工业技术依赖于大规模的资本运用: 精密的机器、大型的工厂和库存</p>
-</li>
-</ul>
-<ul>
-<li><p>贸易、专业化和劳动分工</p>
-</li>
-<li><p>专业化是指让个人或国家各自集中精力去完成某一种(或一系列)任务，使得每个人或<br>国家都能够发挥其特殊技能和资源优势</p>
-</li>
-<li><p>发达经济致力于专业化和劳动分工，因而能提高其资源的生产率。个人和国家用自己专<br>业化生产的物品自愿地交换其他人的产品，能极大地增加消费品的范围和数量，并提高每<br>个人的生活水平。</p>
-</li>
-</ul>
-<ul>
-<li><p>货币(money)是一种支付手段或交换媒介，即购物时所支付的现金和支票。</p>
-</li>
-<li><p>货币是供应适度是各国宏观经济政策的主要任务之一。</p>
-</li>
-</ul>
-<ul>
-<li><p>资本(capital)，一种被生产出来的要素，一种本身就是由经济过程产出的耐用的投<br>入品</p>
-</li>
-<li><p>三大生产要素：资本、土地和劳动。</p>
-</li>
-<li><p>基本生产要素：土地和劳动，其供给主要取决于非经济要素。</p>
-</li>
-<li><p>资本使用之前必须首先被生产出来。资本在本质上意味着时间的耗费和间接的生产手<br>段。</p>
-</li>
-<li><p>靠牺牲当前消费而获得的增长 许多经济活动都涉及到放弃现时消费以增加资本，提高<br>经济未来的生产率，进而增加未来的消费</p>
-</li>
-</ul>
-<ul>
-<li><p>资本和私有财产</p>
-</li>
-<li><p>在市场经济中资本主要归私人拥有，从投资中得到的收益也归个人所有</p>
-</li>
-<li><p>产权赋予资本使用者使用、交换、装修、挖掘、钻探等利用其资本品的权利</p>
-</li>
-<li><p>个人占有资本并能从中获取利润，是资本主义的实质之所在</p>
-</li>
-<li><p>最有价值的经济资源，即劳动，不能像私人财产那样成为可以买卖的商品。人不能自由<br>地卖出自己，只能在某个工资价位上将自己租借出去</p>
-</li>
-</ul>
-<h3 id="政府的经济职能"><a href="#政府的经济职能" class="headerlink" title="政府的经济职能"></a>政府的经济职能</h3><ul>
-<li><p>现实世界中还不曾有一种经济能够完全依照“看不见的手”的原则而顺利地运行</p>
-</li>
-<li><p>政府对市场经济主要行使三项职能：提高效率、增进公平以及促进宏观经济的稳定与<br>增长</p>
-</li>
-</ul>
-<ol>
-<li><p>政府通过促进竞争、控制诸如污染这类外部性问题，以及提供公共品等活动来提高经济<br>效率</p>
-</li>
-<li><p>政府通过财政税收和预算支出等手段，向某些团体进行有倾斜的收入再分配，从而增进<br>公平</p>
-</li>
-<li><p>政府通过财政政策和货币政策促进宏观经济的稳定和增长，在鼓励经济增长的同时减少<br>失业和降低通货膨胀</p>
-</li>
-</ol>
-<ul>
-<li><p>效率</p>
-</li>
-<li><p>只有在完全竞争成立时，市场机制的优点才能充分体现出来</p>
-</li>
-<li><p>完全竞争(perfect competition)指的是所有的物品和劳务都有一个价格并都在市场上<br>交易。意味着没有一家企业或一位消费者足以影响整个市场的价格</p>
-</li>
-<li><p>不完全竞争(imperfect competition)，当买者或卖者能够左右一种商品的价格时；<br>社会的产出将会从生产可能性边界上移至边界之内，物品的产出就会低于有效率的水平。</p>
-</li>
-<li><p>不完全竞争导致价格高于成本，消费者购买量低于效率水平。过高的价格和过低的产出<br>是伴随不完全竞争而来的非效率的标志</p>
-</li>
-<li><p>不完全竞争的极端情况是垄断，唯一的卖者独自决定某种物品或劳务的价格水平</p>
-</li>
-</ul>
-<ul>
-<li><p>外部性(溢出效应)</p>
-</li>
-<li><p>外部性(externalities)指的是企业或个人向市场之外的其他人所强加的成本或效益</p>
-</li>
-<li><p>一个行动可能在市场交易之外有助于或有损于其他人的利益，也即存在着根本不发生经<br>济支付的经济交易</p>
-</li>
-<li><p>负的外部性已逐渐由微小的麻烦变成巨大的威胁，是政府进行干预的地方。</p>
-</li>
-</ul>
-<ul>
-<li><p>公共品</p>
-</li>
-<li><p>正外部性的极端情况是公共品</p>
-</li>
-<li><p>公共品(public goods)指一类商品：将该商品的效用扩展与他人的成本为零(非相克<br>性)；无法排除他人参与共享(非相斥性)。</p>
-</li>
-<li><p>税收：政府对个人和公司的收入、工资、消费品销售额和其他项目所征收的税款。政府<br>的收入来源，以提供公共品和实施收入再分配计划</p>
-</li>
-</ul>
-<ul>
-<li><p>公平</p>
-</li>
-<li><p>市场并不必然能够带来公平的收入分配。市场经济可能会产生令人难以接受的收入水平<br>和消费水平的巨大差异</p>
-</li>
-<li><p>收入取决于一系列因素，包括努力程度、教育、继承权、要素价格和运气；由此导致的<br>收入分配可能会同公平的结果相悖</p>
-</li>
-<li><p>物品追随的是货币选票而不是最大满足</p>
-</li>
-<li><p>累进税</p>
-</li>
-<li><p>转移支付，帮助根本没有收入的人</p>
-</li>
-</ul>
-<ul>
-<li><p>宏观经济增长与稳定</p>
-</li>
-<li><p>资本主义自产生以来不时地受通货膨胀(价格上升)和萧条(高失业率)的周期性困扰。这<br>些波动被称为商业周期。</p>
-</li>
-<li><p>通过审慎地运用财政和货币政策，政府能够影响产出、就业和通货膨胀的水平</p>
-</li>
-<li><p>政府的财政政策是税收权力和预算支出权力</p>
-</li>
-<li><p>货币政策涉及到货币供应量和利率水平， 进而影响到资本品的投资和其他利率敏感性<br>的支出(影响利率和信贷条件)</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/08/economics/现代经济中的市场和政府/">展开全文 >></a>
         </p>
       
 

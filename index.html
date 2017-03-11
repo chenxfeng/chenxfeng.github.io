@@ -151,6 +151,150 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-paralell_compute3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="列表排序"><a href="#列表排序" class="headerlink" title="列表排序"></a>列表排序</h2><p>The list-ranking problem is to determine the distance of each node i from the end of the list</p>
+<ul>
+<li>指针跳转法(pointer jumping technique)</li>
+</ul>
+<p>T = O(logn); W = O(nlogn)</p>
+<p>并不比串行算法(linear, O(n))更优</p>
+<p>优化思路:<br>reduce the size of the list to O(n/logn) nodes using a linear number of operations</p>
+<ol>
+<li>把列表分成约n/logn块{ $B_{i}$ }, 每块包含O(logn)个节点</li>
+<li>在每块内对每个节点用最优串行算法求序(preliminary rank)</li>
+<li>用O(logn)的平行算法把所有排好序的块组合</li>
+</ol>
+<p>Algorithm 3.1<br>‘’’C++</p>
+<h1 id="List-Ranking-Using-Pointer-Jumping"><a href="#List-Ranking-Using-Pointer-Jumping" class="headerlink" title="List Ranking Using Pointer Jumping"></a>List Ranking Using Pointer Jumping</h1><p>Input: A linked list of n nodes such that (1)the successor of each node i is given by S(i), and (2)the S value of the last node on the list is euqal to 0.</p>
+<p>Output: For each 1 &lt;= i &lt;= n, the distance R(i) of node i from the end of the list.</p>
+<p>begin</p>
+<ol>
+<li>for 1 &lt;= i &lt;= n pardo<br> if (S(i) != 0) then set R(i):= 1<pre><code>else set R(i):= 0
+</code></pre></li>
+<li>for 1 &lt;= i &lt;= n pardo<br> set Q(i) := S(i)<br> while (Q(i) ！= 0 and Q(Q(i)) != 0) do<pre><code>set R(i) := R(i) + R(Q(i))
+set Q(i) := Q(Q(i))
+</code></pre>end<br>‘’’</li>
+</ol>
+<p>List-Ranking Strategy</p>
+<ol>
+<li>Shrink the linked list L until only O(n/logn) nodes remain.</li>
+<li>Apply the pointer jumping technique(Algorithm 3.1) on the short list of the remaining nodes.</li>
+<li>Restore the original list and rank all the nodes removed in step 1.</li>
+</ol>
+<p>independent sets</p>
+<ul>
+<li>A set I of nodes is independent if, whenever i belongs to I, S(i) not belongs to I.</li>
+</ul>
+<p>缩减的结点必须构成一个独立集，即不相邻</p>
+<p>T = O(logn); W = O(n)</p>
+<p>Algorithm 3.2<br>‘’’C++</p>
+<h1 id="removing-nodes-of-an-independent-set"><a href="#removing-nodes-of-an-independent-set" class="headerlink" title="removing nodes of an independent set"></a>removing nodes of an independent set</h1><p>Input: (1)Arrays S and P of length n representing, respectively, the successor and predecessor relations of linked list; (2)an independent set I of nodes such that P(i), S(i) != 0; (3)a value R(i) for each node i.</p>
+<p>Output: The list obtained after removal of all the nodes in I with the updated R values.</p>
+<p>begin</p>
+<ol>
+<li>Assign consecutive serial numbers N(i) to the elements of I, where 1 &lt;= N(i) &lt;= |I| = n’.</li>
+<li>for for all i belongs to I pardo<br> set U(N(i)) := (i, S(i), R(i))<br> set R(P(i)) := R(P(i) + R(i))<br> set S(P(i)) := S(i)<br> set P(S(i)) := P(i)<br>end<br>‘’’</li>
+</ol>
+<p>Determination of an Independent Set</p>
+<p>环的三色着色算法，把局部最小(或最大)的节点作为独立集元素</p>
+<p>3-color 算法收敛很快</p>
+<p>Algorithm 3.3<br>‘’’C++</p>
+<h1 id="simple-optimal-list-ranking"><a href="#simple-optimal-list-ranking" class="headerlink" title="simple optimal list ranking"></a>simple optimal list ranking</h1><p>Input: A linked list with n nodes suc that the successor of each node i is given by S(i).</p>
+<p>Output: For each node i, the distance of i from the end of the list.</p>
+<p>begin</p>
+<ol>
+<li>set n_0 := n, k := 0</li>
+<li>while n_k &gt; n/logn do<br> 2.1 set k := k + 1<br> 2.2 color the list with three colors and identify the set I of local minima.<br> 2.3 remove the nodes in I, and store the appropriate information regarding the removed nodes(Algorithm 3.2).<br> 2.4 let n_k be the size of the remaining list. compact the list into consecutive memory locations.</li>
+<li>apply the pointer jumping technique (Algorithm 3.1) to the resulting list.</li>
+<li>restore the original list and rank all the removed nodes by reversing the process performed in step2.<br>end<br>‘’’</li>
+</ol>
+<p>T = O(loglogn); W = (n)</p>
+<ul>
+<li>*一个优化的时间复杂度为O(logn)的列表求序算法……</li>
+</ul>
+<h2 id="欧拉回路？？？-the-Euler-Tour-Technique"><a href="#欧拉回路？？？-the-Euler-Tour-Technique" class="headerlink" title="欧拉回路？？？(the Euler-Tour Technique)"></a>欧拉回路？？？(the Euler-Tour Technique)</h2><p>树的欧拉回路是指：<br>将一棵树的每一条边换成两条指向相反的有向边，成为一个欧拉图，就存在欧拉回路；<br>可以定义一个论域为所有有向边的函数s(successor function)，描述这棵树的欧拉回路</p>
+<p>Lemma 3.6: Given a tree T = (V, E) and an ordering of the set of vertices adjacent to each vertex v belongs to V, the function s defined previously specifies an Euler circuit in the directed graph T’ = (V, E’), where E’ is obtained by replacement of each e belongs to E by two arcs of opposite directions.</p>
+<ul>
+<li>we call the Euler circuit of T’ the <strong>Euler tour</strong> of T</li>
+</ul>
+<p>给出一个由邻接表及附加的指针信息描述的树，求得一条欧拉回路的T = O(1), W = O(n), |V| = n<br>(指针信息: data field + pointer * 2(描述下一个邻接点 + 描述该点在邻接表中指向此顶点的item))</p>
+<ul>
+<li>树求根(rooting a tree): 树根结点为r，对于每个非根结点v，寻找其父父结点p(v)</li>
+</ul>
+<p>树的一个欧拉回路为L[r] = <u_0, u_1,="" ...="" ,="" u_d-1=""></u_0,></p>
+<p>设s(<u_d-1, r="">) = 0，将欧拉回路从r处截断，得到一条始于r，遍历所有顶点一次，终于r的欧拉路径</u_d-1,></p>
+<p>Algorithm 3.5<br>‘’’C++</p>
+<h1 id="rooting-a-tree"><a href="#rooting-a-tree" class="headerlink" title="rooting a tree"></a>rooting a tree</h1><p>Input: (1)a tree T defined by the adjacency lists of its vertices, (2)an Euler tour defined by the successor function s, and (3)a special vertex r</p>
+<p>Output: For each vertex v != r, the parent p(v) of v in the tree rooted at r.</p>
+<p>begin</p>
+<ol>
+<li>Identify the last vertex u appearing on the adjacency list of r. set s(<u, r="">) = 0</u,></li>
+<li>Assign a weight of 1 to each arc <x, y="">, and apply parallel prefix on the list of arcs defined by s.</x,></li>
+<li>For each arc <x, y="">, set x = p(y) whenever the prefix sum of <x, y=""> is smaller than the prefix sum of <y, x="">.<br>end<br>‘’’</y,></x,></x,></li>
+</ol>
+<p>Postorder Numbering 后序遍历的序数</p>
+<p>Algorithm 3.6<br>‘’’C++</p>
+<h1 id="Postorder-Numbering"><a href="#Postorder-Numbering" class="headerlink" title="Postorder Numbering"></a>Postorder Numbering</h1><p>Input: (1)A rooted binary tree with root r, and (2)the coresponding Euler path defined by the function s</p>
+<p>Output: The postorder number post(v) of each vertex v</p>
+<p>begin</p>
+<ol>
+<li>For each vertex v != r, assign the weights w(<v, p(v)="">) = 1 and w(<p(v>, v) = 0</p(v></v,></li>
+<li>Perform parallel prefix on the list of arcs defined by s.</li>
+<li>For each vertex v != r, set post(v) equal to the prefix sum of <v, p(v)="">. For v = r, set post(v) = n, where n is the number of vertices in the given tree.<br>end<br>‘’’</v,></li>
+</ol>
+<ul>
+<li>Computing the Vertex level 结点层数</li>
+</ul>
+<p>可用类似Algorithm 3.6的算法，1和3做改动: w(<p(v), v="">) = +1 w(<v, p(v)="">) = -1。level(v) = <p(v), v="">的前缀和</p(v),></v,></p(v),></p>
+<ul>
+<li>Computing the preorder Number </li>
+</ul>
+<p>w(<p(v), v="">) = 1  w(<v, p(v)="">) = 0;<br>preorder(v) = <p(v), v="">前缀和 + 1  preorder(r) = 1</p(v),></v,></p(v),></p>
+<ul>
+<li>Computing the Number of Descendants</li>
+</ul>
+<p>w(<p(v), v="">) = 1 w(<v, p(v)="">) = 0;<br>desc(v) = <v, p(v)="">前缀和 - <p(v), v="">前缀和<br>desc(r) = n - 1</p(v),></v,></v,></p(v),></p>
+<p>以上四个并行算法:<br>T = O(logn); W = O(n)（由平衡树方法求前缀和的平行算法所决定）</p>
+<ul>
+<li>*Tree Contraction(树收缩) ……</li>
+</ul>
+<ul>
+<li>*Lowest Common Ancestors ……</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/11/paralell_compute3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-computer_network_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -843,6 +987,113 @@
 
 
   
+    <article id="post-economics/宏观经济现象鸟瞰" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="宏观经济现象鸟瞰"><a href="#宏观经济现象鸟瞰" class="headerlink" title="宏观经济现象鸟瞰"></a>宏观经济现象鸟瞰</h1><p>标签： 宏观经济学</p>
+<hr>
+<h2 id="三个重要的宏观经济变量"><a href="#三个重要的宏观经济变量" class="headerlink" title="三个重要的宏观经济变量"></a>三个重要的宏观经济变量</h2><ul>
+<li><p>实际国内生产总值(real GDP<gross domestic="" product="">):<br>经济体内所有人的实际总收入。<br>人均国内生产总值(GDP per capita): 经济体内平均而言每个人的实际收入。</gross></p>
+</li>
+<li><p>通货膨胀率(inflation rate):<br>物价水平变动的百分比。(物价指数)<br>用消费者价格指数(consumer price index, CPI)或GDP缩减指数(GDP deflator index)<br>衡量。</p>
+</li>
+<li><p>失业率(unemployment rate):<br>经济体中没有工作当正在积极找工作的劳动力比重。</p>
+</li>
+</ul>
+<h3 id="GDP：衡量经济活动创造的价值"><a href="#GDP：衡量经济活动创造的价值" class="headerlink" title="GDP：衡量经济活动创造的价值"></a>GDP：衡量经济活动创造的价值</h3><p>经济体在既定时期内生产的所有的最终产品和服务的当期市场总值</p>
+<ul>
+<li>核算GDP三种方法</li>
+</ul>
+<ul>
+<li>生产法<br>把GDP作为经济体里当期所生产的最终产品与服务的总值</li>
+<li>收入法<br>把GDP作为经济体中所有人的总收入<br>国内顾客的购买总值=企业的总收益=工资+资本所得+中间投入品的购买<br>最终消费=增加值=工资+资本所得<br>(in China)增加值=劳动者报酬+生产税净额+固定资产折旧+营业盈额</li>
+<li>支出法<br>把GDP作为经济体里对产品与服务的总支出<br>Y=C+I+G(GDP、消费、投资、政府购买)<br>开放经济条件下Y=Cd+Id+Gd+EX<br>(国内产品和服务的消费、国内产品和服务的投资、国内产品和服务的政府采购、国内产品和服务的出口)<br>国外产品和服务的消费Cf=C-Cd<br>国外产品和服务的投资If=I-Id<br>国外产品和服务的政府采购Gf=G-Gd<br>国外产品和服务的进口IM=Cf+If+Gf<br>净出口(net export)NEX=EX-IM<br>国民经济核算表达式Y=C+I+G+NEX</li>
+</ul>
+<ul>
+<li>国民生产总值(gross national product,GNP)<br>一国居民在一个既定时期内所获得的总收入<br>GNP=GDP+来自国外的生产要素收入-对国外的生产要素支付</li>
+</ul>
+<h3 id="物价水平：衡量生活费用"><a href="#物价水平：衡量生活费用" class="headerlink" title="物价水平：衡量生活费用"></a>物价水平：衡量生活费用</h3><p>通货膨胀：物价水平上升</p>
+<ul>
+<li>消费者价格指数(CPI)<br>最常用的度量物价水平的指标</li>
+</ul>
+<ol>
+<li>选定一个开始时期(基期)</li>
+<li>选定一个<em>典型消费者</em>所购买的一篮子产品和服务的种类和数量</li>
+<li>计算每一期购买同样一篮子产品和服务的支出</li>
+<li>计算每一期的CPI(CPI=当期与基期一篮子产品和服务支出的<strong>比值</strong>)</li>
+</ol>
+<p>通货膨胀率 = (CPI(后一期)-CPI(前一期))/CPI(前一期)</p>
+<ul>
+<li>生产者价格指数(producer price index, PPI)<br>度量物价水平的另一指标</li>
+</ul>
+<ul>
+<li><em>典型生产者</em>购买的一篮子产品和服务</li>
+</ul>
+<ul>
+<li>GDP缩减指数</li>
+</ul>
+<p>名义GDP(nominal GDP)：按照当期价格度量的GDP<br>实际GDP(real GDP)：按照不变价格度量的GDP(尽可能反映经济体生产能力的变化)</p>
+<p>GDP缩减指数=名义GDP/实际GDP * 100%</p>
+<p>名义GDP剔除通货膨胀的影响得到实际GDP</p>
+<h3 id="失业率：度量经济体痛苦程度"><a href="#失业率：度量经济体痛苦程度" class="headerlink" title="失业率：度量经济体痛苦程度"></a>失业率：度量经济体痛苦程度</h3><p>就业：在一定年龄段的经济活动主体从事有报酬的活动</p>
+<p>失业者：有劳动能力并愿意就业但找不到工作的经济活动主体</p>
+<ul>
+<li>劳动力人口 = 劳动年龄(16~65)人口 - 不在劳动力(not in labor force)人口</li>
+<li>劳动参与率 = 劳动力人口 / 劳动年龄人口</li>
+<li>失业率 = 失业人口 / 劳动力人口</li>
+</ul>
+<ul>
+<li>测算失业人口两种方法</li>
+</ul>
+<ul>
+<li>收集失业者在劳动行政部门申报的数据<br>大多数失业者有申报动机：失业申报可以领取失业救济金、获得再就业信息等</li>
+<li>定期抽样调查估计失业人口</li>
+</ul>
+<h2 id="数据查找"><a href="#数据查找" class="headerlink" title="数据查找"></a>数据查找</h2><ul>
+<li>中国国家统计局网站 <a href="http://www.stats.gov.cn" target="_blank" rel="external">http://www.stats.gov.cn</a></li>
+<li><p>中国经济学教育科研网 <a href="http://www.cenet.org.cn/cn/" target="_blank" rel="external">http://www.cenet.org.cn/cn/</a></p>
+</li>
+<li><p>美国 总统经济报告 www.access.gpo.gov/eop/</p>
+</li>
+<li><p>美国统计概要 www.census.gov/compendia/statab</p>
+</li>
+<li><p>经济合作与发展组织 www.oecd.org</p>
+</li>
+<li>宾夕法尼亚大学国际比较中心 <a href="http://pwt.econ.upenn.edu/" target="_blank" rel="external">http://pwt.econ.upenn.edu/</a></li>
+<li>哈佛商学院宏观经济学资源网站 www.hbs.edu/units/bgie/internet</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/08/economics/宏观经济现象鸟瞰/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-economics/现代经济中的市场和政府" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1021,113 +1272,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/08/economics/现代经济中的市场和政府/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-economics/宏观经济现象鸟瞰" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="宏观经济现象鸟瞰"><a href="#宏观经济现象鸟瞰" class="headerlink" title="宏观经济现象鸟瞰"></a>宏观经济现象鸟瞰</h1><p>标签： 宏观经济学</p>
-<hr>
-<h2 id="三个重要的宏观经济变量"><a href="#三个重要的宏观经济变量" class="headerlink" title="三个重要的宏观经济变量"></a>三个重要的宏观经济变量</h2><ul>
-<li><p>实际国内生产总值(real GDP<gross domestic="" product="">):<br>经济体内所有人的实际总收入。<br>人均国内生产总值(GDP per capita): 经济体内平均而言每个人的实际收入。</gross></p>
-</li>
-<li><p>通货膨胀率(inflation rate):<br>物价水平变动的百分比。(物价指数)<br>用消费者价格指数(consumer price index, CPI)或GDP缩减指数(GDP deflator index)<br>衡量。</p>
-</li>
-<li><p>失业率(unemployment rate):<br>经济体中没有工作当正在积极找工作的劳动力比重。</p>
-</li>
-</ul>
-<h3 id="GDP：衡量经济活动创造的价值"><a href="#GDP：衡量经济活动创造的价值" class="headerlink" title="GDP：衡量经济活动创造的价值"></a>GDP：衡量经济活动创造的价值</h3><p>经济体在既定时期内生产的所有的最终产品和服务的当期市场总值</p>
-<ul>
-<li>核算GDP三种方法</li>
-</ul>
-<ul>
-<li>生产法<br>把GDP作为经济体里当期所生产的最终产品与服务的总值</li>
-<li>收入法<br>把GDP作为经济体中所有人的总收入<br>国内顾客的购买总值=企业的总收益=工资+资本所得+中间投入品的购买<br>最终消费=增加值=工资+资本所得<br>(in China)增加值=劳动者报酬+生产税净额+固定资产折旧+营业盈额</li>
-<li>支出法<br>把GDP作为经济体里对产品与服务的总支出<br>Y=C+I+G(GDP、消费、投资、政府购买)<br>开放经济条件下Y=Cd+Id+Gd+EX<br>(国内产品和服务的消费、国内产品和服务的投资、国内产品和服务的政府采购、国内产品和服务的出口)<br>国外产品和服务的消费Cf=C-Cd<br>国外产品和服务的投资If=I-Id<br>国外产品和服务的政府采购Gf=G-Gd<br>国外产品和服务的进口IM=Cf+If+Gf<br>净出口(net export)NEX=EX-IM<br>国民经济核算表达式Y=C+I+G+NEX</li>
-</ul>
-<ul>
-<li>国民生产总值(gross national product,GNP)<br>一国居民在一个既定时期内所获得的总收入<br>GNP=GDP+来自国外的生产要素收入-对国外的生产要素支付</li>
-</ul>
-<h3 id="物价水平：衡量生活费用"><a href="#物价水平：衡量生活费用" class="headerlink" title="物价水平：衡量生活费用"></a>物价水平：衡量生活费用</h3><p>通货膨胀：物价水平上升</p>
-<ul>
-<li>消费者价格指数(CPI)<br>最常用的度量物价水平的指标</li>
-</ul>
-<ol>
-<li>选定一个开始时期(基期)</li>
-<li>选定一个<em>典型消费者</em>所购买的一篮子产品和服务的种类和数量</li>
-<li>计算每一期购买同样一篮子产品和服务的支出</li>
-<li>计算每一期的CPI(CPI=当期与基期一篮子产品和服务支出的<strong>比值</strong>)</li>
-</ol>
-<p>通货膨胀率 = (CPI(后一期)-CPI(前一期))/CPI(前一期)</p>
-<ul>
-<li>生产者价格指数(producer price index, PPI)<br>度量物价水平的另一指标</li>
-</ul>
-<ul>
-<li><em>典型生产者</em>购买的一篮子产品和服务</li>
-</ul>
-<ul>
-<li>GDP缩减指数</li>
-</ul>
-<p>名义GDP(nominal GDP)：按照当期价格度量的GDP<br>实际GDP(real GDP)：按照不变价格度量的GDP(尽可能反映经济体生产能力的变化)</p>
-<p>GDP缩减指数=名义GDP/实际GDP * 100%</p>
-<p>名义GDP剔除通货膨胀的影响得到实际GDP</p>
-<h3 id="失业率：度量经济体痛苦程度"><a href="#失业率：度量经济体痛苦程度" class="headerlink" title="失业率：度量经济体痛苦程度"></a>失业率：度量经济体痛苦程度</h3><p>就业：在一定年龄段的经济活动主体从事有报酬的活动</p>
-<p>失业者：有劳动能力并愿意就业但找不到工作的经济活动主体</p>
-<ul>
-<li>劳动力人口 = 劳动年龄(16~65)人口 - 不在劳动力(not in labor force)人口</li>
-<li>劳动参与率 = 劳动力人口 / 劳动年龄人口</li>
-<li>失业率 = 失业人口 / 劳动力人口</li>
-</ul>
-<ul>
-<li>测算失业人口两种方法</li>
-</ul>
-<ul>
-<li>收集失业者在劳动行政部门申报的数据<br>大多数失业者有申报动机：失业申报可以领取失业救济金、获得再就业信息等</li>
-<li>定期抽样调查估计失业人口</li>
-</ul>
-<h2 id="数据查找"><a href="#数据查找" class="headerlink" title="数据查找"></a>数据查找</h2><ul>
-<li>中国国家统计局网站 <a href="http://www.stats.gov.cn" target="_blank" rel="external">http://www.stats.gov.cn</a></li>
-<li><p>中国经济学教育科研网 <a href="http://www.cenet.org.cn/cn/" target="_blank" rel="external">http://www.cenet.org.cn/cn/</a></p>
-</li>
-<li><p>美国 总统经济报告 www.access.gpo.gov/eop/</p>
-</li>
-<li><p>美国统计概要 www.census.gov/compendia/statab</p>
-</li>
-<li><p>经济合作与发展组织 www.oecd.org</p>
-</li>
-<li>宾夕法尼亚大学国际比较中心 <a href="http://pwt.econ.upenn.edu/" target="_blank" rel="external">http://pwt.econ.upenn.edu/</a></li>
-<li>哈佛商学院宏观经济学资源网站 www.hbs.edu/units/bgie/internet</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/08/economics/宏观经济现象鸟瞰/">展开全文 >></a>
         </p>
       
 
@@ -1803,117 +1947,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/08/Cplusplus_thinking/模板（二）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Cplusplus_thinking/模板（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="模板（三）"><a href="#模板（三）" class="headerlink" title="模板（三）"></a>模板（三）</h1><p>标签：C++</p>
-<hr>
-<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
-<li><p>已经定义Array<t>、Pointer<t>和Ptr_to_const<t>使得能部分确保安全性避免使用<br>指针</t></t></t></p>
-</li>
-<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
-</li>
-</ul>
-<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
-<ul>
-<li>基类及派生类都要定义这些操作</li>
-</ul>
-<p>‘’’C++<br>template <class t=""> class Pointer: public Ptr_to_const<t> {<br>public:<br>    Pointer&amp; operator++() {<br>        ++sub;<br>        return *this;<br>    }</t></class></p>
-<pre><code>Pointer&amp; operator--() {
-    --sub;
-    return *this;
-}
-
-Pointer&amp; operator++(int) {
-    Pointer ret = *this;
-    ++sub;
-    return ret;
-}
-
-Pointer&amp; operator--(int) {
-    Pointer ret = *this;
-    --sub;
-    return ret;
-}
-
-Pointer&amp; operator+=(int n) {
-    sub += n;
-    return *this;
-}
-
-Pointer&amp; operator-=(int n) {
-    sub -= n;
-    return *this;
-}
-// ...
-</code></pre><p>};</p>
-<p>template <class t=""> Pointer<t> operator+(const Pointer<t>&amp; p, int n) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
-<p>template <class t=""> Pointer<t> operator+(int n, const Pointer<t>&amp; p) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
-<p>// subtration is similar<br>‘’’</p>
-<ul>
-<li>两个指针当且仅当指向同一个Array的同一个元素(或都不指向任何Array)时才相等</li>
-</ul>
-<p>‘’’C++<br>template <class t=""><br>int operator==(const Ptr_to_const<t>&amp; op1, cosnt Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        return 0;<br>    return (op1.sub == op2.sub);<br>}</t></t></class></p>
-<p>template <class t=""><br>int operator&lt;(const Ptr_to_const<t>&amp; op1, const Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        throw “&lt; on different Arrays”;<br>    return op1.sub &lt; op2.sub;<br>}<br>‘’’</t></t></class></p>
-<ul>
-<li>迭代器能在不暴露容器内部结构的情况下访问容器的元素</li>
-</ul>
-<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
-<li><p>当元素不存在时的处理方法</p>
-</li>
-<li><p>禁止从容器中删除单个元素(可以删除整个容器)</p>
-</li>
-<li><p>在每个容器对象中保存一个有效迭代器的列表，删除一个元素则正好删除刚好指向这个<br>被删除元素的迭代器</p>
-</li>
-<li><p>对容器中每个元素采用引用计数，删除任何一个元素都必须等到最后一个指向该元素的<br>引用都不存在</p>
-</li>
-<li><p>让迭代器指向容器中元素与元素之间的位置上(难以实现；影响先有代码)</p>
-</li>
-</ul>
-<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><ul>
-<li><p>容器本身已不存在，还有活动的迭代器的解决方法</p>
-</li>
-<li><p>删除操作延后到最后一个迭代器失效</p>
-</li>
-<li><p>采用处理删除单个元素的思想</p>
-</li>
-<li><p>用户确保一旦容器删除就不再使用迭代器</p>
-</li>
-<li><p>只要有活动迭代器存在就禁止删除容器本身</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/08/Cplusplus_thinking/模板（三）/">展开全文 >></a>
         </p>
       
 

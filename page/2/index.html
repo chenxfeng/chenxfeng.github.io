@@ -151,118 +151,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Cplusplus_thinking/模板（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="模板（一）"><a href="#模板（一）" class="headerlink" title="模板（一）"></a>模板（一）</h1><p>标签：C++</p>
-<hr>
-<h2 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h2><p>容器：保存值的集合的数据结构</p>
-<ul>
-<li>语言内建容器：数组、结构体</li>
-<li><p>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</p>
-</li>
-<li><p>容器包含对象</p>
-</li>
-<li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
-</li>
-<li><p>函数传参数方式 void f(const Container<t>&amp;)避免大对象的复制</t></p>
-</li>
-<li><p>区分读和写</p>
-</li>
-</ul>
-<p>operator[]只用于取数</p>
-<p>用成员函数update(i, x)修改索引为i的元素为x</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Container &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T <span class="keyword">operator</span>[](Index) <span class="keyword">const</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">Container&lt; Container&lt;<span class="keyword">int</span>&gt; &gt;c;</div><div class="line">Index i, j;</div><div class="line"><span class="keyword">int</span> k = c[i][j];</div><div class="line"><span class="comment">// only way to modify the element in Container</span></div><div class="line"><span class="comment">// c[i][j]</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="comment">// hard to deal with much more dimension</span></div><div class="line"><span class="comment">// c[i] return type T instead of T&amp;</span></div><div class="line"><span class="comment">// c[i].update(j, new_value) does not work</span></div></pre></td></tr></table></figure>
-<ul>
-<li><p>获取容器的元素严格分清类型T(作右值)和类型T&amp;(作左值)</p>
-</li>
-<li><p>容器增长：按区块(chunk)增加容器大小的分配策略</p>
-</li>
-<li><p>容器操作<br>容器数组：必须有缺省构造函数<br>“顺序地”遍历容器中所有元素：先给元素强制规定顺序(解决方案：迭代器(iterator))</p>
-</li>
-<li><p>容器元素的类型</p>
-</li>
-</ul>
-<ol>
-<li><p>类型为T的元素可以进行行为正确的复制、赋值和销毁<br>T::T(const T&amp;)</p>
-</li>
-<li><p>可以判定两个元素是否相等<br>operator==(const T&amp;, cosnt T&amp;)</p>
-</li>
-<li><p>为增加性能，有关于偏序关系或全序关系的定义(如set)<br>operator&lt;(const T&amp;, const T&amp;)</p>
-</li>
-<li><p>考虑是否重载operator&lt;&lt;(ostream&amp;, const Container<t>&amp;)<br>兼顾不使用标准输入输出操作库或不用输入输出操作的用户，提供遍历整个容器的机制</t></p>
-</li>
-</ol>
-<ul>
-<li>容器不可通过继承关联起来<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// if Container&lt;Airplane&gt; is derived from Container&lt;Vehicle&gt;</span></div><div class="line">Vehicle v;</div><div class="line">Container&lt;Airplane&gt; ca;</div><div class="line"></div><div class="line">Container&lt;Vehicle&gt;&amp; vp = ca;</div><div class="line">vp.insert(v);</div><div class="line"><span class="comment">// that does not make any sence</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Demo-an-array-like-class"><a href="#Demo-an-array-like-class" class="headerlink" title="Demo : an array-like class"></a>Demo : an array-like class</h3><ul>
-<li>使用指针和使用下标的差别</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// by index</span></div><div class="line"><span class="keyword">int</span> i;</div><div class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    f(x[i]);</div><div class="line"></div><div class="line"><span class="comment">// by pointer</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">for</span> (p = x; p &lt; x + N; ++p)</div><div class="line">    f(*p);</div><div class="line"><span class="comment">// a simplified version</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">while</span> (p &lt; x + N)</div><div class="line">    f(*p++);</div></pre></td></tr></table></figure>
-<p>区别：</p>
-<ol>
-<li>下标值本身就有意义，与是否用作下标无关：通过下标进行元素访问的程序要另外知道<br>正在使用的数组(才能访问整个数组)</li>
-<li>要访问容器的元素没必要知道容器的标识，指针本身就包含所有的必要信息：程序只要<br>拥有拥有一个指向数组元素的指针就能访问整个数组</li>
-</ol>
-<p>这些影响设计，比”下标易于理解，指针效率高”的区别更为重要</p>
-<ul>
-<li><p>禁止(数组)复制和赋值</p>
-</li>
-<li><p>使用operator[]存取元素</p>
-</li>
-<li><p>关于扩展：定长</p>
-</li>
-<li><p>缺省构造函数：可以创建包含数组的数组</p>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Array(): data(<span class="number">0</span>), sz(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Array(<span class="keyword">unsigned</span> size): sz(size), data(<span class="keyword">new</span> T(size)) &#123;&#125;</div><div class="line">    ~Array() &#123; <span class="keyword">delete</span> [] data; &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> <span class="keyword">const</span> T*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> T*() &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    T* data;</div><div class="line">    <span class="keyword">unsigned</span> sz;</div><div class="line">    Array(<span class="keyword">const</span> Array* a);</div><div class="line">    Array&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array&amp;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>缺陷</li>
-</ul>
-<ol>
-<li><p>(也存在于内建数组中)包含元素的Array消失后，它的元素地址还在</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> *p;</div><div class="line">    &#123;</div><div class="line">        Array&lt;<span class="keyword">int</span>&gt; x(<span class="number">20</span>);</div><div class="line">        p = &amp;x[<span class="number">10</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; *p; <span class="comment">// no exist</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>允许用户访问它的元素地址，透露太多内部运作的信息，违背了封装理念</p>
-</li>
-</ol>
-<ul>
-<li>允许Array被构造后改变长度会导致旧指针失效</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/08/Cplusplus_thinking/模板（一）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
     <article id="post-Cplusplus_thinking/句柄类(handle)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -364,6 +252,118 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/08/Cplusplus_thinking/句柄类(handle)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-Cplusplus_thinking/模板（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="模板（一）"><a href="#模板（一）" class="headerlink" title="模板（一）"></a>模板（一）</h1><p>标签：C++</p>
+<hr>
+<h2 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h2><p>容器：保存值的集合的数据结构</p>
+<ul>
+<li>语言内建容器：数组、结构体</li>
+<li><p>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</p>
+</li>
+<li><p>容器包含对象</p>
+</li>
+<li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
+</li>
+<li><p>函数传参数方式 void f(const Container<t>&amp;)避免大对象的复制</t></p>
+</li>
+<li><p>区分读和写</p>
+</li>
+</ul>
+<p>operator[]只用于取数</p>
+<p>用成员函数update(i, x)修改索引为i的元素为x</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Container &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T <span class="keyword">operator</span>[](Index) <span class="keyword">const</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">Container&lt; Container&lt;<span class="keyword">int</span>&gt; &gt;c;</div><div class="line">Index i, j;</div><div class="line"><span class="keyword">int</span> k = c[i][j];</div><div class="line"><span class="comment">// only way to modify the element in Container</span></div><div class="line"><span class="comment">// c[i][j]</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="comment">// hard to deal with much more dimension</span></div><div class="line"><span class="comment">// c[i] return type T instead of T&amp;</span></div><div class="line"><span class="comment">// c[i].update(j, new_value) does not work</span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>获取容器的元素严格分清类型T(作右值)和类型T&amp;(作左值)</p>
+</li>
+<li><p>容器增长：按区块(chunk)增加容器大小的分配策略</p>
+</li>
+<li><p>容器操作<br>容器数组：必须有缺省构造函数<br>“顺序地”遍历容器中所有元素：先给元素强制规定顺序(解决方案：迭代器(iterator))</p>
+</li>
+<li><p>容器元素的类型</p>
+</li>
+</ul>
+<ol>
+<li><p>类型为T的元素可以进行行为正确的复制、赋值和销毁<br>T::T(const T&amp;)</p>
+</li>
+<li><p>可以判定两个元素是否相等<br>operator==(const T&amp;, cosnt T&amp;)</p>
+</li>
+<li><p>为增加性能，有关于偏序关系或全序关系的定义(如set)<br>operator&lt;(const T&amp;, const T&amp;)</p>
+</li>
+<li><p>考虑是否重载operator&lt;&lt;(ostream&amp;, const Container<t>&amp;)<br>兼顾不使用标准输入输出操作库或不用输入输出操作的用户，提供遍历整个容器的机制</t></p>
+</li>
+</ol>
+<ul>
+<li>容器不可通过继承关联起来<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// if Container&lt;Airplane&gt; is derived from Container&lt;Vehicle&gt;</span></div><div class="line">Vehicle v;</div><div class="line">Container&lt;Airplane&gt; ca;</div><div class="line"></div><div class="line">Container&lt;Vehicle&gt;&amp; vp = ca;</div><div class="line">vp.insert(v);</div><div class="line"><span class="comment">// that does not make any sence</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Demo-an-array-like-class"><a href="#Demo-an-array-like-class" class="headerlink" title="Demo : an array-like class"></a>Demo : an array-like class</h3><ul>
+<li>使用指针和使用下标的差别</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// by index</span></div><div class="line"><span class="keyword">int</span> i;</div><div class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    f(x[i]);</div><div class="line"></div><div class="line"><span class="comment">// by pointer</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">for</span> (p = x; p &lt; x + N; ++p)</div><div class="line">    f(*p);</div><div class="line"><span class="comment">// a simplified version</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">while</span> (p &lt; x + N)</div><div class="line">    f(*p++);</div></pre></td></tr></table></figure>
+<p>区别：</p>
+<ol>
+<li>下标值本身就有意义，与是否用作下标无关：通过下标进行元素访问的程序要另外知道<br>正在使用的数组(才能访问整个数组)</li>
+<li>要访问容器的元素没必要知道容器的标识，指针本身就包含所有的必要信息：程序只要<br>拥有拥有一个指向数组元素的指针就能访问整个数组</li>
+</ol>
+<p>这些影响设计，比”下标易于理解，指针效率高”的区别更为重要</p>
+<ul>
+<li><p>禁止(数组)复制和赋值</p>
+</li>
+<li><p>使用operator[]存取元素</p>
+</li>
+<li><p>关于扩展：定长</p>
+</li>
+<li><p>缺省构造函数：可以创建包含数组的数组</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Array(): data(<span class="number">0</span>), sz(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Array(<span class="keyword">unsigned</span> size): sz(size), data(<span class="keyword">new</span> T(size)) &#123;&#125;</div><div class="line">    ~Array() &#123; <span class="keyword">delete</span> [] data; &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> <span class="keyword">const</span> T*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> T*() &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    T* data;</div><div class="line">    <span class="keyword">unsigned</span> sz;</div><div class="line">    Array(<span class="keyword">const</span> Array* a);</div><div class="line">    Array&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array&amp;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>缺陷</li>
+</ul>
+<ol>
+<li><p>(也存在于内建数组中)包含元素的Array消失后，它的元素地址还在</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> *p;</div><div class="line">    &#123;</div><div class="line">        Array&lt;<span class="keyword">int</span>&gt; x(<span class="number">20</span>);</div><div class="line">        p = &amp;x[<span class="number">10</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; *p; <span class="comment">// no exist</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>允许用户访问它的元素地址，透露太多内部运作的信息，违背了封装理念</p>
+</li>
+</ol>
+<ul>
+<li>允许Array被构造后改变长度会导致旧指针失效</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/08/Cplusplus_thinking/模板（一）/">展开全文 >></a>
         </p>
       
 

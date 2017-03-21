@@ -8,31 +8,40 @@
   <link rel="dns-prefetch" href="https://chenfeng.github.io">
   <title>chenfeng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
-指针跳转法(pointer jumping technique)思想：
+  <meta name="description" content="模板（三）标签：C++
 
-链表中的指针跳转可以由一次跳转一步改为一次跳转多步
-如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间
-如果为每">
+迭代器
+已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用指针
+
+进一步取代指针，需实现加法、减法和关系运算符
+
+
+‘’’C++void f() {    int a[10];    int pa = a;    int end = pa + 10;    while (pa != end)        *pa++ = 0;}‘’’">
 <meta property="og:type" content="article">
 <meta property="og:title" content="chenfeng's blog">
-<meta property="og:url" content="https://chenfeng.github.io/2017/03/11/paralell_compute3/index.html">
+<meta property="og:url" content="https://chenfeng.github.io/2017/03/21/Cplusplus_thinking/模板（三）/index.html">
 <meta property="og:site_name" content="chenfeng's blog">
-<meta property="og:description" content="列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
-指针跳转法(pointer jumping technique)思想：
+<meta property="og:description" content="模板（三）标签：C++
 
-链表中的指针跳转可以由一次跳转一步改为一次跳转多步
-如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间
-如果为每">
-<meta property="og:updated_time" content="2017-03-11T11:54:39.719Z">
+迭代器
+已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用指针
+
+进一步取代指针，需实现加法、减法和关系运算符
+
+
+‘’’C++void f() {    int a[10];    int pa = a;    int end = pa + 10;    while (pa != end)        *pa++ = 0;}‘’’">
+<meta property="og:updated_time" content="2017-03-21T00:22:27.512Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chenfeng's blog">
-<meta name="twitter:description" content="列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
-指针跳转法(pointer jumping technique)思想：
+<meta name="twitter:description" content="模板（三）标签：C++
 
-链表中的指针跳转可以由一次跳转一步改为一次跳转多步
-如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间
-如果为每">
+迭代器
+已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用指针
+
+进一步取代指针，需实现加法、减法和关系运算符
+
+
+‘’’C++void f() {    int a[10];    int pa = a;    int end = pa + 10;    while (pa != end)        *pa++ = 0;}‘’’">
   
     <link rel="alternative" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
   
@@ -61,8 +70,9 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="null" class="js-avatar">
+			<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar" show>
 		</a>
+		<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar show" style="width: 100%;height: 100%;opacity: 1;"> 
 		<hgroup>
 		  <h1 class="header-author"><a href="/">chenxf</a></h1>
 		</hgroup>
@@ -119,7 +129,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="null" class="js-avatar">
+				<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">chenxf</h1>
@@ -168,119 +178,87 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-paralell_compute3" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Cplusplus_thinking/模板（三）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="列表排序"><a href="#列表排序" class="headerlink" title="列表排序"></a>列表排序</h2><p>The list-ranking problem is to determine the distance of each node i from the end of the list</p>
-<h3 id="指针跳转法-pointer-jumping-technique"><a href="#指针跳转法-pointer-jumping-technique" class="headerlink" title="指针跳转法(pointer jumping technique)"></a>指针跳转法(pointer jumping technique)</h3><p>思想：</p>
-<ul>
-<li>链表中的指针跳转可以由一次跳转一步改为一次跳转多步</li>
-<li>如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间</li>
-<li>如果为每个节点，把一次跳转2k步的跳转结果记录下来，那么以后一次跳转2k步也只需要O（1）时间</li>
-<li>反复利用跳转步数翻倍和跳转结果记录的技巧，可以在O（log N）的时间内把跳转步数扩大为N</li>
-</ul>
-<p>T = O(logn); W = O(nlogn)<br>并不比串行算法(linear, O(n))更优</p>
-<p>Algorithm 3.1<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># List Ranking Using Pointer Jumping</div><div class="line"></div><div class="line">Input: A linked list of n nodes such that (1)the successor of each node i is given by S(i), and (2)the S value of the last node on the list is euqal to 0.</div><div class="line"></div><div class="line">Output: For each 1 &lt;= i &lt;= n, the distance R(i) of node i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    if (S(i) != 0) then set R(i):= 1</div><div class="line">                   else set R(i):= 0</div><div class="line">2. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set Q(i) := S(i)</div><div class="line">    while (Q(i) ！= 0 and Q(Q(i)) != 0) do</div><div class="line">        set R(i) := R(i) + R(Q(i))</div><div class="line">        set Q(i) := Q(Q(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>优化思路: </p>
-<ul>
-<li>用快速并行算法把链表长度缩短为n/log n</li>
-<li>要求：缩短和恢复都可以用很小的T，并且W=O(n)</li>
-<li>方法：通过删除链表中的独立顶点集来缩短链表</li>
-<li>在缩短的链表上用指针跳转法来求序，只需W=O(n)</li>
-<li>最后用快速并行算法来恢复链表的长度</li>
-</ul>
-<p>也即：</p>
-<ol>
-<li>把列表分成约n/logn块{ $B_{i}$ }, 每块包含O(logn)个节点</li>
-<li>在每块内对每个节点用最优串行算法求序(preliminary rank)</li>
-<li>用O(logn)的平行算法把所有排好序的块组合</li>
-</ol>
-<p>List-Ranking Strategy</p>
-<ol>
-<li>Shrink the linked list L until only O(n/logn) nodes remain.</li>
-<li>Apply the pointer jumping technique(Algorithm 3.1) on the short list of the remaining nodes.</li>
-<li>Restore the original list and rank all the nodes removed in step 1.</li>
-</ol>
-<p>independent sets</p>
-<ul>
-<li>A set I of nodes is independent if, whenever i belongs to I, S(i) not belongs to I.</li>
-</ul>
-<p>缩减的列表结点必须构成一个独立集，即不相邻</p>
-<p>Algorithm 3.2<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># removing nodes of an independent set</div><div class="line"></div><div class="line">Input: (1)Arrays S and P of length n representing, respectively, the successor and predecessor relations of linked list; (2)an independent set I of nodes such that P(i), S(i) != 0; (3)a value R(i) for each node i.</div><div class="line"></div><div class="line">Output: The list obtained after removal of all the nodes in I with the updated R values.</div><div class="line"></div><div class="line">begin</div><div class="line">1. Assign consecutive serial numbers N(i) to the elements of I, where 1 &lt;= N(i) &lt;= |I| = n'.</div><div class="line">2. for for all i belongs to I pardo </div><div class="line">    set U(N(i)) := (i, S(i), R(i))</div><div class="line">    set R(P(i)) := R(P(i) + R(i))</div><div class="line">    set S(P(i)) := S(i)</div><div class="line">    set P(S(i)) := P(i)</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>删除独立顶点集并合并其权重到剩余顶点的并行复杂度: T=O(1) W=O(n)</p>
-<h3 id="Determination-of-an-Independent-Set"><a href="#Determination-of-an-Independent-Set" class="headerlink" title="Determination of an Independent Set"></a>Determination of an Independent Set</h3><p>独立集合充分大：存在常数c，c属于(0, 1)，使集合包含顶点数不少于c×n</p>
-<ul>
-<li>保证快速地迭代缩短链表</li>
-<li>把长度为n的链表缩短为n/logn只需不超过log_1-c(logn)的T</li>
-</ul>
-<p>最理想但没有快速算法：用序的奇偶性确定独立顶点集合，c=1/2</p>
-<p>(存在快速算法)对链表使用三色着色算法，把局部最小色数(或最大)的节点作为独立集元素</p>
-<ul>
-<li>从一个局部极小到下一个局部极小着色点，中间经过的点数最多为3，因此C=1/4</li>
-<li>3-color 算法收敛很快，每次调用算法，<br>着色的色数都变小为原色数的对数比例，这里的对数以2为基底</li>
-<li>要把色数变小为3，T几乎是O(1)</li>
-</ul>
-<p>Algorithm 3.3<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># simple optimal list ranking</div><div class="line"></div><div class="line">Input: A linked list with n nodes suc that the successor of each node i is given by S(i).</div><div class="line"></div><div class="line">Output: For each node i, the distance of i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. set n_0 := n, k := 0</div><div class="line">2. while n_k &gt; n/logn do</div><div class="line">    2.1 set k := k + 1</div><div class="line">    2.2 color the list with three colors and identify the set I of local minima.</div><div class="line">    2.3 remove the nodes in I, and store the appropriate information regarding the removed nodes(Algorithm 3.2).</div><div class="line">    2.4 let n_k be the size of the remaining list. compact the list into consecutive memory locations.</div><div class="line">3. apply the pointer jumping technique (Algorithm 3.1) to the resulting list.</div><div class="line">4. restore the original list and rank all the removed nodes by reversing the process performed in step2.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>缩短链表和恢复链表：T = O(log logn), W = O(n)</p>
-<ul>
-<li>把长度为n的链表缩短为n/logn，只需不超过log_1-c(logn)的T</li>
-<li>第一次迭代W = O(n), 第二次迭代W = O((1 - c)*c), …</li>
-<li>W = O(n + (1 - c)n + (1 - c)^2 *n + …) = O(n/c) = O(n)</li>
-<li>恢复和缩短是对称的，T和W都相同</li>
-</ul>
-<p>指针跳转是在长度为n/logn的已缩短链表上zuo做的，T = O(logn), W = O(n)</p>
-<p>算法的并行复杂度: T = O(loglogn); W = (n)</p>
-<ul>
-<li>*一个优化的时间复杂度为O(logn)的列表求序算法……</li>
-</ul>
-<h2 id="欧拉回路-the-Euler-Tour-Technique"><a href="#欧拉回路-the-Euler-Tour-Technique" class="headerlink" title="欧拉回路(the Euler-Tour Technique)"></a>欧拉回路(the Euler-Tour Technique)</h2><p>树的欧拉回路是指：<br>将一棵树的每一条边换成两条指向相反的有向边，成为一个欧拉图，就存在欧拉回路；<br>可以定义一个论域为所有有向边的函数s(successor function)，描述这棵树的欧拉回路</p>
-<p>Lemma 3.6: Given a tree T = (V, E) and an ordering of the set of vertices adjacent to each vertex v belongs to V, the function s defined previously specifies an Euler circuit in the directed graph T’ = (V, E’), where E’ is obtained by replacement of each e belongs to E by two arcs of opposite directions.</p>
-<ul>
-<li><p>we call the Euler circuit of T’ the <strong>Euler tour</strong> of T</p>
+        <h1 id="模板（三）"><a href="#模板（三）" class="headerlink" title="模板（三）"></a>模板（三）</h1><p>标签：C++</p>
+<hr>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
+<li><p>已经定义Array<t>、Pointer<t>和Ptr_to_const<t>使得能部分确保安全性避免使用<br>指针</t></t></t></p>
 </li>
-<li><p>每棵树都有欧拉回路</p>
-</li>
-<li>如果欧拉回路从树的根节点出发，则它实际上是树的节点深度优先遍历路径</li>
-</ul>
-<p>给出一个由邻接表及附加的指针信息描述的树，求得一条欧拉回路的T = O(1), W = O(n), |V| = n<br>(指针信息: data field + pointer * 2(描述下一个邻接点 + 描述该点在邻接表中指向此顶点的item))</p>
-<ul>
-<li><p>树求根(rooting a tree): 树根结点为r，对于每个非根结点v，寻找其父父结点p(v)</p>
-</li>
-<li><p>一对顶点之间的两条弧，先出后进的顶点是父节点，先进后出的是子节点</p>
+<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
 </li>
 </ul>
-<p>弧的顺序的确定：<br>-把欧拉回路从其中一点处断开（例如去除回路路径列表中的最前与最后的弧的相邻关系）</p>
+<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
 <ul>
-<li>用链表求序来对这些弧定序</li>
+<li>基类及派生类都要定义这些操作</li>
 </ul>
-<p>树的一个欧拉回路为L[r] = &lt; u_0, u_1, … , u_d-1 &gt;</p>
-<p>设s(&lt; u_d-1, r &gt;) = 0，将欧拉回路从r处截断，得到一条始于r，遍历所有顶点一次，终于r的欧拉路径</p>
-<p>Algorithm 3.5<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># rooting a tree</span></div><div class="line"></div><div class="line">Input: (<span class="number">1</span>)a tree T defined by the adjacency lists of its vertices, (<span class="number">2</span>)an Euler tour defined by the successor function s, and (<span class="number">3</span>)a special vertex r</div><div class="line"></div><div class="line">Output: For each vertex v != r, the parent p(v) of v in the tree rooted at r.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> Identify the last vertex u appearing on the adjacency <span class="built_in">list</span> of r. <span class="built_in">set</span> s(&lt;u, r&gt;) = <span class="number">0</span></div><div class="line"><span class="number">2.</span> Assign a weight of <span class="number">1</span> to each arc &lt;x, y&gt;, and apply parallel prefix on the <span class="built_in">list</span> of arcs defined by s.</div><div class="line"><span class="number">3.</span> For each arc &lt;x, y&gt;, <span class="built_in">set</span> x = p(y) whenever the prefix sum of &lt;x, y&gt; is smaller than the prefix sum of &lt;y, x&gt;.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>并行复杂度与链表求序相同：</p>
+<p>more</p>
+<p>‘’’C++<br>template <class t=""> class Pointer: public Ptr_to_const<t> {<br>public:<br>    Pointer&amp; operator++() {<br>        ++sub;<br>        return *this;<br>    }</t></class></p>
+<pre><code>Pointer&amp; operator--() {
+    --sub;
+    return *this;
+}
+
+Pointer&amp; operator++(int) {
+    Pointer ret = *this;
+    ++sub;
+    return ret;
+}
+
+Pointer&amp; operator--(int) {
+    Pointer ret = *this;
+    --sub;
+    return ret;
+}
+
+Pointer&amp; operator+=(int n) {
+    sub += n;
+    return *this;
+}
+
+Pointer&amp; operator-=(int n) {
+    sub -= n;
+    return *this;
+}
+// ...
+</code></pre><p>};</p>
+<p>template <class t=""> Pointer<t> operator+(const Pointer<t>&amp; p, int n) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
+<p>template <class t=""> Pointer<t> operator+(int n, const Pointer<t>&amp; p) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
+<p>// subtration is similar<br>‘’’</p>
 <ul>
-<li>T=O(log n log log n) ？？？</li>
-<li>W=O(n)</li>
-<li>这里n是顶点数（树的边数是顶点数减一）</li>
+<li>两个指针当且仅当指向同一个Array的同一个元素(或都不指向任何Array)时才相等</li>
 </ul>
-<p>1、Postorder Numbering 后序遍历的序数</p>
-<p>往下走的弧的权重为0，往上走的弧的权重为1，然后用链表中求前缀和的方法来算出后序遍历编号</p>
-<p>Algorithm 3.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Postorder Numbering</div><div class="line"></div><div class="line">Input: (1)A rooted binary tree with root r, and (2)the coresponding Euler path defined by the function s</div><div class="line"></div><div class="line">Output: The postorder number post(v) of each vertex v</div><div class="line"></div><div class="line">begin</div><div class="line">1. For each vertex v != r, assign the weights w(&lt;v, p(v)&gt;) = 1 and w(&lt;p(v&gt;, v) = 0</div><div class="line">2. Perform parallel prefix on the list of arcs defined by s.</div><div class="line">3. For each vertex v != r, set post(v) equal to the prefix sum of &lt;v, p(v)&gt;. For v = r, set post(v) = n, where n is the number of vertices in the given tree.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>2、Computing the Vertex level 结点层数</p>
-<p>可用类似Algorithm 3.6的算法，1和3做改动: w(<p(v), v="">) = +1; w(<v, p(v)="">) = -1。level(v) = <p(v), v="">的前缀和</p(v),></v,></p(v),></p>
-<p>3、Computing the preorder Number </p>
-<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0; </p>
-<p>preorder(v) = &lt; p(v), v &gt;前缀和 + 1;  preorder(r) = 1</p>
-<p>4、Computing the Number of Descendants</p>
-<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0;</p>
-<p>desc(v) = &lt; v, p(v) &gt;前缀和 - &lt; p(v), v &gt;前缀和; desc(r) = n - 1</p>
-<p>以上四个并行算法:<br>T = O(logn); W = O(n)（由平衡树方法求前缀和的平行算法所决定）</p>
+<p>‘’’C++<br>template <class t=""><br>int operator==(const Ptr_to_const<t>&amp; op1, cosnt Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        return 0;<br>    return (op1.sub == op2.sub);<br>}</t></t></class></p>
+<p>template <class t=""><br>int operator&lt;(const Ptr_to_const<t>&amp; op1, const Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        throw “&lt; on different Arrays”;<br>    return op1.sub &lt; op2.sub;<br>}<br>‘’’</t></t></class></p>
 <ul>
-<li>*Tree Contraction(树收缩) ……</li>
+<li>迭代器能在不暴露容器内部结构的情况下访问容器的元素</li>
 </ul>
-<ul>
-<li>*Lowest Common Ancestors ……</li>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
+<li><p>当元素不存在时的处理方法</p>
+</li>
+<li><p>禁止从容器中删除单个元素(可以删除整个容器)</p>
+</li>
+<li><p>在每个容器对象中保存一个有效迭代器的列表，删除一个元素则正好删除刚好指向这个<br>被删除元素的迭代器</p>
+</li>
+<li><p>对容器中每个元素采用引用计数，删除任何一个元素都必须等到最后一个指向该元素的<br>引用都不存在</p>
+</li>
+<li><p>让迭代器指向容器中元素与元素之间的位置上(难以实现；影响先有代码)</p>
+</li>
+</ul>
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><ul>
+<li><p>容器本身已不存在，还有活动的迭代器的解决方法</p>
+</li>
+<li><p>删除操作延后到最后一个迭代器失效</p>
+</li>
+<li><p>采用处理删除单个元素的思想</p>
+</li>
+<li><p>用户确保一旦容器删除就不再使用迭代器</p>
+</li>
+<li><p>只要有活动迭代器存在就禁止删除容器本身</p>
+</li>
 </ul>
 
       
@@ -361,7 +339,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/03/11/paralell_compute3/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/03/21/Cplusplus_thinking/模板（三）/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -375,8 +353,17 @@
   
 <nav id="article-nav">
   
+    <a href="/2017/03/21/Cplusplus_thinking/模板（一）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
-    <a href="/2017/03/10/computer_network_1/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2017/03/21/Cplusplus_thinking/模板（二）/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>

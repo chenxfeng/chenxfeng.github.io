@@ -8,37 +8,52 @@
   <link rel="dns-prefetch" href="https://chenfeng.github.io">
   <title>chenfeng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="现代经济中的市场和政府标签：微观经济学
+  <meta name="description" content="基础知识设计分布式并行算法基本流程1.1发现计算问题的内在并行性
+1.2设计与硬件无关的并行算法
 
-什么是市场
-市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制
+让算法设计者专注于挖掘问题相关的内在并行性而不是被繁琐的硬件特性所干扰
 
-在市场中，是价格在协调生产者和消费者的决策。较高的价格趋于抑制消费者购买，同时会刺激生产；而较低的价格则鼓励消费，同时抑制生产。价格(price)在市场机制中起着平衡的作用
+便于不同硬件环境下的开发者移植算法
 
-市场不断地解决生产什么、如何生产和为谁生产的问题，当平衡了所有影响经济的力量时，市场">
+便于算法到硬件的映射的自动匹配和优化
+
+为并行和分布式计算的系统库(中间件)研发提供一套高层语义抽象
+
+
+PRAM(Parallel Random Access Machine, 随机存取">
 <meta property="og:type" content="article">
 <meta property="og:title" content="chenfeng's blog">
-<meta property="og:url" content="https://chenfeng.github.io/2017/03/08/economics/现代经济中的市场和政府/index.html">
+<meta property="og:url" content="https://chenfeng.github.io/2017/03/21/paralell_compute1&2/index.html">
 <meta property="og:site_name" content="chenfeng's blog">
-<meta property="og:description" content="现代经济中的市场和政府标签：微观经济学
+<meta property="og:description" content="基础知识设计分布式并行算法基本流程1.1发现计算问题的内在并行性
+1.2设计与硬件无关的并行算法
 
-什么是市场
-市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制
+让算法设计者专注于挖掘问题相关的内在并行性而不是被繁琐的硬件特性所干扰
 
-在市场中，是价格在协调生产者和消费者的决策。较高的价格趋于抑制消费者购买，同时会刺激生产；而较低的价格则鼓励消费，同时抑制生产。价格(price)在市场机制中起着平衡的作用
+便于不同硬件环境下的开发者移植算法
 
-市场不断地解决生产什么、如何生产和为谁生产的问题，当平衡了所有影响经济的力量时，市场">
-<meta property="og:updated_time" content="2017-03-08T04:10:41.265Z">
+便于算法到硬件的映射的自动匹配和优化
+
+为并行和分布式计算的系统库(中间件)研发提供一套高层语义抽象
+
+
+PRAM(Parallel Random Access Machine, 随机存取">
+<meta property="og:updated_time" content="2017-03-21T00:26:28.898Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chenfeng's blog">
-<meta name="twitter:description" content="现代经济中的市场和政府标签：微观经济学
+<meta name="twitter:description" content="基础知识设计分布式并行算法基本流程1.1发现计算问题的内在并行性
+1.2设计与硬件无关的并行算法
 
-什么是市场
-市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制
+让算法设计者专注于挖掘问题相关的内在并行性而不是被繁琐的硬件特性所干扰
 
-在市场中，是价格在协调生产者和消费者的决策。较高的价格趋于抑制消费者购买，同时会刺激生产；而较低的价格则鼓励消费，同时抑制生产。价格(price)在市场机制中起着平衡的作用
+便于不同硬件环境下的开发者移植算法
 
-市场不断地解决生产什么、如何生产和为谁生产的问题，当平衡了所有影响经济的力量时，市场">
+便于算法到硬件的映射的自动匹配和优化
+
+为并行和分布式计算的系统库(中间件)研发提供一套高层语义抽象
+
+
+PRAM(Parallel Random Access Machine, 随机存取">
   
     <link rel="alternative" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
   
@@ -67,8 +82,9 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="null" class="js-avatar">
+			<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar" show>
 		</a>
+		<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar show" style="width: 100%;height: 100%;opacity: 1;"> 
 		<hgroup>
 		  <h1 class="header-author"><a href="/">chenxf</a></h1>
 		</hgroup>
@@ -125,7 +141,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="null" class="js-avatar">
+				<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">chenxf</h1>
@@ -174,171 +190,181 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-economics/现代经济中的市场和政府" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-paralell_compute1&amp;2" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="现代经济中的市场和政府"><a href="#现代经济中的市场和政府" class="headerlink" title="现代经济中的市场和政府"></a>现代经济中的市场和政府</h1><p>标签：微观经济学</p>
-<hr>
-<h3 id="什么是市场"><a href="#什么是市场" class="headerlink" title="什么是市场"></a>什么是市场</h3><ul>
-<li><p>市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制</p>
+        <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="设计分布式并行算法基本流程"><a href="#设计分布式并行算法基本流程" class="headerlink" title="设计分布式并行算法基本流程"></a>设计分布式并行算法基本流程</h3><p>1.1发现计算问题的<strong>内在并行性</strong></p>
+<p>1.2设计<strong>与硬件无关</strong>的并行算法</p>
+<ul>
+<li><p>让算法设计者专注于挖掘问题相关的内在并行性而不是被繁琐的硬件特性所干扰</p>
 </li>
-<li><p>在市场中，是价格在协调生产者和消费者的决策。较高的价格趋于抑制消费者购买，<br>同时会刺激生产；而较低的价格则鼓励消费，同时抑制生产。价格(price)在市场机制<br>中起着平衡的作用</p>
+<li><p>便于不同硬件环境下的开发者移植算法</p>
 </li>
-<li><p>市场不断地解决生产什么、如何生产和为谁生产的问题，当平衡了所有影响经济的力量<br>时，市场就达到了供给和需求的市场均衡(market equilibrium of supply and demand)。</p>
+<li><p>便于算法到硬件的映射的自动匹配和优化</p>
 </li>
-<li><p>市场均衡代表了所有不同的买者和卖者之间的一种平衡。在某一价格水平上，买者所愿<br>意购买的数量正好等于卖者所愿意出售的数量，这一价格就达成了供给和需求的均衡。</p>
+<li><p>为并行和分布式计算的系统库(中间件)研发提供一套高层语义抽象</p>
 </li>
-<li><p>市场如何解决三大经济问题</p>
+</ul>
+<p>PRAM(Parallel Random Access Machine, 随机存取并行机器): 一个简单的并行算法模型</p>
+<ul>
+<li><p>Parallel: 可以自由分布任意个处理器并行地读、写和计算</p>
+</li>
+<li><p>Random Access: 处理器可以按下面其中一条规则自由地访问“共享内存”</p>
 </li>
 </ul>
 <ol>
-<li><p>生产什么商品和劳务取决于消费者的货币选票——每天的购买决策。企业会受到利润<br>(profit，净收益，等于总销售额和总成本之间的差额)最大化愿望的驱使。</p>
+<li><p>规则一: Exclusive Read Exclusive Write(EREW)(不允许同时读和同时写)</p>
 </li>
-<li><p>如何生产取决于不同生产者之间的竞争。生产者的最佳方法是采用效率最高的生产<br>技术以将成本降到最低点。</p>
+<li><p>规则二: Concurrent Read Exclusive Write(CREW)(允许同时读但不允许同时写)</p>
 </li>
-<li><p>为谁生产主要取决于生产要素市场上的供给与需求。要素市场决定了工资、地租、利<br>息和利润的水平(要素价格)。收入在消费者之间的分配取决于他们所拥有的要素的数量和<br>价格。</p>
+<li><p>规则三: Concurrent Read Concurrent Write(CRCW)(允许同时读和同时写)</p>
 </li>
 </ol>
 <ul>
-<li><p>经济的核心控制者是偏好和技术。消费者根据自己先天或后天的偏好(并以其货币选票<br>加以表达)解决社会资源的最终用途，即在生产可能性边界上的各个点之间作决定。</p>
+<li>算法复杂度框架: work(计算量(operation)), time(计算时间)</li>
+</ul>
+<p>more</p>
+<p>2.1发现硬件的<strong>网络拓扑和处理能力</strong></p>
+<p>网络拓扑: </p>
+<ul>
+<li>静态: 环、星、树、超立方、图</li>
+<li>动态: 互联网或移动网络中的分布式计算</li>
+</ul>
+<p>处理能力: </p>
+<ul>
+<li>指标: 处理速度和处理规模</li>
+<li>结构: 同构、异构</li>
+<li>方式: 内存计算还是内外存混合计算，计算密集型还是数据密集型</li>
+</ul>
+<p>发现网络拓扑的算法: </p>
+<ul>
+<li>目的一: 建立数据通信的路由</li>
+<li>目的二: 死锁检测和解除</li>
+<li>目的三: 优化数据传播和交换</li>
+</ul>
+<p>发现处理能力的方法: </p>
+<ul>
+<li>测试程序</li>
+<li>人工检测</li>
+</ul>
+<p>2.2设计<strong>与计算问题无关</strong>的分布式计算协议</p>
+<p>(所需计算协议包括以下但不止)</p>
+<ul>
+<li><p>广播、多播和数据收集</p>
 </li>
-<li><p>可供利用的资源和技术对消费者的选择构成了一种基本的约束，经济不能超越于它的生<br>产可能性边界。经济资源与可供利用的科学技术加在一起，限定了消费者花钱消费的对象</p>
+<li><p>同步和异步控制</p>
 </li>
+<li><p>终止检测和全局谓词(条件)检测</p>
+</li>
+<li><p>快照保存与检查点恢复</p>
+</li>
+</ul>
+<p>3.把并行算法<em>映射</em>到硬件上，匹配、优化</p>
+<p>匹配: </p>
+<ul>
+<li>与硬件相关的具体并行算法</li>
+<li>数据分划和任务指派方案(静态或动态)</li>
+<li>并行和分布式计算的程序</li>
+</ul>
+<p>优化: </p>
+<ul>
+<li>面向硬件体系结构的算法复杂度分析</li>
+<li>针对硬件特性的算法改进和程序调优</li>
+</ul>
+<h2 id="并行计算的基本方法"><a href="#并行计算的基本方法" class="headerlink" title="并行计算的基本方法"></a>并行计算的基本方法</h2><h3 id="平衡树方法-Balanced-Trees"><a href="#平衡树方法-Balanced-Trees" class="headerlink" title="平衡树方法(Balanced Trees)"></a>平衡树方法(Balanced Trees)</h3><ul>
+<li>例: 设<em>是满足结合律的二元运算符，考虑计算<br>$$ S_i = x_1 </em> x_2 <em> … </em> x_i, 1 \leq i \leq n $$</li>
+</ul>
+<p>Algorithm 2.1<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># Prefix Sums</div><div class="line"></div><div class="line">Input: An <span class="built_in">array</span> of n = <span class="number">2</span>^k elements (x_1, x_2, ..., x_n), where k is a nonnegative integer.</div><div class="line"></div><div class="line">Output: The prefix sums s_i, <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">if</span> n = <span class="number">1</span> then &#123;<span class="built_in">set</span> s_1 := x_1; <span class="built_in">exit</span>&#125;</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n/<span class="number">2</span> pardo</div><div class="line">    <span class="built_in">set</span> y_i := x_2i<span class="number">-1</span> * x_2i</div><div class="line"><span class="number">3.</span> Recursively, compute the prefix sums of &#123;y_1, y_2, ..., y_n&#125;, and store them in z_1, z_2, ..., z_n/<span class="number">2</span></div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    &#123;i even     :  <span class="built_in">set</span> s_i := z_i/<span class="number">2</span></div><div class="line">     i = <span class="number">1</span>      :  <span class="built_in">set</span> s_1 := x_1</div><div class="line">     i odd &gt; <span class="number">1</span>  :  <span class="built_in">set</span> s_i := z_(i<span class="number">-1</span>)/<span class="number">2</span> * x_i&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>复杂度分析<br>$$ T(n) = T(\frac{n}{2}) + a  $$<br>$$ W(n) = W(\frac{n}{2}) + bn $$<br>求解递归方程<br>$$ T(n) = O(logn) $$<br>$$ W(n) = O(n) $$</li>
+</ul>
+<p>Algorithm 2.2<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># Nonrecursive Prefix Sums</div><div class="line"></div><div class="line">Input: An <span class="built_in">array</span> A of size n = <span class="number">2</span>^k, where k is a nonnegative integer.</div><div class="line"></div><div class="line">Output: An <span class="built_in">array</span> C such that C(<span class="number">0</span>, j) is the jth prefix sum, <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n pardo</div><div class="line">    <span class="built_in">set</span> B(<span class="number">0</span>, j) := A(j)</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> h = <span class="number">1</span> to logn <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        <span class="built_in">set</span> B(h, j) := B(h - <span class="number">1</span>, <span class="number">2</span>j - <span class="number">1</span>) * B(h - <span class="number">1</span>, <span class="number">2</span>j)</div><div class="line"><span class="number">3.</span> <span class="keyword">for</span> h = logn to <span class="number">0</span> <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        &#123;j even    : <span class="built_in">set</span> C(h, j) := C(h + <span class="number">1</span>, j/<span class="number">2</span>)</div><div class="line">         j = <span class="number">1</span>     : <span class="built_in">set</span> C(h, <span class="number">1</span>) := B(h, <span class="number">1</span>)</div><div class="line">         j odd &gt; <span class="number">1</span> : <span class="built_in">set</span> C(h, j) := C(h + <span class="number">1</span>, (j - <span class="number">1</span>)/<span class="number">2</span>)*B(h, j)&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="指针跳转法-Pointer-Jumping"><a href="#指针跳转法-Pointer-Jumping" class="headerlink" title="指针跳转法(Pointer Jumping)"></a>指针跳转法(Pointer Jumping)</h3><ul>
+<li>例一: 存储在数组中的链表求序</li>
 </ul>
 <ul>
-<li><p>追逐个人利益的结果，是经常地增进社会的利益，其效果要比真的想要增进社会的利益<br>时更好。(“看不见的手”在引导)(亚当·斯密《国富论》)</p>
-</li>
-<li><p>在一定条件下，完全竞争经济是有效率的(经济效率指的是无法在不损害其他人经济福<br>利的前提下增进某个人的经济福利)</p>
-</li>
-<li><p>市场不灵的一种情况是垄断以及其他形式的不完全竞争。</p>
-</li>
-<li><p>第二种不灵表现为市场的外溢效果或外部性：正面的外部性包括科学发现等，而负面的<br>外溢效果应包括环境污染。</p>
-</li>
-<li><p>市场的收入分配的后果在政治上或道义上时无法接受的。</p>
-</li>
-</ul>
-<h3 id="贸易、货币和资本"><a href="#贸易、货币和资本" class="headerlink" title="贸易、货币和资本"></a>贸易、货币和资本</h3><ul>
-<li><p>发达经济以细密的贸易网络(基于大量的专业化和精细的劳动分工)为特征</p>
-</li>
-<li><p>当今的经济都大量使用货币(支付手段)</p>
-</li>
-<li><p>现代工业技术依赖于大规模的资本运用: 精密的机器、大型的工厂和库存</p>
-</li>
+<li>串行算法: 线性复杂度</li>
+<li>并行复杂度: T = O(logn), W = O(nlogn)</li>
 </ul>
 <ul>
-<li><p>贸易、专业化和劳动分工</p>
-</li>
-<li><p>专业化是指让个人或国家各自集中精力去完成某一种(或一系列)任务，使得每个人或<br>国家都能够发挥其特殊技能和资源优势</p>
-</li>
-<li><p>发达经济致力于专业化和劳动分工，因而能提高其资源的生产率。个人和国家用自己专<br>业化生产的物品自愿地交换其他人的产品，能极大地增加消费品的范围和数量，并提高每<br>个人的生活水平。</p>
-</li>
+<li>例二: 为森林里的每个节点找所在的那棵树的根节点</li>
+</ul>
+<p>Algorithm 2.4<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Pointer Jumping</div><div class="line"></div><div class="line">Input: A forest of rooted directed trees, each with a self-loop at its root, such that each arc is specified by (i, P(i)), where 1 &lt;= i &lt;= n.</div><div class="line"></div><div class="line">Output: For each vertex i, the root S(i) of the tree containing i.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set S(i) := P(i)</div><div class="line">    while (S(i)) != S(S(i)) do</div><div class="line">        set S(i) := S(S(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(logh); W = O(nlogh)</p>
+<p>Algorithm 2.5<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># Parallel Prefix on Rooted Directed Trees</div><div class="line"></div><div class="line">Input: A forest of rooted directed trees, each with a self-loop at its root such that (1)each arc is specified by (i, P(i)), (2)each vertex i has a weight W(i), and (3)for each root r, W(r) = 0</div><div class="line"></div><div class="line">Output: For each vertex i, W(i) is set equal to the sum of the weights of vertices on the path from i to the root of its tree.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set S(i) := P(i)</div><div class="line">    while (S(i)) != S(S(i)) do</div><div class="line">        set W(i) := W(i) + W(S(i))</div><div class="line">        set S(i) := S(S(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(logn); W = O(nlogn)</p>
+<h3 id="分而治之法-Divide-and-Conquer"><a href="#分而治之法-Divide-and-Conquer" class="headerlink" title="分而治之法(Divide and Conquer)"></a>分而治之法(Divide and Conquer)</h3><p>例: 找二维平面上的点的凸包(planar convex hull)</p>
+<ul>
+<li>分: 把这些顶点按由左到右平均分成两组</li>
+<li>治: 在这两组内分别求凸包(求解两个规模相对较小的问题，递归)</li>
+<li>合: 把两组凸包用快速算法合为一个</li>
+</ul>
+<p>Algorithm 2.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Simple Upper Hull</div><div class="line"></div><div class="line">Input: A set S of n points in the plane, no two of which have the same x or y coordinates such that x(p_1) &lt; x(p_2) &lt; ... &lt; x(p_n), where n is a power of 2.</div><div class="line"></div><div class="line">Output: The upper hull of S.</div><div class="line"></div><div class="line">begin</div><div class="line">1. If n &lt;= 4, then use a brute-force method to determine UH(S), and exit.</div><div class="line">2. Let S_1 = (p_1, p_2, ..., P_n/2) and S_2 = (p_n/2+1, ..., p_n). Recursively, compute UH(S_1) and UH(S_2) in parallel.</div><div class="line">3. find the upper common tangent between UH(S_1) nad UH(S_2), and deduce the upper hull of S.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>$$ T(n) \leq T(\frac{n}{2}) + alogn $$<br>$$ W(n) \leq 2W(\frac{n}{2} + bn) $$<br>并行复杂度: $ T = O(log^2 n); W = O(nlogn) $</p>
+<h3 id="数据划分法-partition-strategy"><a href="#数据划分法-partition-strategy" class="headerlink" title="数据划分法(partition strategy)"></a>数据划分法(partition strategy)</h3><ul>
+<li>例: 归并排序</li>
 </ul>
 <ul>
-<li><p>货币(money)是一种支付手段或交换媒介，即购物时所支付的现金和支票。</p>
-</li>
-<li><p>货币是供应适度是各国宏观经济政策的主要任务之一。</p>
-</li>
+<li>1.数据均分为若干等分</li>
+<li>2.在每一等分内用其它方法排序</li>
+<li>3.平衡树快速并行合并这些等分</li>
+</ul>
+<p>Algorithm 2.7<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># Partition</div><div class="line"></div><div class="line">Input: Two arrays A = (a_1, a_2, ..., a_n) and B = (b_1, b_2, ..., b_m) in increasing order, where both logm and k(m) = m/logm are integers.</div><div class="line"></div><div class="line">Output: k(m) pairs (A_i, B_i) of subsequences of A and B such that (<span class="number">1</span>)|B_i| = <span class="built_in">log</span> m, (<span class="number">2</span>)\sum |A_i| = n, and (<span class="number">3</span>)each element of A_i and B_i is larger than each element of A_i<span class="number">-1</span> or B_i<span class="number">-1</span>, <span class="keyword">for</span> all <span class="number">1</span> &lt;= i &lt;= k(m)<span class="number">-1</span></div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="built_in">set</span> j(<span class="number">0</span>) := <span class="number">0</span>, j(k(m)) := n</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= k(m) - <span class="number">1</span> pardo</div><div class="line">    <span class="number">2.1</span>. Rank b_ilogm in A <span class="keyword">using</span> binary search method, and let j(i) = rank(b_ilogm : A)</div><div class="line"><span class="number">3.</span> <span class="keyword">for</span> <span class="number">0</span> &lt;= i &lt;= k(m) - <span class="number">1</span> pardo</div><div class="line">    <span class="number">3.1</span>. <span class="built_in">set</span> B_i := (b_ilogm+<span class="number">1</span>, ..., b_(i+<span class="number">1</span>)logm)</div><div class="line">    <span class="number">3.2</span>. <span class="built_in">set</span> A_i := (a_j(i) + <span class="number">1</span>, ..., a_j(i+<span class="number">1</span>))</div><div class="line">        (A_i is empty <span class="keyword">if</span> j(i) = j(i+<span class="number">1</span>))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>合并后的序 = 自序 + 交叉序</li>
+<li>自序(a_i) = {a_0, a_1, …, a_n-1}中有多少a_j 排在a_i前面(在这里即i)</li>
+<li>交叉序(a_i) = {b_0, b_1, …, b_n-1}中有多少b_j排在a_i前面</li>
+</ul>
+<p>并行复杂度: T = O(logn); W = O(n)</p>
+<h3 id="流水线方法-Pipelining"><a href="#流水线方法-Pipelining" class="headerlink" title="流水线方法(Pipelining)"></a>流水线方法(Pipelining)</h3><ul>
+<li>例: 2-3树的数据插入</li>
 </ul>
 <ul>
-<li><p>资本(capital)，一种被生产出来的要素，一种本身就是由经济过程产出的耐用的投<br>入品</p>
-</li>
-<li><p>三大生产要素：资本、土地和劳动。</p>
-</li>
-<li><p>基本生产要素：土地和劳动，其供给主要取决于非经济要素。</p>
-</li>
-<li><p>资本使用之前必须首先被生产出来。资本在本质上意味着时间的耗费和间接的生产手<br>段。</p>
-</li>
-<li><p>靠牺牲当前消费而获得的增长 许多经济活动都涉及到放弃现时消费以增加资本，提高<br>经济未来的生产率，进而增加未来的消费</p>
-</li>
+<li>批量插入多个点及其并行复杂度<br>T = O(logn); W = O(klogn)</li>
 </ul>
 <ul>
-<li><p>资本和私有财产</p>
-</li>
-<li><p>在市场经济中资本主要归私人拥有，从投资中得到的收益也归个人所有</p>
-</li>
-<li><p>产权赋予资本使用者使用、交换、装修、挖掘、钻探等利用其资本品的权利</p>
-</li>
-<li><p>个人占有资本并能从中获取利润，是资本主义的实质之所在</p>
-</li>
-<li><p>最有价值的经济资源，即劳动，不能像私人财产那样成为可以买卖的商品。人不能自由<br>地卖出自己，只能在某个工资价位上将自己租借出去</p>
-</li>
+<li>breaking up a task into a sequence of subtask t_1, t_2, …, t_m<br>……</li>
 </ul>
-<h3 id="政府的经济职能"><a href="#政府的经济职能" class="headerlink" title="政府的经济职能"></a>政府的经济职能</h3><ul>
-<li><p>现实世界中还不曾有一种经济能够完全依照“看不见的手”的原则而顺利地运行</p>
-</li>
-<li><p>政府对市场经济主要行使三项职能：提高效率、增进公平以及促进宏观经济的稳定与<br>增长</p>
-</li>
+<h3 id="加速层叠法-Accelerated-Cascading"><a href="#加速层叠法-Accelerated-Cascading" class="headerlink" title="加速层叠法(Accelerated Cascading)"></a>加速层叠法(Accelerated Cascading)</h3><ul>
+<li>例: 数组找最大值</li>
 </ul>
+<p>常数的并行时间复杂度</p>
+<p>Algorithm 2.8<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Basic Maximum</div><div class="line"></div><div class="line">Input: An array A of p distinct elements.</div><div class="line"></div><div class="line">Output: A Boolean array M such that M(i) = 1 if and only if A(i) is the maximum element of A.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i, j &lt;= p pardo if (A(i) &gt;= A(j)) then set B(i, j) := 1</div><div class="line">                                              else set B(i, j) := 0</div><div class="line">2. for 1 &lt;= i &lt;= p pardo</div><div class="line">    set M(i) := B(i, 1) &amp; B(i, 2) &amp; ... B(i, p)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>$ T = O(1); W = O(p^2) $</p>
+<p>双层log深度树(doubly logarithmic-depth tree): 最底层节点数 为 n，根节点的孩子节点数 为 $n^{\frac{1}{2}}$，下一层每个节点的孩子节点数 $n^{\frac{1}{2^2}}$，…</p>
+<ul>
+<li><p>假设$n = 2^{2^k}$, 树根有$2^{2^{k-1}}$个孩子, 第一层有$2^{2^{k-2}}$个孩子, …, 第i层有$2^{2^{k-i-1}}$个孩子, …</p>
+</li>
+<li><p>倒数第二层每个节点有常数个子节点</p>
+</li>
+<li>向上合并用常数复杂度求最大值方法</li>
+<li>整体并行复杂度: $$ T(n) = O(log log n) $$ $$ W(n) = O(n log log n) $$</li>
+</ul>
+<p>accelerated cascading:</p>
 <ol>
-<li><p>政府通过促进竞争、控制诸如污染这类外部性问题，以及提供公共品等活动来提高经济<br>效率</p>
-</li>
-<li><p>政府通过财政税收和预算支出等手段，向某些团体进行有倾斜的收入再分配，从而增进<br>公平</p>
-</li>
-<li><p>政府通过财政政策和货币政策促进宏观经济的稳定和增长，在鼓励经济增长的同时减少<br>失业和降低通货膨胀</p>
-</li>
+<li>start with the optimal algorithm until the size of the problem is reduced to a centain threshold value. 双层log深度树加速</li>
+<li>Then, shift to the fast but nonoptimal algorithm. 常数时间算法层叠</li>
 </ol>
-<ul>
-<li><p>效率</p>
-</li>
-<li><p>只有在完全竞争成立时，市场机制的优点才能充分体现出来</p>
-</li>
-<li><p>完全竞争(perfect competition)指的是所有的物品和劳务都有一个价格并都在市场上<br>交易。意味着没有一家企业或一位消费者足以影响整个市场的价格</p>
-</li>
-<li><p>不完全竞争(imperfect competition)，当买者或卖者能够左右一种商品的价格时；<br>社会的产出将会从生产可能性边界上移至边界之内，物品的产出就会低于有效率的水平。</p>
-</li>
-<li><p>不完全竞争导致价格高于成本，消费者购买量低于效率水平。过高的价格和过低的产出<br>是伴随不完全竞争而来的非效率的标志</p>
-</li>
-<li><p>不完全竞争的极端情况是垄断，唯一的卖者独自决定某种物品或劳务的价格水平</p>
-</li>
+<h3 id="对称破坏法-Symmetry-Breaking"><a href="#对称破坏法-Symmetry-Breaking" class="headerlink" title="对称破坏法(Symmetry Breaking)"></a>对称破坏法(Symmetry Breaking)</h3><ul>
+<li>例: 环的三色着色问题</li>
 </ul>
 <ul>
-<li><p>外部性(溢出效应)</p>
-</li>
-<li><p>外部性(externalities)指的是企业或个人向市场之外的其他人所强加的成本或效益</p>
-</li>
-<li><p>一个行动可能在市场交易之外有助于或有损于其他人的利益，也即存在着根本不发生经<br>济支付的经济交易</p>
-</li>
-<li><p>负的外部性已逐渐由微小的麻烦变成巨大的威胁，是政府进行干预的地方。</p>
-</li>
+<li>要求: 相邻的点不能是相同的颜色</li>
+<li>串行算法: 在环上随机选一点把环打开得到一个队列；从队首开始除队尾外以0，1相间着色，队尾着色为2(确保队尾和队首、对中倒数第二节点的颜色都不同)</li>
+<li>并行算法大致思想: 从以节点编号为颜色的着色方案开始，通过迭代算法，逐步减少着色数量</li>
 </ul>
+<p>Algorithm 2.9<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Basic Coloring</div><div class="line"></div><div class="line">Input: A directed cycle whose arcs are specified by an <span class="built_in">array</span> S of size n and a coloring c of the vertices.</div><div class="line"></div><div class="line">Output: Another coloring c' of the verteces of the cycle.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    <span class="number">1.</span> <span class="built_in">set</span> k to the least significant bit position in which c(i) and c(S(i)) disagree.</div><div class="line">    <span class="number">2.</span> <span class="built_in">set</span> c'(i) := <span class="number">2</span>k + c(i)_k</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(1); W = O(n)</p>
+<blockquote>
+<p>definition: $log^{(1)}x = logx$, and $log^{(i)}x = log(log^{(i-1)}x)$</p>
+</blockquote>
 <ul>
-<li><p>公共品</p>
-</li>
-<li><p>正外部性的极端情况是公共品</p>
-</li>
-<li><p>公共品(public goods)指一类商品：将该商品的效用扩展与他人的成本为零(非相克<br>性)；无法排除他人参与共享(非相斥性)。</p>
-</li>
-<li><p>税收：政府对个人和公司的收入、工资、消费品销售额和其他项目所征收的税款。政府<br>的收入来源，以提供公共品和实施收入再分配计划</p>
-</li>
+<li>Fast Coloring<br>反复运用这个算法使得从颜色序号{0, 1, 2}中重新选择颜色给每个顶点着色且相邻顶点色不同, 整体并行复杂度为: $$ T = O(log<em>n); W = O(nlog</em>n) $$</li>
 </ul>
-<ul>
-<li><p>公平</p>
-</li>
-<li><p>市场并不必然能够带来公平的收入分配。市场经济可能会产生令人难以接受的收入水平<br>和消费水平的巨大差异</p>
-</li>
-<li><p>收入取决于一系列因素，包括努力程度、教育、继承权、要素价格和运气；由此导致的<br>收入分配可能会同公平的结果相悖</p>
-</li>
-<li><p>物品追随的是货币选票而不是最大满足</p>
-</li>
-<li><p>累进税</p>
-</li>
-<li><p>转移支付，帮助根本没有收入的人</p>
-</li>
-</ul>
-<ul>
-<li><p>宏观经济增长与稳定</p>
-</li>
-<li><p>资本主义自产生以来不时地受通货膨胀(价格上升)和萧条(高失业率)的周期性困扰。这<br>些波动被称为商业周期。</p>
-</li>
-<li><p>通过审慎地运用财政和货币政策，政府能够影响产出、就业和通货膨胀的水平</p>
-</li>
-<li><p>政府的财政政策是税收权力和预算支出权力</p>
-</li>
-<li><p>货币政策涉及到货币供应量和利率水平， 进而影响到资本品的投资和其他利率敏感性<br>的支出(影响利率和信贷条件)</p>
-</li>
-</ul>
+<p>Algorithm 2.10<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># <span class="number">3</span>-coloring of a Cycle</div><div class="line"></div><div class="line">Input: A directed cycle of length n whose arcs are specified by an <span class="built_in">array</span> S.</div><div class="line"></div><div class="line">Output: A <span class="number">3</span>-coloring of the vertices of the cycle.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    <span class="built_in">set</span> C(i) := i</div><div class="line"><span class="number">2.</span> Apply Algorithm <span class="number">2.9</span> once.</div><div class="line"><span class="number">3.</span> Sort the vertices by their colors.</div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> i = <span class="number">3</span> to <span class="number">2</span> \ceiling(logn) <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> all vertices v of color i pardo</div><div class="line">    color v with the smallest color from &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125; that is diffrrent from the colors of its two neighbors.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(logn); W = O(n)</p>
 
       
 
@@ -418,7 +444,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/03/08/economics/现代经济中的市场和政府/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/03/21/paralell_compute1&2/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -432,7 +458,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/03/08/economics/经济学基础知识/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/21/computer_network_1/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -442,7 +468,7 @@
     </a>
   
   
-    <a href="/2017/03/08/economics/宏观经济现象鸟瞰/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/03/21/economics/现代经济中的市场和政府/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>

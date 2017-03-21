@@ -38,7 +38,7 @@
 有些情况下非虚函数能够正确运行而虚函数不能
 
 有些类并非为继承而设计(设计时并不兼容被继承)">
-<meta property="og:updated_time" content="2017-03-21T00:20:05.716Z">
+<meta property="og:updated_time" content="2017-03-21T01:16:21.923Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chenfeng's blog">
 <meta name="twitter:description" content="不应当使用虚函数的情况标签： C++
@@ -209,7 +209,7 @@
 <li><p>有些类并非为继承而设计(设计时并不兼容被继承)</p>
 </li>
 </ul>
-<p>more</p>
+<a id="more"></a>
 <h3 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h3><p><strong>程序调用显式提供的对象的虚拟成员函数，优秀的编译器不带来额外的开销(与调用非虚函数相同)</strong><br>如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">T x;</div><div class="line">x.f();</div></pre></td></tr></table></figure></p>
 <ul>
 <li><p>在这里，f是否虚函数应该没有影响；产生对T::f的直接调用</p>
@@ -353,7 +353,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/03/21/Cplusplus_thinking/代理类/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/21/Cplusplus_thinking/句柄类(handle)/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         

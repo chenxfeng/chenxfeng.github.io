@@ -151,151 +151,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-paralell_compute3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="列表排序"><a href="#列表排序" class="headerlink" title="列表排序"></a>列表排序</h2><p>The list-ranking problem is to determine the distance of each node i from the end of the list</p>
-<h3 id="指针跳转法-pointer-jumping-technique"><a href="#指针跳转法-pointer-jumping-technique" class="headerlink" title="指针跳转法(pointer jumping technique)"></a>指针跳转法(pointer jumping technique)</h3><p>思想：</p>
-<ul>
-<li>链表中的指针跳转可以由一次跳转一步改为一次跳转多步</li>
-<li>如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间</li>
-<li>如果为每个节点，把一次跳转2k步的跳转结果记录下来，那么以后一次跳转2k步也只需要O（1）时间</li>
-<li>反复利用跳转步数翻倍和跳转结果记录的技巧，可以在O（log N）的时间内把跳转步数扩大为N</li>
-</ul>
-<p>more</p>
-<p>T = O(logn); W = O(nlogn)<br>并不比串行算法(linear, O(n))更优</p>
-<p>Algorithm 3.1<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># List Ranking Using Pointer Jumping</div><div class="line"></div><div class="line">Input: A linked list of n nodes such that (1)the successor of each node i is given by S(i), and (2)the S value of the last node on the list is euqal to 0.</div><div class="line"></div><div class="line">Output: For each 1 &lt;= i &lt;= n, the distance R(i) of node i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    if (S(i) != 0) then set R(i):= 1</div><div class="line">                   else set R(i):= 0</div><div class="line">2. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set Q(i) := S(i)</div><div class="line">    while (Q(i) ！= 0 and Q(Q(i)) != 0) do</div><div class="line">        set R(i) := R(i) + R(Q(i))</div><div class="line">        set Q(i) := Q(Q(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>优化思路: </p>
-<ul>
-<li>用快速并行算法把链表长度缩短为n/log n</li>
-<li>要求：缩短和恢复都可以用很小的T，并且W=O(n)</li>
-<li>方法：通过删除链表中的独立顶点集来缩短链表</li>
-<li>在缩短的链表上用指针跳转法来求序，只需W=O(n)</li>
-<li>最后用快速并行算法来恢复链表的长度</li>
-</ul>
-<p>也即：</p>
-<ol>
-<li>把列表分成约n/logn块{ $B_{i}$ }, 每块包含O(logn)个节点</li>
-<li>在每块内对每个节点用最优串行算法求序(preliminary rank)</li>
-<li>用O(logn)的平行算法把所有排好序的块组合</li>
-</ol>
-<p>List-Ranking Strategy</p>
-<ol>
-<li>Shrink the linked list L until only O(n/logn) nodes remain.</li>
-<li>Apply the pointer jumping technique(Algorithm 3.1) on the short list of the remaining nodes.</li>
-<li>Restore the original list and rank all the nodes removed in step 1.</li>
-</ol>
-<p>independent sets</p>
-<ul>
-<li>A set I of nodes is independent if, whenever i belongs to I, S(i) not belongs to I.</li>
-</ul>
-<p>缩减的列表结点必须构成一个独立集，即不相邻</p>
-<p>Algorithm 3.2<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># removing nodes of an independent set</div><div class="line"></div><div class="line">Input: (1)Arrays S and P of length n representing, respectively, the successor and predecessor relations of linked list; (2)an independent set I of nodes such that P(i), S(i) != 0; (3)a value R(i) for each node i.</div><div class="line"></div><div class="line">Output: The list obtained after removal of all the nodes in I with the updated R values.</div><div class="line"></div><div class="line">begin</div><div class="line">1. Assign consecutive serial numbers N(i) to the elements of I, where 1 &lt;= N(i) &lt;= |I| = n'.</div><div class="line">2. for for all i belongs to I pardo </div><div class="line">    set U(N(i)) := (i, S(i), R(i))</div><div class="line">    set R(P(i)) := R(P(i) + R(i))</div><div class="line">    set S(P(i)) := S(i)</div><div class="line">    set P(S(i)) := P(i)</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>删除独立顶点集并合并其权重到剩余顶点的并行复杂度: T=O(1) W=O(n)</p>
-<h3 id="Determination-of-an-Independent-Set"><a href="#Determination-of-an-Independent-Set" class="headerlink" title="Determination of an Independent Set"></a>Determination of an Independent Set</h3><p>独立集合充分大：存在常数c，c属于(0, 1)，使集合包含顶点数不少于c×n</p>
-<ul>
-<li>保证快速地迭代缩短链表</li>
-<li>把长度为n的链表缩短为n/logn只需不超过log_1-c(logn)的T</li>
-</ul>
-<p>最理想但没有快速算法：用序的奇偶性确定独立顶点集合，c=1/2</p>
-<p>(存在快速算法)对链表使用三色着色算法，把局部最小色数(或最大)的节点作为独立集元素</p>
-<ul>
-<li>从一个局部极小到下一个局部极小着色点，中间经过的点数最多为3，因此C=1/4</li>
-<li>3-color 算法收敛很快，每次调用算法，<br>着色的色数都变小为原色数的对数比例，这里的对数以2为基底</li>
-<li>要把色数变小为3，T几乎是O(1)</li>
-</ul>
-<p>Algorithm 3.3<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># simple optimal list ranking</div><div class="line"></div><div class="line">Input: A linked list with n nodes suc that the successor of each node i is given by S(i).</div><div class="line"></div><div class="line">Output: For each node i, the distance of i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. set n_0 := n, k := 0</div><div class="line">2. while n_k &gt; n/logn do</div><div class="line">    2.1 set k := k + 1</div><div class="line">    2.2 color the list with three colors and identify the set I of local minima.</div><div class="line">    2.3 remove the nodes in I, and store the appropriate information regarding the removed nodes(Algorithm 3.2).</div><div class="line">    2.4 let n_k be the size of the remaining list. compact the list into consecutive memory locations.</div><div class="line">3. apply the pointer jumping technique (Algorithm 3.1) to the resulting list.</div><div class="line">4. restore the original list and rank all the removed nodes by reversing the process performed in step2.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>缩短链表和恢复链表：T = O(log logn), W = O(n)</p>
-<ul>
-<li>把长度为n的链表缩短为n/logn，只需不超过log_1-c(logn)的T</li>
-<li>第一次迭代W = O(n), 第二次迭代W = O((1 - c)*c), …</li>
-<li>W = O(n + (1 - c)n + (1 - c)^2 *n + …) = O(n/c) = O(n)</li>
-<li>恢复和缩短是对称的，T和W都相同</li>
-</ul>
-<p>指针跳转是在长度为n/logn的已缩短链表上zuo做的，T = O(logn), W = O(n)</p>
-<p>算法的并行复杂度: T = O(loglogn); W = (n)</p>
-<ul>
-<li>*一个优化的时间复杂度为O(logn)的列表求序算法……</li>
-</ul>
-<h2 id="欧拉回路-the-Euler-Tour-Technique"><a href="#欧拉回路-the-Euler-Tour-Technique" class="headerlink" title="欧拉回路(the Euler-Tour Technique)"></a>欧拉回路(the Euler-Tour Technique)</h2><p>树的欧拉回路是指：<br>将一棵树的每一条边换成两条指向相反的有向边，成为一个欧拉图，就存在欧拉回路；<br>可以定义一个论域为所有有向边的函数s(successor function)，描述这棵树的欧拉回路</p>
-<p>Lemma 3.6: Given a tree T = (V, E) and an ordering of the set of vertices adjacent to each vertex v belongs to V, the function s defined previously specifies an Euler circuit in the directed graph T’ = (V, E’), where E’ is obtained by replacement of each e belongs to E by two arcs of opposite directions.</p>
-<ul>
-<li><p>we call the Euler circuit of T’ the <strong>Euler tour</strong> of T</p>
-</li>
-<li><p>每棵树都有欧拉回路</p>
-</li>
-<li>如果欧拉回路从树的根节点出发，则它实际上是树的节点深度优先遍历路径</li>
-</ul>
-<p>给出一个由邻接表及附加的指针信息描述的树，求得一条欧拉回路的T = O(1), W = O(n), |V| = n<br>(指针信息: data field + pointer * 2(描述下一个邻接点 + 描述该点在邻接表中指向此顶点的item))</p>
-<ul>
-<li><p>树求根(rooting a tree): 树根结点为r，对于每个非根结点v，寻找其父父结点p(v)</p>
-</li>
-<li><p>一对顶点之间的两条弧，先出后进的顶点是父节点，先进后出的是子节点</p>
-</li>
-</ul>
-<p>弧的顺序的确定：<br>-把欧拉回路从其中一点处断开（例如去除回路路径列表中的最前与最后的弧的相邻关系）</p>
-<ul>
-<li>用链表求序来对这些弧定序</li>
-</ul>
-<p>树的一个欧拉回路为L[r] = &lt; u_0, u_1, … , u_d-1 &gt;</p>
-<p>设s(&lt; u_d-1, r &gt;) = 0，将欧拉回路从r处截断，得到一条始于r，遍历所有顶点一次，终于r的欧拉路径</p>
-<p>Algorithm 3.5<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># rooting a tree</span></div><div class="line"></div><div class="line">Input: (<span class="number">1</span>)a tree T defined by the adjacency lists of its vertices, (<span class="number">2</span>)an Euler tour defined by the successor function s, and (<span class="number">3</span>)a special vertex r</div><div class="line"></div><div class="line">Output: For each vertex v != r, the parent p(v) of v in the tree rooted at r.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> Identify the last vertex u appearing on the adjacency <span class="built_in">list</span> of r. <span class="built_in">set</span> s(&lt;u, r&gt;) = <span class="number">0</span></div><div class="line"><span class="number">2.</span> Assign a weight of <span class="number">1</span> to each arc &lt;x, y&gt;, and apply parallel prefix on the <span class="built_in">list</span> of arcs defined by s.</div><div class="line"><span class="number">3.</span> For each arc &lt;x, y&gt;, <span class="built_in">set</span> x = p(y) whenever the prefix sum of &lt;x, y&gt; is smaller than the prefix sum of &lt;y, x&gt;.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>并行复杂度与链表求序相同：</p>
-<ul>
-<li>T=O(log n log log n) ？？？</li>
-<li>W=O(n)</li>
-<li>这里n是顶点数（树的边数是顶点数减一）</li>
-</ul>
-<p>1、Postorder Numbering 后序遍历的序数</p>
-<p>往下走的弧的权重为0，往上走的弧的权重为1，然后用链表中求前缀和的方法来算出后序遍历编号</p>
-<p>Algorithm 3.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Postorder Numbering</div><div class="line"></div><div class="line">Input: (1)A rooted binary tree with root r, and (2)the coresponding Euler path defined by the function s</div><div class="line"></div><div class="line">Output: The postorder number post(v) of each vertex v</div><div class="line"></div><div class="line">begin</div><div class="line">1. For each vertex v != r, assign the weights w(&lt;v, p(v)&gt;) = 1 and w(&lt;p(v&gt;, v) = 0</div><div class="line">2. Perform parallel prefix on the list of arcs defined by s.</div><div class="line">3. For each vertex v != r, set post(v) equal to the prefix sum of &lt;v, p(v)&gt;. For v = r, set post(v) = n, where n is the number of vertices in the given tree.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>2、Computing the Vertex level 结点层数</p>
-<p>可用类似Algorithm 3.6的算法，1和3做改动: w(<p(v), v="">) = +1; w(<v, p(v)="">) = -1。level(v) = <p(v), v="">的前缀和</p(v),></v,></p(v),></p>
-<p>3、Computing the preorder Number </p>
-<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0; </p>
-<p>preorder(v) = &lt; p(v), v &gt;前缀和 + 1;  preorder(r) = 1</p>
-<p>4、Computing the Number of Descendants</p>
-<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0;</p>
-<p>desc(v) = &lt; v, p(v) &gt;前缀和 - &lt; p(v), v &gt;前缀和; desc(r) = n - 1</p>
-<p>以上四个并行算法:<br>T = O(logn); W = O(n)（由平衡树方法求前缀和的平行算法所决定）</p>
-<ul>
-<li>*Tree Contraction(树收缩) ……</li>
-</ul>
-<ul>
-<li>*Lowest Common Ancestors ……</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/21/paralell_compute3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
     <article id="post-computer_network_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -320,545 +175,10 @@
 <p>IETF标准文档称请求评论(Request For Comment, RFC)</p>
 <p>分布式应用程序(distributed application)涉及多台相互交换数据的端系统</p>
 <p>应用程序编程接口(Application Programming Interface, API)</p>
-<h2 id="网络边缘"><a href="#网络边缘" class="headerlink" title="网络边缘"></a>网络边缘</h2><p>more</p>
-<p>主机(hosts) = 端系统: 客户(client)和服务器(server)</p>
-<p>数据中心(data center)由许多服务器构成</p>
-<p>接入网(access network)指将端系统连接到其边缘路由器(edge router)的物理链路</p>
-<ol>
-<li>residential access nets</li>
-<li>institutional access networks (school, company)</li>
-<li>mobile access networks</li>
-</ol>
-<p>bandwidth(bit per second, bps); shared / dedicated(专用)</p>
-<p>数字用户线(Digital Subscriber Line, DSL): </p>
-<ul>
-<li>existing telephone line to central office DSLAM</li>
-<li>&lt; 2.5 Mbps upstream transmission rate (typically &lt; 1 Mbps)</li>
-<li>&lt; 24 Mbps downstream transmission rate (typically &lt; 10 Mbps)</li>
-<li>frequency division multiplexing: different channels transmitted<br>in different frequency bands</li>
-</ul>
-<p>电缆因特网接入(cable Internet access) 有线电视</p>
-<p>HFC: hybrid fiber coax</p>
-<ul>
-<li>asymmetric: up to 30Mbps downstream transmission rate, 2 Mbps upstream transmission rate</li>
-</ul>
-<p>以太网Ethernet</p>
-<p>光纤到户(Fiber To The Home, FTTH)</p>
-<ul>
-<li>光纤分布体系结构：主动光纤网络(Active Optical Network, AON)和被动光纤网络(Passive Optical Network, PON)</li>
-</ul>
-<p>光纤网络端接器(Optical Network Terminator, ONT)</p>
-<p>分配器(splitter)</p>
-<p>光纤线路端接器(Optical Line Terminator, OLT)</p>
-<p>wireless network</p>
-<p>wireless LANs:</p>
-<ul>
-<li>within building (100 ft.)</li>
-<li>802.11b/g/n (WiFi): 11, 54, 450 Mbps transmission rate</li>
-</ul>
-<p>wide-area wireless access</p>
-<ul>
-<li>provided by telco (cellular) operator, 10’s km</li>
-<li>between 1 and 10 Mbps </li>
-<li>3G, 4G: LTE</li>
-</ul>
-<p>host sending function:</p>
-<ul>
-<li>takes application message</li>
-<li>breaks into smaller chunks, known as packets, of length L bits</li>
-<li>transmits packet into access network at transmission rate R</li>
-<li>link transmission rate, aka link capacity, aka link bandwidth</li>
-</ul>
-<ul>
-<li>物理媒体(physical medium): 双绞铜线、同轴电缆、多模光纤缆、陆地无线电频谱、卫星无线电频谱</li>
-</ul>
-<ul>
-<li>bit: propagates between transmitter/receiver pairs</li>
-<li>physical link: what lies between transmitter &amp; receiver</li>
-</ul>
-<p>导引型媒体(guided media): </p>
-<ul>
-<li>signals propagate in solid media: copper, fiber, coax</li>
-</ul>
-<p>非导引型媒体(unguided media): </p>
-<ul>
-<li>signals propagate freely, e.g., radio</li>
-</ul>
-<p>双绞铜线 twisted pair (TP): </p>
-<ul>
-<li>two insulated copper wires</li>
-<li>Category 5: 100 Mbps, 1 Gbps Ethernet</li>
-<li>Category 6: 10Gbps</li>
-</ul>
-<p>两根隔离的铜线以规则的螺旋形式排列组成；两根线绞合起来以减少邻近类似双绞线的电气干扰</p>
-<p>一对电线构成一个通信链路；通常许多双绞线捆扎在一起成电缆</p>
-<p>无屏蔽双绞线(Unshielded Twisted Pair, UTP) 常用于建筑物内网络</p>
-<p>同轴电缆 coaxial cable: </p>
-<ul>
-<li>two concentric copper conductors</li>
-<li>bidirectional</li>
-<li>broadband:</li>
-<li>multiple channels on cable</li>
-<li>HFC</li>
-</ul>
-<p>光纤 fiber optic cable: </p>
-<ul>
-<li>glass fiber carrying light pulses, each pulse a bit</li>
-<li>high-speed operation:<br>high-speed point-to-point transmission (e.g., 10’s-100’s Gbps transmission rate)</li>
-<li>low error rate: </li>
-</ul>
-<ol>
-<li>repeaters spaced far apart </li>
-<li>immune to electromagnetic noise(不受电磁干扰)</li>
-</ol>
-<p>单模光纤速率高，价格贵; 多模光纤速率低，价格便宜</p>
-<p>电磁波 ratio</p>
-<ul>
-<li>signal carried in electromagnetic spectrum</li>
-<li>no physical “wire”</li>
-<li>bidirectional</li>
-<li>propagation environment effects:</li>
-</ul>
-<ol>
-<li>reflection </li>
-<li>obstruction by objects</li>
-<li>interference</li>
-</ol>
-<p>adio link types:</p>
-<ul>
-<li>terrestrial  microwave<br>e.g. up to 45 Mbps channels</li>
-<li>LAN (e.g., WiFi)<br>54 Mbps</li>
-<li>wide-area (e.g., cellular)<br>4G cellular: ~ 10 Mbps</li>
-<li>satellite</li>
-</ul>
-<ol>
-<li>Kbps to 45Mbps channel (or multiple smaller channels)</li>
-<li>270 msec end-end delay</li>
-<li>geosynchronous versus low altitude</li>
-</ol>
-<p>同步卫星(geostationary satellite); 近地轨道(Low-Earth Orbiting, LEO)卫星</p>
-<h3 id="编码-encoding"><a href="#编码-encoding" class="headerlink" title="编码(encoding)"></a>编码(encoding)</h3><p>Non-return to Zero Inverted (NRZI):</p>
-<ul>
-<li>make a transition from current signal to encode a one; stay at current signal to encode a zero</li>
-<li>solves the problem of consecutive ones</li>
-</ul>
-<p>经网络传输数据会产生时钟同步问题</p>
-<p>Manchester: </p>
-<ul>
-<li>transmit XOR of the NRZ encoded data and the clock</li>
-<li>only 50% efficient (bit rate = 1/2 baud rate)</li>
-</ul>
-<p>包含丰富的时钟信息</p>
-<p>4B/5B: </p>
-<ul>
-<li>every 4 bits of data encoded in a 5-bit code</li>
-<li>5-bit codes selected to have no more than one leading 0 and no more than two trailing 0s </li>
-<li>thus,  never get more than three consecutive 0s</li>
-<li>resulting 5-bit codes are transmitted using NRZI </li>
-<li>achieves 80% efficiency</li>
-</ul>
-<h3 id="数据帧化Framing"><a href="#数据帧化Framing" class="headerlink" title="数据帧化Framing"></a>数据帧化Framing</h3><ul>
-<li>Break sequence of bits into a frame</li>
-<li>Typically implemented by network adaptor</li>
-</ul>
-<p>Sentinel-based: </p>
-<ul>
-<li>delineate frame with special pattern: 01111110</li>
-<li>e.g., HDLC, SDLC, PPP</li>
-</ul>
-<p>Beginning sequence(8) + Header(16) + Body + CRC(16) + Ending sequence(8)</p>
-<ul>
-<li>problem: special pattern appears in the payload</li>
-<li>solution: bit stuffing</li>
-<li>sender: insert 0 after five consecutive 1s</li>
-<li>receiver: delete 0 that follows five consecutive 1s</li>
-</ul>
-<p>Counter-based: </p>
-<ul>
-<li>include payload length in header</li>
-<li>e.g., DDCMP</li>
-</ul>
-<p>SYN(8) + SYN(8) + Class(8) + Count(14) + Header(42) + Body + CRC(16)</p>
-<ul>
-<li>problem: count field corrupted</li>
-<li>solution: catch when CRC fails</li>
-</ul>
-<p>Clock-based: </p>
-<ul>
-<li>each frame is 125us long</li>
-<li>e.g., SONET: Synchronous Optical Network</li>
-<li>STS-n (STS-1 = 51.84 Mbps)</li>
-</ul>
-<h2 id="网络核心"><a href="#网络核心" class="headerlink" title="网络核心"></a>网络核心</h2><p>Communication networks can be classified based on the way in which the nodes exchange information:</p>
-<p>Communication Network: </p>
-<ul>
-<li><p>Broadcast Communication Network</p>
-</li>
-<li><p>Switched Communication Network</p>
-</li>
-</ul>
-<ol>
-<li><p>Circuit-Switched Communication Network</p>
-</li>
-<li><p>Packet-Switched Communication Network</p>
-</li>
-</ol>
-<ul>
-<li>Datagram Network</li>
-<li>Virtual Circuit Network</li>
-</ul>
-<h3 id="Connection-Oriented-面向连接"><a href="#Connection-Oriented-面向连接" class="headerlink" title="Connection Oriented(面向连接)"></a>Connection Oriented(面向连接)</h3><p>Has connection establish and release procedures</p>
-<ul>
-<li>Similar to circuit switched</li>
-</ul>
-<p>Transmission in order</p>
-<p>Bandwidth <em>may</em> be guaranteed</p>
-<p>Flow control <em>may</em> exist</p>
-<p>Error control <em>may</em> exist</p>
-<h3 id="Connectionless-无连接"><a href="#Connectionless-无连接" class="headerlink" title="Connectionless(无连接)"></a>Connectionless(无连接)</h3><p>Each datagram may take a different path</p>
-<p>Datagrams may arrive out of order</p>
-<p>Link failures not a problem</p>
-<ul>
-<li><p>problem in a Generic Switch</p>
-</li>
-<li><p>incoming links : how to demultiplex</p>
-</li>
-<li><p>switch : how to switch</p>
-</li>
-<li><p>outgoing links : how to multiplex</p>
-</li>
-</ul>
-<h3 id="Packet-Switching-分组交换"><a href="#Packet-Switching-分组交换" class="headerlink" title="Packet Switching(分组交换)"></a>Packet Switching(分组交换)</h3><p>各种网络应用中，端系统彼此交换报文(message)</p>
-<p>分组(packet swicth): 源端系统像目的端系统发送报文，源将报文划分为较小的数据块</p>
-<p>每个分组通过通信链路和分组交换机(packet switch)传送</p>
-<ul>
-<li>两类交换机: 路由器和链路层交换机</li>
-</ul>
-<p>packet-switching:<br>hosts break application-layer messages into packets</p>
-<p>Data from any conversation can be transmitted at any given time</p>
-<ul>
-<li>A single conversation can use the entire link capacity if it is alone</li>
-</ul>
-<p>How to demultiplex?</p>
-<ul>
-<li>Use meta-data (header) to describe data</li>
-</ul>
-<p>Data are sent as formatted bit-sequences</p>
-<ul>
-<li>so-called packets.</li>
-</ul>
-<p>Packets have the following structure:</p>
-<ul>
-<li>Header + Data + Tailer</li>
-<li>Header and Trailer carry control information</li>
-<li>e.g., destination address, check sum</li>
-</ul>
-<p>Store-and-Forward Networks(存储转发传输): </p>
-<ul>
-<li>At each node the entire packet is received, stored briefly, and </li>
-<li>then forwarded to the next node based on the header information </li>
-<li>Allows statistical(统计的) multiplexing</li>
-</ul>
-<p>在接收完所有的比特后进行查错，无误在再进行转发</p>
-<p>“热土豆”传输: 一边接收，一边转发</p>
-<ul>
-<li>适用于网络质量好，出错概率低的情况</li>
-</ul>
-<p>通过N条速率均为R的链路组成的路径(源和目的地之间有N-1台路由器)发送一个分组，端到端时延: </p>
-<p>$$d_{EndToEnd} = N \frac{L}{R}$$</p>
-<p>takes L/R seconds to transmit </p>
-<ul>
-<li>L-bit packet into link at R bps</li>
-</ul>
-<p>one-hop numerical example:</p>
-<ul>
-<li>L = 7.5 Mbits</li>
-<li>R = 1.5 Mbps</li>
-<li>one-hop transmission delay = 5 sec</li>
-</ul>
-<p>packet-switching</p>
-<ul>
-<li>forward packets from one router to the next</li>
-<li>across links on path from source to destination</li>
-<li>Each packet is independently switched</li>
-<li>header contains destination address</li>
-</ul>
-<ul>
-<li>Two key network-core functions</li>
-</ul>
-<ol>
-<li>routing: determines source-destination route taken by packets</li>
-</ol>
-<ul>
-<li>routing algorithms</li>
-</ul>
-<ol>
-<li>forwarding: move packets from router’s input to appropriate router output</li>
-</ol>
-<p>输出缓存(output buffer)(输出队列 output queue):<br>用于存储路由器准备发往相连的链路的分组;</p>
-<p>排队时延(queue delay):<br>到达的分组在链路忙于传输其他分组时必须在输出缓存中等待;</p>
-<p>分组丢失(丢包 packet lost):<br>一个分组到达时缓存已被其他等待传输的分组完全充满，到达的分组或已经排队的分组之一将被丢弃</p>
-<p>queuing and loss: </p>
-<ul>
-<li>if arrival rate exceeds transmission rate of link for a period of time</li>
-<li>packets will queue, wait to be transmitted on link </li>
-<li>can be dropped (lost) if memory (buffer) fills up</li>
-</ul>
-<h3 id="Circuit-Switching-电路交换"><a href="#Circuit-Switching-电路交换" class="headerlink" title="Circuit Switching(电路交换)"></a>Circuit Switching(电路交换)</h3><p>两台主机通信时网络在两台主机之间创建一条专用的端到端连接(end-to-end connection)</p>
-<p>频分复用(Frequency-Division Multiplexing, FDM):<br>链路的频谱由跨越链路创建的所有连接所共享; 在连接期间链路为每条连接专用一个频段</p>
-<p>时分复用(Time-Division Multiplexing, TDM):<br>时间被划分为固定区间的帧(frame)，每帧划分为固定数量的时隙;<br>网络跨越一条链路创建一条连接时在每个帧中为该连接指定一个时隙(slot)</p>
-<p>Time divided in frames and frames divided in slots</p>
-<p>Relative slot <strong>position</strong> inside a frame determines which conversation the data belongs to </p>
-<p>Needs <strong>synchronization</strong>(同步) between sender and receiver</p>
-<p>If a conversation does not use its circuit the capacity is lost</p>
-<p>Three phases(三个阶段)</p>
-<ol>
-<li>circuit establishment</li>
-<li>data transfer</li>
-<li>circuit termination</li>
-</ol>
-<p>If circuit not available: busy</p>
-<p>Examples</p>
-<ul>
-<li>Telephone networks</li>
-<li>ISDN (Integrated Services Digital Networks)(综合业务数字网)</li>
-</ul>
-<p>end-end resources allocated to, reserved for “call” between source &amp; dest</p>
-<p>dedicated resources: no sharing</p>
-<ul>
-<li>circuit-like (guaranteed) performance</li>
-</ul>
-<p>circuit segment idle(闲置) if not used by call (no sharing)</p>
-<h3 id="Packet-Switching-vs-Circuit-Switching"><a href="#Packet-Switching-vs-Circuit-Switching" class="headerlink" title="Packet-Switching vs. Circuit-Switching"></a>Packet-Switching vs. Circuit-Switching</h3><p>Most important advantage of packet-switching: </p>
-<ul>
-<li>Ability to exploit statistical multiplexing</li>
-<li>More efficient bandwidth usage</li>
-</ul>
-<p>However, packet-switching needs to buffer and deal with congestion</p>
-<ul>
-<li>More complex switches</li>
-<li>Harder to provide good network services (e.g., delay and bandwidth guarantees)</li>
-</ul>
-<p>packet switching allows more users to use network</p>
-<p>example:</p>
-<ul>
-<li>1 Mb/s link<br>each user: </li>
-<li>100 kb/s when “active”</li>
-<li><p>active 10% of time</p>
-</li>
-<li><p>circuit-switching: 10 users</p>
-</li>
-<li>packet switching: with 35 users, probability &gt; 10 active at same time is less than .0004 *</li>
-</ul>
-<p>packet switching: </p>
-<p>great for bursty data</p>
-<ul>
-<li>resource sharing</li>
-<li>simpler, no call setup</li>
-</ul>
-<p>excessive congestion possible: </p>
-<ul>
-<li>packet delay and loss</li>
-<li>protocols needed for reliable data transfer, congestion control</li>
-</ul>
-<p>Q: How to provide circuit-like behavior?</p>
-<ul>
-<li>bandwidth guarantees needed for audio/video apps</li>
-</ul>
-<h3 id="Virtual-Circuit-Packet-Switching-虚电路交换"><a href="#Virtual-Circuit-Packet-Switching-虚电路交换" class="headerlink" title="Virtual-Circuit Packet Switching(虚电路交换)"></a>Virtual-Circuit Packet Switching(虚电路交换)</h3><p>Hybrid of circuit switching and packet switching</p>
-<ul>
-<li>Data is transmitted as packets</li>
-<li>All packets from one packet stream are sent along a pre-established path (=virtual circuit)</li>
-<li>Guarantees in-sequence delivery of packets</li>
-</ul>
-<p>Packet header only contains local virtual circuit identifier (VCI)</p>
-<p>Demultiplexing and switching based on VCI</p>
-<ul>
-<li>Note: packet headers don’t need to contain the full destination address of the packet </li>
-</ul>
-<p>Example: ATM networks</p>
-<p>Communication with virtual circuits takes place in three phases </p>
-<ol>
-<li>VC establishment</li>
-<li>data transfer</li>
-<li>VC disconnect</li>
-</ol>
-<h3 id="Internet-structure-network-of-networks-网络的网络"><a href="#Internet-structure-network-of-networks-网络的网络" class="headerlink" title="Internet structure: network of networks(网络的网络)"></a>Internet structure: network of networks(网络的网络)</h3><p>End systems connect to Internet via access ISPs (Internet Service Providers)</p>
-<ul>
-<li>residential, company and university ISPs</li>
-</ul>
-<p>Access ISPs in turn must be interconnected. </p>
-<ul>
-<li>so that any two hosts can send packets to each other</li>
-</ul>
-<p>Resulting network of networks is very complex</p>
-<ul>
-<li>evolution was driven by economics and national policies</li>
-</ul>
-<p>Question: given millions of access ISPs, how to connect them together?<br>Option: connect each access ISP to every other access ISP?<br>Option: connect each access ISP to one global transit ISP? </p>
-<ul>
-<li>Customer and provider ISPs have economic agreement.</li>
-</ul>
-<p>at center: small # of well-connected large networks</p>
-<ul>
-<li>“tier-1” commercial ISPs (e.g., Level 3, Sprint, AT&amp;T, NTT), national &amp; international coverage</li>
-<li>content provider network (e.g., Google): private network that connects it data centers to Internet, often bypassing tier-1, regional ISPs</li>
-</ul>
-<h2 id="分组交换网中的时延、丢包和吞吐量-delay-loss-throughput-in-networks"><a href="#分组交换网中的时延、丢包和吞吐量-delay-loss-throughput-in-networks" class="headerlink" title="分组交换网中的时延、丢包和吞吐量(delay, loss, throughput in networks)"></a>分组交换网中的时延、丢包和吞吐量(delay, loss, throughput in networks)</h2><h3 id="时延"><a href="#时延" class="headerlink" title="时延"></a>时延</h3><p>结点处理时延(nodal processing delay): 检查分组首部和决定出口链路、查错校验</p>
-<p>排队时延(queuing delay): 分组在出口链路队列上等待传输</p>
-<p>传输时延(transmission delay): L/R(分组长度/链路传输速率); 将所有分组比特推(传输)向链路所需时间</p>
-<p>传播时延(propagation delay): d/s(距离/传播速率)，介质相关</p>
-<p>结点总时延(total nodal delay)</p>
-<p>$$d<em>{nodal} = d</em>{proc} + d<em>{queue} + d</em>{trans} + d_{prop}$$</p>
-<p>How do loss and delay occur:<br>packets queue in router buffers </p>
-<ul>
-<li>packet arrival rate to link (temporarily) exceeds output link capacity</li>
-<li>packets queue, wait for turn</li>
-</ul>
-<p>$d_{proc}$: nodal processing </p>
-<ul>
-<li>check bit errors</li>
-<li>determine output link</li>
-<li>typically &lt; msec</li>
-</ul>
-<p>$d_{queue}$: queueing delay</p>
-<ul>
-<li>time waiting at output link for transmission </li>
-<li>depends on congestion level of router</li>
-</ul>
-<p>$d_{trans}$: transmission delay</p>
-<ul>
-<li>L: packet length (bits) </li>
-<li>R: link bandwidth (bps)</li>
-<li>$d_{trans} = L/R$</li>
-</ul>
-<p>$d_{prop}$: propagation delay</p>
-<ul>
-<li>d: length of physical link</li>
-<li>s: propagation speed (~2x108 m/sec)</li>
-<li>$d_{prop} = d/s$</li>
-</ul>
-<p>$d<em>{trans}$ and $d</em>{prop}$ are very different</p>
-<h3 id="排队时延和丢包"><a href="#排队时延和丢包" class="headerlink" title="排队时延和丢包"></a>排队时延和丢包</h3><p>流量强度(traffic intensity): La/R; </p>
-<ul>
-<li>a: 分组到达队列的平均速率(pkt/s)(a: average packet arrival rate)</li>
-<li>R: link bandwidth (bps)</li>
-<li><p>L: packet length (bits)</p>
-</li>
-<li><p>La/R ~ 0: avg. queueing delay small</p>
-</li>
-<li>La/R -&gt; 1: avg. queueing delay large</li>
-<li>La/R &gt; 1: more “work” arriving<br> than can be serviced, average delay infinite!</li>
-</ul>
-<ul>
-<li>设计系统时流量强度不能大于1</li>
-</ul>
-<p>随着流量强度接近于1，平均排队时延迅速增加</p>
-<p>丢包: 分组到达时路由器链路队列已满，路由器丢弃(drop)该分组，该分组会丢失(lost)</p>
-<ul>
-<li>queue (aka buffer) preceding link in buffer has finite capacity</li>
-<li>packet arriving to full queue dropped (aka lost)</li>
-<li>lost packet may be retransmitted by previous node, by source end system, or not at all</li>
-</ul>
-<h3 id="吞吐量-throughput"><a href="#吞吐量-throughput" class="headerlink" title="吞吐量(throughput)"></a>吞吐量(throughput)</h3><p>瞬时吞吐量(instantaneous throughput): 主机接收到文件的速率(bps)</p>
-<p>平均吞吐量(average throughput): F/T秒; 接收总共F比特用去T秒</p>
-<p>瓶颈链路(bottleneck link): 系统中传输速率最小的链路</p>
-<p>throughput: rate (bits/time unit) at which bits transferred between sender/receiver</p>
-<ul>
-<li>instantaneous: rate at given point in time</li>
-<li>average: rate over longer period of time</li>
-</ul>
-<p>bottleneck link:<br>link on end-end path that constrains end-end throughput</p>
-<h2 id="协议层次-服务模型-protocol-layers-service-models"><a href="#协议层次-服务模型-protocol-layers-service-models" class="headerlink" title="协议层次 服务模型(protocol layers, service models)"></a>协议层次 服务模型(protocol layers, service models)</h2><p>分层(layer)</p>
-<p>layers: each layer implements a service</p>
-<ul>
-<li>via its own internal-layer actions</li>
-<li>relying on services provided by layer below</li>
-</ul>
-<p>协议栈(protocol stack)</p>
-<p>应用层(第七层): <http、smtp、ftp、dns...> 报文(message)</http、smtp、ftp、dns...></p>
-<p>运输层(四层): <tcp udp=""> 报文段(segment)</tcp></p>
-<p>网络层(三层): <ip>数据报(datagram)</ip></p>
-<p>链路层(二层): 帧(frame)</p>
-<p>物理层(一层): 将帧中的比特一个一个从一个结点移动到下一个结点</p>
-<p>OSI(Open System Interconnect Reference Model, 开放系统互联参考模型)</p>
-<p>表示层: 数据压缩、数据加密、数据描述</p>
-<p>会话层: 数据交换定界、同步功能，建立检查点和恢复方案</p>
-<p>Internet protocol stack: </p>
-<p>application: supporting network applications</p>
-<ul>
-<li>FTP, SMTP, HTTP</li>
-</ul>
-<p>transport: process-process data transfer</p>
-<ul>
-<li>TCP, UDP</li>
-</ul>
-<p>network: routing of datagrams from source to destination</p>
-<ul>
-<li>IP, routing protocols</li>
-</ul>
-<p>link: data transfer between neighboring  network elements</p>
-<ul>
-<li>Ethernet, 802.111 (WiFi), PPP</li>
-</ul>
-<p>physical: bits “on the wire</p>
-<p>ISO/OSI reference model: (two more layer)</p>
-<ul>
-<li><p>presentation: allow applications to interpret meaning of data, e.g., encryption, compression, machine-specific conventions</p>
-</li>
-<li><p>session: synchronization, checkpointing, recovery of data exchange<br>Internet stack “missing” these layers!</p>
-</li>
-<li><p>these services, if needed, must be implemented in application</p>
-</li>
-</ul>
-<p>封装(encaosulation)</p>
-<p>应用层报文(application-layer message) -&gt; 运输层报文段(transport-layer segment) -&gt; 网络层数据报(network-layer datagram) -&gt; 链路层帧(link-layer frame)</p>
-<p>分组 : 首部字段 + 有效载荷字段(payload field)(来自上一层的分组)</p>
-<h2 id="面对攻击的网络-networks-under-attack-security"><a href="#面对攻击的网络-networks-under-attack-security" class="headerlink" title="面对攻击的网络(networks under attack: security)"></a>面对攻击的网络(networks under attack: security)</h2><p>Internet not originally designed with (much) security in mind</p>
-<ul>
-<li>original vision: “a group of mutually trusting users attached to a transparent network” </li>
-<li>Internet protocol designers playing “catch-up”</li>
-<li>security considerations in all layers!</li>
-</ul>
-<p>恶意软件(malware)</p>
-<p>僵尸网络(botnet)</p>
-<p>病毒(virus): 需要某种形式的用户交互感染用户设备的恶意软件</p>
-<p>蠕虫(worm): 无需任何明显用户交互就能进入设备的恶意软件</p>
-<p>malware can get in host from:</p>
-<ul>
-<li>virus: self-replicating infection by receiving/executing object (e.g., e-mail attachment)</li>
-<li>worm: self-replicating infection by passively receiving object that gets itself executed</li>
-</ul>
-<p><strong>spyware malware</strong> can record keystrokes, web sites visited, upload info to collection site</p>
-<p>infected host can be enrolled in <strong>botnet</strong>, used for spam. DDoS attacks</p>
-<p>拒绝服务攻击(Denial-of-Service (DoS) attack)</p>
-<ul>
-<li>弱点攻击: 向一台目标主机上运行的易受攻击的应用程序或操作系统发送制作精细的报文</li>
-<li>带宽洪泛: 向目标主机发送大量的分组使目标接入链路拥塞</li>
-<li>连接洪泛: 在目标主机中创建大量半开或全开TCP连接</li>
-</ul>
-<p>分布式Dos(Distributed DoS, DDoS): 攻击者控制多个源向目标发送大量流量</p>
-<p>Denial of Service(DoS): attackers make resources (server, bandwidth) unavailable to legitimate traffic by overwhelming resource with bogus traffic</p>
-<ol>
-<li><p>select target</p>
-</li>
-<li><p>break into hosts around the network (see botnet)</p>
-</li>
-<li><p>send packets to target from compromised hosts</p>
-</li>
-</ol>
-<p>分组嗅探器(packet sniffer)</p>
-<p>packet “sniffing”: </p>
-<ul>
-<li>broadcast media (shared Ethernet, wireless)</li>
-<li>promiscuous network interface reads/records all packets (e.g., including passwords!) passing by</li>
-<li>wireshark software is a (free) packet-sniffer</li>
-</ul>
-<p>IP哄骗(IP spooning)</p>
-<p>IP spoofing: send packet with false source address</p>
-<hr>
-<p>~ history</p>
-
+<h2 id="网络边缘"><a href="#网络边缘" class="headerlink" title="网络边缘"></a>网络边缘</h2>
+        
+          <a class="article-more-a" href="/2017/03/21/computer_network_1/#more">more >></a>
+        
       
 
       
@@ -923,147 +243,9 @@
 <ul>
 <li>算法复杂度框架: work(计算量(operation)), time(计算时间)</li>
 </ul>
-<p>more</p>
-<p>2.1发现硬件的<strong>网络拓扑和处理能力</strong></p>
-<p>网络拓扑: </p>
-<ul>
-<li>静态: 环、星、树、超立方、图</li>
-<li>动态: 互联网或移动网络中的分布式计算</li>
-</ul>
-<p>处理能力: </p>
-<ul>
-<li>指标: 处理速度和处理规模</li>
-<li>结构: 同构、异构</li>
-<li>方式: 内存计算还是内外存混合计算，计算密集型还是数据密集型</li>
-</ul>
-<p>发现网络拓扑的算法: </p>
-<ul>
-<li>目的一: 建立数据通信的路由</li>
-<li>目的二: 死锁检测和解除</li>
-<li>目的三: 优化数据传播和交换</li>
-</ul>
-<p>发现处理能力的方法: </p>
-<ul>
-<li>测试程序</li>
-<li>人工检测</li>
-</ul>
-<p>2.2设计<strong>与计算问题无关</strong>的分布式计算协议</p>
-<p>(所需计算协议包括以下但不止)</p>
-<ul>
-<li><p>广播、多播和数据收集</p>
-</li>
-<li><p>同步和异步控制</p>
-</li>
-<li><p>终止检测和全局谓词(条件)检测</p>
-</li>
-<li><p>快照保存与检查点恢复</p>
-</li>
-</ul>
-<p>3.把并行算法<em>映射</em>到硬件上，匹配、优化</p>
-<p>匹配: </p>
-<ul>
-<li>与硬件相关的具体并行算法</li>
-<li>数据分划和任务指派方案(静态或动态)</li>
-<li>并行和分布式计算的程序</li>
-</ul>
-<p>优化: </p>
-<ul>
-<li>面向硬件体系结构的算法复杂度分析</li>
-<li>针对硬件特性的算法改进和程序调优</li>
-</ul>
-<h2 id="并行计算的基本方法"><a href="#并行计算的基本方法" class="headerlink" title="并行计算的基本方法"></a>并行计算的基本方法</h2><h3 id="平衡树方法-Balanced-Trees"><a href="#平衡树方法-Balanced-Trees" class="headerlink" title="平衡树方法(Balanced Trees)"></a>平衡树方法(Balanced Trees)</h3><ul>
-<li>例: 设<em>是满足结合律的二元运算符，考虑计算<br>$$ S_i = x_1 </em> x_2 <em> … </em> x_i, 1 \leq i \leq n $$</li>
-</ul>
-<p>Algorithm 2.1<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># Prefix Sums</div><div class="line"></div><div class="line">Input: An <span class="built_in">array</span> of n = <span class="number">2</span>^k elements (x_1, x_2, ..., x_n), where k is a nonnegative integer.</div><div class="line"></div><div class="line">Output: The prefix sums s_i, <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">if</span> n = <span class="number">1</span> then &#123;<span class="built_in">set</span> s_1 := x_1; <span class="built_in">exit</span>&#125;</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n/<span class="number">2</span> pardo</div><div class="line">    <span class="built_in">set</span> y_i := x_2i<span class="number">-1</span> * x_2i</div><div class="line"><span class="number">3.</span> Recursively, compute the prefix sums of &#123;y_1, y_2, ..., y_n&#125;, and store them in z_1, z_2, ..., z_n/<span class="number">2</span></div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    &#123;i even     :  <span class="built_in">set</span> s_i := z_i/<span class="number">2</span></div><div class="line">     i = <span class="number">1</span>      :  <span class="built_in">set</span> s_1 := x_1</div><div class="line">     i odd &gt; <span class="number">1</span>  :  <span class="built_in">set</span> s_i := z_(i<span class="number">-1</span>)/<span class="number">2</span> * x_i&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<ul>
-<li>复杂度分析<br>$$ T(n) = T(\frac{n}{2}) + a  $$<br>$$ W(n) = W(\frac{n}{2}) + bn $$<br>求解递归方程<br>$$ T(n) = O(logn) $$<br>$$ W(n) = O(n) $$</li>
-</ul>
-<p>Algorithm 2.2<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># Nonrecursive Prefix Sums</div><div class="line"></div><div class="line">Input: An <span class="built_in">array</span> A of size n = <span class="number">2</span>^k, where k is a nonnegative integer.</div><div class="line"></div><div class="line">Output: An <span class="built_in">array</span> C such that C(<span class="number">0</span>, j) is the jth prefix sum, <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n pardo</div><div class="line">    <span class="built_in">set</span> B(<span class="number">0</span>, j) := A(j)</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> h = <span class="number">1</span> to logn <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        <span class="built_in">set</span> B(h, j) := B(h - <span class="number">1</span>, <span class="number">2</span>j - <span class="number">1</span>) * B(h - <span class="number">1</span>, <span class="number">2</span>j)</div><div class="line"><span class="number">3.</span> <span class="keyword">for</span> h = logn to <span class="number">0</span> <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        &#123;j even    : <span class="built_in">set</span> C(h, j) := C(h + <span class="number">1</span>, j/<span class="number">2</span>)</div><div class="line">         j = <span class="number">1</span>     : <span class="built_in">set</span> C(h, <span class="number">1</span>) := B(h, <span class="number">1</span>)</div><div class="line">         j odd &gt; <span class="number">1</span> : <span class="built_in">set</span> C(h, j) := C(h + <span class="number">1</span>, (j - <span class="number">1</span>)/<span class="number">2</span>)*B(h, j)&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<h3 id="指针跳转法-Pointer-Jumping"><a href="#指针跳转法-Pointer-Jumping" class="headerlink" title="指针跳转法(Pointer Jumping)"></a>指针跳转法(Pointer Jumping)</h3><ul>
-<li>例一: 存储在数组中的链表求序</li>
-</ul>
-<ul>
-<li>串行算法: 线性复杂度</li>
-<li>并行复杂度: T = O(logn), W = O(nlogn)</li>
-</ul>
-<ul>
-<li>例二: 为森林里的每个节点找所在的那棵树的根节点</li>
-</ul>
-<p>Algorithm 2.4<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Pointer Jumping</div><div class="line"></div><div class="line">Input: A forest of rooted directed trees, each with a self-loop at its root, such that each arc is specified by (i, P(i)), where 1 &lt;= i &lt;= n.</div><div class="line"></div><div class="line">Output: For each vertex i, the root S(i) of the tree containing i.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set S(i) := P(i)</div><div class="line">    while (S(i)) != S(S(i)) do</div><div class="line">        set S(i) := S(S(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>T = O(logh); W = O(nlogh)</p>
-<p>Algorithm 2.5<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># Parallel Prefix on Rooted Directed Trees</div><div class="line"></div><div class="line">Input: A forest of rooted directed trees, each with a self-loop at its root such that (1)each arc is specified by (i, P(i)), (2)each vertex i has a weight W(i), and (3)for each root r, W(r) = 0</div><div class="line"></div><div class="line">Output: For each vertex i, W(i) is set equal to the sum of the weights of vertices on the path from i to the root of its tree.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set S(i) := P(i)</div><div class="line">    while (S(i)) != S(S(i)) do</div><div class="line">        set W(i) := W(i) + W(S(i))</div><div class="line">        set S(i) := S(S(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>T = O(logn); W = O(nlogn)</p>
-<h3 id="分而治之法-Divide-and-Conquer"><a href="#分而治之法-Divide-and-Conquer" class="headerlink" title="分而治之法(Divide and Conquer)"></a>分而治之法(Divide and Conquer)</h3><p>例: 找二维平面上的点的凸包(planar convex hull)</p>
-<ul>
-<li>分: 把这些顶点按由左到右平均分成两组</li>
-<li>治: 在这两组内分别求凸包(求解两个规模相对较小的问题，递归)</li>
-<li>合: 把两组凸包用快速算法合为一个</li>
-</ul>
-<p>Algorithm 2.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Simple Upper Hull</div><div class="line"></div><div class="line">Input: A set S of n points in the plane, no two of which have the same x or y coordinates such that x(p_1) &lt; x(p_2) &lt; ... &lt; x(p_n), where n is a power of 2.</div><div class="line"></div><div class="line">Output: The upper hull of S.</div><div class="line"></div><div class="line">begin</div><div class="line">1. If n &lt;= 4, then use a brute-force method to determine UH(S), and exit.</div><div class="line">2. Let S_1 = (p_1, p_2, ..., P_n/2) and S_2 = (p_n/2+1, ..., p_n). Recursively, compute UH(S_1) and UH(S_2) in parallel.</div><div class="line">3. find the upper common tangent between UH(S_1) nad UH(S_2), and deduce the upper hull of S.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>$$ T(n) \leq T(\frac{n}{2}) + alogn $$<br>$$ W(n) \leq 2W(\frac{n}{2} + bn) $$<br>并行复杂度: $ T = O(log^2 n); W = O(nlogn) $</p>
-<h3 id="数据划分法-partition-strategy"><a href="#数据划分法-partition-strategy" class="headerlink" title="数据划分法(partition strategy)"></a>数据划分法(partition strategy)</h3><ul>
-<li>例: 归并排序</li>
-</ul>
-<ul>
-<li>1.数据均分为若干等分</li>
-<li>2.在每一等分内用其它方法排序</li>
-<li>3.平衡树快速并行合并这些等分</li>
-</ul>
-<p>Algorithm 2.7<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># Partition</div><div class="line"></div><div class="line">Input: Two arrays A = (a_1, a_2, ..., a_n) and B = (b_1, b_2, ..., b_m) in increasing order, where both logm and k(m) = m/logm are integers.</div><div class="line"></div><div class="line">Output: k(m) pairs (A_i, B_i) of subsequences of A and B such that (<span class="number">1</span>)|B_i| = <span class="built_in">log</span> m, (<span class="number">2</span>)\sum |A_i| = n, and (<span class="number">3</span>)each element of A_i and B_i is larger than each element of A_i<span class="number">-1</span> or B_i<span class="number">-1</span>, <span class="keyword">for</span> all <span class="number">1</span> &lt;= i &lt;= k(m)<span class="number">-1</span></div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="built_in">set</span> j(<span class="number">0</span>) := <span class="number">0</span>, j(k(m)) := n</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= k(m) - <span class="number">1</span> pardo</div><div class="line">    <span class="number">2.1</span>. Rank b_ilogm in A <span class="keyword">using</span> binary search method, and let j(i) = rank(b_ilogm : A)</div><div class="line"><span class="number">3.</span> <span class="keyword">for</span> <span class="number">0</span> &lt;= i &lt;= k(m) - <span class="number">1</span> pardo</div><div class="line">    <span class="number">3.1</span>. <span class="built_in">set</span> B_i := (b_ilogm+<span class="number">1</span>, ..., b_(i+<span class="number">1</span>)logm)</div><div class="line">    <span class="number">3.2</span>. <span class="built_in">set</span> A_i := (a_j(i) + <span class="number">1</span>, ..., a_j(i+<span class="number">1</span>))</div><div class="line">        (A_i is empty <span class="keyword">if</span> j(i) = j(i+<span class="number">1</span>))</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<ul>
-<li>合并后的序 = 自序 + 交叉序</li>
-<li>自序(a_i) = {a_0, a_1, …, a_n-1}中有多少a_j 排在a_i前面(在这里即i)</li>
-<li>交叉序(a_i) = {b_0, b_1, …, b_n-1}中有多少b_j排在a_i前面</li>
-</ul>
-<p>并行复杂度: T = O(logn); W = O(n)</p>
-<h3 id="流水线方法-Pipelining"><a href="#流水线方法-Pipelining" class="headerlink" title="流水线方法(Pipelining)"></a>流水线方法(Pipelining)</h3><ul>
-<li>例: 2-3树的数据插入</li>
-</ul>
-<ul>
-<li>批量插入多个点及其并行复杂度<br>T = O(logn); W = O(klogn)</li>
-</ul>
-<ul>
-<li>breaking up a task into a sequence of subtask t_1, t_2, …, t_m<br>……</li>
-</ul>
-<h3 id="加速层叠法-Accelerated-Cascading"><a href="#加速层叠法-Accelerated-Cascading" class="headerlink" title="加速层叠法(Accelerated Cascading)"></a>加速层叠法(Accelerated Cascading)</h3><ul>
-<li>例: 数组找最大值</li>
-</ul>
-<p>常数的并行时间复杂度</p>
-<p>Algorithm 2.8<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Basic Maximum</div><div class="line"></div><div class="line">Input: An array A of p distinct elements.</div><div class="line"></div><div class="line">Output: A Boolean array M such that M(i) = 1 if and only if A(i) is the maximum element of A.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i, j &lt;= p pardo if (A(i) &gt;= A(j)) then set B(i, j) := 1</div><div class="line">                                              else set B(i, j) := 0</div><div class="line">2. for 1 &lt;= i &lt;= p pardo</div><div class="line">    set M(i) := B(i, 1) &amp; B(i, 2) &amp; ... B(i, p)</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>$ T = O(1); W = O(p^2) $</p>
-<p>双层log深度树(doubly logarithmic-depth tree): 最底层节点数 为 n，根节点的孩子节点数 为 $n^{\frac{1}{2}}$，下一层每个节点的孩子节点数 $n^{\frac{1}{2^2}}$，…</p>
-<ul>
-<li><p>假设$n = 2^{2^k}$, 树根有$2^{2^{k-1}}$个孩子, 第一层有$2^{2^{k-2}}$个孩子, …, 第i层有$2^{2^{k-i-1}}$个孩子, …</p>
-</li>
-<li><p>倒数第二层每个节点有常数个子节点</p>
-</li>
-<li>向上合并用常数复杂度求最大值方法</li>
-<li>整体并行复杂度: $$ T(n) = O(log log n) $$ $$ W(n) = O(n log log n) $$</li>
-</ul>
-<p>accelerated cascading:</p>
-<ol>
-<li>start with the optimal algorithm until the size of the problem is reduced to a centain threshold value. 双层log深度树加速</li>
-<li>Then, shift to the fast but nonoptimal algorithm. 常数时间算法层叠</li>
-</ol>
-<h3 id="对称破坏法-Symmetry-Breaking"><a href="#对称破坏法-Symmetry-Breaking" class="headerlink" title="对称破坏法(Symmetry Breaking)"></a>对称破坏法(Symmetry Breaking)</h3><ul>
-<li>例: 环的三色着色问题</li>
-</ul>
-<ul>
-<li>要求: 相邻的点不能是相同的颜色</li>
-<li>串行算法: 在环上随机选一点把环打开得到一个队列；从队首开始除队尾外以0，1相间着色，队尾着色为2(确保队尾和队首、对中倒数第二节点的颜色都不同)</li>
-<li>并行算法大致思想: 从以节点编号为颜色的着色方案开始，通过迭代算法，逐步减少着色数量</li>
-</ul>
-<p>Algorithm 2.9<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Basic Coloring</div><div class="line"></div><div class="line">Input: A directed cycle whose arcs are specified by an <span class="built_in">array</span> S of size n and a coloring c of the vertices.</div><div class="line"></div><div class="line">Output: Another coloring c' of the verteces of the cycle.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    <span class="number">1.</span> <span class="built_in">set</span> k to the least significant bit position in which c(i) and c(S(i)) disagree.</div><div class="line">    <span class="number">2.</span> <span class="built_in">set</span> c'(i) := <span class="number">2</span>k + c(i)_k</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>T = O(1); W = O(n)</p>
-<blockquote>
-<p>definition: $log^{(1)}x = logx$, and $log^{(i)}x = log(log^{(i-1)}x)$</p>
-</blockquote>
-<ul>
-<li>Fast Coloring<br>反复运用这个算法使得从颜色序号{0, 1, 2}中重新选择颜色给每个顶点着色且相邻顶点色不同, 整体并行复杂度为: $$ T = O(log<em>n); W = O(nlog</em>n) $$</li>
-</ul>
-<p>Algorithm 2.10<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># <span class="number">3</span>-coloring of a Cycle</div><div class="line"></div><div class="line">Input: A directed cycle of length n whose arcs are specified by an <span class="built_in">array</span> S.</div><div class="line"></div><div class="line">Output: A <span class="number">3</span>-coloring of the vertices of the cycle.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    <span class="built_in">set</span> C(i) := i</div><div class="line"><span class="number">2.</span> Apply Algorithm <span class="number">2.9</span> once.</div><div class="line"><span class="number">3.</span> Sort the vertices by their colors.</div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> i = <span class="number">3</span> to <span class="number">2</span> \ceiling(logn) <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> all vertices v of color i pardo</div><div class="line">    color v with the smallest color from &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125; that is diffrrent from the colors of its two neighbors.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>T = O(logn); W = O(n)</p>
-
+        
+          <a class="article-more-a" href="/2017/03/21/paralell_compute1&2/#more">more >></a>
+        
       
 
       
@@ -1076,6 +258,51 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/21/paralell_compute1&2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-paralell_compute3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="列表排序"><a href="#列表排序" class="headerlink" title="列表排序"></a>列表排序</h2><p>The list-ranking problem is to determine the distance of each node i from the end of the list</p>
+<h3 id="指针跳转法-pointer-jumping-technique"><a href="#指针跳转法-pointer-jumping-technique" class="headerlink" title="指针跳转法(pointer jumping technique)"></a>指针跳转法(pointer jumping technique)</h3><p>思想：</p>
+<ul>
+<li>链表中的指针跳转可以由一次跳转一步改为一次跳转多步</li>
+<li>如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间</li>
+<li>如果为每个节点，把一次跳转2k步的跳转结果记录下来，那么以后一次跳转2k步也只需要O（1）时间</li>
+<li>反复利用跳转步数翻倍和跳转结果记录的技巧，可以在O（log N）的时间内把跳转步数扩大为N</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/03/21/paralell_compute3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/21/paralell_compute3/">展开全文 >></a>
         </p>
       
 
@@ -1138,128 +365,9 @@
 <li><p>市场的收入分配的后果在政治上或道义上时无法接受的。</p>
 </li>
 </ul>
-<p>more</p>
-<h3 id="贸易、货币和资本"><a href="#贸易、货币和资本" class="headerlink" title="贸易、货币和资本"></a>贸易、货币和资本</h3><ul>
-<li><p>发达经济以细密的贸易网络(基于大量的专业化和精细的劳动分工)为特征</p>
-</li>
-<li><p>当今的经济都大量使用货币(支付手段)</p>
-</li>
-<li><p>现代工业技术依赖于大规模的资本运用: 精密的机器、大型的工厂和库存</p>
-</li>
-</ul>
-<ul>
-<li><p>贸易、专业化和劳动分工</p>
-</li>
-<li><p>专业化是指让个人或国家各自集中精力去完成某一种(或一系列)任务，使得每个人或<br>国家都能够发挥其特殊技能和资源优势</p>
-</li>
-<li><p>发达经济致力于专业化和劳动分工，因而能提高其资源的生产率。个人和国家用自己专<br>业化生产的物品自愿地交换其他人的产品，能极大地增加消费品的范围和数量，并提高每<br>个人的生活水平。</p>
-</li>
-</ul>
-<ul>
-<li><p>货币(money)是一种支付手段或交换媒介，即购物时所支付的现金和支票。</p>
-</li>
-<li><p>货币是供应适度是各国宏观经济政策的主要任务之一。</p>
-</li>
-</ul>
-<ul>
-<li><p>资本(capital)，一种被生产出来的要素，一种本身就是由经济过程产出的耐用的投<br>入品</p>
-</li>
-<li><p>三大生产要素：资本、土地和劳动。</p>
-</li>
-<li><p>基本生产要素：土地和劳动，其供给主要取决于非经济要素。</p>
-</li>
-<li><p>资本使用之前必须首先被生产出来。资本在本质上意味着时间的耗费和间接的生产手<br>段。</p>
-</li>
-<li><p>靠牺牲当前消费而获得的增长 许多经济活动都涉及到放弃现时消费以增加资本，提高<br>经济未来的生产率，进而增加未来的消费</p>
-</li>
-</ul>
-<ul>
-<li><p>资本和私有财产</p>
-</li>
-<li><p>在市场经济中资本主要归私人拥有，从投资中得到的收益也归个人所有</p>
-</li>
-<li><p>产权赋予资本使用者使用、交换、装修、挖掘、钻探等利用其资本品的权利</p>
-</li>
-<li><p>个人占有资本并能从中获取利润，是资本主义的实质之所在</p>
-</li>
-<li><p>最有价值的经济资源，即劳动，不能像私人财产那样成为可以买卖的商品。人不能自由<br>地卖出自己，只能在某个工资价位上将自己租借出去</p>
-</li>
-</ul>
-<h3 id="政府的经济职能"><a href="#政府的经济职能" class="headerlink" title="政府的经济职能"></a>政府的经济职能</h3><ul>
-<li><p>现实世界中还不曾有一种经济能够完全依照“看不见的手”的原则而顺利地运行</p>
-</li>
-<li><p>政府对市场经济主要行使三项职能：提高效率、增进公平以及促进宏观经济的稳定与<br>增长</p>
-</li>
-</ul>
-<ol>
-<li><p>政府通过促进竞争、控制诸如污染这类外部性问题，以及提供公共品等活动来提高经济<br>效率</p>
-</li>
-<li><p>政府通过财政税收和预算支出等手段，向某些团体进行有倾斜的收入再分配，从而增进<br>公平</p>
-</li>
-<li><p>政府通过财政政策和货币政策促进宏观经济的稳定和增长，在鼓励经济增长的同时减少<br>失业和降低通货膨胀</p>
-</li>
-</ol>
-<ul>
-<li><p>效率</p>
-</li>
-<li><p>只有在完全竞争成立时，市场机制的优点才能充分体现出来</p>
-</li>
-<li><p>完全竞争(perfect competition)指的是所有的物品和劳务都有一个价格并都在市场上<br>交易。意味着没有一家企业或一位消费者足以影响整个市场的价格</p>
-</li>
-<li><p>不完全竞争(imperfect competition)，当买者或卖者能够左右一种商品的价格时；<br>社会的产出将会从生产可能性边界上移至边界之内，物品的产出就会低于有效率的水平。</p>
-</li>
-<li><p>不完全竞争导致价格高于成本，消费者购买量低于效率水平。过高的价格和过低的产出<br>是伴随不完全竞争而来的非效率的标志</p>
-</li>
-<li><p>不完全竞争的极端情况是垄断，唯一的卖者独自决定某种物品或劳务的价格水平</p>
-</li>
-</ul>
-<ul>
-<li><p>外部性(溢出效应)</p>
-</li>
-<li><p>外部性(externalities)指的是企业或个人向市场之外的其他人所强加的成本或效益</p>
-</li>
-<li><p>一个行动可能在市场交易之外有助于或有损于其他人的利益，也即存在着根本不发生经<br>济支付的经济交易</p>
-</li>
-<li><p>负的外部性已逐渐由微小的麻烦变成巨大的威胁，是政府进行干预的地方。</p>
-</li>
-</ul>
-<ul>
-<li><p>公共品</p>
-</li>
-<li><p>正外部性的极端情况是公共品</p>
-</li>
-<li><p>公共品(public goods)指一类商品：将该商品的效用扩展与他人的成本为零(非相克<br>性)；无法排除他人参与共享(非相斥性)。</p>
-</li>
-<li><p>税收：政府对个人和公司的收入、工资、消费品销售额和其他项目所征收的税款。政府<br>的收入来源，以提供公共品和实施收入再分配计划</p>
-</li>
-</ul>
-<ul>
-<li><p>公平</p>
-</li>
-<li><p>市场并不必然能够带来公平的收入分配。市场经济可能会产生令人难以接受的收入水平<br>和消费水平的巨大差异</p>
-</li>
-<li><p>收入取决于一系列因素，包括努力程度、教育、继承权、要素价格和运气；由此导致的<br>收入分配可能会同公平的结果相悖</p>
-</li>
-<li><p>物品追随的是货币选票而不是最大满足</p>
-</li>
-<li><p>累进税</p>
-</li>
-<li><p>转移支付，帮助根本没有收入的人</p>
-</li>
-</ul>
-<ul>
-<li><p>宏观经济增长与稳定</p>
-</li>
-<li><p>资本主义自产生以来不时地受通货膨胀(价格上升)和萧条(高失业率)的周期性困扰。这<br>些波动被称为商业周期。</p>
-</li>
-<li><p>通过审慎地运用财政和货币政策，政府能够影响产出、就业和通货膨胀的水平</p>
-</li>
-<li><p>政府的财政政策是税收权力和预算支出权力</p>
-</li>
-<li><p>货币政策涉及到货币供应量和利率水平， 进而影响到资本品的投资和其他利率敏感性<br>的支出(影响利率和信贷条件)</p>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2017/03/21/economics/现代经济中的市场和政府/#more">more >></a>
+        
       
 
       
@@ -1310,216 +418,10 @@
 <li><p>收集不同时期、不同国家有关收入、通货膨胀和失业等变量的数据，尝试构建有助于理解这些数据的一般理论</p>
 </li>
 </ul>
-<h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2><p>more</p>
-<h3 id="凯恩斯革命"><a href="#凯恩斯革命" class="headerlink" title="凯恩斯革命"></a>凯恩斯革命</h3><ol>
-<li><p>系统收集、处理总量数据，为宏观经济学的研究提供科学基础</p>
-</li>
-<li><p>对经济波动的系统研究</p>
-</li>
-<li><p>始于1929年的“大萧条”</p>
-</li>
-</ol>
-<ul>
-<li>凯恩斯《就业、利息和货币通论》(General Theory of Employment, Interest and Money)</li>
-</ul>
-<p>有效需求：总需求(aggregate demand)</p>
-<ul>
-<li>构成现代宏观经济学的要素</li>
-</ul>
-<ul>
-<li><p>乘数，解释需求冲击如何被放大以及如何导致产出更大的变化</p>
-</li>
-<li><p>流动性偏好，凯恩斯对货币需求的称谓，解释货币政策如何影响利率和有效需求</p>
-</li>
-<li><p>预期在影响消费和投资方面的重要性，动物精神，即预期的变化是造成需求和产出变化的主要因素</p>
-</li>
-</ul>
-<h3 id="凯恩斯主义的发展"><a href="#凯恩斯主义的发展" class="headerlink" title="凯恩斯主义的发展"></a>凯恩斯主义的发展</h3><ul>
-<li>新古典综合(neoclassical synthesis)：整合凯恩斯思想和古典思想</li>
-</ul>
-<ul>
-<li><p>IS-LM模型</p>
-</li>
-<li><p>用数学语言对凯恩斯的观点进行表述</p>
-</li>
-<li><p>预期没有起到任何作用</p>
-</li>
-<li><p>缺少对价格和工资的调整</p>
-</li>
-<li><p>消费理论：持久收入在消费决策中具有重要作用</p>
-</li>
-<li><p>投资理论</p>
-</li>
-<li><p>货币需求理论：基于流动性、投资报酬率和风险发展不同资产之间的选择理论</p>
-</li>
-</ul>
-<h3 id="凯恩斯主义和货币主义-争论"><a href="#凯恩斯主义和货币主义-争论" class="headerlink" title="凯恩斯主义和货币主义(争论)"></a>凯恩斯主义和货币主义(争论)</h3><ul>
-<li><p>货币政策和财政政策(的效果)</p>
-</li>
-<li><p>凯恩斯强调，治理经济衰退中财政政策优于货币政策，IS曲线非常陡峭，推论货币政策作用不大</p>
-</li>
-<li><p>弗里德曼、施瓦茨考察货币史发现货币政策非常有效，可以解释大多数产出波动</p>
-</li>
-<li><p>IS曲线并没有想象的那样陡峭，财政政策和货币政策都会产生效果</p>
-</li>
-</ul>
-<ul>
-<li><p>菲利普斯曲线</p>
-</li>
-<li><p>失业和通胀之间存在可靠的交替关系</p>
-</li>
-<li><p>失业和通胀之间并不存在长期的交替关系：违背基本的经济规律</p>
-</li>
-</ul>
-<ul>
-<li><p>宏观经济管理模式(的作用)</p>
-</li>
-<li><p>凯恩斯主义：政府在宏观经济管理上要相机决策；经济学知识可用以稳定经济，政策制定者能够做正确的事情</p>
-</li>
-<li><p>弗里德曼质疑政府的良好初衷未必能可信地做正确的事情，建议政府在宏观经济管理上采取固定法则</p>
-</li>
-</ul>
-<h3 id="理性预期批判"><a href="#理性预期批判" class="headerlink" title="理性预期批判"></a>理性预期批判</h3><ul>
-<li>危机(20世纪70年代)</li>
-</ul>
-<ol>
-<li>经济生活中发生石油危机</li>
-</ol>
-<ul>
-<li><p>滞涨(stagflation): 高失业和高通胀同时存在</p>
-</li>
-<li><p>石油危机是一次不利的供给冲击</p>
-</li>
-</ul>
-<ol>
-<li>一部分经济学家开始从理论上质疑凯恩斯主义</li>
-</ol>
-<ul>
-<li><p>凯恩斯主义经济学在石油危机中所表现出的漏洞：忽略预期影响经济活动主体行为的全面含义</p>
-</li>
-<li><p>解决办法：人们基于目前所有的信息理性地做出预期</p>
-</li>
-</ul>
-<ul>
-<li>凯恩斯主义经济学遭到严重破坏(经济活动主体是理性的，其预期也是理性的)</li>
-</ul>
-<ol>
-<li>卢卡斯批判(Lucas Critique)</li>
-</ol>
-<p>如果政策发生变化，人们会基于新的政策形成预期，其行为也会发生变化，从而导致原先<br>的宏观经济(计量)模型可能会对在新政策下将要发生的事情做出糟糕的指导。</p>
-<p>如20世纪70年代初期的菲利普斯曲线</p>
-<ol>
-<li>理性预期与菲利普斯曲线</li>
-</ol>
-<p>凯恩斯模型中，由于价格和工资将沿着菲利普斯曲线缓慢调整，产出是缓慢而不是迅速调整<br>到潜在产出水平。</p>
-<ul>
-<li>卢卡斯：供给和价格的调整很大程度上取决于工资制定者对通胀的预期方式，一旦我们<br>假定工资制定是理性预期的，调整可能快得多</li>
-</ul>
-<ol>
-<li>最优控制与博弈论</li>
-</ol>
-<ul>
-<li><p>凯恩斯主义采用的(宏观经济政策)分析工具，最优控制等，忽视了宏观经济政策制定者<br>与经济活动主体之间的互动</p>
-</li>
-<li><p>理性预期的第三个含义：如果经济活动主体是理性预期的，那么政策通常是政策制定者<br>与经济活动主体之间的博弈</p>
-</li>
-<li><p>采用博弈论研究宏观经济政策</p>
-</li>
-</ul>
-<h3 id="理性预期的整合-20世纪70年代和80年代"><a href="#理性预期的整合-20世纪70年代和80年代" class="headerlink" title="理性预期的整合(20世纪70年代和80年代)"></a>理性预期的整合(20世纪70年代和80年代)</h3><ul>
-<li>消费随机游走假说(Random-Walk Model of Consumption)</li>
-</ul>
-<p>理性预期引入到消费研究领域：如果消费者是理性预期的且非常有远见，那么对于下一年<br>消费的最好预测就是今天的消费</p>
-<p>消费的变化难以预测：消费者只有得知有关将来的新信息后才会改变消费行为，但将来的<br>新信息是不可预测的</p>
-<ul>
-<li>工资与价格的交错调整(staggered price adjustment)</li>
-</ul>
-<p>工资和价格的调整过程不会出现突然的同步调整，而是交错调整，可能是缓慢的</p>
-<p>即使经济活动主体是理性预期的，产出也是缓慢调整到其潜在产出水平的</p>
-<p>政府有效需求管理的有效性并不依赖于理性预期的假定，而是依赖于市场瞬时出清的假定</p>
-<ul>
-<li>政策理论</li>
-</ul>
-<p>博弈不仅存在于政策制定者和经济活动主体之间，也存在与政策制定者(政党、央行和<br>中央政府，或不同国家政府)之间</p>
-<h3 id="当前发展"><a href="#当前发展" class="headerlink" title="当前发展"></a>当前发展</h3><ul>
-<li><p>新古典主义，新凯恩斯主义，新增长理论</p>
-</li>
-<li><p>实际商业周期理论(real business cycle, RBC)：经济体的产出通常处于其潜在水平，<br>因此所有波动都是源于潜在产出水平自身的变动，而不是源于对潜在产出水平的偏离。</p>
-</li>
-<li><p>RBC强调经济波动的根源是技术进步</p>
-</li>
-</ul>
-<ul>
-<li>新凯恩斯主义(New Keynesians)</li>
-</ul>
-<p>以最大化行为和理性预期为基础构建严密可信的工资、价格粘性模型</p>
-<p>研究方向主要集中在劳动力市场的工资决定、信用市场的不完全以及名义刚性(nominal rigidities)</p>
-<p>由于工资和价格决策的交错，产出会偏离潜在水平很长一段时间；</p>
-<p>菜单成本理论(menu cost): 即使改变价格的成本很小也会导致交错的价格调整，产生名义价格刚性</p>
-<ul>
-<li>新经济增长理论(new growth theory)</li>
-</ul>
-<p>经济体增长速度取决于技术进步速度，决定技术进步的因素</p>
-<p>规模报酬递增在增长中的作用，有效地分析框架</p>
-<h2 id="微观经济学"><a href="#微观经济学" class="headerlink" title="微观经济学"></a>微观经济学</h2><h3 id="经济学家如何思考"><a href="#经济学家如何思考" class="headerlink" title="经济学家如何思考"></a>经济学家如何思考</h3><ul>
-<li><p>经济学家最基本的工具：数据、术语、思考问题的方式；利用这些工具构建模型(model)，<br>用数学术语清晰地说明变量之间的关系。</p>
-</li>
-<li><p>外生变量(exogenous variables)：模型中给定的变量</p>
-</li>
-<li>内生变量(endogenous variables)：模型要解释的变量</li>
-<li>模型界定外生变量如何影响内生变量</li>
-</ul>
-<h3 id="供求模型"><a href="#供求模型" class="headerlink" title="供求模型"></a>供求模型</h3><p>某种商品的竞争性市场，市场需求曲线单调下降，市场供给曲线单调上升，交点为市场均衡点。</p>
-<ul>
-<li><p>内生变量：对应价格为均衡价格，对应商品数量为均衡交易数量</p>
-</li>
-<li><p>外生变量：消费习惯、原材料来源、技术水平、政治法律等的变化，市场规模或居民收入水平变化等</p>
-</li>
-<li><p>需求膨胀：需求方购买商品的愿望和能力增强，商品的需求量在每个价格水平上都有所增加；<br>需求曲线向右平移，会导致市场均衡点上升，均衡价格和均衡交易量同时上升</p>
-</li>
-<li><p>需求收缩：需求方购买商品的愿望和能力减弱，商品的需求量在每个价格水平上都有所下降；<br>需求曲线向左平移，会导致市场均衡点下降，均衡价格和均衡交易量同时下降</p>
-</li>
-<li><p>供给膨胀：供给方出售商品的愿望增强，商品的供给量在每个价格水平上都有所增加;<br>供给曲线向右平移，市场均衡点下降，均衡价格下降，均衡交易量上升</p>
-</li>
-<li><p>供给收缩：供给方出售商品的愿望减弱，商品的供给量在每个价格水平上都有所减少；<br>供给曲线向左平移，市场均衡点上升，均衡价格上升，均衡交易量下降</p>
-</li>
-</ul>
-<h3 id="从微观到宏观"><a href="#从微观到宏观" class="headerlink" title="从微观到宏观"></a>从微观到宏观</h3><p>宏观经济理论必须与微观经济活动主体的基本行为一致</p>
-<ol>
-<li><p>试图在理论水平上理解单个家庭和企业的决策过程</p>
-</li>
-<li><p>试图通过<strong>加总</strong>经济体中微观主体的所有决定来解释整体经济行为</p>
-</li>
-<li><p>通过手机分析数据，实证检验宏观经济学模型是否与现实一致</p>
-</li>
-</ol>
-<h3 id="基本假定"><a href="#基本假定" class="headerlink" title="基本假定"></a>基本假定</h3><p>一种产品或服务的价格可以迅速调整；市场可以自动走向供求均衡，市场迅速出清</p>
-<p>现实中存在工资和价格缓慢调整的情况，价格黏性</p>
-<ul>
-<li>价格并不总是黏性的，最终会随着供求的变动而变动；这一假定可以描述经济体的长期趋势</li>
-</ul>
-<h3 id="基本模型"><a href="#基本模型" class="headerlink" title="基本模型"></a>基本模型</h3><ul>
-<li><p>总需求(aggregate demand, AD)：在货币政策、财政政策以及消费者信心不变的情况下，<br>每给定一个价格水平，产品市场和货币市场同时处于均衡状态时的产量水平</p>
-</li>
-<li><p>总需求函数(aggregate demand function)：Y = D(P)，经济体中价格水平P，总需求量Y</p>
-</li>
-<li><p>总需求曲线(aggregate deamnd curve)</p>
-</li>
-</ul>
-<p>其它条件不变(ceteris paribus)：除价格水平之外其它与经济体的总需求相关的条件都保持不变</p>
-<ul>
-<li><p>总供给(aggregate supply)：在经济体中，对于每一既定价格水平，厂商愿意提供的产量</p>
-</li>
-<li><p>总供给函数(aggregate supply function)：Y = S(P)</p>
-</li>
-<li><p>长期总供给曲线是垂直的。其它条件发生变化(技术进步等)，生产能力提高时总供给曲线向右平移</p>
-</li>
-<li><p>在短期，价格是黏性的，总供给曲线是水平线</p>
-</li>
-<li><p>通常情况下，短期总供给曲线是向右上方倾斜</p>
-</li>
-</ul>
-
+<h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2>
+        
+          <a class="article-more-a" href="/2017/03/21/economics/宏观经济学鸟瞰/#more">more >></a>
+        
       
 
       
@@ -1557,77 +459,16 @@
         <h1 id="宏观经济现象鸟瞰"><a href="#宏观经济现象鸟瞰" class="headerlink" title="宏观经济现象鸟瞰"></a>宏观经济现象鸟瞰</h1><p>标签： 宏观经济学</p>
 <hr>
 <h2 id="三个重要的宏观经济变量"><a href="#三个重要的宏观经济变量" class="headerlink" title="三个重要的宏观经济变量"></a>三个重要的宏观经济变量</h2><ul>
-<li><p>实际国内生产总值(real GDP<gross domestic="" product="">):<br>经济体内所有人的实际总收入。<br>人均国内生产总值(GDP per capita): 经济体内平均而言每个人的实际收入。</gross></p>
+<li><p>实际国内生产总值(real GDP<gross domestic product>):<br>经济体内所有人的实际总收入。<br>人均国内生产总值(GDP per capita): 经济体内平均而言每个人的实际收入。</p>
 </li>
 <li><p>通货膨胀率(inflation rate):<br>物价水平变动的百分比。(物价指数)<br>用消费者价格指数(consumer price index, CPI)或GDP缩减指数(GDP deflator index)<br>衡量。</p>
 </li>
 <li><p>失业率(unemployment rate):<br>经济体中没有工作当正在积极找工作的劳动力比重。</p>
 </li>
 </ul>
-<p>more</p>
-<h3 id="GDP：衡量经济活动创造的价值"><a href="#GDP：衡量经济活动创造的价值" class="headerlink" title="GDP：衡量经济活动创造的价值"></a>GDP：衡量经济活动创造的价值</h3><p>经济体在既定时期内生产的所有的最终产品和服务的当期市场总值</p>
-<ul>
-<li>核算GDP三种方法</li>
-</ul>
-<ul>
-<li>生产法<br>把GDP作为经济体里当期所生产的最终产品与服务的总值</li>
-<li>收入法<br>把GDP作为经济体中所有人的总收入<br>国内顾客的购买总值=企业的总收益=工资+资本所得+中间投入品的购买<br>最终消费=增加值=工资+资本所得<br>(in China)增加值=劳动者报酬+生产税净额+固定资产折旧+营业盈额</li>
-<li>支出法<br>把GDP作为经济体里对产品与服务的总支出<br>Y=C+I+G(GDP、消费、投资、政府购买)<br>开放经济条件下Y=Cd+Id+Gd+EX<br>(国内产品和服务的消费、国内产品和服务的投资、国内产品和服务的政府采购、国内产品和服务的出口)<br>国外产品和服务的消费Cf=C-Cd<br>国外产品和服务的投资If=I-Id<br>国外产品和服务的政府采购Gf=G-Gd<br>国外产品和服务的进口IM=Cf+If+Gf<br>净出口(net export)NEX=EX-IM<br>国民经济核算表达式Y=C+I+G+NEX</li>
-</ul>
-<ul>
-<li>国民生产总值(gross national product,GNP)<br>一国居民在一个既定时期内所获得的总收入<br>GNP=GDP+来自国外的生产要素收入-对国外的生产要素支付</li>
-</ul>
-<h3 id="物价水平：衡量生活费用"><a href="#物价水平：衡量生活费用" class="headerlink" title="物价水平：衡量生活费用"></a>物价水平：衡量生活费用</h3><p>通货膨胀：物价水平上升</p>
-<ul>
-<li>消费者价格指数(CPI)<br>最常用的度量物价水平的指标</li>
-</ul>
-<ol>
-<li>选定一个开始时期(基期)</li>
-<li>选定一个<em>典型消费者</em>所购买的一篮子产品和服务的种类和数量</li>
-<li>计算每一期购买同样一篮子产品和服务的支出</li>
-<li>计算每一期的CPI(CPI=当期与基期一篮子产品和服务支出的<strong>比值</strong>)</li>
-</ol>
-<p>通货膨胀率 = (CPI(后一期)-CPI(前一期))/CPI(前一期)</p>
-<ul>
-<li>生产者价格指数(producer price index, PPI)<br>度量物价水平的另一指标</li>
-</ul>
-<ul>
-<li><em>典型生产者</em>购买的一篮子产品和服务</li>
-</ul>
-<ul>
-<li>GDP缩减指数</li>
-</ul>
-<p>名义GDP(nominal GDP)：按照当期价格度量的GDP<br>实际GDP(real GDP)：按照不变价格度量的GDP(尽可能反映经济体生产能力的变化)</p>
-<p>GDP缩减指数=名义GDP/实际GDP * 100%</p>
-<p>名义GDP剔除通货膨胀的影响得到实际GDP</p>
-<h3 id="失业率：度量经济体痛苦程度"><a href="#失业率：度量经济体痛苦程度" class="headerlink" title="失业率：度量经济体痛苦程度"></a>失业率：度量经济体痛苦程度</h3><p>就业：在一定年龄段的经济活动主体从事有报酬的活动</p>
-<p>失业者：有劳动能力并愿意就业但找不到工作的经济活动主体</p>
-<ul>
-<li>劳动力人口 = 劳动年龄(16~65)人口 - 不在劳动力(not in labor force)人口</li>
-<li>劳动参与率 = 劳动力人口 / 劳动年龄人口</li>
-<li>失业率 = 失业人口 / 劳动力人口</li>
-</ul>
-<ul>
-<li>测算失业人口两种方法</li>
-</ul>
-<ul>
-<li>收集失业者在劳动行政部门申报的数据<br>大多数失业者有申报动机：失业申报可以领取失业救济金、获得再就业信息等</li>
-<li>定期抽样调查估计失业人口</li>
-</ul>
-<h2 id="数据查找"><a href="#数据查找" class="headerlink" title="数据查找"></a>数据查找</h2><ul>
-<li>中国国家统计局网站 <a href="http://www.stats.gov.cn" target="_blank" rel="external">http://www.stats.gov.cn</a></li>
-<li><p>中国经济学教育科研网 <a href="http://www.cenet.org.cn/cn/" target="_blank" rel="external">http://www.cenet.org.cn/cn/</a></p>
-</li>
-<li><p>美国 总统经济报告 www.access.gpo.gov/eop/</p>
-</li>
-<li><p>美国统计概要 www.census.gov/compendia/statab</p>
-</li>
-<li><p>经济合作与发展组织 www.oecd.org</p>
-</li>
-<li>宾夕法尼亚大学国际比较中心 <a href="http://pwt.econ.upenn.edu/" target="_blank" rel="external">http://pwt.econ.upenn.edu/</a></li>
-<li>哈佛商学院宏观经济学资源网站 www.hbs.edu/units/bgie/internet</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2017/03/21/economics/宏观经济现象鸟瞰/#more">more >></a>
+        
       
 
       
@@ -1688,104 +529,9 @@
 <li><p>市场需求曲线符合需求向下倾斜规律</p>
 </li>
 </ul>
-<p>more</p>
-<ul>
-<li><p>需求曲线背后的因素</p>
-</li>
-<li><p>消费者的平均收入是需求的重要决定因素。个人收入上升，即使价格不变，人们也会倾向于购买更多数量的几乎任何物品。</p>
-</li>
-<li><p>市场规模(用人口衡量)影响市场需求曲线</p>
-</li>
-<li><p>相关物品的价格及其可获得性会影响对该物品的需求，尤其是替代品之间存在着重要的联系</p>
-</li>
-<li><p>爱好或偏好的主观因素。代表文化、历史因素，反映心理、生理需要或人为造成的需要或者传统、宗教的因素</p>
-</li>
-<li><p>其他特殊的因素</p>
-</li>
-</ul>
-<ul>
-<li><p>需求的移动：除物品价格以外的其他因素(非价格变量)发生了变化</p>
-</li>
-<li><p>需求变动：商品价格之外的因素变化引起购买数量发生变化</p>
-</li>
-<li><p>需求增加，需求曲线向右移动，每一价格水平人们会购买更多物品</p>
-</li>
-<li><p>需求减少，需求曲线向左移动，每一价格水平人们会购买更少物品</p>
-</li>
-</ul>
-<h3 id="供给表"><a href="#供给表" class="headerlink" title="供给表"></a>供给表</h3><ul>
-<li><p>一种商品的供给表(supply schedule)或供给曲线(supply curve)体现在其它条件下，该商品的市场价格与生产者愿意生产和销售的数量之间的关系</p>
-</li>
-<li><p>应当保持不变的条件包括生产成本、相关物品的价格和政府政策</p>
-</li>
-</ul>
-<ul>
-<li><p>供给曲线</p>
-</li>
-<li><p>供给曲线向上倾斜的重要原因之一是边际收益递减规律：每一个新增加的劳动(要素)所增添的数量是递减的</p>
-</li>
-</ul>
-<ul>
-<li><p>供给曲线背后的因素</p>
-</li>
-<li><p>一个关键因素是生产成本</p>
-</li>
-<li><p>生产成本主要取决于投入品(劳动、能源或机器等)价格和技术进步(降低生产同量产出<br>所需的投入品数量的变化)(从应用科学突破到现有技术的更新与挖潜、生产流程的重新组织)</p>
-</li>
-<li><p>供给受相关物品价格的影响</p>
-</li>
-<li><p>一种替代品的价格上升，另一种替代品的供给就会下降</p>
-</li>
-<li><p>政府政策会对供给曲线产生重大影响</p>
-</li>
-<li><p>特殊因素(气候条件之类)也会影响供给曲线</p>
-</li>
-</ul>
-<ul>
-<li><p>供给的移动：价格之外的其他因素发生变动而引起供给数量发生变动</p>
-</li>
-<li><p>在市场的每一价格水平，当供给的数量都增加(或减少)时，供给增加(或减少)</p>
-</li>
-</ul>
-<h3 id="供给和需求的平衡"><a href="#供给和需求的平衡" class="headerlink" title="供给和需求的平衡"></a>供给和需求的平衡</h3><ul>
-<li><p>市场均衡(market equilibrium)：供给和需求的力量相互作用，产生均衡的价格和均衡<br>的数量。</p>
-</li>
-<li><p>在该点买者所愿意购买的数量正好等于卖者所愿意出售的数量。</p>
-</li>
-<li><p>当供求力量平衡时，只要其他条件保持不变，价格就没有理由继续波动</p>
-</li>
-<li><p>市场出清价格(market-clearing price)：需求量与供给量相等的价格水平(均衡价格)</p>
-</li>
-</ul>
-<ul>
-<li><p>供给曲线与需求曲线的均衡</p>
-</li>
-<li><p>均衡价格与均衡数量发生在愿意供给的数量等于愿意购买的数量的水平上</p>
-</li>
-<li><p>在竞争市场上，均衡发生在供给曲线与需求曲线的交点</p>
-</li>
-<li><p>在均衡价格水平上，市场上不存在短缺或过剩</p>
-</li>
-</ul>
-<ul>
-<li><p>供给或需求的移动对均衡的影响</p>
-</li>
-<li><p>当影响需求或供给的诸因素发生变化时就会导致需求或供给发生变动，并引起市场上的均衡价格和均衡数量也发生变动</p>
-</li>
-</ul>
-<ul>
-<li>解释价格和数量的变动：供给变化或需求变化；需求变化或沿着需求曲线移动</li>
-</ul>
-<ul>
-<li>供给、需求和移民：移民对于当地劳工市场影响微弱;人口流动性强，新移民流向最可能找到工作的城市，迁入城市对劳工需求已经上升;移民迁入，当地居民迁出，劳动总供给实际上没变动</li>
-</ul>
-<ul>
-<li><p>通过价格进行分配</p>
-</li>
-<li><p>用钱包进行配给(rationing by the purse)：市场通过供求的相互作用决定所有投入<br>和产出的均衡价格和均衡数量，将社会的稀缺品配置或配给到各种用途中</p>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2017/03/21/economics/供给与需求的基本原理/#more">more >></a>
+        
       
 
       
@@ -1798,6 +544,69 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/21/economics/供给与需求的基本原理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-Cplusplus_thinking/代理类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="代理类"><a href="#代理类" class="headerlink" title="代理类"></a>代理类</h1><p>标签： C++</p>
+<hr>
+<p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
+<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
+<ul>
+<li>surrogate是handle(句柄)类中最简单的一种</li>
+</ul>
+<h2 id="一个表示不同交通工具的类派生层次"><a href="#一个表示不同交通工具的类派生层次" class="headerlink" title="一个表示不同交通工具的类派生层次"></a>一个表示不同交通工具的类派生层次</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="comment">// pure virtual function</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> RoadVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> AutoVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Aircraft : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Helicopter : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div></pre></td></tr></table></figure>
+<h2 id="一个容器"><a href="#一个容器" class="headerlink" title="一个容器"></a>一个容器</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle parking_lot[<span class="number">1000</span>]; <span class="comment">// error</span></div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = x;</div></pre></td></tr></table></figure>
+<ul>
+<li>Vehicle是虚基类，不能实例化</li>
+<li>子类对象转化为父类对象会丢失父类中没有的成员</li>
+<li>parking_lot是Vehicle的集合而不是所有继承自Vehicle的对象的集合</li>
+</ul>
+<h2 id="间接层-indirection"><a href="#间接层-indirection" class="headerlink" title="间接层 indirection"></a>间接层 indirection</h2><p>存储指针替代存储对象本身<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* parking_lot[<span class="number">1000</span>];</div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = &amp;x;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>x是局部变量，释放之后parking_pot指向未知</p>
+</li>
+<li><p>存储副本的指针而非原对象的指针</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = <span class="keyword">new</span> AutoVehicle(x);</div></pre></td></tr></table></figure>
+</li>
+<li><p>带来动态内存管理的负担</p>
+</li>
+<li>必须知道要放入parking_lot中的对象的静态类型<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (p != q) &#123;</div><div class="line">    <span class="keyword">delete</span> parking_pot[p];</div><div class="line">    parking_pot[p] = <span class="keyword">new</span> Vehicle(parking_pot[q]);</div><div class="line">&#125;   <span class="comment">// virtual base class has no instance</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/03/21/Cplusplus_thinking/代理类/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/21/Cplusplus_thinking/代理类/">展开全文 >></a>
         </p>
       
 
@@ -1831,74 +640,16 @@
 </li>
 <li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
 </li>
-<li><p>函数传参数方式 void f(const Container<t>&amp;)避免大对象的复制</t></p>
+<li><p>函数传参数方式 void f(const Container<T>&amp;)避免大对象的复制</p>
 </li>
 <li><p>区分读和写</p>
 </li>
 </ul>
 <p>operator[]只用于取数</p>
 <p>用成员函数update(i, x)修改索引为i的元素为x</p>
-<p>more</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Container &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T <span class="keyword">operator</span>[](Index) <span class="keyword">const</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">Container&lt; Container&lt;<span class="keyword">int</span>&gt; &gt;c;</div><div class="line">Index i, j;</div><div class="line"><span class="keyword">int</span> k = c[i][j];</div><div class="line"><span class="comment">// only way to modify the element in Container</span></div><div class="line"><span class="comment">// c[i][j]</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="comment">// hard to deal with much more dimension</span></div><div class="line"><span class="comment">// c[i] return type T instead of T&amp;</span></div><div class="line"><span class="comment">// c[i].update(j, new_value) does not work</span></div></pre></td></tr></table></figure>
-<ul>
-<li><p>获取容器的元素严格分清类型T(作右值)和类型T&amp;(作左值)</p>
-</li>
-<li><p>容器增长：按区块(chunk)增加容器大小的分配策略</p>
-</li>
-<li><p>容器操作<br>容器数组：必须有缺省构造函数<br>“顺序地”遍历容器中所有元素：先给元素强制规定顺序(解决方案：迭代器(iterator))</p>
-</li>
-<li><p>容器元素的类型</p>
-</li>
-</ul>
-<ol>
-<li><p>类型为T的元素可以进行行为正确的复制、赋值和销毁<br>T::T(const T&amp;)</p>
-</li>
-<li><p>可以判定两个元素是否相等<br>operator==(const T&amp;, cosnt T&amp;)</p>
-</li>
-<li><p>为增加性能，有关于偏序关系或全序关系的定义(如set)<br>operator&lt;(const T&amp;, const T&amp;)</p>
-</li>
-<li><p>考虑是否重载operator&lt;&lt;(ostream&amp;, const Container<t>&amp;)<br>兼顾不使用标准输入输出操作库或不用输入输出操作的用户，提供遍历整个容器的机制</t></p>
-</li>
-</ol>
-<ul>
-<li>容器不可通过继承关联起来<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// if Container&lt;Airplane&gt; is derived from Container&lt;Vehicle&gt;</span></div><div class="line">Vehicle v;</div><div class="line">Container&lt;Airplane&gt; ca;</div><div class="line"></div><div class="line">Container&lt;Vehicle&gt;&amp; vp = ca;</div><div class="line">vp.insert(v);</div><div class="line"><span class="comment">// that does not make any sence</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Demo-an-array-like-class"><a href="#Demo-an-array-like-class" class="headerlink" title="Demo : an array-like class"></a>Demo : an array-like class</h3><ul>
-<li>使用指针和使用下标的差别</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// by index</span></div><div class="line"><span class="keyword">int</span> i;</div><div class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    f(x[i]);</div><div class="line"></div><div class="line"><span class="comment">// by pointer</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">for</span> (p = x; p &lt; x + N; ++p)</div><div class="line">    f(*p);</div><div class="line"><span class="comment">// a simplified version</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">while</span> (p &lt; x + N)</div><div class="line">    f(*p++);</div></pre></td></tr></table></figure>
-<p>区别：</p>
-<ol>
-<li>下标值本身就有意义，与是否用作下标无关：通过下标进行元素访问的程序要另外知道<br>正在使用的数组(才能访问整个数组)</li>
-<li>要访问容器的元素没必要知道容器的标识，指针本身就包含所有的必要信息：程序只要<br>拥有拥有一个指向数组元素的指针就能访问整个数组</li>
-</ol>
-<p>这些影响设计，比”下标易于理解，指针效率高”的区别更为重要</p>
-<ul>
-<li><p>禁止(数组)复制和赋值</p>
-</li>
-<li><p>使用operator[]存取元素</p>
-</li>
-<li><p>关于扩展：定长</p>
-</li>
-<li><p>缺省构造函数：可以创建包含数组的数组</p>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Array(): data(<span class="number">0</span>), sz(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Array(<span class="keyword">unsigned</span> size): sz(size), data(<span class="keyword">new</span> T(size)) &#123;&#125;</div><div class="line">    ~Array() &#123; <span class="keyword">delete</span> [] data; &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> <span class="keyword">const</span> T*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> T*() &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    T* data;</div><div class="line">    <span class="keyword">unsigned</span> sz;</div><div class="line">    Array(<span class="keyword">const</span> Array* a);</div><div class="line">    Array&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array&amp;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>缺陷</li>
-</ul>
-<ol>
-<li><p>(也存在于内建数组中)包含元素的Array消失后，它的元素地址还在</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> *p;</div><div class="line">    &#123;</div><div class="line">        Array&lt;<span class="keyword">int</span>&gt; x(<span class="number">20</span>);</div><div class="line">        p = &amp;x[<span class="number">10</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; *p; <span class="comment">// no exist</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>允许用户访问它的元素地址，透露太多内部运作的信息，违背了封装理念</p>
-</li>
-</ol>
-<ul>
-<li>允许Array被构造后改变长度会导致旧指针失效</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2017/03/21/Cplusplus_thinking/模板（一）/#more">more >></a>
+        
       
 
       
@@ -1936,7 +687,7 @@
         <h1 id="模板（三）"><a href="#模板（三）" class="headerlink" title="模板（三）"></a>模板（三）</h1><p>标签：C++</p>
 <hr>
 <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
-<li><p>已经定义Array<t>、Pointer<t>和Ptr_to_const<t>使得能部分确保安全性避免使用<br>指针</t></t></t></p>
+<li><p>已经定义Array<T>、Pointer<T>和Ptr_to_const<T>使得能部分确保安全性避免使用<br>指针</p>
 </li>
 <li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
 </li>
@@ -1945,72 +696,9 @@
 <ul>
 <li>基类及派生类都要定义这些操作</li>
 </ul>
-<p>more</p>
-<p>‘’’C++<br>template <class t=""> class Pointer: public Ptr_to_const<t> {<br>public:<br>    Pointer&amp; operator++() {<br>        ++sub;<br>        return *this;<br>    }</t></class></p>
-<pre><code>Pointer&amp; operator--() {
-    --sub;
-    return *this;
-}
-
-Pointer&amp; operator++(int) {
-    Pointer ret = *this;
-    ++sub;
-    return ret;
-}
-
-Pointer&amp; operator--(int) {
-    Pointer ret = *this;
-    --sub;
-    return ret;
-}
-
-Pointer&amp; operator+=(int n) {
-    sub += n;
-    return *this;
-}
-
-Pointer&amp; operator-=(int n) {
-    sub -= n;
-    return *this;
-}
-// ...
-</code></pre><p>};</p>
-<p>template <class t=""> Pointer<t> operator+(const Pointer<t>&amp; p, int n) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
-<p>template <class t=""> Pointer<t> operator+(int n, const Pointer<t>&amp; p) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
-<p>// subtration is similar<br>‘’’</p>
-<ul>
-<li>两个指针当且仅当指向同一个Array的同一个元素(或都不指向任何Array)时才相等</li>
-</ul>
-<p>‘’’C++<br>template <class t=""><br>int operator==(const Ptr_to_const<t>&amp; op1, cosnt Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        return 0;<br>    return (op1.sub == op2.sub);<br>}</t></t></class></p>
-<p>template <class t=""><br>int operator&lt;(const Ptr_to_const<t>&amp; op1, const Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        throw “&lt; on different Arrays”;<br>    return op1.sub &lt; op2.sub;<br>}<br>‘’’</t></t></class></p>
-<ul>
-<li>迭代器能在不暴露容器内部结构的情况下访问容器的元素</li>
-</ul>
-<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
-<li><p>当元素不存在时的处理方法</p>
-</li>
-<li><p>禁止从容器中删除单个元素(可以删除整个容器)</p>
-</li>
-<li><p>在每个容器对象中保存一个有效迭代器的列表，删除一个元素则正好删除刚好指向这个<br>被删除元素的迭代器</p>
-</li>
-<li><p>对容器中每个元素采用引用计数，删除任何一个元素都必须等到最后一个指向该元素的<br>引用都不存在</p>
-</li>
-<li><p>让迭代器指向容器中元素与元素之间的位置上(难以实现；影响先有代码)</p>
-</li>
-</ul>
-<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><ul>
-<li><p>容器本身已不存在，还有活动的迭代器的解决方法</p>
-</li>
-<li><p>删除操作延后到最后一个迭代器失效</p>
-</li>
-<li><p>采用处理删除单个元素的思想</p>
-</li>
-<li><p>用户确保一旦容器删除就不再使用迭代器</p>
-</li>
-<li><p>只要有活动迭代器存在就禁止删除容器本身</p>
-</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2017/03/21/Cplusplus_thinking/模板（三）/#more">more >></a>
+        
       
 
       
@@ -2023,108 +711,6 @@ Pointer&amp; operator-=(int n) {
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/21/Cplusplus_thinking/模板（三）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Cplusplus_thinking/模板（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="模板（二）"><a href="#模板（二）" class="headerlink" title="模板（二）"></a>模板（二）</h1><p>标签：C++</p>
-<hr>
-<h2 id="访问容器中的元素"><a href="#访问容器中的元素" class="headerlink" title="访问容器中的元素"></a>访问容器中的元素</h2><p>保留Array<t>和一个指向T的指针之间的密切关系要付出一定的代价</t></p>
-<ol>
-<li><p>用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留</p>
-</li>
-<li><p>不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误</p>
-</li>
-</ol>
-<ul>
-<li>增加防止出错的中间层</li>
-</ul>
-<p>more</p>
-<h3 id="模拟指针"><a href="#模拟指针" class="headerlink" title="模拟指针"></a>模拟指针</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Pointer &#123;</div><div class="line"><span class="keyword">public</span>：</div><div class="line">    Pointer(Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): ap(&amp;a), sub(n) &#123;&#125;</div><div class="line">    Pointer(): ap(<span class="number">0</span>), sub(<span class="number">0</span>) &#123;&#125;</div><div class="line">    <span class="comment">// Array&lt;T&gt; cann't be default: reference should bind a object</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array&lt;T&gt;* ap;</div><div class="line">    <span class="keyword">unsigned</span> sub;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>复制一个Pointer之后，原Pointer和其副本都指向一个位置</li>
-</ul>
-<h3 id="获取元素"><a href="#获取元素" class="headerlink" title="获取元素"></a>获取元素</h3><ul>
-<li><p>最直接的方法会面临上述问题：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Pointer &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Pointer"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-<li><p>另一种解决方案会带来赋值不方便的新问题：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Pointer &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Pointer"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// "t = *p" is allowed but "*p = t" is forbidden</span></div><div class="line"><span class="comment">// the point is that it is hard to implement "*p = t"</span></div><div class="line"><span class="comment">// while "T* tp = &amp;*p" is allowed</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>引进update操作</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Pointer &#123;</div><div class="line"><span class="keyword">public</span>：</div><div class="line">    Pointer(Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): ap(&amp;a), sub(n) &#123;&#125;</div><div class="line">    Pointer(): ap(<span class="number">0</span>), sub(<span class="number">0</span>) &#123;&#125;</div><div class="line">    </div><div class="line">    T <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Pointer"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">const</span> T&amp; t)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"update of unbound Pointer"</span>;</div><div class="line">        (*ap)[sub] = t;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array&lt;T&gt;* ap;</div><div class="line">    <span class="keyword">unsigned</span> sub;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-<li><p>相应地，Array类使用update操作，但会带来无法实现包含Array的Array的功能的问题</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array suubscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">unsigned</span> n, <span class="keyword">const</span> T&amp; t)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        data[n] = t;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>方便性和安全性之间的权衡问题</li>
-</ul>
-<blockquote>
-<p>选择何种方法取决于类会被确切地怎样使用</p>
-</blockquote>
-<h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><ul>
-<li>如果Array不存在了还可能存在一个指向它的空悬Pointer</li>
-</ul>
-<blockquote>
-<p>“软件工程基本定理”(though it isn’t a real theory): 通过引进一个额外的中间层能够解决任何问题。’</p>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array_data &#123;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Array&lt;T&gt;;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Pointer&lt;T&gt;;</div><div class="line"></div><div class="line">    Array_data(<span class="keyword">unsigned</span> size = <span class="number">0</span>): data(<span class="keyword">new</span> T[size]), sz(size), use(<span class="number">1</span>) &#123;&#125;</div><div class="line">    ~Array_data() &#123; <span class="keyword">delete</span> [] data; &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// no implement that copy is no allowed</span></div><div class="line">    Array_data(<span class="keyword">const</span> Array_data&amp;);</div><div class="line">    Array_data&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array_data&amp;);</div><div class="line"></div><div class="line">    T* data;</div><div class="line">    <span class="keyword">unsigned</span> sz;</div><div class="line">    <span class="keyword">int</span> use;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array &#123;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Pointer&lt;T&gt;;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Array(<span class="keyword">unsigned</span> size): data(<span class="keyword">new</span> Array_data&lt;T&gt;(size)) &#123;&#125;</div><div class="line">    ~Array() &#123;</div><div class="line">        <span class="keyword">if</span> (--data-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">return</span> (*data)[n];</div><div class="line">    &#125;</div><div class="line">    T* <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">        <span class="keyword">return</span> (*data)[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array(<span class="keyword">const</span> Array&amp;);</div><div class="line">    Array&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array&amp;);</div><div class="line">    Array_data&lt;T&gt;* data;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Poiter: <span class="keyword">public</span> Ptr_to_const&lt;T&gt; &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Pointer(Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): ap(a.data), sub(n) &#123;</div><div class="line">        ++ap-&gt;use;</div><div class="line">    &#125;</div><div class="line">    Pointer(): ap(<span class="number">0</span>), sub(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Pointer(<span class="keyword">const</span> Pointer&lt;T&gt;&amp; p): ap(p.ap), sub(p.sub) &#123;</div><div class="line">        <span class="keyword">if</span> (ap)</div><div class="line">            ++ap-&gt;use;</div><div class="line">    &#125;</div><div class="line">    ~Pointer() &#123;</div><div class="line">        <span class="keyword">if</span> (ap &amp;&amp; --ap-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> ap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Pointer&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Pointer&lt;T&gt;&amp; p) &#123;</div><div class="line">        <span class="keyword">if</span> (p.ap)</div><div class="line">            ++p.ap-&gt;use;</div><div class="line">        <span class="keyword">if</span> (ap &amp;&amp; --ap-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> ap;</div><div class="line">        ap = p.ap;</div><div class="line">        sub = p.sub;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Ptr_to_const"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array_data&lt;T&gt;* ap;</div><div class="line">    <span class="keyword">unsigned</span> sub;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// the following code does work</span></div><div class="line">Array&lt;<span class="keyword">int</span>&gt;* ap = <span class="keyword">new</span> Array&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>);</div><div class="line">Pointer&lt;<span class="keyword">int</span>&gt; p(*ap, <span class="number">5</span>);</div><div class="line"><span class="keyword">delete</span> ap;</div><div class="line">*p = <span class="number">42</span>;</div></pre></td></tr></table></figure>
-<h3 id="指向const-Array的Pointer"><a href="#指向const-Array的Pointer" class="headerlink" title="指向const Array的Pointer"></a>指向const Array的Pointer</h3><ul>
-<li>还无法使Pointer指向const Array的元素</li>
-</ul>
-<p>const Array的实际对象很少，但通过引用传递Array参数(const Array&amp;)时还是有用的</p>
-<ul>
-<li><p>定义独立的类，提供类型转换操作符给这个类，通过继承获得两种类型间的相似性</p>
-</li>
-<li><p>类Pointer从Ptr_to_const继承而来，即使对象不是const类型也能把指针保存在Array_data中</p>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Ptr_to_const &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">// catch a argument const Array&lt;T&gt;&amp; instead of Array&lt;T&gt;&amp;</span></div><div class="line">    Ptr_to_const(<span class="keyword">const</span> Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): ap(a.data), sub(n) &#123;</div><div class="line">        ++ap-&gt;use;</div><div class="line">    &#125;</div><div class="line">    Ptr_to_const(): ap(<span class="number">0</span>), sub(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Ptr_to_const(<span class="keyword">const</span> Ptr_to_const&lt;T&gt;&amp; p): ap(p.ap), sub(p.sub) &#123;</div><div class="line">        <span class="keyword">if</span> (ap)</div><div class="line">            ++ap-&gt;use;</div><div class="line">    &#125;</div><div class="line">    ~Ptr_to_const() &#123;</div><div class="line">        <span class="keyword">if</span> (ap &amp;&amp; --ap-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> ap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Ptr_to_const&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Ptr_to_const&lt;T&gt;&amp; p) &#123;</div><div class="line">        <span class="keyword">if</span> (p.ap)</div><div class="line">            ++p.ap-&gt;use;</div><div class="line">        <span class="keyword">if</span> (ap &amp;&amp; --ap-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> ap;</div><div class="line">        ap = p.ap;</div><div class="line">        sub = p.sub;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Ptr_to_const"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array_data&lt;T&gt;* ap;</div><div class="line">    <span class="keyword">unsigned</span> sub;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// redefine class Pointer to keep something about constant</span></div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Poiter: <span class="keyword">public</span> Ptr_to_const&lt;T&gt; &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Pointer(Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): Ptr_to_const&lt;T&gt;(a, n) &#123;&#125;</div><div class="line">    Pointer() &#123;&#125;</div><div class="line"></div><div class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Ptr_to_const"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h3 id="增强操作"><a href="#增强操作" class="headerlink" title="增强操作"></a>增强操作</h3><p>重新设置Array大小</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">resize</span><span class="params">(<span class="keyword">unsigned</span> n)</span> </span>&#123;</div><div class="line">        <span class="comment">// Array_data do the real operation</span></div><div class="line">        data-&gt;resize(n);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> Array_data&lt;T&gt;::resize(<span class="keyword">unsigned</span> n) &#123;</div><div class="line">    <span class="keyword">if</span> (n == sz) <span class="keyword">return</span> ;</div><div class="line">    T* odata = data;</div><div class="line">    data = <span class="keyword">new</span> T[n];</div><div class="line">    copy(odata, sz &gt; n ? n : sz);</div><div class="line">    <span class="keyword">delete</span> [] odata;</div><div class="line">    sz = n;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> Array_data&lt;T&gt;::copy(T* arr, <span class="keyword">unsigned</span> n) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</div><div class="line">        data[i] = arr[i];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// another way of changing Array size</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">unsigned</span> new_sz)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (new_sz &gt;= data-&gt;sz)</div><div class="line">            data-&gt;grow(new_sz);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> Array_data&lt;T&gt;::grow(<span class="keyword">unsigned</span> new_sz) &#123;</div><div class="line">    <span class="keyword">unsigned</span> nsz = sz;</div><div class="line">    <span class="keyword">if</span> (nsz == <span class="number">0</span>)</div><div class="line">        nsz = <span class="number">1</span>;</div><div class="line">    whiel (nsz &lt;= new_sz)</div><div class="line">        nsz *= <span class="number">2</span>;</div><div class="line">    resize(nsz);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li><p>实现对Array的复制和赋值使包含Array的Array有效</p>
-</li>
-<li><p>不允许对Array_data对象复制，故不定义operator=调用Array_data::operator=</p>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Array(<span class="keyword">const</span> Array&amp; a): data(<span class="keyword">new</span> Array_data&lt;T&gt;(a.data-&gt;sz)) &#123;</div><div class="line">        data-&gt;copy(a.data-&gt;data, a.data-&gt;sz);</div><div class="line">    &#125;</div><div class="line">    Array&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array&amp; a) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;a)</div><div class="line">            data-&gt;clone(*a.data, a.data-&gt;data);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> Array_data&lt;T&gt;::clone(<span class="keyword">const</span> Array_data&amp; a, <span class="keyword">unsigned</span> n) &#123;</div><div class="line">    <span class="keyword">delete</span> [] data;</div><div class="line">    data = <span class="keyword">new</span> T[sz = a.sz];</div><div class="line">    copy(a.data, sz);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>尚未完全消除指针的需求</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/21/Cplusplus_thinking/模板（二）/">展开全文 >></a>
         </p>
       
 

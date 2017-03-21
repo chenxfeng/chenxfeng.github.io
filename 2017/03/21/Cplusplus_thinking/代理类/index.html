@@ -28,7 +28,7 @@ surrogate是handle(句柄)类中最简单的一种
 surrogate是handle(句柄)类中最简单的一种
 
 一个表示不同交通工具的类派生层次1234567891011class Vehicle &amp;#1">
-<meta property="og:updated_time" content="2017-03-21T00:20:38.147Z">
+<meta property="og:updated_time" content="2017-03-21T01:17:56.084Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chenfeng's blog">
 <meta name="twitter:description" content="代理类标签： C++
@@ -205,7 +205,7 @@ surrogate是handle(句柄)类中最简单的一种
 <li>必须知道要放入parking_lot中的对象的静态类型<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (p != q) &#123;</div><div class="line">    <span class="keyword">delete</span> parking_pot[p];</div><div class="line">    parking_pot[p] = <span class="keyword">new</span> Vehicle(parking_pot[q]);</div><div class="line">&#125;   <span class="comment">// virtual base class has no instance</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>more</p>
+<a id="more"></a>
 <h2 id="虚复制函数"><a href="#虚复制函数" class="headerlink" title="虚复制函数"></a>虚复制函数</h2><p>在Vehicle中增加合适的纯虚函数来复制编译时类型未知的对象<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="function"><span class="keyword">virtual</span> Vehicle* <span class="title">copy</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="keyword">virtual</span> ~Vehicle() &#123;&#125; <span class="comment">// virtual destructor</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>在Vehicle的所有派生类中添加成员函数copy，若vp指向Vehicle不确定的子类的对象，vp-&gt;copy()返回指向该对象新建副本的指针。<br>例如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* Trunk::copy() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Truck(*<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="定义代理类"><a href="#定义代理类" class="headerlink" title="定义代理类"></a>定义代理类</h2><ul>
@@ -322,7 +322,7 @@ surrogate是handle(句柄)类中最简单的一种
   
 <nav id="article-nav">
   
-    <a href="/2017/03/21/Cplusplus_thinking/句柄类(handle)/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/21/economics/供给与需求的基本原理/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -332,7 +332,7 @@ surrogate是handle(句柄)类中最简单的一种
     </a>
   
   
-    <a href="/2017/03/21/Cplusplus_thinking/不应当使用虚函数的情况/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/03/21/Cplusplus_thinking/模板（一）/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>

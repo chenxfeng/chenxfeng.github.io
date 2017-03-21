@@ -24,7 +24,7 @@
 链表中的指针跳转可以由一次跳转一步改为一次跳转多步
 如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间
 如果为每">
-<meta property="og:updated_time" content="2017-03-21T00:26:57.184Z">
+<meta property="og:updated_time" content="2017-03-21T01:18:58.400Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chenfeng's blog">
 <meta name="twitter:description" content="列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
@@ -181,7 +181,7 @@
 <li>如果为每个节点，把一次跳转2k步的跳转结果记录下来，那么以后一次跳转2k步也只需要O（1）时间</li>
 <li>反复利用跳转步数翻倍和跳转结果记录的技巧，可以在O（log N）的时间内把跳转步数扩大为N</li>
 </ul>
-<p>more</p>
+<a id="more"></a>
 <p>T = O(logn); W = O(nlogn)<br>并不比串行算法(linear, O(n))更优</p>
 <p>Algorithm 3.1<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># List Ranking Using Pointer Jumping</div><div class="line"></div><div class="line">Input: A linked list of n nodes such that (1)the successor of each node i is given by S(i), and (2)the S value of the last node on the list is euqal to 0.</div><div class="line"></div><div class="line">Output: For each 1 &lt;= i &lt;= n, the distance R(i) of node i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    if (S(i) != 0) then set R(i):= 1</div><div class="line">                   else set R(i):= 0</div><div class="line">2. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set Q(i) := S(i)</div><div class="line">    while (Q(i) ！= 0 and Q(Q(i)) != 0) do</div><div class="line">        set R(i) := R(i) + R(Q(i))</div><div class="line">        set Q(i) := Q(Q(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
 <p>优化思路: </p>
@@ -376,8 +376,17 @@
   
 <nav id="article-nav">
   
+    <a href="/2017/03/21/paralell_compute1&2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
-    <a href="/2017/03/21/computer_network_1/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2017/03/21/economics/现代经济中的市场和政府/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>

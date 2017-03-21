@@ -46,7 +46,7 @@ C++没有提供更多的内建容器：不将容器的设计限定到某种单�
 
 
 operator[]只用于取">
-<meta property="og:updated_time" content="2017-03-21T00:22:47.416Z">
+<meta property="og:updated_time" content="2017-03-21T01:17:47.852Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chenfeng's blog">
 <meta name="twitter:description" content="模板（一）标签：C++
@@ -224,7 +224,7 @@ operator[]只用于取">
 </ul>
 <p>operator[]只用于取数</p>
 <p>用成员函数update(i, x)修改索引为i的元素为x</p>
-<p>more</p>
+<a id="more"></a>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Container &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T <span class="keyword">operator</span>[](Index) <span class="keyword">const</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">Container&lt; Container&lt;<span class="keyword">int</span>&gt; &gt;c;</div><div class="line">Index i, j;</div><div class="line"><span class="keyword">int</span> k = c[i][j];</div><div class="line"><span class="comment">// only way to modify the element in Container</span></div><div class="line"><span class="comment">// c[i][j]</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="comment">// hard to deal with much more dimension</span></div><div class="line"><span class="comment">// c[i] return type T instead of T&amp;</span></div><div class="line"><span class="comment">// c[i].update(j, new_value) does not work</span></div></pre></td></tr></table></figure>
 <ul>
 <li><p>获取容器的元素严格分清类型T(作右值)和类型T&amp;(作左值)</p>
@@ -377,7 +377,7 @@ operator[]只用于取">
   
 <nav id="article-nav">
   
-    <a href="/2017/03/21/economics/供给与需求的基本原理/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/21/Cplusplus_thinking/代理类/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         

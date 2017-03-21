@@ -36,7 +36,7 @@
 
 避免使用指针复制对象：
 使">
-<meta property="og:updated_time" content="2017-03-21T00:21:06.791Z">
+<meta property="og:updated_time" content="2017-03-21T01:17:08.503Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chenfeng's blog">
 <meta name="twitter:description" content="句柄类(handle)标签： C++
@@ -215,7 +215,7 @@
 <li>有时也称为smart pointer(智能指针)</li>
 <li>绑定到所控制的类的对象上</li>
 </ul>
-<p>more</p>
+<a id="more"></a>
 <h3 id="简单示例类"><a href="#简单示例类" class="headerlink" title="简单示例类"></a>简单示例类</h3><p>表示点平面坐标的类<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Point &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Point(): xval(<span class="number">0</span>), yval(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Point(<span class="keyword">int</span> x, <span class="keyword">int</span> y): xval(x), yval(y) &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> xval; &#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> yval; &#125;</div><div class="line">    <span class="function">Point&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span> xv)</span> </span>&#123; xval = xv; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</div><div class="line">    <span class="function">Point&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span> yv)</span> </span>&#123; yval = yv; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p><strong>使用一个无参构造函数和一个两个参数的构造函数而非一个缺省参数的构造函数</strong><br><code>Point(int x = 0, int y = 0): xval(x), yval(y) {}</code><br><em>后者允许只用一个参数(另一个缺省为零)构造Point对象，而这几乎是错的</em></p>
 <h3 id="绑定到句柄"><a href="#绑定到句柄" class="headerlink" title="绑定到句柄"></a>绑定到句柄</h3><p>将句柄h直接绑定到对象上<br><code>Point p;</code><br><code>Handle h(p);</code></p>
@@ -378,7 +378,7 @@
     </a>
   
   
-    <a href="/2017/03/21/Cplusplus_thinking/代理类/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/03/21/Cplusplus_thinking/不应当使用虚函数的情况/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>

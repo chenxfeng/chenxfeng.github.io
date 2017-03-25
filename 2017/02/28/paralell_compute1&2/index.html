@@ -6,14 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chenfeng.github.io">
-  <title>Archives: 2017/3 | chenfeng&#39;s blog</title>
+  <title>并行计算基础知识及基本并行算法 | chenfeng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="chenfeng's blog">
-<meta property="og:url" content="https://chenfeng.github.io/archives/2017/03/index.html">
+  <meta name="description" content="(并行与分布式计算一)
+基础知识设计分布式并行算法基本流程1.1发现计算问题的内在并行性
+1.2设计与硬件无关的并行算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并行计算基础知识及基本并行算法">
+<meta property="og:url" content="https://chenfeng.github.io/2017/02/28/paralell_compute1&2/index.html">
 <meta property="og:site_name" content="chenfeng's blog">
+<meta property="og:description" content="(并行与分布式计算一)
+基础知识设计分布式并行算法基本流程1.1发现计算问题的内在并行性
+1.2设计与硬件无关的并行算法">
+<meta property="og:image" content="https://chenfeng.github.io/img/prefix_sum_balance_tree.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/nonrecursive_prefix_sum.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/tree_root_pointer_jumping.png">
+<meta property="og:updated_time" content="2017-03-25T03:40:38.688Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="chenfeng's blog">
+<meta name="twitter:title" content="并行计算基础知识及基本并行算法">
+<meta name="twitter:description" content="(并行与分布式计算一)
+基础知识设计分布式并行算法基本流程1.1发现计算问题的内在并行性
+1.2设计与硬件无关的并行算法">
+<meta name="twitter:image" content="https://chenfeng.github.io/img/prefix_sum_balance_tree.png">
   
     <link rel="alternative" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
   
@@ -149,78 +163,235 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-paralell_compute1&amp;2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/25/economics/宏观经济现象鸟瞰/" class="archive-article-date">
-  	<time datetime="2017-03-25T03:52:32.346Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-25</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/25/computer_network_1/" class="archive-article-date">
-  	<time datetime="2017-03-25T03:41:16.913Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-25</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/03/14/paralell_compute3/" class="archive-article-date">
-  	<time datetime="2017-03-13T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/14/paralell_compute3/">列表和树</a>
+    <h1 class="article-title" itemprop="name">
+      并行计算基础知识及基本并行算法
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/02/28/paralell_compute1&2/" class="archive-article-date">
+  	<time datetime="2017-02-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算一)</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="设计分布式并行算法基本流程"><a href="#设计分布式并行算法基本流程" class="headerlink" title="设计分布式并行算法基本流程"></a>设计分布式并行算法基本流程</h3><p>1.1发现计算问题的<strong>内在并行性</strong></p>
+<p>1.2设计<strong>与硬件无关</strong>的并行算法</p>
+<a id="more"></a>
+<ul>
+<li><p>让算法设计者专注于挖掘问题相关的内在并行性而不是被繁琐的硬件特性所干扰</p>
+</li>
+<li><p>便于不同硬件环境下的开发者移植算法</p>
+</li>
+<li><p>便于算法到硬件的映射的自动匹配和优化</p>
+</li>
+<li><p>为并行和分布式计算的系统库(中间件)研发提供一套高层语义抽象</p>
+</li>
+</ul>
+<p>PRAM(Parallel Random Access Machine, 随机存取并行机器): 一个简单的并行算法模型</p>
+<ul>
+<li><p>Parallel: 可以自由分布任意个处理器并行地读、写和计算</p>
+</li>
+<li><p>Random Access: 处理器可以按下面其中一条规则自由地访问“共享内存”</p>
+</li>
+</ul>
+<ol>
+<li><p>规则一: Exclusive Read Exclusive Write(EREW)(不允许同时读和同时写)</p>
+</li>
+<li><p>规则二: Concurrent Read Exclusive Write(CREW)(允许同时读但不允许同时写)</p>
+</li>
+<li><p>规则三: Concurrent Read Concurrent Write(CRCW)(允许同时读和同时写)</p>
+</li>
+</ol>
+<ul>
+<li>算法复杂度框架: work(计算量(operation)), time(计算时间)</li>
+</ul>
+<p>2.1发现硬件的<strong>网络拓扑和处理能力</strong></p>
+<p>网络拓扑: </p>
+<ul>
+<li>静态: 环、星、树、超立方、图</li>
+<li>动态: 互联网或移动网络中的分布式计算</li>
+</ul>
+<p>处理能力: </p>
+<ul>
+<li>指标: 处理速度和处理规模</li>
+<li>结构: 同构、异构</li>
+<li>方式: 内存计算还是内外存混合计算，计算密集型还是数据密集型</li>
+</ul>
+<p>发现网络拓扑的算法: </p>
+<ul>
+<li>目的一: 建立数据通信的路由</li>
+<li>目的二: 死锁检测和解除</li>
+<li>目的三: 优化数据传播和交换</li>
+</ul>
+<p>发现处理能力的方法: </p>
+<ul>
+<li>测试程序</li>
+<li>人工检测</li>
+</ul>
+<p>2.2设计<strong>与计算问题无关</strong>的分布式计算协议</p>
+<p>(所需计算协议包括以下但不止)</p>
+<ul>
+<li><p>广播、多播和数据收集</p>
+</li>
+<li><p>同步和异步控制</p>
+</li>
+<li><p>终止检测和全局谓词(条件)检测</p>
+</li>
+<li><p>快照保存与检查点恢复</p>
+</li>
+</ul>
+<p>3.把并行算法<em>映射</em>到硬件上，匹配、优化</p>
+<p>匹配: </p>
+<ul>
+<li>与硬件相关的具体并行算法</li>
+<li>数据分划和任务指派方案(静态或动态)</li>
+<li>并行和分布式计算的程序</li>
+</ul>
+<p>优化: </p>
+<ul>
+<li>面向硬件体系结构的算法复杂度分析</li>
+<li>针对硬件特性的算法改进和程序调优</li>
+</ul>
+<h2 id="并行计算的基本方法"><a href="#并行计算的基本方法" class="headerlink" title="并行计算的基本方法"></a>并行计算的基本方法</h2><h3 id="平衡树方法-Balanced-Trees"><a href="#平衡树方法-Balanced-Trees" class="headerlink" title="平衡树方法(Balanced Trees)"></a>平衡树方法(Balanced Trees)</h3><ul>
+<li>例: 设<em>是满足结合律的二元运算符，考虑计算<br>$$ S_i = x_1 </em> x_2 <em> … </em> x_i, 1 \leq i \leq n $$</li>
+</ul>
+<p>Algorithm 2.1<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># Prefix Sums</div><div class="line"></div><div class="line">Input: An <span class="built_in">array</span> of n = <span class="number">2</span>^k elements (x_1, x_2, ..., x_n), where k is a nonnegative integer.</div><div class="line"></div><div class="line">Output: The prefix sums s_i, <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">if</span> n = <span class="number">1</span> then &#123;<span class="built_in">set</span> s_1 := x_1; <span class="built_in">exit</span>&#125;</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n/<span class="number">2</span> pardo</div><div class="line">    <span class="built_in">set</span> y_i := x_2i<span class="number">-1</span> * x_2i</div><div class="line"><span class="number">3.</span> Recursively, compute the prefix sums of &#123;y_1, y_2, ..., y_n&#125;, and store them in z_1, z_2, ..., z_n/<span class="number">2</span></div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    &#123;i even     :  <span class="built_in">set</span> s_i := z_i/<span class="number">2</span></div><div class="line">     i = <span class="number">1</span>      :  <span class="built_in">set</span> s_1 := x_1</div><div class="line">     i odd &gt; <span class="number">1</span>  :  <span class="built_in">set</span> s_i := z_(i<span class="number">-1</span>)/<span class="number">2</span> * x_i&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>复杂度分析<br>$$ T(n) = T(\frac{n}{2}) + a  $$<br>$$ W(n) = W(\frac{n}{2}) + bn $$<br>求解递归方程<br>$$ T(n) = O(logn) $$<br>$$ W(n) = O(n) $$</li>
+</ul>
+<blockquote>
+<p><img src="/img/prefix_sum_balance_tree.png" alt="prefix_sum_balance_tree.png"></p>
+</blockquote>
+<p>Algorithm 2.2<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># Nonrecursive Prefix Sums</div><div class="line"></div><div class="line">Input: An <span class="built_in">array</span> A of size n = <span class="number">2</span>^k, where k is a nonnegative integer.</div><div class="line"></div><div class="line">Output: An <span class="built_in">array</span> C such that C(<span class="number">0</span>, j) is the jth prefix sum, <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n pardo</div><div class="line">    <span class="built_in">set</span> B(<span class="number">0</span>, j) := A(j)</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> h = <span class="number">1</span> to logn <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        <span class="built_in">set</span> B(h, j) := B(h - <span class="number">1</span>, <span class="number">2</span>j - <span class="number">1</span>) * B(h - <span class="number">1</span>, <span class="number">2</span>j)</div><div class="line"><span class="number">3.</span> <span class="keyword">for</span> h = logn to <span class="number">0</span> <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        &#123;j even    : <span class="built_in">set</span> C(h, j) := C(h + <span class="number">1</span>, j/<span class="number">2</span>)</div><div class="line">         j = <span class="number">1</span>     : <span class="built_in">set</span> C(h, <span class="number">1</span>) := B(h, <span class="number">1</span>)</div><div class="line">         j odd &gt; <span class="number">1</span> : <span class="built_in">set</span> C(h, j) := C(h + <span class="number">1</span>, (j - <span class="number">1</span>)/<span class="number">2</span>)*B(h, j)&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><img src="/img/nonrecursive_prefix_sum.png" alt="nonrecursive_prefix_sum.png"></p>
+</blockquote>
+<h3 id="指针跳转法-Pointer-Jumping"><a href="#指针跳转法-Pointer-Jumping" class="headerlink" title="指针跳转法(Pointer Jumping)"></a>指针跳转法(Pointer Jumping)</h3><ul>
+<li>例一: 存储在数组中的链表求序</li>
+</ul>
+<ul>
+<li>串行算法: 线性复杂度</li>
+<li>并行复杂度: T = O(logn), W = O(nlogn)</li>
+</ul>
+<ul>
+<li>例二: 为森林里的每个节点找所在的那棵树的根节点</li>
+</ul>
+<blockquote>
+<p><img src="/img/tree_root_pointer_jumping.png" alt="tree_root_pointer_jumping.png"></p>
+</blockquote>
+<p>Algorithm 2.4<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Pointer Jumping</div><div class="line"></div><div class="line">Input: A forest of rooted directed trees, each with a self-loop at its root, such that each arc is specified by (i, P(i)), where 1 &lt;= i &lt;= n.</div><div class="line"></div><div class="line">Output: For each vertex i, the root S(i) of the tree containing i.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set S(i) := P(i)</div><div class="line">    while (S(i)) != S(S(i)) do</div><div class="line">        set S(i) := S(S(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(logh); W = O(nlogh)</p>
+<p>Algorithm 2.5<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># Parallel Prefix on Rooted Directed Trees</div><div class="line"></div><div class="line">Input: A forest of rooted directed trees, each with a self-loop at its root such that (1)each arc is specified by (i, P(i)), (2)each vertex i has a weight W(i), and (3)for each root r, W(r) = 0</div><div class="line"></div><div class="line">Output: For each vertex i, W(i) is set equal to the sum of the weights of vertices on the path from i to the root of its tree.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set S(i) := P(i)</div><div class="line">    while (S(i)) != S(S(i)) do</div><div class="line">        set W(i) := W(i) + W(S(i))</div><div class="line">        set S(i) := S(S(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(logn); W = O(nlogn)</p>
+<h3 id="分而治之法-Divide-and-Conquer"><a href="#分而治之法-Divide-and-Conquer" class="headerlink" title="分而治之法(Divide and Conquer)"></a>分而治之法(Divide and Conquer)</h3><p>例: 找二维平面上的点的凸包(planar convex hull)</p>
+<ul>
+<li>分: 把这些顶点按由左到右平均分成两组</li>
+<li>治: 在这两组内分别求凸包(求解两个规模相对较小的问题，递归)</li>
+<li>合: 把两组凸包用快速算法合为一个</li>
+</ul>
+<p>Algorithm 2.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Simple Upper Hull</div><div class="line"></div><div class="line">Input: A set S of n points in the plane, no two of which have the same x or y coordinates such that x(p_1) &lt; x(p_2) &lt; ... &lt; x(p_n), where n is a power of 2.</div><div class="line"></div><div class="line">Output: The upper hull of S.</div><div class="line"></div><div class="line">begin</div><div class="line">1. If n &lt;= 4, then use a brute-force method to determine UH(S), and exit.</div><div class="line">2. Let S_1 = (p_1, p_2, ..., P_n/2) and S_2 = (p_n/2+1, ..., p_n). Recursively, compute UH(S_1) and UH(S_2) in parallel.</div><div class="line">3. find the upper common tangent between UH(S_1) nad UH(S_2), and deduce the upper hull of S.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>$$ T(n) \leq T(\frac{n}{2}) + alogn $$<br>$$ W(n) \leq 2W(\frac{n}{2} + bn) $$<br>并行复杂度: $ T = O(log^2 n); W = O(nlogn) $</p>
+<h3 id="数据划分法-partition-strategy"><a href="#数据划分法-partition-strategy" class="headerlink" title="数据划分法(partition strategy)"></a>数据划分法(partition strategy)</h3><ul>
+<li>例: 归并排序</li>
+</ul>
+<ul>
+<li>1.数据均分为若干等分</li>
+<li>2.在每一等分内用其它方法排序</li>
+<li>3.平衡树快速并行合并这些等分</li>
+</ul>
+<p>Algorithm 2.7<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># Partition</div><div class="line"></div><div class="line">Input: Two arrays A = (a_1, a_2, ..., a_n) and B = (b_1, b_2, ..., b_m) in increasing order, where both logm and k(m) = m/logm are integers.</div><div class="line"></div><div class="line">Output: k(m) pairs (A_i, B_i) of subsequences of A and B such that (<span class="number">1</span>)|B_i| = <span class="built_in">log</span> m, (<span class="number">2</span>)\sum |A_i| = n, and (<span class="number">3</span>)each element of A_i and B_i is larger than each element of A_i<span class="number">-1</span> or B_i<span class="number">-1</span>, <span class="keyword">for</span> all <span class="number">1</span> &lt;= i &lt;= k(m)<span class="number">-1</span></div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="built_in">set</span> j(<span class="number">0</span>) := <span class="number">0</span>, j(k(m)) := n</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= k(m) - <span class="number">1</span> pardo</div><div class="line">    <span class="number">2.1</span>. Rank b_ilogm in A <span class="keyword">using</span> binary search method, and let j(i) = rank(b_ilogm : A)</div><div class="line"><span class="number">3.</span> <span class="keyword">for</span> <span class="number">0</span> &lt;= i &lt;= k(m) - <span class="number">1</span> pardo</div><div class="line">    <span class="number">3.1</span>. <span class="built_in">set</span> B_i := (b_ilogm+<span class="number">1</span>, ..., b_(i+<span class="number">1</span>)logm)</div><div class="line">    <span class="number">3.2</span>. <span class="built_in">set</span> A_i := (a_j(i) + <span class="number">1</span>, ..., a_j(i+<span class="number">1</span>))</div><div class="line">        (A_i is empty <span class="keyword">if</span> j(i) = j(i+<span class="number">1</span>))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>合并后的序 = 自序 + 交叉序</li>
+<li>自序(a_i) = {a_0, a_1, …, a_n-1}中有多少a_j 排在a_i前面(在这里即i)</li>
+<li>交叉序(a_i) = {b_0, b_1, …, b_n-1}中有多少b_j排在a_i前面</li>
+</ul>
+<p>并行复杂度: T = O(logn); W = O(n)</p>
+<h3 id="流水线方法-Pipelining"><a href="#流水线方法-Pipelining" class="headerlink" title="流水线方法(Pipelining)"></a>流水线方法(Pipelining)</h3><ul>
+<li>例: 2-3树的数据插入</li>
+</ul>
+<ul>
+<li>批量插入多个点及其并行复杂度<br>T = O(logn); W = O(klogn)</li>
+</ul>
+<ul>
+<li>breaking up a task into a sequence of subtask t_1, t_2, …, t_m<br>……</li>
+</ul>
+<h3 id="加速层叠法-Accelerated-Cascading"><a href="#加速层叠法-Accelerated-Cascading" class="headerlink" title="加速层叠法(Accelerated Cascading)"></a>加速层叠法(Accelerated Cascading)</h3><ul>
+<li>例: 数组找最大值</li>
+</ul>
+<p>常数的并行时间复杂度</p>
+<p>Algorithm 2.8<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Basic Maximum</div><div class="line"></div><div class="line">Input: An array A of p distinct elements.</div><div class="line"></div><div class="line">Output: A Boolean array M such that M(i) = 1 if and only if A(i) is the maximum element of A.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i, j &lt;= p pardo if (A(i) &gt;= A(j)) then set B(i, j) := 1</div><div class="line">                                              else set B(i, j) := 0</div><div class="line">2. for 1 &lt;= i &lt;= p pardo</div><div class="line">    set M(i) := B(i, 1) &amp; B(i, 2) &amp; ... B(i, p)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>$ T = O(1); W = O(p^2) $</p>
+<p>双层log深度树(doubly logarithmic-depth tree): 最底层节点数 为 n，根节点的孩子节点数 为 $n^{\frac{1}{2}}$，下一层每个节点的孩子节点数 $n^{\frac{1}{2^2}}$，…</p>
+<ul>
+<li><p>假设$n = 2^{2^k}$, 树根有$2^{2^{k-1}}$个孩子, 第一层有$2^{2^{k-2}}$个孩子, …, 第i层有$2^{2^{k-i-1}}$个孩子, …</p>
+</li>
+<li><p>倒数第二层每个节点有常数个子节点</p>
+</li>
+<li>向上合并用常数复杂度求最大值方法</li>
+<li>整体并行复杂度: $$ T(n) = O(log log n) $$ $$ W(n) = O(n log log n) $$</li>
+</ul>
+<p>accelerated cascading:</p>
+<ol>
+<li>start with the optimal algorithm until the size of the problem is reduced to a centain threshold value. 双层log深度树加速</li>
+<li>Then, shift to the fast but nonoptimal algorithm. 常数时间算法层叠</li>
+</ol>
+<h3 id="对称破坏法-Symmetry-Breaking"><a href="#对称破坏法-Symmetry-Breaking" class="headerlink" title="对称破坏法(Symmetry Breaking)"></a>对称破坏法(Symmetry Breaking)</h3><ul>
+<li>例: 环的三色着色问题</li>
+</ul>
+<ul>
+<li>要求: 相邻的点不能是相同的颜色</li>
+<li>串行算法: 在环上随机选一点把环打开得到一个队列；从队首开始除队尾外以0，1相间着色，队尾着色为2(确保队尾和队首、对中倒数第二节点的颜色都不同)</li>
+<li>并行算法大致思想: 从以节点编号为颜色的着色方案开始，通过迭代算法，逐步减少着色数量</li>
+</ul>
+<p>Algorithm 2.9<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Basic Coloring</div><div class="line"></div><div class="line">Input: A directed cycle whose arcs are specified by an <span class="built_in">array</span> S of size n and a coloring c of the vertices.</div><div class="line"></div><div class="line">Output: Another coloring c' of the verteces of the cycle.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    <span class="number">1.</span> <span class="built_in">set</span> k to the least significant bit position in which c(i) and c(S(i)) disagree.</div><div class="line">    <span class="number">2.</span> <span class="built_in">set</span> c'(i) := <span class="number">2</span>k + c(i)_k</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(1); W = O(n)</p>
+<blockquote>
+<p>definition: $log^{(1)}x = logx$, and $log^{(i)}x = log(log^{(i-1)}x)$</p>
+</blockquote>
+<ul>
+<li>Fast Coloring<br>反复运用这个算法使得从颜色序号{0, 1, 2}中重新选择颜色给每个顶点着色且相邻顶点色不同, 整体并行复杂度为: $$ T = O(log<em>n); W = O(nlog</em>n) $$</li>
+</ul>
+<p>Algorithm 2.10<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># <span class="number">3</span>-coloring of a Cycle</div><div class="line"></div><div class="line">Input: A directed cycle of length n whose arcs are specified by an <span class="built_in">array</span> S.</div><div class="line"></div><div class="line">Output: A <span class="number">3</span>-coloring of the vertices of the cycle.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    <span class="built_in">set</span> C(i) := i</div><div class="line"><span class="number">2.</span> Apply Algorithm <span class="number">2.9</span> once.</div><div class="line"><span class="number">3.</span> Sort the vertices by their colors.</div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> i = <span class="number">3</span> to <span class="number">2</span> \ceiling(logn) <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> all vertices v of color i pardo</div><div class="line">    color v with the smallest color from &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125; that is diffrrent from the colors of its two neighbors.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(logn); W = O(n)</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -232,19 +403,97 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/02/28/paralell_compute1&2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/03/14/paralell_compute3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          列表和树
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/01/21/Cplusplus_thinking/代理类/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">代理类</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -267,8 +516,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

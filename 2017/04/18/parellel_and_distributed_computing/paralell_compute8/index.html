@@ -25,7 +25,7 @@ Arithmetic Computations
 <meta property="og:image" content="https://chenfeng.github.io/\img\fft.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\polynomial_divide.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\polynomial_evaluation.png">
-<meta property="og:updated_time" content="2017-04-23T09:47:44.831Z">
+<meta property="og:updated_time" content="2017-04-23T12:51:35.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数值计算中的并行算法">
 <meta name="twitter:description" content="(并行与分布式计算七)
@@ -187,7 +187,7 @@ Arithmetic Computations
 <h2 id="线性递推式-linear-recurrences"><a href="#线性递推式-linear-recurrences" class="headerlink" title="线性递推式(linear recurrences)"></a>线性递推式(linear recurrences)</h2><p>m阶线性递推式(linear recurrece of order m):<br>$y<em>i$由$ y</em>{i-1}, y<em>{i-2}, …, y</em>{i-m} $的线性组合生成</p>
 <h3 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h3><p>A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a<em>1x^{n-1 + … + a</em>{n-1}x} + a_n $的系数数组，给定点$x_0$计算$p(x_0)$</p>
 <ul>
-<li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<br>$$ p(x_0) = (…((a_0x_0 +ａ_1)x_0 + a_2)x<em>0 + … + a</em>{n-1})x_0 + a_n $$</li>
+<li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<br>$$ p(x_0) = (…((a_0x_0 +a_1)x_0 + a_2)x<em>0 + … + a</em>{n-1})x_0 + a_n $$</li>
 </ul>
 <a id="more"></a>
 <p>$ y_1 = a_0x_0 + a_1 $<br>$ y_2 = y_1x_0 + a_2 $<br>$ . $<br>$ . $<br>$ . $<br>$ p(x_0) = y<em>n = y</em>{n-1}x_0 + a_n $</p>
@@ -777,11 +777,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
+                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
+                <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -242,7 +242,7 @@
 <h2 id="线性递推式-linear-recurrences"><a href="#线性递推式-linear-recurrences" class="headerlink" title="线性递推式(linear recurrences)"></a>线性递推式(linear recurrences)</h2><p>m阶线性递推式(linear recurrece of order m):<br>$y<em>i$由$ y</em>{i-1}, y<em>{i-2}, …, y</em>{i-m} $的线性组合生成</p>
 <h3 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h3><p>A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a<em>1x^{n-1 + … + a</em>{n-1}x} + a_n $的系数数组，给定点$x_0$计算$p(x_0)$</p>
 <ul>
-<li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<br>$$ p(x_0) = (…((a_0x_0 +ａ_1)x_0 + a_2)x<em>0 + … + a</em>{n-1})x_0 + a_n $$</li>
+<li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<br>$$ p(x_0) = (…((a_0x_0 +a_1)x_0 + a_2)x<em>0 + … + a</em>{n-1})x_0 + a_n $$</li>
 </ul>
         
           <a class="article-more-a" href="/2017/04/18/parellel_and_distributed_computing/paralell_compute8/#more">more >></a>
@@ -709,19 +709,19 @@
 
 
   
-    <article id="post-economics/宏观经济学鸟瞰" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Cplusplus_thinking/不应当使用虚函数的情况" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/economics/宏观经济学鸟瞰/">宏观经济学鸟瞰</a>
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/">不应当使用虚函数的情况</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/economics/宏观经济学鸟瞰/" class="archive-article-date">
+        <a href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/" class="archive-article-date">
   	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
 </a>
         
@@ -729,23 +729,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li><p>研究对象：整体经济行为</p>
+        <p>关于是否应该所有成员函数缺省为虚函数的争论</p>
+<p><em>只有涉及继承时，才需要考虑与此相关的问题</em></p>
+<h2 id="适用的情况"><a href="#适用的情况" class="headerlink" title="适用的情况"></a>适用的情况</h2><ul>
+<li>基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数</li>
+</ul>
+<h2 id="不适用的情况"><a href="#不适用的情况" class="headerlink" title="不适用的情况"></a>不适用的情况</h2><ul>
+<li><p>虚函数代价并不是非常高，当时会带来一定的额外开销</p>
 </li>
-<li><p>个体行为的总体成果</p>
+<li><p>有些情况下非虚函数能够正确运行而虚函数不能</p>
 </li>
-<li><p>不是研究特定部门或特定经济活动主体的行为</p>
-</li>
-<li><p>经济生活中的重大问题</p>
-</li>
-<li><p>基本研究方法：考察经济的总体趋势</p>
-</li>
-<li><p>收集不同时期、不同国家有关收入、通货膨胀和失业等变量的数据，尝试构建有助于理解这些数据的一般理论</p>
+<li><p>有些类并非为继承而设计(设计时并不兼容被继承)</p>
 </li>
 </ul>
-<h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2>
         
-          <a class="article-more-a" href="/2017/01/21/economics/宏观经济学鸟瞰/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/#more">more >></a>
         
       
 
@@ -759,7 +757,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">宏观经济学</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
         		</li>
       		
 		</ul>
@@ -769,7 +767,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/economics/宏观经济学鸟瞰/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/">展开全文 >></a>
         </p>
       
 
@@ -787,19 +785,19 @@
 
 
   
-    <article id="post-economics/宏观经济现象鸟瞰" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-economics/供给与需求的基本原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/economics/宏观经济现象鸟瞰/">宏观经济现象鸟瞰</a>
+      <a class="article-title" href="/2017/01/21/economics/供给与需求的基本原理/">供给与需求的基本原理</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/economics/宏观经济现象鸟瞰/" class="archive-article-date">
+        <a href="/2017/01/21/economics/供给与需求的基本原理/" class="archive-article-date">
   	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
 </a>
         
@@ -807,16 +805,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="三个重要的宏观经济变量"><a href="#三个重要的宏观经济变量" class="headerlink" title="三个重要的宏观经济变量"></a>三个重要的宏观经济变量</h2><ul>
-<li><p>实际国内生产总值(real GDP<gross domestic product>):<br>经济体内所有人的实际总收入。<br>人均国内生产总值(GDP per capita): 经济体内平均而言每个人的实际收入。</p>
+        <h3 id="需求表"><a href="#需求表" class="headerlink" title="需求表"></a>需求表</h3><ul>
+<li><p>在其他条件相同时，一种物品的价格越高，人们愿意购买的数量就越少；而市场价格越低，人们愿意购买的数量就越多</p>
 </li>
-<li><p>通货膨胀率(inflation rate):<br>物价水平变动的百分比。(物价指数)<br>用消费者价格指数(consumer price index, CPI)或GDP缩减指数(GDP deflator index)<br>衡量。</p>
-</li>
-<li><p>失业率(unemployment rate):<br>经济体中没有工作当正在积极找工作的劳动力比重。</p>
+<li><p>价格与需求之间的关系可以用一张需求表(demand schedule)或一条需求曲线(demand curve)表示</p>
 </li>
 </ul>
+<ul>
+<li>需求曲线：数量和价格呈反比关系</li>
+</ul>
         
-          <a class="article-more-a" href="/2017/01/21/economics/宏观经济现象鸟瞰/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/21/economics/供给与需求的基本原理/#more">more >></a>
         
       
 
@@ -830,7 +829,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">宏观经济学</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">微观经济学</a>
         		</li>
       		
 		</ul>
@@ -840,7 +839,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/economics/宏观经济现象鸟瞰/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/21/economics/供给与需求的基本原理/">展开全文 >></a>
         </p>
       
 
@@ -980,11 +979,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
+                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
+                <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
               </li>
              
               <li class="article-tag-list-item">

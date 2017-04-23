@@ -6,40 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chenfeng.github.io">
-  <title>计算机网络和因特网 | chenfeng&#39;s blog</title>
+  <title>并行计算基础知识及基本并行算法 | chenfeng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="因特网连接到因特网的设备：主机(host)或端系统(end system)
-端系统通过通信链路(communication link)和分组交换机(parket switch)连接到一起
-路由器(router) 链路层交换机(link-layer switch)
-端系统通过因特网服务提供商(Internet Service Provider, ISP)接入因特网
-因特网部件运行一系列协议(prot">
+  <meta name="description" content="(并行与分布式计算一)
+基础知识设计分布式并行算法基本流程1.1发现计算问题的内在并行性
+1.2设计与硬件无关的并行算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="计算机网络和因特网">
-<meta property="og:url" content="https://chenfeng.github.io/2017/02/28/computer_network_1/index.html">
+<meta property="og:title" content="并行计算基础知识及基本并行算法">
+<meta property="og:url" content="https://chenfeng.github.io/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/index.html">
 <meta property="og:site_name" content="chenfeng's blog">
-<meta property="og:description" content="因特网连接到因特网的设备：主机(host)或端系统(end system)
-端系统通过通信链路(communication link)和分组交换机(parket switch)连接到一起
-路由器(router) 链路层交换机(link-layer switch)
-端系统通过因特网服务提供商(Internet Service Provider, ISP)接入因特网
-因特网部件运行一系列协议(prot">
-<meta property="og:image" content="https://chenfeng.github.io/img/encoding.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/Timing_of_Datagram_Packet_Switching.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/circuit_switching.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/Timing_in_Circuit_Switching.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/Timing_of_Virtual-Circuit_Packet_Switching.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/network_of_networks.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/delay.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/queueing_delay.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/encapsulation.png">
-<meta property="og:updated_time" content="2017-03-25T04:06:20.373Z">
+<meta property="og:description" content="(并行与分布式计算一)
+基础知识设计分布式并行算法基本流程1.1发现计算问题的内在并行性
+1.2设计与硬件无关的并行算法">
+<meta property="og:image" content="https://chenfeng.github.io/img/prefix_sum_balance_tree.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/nonrecursive_prefix_sum.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/tree_root_pointer_jumping.png">
+<meta property="og:updated_time" content="2017-04-03T08:27:31.927Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="计算机网络和因特网">
-<meta name="twitter:description" content="因特网连接到因特网的设备：主机(host)或端系统(end system)
-端系统通过通信链路(communication link)和分组交换机(parket switch)连接到一起
-路由器(router) 链路层交换机(link-layer switch)
-端系统通过因特网服务提供商(Internet Service Provider, ISP)接入因特网
-因特网部件运行一系列协议(prot">
-<meta name="twitter:image" content="https://chenfeng.github.io/img/encoding.png">
+<meta name="twitter:title" content="并行计算基础知识及基本并行算法">
+<meta name="twitter:description" content="(并行与分布式计算一)
+基础知识设计分布式并行算法基本流程1.1发现计算问题的内在并行性
+1.2设计与硬件无关的并行算法">
+<meta name="twitter:image" content="https://chenfeng.github.io/img/prefix_sum_balance_tree.png">
   
     <link rel="alternative" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
   
@@ -175,19 +163,19 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-computer_network_1" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-parellel_and_distributed_computing/paralell_compute1&amp;2" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      计算机网络和因特网
+      并行计算基础知识及基本并行算法
     </h1>
   
 
         
-        <a href="/2017/02/28/computer_network_1/" class="archive-article-date">
+        <a href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/" class="archive-article-date">
   	<time datetime="2017-02-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-28</time>
 </a>
         
@@ -195,598 +183,197 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="因特网"><a href="#因特网" class="headerlink" title="因特网"></a>因特网</h2><p>连接到因特网的设备：主机(host)或端系统(end system)</p>
-<p>端系统通过通信链路(communication link)和分组交换机(parket switch)连接到一起</p>
-<p>路由器(router) 链路层交换机(link-layer switch)</p>
-<p>端系统通过因特网服务提供商(Internet Service Provider, ISP)接入因特网</p>
-<p>因特网部件运行一系列协议(protocol),协议控制因特网中信息的接受和发送</p>
+        <p>(并行与分布式计算一)</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="设计分布式并行算法基本流程"><a href="#设计分布式并行算法基本流程" class="headerlink" title="设计分布式并行算法基本流程"></a>设计分布式并行算法基本流程</h3><p>1.1发现计算问题的<strong>内在并行性</strong></p>
+<p>1.2设计<strong>与硬件无关</strong>的并行算法</p>
 <a id="more"></a>
-<ol>
-<li><p>Reliable Stream Transport Service:<br>Sends a large amount of data across a reliable “connection”</p>
+<ul>
+<li><p>让算法设计者专注于挖掘问题相关的内在并行性而不是被繁琐的硬件特性所干扰</p>
 </li>
-<li><p>Connectionless Packet Delivery Service:<br>Routes small messages from one computer to another</p>
+<li><p>便于不同硬件环境下的开发者移植算法</p>
 </li>
-</ol>
-<p>TCP(Transmission Control Protocol, 传输控制协议)</p>
-<p>IP(Internet Protocol, 网际协议)定义在路由器和端系统之间发送和接受的分组格式</p>
-<p>因特网标准(Internet standard)由因特网工程任务组(Internet Engineering task Force, IETF)研发</p>
-<p>IETF标准文档称请求评论(Request For Comment, RFC)</p>
-<p>分布式应用程序(distributed application)涉及多台相互交换数据的端系统</p>
-<p>应用程序编程接口(Application Programming Interface, API)</p>
-<h2 id="网络边缘"><a href="#网络边缘" class="headerlink" title="网络边缘"></a>网络边缘</h2><p>主机(hosts) = 端系统: 客户(client)和服务器(server)</p>
-<p>数据中心(data center)由许多服务器构成</p>
-<p>接入网(access network)指将端系统连接到其边缘路由器(edge router)的物理链路</p>
-<ol>
-<li>residential access nets</li>
-<li>institutional access networks (school, company)</li>
-<li>mobile access networks</li>
-</ol>
-<p>bandwidth(bit per second, bps); shared / dedicated(专用)</p>
-<p>数字用户线(Digital Subscriber Line, DSL): </p>
-<ul>
-<li>existing telephone line to central office DSLAM</li>
-<li>&lt; 2.5 Mbps upstream transmission rate (typically &lt; 1 Mbps)</li>
-<li>&lt; 24 Mbps downstream transmission rate (typically &lt; 10 Mbps)</li>
-<li>frequency division multiplexing: different channels transmitted in different frequency bands</li>
-</ul>
-<p>电缆因特网接入(cable Internet access) 有线电视</p>
-<p>HFC: hybrid fiber coax</p>
-<ul>
-<li>asymmetric: up to 30Mbps downstream transmission rate, 2 Mbps upstream transmission rate</li>
-</ul>
-<p>以太网Ethernet</p>
-<p>光纤到户(Fiber To The Home, FTTH)</p>
-<ul>
-<li>光纤分布体系结构：主动光纤网络(Active Optical Network, AON)和被动光纤网络(Passive Optical Network, PON)</li>
-</ul>
-<p>光纤网络端接器(Optical Network Terminator, ONT)</p>
-<p>分配器(splitter)</p>
-<p>光纤线路端接器(Optical Line Terminator, OLT)</p>
-<p>无线网络wireless network</p>
-<p>wireless LANs:</p>
-<ul>
-<li>within building (100 ft.)</li>
-<li>802.11b/g/n (WiFi): 11, 54, 450 Mbps transmission rate</li>
-</ul>
-<p>wide-area wireless access</p>
-<ul>
-<li>provided by telco (cellular) operator, 10’s km</li>
-<li>between 1 and 10 Mbps </li>
-<li>3G, 4G: LTE</li>
-</ul>
-<p>host sending function:</p>
-<ul>
-<li>takes application message</li>
-<li>breaks into smaller chunks, known as packets, of length L bits</li>
-<li>transmits packet into access network at transmission rate R</li>
-<li>link transmission rate, aka link capacity, aka link bandwidth</li>
-</ul>
-<ul>
-<li>物理媒体(physical medium): 双绞铜线、同轴电缆、多模光纤缆、陆地无线电频谱、卫星无线电频谱</li>
-</ul>
-<ul>
-<li>bit: propagates between transmitter/receiver pairs</li>
-<li>physical link: what lies between transmitter &amp; receiver</li>
-</ul>
-<p>导引型媒体(guided media): </p>
-<ul>
-<li>signals propagate in solid media: copper, fiber, coax</li>
-</ul>
-<p>非导引型媒体(unguided media): </p>
-<ul>
-<li>signals propagate freely, e.g., radio</li>
-</ul>
-<p>双绞铜线 twisted pair (TP): </p>
-<ul>
-<li>two insulated copper wires</li>
-<li>Category 5: 100 Mbps, 1 Gbps Ethernet</li>
-<li>Category 6: 10Gbps</li>
-</ul>
-<p>两根隔离的铜线以规则的螺旋形式排列组成；两根线绞合起来以减少邻近类似双绞线的电气干扰</p>
-<p>一对电线构成一个通信链路；通常许多双绞线捆扎在一起成电缆</p>
-<p>无屏蔽双绞线(Unshielded Twisted Pair, UTP) 常用于建筑物内网络</p>
-<p>同轴电缆 coaxial cable: </p>
-<ul>
-<li>two concentric copper conductors</li>
-<li>bidirectional</li>
-<li>broadband:</li>
-<li>multiple channels on cable</li>
-<li>HFC</li>
-</ul>
-<p>光纤 fiber optic cable: </p>
-<ul>
-<li>glass fiber carrying light pulses, each pulse a bit</li>
-<li>high-speed operation: high-speed point-to-point transmission (e.g., 10’s-100’s Gbps transmission rate)</li>
-<li>low error rate: </li>
-</ul>
-<ol>
-<li>repeaters spaced far apart </li>
-<li>immune to electromagnetic noise(不受电磁干扰)</li>
-</ol>
-<p>单模光纤速率高，价格贵; 多模光纤速率低，价格便宜</p>
-<p>电磁波 ratio</p>
-<ul>
-<li>signal carried in electromagnetic spectrum</li>
-<li>no physical “wire”</li>
-<li>bidirectional</li>
-<li>propagation environment effects:</li>
-</ul>
-<ol>
-<li>reflection </li>
-<li>obstruction by objects</li>
-<li>interference</li>
-</ol>
-<p>adio link types:</p>
-<ul>
-<li>terrestrial  microwave<br>e.g. up to 45 Mbps channels</li>
-<li>LAN (e.g., WiFi)<br>54 Mbps</li>
-<li>wide-area (e.g., cellular)<br>4G cellular: ~ 10 Mbps</li>
-<li>satellite</li>
-</ul>
-<ol>
-<li>Kbps to 45Mbps channel (or multiple smaller channels)</li>
-<li>270 msec end-end delay</li>
-<li>geosynchronous versus low altitude</li>
-</ol>
-<p>同步卫星(geostationary satellite); 近地轨道(Low-Earth Orbiting, LEO)卫星</p>
-<h3 id="编码-encoding"><a href="#编码-encoding" class="headerlink" title="编码(encoding)"></a>编码(encoding)</h3><p>Non-return to Zero Inverted (NRZI):</p>
-<ul>
-<li>make a transition from current signal to encode a one; stay at current signal to encode a zero</li>
-<li>solves the problem of consecutive ones</li>
-</ul>
-<p>经网络传输数据会产生<em>时钟同步问题</em></p>
-<p>Manchester: </p>
-<ul>
-<li>transmit XOR of the NRZ encoded data and the clock</li>
-<li>only 50% efficient (bit rate = 1/2 baud rate)</li>
-</ul>
-<p><em>包含丰富的时钟信息</em></p>
-<blockquote>
-<p><img src="/img/encoding.png" alt="encoding.png"></p>
-</blockquote>
-<p>4B/5B: </p>
-<ul>
-<li>every 4 bits of data encoded in a 5-bit code</li>
-<li>5-bit codes selected to have no more than one leading 0 and no more than two trailing 0s </li>
-<li>thus,  never get more than three consecutive 0s</li>
-<li>resulting 5-bit codes are transmitted using NRZI </li>
-<li>achieves 80% efficiency</li>
-</ul>
-<h3 id="数据帧化Framing"><a href="#数据帧化Framing" class="headerlink" title="数据帧化Framing"></a>数据帧化Framing</h3><ul>
-<li>Break sequence of bits into a frame</li>
-<li>Typically implemented by network adaptor</li>
-</ul>
-<p>Sentinel-based: </p>
-<ul>
-<li>delineate frame with special pattern: 01111110</li>
-<li>e.g., HDLC, SDLC, PPP</li>
-</ul>
-<p>Beginning sequence(8) + Header(16) + Body + CRC(16) + Ending sequence(8)</p>
-<ul>
-<li>problem: special pattern appears in the payload</li>
-<li>solution: bit stuffing</li>
-<li>sender: insert 0 after five consecutive 1s</li>
-<li>receiver: delete 0 that follows five consecutive 1s</li>
-</ul>
-<p>Counter-based: </p>
-<ul>
-<li>include payload length in header</li>
-<li>e.g., DDCMP</li>
-</ul>
-<p>SYN(8) + SYN(8) + Class(8) + Count(14) + Header(42) + Body + CRC(16)</p>
-<ul>
-<li>problem: count field corrupted</li>
-<li>solution: catch when CRC fails</li>
-</ul>
-<p>Clock-based: </p>
-<ul>
-<li>each frame is 125us long</li>
-<li>e.g., SONET: Synchronous Optical Network</li>
-<li>STS-n (STS-1 = 51.84 Mbps)</li>
-</ul>
-<h2 id="网络核心"><a href="#网络核心" class="headerlink" title="网络核心"></a>网络核心</h2><p>Communication networks can be classified based on the way in which the nodes exchange information:</p>
-<p>Communication Network: </p>
-<ul>
-<li><p>Broadcast Communication Network</p>
+<li><p>便于算法到硬件的映射的自动匹配和优化</p>
 </li>
-<li><p>Switched Communication Network</p>
+<li><p>为并行和分布式计算的系统库(中间件)研发提供一套高层语义抽象</p>
+</li>
+</ul>
+<p>PRAM(Parallel Random Access Machine, 随机存取并行机器): 一个简单的并行算法模型</p>
+<ul>
+<li><p>Parallel: 可以自由分布任意个处理器并行地读、写和计算</p>
+</li>
+<li><p>Random Access: 处理器可以按下面其中一条规则自由地访问“共享内存”</p>
 </li>
 </ul>
 <ol>
-<li><p>Circuit-Switched Communication Network</p>
+<li><p>规则一: Exclusive Read Exclusive Write(EREW)(不允许同时读和同时写)</p>
 </li>
-<li><p>Packet-Switched Communication Network</p>
+<li><p>规则二: Concurrent Read Exclusive Write(CREW)(允许同时读但不允许同时写)</p>
+</li>
+<li><p>规则三: Concurrent Read Concurrent Write(CRCW)(允许同时读和同时写)</p>
 </li>
 </ol>
 <ul>
-<li>Datagram Network</li>
-<li>Virtual Circuit Network</li>
+<li>算法复杂度框架: work(计算量(operation)), time(计算时间)</li>
 </ul>
-<h3 id="Connection-Oriented-面向连接"><a href="#Connection-Oriented-面向连接" class="headerlink" title="Connection Oriented(面向连接)"></a>Connection Oriented(面向连接)</h3><p>Has connection establish and release procedures</p>
+<p>2.1发现硬件的<strong>网络拓扑和处理能力</strong></p>
+<p>网络拓扑: </p>
 <ul>
-<li>Similar to circuit switched</li>
+<li>静态: 环、星、树、超立方、图</li>
+<li>动态: 互联网或移动网络中的分布式计算</li>
 </ul>
-<p>Transmission in order</p>
-<p>Bandwidth <em>may</em> be guaranteed</p>
-<p>Flow control <em>may</em> exist</p>
-<p>Error control <em>may</em> exist</p>
-<h3 id="Connectionless-无连接"><a href="#Connectionless-无连接" class="headerlink" title="Connectionless(无连接)"></a>Connectionless(无连接)</h3><p>Each datagram may take a different path</p>
-<p>Datagrams may arrive out of order</p>
-<p>Link failures not a problem</p>
+<p>处理能力: </p>
 <ul>
-<li><p>problem in a Generic Switch</p>
+<li>指标: 处理速度和处理规模</li>
+<li>结构: 同构、异构</li>
+<li>方式: 内存计算还是内外存混合计算，计算密集型还是数据密集型</li>
+</ul>
+<p>发现网络拓扑的算法: </p>
+<ul>
+<li>目的一: 建立数据通信的路由</li>
+<li>目的二: 死锁检测和解除</li>
+<li>目的三: 优化数据传播和交换</li>
+</ul>
+<p>发现处理能力的方法: </p>
+<ul>
+<li>测试程序</li>
+<li>人工检测</li>
+</ul>
+<p>2.2设计<strong>与计算问题无关</strong>的分布式计算协议</p>
+<p>(所需计算协议包括以下但不止)</p>
+<ul>
+<li><p>广播、多播和数据收集</p>
 </li>
-<li><p>incoming links : how to demultiplex</p>
+<li><p>同步和异步控制</p>
 </li>
-<li><p>switch : how to switch</p>
+<li><p>终止检测和全局谓词(条件)检测</p>
 </li>
-<li><p>outgoing links : how to multiplex</p>
+<li><p>快照保存与检查点恢复</p>
 </li>
 </ul>
-<h3 id="Packet-Switching-分组交换"><a href="#Packet-Switching-分组交换" class="headerlink" title="Packet Switching(分组交换)"></a>Packet Switching(分组交换)</h3><p>各种网络应用中，端系统彼此交换报文(message)</p>
-<p>分组(packet swicth): 源端系统像目的端系统发送报文，源将报文划分为较小的数据块</p>
-<p>每个分组通过通信链路和分组交换机(packet switch)传送</p>
+<p>3.把并行算法<em>映射</em>到硬件上，匹配、优化</p>
+<p>匹配: </p>
 <ul>
-<li>两类交换机: 路由器和链路层交换机</li>
+<li>与硬件相关的具体并行算法</li>
+<li>数据分划和任务指派方案(静态或动态)</li>
+<li>并行和分布式计算的程序</li>
 </ul>
-<p>packet-switching: hosts break application-layer messages into packets</p>
-<p>Data from any conversation can be transmitted at any given time</p>
+<p>优化: </p>
 <ul>
-<li>A single conversation can use the entire link capacity if it is alone</li>
+<li>面向硬件体系结构的算法复杂度分析</li>
+<li>针对硬件特性的算法改进和程序调优</li>
 </ul>
-<p>How to demultiplex?</p>
-<ul>
-<li>Use meta-data (header) to describe data</li>
+<h2 id="并行计算的基本方法"><a href="#并行计算的基本方法" class="headerlink" title="并行计算的基本方法"></a>并行计算的基本方法</h2><h3 id="平衡树方法-Balanced-Trees"><a href="#平衡树方法-Balanced-Trees" class="headerlink" title="平衡树方法(Balanced Trees)"></a>平衡树方法(Balanced Trees)</h3><ul>
+<li>例: 设<em>是满足结合律的二元运算符，考虑计算<br>$$ S_i = x_1 </em> x_2 <em> … </em> x_i, 1 \leq i \leq n $$</li>
 </ul>
-<p>Data are sent as formatted bit-sequences</p>
+<p>Algorithm 2.1<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># Prefix Sums</div><div class="line"></div><div class="line">Input: An <span class="built_in">array</span> of n = <span class="number">2</span>^k elements (x_1, x_2, ..., x_n), where k is a nonnegative integer.</div><div class="line"></div><div class="line">Output: The prefix sums s_i, <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">if</span> n = <span class="number">1</span> then &#123;<span class="built_in">set</span> s_1 := x_1; <span class="built_in">exit</span>&#125;</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n/<span class="number">2</span> pardo</div><div class="line">    <span class="built_in">set</span> y_i := x_2i<span class="number">-1</span> * x_2i</div><div class="line"><span class="number">3.</span> Recursively, compute the prefix sums of &#123;y_1, y_2, ..., y_n&#125;, and store them in z_1, z_2, ..., z_n/<span class="number">2</span></div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    &#123;i even     :  <span class="built_in">set</span> s_i := z_i/<span class="number">2</span></div><div class="line">     i = <span class="number">1</span>      :  <span class="built_in">set</span> s_1 := x_1</div><div class="line">     i odd &gt; <span class="number">1</span>  :  <span class="built_in">set</span> s_i := z_(i<span class="number">-1</span>)/<span class="number">2</span> * x_i&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
 <ul>
-<li>so-called packets.</li>
-</ul>
-<p>Packets have the following structure:</p>
-<ul>
-<li>Header + Data + Tailer</li>
-<li>Header and Trailer carry control information</li>
-<li>e.g., destination address, check sum</li>
-</ul>
-<p>输出缓存(output buffer)(输出队列 output queue): 用于存储路由器准备发往相连的链路的分组;</p>
-<p>Store-and-Forward Networks(存储转发传输): </p>
-<ul>
-<li>At each node the entire packet is received, stored briefly, and </li>
-<li>then forwarded to the next node based on the header information </li>
-<li>Allows statistical(统计的) multiplexing</li>
-</ul>
-<p>在接收完所有的比特后进行查错，无误在再进行转发</p>
-<p>“热土豆”传输: 一边接收，一边转发</p>
-<ul>
-<li>适用于网络质量好，出错概率低的情况</li>
-</ul>
-<p>通过N条速率均为R的链路组成的路径(源和目的地之间有N-1台路由器)发送一个分组，端到端时延: </p>
-<p>$$d_{EndToEnd} = N \frac{L}{R}$$</p>
-<p>takes L/R seconds to transmit </p>
-<ul>
-<li>L-bit packet into link at R bps</li>
-</ul>
-<p>one-hop numerical example:</p>
-<ul>
-<li>L = 7.5 Mbits</li>
-<li>R = 1.5 Mbps</li>
-<li>one-hop transmission delay = 5 sec</li>
-</ul>
-<p>packet-switching</p>
-<ul>
-<li>forward packets from one router to the next</li>
-<li>across links on path from source to destination</li>
-<li>Each packet is independently switched</li>
-<li>header contains destination address</li>
-</ul>
-<ul>
-<li>Two key network-core functions</li>
-</ul>
-<ol>
-<li>routing: determines source-destination route taken by packets</li>
-</ol>
-<ul>
-<li>routing algorithms</li>
-</ul>
-<ol>
-<li>forwarding: move packets from router’s input to appropriate router output</li>
-</ol>
-<p>排队时延(queue delay):<br>到达的分组在链路忙于传输其他分组时必须在输出缓存中等待;</p>
-<p>分组丢失(丢包 packet lost): 一个分组到达时缓存已被其他等待传输的分组完全充满，到达的分组或已经排队的分组之一将被丢弃</p>
-<blockquote>
-<p><img src="/img/Timing_of_Datagram_Packet_Switching.png" alt="Timing_of_Datagram_Packet_Switching.png"></p>
-</blockquote>
-<p>queuing and loss: </p>
-<ul>
-<li>if arrival rate exceeds transmission rate of link for a period of time</li>
-<li>packets will queue, wait to be transmitted on link </li>
-<li>can be dropped (lost) if memory (buffer) fills up</li>
-</ul>
-<h3 id="Circuit-Switching-电路交换"><a href="#Circuit-Switching-电路交换" class="headerlink" title="Circuit Switching(电路交换)"></a>Circuit Switching(电路交换)</h3><p>两台主机通信时网络在两台主机之间创建一条专用的端到端连接(end-to-end connection)</p>
-<blockquote>
-<p><img src="/img/circuit_switching.png" alt="circuit_switching.png"></p>
-</blockquote>
-<p>频分复用(Frequency-Division Multiplexing, FDM): </p>
-<ul>
-<li>链路的频谱由跨越链路创建的所有连接所共享; </li>
-<li>在连接期间链路为每条连接专用一个频段</li>
-</ul>
-<p>时分复用(Time-Division Multiplexing, TDM):</p>
-<ul>
-<li>时间被划分为固定区间的帧(frame)，每帧划分为固定数量的时隙; </li>
-<li>网络跨越一条链路创建一条连接时在每个帧中为该连接指定一个时隙(slot)</li>
-</ul>
-<p>Time divided in frames and frames divided in slots</p>
-<p>Relative slot <strong>position</strong> inside a frame determines which conversation the data belongs to </p>
-<p>Needs <strong>synchronization</strong>(同步) between sender and receiver</p>
-<p>If a conversation does not use its circuit the capacity is lost</p>
-<blockquote>
-<p><img src="/img/Timing_in_Circuit_Switching.png" alt="Timing_in_Circuit_Switching.png"></p>
-</blockquote>
-<p>Three phases(三个阶段)</p>
-<ol>
-<li>circuit establishment</li>
-<li>data transfer</li>
-<li>circuit termination</li>
-</ol>
-<p>If circuit not available: busy</p>
-<p>Examples</p>
-<ul>
-<li>Telephone networks</li>
-<li>ISDN (Integrated Services Digital Networks)(综合业务数字网)</li>
-</ul>
-<p>end-end resources allocated to, reserved for “call” between source &amp; dest</p>
-<p>dedicated resources: no sharing</p>
-<ul>
-<li>circuit-like (guaranteed) performance</li>
-</ul>
-<p>circuit segment idle(闲置) if not used by call (no sharing)</p>
-<h3 id="Packet-Switching-vs-Circuit-Switching"><a href="#Packet-Switching-vs-Circuit-Switching" class="headerlink" title="Packet-Switching vs. Circuit-Switching"></a>Packet-Switching vs. Circuit-Switching</h3><p>Most important advantage of packet-switching: </p>
-<ul>
-<li>Ability to exploit statistical multiplexing</li>
-<li>More efficient bandwidth usage</li>
-</ul>
-<p>However, packet-switching needs to buffer and deal with congestion</p>
-<ul>
-<li>More complex switches</li>
-<li>Harder to provide good network services (e.g., delay and bandwidth guarantees)</li>
+<li>复杂度分析<br>$$ T(n) = T(\frac{n}{2}) + a  $$<br>$$ W(n) = W(\frac{n}{2}) + bn $$<br>求解递归方程<br>$$ T(n) = O(logn) $$<br>$$ W(n) = O(n) $$</li>
 </ul>
 <blockquote>
-<p>packet switching allows more users to use network</p>
+<p><img src="/img/prefix_sum_balance_tree.png" alt="prefix_sum_balance_tree.png"></p>
 </blockquote>
-<p>example:</p>
-<ul>
-<li>1 Mb/s link<br>each user: </li>
-<li>100 kb/s when “active”</li>
-<li><p>active 10% of time</p>
-</li>
-<li><p>circuit-switching: 10 users</p>
-</li>
-<li>packet switching: with 35 users, probability &gt; 10 active at same time is less than .0004 *</li>
-</ul>
-<p>packet switching: </p>
-<p>great for bursty data</p>
-<ul>
-<li>resource sharing</li>
-<li>simpler, no call setup</li>
-</ul>
-<p>excessive congestion possible: </p>
-<ul>
-<li>packet delay and loss</li>
-<li>protocols needed for reliable data transfer, congestion control</li>
-</ul>
-<p>Q: How to provide circuit-like behavior?</p>
-<ul>
-<li>bandwidth guarantees needed for audio/video apps</li>
-</ul>
-<h3 id="Virtual-Circuit-Packet-Switching-虚电路交换"><a href="#Virtual-Circuit-Packet-Switching-虚电路交换" class="headerlink" title="Virtual-Circuit Packet Switching(虚电路交换)"></a>Virtual-Circuit Packet Switching(虚电路交换)</h3><blockquote>
-<p><img src="/img/Timing_of_Virtual-Circuit_Packet_Switching.png" alt="Timing_of_Virtual-Circuit_Packet_Switching.png"></p>
+<p>Algorithm 2.2<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># Nonrecursive Prefix Sums</div><div class="line"></div><div class="line">Input: An <span class="built_in">array</span> A of size n = <span class="number">2</span>^k, where k is a nonnegative integer.</div><div class="line"></div><div class="line">Output: An <span class="built_in">array</span> C such that C(<span class="number">0</span>, j) is the jth prefix sum, <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n pardo</div><div class="line">    <span class="built_in">set</span> B(<span class="number">0</span>, j) := A(j)</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> h = <span class="number">1</span> to logn <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        <span class="built_in">set</span> B(h, j) := B(h - <span class="number">1</span>, <span class="number">2</span>j - <span class="number">1</span>) * B(h - <span class="number">1</span>, <span class="number">2</span>j)</div><div class="line"><span class="number">3.</span> <span class="keyword">for</span> h = logn to <span class="number">0</span> <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        &#123;j even    : <span class="built_in">set</span> C(h, j) := C(h + <span class="number">1</span>, j/<span class="number">2</span>)</div><div class="line">         j = <span class="number">1</span>     : <span class="built_in">set</span> C(h, <span class="number">1</span>) := B(h, <span class="number">1</span>)</div><div class="line">         j odd &gt; <span class="number">1</span> : <span class="built_in">set</span> C(h, j) := C(h + <span class="number">1</span>, (j - <span class="number">1</span>)/<span class="number">2</span>)*B(h, j)&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><img src="/img/nonrecursive_prefix_sum.png" alt="nonrecursive_prefix_sum.png"></p>
 </blockquote>
-<p>Hybrid of circuit switching and packet switching</p>
-<ul>
-<li>Data is transmitted as packets</li>
-<li>All packets from one packet stream are sent along a pre-established path (=virtual circuit)</li>
-<li>Guarantees in-sequence delivery of packets</li>
+<h3 id="指针跳转法-Pointer-Jumping"><a href="#指针跳转法-Pointer-Jumping" class="headerlink" title="指针跳转法(Pointer Jumping)"></a>指针跳转法(Pointer Jumping)</h3><ul>
+<li>例一: 存储在数组中的链表求序</li>
 </ul>
-<p>Packet header only contains local virtual circuit identifier (VCI)</p>
-<p>Demultiplexing and switching based on VCI</p>
 <ul>
-<li>Note: packet headers don’t need to contain the full destination address of the packet </li>
+<li>串行算法: 线性复杂度</li>
+<li>并行复杂度: T = O(logn), W = O(nlogn)</li>
 </ul>
-<p>Example: ATM networks</p>
-<p>Communication with virtual circuits takes place in three phases </p>
+<ul>
+<li>例二: 为森林里的每个节点找所在的那棵树的根节点</li>
+</ul>
+<blockquote>
+<p><img src="/img/tree_root_pointer_jumping.png" alt="tree_root_pointer_jumping.png"></p>
+</blockquote>
+<p>Algorithm 2.4<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Pointer Jumping</div><div class="line"></div><div class="line">Input: A forest of rooted directed trees, each with a self-loop at its root, such that each arc is specified by (i, P(i)), where 1 &lt;= i &lt;= n.</div><div class="line"></div><div class="line">Output: For each vertex i, the root S(i) of the tree containing i.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set S(i) := P(i)</div><div class="line">    while (S(i)) != S(S(i)) do</div><div class="line">        set S(i) := S(S(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(logh); W = O(nlogh)</p>
+<p>Algorithm 2.5<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># Parallel Prefix on Rooted Directed Trees</div><div class="line"></div><div class="line">Input: A forest of rooted directed trees, each with a self-loop at its root such that (1)each arc is specified by (i, P(i)), (2)each vertex i has a weight W(i), and (3)for each root r, W(r) = 0</div><div class="line"></div><div class="line">Output: For each vertex i, W(i) is set equal to the sum of the weights of vertices on the path from i to the root of its tree.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set S(i) := P(i)</div><div class="line">    while (S(i)) != S(S(i)) do</div><div class="line">        set W(i) := W(i) + W(S(i))</div><div class="line">        set S(i) := S(S(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(logn); W = O(nlogn)</p>
+<h3 id="分而治之法-Divide-and-Conquer"><a href="#分而治之法-Divide-and-Conquer" class="headerlink" title="分而治之法(Divide and Conquer)"></a>分而治之法(Divide and Conquer)</h3><p>例: 找二维平面上的点的凸包(planar convex hull)</p>
+<ul>
+<li>分: 把这些顶点按由左到右平均分成两组</li>
+<li>治: 在这两组内分别求凸包(求解两个规模相对较小的问题，递归)</li>
+<li>合: 把两组凸包用快速算法合为一个</li>
+</ul>
+<p>Algorithm 2.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Simple Upper Hull</div><div class="line"></div><div class="line">Input: A set S of n points in the plane, no two of which have the same x or y coordinates such that x(p_1) &lt; x(p_2) &lt; ... &lt; x(p_n), where n is a power of 2.</div><div class="line"></div><div class="line">Output: The upper hull of S.</div><div class="line"></div><div class="line">begin</div><div class="line">1. If n &lt;= 4, then use a brute-force method to determine UH(S), and exit.</div><div class="line">2. Let S_1 = (p_1, p_2, ..., P_n/2) and S_2 = (p_n/2+1, ..., p_n). Recursively, compute UH(S_1) and UH(S_2) in parallel.</div><div class="line">3. find the upper common tangent between UH(S_1) nad UH(S_2), and deduce the upper hull of S.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>$$ T(n) \leq T(\frac{n}{2}) + alogn $$<br>$$ W(n) \leq 2W(\frac{n}{2} + bn) $$<br>并行复杂度: $ T = O(log^2 n); W = O(nlogn) $</p>
+<h3 id="数据划分法-partition-strategy"><a href="#数据划分法-partition-strategy" class="headerlink" title="数据划分法(partition strategy)"></a>数据划分法(partition strategy)</h3><ul>
+<li>例: 归并排序</li>
+</ul>
+<ul>
+<li>1.数据均分为若干等分</li>
+<li>2.在每一等分内用其它方法排序</li>
+<li>3.平衡树快速并行合并这些等分</li>
+</ul>
+<p>Algorithm 2.7<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># Partition</div><div class="line"></div><div class="line">Input: Two arrays A = (a_1, a_2, ..., a_n) and B = (b_1, b_2, ..., b_m) in increasing order, where both logm and k(m) = m/logm are integers.</div><div class="line"></div><div class="line">Output: k(m) pairs (A_i, B_i) of subsequences of A and B such that (<span class="number">1</span>)|B_i| = <span class="built_in">log</span> m, (<span class="number">2</span>)\sum |A_i| = n, and (<span class="number">3</span>)each element of A_i and B_i is larger than each element of A_i<span class="number">-1</span> or B_i<span class="number">-1</span>, <span class="keyword">for</span> all <span class="number">1</span> &lt;= i &lt;= k(m)<span class="number">-1</span></div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="built_in">set</span> j(<span class="number">0</span>) := <span class="number">0</span>, j(k(m)) := n</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= k(m) - <span class="number">1</span> pardo</div><div class="line">    <span class="number">2.1</span>. Rank b_ilogm in A <span class="keyword">using</span> binary search method, and let j(i) = rank(b_ilogm : A)</div><div class="line"><span class="number">3.</span> <span class="keyword">for</span> <span class="number">0</span> &lt;= i &lt;= k(m) - <span class="number">1</span> pardo</div><div class="line">    <span class="number">3.1</span>. <span class="built_in">set</span> B_i := (b_ilogm+<span class="number">1</span>, ..., b_(i+<span class="number">1</span>)logm)</div><div class="line">    <span class="number">3.2</span>. <span class="built_in">set</span> A_i := (a_j(i) + <span class="number">1</span>, ..., a_j(i+<span class="number">1</span>))</div><div class="line">        (A_i is empty <span class="keyword">if</span> j(i) = j(i+<span class="number">1</span>))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>合并后的序 = 自序 + 交叉序</li>
+<li>自序(a_i) = {a_0, a_1, …, a_n-1}中有多少a_j 排在a_i前面(在这里即i)</li>
+<li>交叉序(a_i) = {b_0, b_1, …, b_n-1}中有多少b_j排在a_i前面</li>
+</ul>
+<p>并行复杂度: T = O(logn); W = O(n)</p>
+<h3 id="流水线方法-Pipelining"><a href="#流水线方法-Pipelining" class="headerlink" title="流水线方法(Pipelining)"></a>流水线方法(Pipelining)</h3><ul>
+<li>例: 2-3树的数据插入</li>
+</ul>
+<ul>
+<li>批量插入多个点及其并行复杂度<br>T = O(logn); W = O(klogn)</li>
+</ul>
+<ul>
+<li>breaking up a task into a sequence of subtask t_1, t_2, …, t_m<br>……</li>
+</ul>
+<h3 id="加速层叠法-Accelerated-Cascading"><a href="#加速层叠法-Accelerated-Cascading" class="headerlink" title="加速层叠法(Accelerated Cascading)"></a>加速层叠法(Accelerated Cascading)</h3><ul>
+<li>例: 数组找最大值</li>
+</ul>
+<p>常数的并行时间复杂度</p>
+<p>Algorithm 2.8<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Basic Maximum</div><div class="line"></div><div class="line">Input: An array A of p distinct elements.</div><div class="line"></div><div class="line">Output: A Boolean array M such that M(i) = 1 if and only if A(i) is the maximum element of A.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i, j &lt;= p pardo if (A(i) &gt;= A(j)) then set B(i, j) := 1</div><div class="line">                                              else set B(i, j) := 0</div><div class="line">2. for 1 &lt;= i &lt;= p pardo</div><div class="line">    set M(i) := B(i, 1) &amp; B(i, 2) &amp; ... B(i, p)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>$ T = O(1); W = O(p^2) $</p>
+<p>双层log深度树(doubly logarithmic-depth tree): 最底层节点数 为 n，根节点的孩子节点数 为 $n^{\frac{1}{2}}$，下一层每个节点的孩子节点数 $n^{\frac{1}{2^2}}$，…</p>
+<ul>
+<li><p>假设$n = 2^{2^k}$, 树根有$2^{2^{k-1}}$个孩子, 第一层有$2^{2^{k-2}}$个孩子, …, 第i层有$2^{2^{k-i-1}}$个孩子, …</p>
+</li>
+<li><p>倒数第二层每个节点有常数个子节点</p>
+</li>
+<li>向上合并用常数复杂度求最大值方法</li>
+<li>整体并行复杂度: $$ T(n) = O(log log n) $$ $$ W(n) = O(n log log n) $$</li>
+</ul>
+<p>accelerated cascading:</p>
 <ol>
-<li>VC establishment</li>
-<li>data transfer</li>
-<li>VC disconnect</li>
+<li>start with the optimal algorithm until the size of the problem is reduced to a centain threshold value. 双层log深度树加速</li>
+<li>Then, shift to the fast but nonoptimal algorithm. 常数时间算法层叠</li>
 </ol>
-<h3 id="Internet-structure-network-of-networks-网络的网络"><a href="#Internet-structure-network-of-networks-网络的网络" class="headerlink" title="Internet structure: network of networks(网络的网络)"></a>Internet structure: network of networks(网络的网络)</h3><p>End systems connect to Internet via access ISPs (Internet Service Providers)</p>
-<ul>
-<li>residential, company and university ISPs</li>
+<h3 id="对称破坏法-Symmetry-Breaking"><a href="#对称破坏法-Symmetry-Breaking" class="headerlink" title="对称破坏法(Symmetry Breaking)"></a>对称破坏法(Symmetry Breaking)</h3><ul>
+<li>例: 环的三色着色问题</li>
 </ul>
-<p>Access ISPs in turn must be interconnected. </p>
 <ul>
-<li>so that any two hosts can send packets to each other</li>
+<li>要求: 相邻的点不能是相同的颜色</li>
+<li>串行算法: 在环上随机选一点把环打开得到一个队列；从队首开始除队尾外以0，1相间着色，队尾着色为2(确保队尾和队首、对中倒数第二节点的颜色都不同)</li>
+<li>并行算法大致思想: 从以节点编号为颜色的着色方案开始，通过迭代算法，逐步减少着色数量</li>
 </ul>
-<p>Resulting network of networks is very complex</p>
-<ul>
-<li>evolution was driven by economics and national policies</li>
-</ul>
+<p>Algorithm 2.9<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Basic Coloring</div><div class="line"></div><div class="line">Input: A directed cycle whose arcs are specified by an <span class="built_in">array</span> S of size n and a coloring c of the vertices.</div><div class="line"></div><div class="line">Output: Another coloring c' of the verteces of the cycle.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    <span class="number">1.</span> <span class="built_in">set</span> k to the least significant bit position in which c(i) and c(S(i)) disagree.</div><div class="line">    <span class="number">2.</span> <span class="built_in">set</span> c'(i) := <span class="number">2</span>k + c(i)_k</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(1); W = O(n)</p>
 <blockquote>
-<p><img src="/img/network_of_networks.png" alt="network_of_networks.png"></p>
-</blockquote>
-<p>Question: given millions of access ISPs, how to connect them together?<br>Option: connect each access ISP to every other access ISP?<br>Option: connect each access ISP to one global transit ISP? </p>
-<ul>
-<li>Customer and provider ISPs have economic agreement.</li>
-</ul>
-<p>at center: small # of well-connected large networks</p>
-<ul>
-<li>“tier-1” commercial ISPs (e.g., Level 3, Sprint, AT&amp;T, NTT), national &amp; international coverage</li>
-<li>content provider network (e.g., Google): private network that connects it data centers to Internet, often bypassing tier-1, regional ISPs</li>
-</ul>
-<h2 id="分组交换网中的时延、丢包和吞吐量-delay-loss-throughput-in-networks"><a href="#分组交换网中的时延、丢包和吞吐量-delay-loss-throughput-in-networks" class="headerlink" title="分组交换网中的时延、丢包和吞吐量(delay, loss, throughput in networks)"></a>分组交换网中的时延、丢包和吞吐量(delay, loss, throughput in networks)</h2><h3 id="时延"><a href="#时延" class="headerlink" title="时延"></a>时延</h3><blockquote>
-<p><img src="/img/delay.png" alt="delay.png"></p>
-</blockquote>
-<p>结点处理时延(nodal processing delay): 检查分组首部和决定出口链路、查错校验</p>
-<p>排队时延(queuing delay): 分组在出口链路队列上等待传输</p>
-<p>传输时延(transmission delay): L/R(分组长度/链路传输速率); 将所有分组比特推(传输)向链路所需时间</p>
-<p>传播时延(propagation delay): d/s(距离/传播速率)，介质相关</p>
-<p>结点总时延(total nodal delay)</p>
-<p>$$d<em>{nodal} = d</em>{proc} + d<em>{queue} + d</em>{trans} + d_{prop}$$</p>
-<p>How do loss and delay occur:<br>packets queue in router buffers </p>
-<ul>
-<li>packet arrival rate to link (temporarily) exceeds output link capacity</li>
-<li>packets queue, wait for turn</li>
-</ul>
-<p>$d_{proc}$: nodal processing </p>
-<ul>
-<li>check bit errors</li>
-<li>determine output link</li>
-<li>typically &lt; msec</li>
-</ul>
-<p>$d_{queue}$: queueing delay</p>
-<ul>
-<li>time waiting at output link for transmission </li>
-<li>depends on congestion level of router</li>
-</ul>
-<p>$d_{trans}$: transmission delay</p>
-<ul>
-<li>L: packet length (bits) </li>
-<li>R: link bandwidth (bps)</li>
-<li>$d_{trans} = L/R$</li>
-</ul>
-<p>$d_{prop}$: propagation delay</p>
-<ul>
-<li>d: length of physical link</li>
-<li>s: propagation speed (~2x108 m/sec)</li>
-<li>$d_{prop} = d/s$</li>
-</ul>
-<p>$d<em>{trans}$ and $d</em>{prop}$ are very different</p>
-<h3 id="排队时延和丢包"><a href="#排队时延和丢包" class="headerlink" title="排队时延和丢包"></a>排队时延和丢包</h3><p>流量强度(traffic intensity): La/R; </p>
-<ul>
-<li>a: 分组到达队列的平均速率(pkt/s)(a: average packet arrival rate)</li>
-<li>R: link bandwidth (bps)</li>
-<li>L: packet length (bits)</li>
-</ul>
-<blockquote>
-<p><img src="/img/queueing_delay.png" alt="queueing_delay.png"></p>
+<p>definition: $log^{(1)}x = logx$, and $log^{(i)}x = log(log^{(i-1)}x)$</p>
 </blockquote>
 <ul>
-<li>La/R ~ 0: avg. queueing delay small</li>
-<li>La/R -&gt; 1: avg. queueing delay large</li>
-<li>La/R &gt; 1: more “work” arriving<br> than can be serviced, average delay infinite!</li>
+<li>Fast Coloring<br>反复运用这个算法使得从颜色序号{0, 1, 2}中重新选择颜色给每个顶点着色且相邻顶点色不同, 整体并行复杂度为: $$ T = O(log<em>n); W = O(nlog</em>n) $$</li>
 </ul>
+<p>Algorithm 2.10<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># <span class="number">3</span>-coloring of a Cycle</div><div class="line"></div><div class="line">Input: A directed cycle of length n whose arcs are specified by an <span class="built_in">array</span> S.</div><div class="line"></div><div class="line">Output: A <span class="number">3</span>-coloring of the vertices of the cycle.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    <span class="built_in">set</span> C(i) := i</div><div class="line"><span class="number">2.</span> Apply Algorithm <span class="number">2.9</span> once.</div><div class="line"><span class="number">3.</span> Sort the vertices by their colors.</div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> i = <span class="number">3</span> to <span class="number">2</span> \ceiling(logn) <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> all vertices v of color i pardo</div><div class="line">    color v with the smallest color from &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125; that is diffrrent from the colors of its two neighbors.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(logn); W = O(n)</p>
 <ul>
-<li>设计系统时流量强度不能大于1</li>
+<li><strong>三色环着色过程</strong></li>
 </ul>
-<p>随着流量强度接近于1，平均排队时延迅速增加</p>
-<p>丢包: 分组到达时路由器链路队列已满，路由器丢弃(drop)该分组，该分组会丢失(lost)</p>
-<ul>
-<li>queue (aka buffer) preceding link in buffer has finite capacity</li>
-<li>packet arriving to full queue dropped (aka lost)</li>
-<li>lost packet may be retransmitted by previous node, by source end system, or not at all</li>
-</ul>
-<h3 id="吞吐量-throughput"><a href="#吞吐量-throughput" class="headerlink" title="吞吐量(throughput)"></a>吞吐量(throughput)</h3><p>瞬时吞吐量(instantaneous throughput): 主机接收到文件的速率(bps)</p>
-<p>平均吞吐量(average throughput): F/T秒; 接收总共F比特用去T秒</p>
-<p>瓶颈链路(bottleneck link): 系统中传输速率最小的链路</p>
-<p>throughput: rate (bits/time unit) at which bits transferred between sender/receiver</p>
-<ul>
-<li>instantaneous: rate at given point in time</li>
-<li>average: rate over longer period of time</li>
-</ul>
-<p>bottleneck link:<br>link on end-end path that constrains end-end throughput</p>
-<h2 id="协议层次-服务模型-protocol-layers-service-models"><a href="#协议层次-服务模型-protocol-layers-service-models" class="headerlink" title="协议层次 服务模型(protocol layers, service models)"></a>协议层次 服务模型(protocol layers, service models)</h2><p>分层(layer)</p>
-<p>layers: each layer implements a service</p>
-<ul>
-<li>via its own internal-layer actions</li>
-<li>relying on services provided by layer below</li>
-</ul>
-<p>协议栈(protocol stack)</p>
-<p>应用层(第七层): <http、smtp、ftp、dns...> 报文(message)</http、smtp、ftp、dns...></p>
-<p>运输层(四层): <tcp udp=""> 报文段(segment)</tcp></p>
-<p>网络层(三层): <ip>数据报(datagram)</ip></p>
-<p>链路层(二层): 帧(frame)</p>
-<p>物理层(一层): 将帧中的比特一个一个从一个结点移动到下一个结点</p>
-<p>OSI(Open System Interconnect Reference Model, 开放系统互联参考模型)</p>
-<p>表示层: 数据压缩、数据加密、数据描述</p>
-<p>会话层: 数据交换定界、同步功能，建立检查点和恢复方案</p>
-<p>Internet protocol stack: </p>
-<p>application: supporting network applications</p>
-<ul>
-<li>FTP, SMTP, HTTP</li>
-</ul>
-<p>transport: process-process data transfer</p>
-<ul>
-<li>TCP, UDP</li>
-</ul>
-<p>network: routing of datagrams from source to destination</p>
-<ul>
-<li>IP, routing protocols</li>
-</ul>
-<p>link: data transfer between neighboring  network elements</p>
-<ul>
-<li>Ethernet, 802.111 (WiFi), PPP</li>
-</ul>
-<p>physical: bits “on the wire</p>
-<p>ISO/OSI reference model: (two more layer)</p>
-<ul>
-<li><p>presentation: allow applications to interpret meaning of data, e.g., encryption, compression, machine-specific conventions</p>
-</li>
-<li><p>session: synchronization, checkpointing, recovery of data exchange<br>Internet stack “missing” these layers!</p>
-</li>
-<li><p>these services, if needed, must be implemented in application</p>
-</li>
-</ul>
-<p>封装(encaosulation): </p>
-<blockquote>
-<p><img src="/img/encapsulation.png" alt="encapsulation.png"></p>
-</blockquote>
-<p>应用层报文(application-layer message) -&gt; 运输层报文段(transport-layer segment) -&gt; 网络层数据报(network-layer datagram) -&gt; 链路层帧(link-layer frame)</p>
-<p>分组 : 首部字段 + 有效载荷字段(payload field)(来自上一层的分组)</p>
-<h2 id="面对攻击的网络-networks-under-attack-security"><a href="#面对攻击的网络-networks-under-attack-security" class="headerlink" title="面对攻击的网络(networks under attack: security)"></a>面对攻击的网络(networks under attack: security)</h2><p>Internet not originally designed with (much) security in mind</p>
-<ul>
-<li>original vision: “a group of mutually trusting users attached to a transparent network” </li>
-<li>Internet protocol designers playing “catch-up”</li>
-<li>security considerations in all layers!</li>
-</ul>
-<p>恶意软件(malware)</p>
-<p>僵尸网络(botnet)</p>
-<p>病毒(virus): 需要某种形式的用户交互感染用户设备的恶意软件</p>
-<p>蠕虫(worm): 无需任何明显用户交互就能进入设备的恶意软件</p>
-<p>malware can get in host from:</p>
-<ul>
-<li>virus: self-replicating infection by receiving/executing object (e.g., e-mail attachment)</li>
-<li>worm: self-replicating infection by passively receiving object that gets itself executed</li>
-</ul>
-<p><strong>spyware malware</strong> can record keystrokes, web sites visited, upload info to collection site</p>
-<p>infected host can be enrolled in <strong>botnet</strong>, used for spam. DDoS attacks</p>
-<p>拒绝服务攻击(Denial-of-Service (DoS) attack)</p>
-<ul>
-<li>弱点攻击: 向一台目标主机上运行的易受攻击的应用程序或操作系统发送制作精细的报文</li>
-<li>带宽洪泛: 向目标主机发送大量的分组使目标接入链路拥塞</li>
-<li>连接洪泛: 在目标主机中创建大量半开或全开TCP连接</li>
-</ul>
-<p>分布式Dos(Distributed DoS, DDoS): 攻击者控制多个源向目标发送大量流量</p>
-<p>Denial of Service(DoS): attackers make resources (server, bandwidth) unavailable to legitimate traffic by overwhelming resource with bogus traffic</p>
 <ol>
-<li><p>select target</p>
-</li>
-<li><p>break into hosts around the network (see botnet)</p>
-</li>
-<li><p>send packets to target from compromised hosts</p>
-</li>
+<li>迭代调用算法2.9，把颜色降至c种以下(c是较小常数，如10等)</li>
+<li>遍历从3到c-1种颜色:<br>for(color = 3; color &lt; c; ++color) {<br> 环中结点号i<br> if i的颜色为color pardo<pre><code>根据左右邻居占用3颜色0,1,2中的哪几种，决定结点i可以取得颜色({0,1,2}中的某一个)
+</code></pre>}</li>
 </ol>
-<p>分组嗅探器(packet sniffer)</p>
-<p>packet “sniffing”: </p>
-<ul>
-<li>broadcast media (shared Ethernet, wireless)</li>
-<li>promiscuous network interface reads/records all packets (e.g., including passwords!) passing by</li>
-<li>wireshark software is a (free) packet-sniffer</li>
-</ul>
-<p>IP哄骗(IP spooning)</p>
-<p>IP spoofing: send packet with false source address</p>
-<hr>
-<p>~ history</p>
+<blockquote>
+<p>在1.中，设迭代t的颜色数为$n<em>t$，则$n</em>{t+1} \leqslant 2(\ulcorner log_2n_t \urcorner - 1) + 1$</p>
+</blockquote>
 
       
 
@@ -821,7 +408,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">computer network</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
         		</li>
       		
 		</ul>
@@ -877,7 +464,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/02/28/computer_network_1/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -891,7 +478,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/03/14/paralell_compute3/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -901,8 +488,8 @@
     </a>
   
   
-    <a href="/2017/02/28/paralell_compute1&2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">并行计算基础知识及基本并行算法</div>
+    <a href="/2017/01/21/Cplusplus_thinking/面向对象编程/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">面向对象编程</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -1027,14 +614,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
@@ -1044,6 +623,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
               </li>
             
             <div class="clearfix"></div>

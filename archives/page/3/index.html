@@ -6,38 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chenfeng.github.io">
-  <title>列表和树 | chenfeng&#39;s blog</title>
+  <title>Archives | chenfeng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="(并行与分布式计算二)
-列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
-指针跳转法(pointer jumping technique)思想：
-
-链表中的指针跳转可以由一次跳转一步改为一次跳转多步
-如果能在O（1）时间内一次跳转k步，那么一次跳转2k步">
-<meta property="og:type" content="article">
-<meta property="og:title" content="列表和树">
-<meta property="og:url" content="https://chenfeng.github.io/2017/03/14/paralell_compute3/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="chenfeng's blog">
+<meta property="og:url" content="https://chenfeng.github.io/archives/page/3/index.html">
 <meta property="og:site_name" content="chenfeng's blog">
-<meta property="og:description" content="(并行与分布式计算二)
-列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
-指针跳转法(pointer jumping technique)思想：
-
-链表中的指针跳转可以由一次跳转一步改为一次跳转多步
-如果能在O（1）时间内一次跳转k步，那么一次跳转2k步">
-<meta property="og:image" content="https://chenfeng.github.io/img/list_rank_pointer_jump.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/shrink_list1.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/shrink_list2.png">
-<meta property="og:image" content="https://chenfeng.github.io/img/coloring.png">
-<meta property="og:updated_time" content="2017-03-25T03:39:38.176Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="列表和树">
-<meta name="twitter:description" content="(并行与分布式计算二)
-列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
-指针跳转法(pointer jumping technique)思想：
-
-链表中的指针跳转可以由一次跳转一步改为一次跳转多步
-如果能在O（1）时间内一次跳转k步，那么一次跳转2k步">
-<meta name="twitter:image" content="https://chenfeng.github.io/img/list_rank_pointer_jump.png">
+<meta name="twitter:title" content="chenfeng's blog">
   
     <link rel="alternative" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
   
@@ -173,269 +149,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-paralell_compute3" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      列表和树
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/01/21/economics/宏观经济现象鸟瞰/" class="archive-article-date">
+  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/01/21/economics/宏观经济现象鸟瞰/">宏观经济现象鸟瞰</a>
     </h1>
   
 
-        
-        <a href="/2017/03/14/paralell_compute3/" class="archive-article-date">
-  	<time datetime="2017-03-13T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>(并行与分布式计算二)</p>
-<h2 id="列表排序"><a href="#列表排序" class="headerlink" title="列表排序"></a>列表排序</h2><p>The list-ranking problem is to determine the distance of each node i from the end of the list</p>
-<h3 id="指针跳转法-pointer-jumping-technique"><a href="#指针跳转法-pointer-jumping-technique" class="headerlink" title="指针跳转法(pointer jumping technique)"></a>指针跳转法(pointer jumping technique)</h3><p>思想：</p>
-<ul>
-<li>链表中的指针跳转可以由一次跳转一步改为一次跳转多步</li>
-<li>如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间</li>
-<li>如果为每个节点，把一次跳转2k步的跳转结果记录下来，那么以后一次跳转2k步也只需要O（1）时间</li>
-<li>反复利用跳转步数翻倍和跳转结果记录的技巧，可以在O（log N）的时间内把跳转步数扩大为N</li>
-</ul>
-<a id="more"></a>
-<p>T = O(logn); W = O(nlogn)<br>并不比串行算法(linear, O(n))更优</p>
-<blockquote>
-<p><img src="/img/list_rank_pointer_jump.png" alt="list_rank_pointer_jump.png"></p>
-</blockquote>
-<p>Algorithm 3.1<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># List Ranking Using Pointer Jumping</div><div class="line"></div><div class="line">Input: A linked list of n nodes such that (1)the successor of each node i is given by S(i), and (2)the S value of the last node on the list is euqal to 0.</div><div class="line"></div><div class="line">Output: For each 1 &lt;= i &lt;= n, the distance R(i) of node i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    if (S(i) != 0) then set R(i):= 1</div><div class="line">                   else set R(i):= 0</div><div class="line">2. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set Q(i) := S(i)</div><div class="line">    while (Q(i) ！= 0 and Q(Q(i)) != 0) do</div><div class="line">        set R(i) := R(i) + R(Q(i))</div><div class="line">        set Q(i) := Q(Q(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>优化思路: </p>
-<ul>
-<li>用快速并行算法把链表长度缩短为n/log n</li>
-<li>要求：缩短和恢复都可以用很小的T，并且W=O(n)</li>
-<li>方法：通过删除链表中的独立顶点集来缩短链表</li>
-<li>在缩短的链表上用指针跳转法来求序，只需W=O(n)</li>
-<li>最后用快速并行算法来恢复链表的长度</li>
-</ul>
-<p>也即：</p>
-<ol>
-<li>把列表分成约n/logn块{ $B_{i}$ }, 每块包含O(logn)个节点</li>
-<li>在每块内对每个节点用最优串行算法求序(preliminary rank)</li>
-<li>用O(logn)的平行算法把所有排好序的块组合</li>
-</ol>
-<p>List-Ranking Strategy</p>
-<ol>
-<li>Shrink the linked list L until only O(n/logn) nodes remain.</li>
-<li>Apply the pointer jumping technique(Algorithm 3.1) on the short list of the remaining nodes.</li>
-<li>Restore the original list and rank all the nodes removed in step 1.</li>
-</ol>
-<p>independent sets</p>
-<ul>
-<li>A set I of nodes is independent if, whenever i belongs to I, S(i) not belongs to I.</li>
-</ul>
-<p>缩减的列表结点必须构成一个独立集，即不相邻</p>
-<blockquote>
-<p><img src="/img/shrink_list1.png" alt="shrink_list1.png"></p>
-<p><img src="/img/shrink_list2.png" alt="shrink_list2.png"></p>
-</blockquote>
-<p>Algorithm 3.2<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># removing nodes of an independent set</div><div class="line"></div><div class="line">Input: (1)Arrays S and P of length n representing, respectively, the successor and predecessor relations of linked list; (2)an independent set I of nodes such that P(i), S(i) != 0; (3)a value R(i) for each node i.</div><div class="line"></div><div class="line">Output: The list obtained after removal of all the nodes in I with the updated R values.</div><div class="line"></div><div class="line">begin</div><div class="line">1. Assign consecutive serial numbers N(i) to the elements of I, where 1 &lt;= N(i) &lt;= |I| = n'.</div><div class="line">2. for for all i belongs to I pardo </div><div class="line">    set U(N(i)) := (i, S(i), R(i))</div><div class="line">    set R(P(i)) := R(P(i) + R(i))</div><div class="line">    set S(P(i)) := S(i)</div><div class="line">    set P(S(i)) := P(i)</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>删除独立顶点集并合并其权重到剩余顶点的并行复杂度: T=O(1) W=O(n)</p>
-<h3 id="Determination-of-an-Independent-Set"><a href="#Determination-of-an-Independent-Set" class="headerlink" title="Determination of an Independent Set"></a>Determination of an Independent Set</h3><p>独立集合充分大：存在常数c，c属于(0, 1)，使集合包含顶点数不少于c×n</p>
-<ul>
-<li>保证快速地迭代缩短链表</li>
-<li>把长度为n的链表缩短为n/logn只需不超过log_1-c(logn)的T</li>
-</ul>
-<p>最理想但没有快速算法：用序的奇偶性确定独立顶点集合，c=1/2</p>
-<p>(存在快速算法)对链表使用三色着色算法，把局部最小色数(或最大)的节点作为独立集元素</p>
-<blockquote>
-<p><img src="/img/coloring.png" alt="coloring.png"></p>
-</blockquote>
-<ul>
-<li>从一个局部极小到下一个局部极小着色点，中间经过的点数最多为3，因此C=1/4</li>
-<li>3-color 算法收敛很快，每次调用算法，<br>着色的色数都变小为原色数的对数比例，这里的对数以2为基底</li>
-<li>要把色数变小为3，T几乎是O(1)</li>
-</ul>
-<p>Algorithm 3.3<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># simple optimal list ranking</div><div class="line"></div><div class="line">Input: A linked list with n nodes suc that the successor of each node i is given by S(i).</div><div class="line"></div><div class="line">Output: For each node i, the distance of i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. set n_0 := n, k := 0</div><div class="line">2. while n_k &gt; n/logn do</div><div class="line">    2.1 set k := k + 1</div><div class="line">    2.2 color the list with three colors and identify the set I of local minima.</div><div class="line">    2.3 remove the nodes in I, and store the appropriate information regarding the removed nodes(Algorithm 3.2).</div><div class="line">    2.4 let n_k be the size of the remaining list. compact the list into consecutive memory locations.</div><div class="line">3. apply the pointer jumping technique (Algorithm 3.1) to the resulting list.</div><div class="line">4. restore the original list and rank all the removed nodes by reversing the process performed in step2.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>缩短链表和恢复链表：T = O(log logn), W = O(n)</p>
-<ul>
-<li>把长度为n的链表缩短为n/logn，只需不超过log_1-c(logn)的T</li>
-<li>第一次迭代W = O(n), 第二次迭代W = O((1 - c)*c), …</li>
-<li>W = O(n + (1 - c)n + (1 - c)^2 *n + …) = O(n/c) = O(n)</li>
-<li>恢复和缩短是对称的，T和W都相同</li>
-</ul>
-<p>指针跳转是在长度为n/logn的已缩短链表上zuo做的，T = O(logn), W = O(n)</p>
-<p>算法的并行复杂度: T = O(loglogn); W = (n)</p>
-<ul>
-<li>*一个优化的时间复杂度为O(logn)的列表求序算法……</li>
-</ul>
-<h2 id="欧拉回路-the-Euler-Tour-Technique"><a href="#欧拉回路-the-Euler-Tour-Technique" class="headerlink" title="欧拉回路(the Euler-Tour Technique)"></a>欧拉回路(the Euler-Tour Technique)</h2><p>树的欧拉回路是指：<br>将一棵树的每一条边换成两条指向相反的有向边，成为一个欧拉图，就存在欧拉回路；<br>可以定义一个论域为所有有向边的函数s(successor function)，描述这棵树的欧拉回路</p>
-<p>Lemma 3.6: Given a tree T = (V, E) and an ordering of the set of vertices adjacent to each vertex v belongs to V, the function s defined previously specifies an Euler circuit in the directed graph T’ = (V, E’), where E’ is obtained by replacement of each e belongs to E by two arcs of opposite directions.</p>
-<ul>
-<li><p>we call the Euler circuit of T’ the <strong>Euler tour</strong> of T</p>
-</li>
-<li><p>每棵树都有欧拉回路</p>
-</li>
-<li>如果欧拉回路从树的根节点出发，则它实际上是树的节点深度优先遍历路径</li>
-</ul>
-<p>给出一个由邻接表及附加的指针信息描述的树，求得一条欧拉回路的T = O(1), W = O(n), |V| = n<br>(指针信息: data field + pointer * 2(描述下一个邻接点 + 描述该点在邻接表中指向此顶点的item))</p>
-<ul>
-<li><p>树求根(rooting a tree): 树根结点为r，对于每个非根结点v，寻找其父父结点p(v)</p>
-</li>
-<li><p>一对顶点之间的两条弧，先出后进的顶点是父节点，先进后出的是子节点</p>
-</li>
-</ul>
-<p>弧的顺序的确定：<br>-把欧拉回路从其中一点处断开（例如去除回路路径列表中的最前与最后的弧的相邻关系）</p>
-<ul>
-<li>用链表求序来对这些弧定序</li>
-</ul>
-<p>树的一个欧拉回路为L[r] = &lt; u_0, u_1, … , u_d-1 &gt;</p>
-<p>设s(&lt; u_d-1, r &gt;) = 0，将欧拉回路从r处截断，得到一条始于r，遍历所有顶点一次，终于r的欧拉路径</p>
-<p>Algorithm 3.5<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># rooting a tree</span></div><div class="line"></div><div class="line">Input: (<span class="number">1</span>)a tree T defined by the adjacency lists of its vertices, (<span class="number">2</span>)an Euler tour defined by the successor function s, and (<span class="number">3</span>)a special vertex r</div><div class="line"></div><div class="line">Output: For each vertex v != r, the parent p(v) of v in the tree rooted at r.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> Identify the last vertex u appearing on the adjacency <span class="built_in">list</span> of r. <span class="built_in">set</span> s(&lt;u, r&gt;) = <span class="number">0</span></div><div class="line"><span class="number">2.</span> Assign a weight of <span class="number">1</span> to each arc &lt;x, y&gt;, and apply parallel prefix on the <span class="built_in">list</span> of arcs defined by s.</div><div class="line"><span class="number">3.</span> For each arc &lt;x, y&gt;, <span class="built_in">set</span> x = p(y) whenever the prefix sum of &lt;x, y&gt; is smaller than the prefix sum of &lt;y, x&gt;.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>并行复杂度与链表求序相同：</p>
-<ul>
-<li>T=O(log n log log n) ？？？</li>
-<li>W=O(n)</li>
-<li>这里n是顶点数（树的边数是顶点数减一）</li>
-</ul>
-<p>1、Postorder Numbering 后序遍历的序数</p>
-<p>往下走的弧的权重为0，往上走的弧的权重为1，然后用链表中求前缀和的方法来算出后序遍历编号</p>
-<p>Algorithm 3.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Postorder Numbering</div><div class="line"></div><div class="line">Input: (1)A rooted binary tree with root r, and (2)the coresponding Euler path defined by the function s</div><div class="line"></div><div class="line">Output: The postorder number post(v) of each vertex v</div><div class="line"></div><div class="line">begin</div><div class="line">1. For each vertex v != r, assign the weights w(&lt;v, p(v)&gt;) = 1 and w(&lt;p(v&gt;, v) = 0</div><div class="line">2. Perform parallel prefix on the list of arcs defined by s.</div><div class="line">3. For each vertex v != r, set post(v) equal to the prefix sum of &lt;v, p(v)&gt;. For v = r, set post(v) = n, where n is the number of vertices in the given tree.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>2、Computing the Vertex level 结点层数</p>
-<p>可用类似Algorithm 3.6的算法，1和3做改动: w(<p(v), v="">) = +1; w(<v, p(v)="">) = -1。level(v) = <p(v), v="">的前缀和</p(v),></v,></p(v),></p>
-<p>3、Computing the preorder Number </p>
-<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0; </p>
-<p>preorder(v) = &lt; p(v), v &gt;前缀和 + 1;  preorder(r) = 1</p>
-<p>4、Computing the Number of Descendants</p>
-<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0;</p>
-<p>desc(v) = &lt; v, p(v) &gt;前缀和 - &lt; p(v), v &gt;前缀和; desc(r) = n - 1</p>
-<p>以上四个并行算法:<br>T = O(logn); W = O(n)（由平衡树方法求前缀和的平行算法所决定）</p>
-<ul>
-<li>*Tree Contraction(树收缩) ……</li>
-</ul>
-<ul>
-<li>*Lowest Common Ancestors ……</li>
-</ul>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">宏观经济学</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/03/14/paralell_compute3/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
   
   
-    <a href="/2017/02/28/computer_network_1/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">计算机网络和因特网</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-
-
-  
-    <div class="duoshuo"></div>
+    </div></section>
   
 
-
+    
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
+  
 
 
           </div>
@@ -458,8 +229,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
@@ -545,14 +316,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
              
@@ -562,6 +325,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
               </li>
             
             <div class="clearfix"></div>

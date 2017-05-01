@@ -145,6 +145,81 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-parellel_and_distributed_computing/paralell_compute9" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/25/parellel_and_distributed_computing/paralell_compute9/">随机并行算法(Randomized Algorithm)</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/25/parellel_and_distributed_computing/paralell_compute9/" class="archive-article-date">
+  	<time datetime="2017-04-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算八)</p>
+<h2 id="随机并行算法简介"><a href="#随机并行算法简介" class="headerlink" title="随机并行算法简介"></a>随机并行算法简介</h2><p>随机算法：使用了随机数生成器(random-number generator)的算法</p>
+<p>随机算法的分析基于概率论(Probability Theory)基本事实</p>
+<p>伯努利随机试验: </p>
+<ul>
+<li>$P<em>r{X \geq m} = \sum</em>{j=m}^n (_j^n)p^jq^{n-j}$</li>
+</ul>
+<p>切尔诺夫界/不等式(Chernoff bounds): </p>
+<ul>
+<li>$P_r{ X \leq (1 - \epsilon)pn } \leq e^{-\epsilon^2np/2}$</li>
+<li>$P_r{ X \geq (1 + \epsilon)pn } \leq e^{-\epsilon^2np/3}$</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/04/25/parellel_and_distributed_computing/paralell_compute9/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/25/parellel_and_distributed_computing/paralell_compute9/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-computer_network/computer_network_2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -239,7 +314,7 @@
       
         <p>(并行与分布式计算七)</p>
 <p><em>Arithmetic Computations</em></p>
-<h2 id="线性递推式-linear-recurrences"><a href="#线性递推式-linear-recurrences" class="headerlink" title="线性递推式(linear recurrences)"></a>线性递推式(linear recurrences)</h2><p>m阶线性递推式(linear recurrece of order m):<br>$y<em>i$由$ y</em>{i-1}, y<em>{i-2}, …, y</em>{i-m} $的线性组合生成</p>
+<h2 id="线性递推式-linear-recurrences"><a href="#线性递推式-linear-recurrences" class="headerlink" title="线性递推式(linear recurrences)"></a>线性递推式(linear recurrences)</h2><p>m阶线性递推式(linear recurrece of order m):<br>$y<em>i$ 由 $ y</em>{i-1}, y<em>{i-2}, …, y</em>{i-m} $ 的线性组合生成</p>
 <h3 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h3><p>A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a<em>1x^{n-1 + … + a</em>{n-1}x} + a_n $的系数数组，给定点$x_0$计算$p(x_0)$</p>
 <ul>
 <li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<br>$$ p(x_0) = (…((a_0x_0 +a_1)x_0 + a_2)x<em>0 + … + a</em>{n-1})x_0 + a_n $$</li>
@@ -413,6 +488,78 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-parellel_and_distributed_computing/paralell_compute6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/">平面几何的并行算法</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/" class="archive-article-date">
+  	<time datetime="2017-03-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算五)</p>
+<p>computational geometry: design efficient algorithms to handle computational problems dealing with collections of objects in Euclidean space</p>
+<p>three technique: </p>
+<ul>
+<li>divide-and-conquer 分治</li>
+<li>plane-sweep tree 平面扫描树</li>
+<li><em>pipelined divide-and-conquer</em></li>
+</ul>
+<h2 id="凸包-Convex-Hull-计算"><a href="#凸包-Convex-Hull-计算" class="headerlink" title="凸包(Convex-Hull)计算"></a>凸包(Convex-Hull)计算</h2>
+        
+          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/">展开全文 >></a>
         </p>
       
 
@@ -692,154 +839,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Cplusplus_thinking/不应当使用虚函数的情况" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/">不应当使用虚函数的情况</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>关于是否应该所有成员函数缺省为虚函数的争论</p>
-<p><em>只有涉及继承时，才需要考虑与此相关的问题</em></p>
-<h2 id="适用的情况"><a href="#适用的情况" class="headerlink" title="适用的情况"></a>适用的情况</h2><ul>
-<li>基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数</li>
-</ul>
-<h2 id="不适用的情况"><a href="#不适用的情况" class="headerlink" title="不适用的情况"></a>不适用的情况</h2><ul>
-<li><p>虚函数代价并不是非常高，当时会带来一定的额外开销</p>
-</li>
-<li><p>有些情况下非虚函数能够正确运行而虚函数不能</p>
-</li>
-<li><p>有些类并非为继承而设计(设计时并不兼容被继承)</p>
-</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-economics/供给与需求的基本原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/economics/供给与需求的基本原理/">供给与需求的基本原理</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/economics/供给与需求的基本原理/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="需求表"><a href="#需求表" class="headerlink" title="需求表"></a>需求表</h3><ul>
-<li><p>在其他条件相同时，一种物品的价格越高，人们愿意购买的数量就越少；而市场价格越低，人们愿意购买的数量就越多</p>
-</li>
-<li><p>价格与需求之间的关系可以用一张需求表(demand schedule)或一条需求曲线(demand curve)表示</p>
-</li>
-</ul>
-<ul>
-<li>需求曲线：数量和价格呈反比关系</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/01/21/economics/供给与需求的基本原理/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">微观经济学</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/economics/供给与需求的基本原理/">展开全文 >></a>
         </p>
       
 

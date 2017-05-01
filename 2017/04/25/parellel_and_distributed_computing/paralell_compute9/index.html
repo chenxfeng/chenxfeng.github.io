@@ -6,36 +6,45 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chenfeng.github.io">
-  <title>句柄类(handle) | chenfeng&#39;s blog</title>
+  <title>随机并行算法(Randomized Algorithm) | chenfeng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="创建代理会复制所代理的对象，如何避免复制(保持多态性的前提下避免复制对象的代价)
-某些类应当避免复制：
-对象很大，资源消耗多
-每个对象代表一种不能被轻易复制的资源，如文件
-其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大
-对象代表位于网络连接另一端的其他对象
-多态性环境中只知对象基类类型而不知对象本身类型">
+  <meta name="description" content="(并行与分布式计算八)
+随机并行算法简介随机算法：使用了随机数生成器(random-number generator)的算法
+随机算法的分析基于概率论(Probability Theory)基本事实
+伯努利随机试验: 
+
+$Pr{X \geq m} = \sum{j=m}^n (_j^n)p^jq^{n-j}$
+
+切尔诺夫界/不等式(Chernoff bounds): 
+
+$P_r{ X \leq">
 <meta property="og:type" content="article">
-<meta property="og:title" content="句柄类(handle)">
-<meta property="og:url" content="https://chenfeng.github.io/2017/01/21/Cplusplus_thinking/句柄类(handle)/index.html">
+<meta property="og:title" content="随机并行算法(Randomized Algorithm)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/04/25/parellel_and_distributed_computing/paralell_compute9/index.html">
 <meta property="og:site_name" content="chenfeng's blog">
-<meta property="og:description" content="创建代理会复制所代理的对象，如何避免复制(保持多态性的前提下避免复制对象的代价)
-某些类应当避免复制：
-对象很大，资源消耗多
-每个对象代表一种不能被轻易复制的资源，如文件
-其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大
-对象代表位于网络连接另一端的其他对象
-多态性环境中只知对象基类类型而不知对象本身类型">
-<meta property="og:updated_time" content="2017-03-25T03:47:41.789Z">
+<meta property="og:description" content="(并行与分布式计算八)
+随机并行算法简介随机算法：使用了随机数生成器(random-number generator)的算法
+随机算法的分析基于概率论(Probability Theory)基本事实
+伯努利随机试验: 
+
+$Pr{X \geq m} = \sum{j=m}^n (_j^n)p^jq^{n-j}$
+
+切尔诺夫界/不等式(Chernoff bounds): 
+
+$P_r{ X \leq">
+<meta property="og:updated_time" content="2017-05-01T01:12:45.609Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="句柄类(handle)">
-<meta name="twitter:description" content="创建代理会复制所代理的对象，如何避免复制(保持多态性的前提下避免复制对象的代价)
-某些类应当避免复制：
-对象很大，资源消耗多
-每个对象代表一种不能被轻易复制的资源，如文件
-其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大
-对象代表位于网络连接另一端的其他对象
-多态性环境中只知对象基类类型而不知对象本身类型">
+<meta name="twitter:title" content="随机并行算法(Randomized Algorithm)">
+<meta name="twitter:description" content="(并行与分布式计算八)
+随机并行算法简介随机算法：使用了随机数生成器(random-number generator)的算法
+随机算法的分析基于概率论(Probability Theory)基本事实
+伯努利随机试验: 
+
+$Pr{X \geq m} = \sum{j=m}^n (_j^n)p^jq^{n-j}$
+
+切尔诺夫界/不等式(Chernoff bounds): 
+
+$P_r{ X \leq">
   
     <link rel="alternative" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
   
@@ -165,107 +174,282 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Cplusplus_thinking/句柄类(handle)" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-parellel_and_distributed_computing/paralell_compute9" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      句柄类(handle)
+      随机并行算法(Randomized Algorithm)
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+        <a href="/2017/04/25/parellel_and_distributed_computing/paralell_compute9/" class="archive-article-date">
+  	<time datetime="2017-04-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>创建代理会复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
-<h3 id="某些类应当避免复制："><a href="#某些类应当避免复制：" class="headerlink" title="某些类应当避免复制："></a>某些类应当避免复制：</h3><ul>
-<li>对象很大，资源消耗多</li>
-<li>每个对象代表一种不能被轻易复制的资源，如文件</li>
-<li>其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大</li>
-<li>对象代表位于网络连接另一端的其他对象</li>
-<li>多态性环境中只知对象基类类型而不知对象本身类型</li>
+        <p>(并行与分布式计算八)</p>
+<h2 id="随机并行算法简介"><a href="#随机并行算法简介" class="headerlink" title="随机并行算法简介"></a>随机并行算法简介</h2><p>随机算法：使用了随机数生成器(random-number generator)的算法</p>
+<p>随机算法的分析基于概率论(Probability Theory)基本事实</p>
+<p>伯努利随机试验: </p>
+<ul>
+<li>$P<em>r{X \geq m} = \sum</em>{j=m}^n (_j^n)p^jq^{n-j}$</li>
+</ul>
+<p>切尔诺夫界/不等式(Chernoff bounds): </p>
+<ul>
+<li>$P_r{ X \leq (1 - \epsilon)pn } \leq e^{-\epsilon^2np/2}$</li>
+<li>$P_r{ X \geq (1 + \epsilon)pn } \leq e^{-\epsilon^2np/3}$</li>
 </ul>
 <a id="more"></a>
-<h3 id="避免使用指针复制对象："><a href="#避免使用指针复制对象：" class="headerlink" title="避免使用指针复制对象："></a>避免使用指针复制对象：</h3><ul>
-<li>使用对象指针比直接使用对象要困难</li>
-<li>未初始化的指针非常危险且难以防范</li>
-<li>管理内存的硬件总要检查被复制的指针是否真的指向程序所分配的内存位置上</li>
-<li><p>复制未初始化指的针会导致硬件陷阱<br>例如: </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// copy a pointer without initialization</span></div><div class="line">    <span class="comment">// would crash a program</span></div><div class="line">    <span class="keyword">int</span>* p;  <span class="comment">// without initialization</span></div><div class="line">    <span class="keyword">int</span>* q = p; <span class="comment">// not being definited</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>多个指针指向同一个对象时应考虑何时删除此对象</p>
-</li>
-</ul>
-<h2 id="handle-classe-句柄类"><a href="#handle-classe-句柄类" class="headerlink" title="handle classe(句柄类)"></a>handle classe(句柄类)</h2><ul>
-<li>有时也称为smart pointer(智能指针)</li>
-<li>绑定到所控制的类的对象上</li>
-</ul>
-<h3 id="简单示例类"><a href="#简单示例类" class="headerlink" title="简单示例类"></a>简单示例类</h3><p>表示点平面坐标的类<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Point &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Point(): xval(<span class="number">0</span>), yval(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Point(<span class="keyword">int</span> x, <span class="keyword">int</span> y): xval(x), yval(y) &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> xval; &#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> yval; &#125;</div><div class="line">    <span class="function">Point&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span> xv)</span> </span>&#123; xval = xv; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</div><div class="line">    <span class="function">Point&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span> yv)</span> </span>&#123; yval = yv; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p><strong>使用一个无参构造函数和一个两个参数的构造函数而非一个缺省参数的构造函数</strong><br><code>Point(int x = 0, int y = 0): xval(x), yval(y) {}</code><br><em>后者允许只用一个参数(另一个缺省为零)构造Point对象，而这几乎是错的</em></p>
-<h3 id="绑定到句柄"><a href="#绑定到句柄" class="headerlink" title="绑定到句柄"></a>绑定到句柄</h3><p>将句柄h直接绑定到对象上<br><code>Point p;</code><br><code>Handle h(p);</code></p>
+<p>PRAM模型需要加入一些特征</p>
 <ul>
-<li>删除p后应该使handle无效</li>
-<li>handle应该控制它所绑定的对象(创建和销毁)</li>
-<li>从效果上说handle就是一种只包含单个对象的容器</li>
+<li>主要为每个处理器能够在一步时间内产生有限范围内的随机数</li>
+<li>设正整数范围为[1, 2, …, M], 限制产生的随机数长度为O(logn)bits，其中n是输入的长度</li>
+<li>这样的随机数能够在一个内存位置中出现，因此可用O(1)步完成</li>
+<li>k个处理器产生k的独立的随机数</li>
+<li><em>randomized PRAM</em></li>
 </ul>
-<h3 id="获取对象"><a href="#获取对象" class="headerlink" title="获取对象"></a>获取对象</h3><ul>
-<li>handle行为上类似一个指针</li>
-<li>应阻止使用者直接获得对象的实际地址</li>
-<li>过多暴露内存分配策略，不利于改变分配的策略</li>
-<li>隐蔽真正的对象地址，避免直接重载 operator-&gt;<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Handle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Point* <span class="keyword">operator</span>-&gt;();</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">Point* addr = h.<span class="keyword">operator</span>-&gt;(); <span class="comment">// get the object address</span></div><div class="line">                              <span class="comment">// overloading operator-&gt; is to blame</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="引用计数型句柄-UPoint"><a href="#引用计数型句柄-UPoint" class="headerlink" title="引用计数型句柄(UPoint)"></a><strong>引用计数</strong>型句柄(UPoint)</h3><ul>
-<li>了解有多少句柄绑定在同一个对象上以确定何时删除对象</li>
-<li><p>引用计数(use count)不能是句柄的一部分或对象的一部分</p>
-</li>
-<li><p>定义新的类容纳引用计数和Point对象</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> UPoint &#123;</div><div class="line">    <span class="comment">// all the members are private</span></div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Handle;</div><div class="line">    Point p;</div><div class="line">    <span class="keyword">int</span> u;</div><div class="line"></div><div class="line">    UPoint(): u(<span class="number">1</span>) &#123;&#125;</div><div class="line">    UPoint(<span class="keyword">int</span> x, <span class="keyword">int</span> y): P(x, y), u(<span class="number">1</span>) &#123;&#125;</div><div class="line">    UPoint(<span class="keyword">const</span> Point&amp; p0): p(p0), u(<span class="number">1</span>) &#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-<li><p>一个简单的Handle类实现</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Handle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Handle();</div><div class="line">    Handle(<span class="keyword">int</span>, <span class="keyword">int</span>);</div><div class="line">    Handle(<span class="keyword">const</span> Point&amp;);</div><div class="line">    Handle(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    Handle&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    ~Handle();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Upoint * up;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Handle::Handle(): up(<span class="keyword">new</span> UPoint) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">int</span> x, <span class="keyword">int</span> y): up(<span class="keyword">new</span> UPoint(x, y)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">const</span> Point&amp; p): up(<span class="keyword">new</span> UPoint(p)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::~Handle() &#123;</div><div class="line">    <span class="keyword">if</span> (--up-&gt;u == <span class="number">0</span>)</div><div class="line">        <span class="keyword">delete</span> up;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// just increase the use count by 1</span></div><div class="line">Handle::Handle(<span class="keyword">const</span> Handle&amp; h): up(h.up) &#123; ++up-&gt;up; &#125;</div><div class="line"></div><div class="line"><span class="comment">// make sure it works when two handles use the same UPoint object</span></div><div class="line">Handle&amp; Handle::<span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp; h) &#123;</div><div class="line">    ++h.up-&gt;u;</div><div class="line">    <span class="keyword">if</span> (--up-&gt;u == <span class="number">0</span>)</div><div class="line">        <span class="keyword">delete</span> up;</div><div class="line">    up = h.up;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Handle::x() <span class="keyword">const</span> &#123; <span class="keyword">return</span> up-&gt;p.x(); &#125;</div><div class="line"><span class="keyword">int</span> Handle::y() <span class="keyword">const</span> &#123; <span class="keyword">return</span> up-&gt;p.y(); &#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="写时复制-copy-on-write"><a href="#写时复制-copy-on-write" class="headerlink" title="写时复制(copy on write)"></a>写时复制(copy on write)</h3><p>handle改动性函数两种不同语义<br><code>Handle h(3, 4);</code><br><code>Handle h2 = h;</code><br><code>h2.x(5);</code><br><code>int n = h.x(); // 3 or 5 ?</code></p>
+<p>high-likelihood bounds(高可能性边界):</p>
 <ul>
-<li>句柄为<strong>指针语义</strong>，n = 5</li>
-<li><p>handle表现像指针或引用，h和h2绑定到同一对象</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Handle&amp; Handle::x(<span class="keyword">int</span> x0) &#123;</div><div class="line">    up-&gt;p.x(x0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Handle&amp; Handle::y(<span class="keyword">int</span> y0) &#123;</div><div class="line">    up-&gt;p.y(y0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>句柄为<strong>值语义</strong>，n = 3</p>
-</li>
-<li>改变h2的内容不该影响h的值</li>
-<li>必须保证所改动的UPont对象不同时被其它Handle所引用，否则复制UPoint<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Handle&amp; Handle::x(<span class="keyword">int</span> x0) &#123;</div><div class="line">    <span class="keyword">if</span> (up-&gt;u != <span class="number">1</span>) &#123;</div><div class="line">        --up-&gt;u;</div><div class="line">        up = <span class="keyword">new</span> UPoint(up-&gt;p);</div><div class="line">    &#125;</div><div class="line">    up-&gt;p.x(x0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Handle&amp; Handle::y(<span class="keyword">int</span> y0) &#123;</div><div class="line">    <span class="keyword">if</span> (up-&gt;u != <span class="number">1</span>) &#123;</div><div class="line">        --up-&gt;u;</div><div class="line">        up = <span class="keyword">new</span> UPoint(up-&gt;p);</div><div class="line">    &#125;</div><div class="line">    up-&gt;p.y(y0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
+<li>一个随机并行算法需要的资源上界 $f(n)$:  对于任意的输入n，该算法使用的资源数量有 $1 - n^{-c}$的概率最多为 $\alpha f(n)$, 其中 $\alpha$ 和c是正的常数</li>
+<li>$O(f(n))$</li>
 </ul>
-<p><code>if (up-&gt;u != 1) {</code><br><code>--up-&gt;u;</code><br><code>up = new UPoint(up-&gt;p);</code><br><code>}</code></p>
+<p>两种类型的随机算法: </p>
 <ul>
-<li>此代码片段需要在每个改变UPoint对象的成员函数中重复(可设计为Handle的私有成员函数)</li>
-<li>写时复制优点：在绝对必要时才进行复制，额外开销小</li>
+<li>Las Vegas(拉斯维加斯)算法</li>
+<li><ul>
+<li>总是产生正确的解</li>
 </ul>
-<h2 id="句柄类的改进"><a href="#句柄类的改进" class="headerlink" title="句柄类的改进"></a>句柄类的改进</h2><ul>
-<li>前述实现的缺点：把句柄捆绑到类T的对象上必须先定义具有类型T的成员的新类</li>
-<li>当捆绑句柄到继承自T的静态类型未知的类的对象上时难以实现</li>
-</ul>
-<h3 id="将应用计数从数据中分离出来作为独立的对象"><a href="#将应用计数从数据中分离出来作为独立的对象" class="headerlink" title="将应用计数从数据中分离出来作为独立的对象"></a>将应用计数从数据中分离出来作为独立的对象</h3><ul>
-<li><p>抽象地表示应用计数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> UseCount &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    UseCount();</div><div class="line">    UseCount(<span class="keyword">const</span> UseCount&amp;);</div><div class="line">    ~UseCount();</div><div class="line"></div><div class="line">    <span class="comment">// judge whether use count would become zero</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">only</span><span class="params">()</span></span>; </div><div class="line"></div><div class="line">    <span class="comment">// judge whether use count should be deleted</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">reattach</span><span class="params">(<span class="keyword">const</span> UseCount&amp;)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">// provide a method to make this handle to be the only one</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">makeonly</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span>* p;</div><div class="line">    <span class="comment">// make assignment illegal</span></div><div class="line">    UseCount&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> UseCount&amp;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">UseCount::UseCount(): p(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>)) &#123;&#125;</div><div class="line"></div><div class="line">UseCount::UseCount(<span class="keyword">const</span> UseCount&amp; u): p(u.p) &#123; ++*p; &#125;</div><div class="line"></div><div class="line">UseCount::~UseCount() &#123;</div><div class="line">    <span class="keyword">if</span> (--*p == <span class="number">0</span>)</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> UseCount::only() &#123; <span class="keyword">return</span> *p == <span class="number">1</span>; &#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> UseCount::reattach(<span class="keyword">const</span> UseCount&amp; u) &#123;</div><div class="line">    <span class="comment">// increase u.p first to make it work when self-assignment</span></div><div class="line">    ++*u.p; </div><div class="line">    <span class="keyword">if</span> (--*p == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">        p = u.p;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    p = u.p;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> UseCount::makeonly() &#123;</div><div class="line">    <span class="keyword">if</span> (*p == <span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    --*p;</div><div class="line">    p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>);</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>重写Handle类</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Handle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">// the same with previous definition</span></div><div class="line">    Handle();</div><div class="line">    Handle(<span class="keyword">int</span>, <span class="keyword">int</span>);</div><div class="line">    Handle(<span class="keyword">const</span> Point&amp;);</div><div class="line">    Handle(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    Handle&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    ~Handle();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Point* p;</div><div class="line">    UseCount u;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Handle::Handle(): p(<span class="keyword">new</span> Point) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">int</span> x, <span class="keyword">int</span> y): p(<span class="keyword">new</span> Point(x, y)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">const</span> Point&amp; p0): p(<span class="keyword">new</span> Point(p0)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">const</span> Handle&amp; h): u(h.u), p(h.p) &#123;&#125;</div><div class="line"></div><div class="line">Handle::~Handle() &#123;</div><div class="line">    <span class="keyword">if</span> (u.only())</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Handle&amp; Handle::<span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp; h) &#123;</div><div class="line">    <span class="keyword">if</span> (u.reattach(h.u))</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">    p = h.p;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Handle::x() <span class="keyword">const</span> () &#123;</div><div class="line">    <span class="keyword">return</span> p-&gt;x();</div><div class="line">&#125;</div><div class="line"><span class="keyword">int</span> Handle::y() <span class="keyword">const</span> () &#123;</div><div class="line">    <span class="keyword">return</span> p-&gt;y();</div><div class="line">&#125;</div><div class="line"></div><div class="line">Handle&amp; Handle::x(<span class="keyword">int</span> x0) &#123;</div><div class="line">    <span class="keyword">if</span> (u.makeonly())</div><div class="line">        p = <span class="keyword">new</span> Point(*P);</div><div class="line">    p-&gt;x(x0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Handle&amp; Handle::y(<span class="keyword">int</span> y0) &#123;</div><div class="line">    <span class="keyword">if</span> (u.makeonly())</div><div class="line">        p = <span class="keyword">new</span> Point(*P);</div><div class="line">    p-&gt;y(y0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><ul>
+<li>性能用期望资源使用数或使用资源的上界的概率衡量</li>
+</ul>
+</li>
+<li>Monte Carlo(蒙特卡洛)算法</li>
+<li><ul>
+<li>允许存在误差，但保持在足够小的概率</li>
+</ul>
 </li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>通过引入引用计数使得handle类能灵活地设计出来，<br>而将引用计数抽象化表示使handle类能协同不同数据结构工作</li>
-<li>UseCount类简化了实现中特定的子问题：接口设计只为简化引用计算句柄实现，<br>而不为终端用户(end user)所用</li>
+<ul>
+<li><p>优点：简单、易实现、易并行、性能往往比较好</p>
+</li>
+<li><p>缺点：性能也随机，快慢不总是一样</p>
+</li>
+</ul>
+<h2 id="在图中找分数阶的独立集-Fractional-Independent-Set"><a href="#在图中找分数阶的独立集-Fractional-Independent-Set" class="headerlink" title="在图中找分数阶的独立集(Fractional Independent Set)"></a>在图中找分数阶的独立集(Fractional Independent Set)</h2><p>可平面图G = (V, E): 可映射到平面上且边不相交</p>
+<p>aim: to identify a large independent set of G consisting excusively of low-degree vertices</p>
+<ul>
+<li>图G的顶点集合为V，找出集合 $X \subseteq V$ ，使得</li>
+</ul>
+<ol>
+<li><p>X中每一顶点v的度小于等于某个常量d</p>
+</li>
+<li><p>集合X是独立的，即X中任意两个定点不相邻(没有边连接)</p>
+</li>
+<li><p>集合X满足 $|X| \geq c|V|$(对某个正常数c)</p>
+</li>
+</ol>
+<ul>
+<li>X即为图G的一个分数阶的独立集</li>
+</ul>
+<p>给定图G=(V,E)，定义其分数阶的独立集X满足下面三个条件：</p>
+<ul>
+<li>低度性：存在常数d，使X是顶点度数小于d的顶点组成的V子集</li>
+<li>独立性：X中的任意两点都在G中不相邻</li>
+<li>分数阶：存在正的常数c，使|X|不小于c|V|</li>
+</ul>
+<p>引理9.1: 平面图G = (V, E), |V| &gt; 2, 则 $|E| \leq 3|V| - 6$</p>
+<p>定理9.2: 任意平面图G = (V, E)都能在线性串行时间内建立一个分数阶独立集X</p>
+<ul>
+<li>令 $V_d$ 为G的一个阶不大于d的顶点子集(d &gt;= 6)</li>
+<li>令$V_h = V - V<em>d$ ，则 $\sum</em>{v \in V_h}deg(v) \geq (d + 1)|V_h|$</li>
+<li>$(d + 1)|V<em>h| \leq \sum</em>{v \in V}deg(v) \leq 6|V| - 12$</li>
+<li>$|V_h| \leq (6|V| - 12)/(d + 1)$</li>
+<li><p>$|v_d| = |V| - |V_h| \geq (d - 5)|V|/(d + 1)$</p>
+</li>
+<li><p>构造分数阶独立集X：</p>
+</li>
+<li>从 $V_d$ 中选择任意的顶点v，除去所有v在 $V_d$ 中邻接的顶点</li>
+<li>再选 $V_d$ 的另外一个顶点重复以上步骤</li>
+<li>重复直到遍历 $V_d$ 中所有顶点</li>
+<li>$|X| \geq |V_d|/(d + 1) \geq (d - 5)|V|/(d + 1)^2$，是|V|的函数</li>
+</ul>
+<h3 id="有向环-directed-cycles"><a href="#有向环-directed-cycles" class="headerlink" title="有向环(directed cycles)"></a>有向环(directed cycles)</h3><p>求有向环G = (V, E)上的分数阶独立集</p>
+<p>Algorithm 9.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(Randomized Symmetry Breaking)</div><div class="line">Input: A directed cycle G = (V, E) whose arcs are specified by an array S of length n.</div><div class="line">Output: The set of vertices X = &#123;v \in V | label(v) = 1&#125;, which forms a fractional independent set with high probability.</div><div class="line">begin</div><div class="line">  for all v \in V pardo</div><div class="line">    1. Assign label(v) = 1 or 0 randomly with equal probability.</div><div class="line">    2. if (label(v) = 1 and label(S(v)) = 1) then set label(v) := 0</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>T(n) = O(1), W = O(n)</li>
+<li><p>复杂度分析</p>
+</li>
+<li><p>独立的伯努利随机试验：n/2（两点距离&gt;1即可）</p>
+</li>
+<li>顶点被选（最终label为1）的概率：1/4</li>
+<li>在独立试验中的平均被选率：n/8</li>
+<li><p>最终被选的包括独立试验的和非独立试验的</p>
+</li>
+<li><p>$ P_r{|X| \leq \alpha n} \leq e^{-\beta n} $ (由Chernoff bounds得)</p>
+</li>
+<li>其中$ 0 &lt; \alpha &lt; 1/8 $, $ \beta = (1 - 8\alpha)^2/16 $</li>
+</ul>
+<h3 id="可平面图-planar-graphs"><a href="#可平面图-planar-graphs" class="headerlink" title="可平面图(planar graphs)"></a>可平面图(planar graphs)</h3><p>求任意可平面图G = (V, E)上的分数阶独立集</p>
+<p>Algorithm 9.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">(Fractional Independent Set)</div><div class="line">Input: A planar graph G = (V, E) represented by its edge lists. The edges on the list of a vertex v are ordered counterclockwise as they appear around the vertex v in a planar embedding of G. </div><div class="line">Output: A labeled set of low-degree vertices forming a large independent set with high probability. </div><div class="line">begin</div><div class="line">  1. for each vertex v in V pardo</div><div class="line">    if (deg(v) &lt;= 6) then set lowdeg(v) := 1</div><div class="line">                     else set lowdeg(v) := 0</div><div class="line">  2. for each vertex v in V pardo</div><div class="line">    if (lowdeg(v) = 1) then Randomly assign label(v) := 0 or 1 with equal probability</div><div class="line">  3. for each vertex v in V pardo</div><div class="line">    if (label(v) = 1) then</div><div class="line">      if (label(u) = 1 for some u on the list of v) then set label(v) := 0</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>T(n) = O(1), W = O(n)</li>
+<li><p>复杂度分析</p>
+</li>
+<li><p>参数d取为6</p>
+</li>
+<li>独立的伯努利随机试验：$|V_d|/36$（两点距离&gt;2即可）</li>
+<li>成功率：1/27</li>
+<li>独立试验中的平均成功点数至少为： $|V_d|/36 * 1/27$</li>
+<li><p>最终被选的包括独立试验的和非独立试验的</p>
+</li>
+<li><p>$ P_r {|X| \leq \alpha n } \leq e^{-\beta n} $</p>
+</li>
+<li>$\alpha$ 和 $\beta$为常量</li>
+</ul>
+<h2 id="字符串匹配的随机并行算法"><a href="#字符串匹配的随机并行算法" class="headerlink" title="字符串匹配的随机并行算法"></a>字符串匹配的随机并行算法</h2><p>基本策略类似于hashing</p>
+<ul>
+<li>hash函数将集合U映射到一个整数范围之内([1, 2, …, r])</li>
+<li>u -&gt; h(u)</li>
+<li>将长度为m的字符串映射为O(logm)比特的整数(fiingerprint)：两个不同的字符创映射到同一个整数的概率极其低(前提是hash函数选得好)</li>
+</ul>
+<p>关键思想：</p>
+<ul>
+<li>指纹(Fingerprints): 把字符串匹配问题转换为固定几个整数的比较问题</li>
+<li>随机选质数，作为除数对指纹的整数求余，使余数的长度上界能固定</li>
+<li>用比较余数来代替比较指纹整数</li>
+<li>最终算法达到右面三个要求: </li>
+<li><ul>
+<li>property 9.1: 对任意字符串 $X \in B$, $f_p(X)$ 由O(logm)比特组成，对每个$p \in S$</li>
+</ul>
+</li>
+<li><ul>
+<li>property 9.2: 随机选择 $\mathcal{F}$ 中的一个$f_p$，将两个不同的字符串X和Y映射到D中同一元素的概率非常小</li>
+</ul>
+</li>
+<li><ul>
+<li>property 9.3: 对每个$p \in S$, $f_p(X)$很容易并行地计算，对所有B中的字符串</li>
+</ul>
+</li>
+</ul>
+<h3 id="指纹函数"><a href="#指纹函数" class="headerlink" title="指纹函数"></a>指纹函数</h3><ul>
+<li>文本字符串T长度为n，模式字符串P长度为m，$m \leq n$</li>
+<li><p>确定P在T中出现的所有位置</p>
+</li>
+<li><p>令集合B为T的所有长度为m的子字符串的集合，起始位置i($ 1 \leq i \leq n-m+1 $)</p>
+</li>
+<li><p>问题转化成确定B中元素是否和P相同</p>
+</li>
+<li><p>令 $\mathcal{F} = { f<em>p }</em>{p \in S}$为函数集合，其中 $f_p$ 将长度为m的字符串映射到值域D中</p>
+</li>
+<li>$\mathcal{F}$ 必须满足以下三个特性：</li>
+<li><ul>
+<li>1.对任意字符串 $X \in B$, $f_p(X)$ 由O(logm)比特组成，对每个$p \in S$</li>
+</ul>
+</li>
+<li><ul>
+<li>2.随机选择 $\mathcal{F}$ 中的一个$f_p$，将两个不同的字符串X和Y映射到D中同一元素的概率非常小</li>
+</ul>
+</li>
+<li><ul>
+<li>3.对每个$p \in S$, $f_p(X)$很容易并行地计算，对所有B中的字符串</li>
+</ul>
+</li>
+</ul>
+<p>$f_p(X)$称为字符串X的指纹(fingerprint)</p>
+<p><strong>满足以上性质的指纹函数</strong></p>
+<ul>
+<li>由{0, 1}组成的字符串</li>
+<li>将{0, 1}映射到 整数环Z上的2*2矩阵</li>
+<li>(满足性质2但不满足1和3)</li>
+</ul>
+<p>$$ f(0) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 0 \<br>   1 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<p>$$ f(1) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 1 \<br>   0 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<ul>
+<li>对字符串XY，f(XY)=f(X)f(Y)(Z上的矩阵乘法)</li>
+<li>指纹是一一对应的</li>
+<li>通过比较行内元素的大小，可以知道最后是0还是1（0是左大右小，1是左小右大）</li>
+<li><p>而矩阵f(0)和f(1)的逆是已知的，可以右乘最后一位的逆矩阵来从指纹中删除最后一位，从而可以依次知道倒数第1、2、3、…位</p>
+</li>
+<li><p>e.g.</p>
+</li>
+<li><ul>
+<li>X = 1011</li>
+</ul>
+</li>
+<li><ul>
+<li>f(X) = f(1)f(0)f(1)f(1)</li>
+</ul>
+</li>
+<li><ul>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 0 \<br>1 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$ = $<br>\left[<br>\begin{matrix}<br>2 &amp; 5 \<br>1 &amp; 3<br>\end{matrix}<br>\right]<br>$</li>
+</ul>
+</li>
+</ul>
+<p><strong>指纹的增长速度</strong>(不满足性质1)</p>
+<ul>
+<li><p>X长度为m，则f(X)的每个元是不大于 $F<em>{m+1}$ 的整数，其中 $F</em>{m+1}$ 是第(m + 1)个斐波那契数($ F_1 = F<em>2 = 1, F</em>{m + 1} = F<em>m + F</em>{m - 1} $)</p>
+</li>
+<li><p>f(X)的元会大至 $F_{m + 1} \approx \frac{\phi^{m+1}}{\sqrt{5}}$</p>
+</li>
+<li>$ \phi = \frac{1 + \sqrt{5}}{2} \approx 1.618… $</li>
+</ul>
+<p><em>解决指纹增长过快的问题</em></p>
+<ul>
+<li>令p为[1, 2, …, M]内的素数，令 $Z_p$ 为模p的整数环</li>
+<li><p>定义 $f_p(X) = f(X)$ module p</p>
+</li>
+<li><p>e.g</p>
+</li>
+<li><ul>
+<li>X = (1011)^4, 长度为16</li>
+</ul>
+</li>
+<li><ul>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>206 &amp; 575 \<br>115 &amp; 321<br>\end{matrix}<br>\right]<br>$</li>
+</ul>
+</li>
+<li><ul>
+<li>给定素数p = 7</li>
+</ul>
+</li>
+<li><ul>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>3 &amp; 1 \<br>3 &amp; 6<br>\end{matrix}<br>\right]<br>$</li>
+</ul>
+</li>
+<li><p>引理9.4: 对任意整数 $m \geq 17$ , 有 $ \frac{m}{\ln m} \leq \pi(m) \leq 1.2551\frac{m}{\ln m} $</p>
+</li>
+<li><p>引理9.5: 给定正数 $u \leq 2^m$, u的不等质因数的数量为 $\pi(m)$, 当 $m \geq 29$ 时</p>
+</li>
+</ul>
+<h3 id="随机化匹配产生错误的概率"><a href="#随机化匹配产生错误的概率" class="headerlink" title="随机化匹配产生错误的概率"></a>随机化匹配产生错误的概率</h3><ul>
+<li>$f_p$为从函数集合 $\mathcal{F} = {f_p}$ 中随机选取的函数，其中p是范围[1, 2, …, M]内的素数</li>
+<li><p>任意两个长度为m的不同字符串产生错误匹配的概率<strong>不大于</strong> $\frac{\pi(\lfloor2.776m\rfloor)}{\pi(M)}$, $m \geq 11$</p>
+</li>
+<li><p>推论9.1: 选取的素数在$[1, 2, …, m^k]$范围内，则两个长度为m的字符串产生错误匹配的概率不大于 $\frac{3.48k}{m^{k-1}}$, k &gt; 1</p>
+</li>
+<li>$\pi(\lceil2.776m\rceil) \leq 1.2551 \frac{2.776m}{\ln(2.776m)} \approx \frac{3.48m}{\ln(2.776m)}$</li>
+<li><p>$\pi(m^k) \geq \frac{m^k}{\ln m^k} = \frac{m^k}{k\ln m}$</p>
+</li>
+<li><p>随机选取的指纹函数 $f_p \in \mathcal{F}$, p为[1, 2, …, M]中的素数，t对字符串产生错误匹配的概率上界为 $\frac{\pi(\lceil2.776mt\rceil)}{\pi(M)}$, $mt \geq 11$</p>
+</li>
+<li><p>推论9.2: 任意一个正整数常量k，$M = mt^k$, t对长度为m字符串产生错误匹配的概率为 $O(\frac{1}{t^{k-1}})$</p>
+</li>
+</ul>
+<p>Algorithm 9.4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(Monte Carlo String Matching)</div><div class="line">Input: Two arrays T(1:n) and P(1:m) representing the text and the pattern strings, respectively, and an integer M.</div><div class="line">Output: The array MATCH indicating all the positions where the pattern occurs in the text.</div><div class="line">begin</div><div class="line">  1. for 1 &lt;= i &lt;= n-m+1 pardo</div><div class="line">       Set MATCH(i) := 0</div><div class="line">  2. choose a random prime in the range [1, 2, ..., M], and compute f_p(P)</div><div class="line">  3. for 1 &lt;= i &lt;= n-m+1 pardo</div><div class="line">       Set L_l := f_p(T(i : i+m-1))</div><div class="line">  4. for 1 &lt;= i &lt;= n-m+1 pardo</div><div class="line">       if (L_l = f_p(P)) then Set MATCH(i) := 1</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>T(n) = O(logn), W(n) = O(n)</li>
+</ul>
+<h2 id="快速排序的随机并行算法"><a href="#快速排序的随机并行算法" class="headerlink" title="快速排序的随机并行算法"></a>快速排序的随机并行算法</h2><p>Algorithm 9.5<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(Randomized Quicksort)</div><div class="line">Input: An array A containing the n elements to be sorted.</div><div class="line">Output: The Array A in sorted order.</div><div class="line">begin</div><div class="line">  1. if n &lt;= 30 then sort A using any sorting algorithm and exit.</div><div class="line">  2. Select a random element S(A) of A.</div><div class="line">  3. for 1 &lt;= i &lt;= n pardo</div><div class="line">       A(i) &lt; S(A): Set mark(i) := 1</div><div class="line">       A(i) &gt; S(A): Set mark(i) := 0</div><div class="line">  4. Compact the elements of A marked 1 at the beginning of A, followed by S(A), which is followed by the elements marked 0. Set k equal to the position of the element S(A).</div><div class="line">  5. Recursively sort the subarrays A(1:k-1) and A(k+1:n).</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>$T(n) = O(log^2 n)$; $W(n) = O(nlogn)$</li>
 </ul>
 
       
@@ -301,7 +485,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
         		</li>
       		
 		</ul>
@@ -357,7 +541,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/01/21/Cplusplus_thinking/句柄类(handle)/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/04/25/parellel_and_distributed_computing/paralell_compute9/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -371,18 +555,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/01/21/economics/经济学基础知识/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          经济学基础知识
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/01/21/economics/现代经济中的市场和政府/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">现代经济中的市场和政府</div>
+    <a href="/2017/04/19/computer_network/computer_network_2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">应用层 Application Layer</div>
       <i class="icon-circle-right"></i>
     </a>
   

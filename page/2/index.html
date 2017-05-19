@@ -145,19 +145,298 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Cplusplus_thinking/模板（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-parellel_and_distributed_computing/paralell_compute4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（二）/">模板（二）</a>
+      <a class="article-title" href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/">图的并行算法</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/模板（二）/" class="archive-article-date">
+        <a href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/" class="archive-article-date">
+  	<time datetime="2017-03-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算四)</p>
+<h2 id="连通分量"><a href="#连通分量" class="headerlink" title="连通分量"></a>连通分量</h2><ul>
+<li><p>顶点之间的连通性：在无向图G中，若从顶点$v_i$到顶点$v_j$有路径(当然从$v_j$到$v_i$也一定有路径)，则称$v_i$和$v_j$是连通的(Connected)</p>
+</li>
+<li><p>连通图：若V(G)中任意两个不同的顶点$v_i$和$v_j$都连通(即有路径)，则称G为连通图(Connected Graph)</p>
+</li>
+<li><p>连通分量：无向图G的极大连通子图称为G的连通分量(Connected Component)</p>
+</li>
+</ul>
+<h3 id="寻找连通分量的串行算法"><a href="#寻找连通分量的串行算法" class="headerlink" title="寻找连通分量的串行算法"></a>寻找连通分量的串行算法</h3>
+        
+          <a class="article-more-a" href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-parellel_and_distributed_computing/paralell_compute3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/">列表和树</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/" class="archive-article-date">
+  	<time datetime="2017-03-13T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算二)</p>
+<h2 id="列表排序"><a href="#列表排序" class="headerlink" title="列表排序"></a>列表排序</h2><p>The list-ranking problem is to determine the distance of each node i from the end of the list</p>
+<h3 id="指针跳转法-pointer-jumping-technique"><a href="#指针跳转法-pointer-jumping-technique" class="headerlink" title="指针跳转法(pointer jumping technique)"></a>指针跳转法(pointer jumping technique)</h3><p>思想：</p>
+<ul>
+<li>链表中的指针跳转可以由一次跳转一步改为一次跳转多步</li>
+<li>如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间</li>
+<li>如果为每个节点，把一次跳转2k步的跳转结果记录下来，那么以后一次跳转2k步也只需要O（1）时间</li>
+<li>反复利用跳转步数翻倍和跳转结果记录的技巧，可以在O（log N）的时间内把跳转步数扩大为N</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-parellel_and_distributed_computing/paralell_compute1&amp;2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/">并行计算基础知识及基本并行算法</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/" class="archive-article-date">
+  	<time datetime="2017-02-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算一)</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="设计分布式并行算法基本流程"><a href="#设计分布式并行算法基本流程" class="headerlink" title="设计分布式并行算法基本流程"></a>设计分布式并行算法基本流程</h3><p>1.1发现计算问题的<strong>内在并行性</strong></p>
+<p>1.2设计<strong>与硬件无关</strong>的并行算法</p>
+        
+          <a class="article-more-a" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-computer_network/computer_network_1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/28/computer_network/computer_network_1/">计算机网络和因特网</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/28/computer_network/computer_network_1/" class="archive-article-date">
+  	<time datetime="2017-02-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="因特网"><a href="#因特网" class="headerlink" title="因特网"></a>因特网</h2><p>连接到因特网的设备：主机(host)或端系统(end system)</p>
+<p>端系统通过通信链路(communication link)和分组交换机(parket switch)连接到一起</p>
+<p>路由器(router) 链路层交换机(link-layer switch)</p>
+<p>端系统通过因特网服务提供商(Internet Service Provider, ISP)接入因特网</p>
+<p>因特网部件运行一系列协议(protocol),协议控制因特网中信息的接受和发送</p>
+        
+          <a class="article-more-a" href="/2017/02/28/computer_network/computer_network_1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">computer network</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/28/computer_network/computer_network_1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-Cplusplus_thinking/面向对象编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/面向对象编程/">面向对象编程</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/21/Cplusplus_thinking/面向对象编程/" class="archive-article-date">
   	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
 </a>
         
@@ -165,97 +444,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="访问容器中的元素"><a href="#访问容器中的元素" class="headerlink" title="访问容器中的元素"></a>访问容器中的元素</h2><p>保留Array<T>和一个指向T的指针之间的密切关系要付出一定的代价</p>
+        <p><strong>一个面向对象程序范例</strong></p>
+<p>面向对象对象编程三要素：</p>
 <ol>
-<li><p>用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留</p>
-</li>
-<li><p>不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误</p>
-</li>
+<li>数据抽象</li>
+<li>继承</li>
+<li>动态绑定</li>
 </ol>
-<ul>
-<li>增加防止出错的中间层</li>
-</ul>
+<p><strong>适用于大型程序</strong></p>
+<h3 id="以算术表达式树形表示的面向对象解决方案为例"><a href="#以算术表达式树形表示的面向对象解决方案为例" class="headerlink" title="以算术表达式树形表示的面向对象解决方案为例"></a>以算术表达式树形表示的面向对象解决方案为例</h3>
         
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（二）/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（二）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Cplusplus_thinking/模板（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（一）/">模板（一）</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/Cplusplus_thinking/模板（一）/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h2><p>容器：保存值的集合的数据结构</p>
-<ul>
-<li>语言内建容器：数组、结构体</li>
-<li><p>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</p>
-</li>
-<li><p>容器包含对象</p>
-</li>
-<li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
-</li>
-<li><p>函数传参数方式 void f(const Container<T>&amp;)避免大对象的复制</p>
-</li>
-<li><p>区分读和写</p>
-</li>
-</ul>
-<p>operator[]只用于取数</p>
-<p>用成员函数update(i, x)修改索引为i的元素为x</p>
-        
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（一）/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/面向对象编程/#more">more >></a>
         
       
 
@@ -279,355 +478,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（一）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-economics/经济学基础知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/economics/经济学基础知识/">经济学基础知识</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/economics/经济学基础知识/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>研究一个社会如何利用<strong>稀缺</strong>资源生产有价值的物品和劳务并将它们在不同人中间进行分配。</p>
-<ul>
-<li>物品和资源是稀缺的</li>
-<li>社会必须有效地加以利用</li>
-</ul>
-<p>稀缺(sarcity)：相对于需求，物品总是有限的</p>
-<p>效率(efficiency)：最有效地使用社会资源以满足人类的愿望和需要</p>
-        
-          <a class="article-more-a" href="/2017/01/21/economics/经济学基础知识/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">微观经济学</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/economics/经济学基础知识/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Cplusplus_thinking/句柄类(handle)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/">句柄类(handle)</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>创建代理会复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
-<h3 id="某些类应当避免复制："><a href="#某些类应当避免复制：" class="headerlink" title="某些类应当避免复制："></a>某些类应当避免复制：</h3><ul>
-<li>对象很大，资源消耗多</li>
-<li>每个对象代表一种不能被轻易复制的资源，如文件</li>
-<li>其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大</li>
-<li>对象代表位于网络连接另一端的其他对象</li>
-<li>多态性环境中只知对象基类类型而不知对象本身类型</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-economics/现代经济中的市场和政府" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/economics/现代经济中的市场和政府/">现代经济中的市场和政府</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/economics/现代经济中的市场和政府/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="什么是市场"><a href="#什么是市场" class="headerlink" title="什么是市场"></a>什么是市场</h3><ul>
-<li>市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/01/21/economics/现代经济中的市场和政府/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">微观经济学</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/economics/现代经济中的市场和政府/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Cplusplus_thinking/代理类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/代理类/">代理类</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/Cplusplus_thinking/代理类/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
-<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
-<ul>
-<li>surrogate是handle(句柄)类中最简单的一种</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/代理类/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/代理类/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Cplusplus_thinking/模板（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（三）/">模板（三）</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/Cplusplus_thinking/模板（三）/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
-<li><p>已经定义Array<T>、Pointer<T>和Ptr_to_const<T>使得能部分确保安全性避免使用<br>指针</p>
-</li>
-<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
-</li>
-</ul>
-<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
-<ul>
-<li>基类及派生类都要定义这些操作</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/面向对象编程/">展开全文 >></a>
         </p>
       
 
@@ -734,19 +585,19 @@
 
 
   
-    <article id="post-Cplusplus_thinking/面向对象编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Cplusplus_thinking/模板（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/面向对象编程/">面向对象编程</a>
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（二）/">模板（二）</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/面向对象编程/" class="archive-article-date">
+        <a href="/2017/01/21/Cplusplus_thinking/模板（二）/" class="archive-article-date">
   	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
 </a>
         
@@ -754,17 +605,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>一个面向对象程序范例</strong></p>
-<p>面向对象对象编程三要素：</p>
+        <h2 id="访问容器中的元素"><a href="#访问容器中的元素" class="headerlink" title="访问容器中的元素"></a>访问容器中的元素</h2><p>保留Array<T>和一个指向T的指针之间的密切关系要付出一定的代价</p>
 <ol>
-<li>数据抽象</li>
-<li>继承</li>
-<li>动态绑定</li>
+<li><p>用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留</p>
+</li>
+<li><p>不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误</p>
+</li>
 </ol>
-<p><strong>适用于大型程序</strong></p>
-<h3 id="以算术表达式树形表示的面向对象解决方案为例"><a href="#以算术表达式树形表示的面向对象解决方案为例" class="headerlink" title="以算术表达式树形表示的面向对象解决方案为例"></a>以算术表达式树形表示的面向对象解决方案为例</h3>
+<ul>
+<li>增加防止出错的中间层</li>
+</ul>
         
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/面向对象编程/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（二）/#more">more >></a>
         
       
 
@@ -788,7 +640,159 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/面向对象编程/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（二）/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-Cplusplus_thinking/模板（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（三）/">模板（三）</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/21/Cplusplus_thinking/模板（三）/" class="archive-article-date">
+  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
+<li><p>已经定义Array<T>、Pointer<T>和Ptr_to_const<T>使得能部分确保安全性避免使用<br>指针</p>
+</li>
+<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
+</li>
+</ul>
+<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
+<ul>
+<li>基类及派生类都要定义这些操作</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-Cplusplus_thinking/模板（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（一）/">模板（一）</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/21/Cplusplus_thinking/模板（一）/" class="archive-article-date">
+  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h2><p>容器：保存值的集合的数据结构</p>
+<ul>
+<li>语言内建容器：数组、结构体</li>
+<li><p>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</p>
+</li>
+<li><p>容器包含对象</p>
+</li>
+<li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
+</li>
+<li><p>函数传参数方式 void f(const Container<T>&amp;)避免大对象的复制</p>
+</li>
+<li><p>区分读和写</p>
+</li>
+</ul>
+<p>operator[]只用于取数</p>
+<p>用成员函数update(i, x)修改索引为i的元素为x</p>
+        
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（一）/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（一）/">展开全文 >></a>
         </p>
       
 
@@ -1000,7 +1004,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
+                <a href="javascript:void(0)" class="js-tag color1">分布式计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1012,7 +1020,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
               </li>
             
             <div class="clearfix"></div>

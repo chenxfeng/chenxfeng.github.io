@@ -230,6 +230,89 @@
 
 
   
+    <article id="post-computer_network/computer_network_3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/10/computer_network/computer_network_3/">传输层(Transport Layer)</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/10/computer_network/computer_network_3/" class="archive-article-date">
+  	<time datetime="2017-05-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Transport-services-运输层服务"><a href="#Transport-services-运输层服务" class="headerlink" title="Transport services(运输层服务)"></a>Transport services(运输层服务)</h2><h3 id="Transport-services-and-proto"><a href="#Transport-services-and-proto" class="headerlink" title="Transport services and proto"></a>Transport services and proto</h3><ul>
+<li><p>provide <strong>logical communication</strong>(逻辑通信) between app processes running on different hosts</p>
+</li>
+<li><p>transport protocols run in end systems </p>
+</li>
+<li><ul>
+<li>send side: breaks app messages into <strong>segments</strong>, passes to network layer</li>
+</ul>
+</li>
+<li><ul>
+<li>rcv side: reassembles segments(报文段) into messages, passes to app layer</li>
+</ul>
+</li>
+<li><p>more than one transport protocol available to apps</p>
+</li>
+<li><ul>
+<li>Internet: TCP and UDP</li>
+</ul>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/05/10/computer_network/computer_network_3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">computer network</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/10/computer_network/computer_network_3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-parellel_and_distributed_computing/distributed_compute2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -675,48 +758,36 @@
 
 
   
-    <article id="post-computer_network/computer_network3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-parellel_and_distributed_computing/paralell_compute5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/computer_network/computer_network3/">传输层(Transport Layer)</a>
+      <a class="article-title" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">搜索、归并与排序的并行算法</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/computer_network/computer_network3/" class="archive-article-date">
-  	<time datetime="2017-04-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+        <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" class="archive-article-date">
+  	<time datetime="2017-03-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Transport-services-运输层服务"><a href="#Transport-services-运输层服务" class="headerlink" title="Transport services(运输层服务)"></a>Transport services(运输层服务)</h2><h3 id="Transport-services-and-proto"><a href="#Transport-services-and-proto" class="headerlink" title="Transport services and proto"></a>Transport services and proto</h3><ul>
-<li><p>provide <strong>logical communication</strong>(逻辑通信) between app processes running on different hosts</p>
-</li>
-<li><p>transport protocols run in end systems </p>
-</li>
-<li><ul>
-<li>send side: breaks app messages into <strong>segments</strong>, passes to network layer</li>
+        <p>(并行与分布式计算三<rev2>)</p>
+<h2 id="并行搜索的基本思想"><a href="#并行搜索的基本思想" class="headerlink" title="并行搜索的基本思想"></a>并行搜索的基本思想</h2><p>在升序数组中采用与二分搜索类似的p+1分搜索: </p>
+<ul>
+<li>使用递归按比例缩小搜索范围的办法</li>
+<li>二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较</li>
+<li>上述的每层p次比较可以用p个处理器同时进行</li>
 </ul>
-</li>
-<li><ul>
-<li>rcv side: reassembles segments(报文段) into messages, passes to app layer</li>
-</ul>
-</li>
-<li><p>more than one transport protocol available to apps</p>
-</li>
-<li><ul>
-<li>Internet: TCP and UDP</li>
-</ul>
-</li>
-</ul>
+<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$</p>
         
-          <a class="article-more-a" href="/2017/04/10/computer_network/computer_network3/#more">more >></a>
+          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/#more">more >></a>
         
       
 
@@ -730,7 +801,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">computer network</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
         		</li>
       		
 		</ul>
@@ -740,7 +811,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/computer_network/computer_network3/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">展开全文 >></a>
         </p>
       
 
@@ -813,77 +884,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-parellel_and_distributed_computing/paralell_compute5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">搜索、归并与排序的并行算法</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" class="archive-article-date">
-  	<time datetime="2017-03-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>(并行与分布式计算三<rev2>)</p>
-<h2 id="并行搜索的基本思想"><a href="#并行搜索的基本思想" class="headerlink" title="并行搜索的基本思想"></a>并行搜索的基本思想</h2><p>在升序数组中采用与二分搜索类似的p+1分搜索: </p>
-<ul>
-<li>使用递归按比例缩小搜索范围的办法</li>
-<li>二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较</li>
-<li>上述的每层p次比较可以用p个处理器同时进行</li>
-</ul>
-<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$</p>
-        
-          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">展开全文 >></a>
         </p>
       
 
@@ -1019,6 +1019,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">分布式计算</a>
               </li>
              
@@ -1032,10 +1036,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
               </li>
             
             <div class="clearfix"></div>

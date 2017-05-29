@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://chenfeng.github.io">
+  <title>网络层(Network Layer) | chenfeng&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="transport segment from sending to receiving host 
+on sending side encapsulates segments into datagrams
+on receiving side, delivers segments to transport layer
+network layer protocols in every host, r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络层(Network Layer)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/05/24/computer_network/computer_network_4/index.html">
+<meta property="og:site_name" content="chenfeng's blog">
+<meta property="og:description" content="transport segment from sending to receiving host 
+on sending side encapsulates segments into datagrams
+on receiving side, delivers segments to transport layer
+network layer protocols in every host, r">
+<meta property="og:image" content="https://chenfeng.github.io/\img\pre_router.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\centralized_control_plane.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_architecture.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_architecture_inputPort.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_forwardTable.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_switching_fabric.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_headOfLineBlock.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_output_port.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_output_port_queueing.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_schedule_priority.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_schedule_roundRobin.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_schedule_weightedFairQueue.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_datagram_format.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_fragmentation_reassembly.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_fragmentation_reassembly_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_subnet.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_addressing_CIDR.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_DHCP_client_server_scenario.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_DHCP_client_server_scenario1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_addressing_get_subnetPart.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_hierarchical_addressing.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_hierarchical_addressing1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_NAT.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_NAT1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IPv6_datagram_format.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_v4Tov6.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\IP_v4Tov6_tunneling.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\generalized_forwarding.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\OpenFlow_flowTableEntries.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\OpenFlow_flowTableEntries_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\OpenFlow_flowTableEntries_eg1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\OpenFlow_flowTableEntries_eg2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\routing_graph.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\dijkstraAlgorithm_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\dijkstraAlgorithm_discussion.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\bellmanFord_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\distance_vector_nodeState.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\distance_vector_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\interAS_task.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\Hierarchical_OSPF.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\BGP.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\BGP1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\BGP2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\BGP3.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\hot_potato_routing.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\BGP_achieving_policy.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\traffic_engineering.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\traffic_engineering1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\sdn.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\sdn_perspective.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\sdn_controller.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\sdn_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\sdn_openDaylight_controller.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\sdn_ONOS_controller.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ICMP_message.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\network_management.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\SNMP.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\SNMP_message_type.png">
+<meta property="og:updated_time" content="2017-05-28T06:37:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络层(Network Layer)">
+<meta name="twitter:description" content="transport segment from sending to receiving host 
+on sending side encapsulates segments into datagrams
+on receiving side, delivers segments to transport layer
+network layer protocols in every host, r">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\pre_router.png">
+  
+    <link rel="alternative" href="/atom.xml" title="chenfeng&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.2d7529.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">chenxf</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">chenxf</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 50%">
+				
+				
+					<li style="width: 100%"><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-computer_network/computer_network_4" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      网络层(Network Layer)
+    </h1>
+  
+
+        
+        <a href="/2017/05/24/computer_network/computer_network_4/" class="archive-article-date">
+  	<time datetime="2017-05-23T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>transport segment from sending to receiving host </li>
+<li>on sending side encapsulates segments into datagrams</li>
+<li>on receiving side, delivers segments to transport layer</li>
+<li>network layer protocols in every host, router</li>
+<li>router examines header fields in all IP datagrams passing through it</li>
+</ul>
+<p>network-layer functions:</p>
+<ul>
+<li>forwarding: move packets from router’s input to appropriate router output</li>
+<li>routing: determine route taken by packets from source to destination(routing algorithms)</li>
+</ul>
+<a id="more"></a>
+<p>analogy: taking a trip</p>
+<ul>
+<li>forwarding: process of getting through single interchange</li>
+<li>routing: process of planning trip from source to destination</li>
+</ul>
+<p><strong>Data plane</strong></p>
+<ul>
+<li>local, per-router function</li>
+<li>determines how datagram arriving on router input port is forwarded to router output port</li>
+<li>forwarding function</li>
+</ul>
+<p><strong>Control plane</strong></p>
+<ul>
+<li>network-wide logic</li>
+<li>determines how datagram is routed among routers along end-end path from source host to destination host</li>
+<li>two control-plane approaches:</li>
+<li><ul>
+<li><strong>traditional routing algorithms</strong>: implemented in routers</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>software-defined networking (SDN)</strong>: implemented in (remote) servers</li>
+</ul>
+</li>
+</ul>
+<p><strong>Per-router control plane</strong></p>
+<p>Individual routing algorithm components <strong>in each and every router</strong> interact in the control plane</p>
+<blockquote>
+<p><img src="\img\pre_router.png" alt="pre_router.png"></p>
+</blockquote>
+<p><strong>Logically centralized control plane</strong></p>
+<blockquote>
+<p><img src="\img\centralized_control_plane.png" alt="centralized_control_plane.png"></p>
+</blockquote>
+<p>Q: What service model for “channel” transporting datagrams from sender to receiver?</p>
+<p>example services for individual datagrams:</p>
+<ul>
+<li>guaranteed delivery</li>
+<li>guaranteed delivery with less than 40 msec delay</li>
+</ul>
+<p>example services for a flow of datagrams:</p>
+<ul>
+<li>in-order datagram delivery</li>
+<li>guaranteed minimum bandwidth to flow</li>
+<li>restrictions on changes in inter-packet spacing</li>
+</ul>
+<h1 id="Data-plane"><a href="#Data-plane" class="headerlink" title="Data plane"></a>Data plane</h1><h2 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h2><h3 id="Router-architecture-overview"><a href="#Router-architecture-overview" class="headerlink" title="Router architecture overview"></a>Router architecture overview</h3><p>high-level view of generic router architecture:</p>
+<blockquote>
+<p><img src="\img\router_architecture.png" alt="router_architecture.png"></p>
+</blockquote>
+<h3 id="Input-port-functions"><a href="#Input-port-functions" class="headerlink" title="Input port functions"></a>Input port functions</h3><p>decentralized switching: </p>
+<ul>
+<li>using header field values, lookup output port using forwarding table in input port memory (“match plus action”)</li>
+<li>goal: complete input port processing at ‘line speed’</li>
+<li>queuing: if datagrams arrive faster than forwarding rate into switch fabric</li>
+<li>destination-based forwarding: forward based only on destination IP address (traditional)</li>
+<li>generalized forwarding: forward based on any set of header field values</li>
+</ul>
+<blockquote>
+<p><img src="\img\router_architecture_inputPort.png" alt="router_architecture_inputPort.png"></p>
+</blockquote>
+<h3 id="Longest-prefix-matching"><a href="#Longest-prefix-matching" class="headerlink" title="Longest prefix matching"></a>Longest prefix matching</h3><p>when looking for forwarding table entry for given destination address, use longest address prefix that matches destination address.</p>
+<blockquote>
+<p><img src="\img\router_forwardTable.png" alt="router_forwardTable.png"></p>
+</blockquote>
+<ul>
+<li><p>we’ll see why longest prefix matching is used shortly, when we study addressing</p>
+</li>
+<li><p>longest prefix matching: often performed using ternary content addressable memories (TCAMs)</p>
+</li>
+<li><ul>
+<li><strong>content addressable</strong>: present address to TCAM: retrieve address in one clock cycle, regardless of table size</li>
+</ul>
+</li>
+<li><ul>
+<li>Cisco Catalyst: can up ~1M routing table entries in TCAM</li>
+</ul>
+</li>
+</ul>
+<h3 id="Switching-fabrics"><a href="#Switching-fabrics" class="headerlink" title="Switching fabrics"></a>Switching fabrics</h3><p>transfer packet from input buffer to appropriate output buffer</p>
+<ul>
+<li>switching rate: rate at which packets can be transfer from inputs to outputs</li>
+<li><ul>
+<li>often measured as multiple of input/output line rate</li>
+</ul>
+</li>
+<li><ul>
+<li>N inputs: switching rate N times line rate desirable</li>
+</ul>
+</li>
+</ul>
+<p>three types of switching fabrics</p>
+<blockquote>
+<p><img src="\img\router_switching_fabric.png" alt="router_switching_fabric.png"></p>
+</blockquote>
+<p><strong>memory</strong></p>
+<p>first generation routers:</p>
+<ul>
+<li>traditional computers with switching under direct control of CPU</li>
+<li>packet copied to system’s memory</li>
+<li>speed limited by memory bandwidth (2 bus crossings per datagram)</li>
+</ul>
+<p><strong>bus</strong></p>
+<p>datagram from input port memory to output port memory via a shared bus</p>
+<ul>
+<li><strong>bus contention</strong>: switching speed limited by bus bandwidth</li>
+<li>32 Gbps bus, Cisco 5600: sufficient speed for access and enterprise routers</li>
+</ul>
+<p><strong>interconnection network</strong></p>
+<ul>
+<li>overcome  bus bandwidth limitations</li>
+<li>banyan networks, crossbar, other interconnection nets initially developed to connect processors in multiprocessor</li>
+<li>advanced design: fragmenting datagram into fixed length cells, switch cells through the fabric. </li>
+<li>Cisco 12000: switches 60 Gbps through the interconnection network</li>
+</ul>
+<h3 id="Input-port-queuing"><a href="#Input-port-queuing" class="headerlink" title="Input port queuing"></a>Input port queuing</h3><p>fabric slower than input ports combined -&gt; queueing may occur at input queues </p>
+<ul>
+<li>queueing delay and loss due to input buffer overflow!</li>
+<li>Head-of-the-Line (HOL) blocking: queued datagram at front of queue prevents others in queue from moving forward</li>
+</ul>
+<blockquote>
+<p><img src="\img\router_headOfLineBlock.png" alt="router_headOfLineBlock.png"></p>
+</blockquote>
+<h3 id="Output-ports-This-slide-in-HUGELY-important"><a href="#Output-ports-This-slide-in-HUGELY-important" class="headerlink" title="Output ports(This slide in HUGELY important!)"></a>Output ports(This slide in HUGELY important!)</h3><blockquote>
+<p><img src="\img\router_output_port.png" alt="router_output_port.png"></p>
+</blockquote>
+<ul>
+<li>buffering required when datagrams arrive from fabric faster than the transmission rate</li>
+<li><ul>
+<li>Datagram (packets) can be lost due to congestion, lack of buffers</li>
+</ul>
+</li>
+<li><p>scheduling discipline chooses among queued datagrams for transmission</p>
+</li>
+<li><ul>
+<li>Priority scheduling – who gets best performance, network neutrality</li>
+</ul>
+</li>
+</ul>
+<h3 id="Output-port-queueing"><a href="#Output-port-queueing" class="headerlink" title="Output port queueing"></a>Output port queueing</h3><blockquote>
+<p><img src="\img\router_output_port_queueing.png" alt="router_output_port_queueing.png"></p>
+</blockquote>
+<ul>
+<li>buffering when arrival rate via switch exceeds output line speed</li>
+<li><strong>queueing (delay) and loss due to output port buffer overflow!</strong></li>
+</ul>
+<p><strong>How much buffering</strong></p>
+<p>RFC 3439 rule of thumb: average buffering equal to “typical” RTT (say 250 msec) times link capacity C</p>
+<ul>
+<li>e.g., C = 10 Gpbs link: 2.5 Gbit buffer</li>
+</ul>
+<p>recent recommendation: with N flows, buffering equal to<br>$$\frac{RTT * C}{\sqrt{N}}$$</p>
+<h3 id="Scheduling-mechanisms"><a href="#Scheduling-mechanisms" class="headerlink" title="Scheduling mechanisms"></a>Scheduling mechanisms</h3><p>scheduling: choose next packet to send on link</p>
+<ul>
+<li><strong>FIFO (first in first out) scheduling</strong>: send in order of arrival to queue</li>
+<li><ul>
+<li>real-world example?</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>discard policy</strong>: if packet arrives to full queue: who to discard?</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><strong>tail drop</strong>: drop arriving packet</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><strong>priority</strong>: drop/remove on priority basis</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><strong>random</strong>: drop/remove randomly</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Scheduling policies</strong></p>
+<p><strong>priority scheduling</strong>: send highest priority queued packet </p>
+<ul>
+<li>multiple classes, with different priorities</li>
+<li><ul>
+<li>class may depend on marking or other header info, e.g. IP source/dest, port numbers, etc.</li>
+</ul>
+</li>
+<li><ul>
+<li>real world example? </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\router_schedule_priority.png" alt="router_schedule_priority.png"></p>
+</blockquote>
+<p><strong>Round Robin (RR) scheduling</strong>:</p>
+<ul>
+<li>multiple classes</li>
+<li>cyclically scan class queues, sending one complete packet from each class (if available)</li>
+<li>real world example?</li>
+</ul>
+<blockquote>
+<p><img src="\img\router_schedule_roundRobin.png" alt="router_schedule_roundRobin.png"></p>
+</blockquote>
+<p><strong>Weighted Fair Queuing (WFQ)</strong>: </p>
+<ul>
+<li>generalized Round Robin</li>
+<li>each class gets weighted amount of service in each cycle</li>
+<li>real-world example?</li>
+</ul>
+<blockquote>
+<p><img src="\img\router_schedule_weightedFairQueue.png" alt="router_schedule_weightedFairQueue.png"></p>
+</blockquote>
+<h2 id="IP-Internet-Protocol"><a href="#IP-Internet-Protocol" class="headerlink" title="IP: Internet Protocol"></a>IP: Internet Protocol</h2><p>host, router network layer functions:</p>
+<blockquote>
+<p><img src="\img\IP.png" alt="IP.png"></p>
+</blockquote>
+<p>IP datagram format</p>
+<blockquote>
+<p><img src="\img\IP_datagram_format.png" alt="IP_datagram_format.png"></p>
+</blockquote>
+<p><strong>IP fragmentation, reassembly</strong></p>
+<ul>
+<li>network links have MTU (max.transfer size) - largest possible link-level frame</li>
+<li><ul>
+<li>different link types, different MTUs </li>
+</ul>
+</li>
+<li><p>large IP datagram divided (“fragmented”) within net</p>
+</li>
+<li><ul>
+<li>one datagram becomes several datagrams</li>
+</ul>
+</li>
+<li><ul>
+<li>“reassembled” only at final destination</li>
+</ul>
+</li>
+<li><ul>
+<li>IP header bits used to identify, order related fragments</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\IP_fragmentation_reassembly.png" alt="IP_fragmentation_reassembly.png"></p>
+</blockquote>
+<p>example:</p>
+<ul>
+<li>4000 byte datagram</li>
+<li>MTU = 1500 bytes</li>
+</ul>
+<blockquote>
+<p><img src="\img\IP_fragmentation_reassembly_eg.png" alt="IP_fragmentation_reassembly_eg.png"></p>
+</blockquote>
+<h3 id="IP-addressing"><a href="#IP-addressing" class="headerlink" title="IP addressing"></a>IP addressing</h3><p>IP address: 32-bit identifier for host, router interface </p>
+<p>interface: connection between host/router and physical link</p>
+<ul>
+<li>router’s typically have multiple interfaces</li>
+<li>host typically has one or two interfaces (e.g., wired Ethernet, wireless 802.11)</li>
+</ul>
+<p><em>IP addresses associated with each interface</em></p>
+<p>Q: how are interfaces actually connected?</p>
+<ul>
+<li>A: we’ll learn about that in chapter 5, 6.</li>
+<li>A: wired Ethernet interfaces connected by Ethernet switches</li>
+<li><p>A: wireless WiFi interfaces connected by WiFi base station</p>
+</li>
+<li><p>For now: don’t need to worry about how one interface is connected to another (with no intervening router) </p>
+</li>
+</ul>
+<p><strong>Subnets</strong></p>
+<ul>
+<li>IP address: </li>
+<li><ul>
+<li>subnet part - high order bits</li>
+</ul>
+</li>
+<li><ul>
+<li>host part - low order bits </li>
+</ul>
+</li>
+<li>what’s a subnet?</li>
+<li><ul>
+<li>device interfaces with same subnet part of IP address</li>
+</ul>
+</li>
+<li><ul>
+<li>can physically reach each other <strong>without intervening router</strong></li>
+</ul>
+</li>
+<li><ul>
+<li>to determine the subnets, detach each interface from its host or router, creating islands of isolated networks</li>
+</ul>
+</li>
+<li><ul>
+<li>each isolated network is called a <strong>subnet</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\IP_subnet.png" alt="IP_subnet.png"></p>
+</blockquote>
+<p><strong>CIDR</strong></p>
+<p>CIDR: Classless InterDomain Routing</p>
+<ul>
+<li>subnet portion of address of arbitrary length</li>
+<li>address format: a.b.c.d/x, where x is # bits in subnet portion of address</li>
+</ul>
+<blockquote>
+<p><img src="\img\IP_addressing_CIDR.png" alt="IP_addressing_CIDR.png"></p>
+</blockquote>
+<p>Q: How does a host get IP address?</p>
+<ul>
+<li>hard-coded by system admin in a file</li>
+<li><ul>
+<li>Windows: control-panel-&gt;network-&gt;configuration-&gt;tcp/ip-&gt;properties</li>
+</ul>
+</li>
+<li><ul>
+<li>UNIX: /etc/rc.config</li>
+</ul>
+</li>
+<li><strong>DHCP</strong>: Dynamic Host Configuration Protocol</li>
+<li><ul>
+<li>dynamically get address from as server</li>
+</ul>
+</li>
+<li><ul>
+<li>“plug-and-play” </li>
+</ul>
+</li>
+</ul>
+<p><strong>DHCP: Dynamic Host Configuration Protocol</strong></p>
+<p>goal: allow host to dynamically obtain its IP address from network server when it joins network</p>
+<ul>
+<li>can renew its lease on address in use</li>
+<li>allows reuse of addresses (only hold address while connected/“on”)</li>
+<li>support for mobile users who want to join network (more shortly)</li>
+</ul>
+<p>DHCP overview:</p>
+<ul>
+<li>host broadcasts “DHCP discover” msg [optional]</li>
+<li>DHCP server responds with “DHCP offer” msg [optional]</li>
+<li>host requests IP address: “DHCP request” msg</li>
+<li>DHCP server sends address: “DHCP ack” msg </li>
+</ul>
+<blockquote>
+<p><img src="\img\IP_DHCP_client_server_scenario.png" alt="IP_DHCP_client_server_scenario.png"></p>
+<p><img src="\img\IP_DHCP_client_server_scenario1.png" alt="IP_DHCP_client_server_scenario1.png"></p>
+</blockquote>
+<p>DHCP can return more than just allocated IP address on subnet:</p>
+<ul>
+<li>address of first-hop router for client</li>
+<li>name and IP address of DNS sever</li>
+<li>network mask (indicating network versus host portion of address)</li>
+</ul>
+<p><strong>Hierarchical addressing: route aggregation</strong></p>
+<p>Q: how does network get subnet part of IP addr?</p>
+<ul>
+<li>A: gets allocated portion of its provider ISP’s address space</li>
+</ul>
+<blockquote>
+<p><img src="\img\IP_addressing_get_subnetPart.png" alt="IP_addressing_get_subnetPart.png"></p>
+</blockquote>
+<p>hierarchical addressing allows efficient advertisement of routing<br>information:</p>
+<blockquote>
+<p><img src="\img\IP_hierarchical_addressing.png" alt="IP_hierarchical_addressing.png"></p>
+</blockquote>
+<p>ISPs-R-Us has a more specific route to Organization 1</p>
+<blockquote>
+<p><img src="\img\IP_hierarchical_addressing1.png" alt="IP_hierarchical_addressing1.png"></p>
+</blockquote>
+<p>Q: how does an ISP get block of addresses?</p>
+<ul>
+<li>A: ICANN: Internet Corporation for Assigned Names and Numbers <a href="http://www.icann.org/" target="_blank" rel="external">http://www.icann.org/</a></li>
+<li><ul>
+<li>allocates addresses</li>
+</ul>
+</li>
+<li><ul>
+<li>manages DNS</li>
+</ul>
+</li>
+<li><ul>
+<li>assigns domain names, resolves disputes</li>
+</ul>
+</li>
+</ul>
+<p><strong>NAT: network address translation</strong></p>
+<blockquote>
+<p><img src="\img\IP_NAT.png" alt="IP_NAT.png"></p>
+</blockquote>
+<p>motivation: local network uses just one IP address as far as outside world is concerned:</p>
+<ul>
+<li>range of addresses not needed from ISP:  just one IP address for all devices</li>
+<li>can change addresses of devices in local network without notifying outside world</li>
+<li>can change ISP without changing addresses of devices in local network</li>
+<li>devices inside local net not explicitly addressable, visible by outside world (a security plus)</li>
+</ul>
+<p>implementation: NAT router</p>
+<ul>
+<li>outgoing datagrams: replace(source IP address, port #) of every outgoing datagram to (NAT IP address, new port #)</li>
+<li><ul>
+<li>remote clients/servers will respond using (NAT IP address, new port #) as destination addr</li>
+</ul>
+</li>
+<li>remember (in NAT translation table) every (source IP address, port #)  to (NAT IP address, new port #) translation pair</li>
+<li>incoming datagrams: replace (NAT IP address, new port #) in dest fields of every incoming datagram with corresponding (source IP address, port #) stored in NAT table</li>
+</ul>
+<blockquote>
+<p><img src="\img\IP_NAT1.png" alt="IP_NAT1.png"></p>
+</blockquote>
+<ul>
+<li>16-bit port-number field: </li>
+<li><ul>
+<li>60,000 simultaneous connections with a single LAN-side address!</li>
+</ul>
+</li>
+<li>NAT is controversial:</li>
+<li><ul>
+<li>routers should only process up to layer 3</li>
+</ul>
+</li>
+<li><ul>
+<li>address shortage should be solved by IPv6</li>
+</ul>
+</li>
+<li><ul>
+<li>violates end-to-end argument</li>
+</ul>
+</li>
+<li><ul>
+<li>NAT possibility must be taken into account by app designers, e.g., P2P applications</li>
+</ul>
+</li>
+<li><ul>
+<li>NAT traversal: what if client wants to connect to server behind NAT?</li>
+</ul>
+</li>
+</ul>
+<h3 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h3><p><strong>initial motivation</strong>: 32-bit address space soon to be completely allocated.  </p>
+<p><strong>additional motivation</strong>:</p>
+<ul>
+<li>header format helps speed processing/forwarding</li>
+<li>header changes to facilitate QoS </li>
+</ul>
+<p>IPv6 datagram format: </p>
+<ul>
+<li>fixed-length 40 byte header</li>
+<li>no fragmentation allowed</li>
+</ul>
+<blockquote>
+<p><img src="\img\IPv6_datagram_format.png" alt="IPv6_datagram_format.png"></p>
+</blockquote>
+<ul>
+<li><strong>priority</strong>:  identify priority among datagrams in flow</li>
+<li><strong>flow Label</strong>: identify datagrams in same “flow.” (concept of“flow” not well defined).</li>
+<li><strong>next header</strong>: identify upper layer protocol for data </li>
+</ul>
+<p><strong>Other changes from IPv4</strong></p>
+<ul>
+<li><strong>checksum</strong>: removed entirely to reduce processing time at each hop</li>
+<li><strong>options</strong>: allowed, but outside of header, indicated by “Next Header” field</li>
+<li><strong>ICMPv6</strong>: new version of ICMP</li>
+<li><ul>
+<li>additional message types, e.g. “Packet Too Big”</li>
+</ul>
+</li>
+<li><ul>
+<li>multicast group management functions</li>
+</ul>
+</li>
+</ul>
+<p><strong>Transition from IPv4 to IPv6</strong></p>
+<ul>
+<li>not all routers can be upgraded simultaneously</li>
+<li>no “flag days”</li>
+<li>how will network operate with mixed IPv4 and IPv6 routers? </li>
+</ul>
+<p>tunneling: IPv6 datagram carried as payload in IPv4 datagram among IPv4 routers</p>
+<blockquote>
+<p><img src="\img\IP_v4Tov6.png" alt="IP_v4Tov6.png"></p>
+<p><img src="\img\IP_v4Tov6_tunneling.png" alt="IP_v4Tov6_tunneling.png"></p>
+</blockquote>
+<p><strong>IPv6 adoption</strong></p>
+<ul>
+<li>Google: 8% of clients access services via IPv6</li>
+<li><p>NIST: 1/3 of all US government domains are IPv6 capable</p>
+</li>
+<li><p>Long (long!) time for deployment, use</p>
+</li>
+<li><ul>
+<li>20 years and counting!</li>
+</ul>
+</li>
+<li><ul>
+<li>think of application-level changes in last 20 years: WWW, Facebook, streaming media, Skype, …</li>
+</ul>
+</li>
+</ul>
+<h3 id="Generalized-Forwarding-and-SDN"><a href="#Generalized-Forwarding-and-SDN" class="headerlink" title="Generalized Forwarding and SDN"></a>Generalized Forwarding and SDN</h3><p>Each router contains a flow table that is computed and distributed by a logically centralized routing controller</p>
+<blockquote>
+<p><img src="\img\generalized_forwarding.png" alt="generalized_forwarding.png"></p>
+</blockquote>
+<p><strong>OpenFlow data plane abstraction</strong></p>
+<ul>
+<li>flow: defined by header fields</li>
+<li>generalized forwarding: simple packet-handling rules</li>
+<li><ul>
+<li><strong>Pattern</strong>: match values in packet header fields</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>Actions: for matched packet</strong>: drop, forward, modify, matched packet or send matched packet to controller </li>
+</ul>
+</li>
+<li><ul>
+<li><strong>Priority</strong>: disambiguate overlapping patterns</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>Counters</strong>: #bytes and #packets</li>
+</ul>
+</li>
+</ul>
+<p>Flow table in a router (computed and distributed by controller) define router’s match+action rules</p>
+<ol>
+<li>src=1.2.<em>.</em>, dest=3.4.5.* -&gt; drop                        </li>
+<li>src = <em>.</em>.<em>.</em>, dest=3.4.<em>.</em> -&gt; forward(2)</li>
+<li>src=10.1.2.3, dest=<em>.</em>.<em>.</em> -&gt; send to controller</li>
+</ol>
+<p><strong>Flow Table Entries</strong></p>
+<blockquote>
+<p><img src="\img\OpenFlow_flowTableEntries.png" alt="OpenFlow_flowTableEntries.png"></p>
+<p><img src="\img\OpenFlow_flowTableEntries_eg.png" alt="OpenFlow_flowTableEntries_eg.png"></p>
+<p><img src="\img\OpenFlow_flowTableEntries_eg1.png" alt="OpenFlow_flowTableEntries_eg1.png"></p>
+</blockquote>
+<p><strong>OpenFlow abstraction</strong></p>
+<p>match+action: unifies different kinds of devices</p>
+<p>Router</p>
+<ul>
+<li>match: longest destination IP prefix</li>
+<li>action: forward out a link</li>
+</ul>
+<p>Switch</p>
+<ul>
+<li>match: destination MAC address</li>
+<li>action: forward or flood</li>
+</ul>
+<p>Firewall</p>
+<ul>
+<li>match: IP addresses and TCP/UDP port numbers</li>
+<li>action: permit or deny </li>
+</ul>
+<p>NAT</p>
+<ul>
+<li>match: IP address and port</li>
+<li>action: rewrite address and port</li>
+</ul>
+<p>Example: datagrams from hosts h5 and h6 should be sent to h3 or h4, via s1 and from there to s2</p>
+<blockquote>
+<p><img src="\img\OpenFlow_flowTableEntries_eg2.png" alt="OpenFlow_flowTableEntries_eg2.png"></p>
+</blockquote>
+<h1 id="Control-plane"><a href="#Control-plane" class="headerlink" title="Control plane"></a>Control plane</h1><h2 id="Routing-protocols"><a href="#Routing-protocols" class="headerlink" title="Routing protocols"></a>Routing protocols</h2><p>Routing protocol goal: determine “good” paths (equivalently, routes), from sending hosts to receiving host, through network of routers</p>
+<ul>
+<li>path: sequence of routers packets will traverse in going from given initial source host to given final destination host</li>
+<li>“good”: least “cost”, “fastest”, “least congested”</li>
+<li>routing: a “top-10” networking challenge!</li>
+</ul>
+<p><strong>Graph abstraction of the network</strong></p>
+<p>graph: G = (N,E)</p>
+<p>N = set of routers = { u, v, w, x, y, z }</p>
+<p>E = set of links ={ (u,v), (u,x), (v,x), (v,w), (x,w), (x,y), (w,y), (w,z), (y,z) }</p>
+<blockquote>
+<p><img src="\img\routing_graph.png" alt="routing_graph.png"></p>
+<p>aside: graph abstraction is useful in other network contexts, e.g.,<br>P2P, where N is set of peers and E is set of TCP connections</p>
+</blockquote>
+<p><em>costs</em></p>
+<p>c(x,x’) = cost of link (x,x’); e.g., c(w,z) = 5</p>
+<p>cost could always be 1, or inversely related to bandwidth, or inversely related to congestion</p>
+<ul>
+<li><strong>key question</strong>: what is the least-cost path between u and z ?</li>
+<li><strong>routing algorithm</strong>: algorithm that finds that least cost path</li>
+</ul>
+<p><strong>Routing algorithm classification</strong></p>
+<p>Q: global or decentralized information?</p>
+<ul>
+<li>global:</li>
+<li><ul>
+<li>all routers have complete topology, link cost info</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>“link state” algorithms</strong></li>
+</ul>
+</li>
+<li>decentralized: </li>
+<li><ul>
+<li>router knows physically-connected neighbors, link costs to neighbors</li>
+</ul>
+</li>
+<li><ul>
+<li>iterative process of computation, exchange of info with neighbors</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>“distance vector” algorithms</strong></li>
+</ul>
+</li>
+</ul>
+<p>Q: static or dynamic?</p>
+<ul>
+<li>static: </li>
+<li><ul>
+<li>routes change slowly over time</li>
+</ul>
+</li>
+<li>dynamic: </li>
+<li><ul>
+<li>routes change more quickly</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>periodic update</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>in response to link cost changes</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="link-state"><a href="#link-state" class="headerlink" title="link state"></a>link state</h3><p><strong>A link-state routing algorithm</strong></p>
+<p>Dijkstra’s algorithm</p>
+<ul>
+<li>net topology, link costs known to all nodes</li>
+<li><ul>
+<li>accomplished via “link state broadcast” </li>
+</ul>
+</li>
+<li><ul>
+<li>all nodes have same info</li>
+</ul>
+</li>
+<li>computes least cost paths from one node (‘source”) to all other nodes</li>
+<li><ul>
+<li>gives <strong>forwarding table</strong> for that node</li>
+</ul>
+</li>
+<li><p>iterative: after k iterations, know least cost path to k dest.’s</p>
+</li>
+<li><p>notation:</p>
+</li>
+<li>c(x,y): link cost from node x to y;  = ∞ if not direct neighbors</li>
+<li>D(v): current value of cost of path from source to dest. v</li>
+<li>p(v): predecessor node along path from source to v</li>
+<li>N’: set of nodes whose least cost path definitively known</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">1  Initialization: </div><div class="line">2    N&apos; = &#123;u&#125; </div><div class="line">3    for all nodes v </div><div class="line">4      if v adjacent to u </div><div class="line">5          then D(v) = c(u,v) </div><div class="line">6      else D(v) = ∞ </div><div class="line">7 </div><div class="line">8   Loop </div><div class="line">9     find w not in N&apos; such that D(w) is a minimum </div><div class="line">10    add w to N&apos; </div><div class="line">11    update D(v) for all v adjacent to w and not in N&apos; : </div><div class="line">12       D(v) = min( D(v), D(w) + c(w,v) ) </div><div class="line">13    /* new cost to v is either old cost to v or known </div><div class="line">14     shortest path cost to w plus cost from w to v */ </div><div class="line">15  until all nodes in N&apos;</div></pre></td></tr></table></figure>
+<p>Dijkstra’s algorithm example</p>
+<blockquote>
+<p><img src="\img\dijkstraAlgorithm_eg.png" alt="dijkstraAlgorithm_eg.png"></p>
+</blockquote>
+<ul>
+<li>notes:</li>
+<li>construct shortest path tree by tracing predecessor nodes</li>
+<li>ties can exist (can be broken arbitrarily)</li>
+</ul>
+<p><strong>Dijkstra’s algorithm discussion</strong></p>
+<p>algorithm complexity: n nodes</p>
+<ul>
+<li>each iteration: need to check all nodes, w, not in N</li>
+<li>n(n+1)/2 comparisons: O(n2)</li>
+<li>more efficient implementations possible: O(nlogn)</li>
+</ul>
+<p>oscillations possible:</p>
+<ul>
+<li>e.g., support link cost equals amount of carried traffic:<blockquote>
+<p><img src="\img\dijkstraAlgorithm_discussion.png" alt="dijkstraAlgorithm_discussion.png"></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Distance-vector-algorithm"><a href="#Distance-vector-algorithm" class="headerlink" title="Distance vector algorithm"></a>Distance vector algorithm</h3><p><strong>Bellman-Ford equation (dynamic programming)</strong></p>
+<ul>
+<li>min taken over all neighbors v of x</li>
+<li>c(x,v): cost to neighbor v</li>
+<li>dv(y): cost from neighbor v to destination y</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let</div><div class="line">   dx(y) := cost of least-cost path from x to y</div><div class="line">then</div><div class="line">   dx(y) = min &#123;c(x,v) + dv(y)&#125;</div></pre></td></tr></table></figure>
+<p>Bellman-Ford example</p>
+<blockquote>
+<p><img src="\img\bellmanFord_eg.png" alt="bellmanFord_eg.png"></p>
+</blockquote>
+<p>node achieving minimum is next hop in shortest path, used in forwarding table</p>
+<ul>
+<li>Dx(y) = estimate of least cost from x to y</li>
+<li><ul>
+<li>x maintains  distance vector Dx = [Dx(y): y є N ]</li>
+</ul>
+</li>
+<li>node x:</li>
+<li><ul>
+<li>knows cost to each neighbor v: c(x,v)</li>
+</ul>
+</li>
+<li><ul>
+<li>maintains its neighbors’ distance vectors. For each neighbor v, x maintains Dv = [Dv(y): y є N ]</li>
+</ul>
+</li>
+<li><p><strong>key idea</strong>:</p>
+</li>
+<li><ul>
+<li>from time-to-time, each node sends its own distance vector estimate to neighbors</li>
+</ul>
+</li>
+<li><ul>
+<li>when x receives new DV estimate from neighbor, it updates its own DV using B-F equation:<br>$$D_x(y) ← min_v{c(x,v) + D_v(y)}  for each node y \in N$$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>under minor, natural conditions, the estimate Dx(y) converge to the actual least cost dx(y) </p>
+</blockquote>
+<ul>
+<li><strong>iterative, asynchronous</strong>: each local iteration caused by: </li>
+<li><ul>
+<li>local link cost change </li>
+</ul>
+</li>
+<li><ul>
+<li>DV update message from neighbor</li>
+</ul>
+</li>
+<li><strong>distributed</strong>:</li>
+<li><ul>
+<li>each node notifies neighbors only when its DV changes</li>
+</ul>
+</li>
+<li><ul>
+<li>neighbors then notify their neighbors if necessary</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\distance_vector_nodeState.png" alt="distance_vector_nodeState.png"></p>
+<p><img src="\img\distance_vector_eg.png" alt="distance_vector_eg.png"></p>
+</blockquote>
+<p><strong>Distance vector: link cost changes</strong></p>
+<ul>
+<li><strong>link cost changes</strong>:</li>
+<li><ul>
+<li>node detects local link cost change </li>
+</ul>
+</li>
+<li><ul>
+<li>updates routing info, recalculates distance vector</li>
+</ul>
+</li>
+<li><ul>
+<li>if DV changes, notify neighbors</li>
+</ul>
+</li>
+<li><p>“good news travels fast”</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">t0 : y detects link-cost change, updates its DV, informs its neighbors.</div><div class="line"></div><div class="line">t1 : z receives update from y, updates its table, computes new least cost to x , sends its neighbors its DV.</div><div class="line"></div><div class="line">t2 : y receives z’s update, updates its distance table.  y’s least costs do not change, so y  does not send a message to z.</div></pre></td></tr></table></figure>
+<ul>
+<li>bad news travels slow - “count to infinity” problem!</li>
+<li><ul>
+<li>44 iterations before algorithm stabilizes: see text</li>
+</ul>
+</li>
+<li><p><strong>poisoned reverse</strong>: </p>
+</li>
+<li><ul>
+<li>If Z routes through Y to get to X :</li>
+</ul>
+</li>
+<li><ul>
+<li>Z tells Y its (Z’s) distance to X is infinite (so Y won’t route to X via Z)</li>
+</ul>
+</li>
+<li><ul>
+<li>will this completely solve count to infinity problem?</li>
+</ul>
+</li>
+</ul>
+<h3 id="Comparison-of-LS-and-DV-algorithms"><a href="#Comparison-of-LS-and-DV-algorithms" class="headerlink" title="Comparison of LS and DV algorithms"></a>Comparison of LS and DV algorithms</h3><p>message complexity</p>
+<ul>
+<li>LS: with n nodes, E links, O(nE) msgs sent  </li>
+<li>DV: exchange between neighbors only</li>
+<li><ul>
+<li>convergence time varies</li>
+</ul>
+</li>
+</ul>
+<p>speed of convergence</p>
+<ul>
+<li>LS: O(n^2) algorithm requires O(nE) msgs</li>
+<li><ul>
+<li>may have oscillations</li>
+</ul>
+</li>
+<li>DV: convergence time varies</li>
+<li><ul>
+<li>may be routing loops</li>
+</ul>
+</li>
+<li><ul>
+<li>count-to-infinity problem</li>
+</ul>
+</li>
+</ul>
+<p>robustness: what happens if router malfunctions?</p>
+<ul>
+<li>LS: </li>
+<li><ul>
+<li>node can advertise incorrect <em>link</em> cost</li>
+</ul>
+</li>
+<li><ul>
+<li>each node computes only its own table</li>
+</ul>
+</li>
+<li>DV:</li>
+<li><ul>
+<li>DV node can advertise incorrect <em>path</em> cost</li>
+</ul>
+</li>
+<li><ul>
+<li>each node’s table used by others </li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>error propagate thru network</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="intra-AS-routing-in-the-Internet-OSPF"><a href="#intra-AS-routing-in-the-Internet-OSPF" class="headerlink" title="intra-AS routing in the Internet: OSPF"></a>intra-AS routing in the Internet: OSPF</h2><p><strong>Making routing scalable</strong></p>
+<ul>
+<li>our routing study thus far - idealized </li>
+<li><ul>
+<li>all routers identical</li>
+</ul>
+</li>
+<li><ul>
+<li>network “flat”</li>
+</ul>
+</li>
+<li><ul>
+<li>… not true in practice</li>
+</ul>
+</li>
+<li><p>scale: with billions of destinations:</p>
+</li>
+<li><ul>
+<li>can’t store all destinations in routing tables!</li>
+</ul>
+</li>
+<li><ul>
+<li>routing table exchange would swamp links!</li>
+</ul>
+</li>
+<li><p>administrative autonomy</p>
+</li>
+<li><ul>
+<li>internet = network of networks</li>
+</ul>
+</li>
+<li><ul>
+<li>each network admin may want to control routing in its own network</li>
+</ul>
+</li>
+</ul>
+<p><strong>Internet approach to scalable routing</strong></p>
+<p>aggregate routers into regions known as “autonomous systems” (AS) (a.k.a. “domains”)</p>
+<ul>
+<li>intra-AS routing</li>
+<li><ul>
+<li>routing among hosts, routers in same AS (“network”)</li>
+</ul>
+</li>
+<li><ul>
+<li>all routers in AS must run <strong>same</strong> intra-domain protocol</li>
+</ul>
+</li>
+<li><ul>
+<li>routers in different AS can run different intra-domain routing protocol</li>
+</ul>
+</li>
+<li><ul>
+<li>gateway router: at “edge” of its own AS, has link(s) to router(s) in other AS’es</li>
+</ul>
+</li>
+<li><p>inter-AS routing</p>
+</li>
+<li><ul>
+<li>routing among AS’es</li>
+</ul>
+</li>
+<li><ul>
+<li>gateways perform inter-domain routing (as well as intra-domain routing)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Interconnected ASes</strong></p>
+<ul>
+<li>forwarding table configured by both intra- and inter-AS routing algorithm</li>
+<li><ul>
+<li>intra-AS routing determine entries for destinations within AS</li>
+</ul>
+</li>
+<li><ul>
+<li>inter-AS &amp; intra-AS determine entries for external destinations</li>
+</ul>
+</li>
+</ul>
+<p>Inter-AS tasks：</p>
+<ul>
+<li>suppose router in AS1 receives datagram destined outside of AS1:</li>
+<li><p>router should forward packet to gateway router, but which one?</p>
+</li>
+<li><p>AS1 must:</p>
+</li>
+<li><ul>
+<li>learn which dests are reachable through AS2, which through AS3</li>
+</ul>
+</li>
+<li><ul>
+<li>propagate this reachability info to all routers in AS1</li>
+</ul>
+</li>
+<li><ul>
+<li>job of inter-AS routing!</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\interAS_task.png" alt="interAS_task.png"></p>
+</blockquote>
+<p>Intra-AS Routing:</p>
+<ul>
+<li>also known as <strong>interior gateway protocols (IGP)</strong></li>
+<li>most common intra-AS routing protocols:</li>
+<li><ul>
+<li>RIP: Routing Information Protocol</li>
+</ul>
+</li>
+<li><ul>
+<li>OSPF: Open Shortest Path First (IS-IS protocol essentially same as OSPF)</li>
+</ul>
+</li>
+<li><ul>
+<li>IGRP: Interior Gateway Routing Protocol (Cisco proprietary for decades, until 2016)</li>
+</ul>
+</li>
+</ul>
+<h3 id="OSPF-Open-Shortest-Path-First"><a href="#OSPF-Open-Shortest-Path-First" class="headerlink" title="OSPF (Open Shortest Path First)"></a>OSPF (Open Shortest Path First)</h3><ul>
+<li>“open”: publicly available</li>
+<li>uses link-state algorithm </li>
+<li><ul>
+<li>link state packet dissemination</li>
+</ul>
+</li>
+<li><ul>
+<li>topology map at each node</li>
+</ul>
+</li>
+<li><ul>
+<li>route computation using Dijkstra’s algorithm</li>
+</ul>
+</li>
+<li>router floods OSPF link-state advertisements to all other routers in <strong>entire</strong> AS</li>
+<li><ul>
+<li>carried in OSPF messages directly over IP (rather than TCP or UDP)</li>
+</ul>
+</li>
+<li><ul>
+<li>link state: for each attached link</li>
+</ul>
+</li>
+<li><strong>IS-IS routing protocol</strong>: nearly identical to OSPF</li>
+</ul>
+<p>OSPF “advanced” features:</p>
+<ul>
+<li><strong>security</strong>: all OSPF messages authenticated (to prevent malicious intrusion) </li>
+<li><strong>multiple</strong> same-cost <strong>paths</strong> allowed (only one path in RIP)</li>
+<li>for each link, multiple cost metrics for different <strong>TOS</strong> (e.g., satellite link cost set low for best effort ToS; high for real-time ToS)</li>
+<li>integrated uni- and <strong>multi-</strong>cast support: </li>
+<li><ul>
+<li>Multicast OSPF (MOSPF) uses same topology data base as OSPF</li>
+</ul>
+</li>
+<li><strong>hierarchical</strong> OSPF in large domains.</li>
+</ul>
+<p>Hierarchical OSPF:</p>
+<blockquote>
+<p><img src="\img\Hierarchical_OSPF.png" alt="Hierarchical_OSPF.png"></p>
+</blockquote>
+<ul>
+<li><strong>two-level hierarchy</strong>: local area, backbone.</li>
+<li><ul>
+<li>link-state advertisements only in area </li>
+</ul>
+</li>
+<li><ul>
+<li>each nodes has detailed area topology; only know direction (shortest path) to nets in other areas.</li>
+</ul>
+</li>
+<li><strong>area border routers</strong>: “summarize” distances  to nets in own area, advertise to other Area Border routers.</li>
+<li><strong>backbone routers</strong>: run OSPF routing limited to backbone.</li>
+<li><strong>boundary routers</strong>: connect to other AS’es.</li>
+</ul>
+<h2 id="routing-among-the-ISPs-BGP"><a href="#routing-among-the-ISPs-BGP" class="headerlink" title="routing among the ISPs: BGP"></a>routing among the ISPs: BGP</h2><p>Internet inter-AS routing: BGP</p>
+<ul>
+<li><strong>BGP (Border Gateway Protocol)</strong>: the de facto inter-domain routing protocol</li>
+<li><ul>
+<li>“glue that holds the Internet together”</li>
+</ul>
+</li>
+<li>BGP provides each AS a means to:</li>
+<li><ul>
+<li><strong>eBGP</strong>: obtain subnet reachability information from neighboring ASes</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>iBGP</strong>: propagate reachability information to all AS-internal routers.</li>
+</ul>
+</li>
+<li><ul>
+<li>determine “good” routes to other networks based on reachability information and policy</li>
+</ul>
+</li>
+<li>allows subnet to advertise its existence to rest of Internet: “I am here”</li>
+</ul>
+<p><strong>eBGP, iBGP connections</strong></p>
+<blockquote>
+<p><img src="\img\BGP.png" alt="BGP.png"></p>
+</blockquote>
+<p>BGP basics</p>
+<ul>
+<li><strong>BGP session</strong>: two BGP routers (“peers”) exchange BGP messages over semi-permanent TCP connection:</li>
+<li><ul>
+<li>advertising paths to different destination network prefixes (BGP is a “path vector” protocol)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\BGP1.png" alt="BGP1.png"></p>
+</blockquote>
+<ul>
+<li>when AS3 gateway router 3a advertises path AS3,X to AS2 gateway router 2c:</li>
+<li><ul>
+<li>AS3 promises to AS2 it will forward datagrams towards X</li>
+</ul>
+</li>
+</ul>
+<p><strong>Path attributes and BGP routes</strong></p>
+<ul>
+<li>advertised prefix includes BGP attributes </li>
+<li><ul>
+<li>prefix + attributes = “route”</li>
+</ul>
+</li>
+<li>two important attributes:</li>
+<li><ul>
+<li><em>AS-PATH</em>: list of ASes through which prefix advertisement has passed</li>
+</ul>
+</li>
+<li><ul>
+<li><em>NEXT-HOP</em>: indicates specific internal-AS router to next-hop AS</li>
+</ul>
+</li>
+<li><strong>Policy-based routing</strong>:</li>
+<li><ul>
+<li>gateway receiving route advertisement uses <strong>import policy</strong> to accept/decline path (e.g., never route through AS Y).</li>
+</ul>
+</li>
+<li><ul>
+<li>AS policy also determines whether to advertise path to other neighboring ASes</li>
+</ul>
+</li>
+</ul>
+<p><strong>BGP path advertisement</strong></p>
+<blockquote>
+<p><img src="\img\BGP2.png" alt="BGP2.png"></p>
+</blockquote>
+<ul>
+<li>AS2 router 2c receives path advertisement AS3,X (via eBGP) from AS3 router 3a</li>
+<li>Based on AS2 policy, AS2 router 2c accepts path AS3,X, propagates (via iBGP) to all AS2 routers</li>
+<li>Based on AS2 policy,  AS2 router 2a advertises (via eBGP)  path AS2, AS3, X   to AS1 router 1c</li>
+</ul>
+<blockquote>
+<p><img src="\img\BGP3.png" alt="BGP3.png"></p>
+</blockquote>
+<ul>
+<li>gateway router may learn about multiple paths to destination:</li>
+<li>AS1 gateway router 1c learns path AS2,AS3,X from 2a</li>
+<li>AS1 gateway router 1c learns path AS3,X from 3a</li>
+<li>Based on policy, AS1 gateway router 1c chooses path <strong>AS3,X, and advertises path within AS1 via iBGP</strong></li>
+</ul>
+<p><strong>BGP messages</strong></p>
+<p>BGP messages exchanged between peers over TCP connection</p>
+<p>BGP messages:</p>
+<ul>
+<li><strong>OPEN</strong>: opens TCP connection to remote BGP peer and authenticates sending BGP peer</li>
+<li><strong>UPDATE</strong>: advertises new path (or withdraws old)</li>
+<li><strong>KEEPALIVE</strong>: keeps connection alive in absence of UPDATES; also ACKs OPEN request</li>
+<li><strong>NOTIFICATION</strong>: reports errors in previous msg; also used to close connection</li>
+</ul>
+<p><strong>BGP route selection</strong></p>
+<p>router may learn about more than one route to destination AS, selects route based on:</p>
+<ol>
+<li><p>local preference value attribute: policy decision</p>
+</li>
+<li><p>shortest AS-PATH </p>
+</li>
+<li><p>closest NEXT-HOP router: hot potato routing</p>
+</li>
+<li><p>additional criteria </p>
+</li>
+</ol>
+<p><em>Hot Potato Routing</em></p>
+<blockquote>
+<p><img src="\img\hot_potato_routing.png" alt="hot_potato_routing.png"></p>
+</blockquote>
+<ul>
+<li>2d learns (via iBGP) it can route to X via 2a or 2c</li>
+<li><strong>hot potato routing</strong>: choose local gateway that has least intra-domain cost (e.g., 2d chooses 2a, even though more AS hops to X): don’t worry about inter-domain cost!</li>
+</ul>
+<p><strong>BGP: achieving policy via advertisements</strong></p>
+<blockquote>
+<p><img src="\img\BGP_achieving_policy.png" alt="BGP_achieving_policy.png"></p>
+</blockquote>
+<ul>
+<li>A advertises path A w to B and to C</li>
+<li>B <strong>chooses not to advertise</strong> BAw to C:  </li>
+<li><ul>
+<li>B gets no “revenue” for routing CBAw, since none of  C, A, w are B’s customers</li>
+</ul>
+</li>
+<li><ul>
+<li>C does not learn about CBAw path</li>
+</ul>
+</li>
+<li><p>C will route CAw (not using B) to get to w</p>
+</li>
+<li><p>A,B,C are <strong>provider networks</strong></p>
+</li>
+<li>X,W,Y are customer (of provider networks)</li>
+<li>X is <strong>dual-homed</strong>: attached to two networks</li>
+<li>policy to enforce: X does not want to route from B to C via X </li>
+<li><ul>
+<li>.. so X will not advertise to B a route to C</li>
+</ul>
+</li>
+</ul>
+<p><em>Why different Intra-, Inter-AS routing ?</em></p>
+<ul>
+<li><strong>policy</strong>: </li>
+<li><ul>
+<li>inter-AS: admin wants control over how its traffic routed, who routes through its net. </li>
+</ul>
+</li>
+<li><ul>
+<li>intra-AS: single admin, so no policy decisions needed</li>
+</ul>
+</li>
+<li><strong>scale</strong>:</li>
+<li><ul>
+<li>hierarchical routing saves table size, reduced update traffic</li>
+</ul>
+</li>
+<li><strong>performance</strong>: </li>
+<li><ul>
+<li>intra-AS: can focus on performance</li>
+</ul>
+</li>
+<li><ul>
+<li>inter-AS: policy may dominate over performance</li>
+</ul>
+</li>
+</ul>
+<h2 id="The-SDN-control-plane"><a href="#The-SDN-control-plane" class="headerlink" title="The SDN control plane"></a>The SDN control plane</h2><p>Software defined networking (SDN)</p>
+<ul>
+<li>Internet network layer: historically has been implemented via distributed, per-router approach</li>
+<li><ul>
+<li><strong>monolithic</strong> router contains switching hardware, runs proprietary implementation of Internet standard protocols (IP, RIP, IS-IS, OSPF, BGP) in proprietary router OS (e.g., Cisco IOS)</li>
+</ul>
+</li>
+<li><ul>
+<li>different “middleboxes” for different network layer functions: firewalls, load balancers, NAT boxes, ..</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>~2005: renewed interest in rethinking network control plane</p>
+</blockquote>
+<p>Why a <strong>logically centralized</strong> control plane?</p>
+<ul>
+<li>easier network management: avoid router misconfigurations, greater flexibility of traffic flows</li>
+<li>table-based forwarding (recall OpenFlow API) allows “programming” routers</li>
+<li><ul>
+<li>centralized “programming” easier: compute tables centrally and distribute</li>
+</ul>
+</li>
+<li><ul>
+<li>distributed “programming: more difficult: compute tables as result of distributed algorithm (protocol) implemented in each and every router </li>
+</ul>
+</li>
+<li>open (non-proprietary) implementation of control plane</li>
+</ul>
+<p><strong>Traffic engineering: difficult traditional routing</strong></p>
+<blockquote>
+<p><img src="\img\traffic_engineering.png" alt="traffic_engineering.png"></p>
+</blockquote>
+<p>Q: what if network operator wants u-to-z traffic to flow along uvwz, x-to-z traffic to flow xwyz?</p>
+<ul>
+<li>A: need to define link weights so traffic routing algorithm computes routes accordingly (or need a new routing algorithm)!</li>
+</ul>
+<blockquote>
+<p>Link weights are only control “knobs”: wrong!</p>
+</blockquote>
+<p>Q: what if network operator wants to split u-to-z traffic along uvwz and uxyz (load balancing)?</p>
+<ul>
+<li>A: can’t do it (or need a new routing algorithm)</li>
+</ul>
+<blockquote>
+<p><img src="\img\traffic_engineering1.png" alt="traffic_engineering1.png"></p>
+</blockquote>
+<p>Q: what if w wants to route blue and red traffic differently?</p>
+<ul>
+<li>A: can’t do it (with destination based forwarding, and LS, DV routing)</li>
+</ul>
+<blockquote>
+<p><img src="\img\sdn.png" alt="sdn.png"></p>
+</blockquote>
+<p><strong>SDN perspective</strong></p>
+<blockquote>
+<p><img src="\img\sdn_perspective.png" alt="sdn_perspective.png"></p>
+</blockquote>
+<p><em>Data plane switches</em></p>
+<ul>
+<li>fast, simple, commodity switches implementing generalized data-plane forwarding in hardware</li>
+<li>switch flow table computed, installed by controller</li>
+<li>API for table-based switch control (e.g., OpenFlow)</li>
+<li><ul>
+<li>defines what is controllable and what is not</li>
+</ul>
+</li>
+<li>protocol for communicating with controller (e.g., OpenFlow)</li>
+</ul>
+<p><em>SDN controller (network OS)</em>: </p>
+<ul>
+<li>maintain network state information</li>
+<li>interacts with network control applications “above” via northbound API</li>
+<li>interacts with network switches “below” via southbound API</li>
+<li>implemented as distributed system for performance, scalability, fault-tolerance, robustness</li>
+</ul>
+<p><em>network-control apps</em>:</p>
+<ul>
+<li>“brains” of control: implement control functions using lower-level services, API provided by SND controller</li>
+<li>unbundled: can be provided by 3rd party: distinct from routing vendor, or SDN controller</li>
+</ul>
+<p><strong>Components of SDN controller</strong></p>
+<blockquote>
+<p><img src="\img\sdn_controller.png" alt="sdn_controller.png"></p>
+</blockquote>
+<p><strong>OpenFlow protocol</strong></p>
+<ul>
+<li>operates between controller, switch</li>
+<li>TCP used to exchange messages</li>
+<li><ul>
+<li>optional encryption</li>
+</ul>
+</li>
+<li>three classes of  OpenFlow messages:</li>
+<li><ul>
+<li>controller-to-switch</li>
+</ul>
+</li>
+<li><ul>
+<li>asynchronous (switch to controller)</li>
+</ul>
+</li>
+<li><ul>
+<li>symmetric (misc)</li>
+</ul>
+</li>
+</ul>
+<p><em>controller-to-switch messages</em>: </p>
+<ul>
+<li>Key controller-to-switch messages</li>
+<li>features: controller queries switch features, switch replies</li>
+<li>configure: controller queries/sets switch configuration parameters</li>
+<li>modify-state: add, delete, modify flow entries in the OpenFlow tables</li>
+<li>packet-out: controller can send this packet out of specific switch port</li>
+<li>packet-in: transfer packet (and its control) to controller.  See packet-out message from controller</li>
+<li>flow-removed: flow table entry deleted at switch</li>
+<li>port status: inform controller of a change on a port.</li>
+</ul>
+<blockquote>
+<p>Fortunately, network operators don’t “program” switches by creating/sending OpenFlow messages directly. Instead use higher-level abstraction at controller</p>
+</blockquote>
+<p><strong>control/data plane interaction example</strong></p>
+<blockquote>
+<p><img src="\img\sdn_eg.png" alt="sdn_eg.png"></p>
+</blockquote>
+<ol>
+<li><p>S1, experiencing link failure using OpenFlow port status message to notify controller</p>
+</li>
+<li><p>SDN controller receives OpenFlow message, updates link status info</p>
+</li>
+<li><p>Dijkstra’s routing algorithm application has previously registered to be called when ever link status changes. It is called.</p>
+</li>
+<li><p>Dijkstra’s routing algorithm access network graph info, link state info in controller, computes new routes</p>
+</li>
+<li><p>link state routing app interacts with flow-table-computation component in SDN controller, which computes new flow tables needed</p>
+</li>
+<li><p>Controller uses OpenFlow to install new tables in switches that need updating</p>
+</li>
+</ol>
+<p><strong>OpenDaylight (ODL) controller</strong></p>
+<ul>
+<li>ODL Lithium controller</li>
+<li>network apps may be contained within, or be external to SDN controller</li>
+<li>Service Abstraction Layer: interconnects internal, external applications and services</li>
+</ul>
+<blockquote>
+<p><img src="\img\sdn_openDaylight_controller.png" alt="sdn_openDaylight_controller.png"></p>
+</blockquote>
+<p><strong>ONOS controller</strong></p>
+<ul>
+<li>control apps separate from controller</li>
+<li>intent framework: high-level specification of service: what rather than how</li>
+<li>considerable emphasis on distributed core: service reliability, replication performance scaling</li>
+</ul>
+<blockquote>
+<p><img src="\img\sdn_ONOS_controller.png" alt="sdn_ONOS_controller.png"></p>
+</blockquote>
+<p><strong>SDN: selected challenges</strong></p>
+<ul>
+<li>hardening the control plane: dependable, reliable, performance-scalable, secure distributed system</li>
+<li><ul>
+<li>robustness to failures: leverage strong theory of reliable distributed system for control plane</li>
+</ul>
+</li>
+<li><ul>
+<li>dependability, security: “baked in” from day one? </li>
+</ul>
+</li>
+<li>networks, protocols meeting mission-specific requirements</li>
+<li><ul>
+<li>e.g., real-time, ultra-reliable, ultra-secure</li>
+</ul>
+</li>
+<li>Internet-scaling </li>
+</ul>
+<h2 id="ICMP-The-Internet-Control-Message-Protocol"><a href="#ICMP-The-Internet-Control-Message-Protocol" class="headerlink" title="ICMP: The Internet Control Message Protocol"></a>ICMP: The Internet Control Message Protocol</h2><ul>
+<li>used by hosts &amp; routers to communicate network-level information</li>
+<li><ul>
+<li>error reporting: unreachable host, network, port, protocol</li>
+</ul>
+</li>
+<li><ul>
+<li>echo request/reply (used by ping)</li>
+</ul>
+</li>
+<li>network-layer “above” IP:</li>
+<li><ul>
+<li>ICMP msgs carried in IP datagrams</li>
+</ul>
+</li>
+<li><strong>ICMP message</strong>: type, code plus first 8 bytes of IP datagram causing error</li>
+</ul>
+<blockquote>
+<p><img src="\img\ICMP_message.png" alt="ICMP_message.png"></p>
+</blockquote>
+<p><strong>Traceroute and ICMP</strong></p>
+<ul>
+<li>source sends series of UDP segments to destination</li>
+<li><ul>
+<li>first set has TTL =1</li>
+</ul>
+</li>
+<li><ul>
+<li>second set has TTL=2, etc.</li>
+</ul>
+</li>
+<li><ul>
+<li>unlikely port number</li>
+</ul>
+</li>
+<li>when datagram in nth set arrives to nth router:</li>
+<li><ul>
+<li>router discards datagram and sends source ICMP message (type 11, code 0)(TTL expired)</li>
+</ul>
+</li>
+<li><ul>
+<li>ICMP message include name of router &amp; IP address</li>
+</ul>
+</li>
+<li>when ICMP message arrives, source records RTTs</li>
+</ul>
+<p><strong>stopping criteria</strong>:</p>
+<ul>
+<li>UDP segment eventually arrives at destination host</li>
+<li>destination returns ICMP “port unreachable” message (type 3, code 3)</li>
+<li>source stops</li>
+</ul>
+<h2 id="Network-management-and-SNMP"><a href="#Network-management-and-SNMP" class="headerlink" title="Network management and SNMP"></a>Network management and SNMP</h2><p>What is network management?</p>
+<ul>
+<li>autonomous systems (aka “network”): 1000s of interacting hardware/software components</li>
+<li>other complex systems requiring monitoring, control:</li>
+<li><ul>
+<li>jet airplane</li>
+</ul>
+</li>
+<li><ul>
+<li>nuclear power plant</li>
+</ul>
+</li>
+<li><ul>
+<li>others?</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>“Network management includes the deployment, integration<br>and coordination of the hardware, software, and human<br>elements to monitor, test, poll, configure, analyze, evaluate,<br>and control the network and element resources to meet the<br>real-time, operational performance, and Quality of Service<br>requirements at a reasonable cost.” </p>
+</blockquote>
+<p><strong>Infrastructure for network management</strong></p>
+<p>managed devices contain managed objects whose  data is gathered into a Management Information Base (MIB) </p>
+<blockquote>
+<p><img src="\img\network_management.png" alt="network_management.png"></p>
+</blockquote>
+<p><strong>SNMP protocol</strong>: simple network management protocol</p>
+<p>Two ways to convey MIB info, commands:</p>
+<blockquote>
+<p><img src="\img\SNMP.png" alt="SNMP.png"></p>
+</blockquote>
+<p><strong>SNMP protocol: message types</strong></p>
+<blockquote>
+<p><img src="\img\SNMP_message_type.png" alt="SNMP_message_type.png"></p>
+</blockquote>
+<p><strong>SNMP protocol: message formats</strong></p>
+<blockquote>
+<p><a href="\img\SNMP_message_format.png">SNMP_message_format.png</a></p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">computer network</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/05/24/computer_network/computer_network_4/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/05/29/algoDesign/dp/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/23/parellel_and_distributed_computing/distributed_compute4/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">同步与互斥</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 chenxf
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: false
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.2d7529.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分布式计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

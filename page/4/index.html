@@ -145,19 +145,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Cplusplus_thinking/类设计者的核查表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Cplusplus_thinking/代理类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/类设计者的核查表/">类设计者的核查表</a>
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/代理类/">代理类</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/类设计者的核查表/" class="archive-article-date">
+        <a href="/2017/01/21/Cplusplus_thinking/代理类/" class="archive-article-date">
   	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
 </a>
         
@@ -165,35 +165,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>简单的类 结构就是接口 不需要构造函数</p>
-<h2 id="数据成员私有"><a href="#数据成员私有" class="headerlink" title="数据成员私有"></a>数据成员私有</h2><p>阻止类的使用者私自改动<br>提供相应接口 供使用者执行修改或访问等操作</p>
-<h2 id="无参构造函数"><a href="#无参构造函数" class="headerlink" title="无参构造函数"></a>无参构造函数</h2><p>声明对象数组必需</p>
-<h2 id="初始化数据成员"><a href="#初始化数据成员" class="headerlink" title="初始化数据成员"></a>初始化数据成员</h2><p>每个构造函数都要负责为所有的数据成员设置经过明确定义的值<br>除非该数据成员在类的对象存在一定时间后才有意义或其它特殊情况</p>
-<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>该类分配了不会被成员函数自动释放的资源（动态内存）时必需</p>
-<h2 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h2><p>(类B派生的子类D，若可能对D类型对象的B*指针执行delete表达式时必需)<br>例如:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> B &#123;</div><div class="line">    <span class="built_in">string</span> s;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">class</span> D : <span class="keyword">public</span> B &#123;</div><div class="line">    <span class="built_in">string</span> t;</div><div class="line">    <span class="comment">// virtual ~B() &#123;&#125;;</span></div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    B* bp = <span class="keyword">new</span> D; <span class="comment">// no problem</span></div><div class="line">    <span class="keyword">delete</span> bp;     <span class="comment">// unless B has a virtual destructor</span></div><div class="line">                   <span class="comment">// or the wrong dstructor would be called</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><p>当复制类的对象并非复制其数据成员和基类对象时必需</p>
+        <p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
+<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
 <ul>
-<li>若不想使用者能够复制类的对象，就声明复制构造函数(赋值操作符)为私有的</li>
+<li>surrogate是handle(句柄)类中最简单的一种</li>
 </ul>
-<h2 id="赋值操作符"><a href="#赋值操作符" class="headerlink" title="赋值操作符"></a>赋值操作符</h2><p>当赋值类的对象并非复制其数据成员和基类对象时必需</p>
-<ul>
-<li><p>考虑赋值给对象本身的情况<br>例如:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> String &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">string</span>&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> String &amp;s);</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">char</span> *data;</div><div class="line">&#125;;</div><div class="line">String&amp; String::<span class="keyword">operator</span>=(<span class="keyword">const</span> String&amp; s) &#123;</div><div class="line">    <span class="keyword">if</span> (&amp;s != <span class="keyword">this</span>) &#123; <span class="comment">// do nothing with self-assignment</span></div><div class="line">        <span class="keyword">delete</span> [] data; <span class="comment">// delete old array</span></div><div class="line">        data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(s.data) + <span class="number">1</span>];</div><div class="line">        <span class="built_in">strcpy</span>(data, s.data);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>若不想使用者能够设置类中的对象，就将赋值操作符私有化</p>
-</li>
-<li><p>析构函数、拷贝构造函数、赋值操作符= 通常为同时必需的</p>
-</li>
-</ul>
-<p>关系操作符<br>类逻辑上支持相等操作则提供 operator== 和 operator!=<br>类具有某种排序关系则提供余下的关系操作符(&lt; &gt; &lt;= &gt;=)</p>
-<h2 id="拷贝构造函数和赋值操作符的参数类型加上const"><a href="#拷贝构造函数和赋值操作符的参数类型加上const" class="headerlink" title="拷贝构造函数和赋值操作符的参数类型加上const"></a>拷贝构造函数和赋值操作符的参数类型加上const</h2><p>like X::X(const X&amp;) X::operator=(const X&amp;)</p>
-<h2 id="函数的const引用参数"><a href="#函数的const引用参数" class="headerlink" title="函数的const引用参数"></a>函数的const引用参数</h2><p>除非函数用来改变参数的值否则应为const引用<br>例如:<br>    Complex operator+(const Complex&amp; x, const Complex&amp; y);</p>
-<h2 id="适当声明成员函数为const"><a href="#适当声明成员函数为const" class="headerlink" title="适当声明成员函数为const"></a>适当声明成员函数为const</h2><p>成员函数不用修改它的对象时</p>
-<ul>
-<li>const对象只能使用声明为const的函数</li>
-</ul>
-<h1 id="设计理念："><a href="#设计理念：" class="headerlink" title="设计理念："></a>设计理念：</h1><p>C++不可能自动处理所有这些事情(难以保证做得对)<br>始终加入的话增加太多的额外负担，开销过大<br>如给所有类自动添加一个虚析构函数，当类较小时开销明显<br>作为变通方法，让编译器指出什么时候类该有什么必需的</p>
-
+        
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/代理类/#more">more >></a>
+        
       
 
       
@@ -216,7 +195,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/类设计者的核查表/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/代理类/">展开全文 >></a>
         </p>
       
 
@@ -234,19 +213,19 @@
 
 
   
-    <article id="post-Cplusplus_thinking/面向对象编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-economics/宏观经济学鸟瞰" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/面向对象编程/">面向对象编程</a>
+      <a class="article-title" href="/2017/01/21/economics/宏观经济学鸟瞰/">宏观经济学鸟瞰</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/面向对象编程/" class="archive-article-date">
+        <a href="/2017/01/21/economics/宏观经济学鸟瞰/" class="archive-article-date">
   	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
 </a>
         
@@ -254,17 +233,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>一个面向对象程序范例</strong></p>
-<p>面向对象对象编程三要素：</p>
-<ol>
-<li>数据抽象</li>
-<li>继承</li>
-<li>动态绑定</li>
-</ol>
-<p><strong>适用于大型程序</strong></p>
-<h3 id="以算术表达式树形表示的面向对象解决方案为例"><a href="#以算术表达式树形表示的面向对象解决方案为例" class="headerlink" title="以算术表达式树形表示的面向对象解决方案为例"></a>以算术表达式树形表示的面向对象解决方案为例</h3>
+        <ul>
+<li><p>研究对象：整体经济行为</p>
+</li>
+<li><p>个体行为的总体成果</p>
+</li>
+<li><p>不是研究特定部门或特定经济活动主体的行为</p>
+</li>
+<li><p>经济生活中的重大问题</p>
+</li>
+<li><p>基本研究方法：考察经济的总体趋势</p>
+</li>
+<li><p>收集不同时期、不同国家有关收入、通货膨胀和失业等变量的数据，尝试构建有助于理解这些数据的一般理论</p>
+</li>
+</ul>
+<h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2>
         
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/面向对象编程/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/21/economics/宏观经济学鸟瞰/#more">more >></a>
         
       
 
@@ -278,7 +263,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">宏观经济学</a>
         		</li>
       		
 		</ul>
@@ -288,7 +273,144 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/面向对象编程/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/21/economics/宏观经济学鸟瞰/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-economics/宏观经济现象鸟瞰" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/economics/宏观经济现象鸟瞰/">宏观经济现象鸟瞰</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/21/economics/宏观经济现象鸟瞰/" class="archive-article-date">
+  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="三个重要的宏观经济变量"><a href="#三个重要的宏观经济变量" class="headerlink" title="三个重要的宏观经济变量"></a>三个重要的宏观经济变量</h2><ul>
+<li><p>实际国内生产总值(real GDP<gross domestic product>):<br>经济体内所有人的实际总收入。<br>人均国内生产总值(GDP per capita): 经济体内平均而言每个人的实际收入。</p>
+</li>
+<li><p>通货膨胀率(inflation rate):<br>物价水平变动的百分比。(物价指数)<br>用消费者价格指数(consumer price index, CPI)或GDP缩减指数(GDP deflator index)<br>衡量。</p>
+</li>
+<li><p>失业率(unemployment rate):<br>经济体中没有工作当正在积极找工作的劳动力比重。</p>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/01/21/economics/宏观经济现象鸟瞰/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">宏观经济学</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/21/economics/宏观经济现象鸟瞰/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-economics/现代经济中的市场和政府" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/economics/现代经济中的市场和政府/">现代经济中的市场和政府</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/21/economics/现代经济中的市场和政府/" class="archive-article-date">
+  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="什么是市场"><a href="#什么是市场" class="headerlink" title="什么是市场"></a>什么是市场</h3><ul>
+<li>市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/01/21/economics/现代经济中的市场和政府/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">微观经济学</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/21/economics/现代经济中的市场和政府/">展开全文 >></a>
         </p>
       
 
@@ -359,6 +481,151 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/01/21/economics/经济学基础知识/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-Cplusplus_thinking/模板（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（三）/">模板（三）</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/21/Cplusplus_thinking/模板（三）/" class="archive-article-date">
+  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
+<li><p>已经定义Array<T>、Pointer<T>和Ptr_to_const<T>使得能部分确保安全性避免使用<br>指针</p>
+</li>
+<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
+</li>
+</ul>
+<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
+<ul>
+<li>基类及派生类都要定义这些操作</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-economics/供给与需求的基本原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/economics/供给与需求的基本原理/">供给与需求的基本原理</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/21/economics/供给与需求的基本原理/" class="archive-article-date">
+  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="需求表"><a href="#需求表" class="headerlink" title="需求表"></a>需求表</h3><ul>
+<li><p>在其他条件相同时，一种物品的价格越高，人们愿意购买的数量就越少；而市场价格越低，人们愿意购买的数量就越多</p>
+</li>
+<li><p>价格与需求之间的关系可以用一张需求表(demand schedule)或一条需求曲线(demand curve)表示</p>
+</li>
+</ul>
+<ul>
+<li>需求曲线：数量和价格呈反比关系</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/01/21/economics/供给与需求的基本原理/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">微观经济学</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/21/economics/供给与需求的基本原理/">展开全文 >></a>
         </p>
       
 
@@ -494,11 +761,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">macro economics</a>
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
+                <a href="javascript:void(0)" class="js-tag color1">macro economics</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -506,7 +773,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
+                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
               </li>
              
               <li class="article-tag-list-item">

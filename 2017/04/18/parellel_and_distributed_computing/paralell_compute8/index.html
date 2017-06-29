@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://chenfeng.github.io">
+  <title>数值计算中的并行算法 | chenxfeng&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="(并行与分布式计算七)
+Arithmetic Computations
+线性递推式(linear recurrences)m阶线性递推式(linear recurrece of order m):$y_i$ 由 $ y_{i-1}, y_{i-2}, …, y_{i-m} $ 的线性组合生成
+多项式求值A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n +">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数值计算中的并行算法">
+<meta property="og:url" content="https://chenfeng.github.io/2017/04/18/parellel_and_distributed_computing/paralell_compute8/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="(并行与分布式计算七)
+Arithmetic Computations
+线性递推式(linear recurrences)m阶线性递推式(linear recurrece of order m):$y_i$ 由 $ y_{i-1}, y_{i-2}, …, y_{i-m} $ 的线性组合生成
+多项式求值A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n +">
+<meta property="og:image" content="https://chenfeng.github.io/\img\matrix_block.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\eg_DFT.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\fft.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\polynomial_divide.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\polynomial_evaluation.png">
+<meta property="og:updated_time" content="2017-04-23T12:55:06.959Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数值计算中的并行算法">
+<meta name="twitter:description" content="(并行与分布式计算七)
+Arithmetic Computations
+线性递推式(linear recurrences)m阶线性递推式(linear recurrece of order m):$y_i$ 由 $ y_{i-1}, y_{i-2}, …, y_{i-m} $ 的线性组合生成
+多项式求值A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n +">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\matrix_block.png">
+  
+    <link rel="alternative" href="/atom.xml" title="chenxfeng&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.2d7529.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">chenxf</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/chenxfeng" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">chenxf</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chenxfeng" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 50%">
+				
+				
+					<li style="width: 100%"><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-parellel_and_distributed_computing/paralell_compute8" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数值计算中的并行算法
+    </h1>
+  
+
+        
+        <a href="/2017/04/18/parellel_and_distributed_computing/paralell_compute8/" class="archive-article-date">
+  	<time datetime="2017-04-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算七)</p>
+<p><em>Arithmetic Computations</em></p>
+<h2 id="线性递推式-linear-recurrences"><a href="#线性递推式-linear-recurrences" class="headerlink" title="线性递推式(linear recurrences)"></a>线性递推式(linear recurrences)</h2><p>m阶线性递推式(linear recurrece of order m):<br>$y_i$ 由 $ y_{i-1}, y_{i-2}, …, y_{i-m} $ 的线性组合生成</p>
+<h3 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h3><p>A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a_1x^{n-1 + … + a_{n-1}x} + a_n $的系数数组，给定点$x_0$计算$p(x_0)$</p>
+<ul>
+<li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<script type="math/tex; mode=display">p(x_0) = (...((a_0x_0 +a_1)x_0 + a_2)x_0 + ... + a_{n-1})x_0 + a_n</script></li>
+</ul>
+<a id="more"></a>
+<p>$ y_1 = a_0x_0 + a_1 $<br>$ y_2 = y_1x_0 + a_2 $<br>$ . $<br>$ . $<br>$ . $<br>$ p(x_0) = y_n = y_{n-1}x_0 + a_n $</p>
+<p>即如下一阶递推式:<br>$ y_0 = a_0 $<br>$ y_i = y_ix_0 + a_i, 1 \leq i \leq n $</p>
+<h3 id="三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix"><a href="#三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix" class="headerlink" title="三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)"></a>三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)</h3><ul>
+<li>n*n 非奇异(nonsingular)三对角线矩阵A<script type="math/tex; mode=display">A = 
+\left[
+\begin{matrix}
+ b_1 & c_1 &     &     &    & \\
+ a_2 & b_2 & c_2 &     &    & \\
+     & a_3 & b_3 & c_3 &    & \\
+     & .   & .   &  .  &    & \\
+     &     & .   &  .  & .  & \\
+     &     &     &  a_{n-1} & b_{n-1} & c_{n-1}\\
+     &     &     &          & a_n     & b_n
+\end{matrix}
+\right]</script></li>
+<li>A的LDU分解: 单位下三角矩阵L, 对角矩阵D和单位上三角矩阵U; A = LDU</li>
+<li><p>易证三个矩阵形式如下</p>
+<script type="math/tex; mode=display">L = 
+\left[
+\begin{matrix}
+ 1   &     &     &     &     & \\
+ l_2 & 1   &     &     &     & \\
+     & l_3 & 1   &     &     & \\
+     &     & .   &  .  &     & \\
+     &     &     &  .  & .   & \\
+     &     &     &     & .   & . \\
+     &     &     &     & l_n & 1 
+\end{matrix}
+\right]</script><script type="math/tex; mode=display">U = 
+\left[
+\begin{matrix}
+ 1   & u_1 &     &     &     & \\
+     & 1   & u_2 &     &     & \\
+     &     & 1   & u_3 &     & \\
+     &     &     &  .  & .   & \\
+     &     &     &     & .   & u_{n-1} \\
+     &     &     &     &     & 1 
+\end{matrix}
+\right]</script><script type="math/tex; mode=display">D = 
+\left[
+\begin{matrix}
+ d_1 &     &     &     &     & \\
+     & d_2 &     &     &     & \\
+     &     & .   &     &     & \\
+     &     &     &  .  &     & \\
+     &     &     &     & .   & \\
+     &     &     &     &     & d_n 
+\end{matrix}
+\right]</script><p>其中<br>$ d_1 = b_1 $<br>$ d_j = b_j - a_jc_{j-1}/d_{j-1}, 2 \leq j \leq n $<br>$ l_j = a_j/d_{j-1}, 2 \leq j \leq n $<br>$ u_j = c_j/d_j, 1 \leq j \leq n - 1 $</p>
+</li>
+<li><p>$l_j$和$u_j$的值可以有$d_j$快速得到</p>
+</li>
+<li>使$d_j = w_j/w_{j-1}, w_0 = 1, w_1 = b_1$</li>
+<li>$w_j$可由下列二阶递推式计算:<br>$w_0 = 1$<br>$w_1 = b_1$<br>$w_j = b_jw_{j-1} - (a_jc_{j-1})w_{j-2}, 2 \leq j \leq n$</li>
+<li>三对角线矩阵A的LDU分解转化成求解二阶线性递推式</li>
+</ul>
+<h3 id="带状三角线性系统-Banded-Triangular-Linear-Systems"><a href="#带状三角线性系统-Banded-Triangular-Linear-Systems" class="headerlink" title="带状三角线性系统(Banded Triangular Linear Systems)"></a>带状三角线性系统(Banded Triangular Linear Systems)</h3><p>n*n 下三角矩阵A, 其中所有非零元在主对角线或者其下的m-1对角线上(m &lt; n)</p>
+<ul>
+<li><p>e.g. (m = 3):</p>
+<script type="math/tex; mode=display">A = 
+\left[
+\begin{matrix}
+ a_{11} & 0 & 0  & 0 & ... & ... & 0 \\
+ a_{21} & a_{22} & 0 & 0  & ... & ... & 0 \\
+ a_{31} & a_{32} & a_{33} & 0   & . & . & . \\
+  0  & a_{42} & a_{43} & a_{44} &   &   &  \\
+     &     & .   &  .  & .  & . & . \\
+     &     &     &  .  & .  & . & 0\\
+     &     &     &     & a_{n,n-2}  & a_{n, n-1} & a_{nn}
+\end{matrix}
+\right]</script></li>
+<li><p>线性系统<strong>$ Ax = b $</strong>的解可以表示为:<br>$ x_1 = \frac{b_1}{a_{11}} $<br>$ x_i = -(\sum_{j=i-m+1}^{i-1}\frac{a_{ij}}{a_{i1}}x_j) - \frac{b_i}{a_{i1}}, 2 \leq i \leq n $</p>
+</li>
+<li><p>该解是一个m-1阶线性递推式</p>
+</li>
+</ul>
+<h3 id="一阶线性递推式-first-order-linear-recurrences"><a href="#一阶线性递推式-first-order-linear-recurrences" class="headerlink" title="一阶线性递推式(first-order linear recurrences)"></a>一阶线性递推式(first-order linear recurrences)</h3><p>$ y_1 = b_1 $<br>$ y_i = a_iy_{i-1} + b_i, 2 \leq i \leq n $</p>
+<p>基本思想：</p>
+<ul>
+<li>类似于前缀和的计算(若对所有i有$a_i = 1$，则为前缀和计算)</li>
+<li><p>用平衡树方法</p>
+</li>
+<li><p>不妨设$n = 2^k$，i($2\leq i \leq n$)为偶数，则$y_i = a_i(a_{i-1}y_{i-2} + b_{i-1}) + b_i$，即$y_i = a_ia_{i-1}y_{i-2} + a_ib_{i-1} + b_i$</p>
+</li>
+<li><p>这是对偶数下标i的一阶线性递推式(size: n/2)</p>
+</li>
+<li><p>使$a_i^{‘} = a_{2i}a_{2i-1}$和$b_i^{‘} = a_{2i}b_{2i-1} + b_{2i}$, $1 \leq i \leq \frac{n}{2}$, 同时使$z_i = y_{2i}$, 则得到下列递推式:<br>$ z_1 = b_1^{‘} $<br>$ z_i = a_i^{‘}z_{i-1} + b_i^{‘}, 2 \leq i \leq n/2 $</p>
+</li>
+</ul>
+<p>Algorithm 8.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(First-Order linear Recurrence)</div><div class="line">Input: Two arrays B = (b_1, b_2, ..., b_n) and A = (a_1 = 0, a_2, ..., a_n) representing the first-order linear recurrence y_1 = b_1 and y_i = a_iy_&#123;i-1&#125; + b_i, (2 &lt;= i &lt;= n); n is assumed to be a power of 2.</div><div class="line">Output: The values of all the y_i terms.</div><div class="line">begin</div><div class="line">1. if n = 1 then &#123;set y_1 := b_1, exit&#125;</div><div class="line">2. for 1 &lt;= i &lt;= n/2 pardo</div><div class="line">    Set a_i^&#123;&apos;&#125; := a_&#123;2i&#125;a_&#123;2i-1&#125;</div><div class="line">    Set b_i^&#123;&apos;&#125; := a_&#123;2i&#125;b_&#123;2i-1&#125; + b_&#123;2i&#125;</div><div class="line">3. Recursively, solve the first-order linear recurrence defined by z_1 = b_1^&#123;&apos;&#125; and z_i = a_i^&#123;&apos;&#125;z_&#123;i-1&#125; + b_i^&#123;&apos;&#125;, where 2 &lt;= i &lt;= n/2.</div><div class="line">4. for 1 &lt;= i &lt;= n pardo</div><div class="line">    i even    : Set y_i := z_&#123;i/2&#125;</div><div class="line">    i = 1     : Set y_1 := b_1</div><div class="line">    i odd &gt; 1 : Set y_i = a_iz_&#123;(i-1)/2&#125; + b_i</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>$ T(n) = T(n/2) + O(1) $</li>
+<li><p>$ W(n) = W(n/2) + O(n) $</p>
+</li>
+<li><p>并行复杂度: T(n) = O(logn), W(n) = O(n)</p>
+</li>
+</ul>
+<h3 id="高维-一阶-线性递推式-first-order-higher-demensional-linear-recurrences"><a href="#高维-一阶-线性递推式-first-order-higher-demensional-linear-recurrences" class="headerlink" title="高维(一阶)线性递推式((first-order)higher-demensional linear recurrences)"></a>高维(一阶)线性递推式((first-order)higher-demensional linear recurrences)</h3><ul>
+<li><p>m维向量$b_i(1 \leq i \leq n)$, m<em>m矩阵$A_i(2 \leq i \leq n)$, 递推式如下:<br><strong>$ y_1 = b_1 $</strong><br><em>*$ y_i = A_iy_{i-1} + b_i $</em></em>, $2 \leq i \leq n$</p>
+</li>
+<li><p>将问题规约为通过计算$A_i^{‘} = A_{2i}A_{2i-1}$和$b_i^{‘} = A_{2i}b_{2i-1} + b_{2i}, 1 \leq i \leq n/2$求解$y_2, y_4, …, y_n$</p>
+</li>
+<li><p>$y_2i = A_i^{‘}y_{2(i-1)} + b_i^{‘}$; 偶数下标y值得出后容易通过定义算得奇数下标y值</p>
+</li>
+<li><p>将Algorithm8.1中相应元素换为矩阵和向量即可</p>
+</li>
+</ul>
+<blockquote>
+<p>两个m<em>m 矩阵乘积的可以在O(logm)的时间复杂度内用O(M(m))计算量复杂度求得，其中M(m)是计算m</em>m矩阵乘积所需要的数学操作数量的时序约束(sequential bound)，目前可知的最好上界是$M(m) = O(m^2.376)$(over a ring)</p>
+</blockquote>
+<ul>
+<li>并行复杂度: T(n) = O(lognlogm); W(n) = O(nM(m))</li>
+</ul>
+<h2 id="三角线性方程组-Triangular-Linear-Systems"><a href="#三角线性方程组-Triangular-Linear-Systems" class="headerlink" title="三角线性方程组(Triangular Linear Systems)"></a>三角线性方程组(Triangular Linear Systems)</h2><ul>
+<li><p>高斯消元法(Gaussian elimination scheme)可以将任意的线性方程组化简为三角矩阵</p>
+</li>
+<li><p>再用标准前向替换法(standard forward substitution algorithm)可以求解</p>
+</li>
+</ul>
+<h3 id="单位下三角矩阵及其线性方程"><a href="#单位下三角矩阵及其线性方程" class="headerlink" title="单位下三角矩阵及其线性方程"></a>单位下三角矩阵及其线性方程</h3><p>线性方程组$Ax = b$, 其中$x$和$b是n维向量$, A是n*n 单位下三角矩阵:</p>
+<script type="math/tex; mode=display">A = 
+ \left[
+ \begin{matrix}
+   1 & 0 & 0 & ... & 0 \\
+   a_{21} & 1 & 0 & ...  & 0 \\
+   a_{31} & a_{32} & 1 & ... & 0 \\
+    .  & . & . & . & . \\
+   a_{n1} & a_{n2} & ... &  a_{n,n-1}  & 1
+  \end{matrix}
+  \right]</script><ul>
+<li><p>对任意矩阵，通过将每行元素除以$a_{ii}(a_{ii} \not= 1, 1 \leq i \leq n)$可得到以上形式的矩阵</p>
+</li>
+<li><p>简单方法: $x_i = b_i - \sum_{j=1}^{i-1}a_{ij}x_j$; 需要O(n^2)的计算量, 但无法求得并行算法</p>
+</li>
+</ul>
+<h3 id="快速矩阵求逆并行算法"><a href="#快速矩阵求逆并行算法" class="headerlink" title="快速矩阵求逆并行算法"></a>快速矩阵求逆并行算法</h3><p>用分治策略求出矩阵$A$的逆$A^{-1}$，则$x = A^{-1}b$能在$O(logn)$时间内用$O(n^2)$计算量求得</p>
+<ul>
+<li>矩阵分块: 将矩阵$A$分成(n/2) * (n/2)的块(不妨设n是2的幂)<script type="math/tex; mode=display">A = 
+\left[
+\begin{matrix}
+ A_1 & 0  \\
+ A_2 & A_3  
+\end{matrix}
+\right]</script></li>
+<li><p>$A_1$和$A_3$是非奇异下三角矩阵</p>
+<blockquote>
+<p>非奇异矩阵: 行列式不为零(存在逆矩阵)</p>
+<script type="math/tex; mode=display">A^{-1} = 
+\left[
+\begin{matrix}
+ A_1^{-1} & 0  \\
+ -A_3^{-1}A_2A_1^{-1} & A_3^{-1}  
+\end{matrix}
+\right]</script></blockquote>
+</li>
+<li><p>n*n 三角线性方程组可以在$O(log^2n)$时间复杂度，O(M(n))的计算量内求解</p>
+</li>
+<li><p>$T(n) = O(log^2n) = O(logn) * O(log^n)$: O(logn) (分治)迭代; O(logn) 维数&lt;=(n/2)的矩阵乘法</p>
+</li>
+<li><p>$W(n) = 2W(n/2) + 2M(n/2)$: 假设$M(n) \geq 4M(n/2)$可得$W(n) \leq M(n)$</p>
+</li>
+</ul>
+<h3 id="带状三角形线性方程组"><a href="#带状三角形线性方程组" class="headerlink" title="带状三角形线性方程组"></a>带状三角形线性方程组</h3><p>e.g.(n = 6, m = 3)</p>
+<script type="math/tex; mode=display">A = 
+ \left[
+ \begin{matrix}
+   a_{11} & 0 & 0 & 0 & 0 & 0  \\
+   a_{21} & a_{22} & 0 & 0 & 0 & 0 \\
+   a_{31} & a_{32} & a_{33} & 0 & 0 & 0 \\
+   0 & a_{42} & a_{43} & a_{44} & 0 & 0 \\
+   0 & 0 & a_{53} & a_{54} & a_{55} & 0 \\
+   0 & 0 & 0 & a_{64} & a_{65} & a_{66}
+  \end{matrix}
+  \right]</script><ul>
+<li><p>不失一般性假设主对角线元等于1，$Ax = b$的解可以表示为<br>$ x_1 = b_1 $<br>$ x_i = (-\sum_{j=i-m+1}^{i-1}a_{ij}x_j) + b_i, 2 \leq i \leq n $</p>
+</li>
+<li><p>不妨设m能整除n，将A分成m*m 的块$A_{i,j}, 1 \leq i,j \leq n/m$; $A_{i,i}$是下三角矩阵，$A_{i,i-1}$是上三角矩阵<br>e.g.:</p>
+<blockquote>
+<p><img src="\img\matrix_block.png" alt="matrix_block.png"></p>
+</blockquote>
+</li>
+<li><p>设D为如下子矩阵:</p>
+<script type="math/tex; mode=display">D = 
+\left[
+\begin{matrix}
+A_{1,1} & & & \\
+& A_{2,2} & & \\
+&  & . & \\
+ & & & A_{\frac{n}{m},\frac{n}{m}}
+\end{matrix}
+\right]</script></li>
+<li><p>使$A^{<em>} = D^{-1}A$, 使$d = D^{-1}b$; $Ax = b$的解同$D_{-1}Ax = D^{-1}b$, 即$A^{</em>}x = b$, $A^{*}$如下:</p>
+<script type="math/tex; mode=display">A = 
+\left[
+\begin{matrix}
+I_m & & & & \\
+A_{2,1}^{*} & I_m & & & \\
+& A_{3,2}^{*} & I_m & & \\
+&  & . & . & \\
+ & & & A_{\frac{n}{m},\frac{n}{m}-1}^{*} & I_m
+\end{matrix}
+\right]</script></li>
+<li><p>$A_{i,i-1}^{<em>} = A_{i,i}^{-1}A_{i,i-1}, 2 \leq i \leq n/m$; $A^{</em>}$的计算需要对(n/m)-1个独立的m<em>m矩阵求逆得到${A_{i,i}^{-1}}_{i=2}^{n/m}$，再通过(n/m)-1个独立的m</em>m矩阵相乘得到${A_{i,i}^{-1}A_{i,i-1}}_{i=2}^{n/m}$</p>
+</li>
+<li><p>运用对下三角矩阵求逆的并行算法，可以在$O(log^2m)$时间内用$O((n/m)M(m))$计算量求出$A_{i,i}^{-1}, 1 \leq i \leq n/m$; (n/m)-1矩阵乘法与$d = D_{-1}b$的计算显然在这个上界之内</p>
+</li>
+<li><p>将x和d分成m维子向量$x = (x_1, x_2, …, x_{n/m})$和$d = (d_1, d_2, …, d_{n/m})$, $A<em>x = d$的解可表示为<br>$x_1 = d_1$<br>$x_i = -A_{i,i-1}^{</em>}x_{i-1} + d_i, 2 \leq i \leq n/m$</p>
+</li>
+<li><p>$x_i$的计算可以在O(log(n/m)logm)的时间复杂度内，用O((n/m)M(m))的计算量</p>
+</li>
+<li><p>$T(n) = O(lognlogm)$; W(n) = O((n/m)M(m))</p>
+</li>
+</ul>
+<h2 id="离散傅氏变换-Discrete-fourier-transform"><a href="#离散傅氏变换-Discrete-fourier-transform" class="headerlink" title="离散傅氏变换(Discrete fourier transform)"></a>离散傅氏变换(Discrete fourier transform)</h2><h3 id="定义在复数域上的离散傅氏变换DFT"><a href="#定义在复数域上的离散傅氏变换DFT" class="headerlink" title="定义在复数域上的离散傅氏变换DFT"></a>定义在复数域上的离散傅氏变换DFT</h3><ul>
+<li><p>定义复数$ \omega = e^{i\frac{2\pi}{n}} = \cos\frac{2\pi}{n} + i\sin\frac{2\pi}{n} $，其中$i = \sqrt{-1}$</p>
+</li>
+<li><p>$\omega^{n} = e^{2\pi i} = 1$; $1, \omega, \omega^2, …, \omega^{n-1}$是复数域上(相异的)第n单位根(root of unity); $\omega$被称为第n本原单位根(primitive root of unity)</p>
+</li>
+<li><p>使n*n矩阵$W_n(j,k) = \omega^{jk}, 0 \leq j,k \leq n-1$, n维列向量$x$的DFT定义为列向量$y = W_nx$</p>
+</li>
+<li><p>$y_j = \sum_{k=0}^{n-1}\omega^{jk}x_k, 0 \leq j \leq n-1$</p>
+</li>
+</ul>
+<p>e.g.</p>
+<blockquote>
+<p><img src="\img\eg_DFT.png" alt="eg_DFT.png"></p>
+</blockquote>
+<h3 id="快速傅氏变换"><a href="#快速傅氏变换" class="headerlink" title="快速傅氏变换"></a>快速傅氏变换</h3><p>用分治策略计算DFT $y = W_nx$(假设n是2的幂)</p>
+<ul>
+<li><p>使j为偶数: $j = 2l, 0 \leq l \leq \frac{n}{2} - 1$</p>
+</li>
+<li><p>$y_j = y_{2l} = \sum_{k=0}^{n-1}\omega^{2lk}x_k$, 故有<br>$ y_{2l} = x_0 + \omega^{2l}x_1 + \omega^{4l}x_2 + … + \omega^{2l(\frac{n}{2}-1)}x_{\frac{n}{2}-1} + x_{\frac{n}{2}} + \omega^{2l}x_{\frac{n}{2}+1} + \omega^{4l}x_{\frac{n}{2}+2} + … + \omega^{2l(\frac{n}{2}-1)}x_{n-1} $</p>
+</li>
+<li><p>$ y_{2l} = (x_0 + x_{\frac{n}{2}}) + \omega^{2l}(x_1 + x_{\frac{n}{2}+1}) + \omega^{4l}(x_2 + x_{\frac{n}{2}+2}) + … + \omega^{2l(\frac{n}{2}-1)}(x_{\frac{n}{2}-1} + x_{n-1}) $</p>
+</li>
+<li><p>显然$\omega^2 = e^{i\frac{2\pi}{\frac{n}{2}}}$, 故$\omega^2$是第(n/2)本原单位根</p>
+</li>
+<li><p>$z^{(1)} = [y_0, y_2, …, y_{n-2}]^{T}$是向量$[x_0 + x_{\frac{n}{2}}, x_1 + x_{\frac{n}{2}+1}, …, x_{\frac{n}{2}-1} + x_{n-1}]^{T}$的离散傅氏变换</p>
+</li>
+<li><p>如果j为奇数: $j = 2l + 1$, 类似地有<br>$ y_{2l+1} = (x_0 + \omega^{\frac{n}{2}})x_{\frac{n}{2}} + \omega^{2l}(\omega x_1 + \omega^{\frac{n}{2}+1}x_{\frac{n}{2}+1}) + … + \omega^{2l(\frac{n}{2}-1)}(\omega^{\frac{n}{2}-1}x_{\frac{n}{2}-1} + \omega^{n-1}x_{n-1}) $</p>
+</li>
+<li><p>$\omega^{\frac{n}{2}} = e^{i\pi} = -1$, 故<br>$ y_{2l+1} = (x_0 - x_{\frac{n}{2}}) + \omega^{2l}\omega (x_1 - x_{\frac{n}{2}+1}) + \omega^{4l}\omega^2(x_2 - x_{\frac{n}{2}+2}) + … + \omega^{2l(\frac{n}{2}-1)}\omega^{\frac{n}{2}-1}(x_{\frac{n}{2}-1} - x_{n-1}) $</p>
+</li>
+<li><p>$z^{(2)} = [y_1, y_3, …, y_{n-1}]^{T}$是向量$[x_0 - x_{\frac{n}{2}}, \omega (x_1 - x_{\frac{n}{2}+1}), …, \omega^{\frac{n}{2}-1}(x_{\frac{n}{2}-1} - x_{n-1})]^{T}$的离散傅氏变换</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\fft.png" alt="fft.png"></p>
+</blockquote>
+<p>algorithm 8.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">(Fast Fourier Transform)</div><div class="line">Input: An n-dimensional vector x whose entries are complex numbers, and \omega = e^&#123;i\frac&#123;2\pi&#125;&#123;n&#125;&#125;, where n is assumed to be a power of 2.</div><div class="line">Output: The vector y that is the DFT of x.</div><div class="line">begin</div><div class="line">1. if n = 2 then &#123;Set y_1 := x_1 + x_2, y_2 := x_1 - x_2, exit&#125;</div><div class="line">2. for 0 &lt;= l &lt;= n/2-1 pardo</div><div class="line">    Set u_l := x_l + x_&#123;n/2+l&#125;</div><div class="line">    Set v_l := \omega^l (x_l - x_&#123;n/2+l&#125;)</div><div class="line">3. Recurrsively, compute the DFT of the two vectors [u_0, u_1, ..., u_&#123;n/2-1&#125;] and [v_0, v_1, ..., v_&#123;n/2-1&#125;], and store the results in vetors z^(1) = [z_0^(1), z_1^(1), ..., z_&#123;n/2-1&#125;^(1)] and z^(2) = [z_0^(2), z_1^(2), ..., z_&#123;n/2-1&#125;^(2)], respectively.</div><div class="line">4. for 0 &lt;= j &lt;= n-1 pardo</div><div class="line">    j even : Set y_j := z_&#123;j/2&#125;^(1)</div><div class="line">    j odd  : Set y_j := z_&#123;(j-1)/2&#125;^(2)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>$ T(n) = T(n/2) + O(1) $</li>
+<li><p>$ W(n) = 2W(n/2) + O(n) $</p>
+</li>
+<li><p>T(n) = O(logn); W(n) = O(nlogn)</p>
+</li>
+<li><p>离散傅里叶逆变换(inverse discrete Fourier transform, IDFT): 矩阵$W_n$的逆$W_n^{-1}(j,k) = \frac{1}{n}\omega^{-jk}, 0 \leq j,k \leq n-1$, 向量x的离散傅氏逆变换是向量$y = W_n^{-1}x$</p>
+</li>
+<li><p>类似地，T = O(logn), W = O(n logn)</p>
+</li>
+</ul>
+<h2 id="多项式乘法和卷积"><a href="#多项式乘法和卷积" class="headerlink" title="多项式乘法和卷积"></a>多项式乘法和卷积</h2><p>多项式$p(x) = \sum_{k=0}^{n-1}a_kx^k$可由系数列表唯一表示$(a_0, a_1, …, a_{n-1})$; 给定点$x_i$, $y_i = p(x_j)$值唯一</p>
+<h3 id="多项式乘法"><a href="#多项式乘法" class="headerlink" title="多项式乘法"></a>多项式乘法</h3><ul>
+<li>两个多项式<br>$ p(x) = \sum_{k=0}^{n-1}a_kx^k $,<br>$ q(x) = \sum_{k=0}^{m-1}b_kx^k $,<br>其积为<br>$ r(x) = p(x)q(x) = \sum_{k=0}^{n+m-2}c_kx^k $,<br>使得<br>$ c_k = \sum_{j=0}^{k}a_jb_{k-j} $ (下标越界的a、b值为0)</li>
+</ul>
+<p><strong>Polynomial multiplication using the FFT algorithm</strong></p>
+<ul>
+<li><p>设l为2的幂且使得$n+m-2 &lt; l \leq 2(n+m-2)$; $a = [a_0, …, a_{l-1}]^{T}, a_j = 0$ for j &gt; n-1, $b = [b_0, …, b_{l-1}]^{T}, b_k = 0$ for k &gt; m-1</p>
+</li>
+<li><p>计算系数列表${c_k}$的算法如下(<em> 多项式乘法的并行算法</em>): </p>
+</li>
+</ul>
+<ol>
+<li><p>用F快速傅里叶变换算法计算 $y = W_la$ 和 $z = W_lb$ , 得到p(x)和q(x)在点x = 1, $\omega, \omega^2, …, \omega^{l-1}$的值，其中$\omega$是第l本原单位根，$y_j = p(\omega^j), z_j = q(\omega^j), 0 \leq j \leq l-1$</p>
+</li>
+<li><p>计算 $u_j = y_jz_j$ , for $0 \leq j \leq l-1$。显然 $u_j = p(\omega^j)q(\omega^j) = r(\omega^j)$, 故能得到多项式$r(x)$在l个相异单位根的值</p>
+</li>
+<li><p>计算向量$u = [u_0, u_1, …, u_{l-1}]^{T}$的傅里叶逆变换。向量前n+m-1个元和乘积$r(x)$的系数相同。</p>
+</li>
+</ol>
+<ul>
+<li>T(n) = O(log(n+m)); W(n) = O((n+m)log(n+m))</li>
+</ul>
+<h3 id="用快速傅里叶变换算法计算卷积-Convolution"><a href="#用快速傅里叶变换算法计算卷积-Convolution" class="headerlink" title="用快速傅里叶变换算法计算卷积(Convolution)"></a>用快速傅里叶变换算法计算卷积(Convolution)</h3><p>向量$a$和$b$的卷积，可以表示为$ a\bigotimes b $</p>
+<ul>
+<li>$a = [a_0, …, a_{n-1}]^{T}$; $b = [b_0, …, b_{m-1}]^{T}$</li>
+<li><p>$a \bigotimes b$定义为向量$c = [c_0, …, c_{m+n-1}]^{T}$, 使得$c_k = \sum_{j=0}^ka_jb_{k-j}$, 其中$a_j = 0, j &gt; n-1$, $b_j = 0, j &gt; m-1$</p>
+</li>
+<li><p>除$c_{n+m-1}$(总是为0)外，两个向量$a$和$b$的卷积和多项式$p(x) = \sum_{j=0}^{n-1}a_jx^j$和$q(x) = \sum_{j=0}^{m-1}b_jx^j$的乘积的系数相同</p>
+</li>
+</ul>
+<p>计算n维向量x和m维向量y的卷积的并行算法的复杂度: </p>
+<ul>
+<li>T = O(log(n+m)); W((n+m)log(n+m))</li>
+</ul>
+<h2 id="Toeplitz矩阵-托普利茨矩阵"><a href="#Toeplitz矩阵-托普利茨矩阵" class="headerlink" title="Toeplitz矩阵(托普利茨矩阵)"></a>Toeplitz矩阵(托普利茨矩阵)</h2><p>Toeplitz矩阵: n*n矩阵T满足$T(k,l) = T(k-1,l-1)$, for $2 \leq l,k \leq n$</p>
+<ul>
+<li>矩阵T同一对角线上的所有元素相等; 因此这类矩阵又出现在第一行和第一列的2n-1个元素唯一确定<script type="math/tex; mode=display">T = 
+\left[
+\begin{matrix}
+t_{n-1} & t_{n-2} & ... & & t_2 & t_1 & t_0 \\
+t_n & t_{n-1} & t_{n-2} & ... & & t_2 & t_1 \\
+t_{n+1} & t_n & t_{n-1} & t_{n-2} & ... & & t_2 \\
+. & & & . & . & . & . \\
+. & & & & . & . & . \\
+t_{2n-3} & t_{2n-4} & ... & & & t_{n-1} & t_{n-2} \\
+t_{2n-2} & t_{2n-3} & ... & & t_{n+1} & t_n & t_{n-1}
+\end{matrix}
+\right]</script></li>
+<li>$t = [t_0, t_1, …, t_{2n-2}]^{T}$确定了托普利茨矩阵T</li>
+</ul>
+<h3 id="Toeplitz矩阵乘以向量"><a href="#Toeplitz矩阵乘以向量" class="headerlink" title="Toeplitz矩阵乘以向量"></a>Toeplitz矩阵乘以向量</h3><ul>
+<li><p>向量$a = [a_0, a_1, …, a_{n-1}]^{T}$, $d = Ta$, 其中T是n*n托普利茨矩阵 $t = [t_0, t_1, …, t_{2n-2}]^{T}$</p>
+</li>
+<li><p>计算d的一般算法需要O(logn)的时间和O(n^2)的计算量</p>
+</li>
+<li><p>易证$d_l = \sum_{j=0}^{n-1}a_jt_{n+l-j-1}, 0 \leq l \leq n-1$</p>
+</li>
+<li><p>考察向量 $a$ 和 $t$ 的卷积c, $c_k = \sum_{j=0}^ka_jt_{k-j}$, 将k=n+l-1代入得$c_{n+l-1} = \sum_{j=0}^{n+l-1}a_jt_{n+l-j-1} = \sum_{j=0}^{n-1}a_jt_{n+l-j-1}$($j &gt; n-1 时 a_j = 0$)</p>
+</li>
+<li><p>$d_l = c_{n+l-1}, 0 \leq l \leq n-1$</p>
+</li>
+<li><p>乘积Ta可通过计算$a \bigotimes t$, 令$d_l = c_{n+l-1}(0 \leq l \leq n-1)$得到</p>
+</li>
+</ul>
+<p>Toeplitz矩阵乘以向量的并行算法:<br>$c = a \bigotimes t$得到的c向量的元素$(c_{n-1}, c_n, …, c_{2n-2})$</p>
+<ul>
+<li>T(n) = O(logn); W(n) = O(nlogn)</li>
+</ul>
+<h3 id="求下三角Toeplitz矩阵的逆矩阵"><a href="#求下三角Toeplitz矩阵的逆矩阵" class="headerlink" title="求下三角Toeplitz矩阵的逆矩阵"></a>求下三角Toeplitz矩阵的逆矩阵</h3><p>-下三角托普利茨矩阵T分成n/2 * n/2的块:</p>
+<script type="math/tex; mode=display">T = 
+ \left[
+ \begin{matrix}
+ T_1 & 0 \\
+ T_2 & T_1
+  \end{matrix}
+  \right]</script><ul>
+<li><p>不妨设n是2的幂</p>
+</li>
+<li><p>矩阵T的逆$T^{-1}$如下: </p>
+<script type="math/tex; mode=display">T^{-1} = 
+\left[
+\begin{matrix}
+T_1^{-1} & 0 \\
+-T_1^{-1}T_2T_1^{-1} & T_1^{-1}
+\end{matrix}
+\right]</script></li>
+<li><p>$T^{-1}$也是一个下三角托普利茨矩阵，由第一列元素唯一确定; 计算$T^{-1}$的算法: </p>
+</li>
+</ul>
+<ol>
+<li>递归地计算$T_1^{-1}$的第一列</li>
+<li>计算$-T_1^{-1}T_2T_1^{-1}$的第一列</li>
+</ol>
+<ul>
+<li><p>计算$-T_1^{-1}T_2T_1^{-1}$的第一列等价于计算$-T_1^{-1}T_2T_1^{-1}e$, 其中$e = [1, 0, …, 0]^{T}$</p>
+</li>
+<li><p>T(n) = T(n/2) + O(logn)</p>
+</li>
+<li>W(n) = W(n/2) + O(nlogn)</li>
+</ul>
+<p>Toeplitz矩阵求逆算法的并行复杂度: $T(n) = O(log^2n)$; $W(n) = O(nlogn)$</p>
+<h3 id="应用Toeplitz矩阵实现多项式的除法"><a href="#应用Toeplitz矩阵实现多项式的除法" class="headerlink" title="应用Toeplitz矩阵实现多项式的除法"></a>应用Toeplitz矩阵实现多项式的除法</h3><ul>
+<li>两个多项式<br>$ s(x) = \sum_{j=0}^{n-1}s_jx^j $<br>和<br>$ t(x) = \sum_{j=0}^{m-1}t_jx^j $,<br>存在唯一的两个多项式, 商$q(x)$和余数$r(x)$<br>使得<br>$ s(x) = t(x)q(x) + r(x) $<br>且$r(x)$的阶(degree)小于$t(x)$的阶(余数的最高次小于除数的最高次)</li>
+</ul>
+<p>引理8.2: $t(x)$和$s(x)$是两个阶分别为n-1和m-1的多项式(n&gt;m)。</p>
+<ul>
+<li>如果商$q(x)$已知，$r(x)$可以在O(logn)的时间内用O(nlogn)的计算量求出来。</li>
+<li><p>如果余数$r(x)$已知，$q(x)$可以在O(log(n-m))的时间内用O((n-m)log(n-m))的计算量算出来。</p>
+</li>
+<li><p>$q(x)$的阶为n-m，两个矩阵$t(x)q(x)$相乘可以在O(logn)时间内用O(nlogn)计算量复杂度的基于FFT的算法。$r(x) = s(x) - t(x)q(x)$可以在O(1)时间内由O(n)计算量完成</p>
+</li>
+<li><p>$s(x) - r(x)$可在O(1)时间内由O(n)操作完成。通过多项式求值/差值和DFT的关系求$q(x) = \frac{s(x)-r(x)}{t(x)}$: 计算$s(\omega^l) - r(\omega^l)$和$t(\omega^l), 0 \leq l \leq n-m+1$, 其中$\omega$是第(n+m-1)本原单位根。FFT算法可以在O(log(n-m))的时间内用O((n-m)log(n-m))计算量计算出来。因此$q(\omega^l)$能在这个上界内求得，再使用快速傅里叶逆变换算法能求得$q(x)$</p>
+</li>
+</ul>
+<p>计算多项式的商: </p>
+<ul>
+<li>设$q(x) = \sum_{j=0}^{n-m}q_jx^j$是两个多项式$s(x) = \sum_{j=0}^{n-1}s_jx^j$和$t(x) = \sum_{j=0}^{m-1}t_jx^j$的商。</li>
+<li><p>不失一般性假设$t_{m-1}s_{n-1} \not= 0$, $t(x)q(x)$可表示为$\sum_{k=0}^{n-1}a_kx^k$, 其中$a_k = \sum_{j=0}^kt_jq_{k-j}$</p>
+</li>
+<li><p>设r(x)为$s(x)$除以$t(x)$的余数，给定$r(x)$的阶小于m-1; 则$\sum_{k=m-1}^{n-1}s_kx^k = \sum_{k=m-1}^{n-1}a_kx^k$, 故$s_k = a_k, m-1 \leq k \leq n-1$ , 从而$s_k = \sum_{j=0}^kt_jq_{k-j}, m-1 \leq k \leq n-1$</p>
+</li>
+<li><p>由$t_j = 0, j \geq m$和$q_j = 0, j \geq n-m+1$可得: </p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\polynomial_divide.png" alt="polynomial_divide.png"></p>
+</blockquote>
+<ul>
+<li>关于$s(x)$和$t(x)$的系数的矩阵T是一个(n-m+1)*(n-m+1)下三角托普利茨矩阵</li>
+</ul>
+<p>两个多项式(n阶和m阶, n &gt; m)相除的并行算法的复杂度<br>$T(n) = O(log^2(n-m) + logn)$;<br>$W(n) = O(nlogn)$</p>
+<h2 id="多项式求值和插值"><a href="#多项式求值和插值" class="headerlink" title="多项式求值和插值"></a>多项式求值和插值</h2><h3 id="多项式求值-polynomial-evaluation"><a href="#多项式求值-polynomial-evaluation" class="headerlink" title="多项式求值(polynomial evaluation):"></a>多项式求值(polynomial evaluation):</h3><ul>
+<li>n-1阶多项式$p(x) = \sum_{j=0}^{n-1}a_jx^j$</li>
+<li>${a_l | 0 \leq l \leq n-1}$是一组相异点的集合</li>
+<li><p>计算$p(\alpha_l), 0 \leq l \leq n-1$</p>
+</li>
+<li><p>Horner’s algorithm并发地求，$T = O(logn), W = O(n^2)$</p>
+</li>
+</ul>
+<h3 id="多项式求值的分治算法"><a href="#多项式求值的分治算法" class="headerlink" title="多项式求值的分治算法"></a>多项式求值的分治算法</h3><ul>
+<li><p>令$q_l = x - \alpha_l, 0 \leq l \leq n-1$</p>
+</li>
+<li><p>$Q_1(x) = \prod_{i=0}^{\frac{n}{2}-1}q_l(x)$<br>$Q_2(x) = \prod_{l=\frac{n}{2}}^{n-1}q_l(x)$</p>
+</li>
+<li><p>设定n为2的幂，$Q_1(x)$和$Q_2(x)$是阶为$\frac{n}{2}$的多项式</p>
+</li>
+<li><p>$p_1(x) = p(x) mod Q_1(x)$; $p_2(x) = p(x) mod Q_2(x)$</p>
+</li>
+<li><p>对某个多项式$t_1(x)$和$t_2(x)$有$p(x) = t_1(x)Q_1(x) + p_1(x)$和$p(x) = t_2(x)Q_2(x) + p_2(x)$ ($deg(p_1(x)), deg(p_2(x)) &lt; \frac{n}{2}$)</p>
+</li>
+<li><p>$p(\alpha_l) = p_1(\alpha_l), 0 \leq l \leq \frac{n}{2}-1$; $p(\alpha_l) = p_2(\alpha_l), \frac{n}{2} \leq l \leq n-1$</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\polynomial_evaluation.png" alt="polynomial_evaluation.png"></p>
+</blockquote>
+<p>algorithm 8.3<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(Polynomial Evaluation)</div><div class="line">Input: (1)A polynomial p(x) of degree n-1 specified by its coefficients, and (2)a set of n distinct points a_j, where 0 &lt;= j &lt;= n-1 and n = 2^k for some integer k.</div><div class="line">Output: The values p(a_j), where 0 &lt;= j &lt;= n-1</div><div class="line">begin</div><div class="line">1. for 0 &lt;= j &lt;= n-1 pardo</div><div class="line">    Set Q_&#123;0, j&#125;(x) := x - a_j</div><div class="line">2. for h = 1 to log n-1 do</div><div class="line">    for 0 &lt;= j &lt;= (n/2^h) - 1 pardo</div><div class="line">        Set Q_&#123;h,j&#125;(x) := Q_&#123;h-1,2j&#125;(x) * Q_&#123;h-1,2j+1&#125;(x)</div><div class="line">3. Set p_&#123;k,0&#125;(x) := p(x)</div><div class="line">4. for h = log n-1 to 0 do</div><div class="line">    for 0 &lt;= j &lt;= (n/2^h)-1 pardo</div><div class="line">        j even : Set p_&#123;h,j&#125;(x) := p_&#123;h+1,j/2&#125;(x) mod Q_&#123;h,j&#125;(x)</div><div class="line">        j odd  : Set p_&#123;h,j&#125;(x) := p_&#123;h+1,(j-1)/2&#125;(x) mod Q_&#123;h,j&#125;(x)</div><div class="line">5. for 0 &lt;= j &lt;= n-1 pardo</div><div class="line">    Set p(a_j) := p_&#123;0,j&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>$ T(n) = O(log^3n) $; $ W(n) = O(nlog^2n) $</li>
+</ul>
+<h3 id="多项式插值的分治算法"><a href="#多项式插值的分治算法" class="headerlink" title="多项式插值的分治算法"></a>多项式插值的分治算法</h3><ul>
+<li><p>集合$ \{ \beta_j = p(\alpha) \}_{j=0}^{n-1} $</p>
+</li>
+<li><p>拉格朗日插值公式(Lagrange interpolation formula):<br>$ p(x) = \sum_{j=0}^{n-1}\beta_j \frac{\prod_{l=0,l \not= j}^{n-1}(x - \alpha_j)}{\prod_{l=0,l \not= j}^{n-1}(\alpha_j-\alpha_l)} $</p>
+</li>
+<li><p>$q_l(x) = x - \alpha_l$; $Q(x) = \prod_{i=0}^{n-1}q_l(x)$; $Q^{‘}(\alpha_j) = \prod_{l=0,l \not= j}^{n-1}(\alpha_j) - \alpha_l$</p>
+</li>
+<li><p>$\gamma_j = Q^{‘}(\alpha_j), 0 \leq j \leq n-1$, $c_j = \beta_j/\gamma_j, 0 \leq j \leq n-1$; $p(x) = Q(x)\sum_{j=0}^{n-1}\frac{c_j}{x - \alpha_j}$</p>
+</li>
+<li><p>$\sum_{j=0}^{n-1}\frac{c_j}{x-\alpha_j}$可用平衡树方法求得<br>$ \frac{p(x)}{Q(x)} = \frac{p_{k-1,0}(x)}{Q_{k-1,0}(x)} + \frac{p_{k-1,1}(x)}{Q_{k-1,1}(x)} = \frac{p_{k-1,0}(x)Q_{k-1,1}(x) + p_{k-1,1}(x)Q_{k-1,0}(x)}{Q(x)} $</p>
+</li>
+</ul>
+<p>Algorithm 8.4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(Polynomial Interpolation)</div><div class="line">Input: A set of pairs of numbers (a_j, b_j), where 0 &lt;= j &lt;= n, the a_j&apos;s are distinct, and n = 2^k for some integer k.</div><div class="line">Output: The coefficients of the (n-1)st-degree polynomial p(x) such that p(a_j) = b_j, for all 0 &lt;= j &lt;= n-1.</div><div class="line">begin</div><div class="line">1. for 0 &lt;= j &lt;= n-1 pardo</div><div class="line">    Set Q_&#123;0,j&#125;(x) := x - a_j</div><div class="line">2. for h = 1 to logn do</div><div class="line">    for 0 &lt;= j &lt;= (n/2^h)-1 pardo</div><div class="line">        Set Q_&#123;h,j&#125;(x) := Q_&#123;h-1,2j&#125;(x) * Q_&#123;h-1,2j+1&#125;(x)</div><div class="line">3. Compute Q_&#123;k,0&#125;(x), and user Algorithm 8.3 to compute y_j = Q&apos;_&#123;k,0&#125;(a_j), for all 0 &lt;= j &lt;= n-1</div><div class="line">4. for 0 &lt;= j &lt;= n-1 pardo</div><div class="line">    Set p_&#123;0,j&#125;(x) := b_j/y_j</div><div class="line">5. for h = 1 to logn do </div><div class="line">    for 0 &lt;= j &lt;= (n/2^h)-1 pardo</div><div class="line">        Set p_&#123;h,j&#125;(x) := p_&#123;h-1,2j&#125;(x)Q_&#123;h-1,2j+1&#125;(x) + p_&#123;h-1,2j+1&#125;(x)Q_&#123;h-1,2j&#125;(x)</div><div class="line">6. Set p(x) := p_&#123;k,0&#125;(x)</div></pre></td></tr></table></figure></p>
+<ul>
+<li>$ T(n) = O(log^3n) $; $ W(n) = O(nlog^2n) $</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/04/18/parellel_and_distributed_computing/paralell_compute8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/19/computer_network/computer_network_2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          应用层 Application Layer
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/11/parellel_and_distributed_computing/paralell_compute7/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">字符串匹配的并行算法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 chenxf
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: false
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.2d7529.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分布式计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

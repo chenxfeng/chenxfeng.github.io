@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://chenfeng.github.io">
+  <title>分布式系统的容错技术(上) | chenxfeng&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="(并行与分布式计算十三)
+分布式系统容错的基本概念
+可用性：可用性反映的是系统随时可被用户使用的特性。
+
+可靠性：可靠性指的是在错误存在的情况下，系统持续服务的能力。
+
+安全性：安全性指的是在系统出现暂时错误的情况下，不出现灾难性后果的能力。
+
+可维护性：可维护性指的是系统一旦出现故障，系统易于修复的能力。
+
+保密性：保密性要求系统资源不被非法用户访问。
+
+按错误的时间特性来看，错误可分为：暂时性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统的容错技术(上)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/06/06/parellel_and_distributed_computing/distributed_compute5/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="(并行与分布式计算十三)
+分布式系统容错的基本概念
+可用性：可用性反映的是系统随时可被用户使用的特性。
+
+可靠性：可靠性指的是在错误存在的情况下，系统持续服务的能力。
+
+安全性：安全性指的是在系统出现暂时错误的情况下，不出现灾难性后果的能力。
+
+可维护性：可维护性指的是系统一旦出现故障，系统易于修复的能力。
+
+保密性：保密性要求系统资源不被非法用户访问。
+
+按错误的时间特性来看，错误可分为：暂时性">
+<meta property="og:image" content="https://chenfeng.github.io/\img\error_inDistributedSystem.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\error_processInDistributedSystem.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\node_error_process_forward.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\check_point.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\domino_effect.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\check_point1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ChandyLamport.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\message_log.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\message_log1.png">
+<meta property="og:updated_time" content="2017-06-06T16:40:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式系统的容错技术(上)">
+<meta name="twitter:description" content="(并行与分布式计算十三)
+分布式系统容错的基本概念
+可用性：可用性反映的是系统随时可被用户使用的特性。
+
+可靠性：可靠性指的是在错误存在的情况下，系统持续服务的能力。
+
+安全性：安全性指的是在系统出现暂时错误的情况下，不出现灾难性后果的能力。
+
+可维护性：可维护性指的是系统一旦出现故障，系统易于修复的能力。
+
+保密性：保密性要求系统资源不被非法用户访问。
+
+按错误的时间特性来看，错误可分为：暂时性">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\error_inDistributedSystem.png">
+  
+    <link rel="alternative" href="/atom.xml" title="chenxfeng&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.2d7529.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">chenxf</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/chenxfeng" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">chenxf</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chenxfeng" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 50%">
+				
+				
+					<li style="width: 100%"><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-parellel_and_distributed_computing/distributed_compute5" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      分布式系统的容错技术(上)
+    </h1>
+  
+
+        
+        <a href="/2017/06/06/parellel_and_distributed_computing/distributed_compute5/" class="archive-article-date">
+  	<time datetime="2017-06-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算十三)</p>
+<h2 id="分布式系统容错的基本概念"><a href="#分布式系统容错的基本概念" class="headerlink" title="分布式系统容错的基本概念"></a>分布式系统容错的基本概念</h2><ol>
+<li><p>可用性：可用性反映的是系统随时可被用户使用的特性。</p>
+</li>
+<li><p>可靠性：可靠性指的是在错误存在的情况下，系统持续服务的能力。</p>
+</li>
+<li><p>安全性：安全性指的是在系统出现暂时错误的情况下，不出现灾难性后果的能力。</p>
+</li>
+<li><p>可维护性：可维护性指的是系统一旦出现故障，系统易于修复的能力。</p>
+</li>
+<li><p>保密性：保密性要求系统资源不被非法用户访问。</p>
+</li>
+<li><p>按错误的时间特性来看，错误可分为：暂时性的(transient)、间歇性的(intermittent)和永久性的(permanent)。</p>
+</li>
+</ol>
+<a id="more"></a>
+<h2 id="基本的故障模型"><a href="#基本的故障模型" class="headerlink" title="基本的故障模型"></a>基本的故障模型</h2><blockquote>
+<p><img src="\img\error_inDistributedSystem.png" alt="error_inDistributedSystem.png"></p>
+</blockquote>
+<p>容错是建立在冗余的基础上的，下面是<strong>四种冗余类型</strong>：</p>
+<ul>
+<li>(1) 硬件冗余。附加额外的处理器、I/O设备等。</li>
+<li>(2) 软件冗余。附加软件模块的额外版本等。</li>
+<li>(3) 信息冗余。如使用了额外位数的错误检测代码等。</li>
+<li>(4) 时间冗余。如用来完成系统功能的额外时间。 </li>
+</ul>
+<blockquote>
+<p>有些研究者将冗余分为三类，即物理冗余、信息冗余和时间冗余。物理冗余可以用硬件冗余的方式或软件冗余的方式来实现，因为硬件和软件在逻辑上是等同的。</p>
+</blockquote>
+<p><strong>故障的基本处理方法</strong>：</p>
+<ul>
+<li>(1) 主动复制。所有的复制模块协同进行，并且它们的状态紧密同步。</li>
+<li>(2) 被动复制。只有一个模块处于动态，其他模块的交互状态由这一模块的检查点定期更新。</li>
+<li>(3) 半主动复制。是主动复制和被动复制的混合方法。此种方法所需的恢复开销相对较低。</li>
+</ul>
+<p><strong>失效的检测</strong>可分为外部检测和内部检测两类：</p>
+<ul>
+<li>外部检测是指将检测节点失效的职责赋予被检测节点的外部附件。 </li>
+<li>内部检测将节点的失效检测机制置于该节点内部，通常检测部件被假定为一个可以完全信赖的“硬核”。</li>
+</ul>
+<h2 id="容错系统的基本构件"><a href="#容错系统的基本构件" class="headerlink" title="容错系统的基本构件"></a>容错系统的基本构件</h2><p><strong>坚固存储器</strong>： 坚固存储器是对一个可以经受系统失效的特定存储器的逻辑抽象，也就是说，坚固存储器里的内容不会被一个失效所毁坏。</p>
+<p>坚固存储器的<em>实现方法</em>：</p>
+<ul>
+<li>磁盘镜像：坚固存储器可以用一对普通磁盘来实现。坚固存储器中的每一个块由两个独立的磁盘块组成，分别位于不同的驱动器上，使得它们同时由于硬件故障受到损坏的机会最小。 </li>
+<li>RAID：另一种实现坚固存储器的方法是使用廉价磁盘冗余阵列(RAID)。RAID是通过运用位交错技术将数据分布到多个磁盘中，从而提供高I/O性能。可以用一个或几个磁盘来检测或屏蔽错误，RAID与传统磁盘相比有显著的优点，并可承受多个失效。</li>
+</ul>
+<p><strong>故障—停止处理器</strong>：</p>
+<ul>
+<li>当一个处理器失效，最可能的是它不进行任何不正确的操作，并且简单地停止运行，这样的处理器被称为故障—停止处理器，一个故障—停止处理器由多个处理器组成。</li>
+<li>失效的效果：当出现一个故障时，故障—停止处理器会有以下效果：</li>
+<li><ul>
+<li>(a)处理器停止运行；</li>
+</ul>
+</li>
+<li><ul>
+<li>(b)易失性存储器的内容丢失，而坚固存储器不受影响；</li>
+</ul>
+</li>
+<li><ul>
+<li>(c)任何其他处理器均可以检测到故障—停止处理器的失效状态。</li>
+</ul>
+</li>
+</ul>
+<p>故障—停止处理器的<em>实现</em>：</p>
+<ul>
+<li>现有一个可靠的坚固存储器、一个可靠的存储处理器(控制存储媒介的处理器)以及k+1个处理器，将它们转变成故障—停止处理器的方法如下：</li>
+<li><ul>
+<li>k+1个处理器中的每一个都运行同样的程序并通过存储处理器访问同一个坚固存储器。</li>
+</ul>
+</li>
+<li>如果任何一个请求是不同的，或者任何一个请求没有在指定的期间到达，则意味着检测到一个失效事件，因而应该丢弃所有请求。</li>
+<li>因为系统表现为一个故障—停止处理器，这一方法产生一个k—故障—停止处理器，除非系统中k+1个或更多的部件失效。</li>
+</ul>
+<p><strong>原子操作</strong></p>
+<ul>
+<li>一个原子操作就是由硬件独立执行的一系列动作。也就是说，每一个动作或者被完全彻底地执行，或者所有的动作根本没有执行，系统的状态保持不变。</li>
+<li>原子操作中的每一个动作都是孤立的，当执行这一动作时，在进程中感觉不到外界活动的存在，也意识不到外界状态的变化。与此相似，任何外界的进程均感觉不到一个孤立的原子操作的内在状态的变化。这就是所谓的原子操作的“全有或全无”的性质，即一个原子操作要么全部完成，要么在执行过程中出现错误的时候相当于根本没有执行。</li>
+<li>原子操作失效时，可以通过简单地重做来恢复。</li>
+</ul>
+<h2 id="节点故障的处理"><a href="#节点故障的处理" class="headerlink" title="节点故障的处理"></a>节点故障的处理</h2><p>向前式恢复和向后式恢复：</p>
+<ol>
+<li><p>在向前式恢复中，假定可以完全准确地得到系统中的故障和损失的性质，这样就有可能去掉这些故障从而使得系统继续向前执行。</p>
+</li>
+<li><p>向后式恢复适用于系统的故障无法预知和去掉的情况，在这种情况下，要定时地存储系统的状态，这样当失效导致系统处于不一致的状态时，系统可以恢复到从前没有发生故障的状态，在此状态下重新执行。</p>
+</li>
+</ol>
+<p><strong>向后式恢复</strong>：</p>
+<ul>
+<li>检查点：在向后式恢复中进程被恢复到一个先前的正确的状态。进程执行中的一些点被称为“检查点”(checkpoint)，在以后发生错误的情况下，进程可以被恢复到这些点。在检查点的实现过程中，需要考虑两个主要问题：<em>检查点的存储</em>和<em>检查点的更新</em>。 </li>
+<li>有两种方法来保存检查点：</li>
+<li><ul>
+<li>(1)每一个检查点被组播到每一个备份模块；</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)每个检查点被存储在它的本地坚固存储器中。当进程正确地从一个旧的检查点运行到一个新的检查点时，旧的检查点就要被新的检查点替换。当进程执行到两个检查点之间时发生错误，那么进程应该卷回到旧的检查点处重新执行。</li>
+</ul>
+</li>
+<li><p>检查点的原子更新：当使用新的检查点替换旧的检查点的过程中，系统也会发生失效。这可以通过检查点的原子更新过程来解决，也就是说，在检查点的更新中，要么旧的检查点被新的检查点替换，要么旧的检查点被完整地保留。</p>
+</li>
+<li>检查点原子更新的实现： 假设库A和库B现在保存的检查点是C1，现在要用检查点C2取代库A和库B的内容。在取代前，假设Ta1=Ta2=Tb1=Tb2=1，检查点的更新过程如下：</li>
+<li><ul>
+<li>(1) 为了更新库A，先置Ta1=2；</li>
+</ul>
+</li>
+<li><ul>
+<li>(2) 将库A的内容用检查点C2取代；</li>
+</ul>
+</li>
+<li><ul>
+<li>(3) 库A更新完毕，置Ta2=2；</li>
+</ul>
+</li>
+<li><ul>
+<li>(4) 为了更新库B，先置Tb1=2；</li>
+</ul>
+</li>
+<li><ul>
+<li>(5) 将库B的内容用检查点C2取代；</li>
+</ul>
+</li>
+<li><ul>
+<li>(6) 库B更新完毕，置Tb2=2；</li>
+</ul>
+</li>
+<li><p>识别在检查点更新过程中发生的失效 ：</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\error_processInDistributedSystem.png" alt="error_processInDistributedSystem.png"></p>
+</blockquote>
+<ul>
+<li>基于影像页面技术的恢复方案：在基于影像页面技术的方案中，当进程需要修改一个页面时，系统复制该页并保留在坚固存储器中。系统中每个页面都有两个拷贝，当进程在执行的过程中，只有其中的一个拷贝被进程修改，另一个拷贝就作为影像页面。如果进程失效，则丢弃被修改的拷贝，系统根据影像页面进行恢复。如果进程成功运行，则每一份影像页面被相应的修改后的页面替换。</li>
+</ul>
+<p><strong>向前式恢复：</strong></p>
+<ul>
+<li>一个进程或任务的初始拷贝由不同的处理器来运行。</li>
+<li>这些版本的结果在检查点进行表决或比较，如果表决结果是成功的，则可以获得一个储存在坚固存储器中的正确结果。</li>
+<li>如果表决结果是失败的，对以前的任务进行一次回卷执行。也就是说，在后备处理器上再运行以前的任务，目的是获得正确的结果。 </li>
+<li>尽管在所有版本都失效(所有结果都不正确)或者表决也不能获得正确结果的情况下，回卷运行是不可避免的，但由于利用了现存的正确结果而不必从头重新开始，还是节省了回卷时间。</li>
+</ul>
+<blockquote>
+<p><img src="\img\node_error_process_forward.png" alt="node_error_process_forward.png"></p>
+</blockquote>
+<ul>
+<li><p>向前式恢复方案的实例：Ii，Ii+1和Ii+2是检查点间隔。两进程X和Y均运行一个进程的同一个版本。在每个检查点之前，需要对结果进行比较并确认是否正确。S是一个后备处理器，对两个间隔Ii和Ii+1进行验证。有以下四种可能： </p>
+</li>
+<li><p>(1) 没有并发重试。如果X和Y都在间隔Ii正确运行，那么X和Y在间隔Ii所得的结果是相同的，S不进行并发重试。</p>
+</li>
+<li><p>(2) 有非回卷的并发重试。在Ii中出现了错误，但在两个合法的检查点间隔Ii+1和Ii+2中间没有错误。</p>
+</li>
+<li><ul>
+<li>如果我们用(Xi,Yi,Si)代表在间隔Ii之中X、Y和S的状态，并且用0代表错误，1代表正确，d代表没有关系(也就是说，或者错误或者正常)。(Xi,Yi,Si)就有两种情况：(1,0,1)和(0,1,1)，无论哪种情况，系统都可以判断哪个进程是正确的，所以不用回卷。</li>
+</ul>
+</li>
+<li><p>(3) 在一次并发重试的间隔后进行回卷。这种情况对应于在Ii中有两个进程(X、Y和S中的两个)有错误的情况。</p>
+</li>
+<li><ul>
+<li>如果我们用(Xi,Yi,Si)代表在间隔Ii之中X、Y和S的状态，那我们就得到三种情况：(1,0,0)，(0,1,0)，(0,0,d)。这三种情况是在一次并发重试的间隔后进行回卷。系统卷回到Ii的开始处。</li>
+</ul>
+</li>
+<li><p>(4) 在并发重试的两次间隔之后回卷。该情况下在检查点间隔Ii+1处出现了一个额外的错误。</p>
+</li>
+<li><ul>
+<li>如果我们用(Xi,Yi,Si,Xi+1,Yi+1,Si+1)代表在间隔Ii和Ii+1中X、Y和S的状态，这种情况对应于以下描述的四种情形：(1,0,1,d,d,0)，(1,0,1,0,d,d)，(0,1,1,d,d,0)，(0,1,1,d,0,d)。可以确定间隔Ii中哪个进程是正确的，但是不能确定间隔Ii+1中哪个进程是正确的。系统卷回到间隔Ii+1的起始处。</li>
+</ul>
+</li>
+</ul>
+<h2 id="分布式检查点算法"><a href="#分布式检查点算法" class="headerlink" title="分布式检查点算法"></a>分布式检查点算法</h2><p><strong>一致性检查点</strong></p>
+<ul>
+<li><p>全局状态：一种全局状态的定义是一系列局部状态的集合，这里的局部状态就是一个进程的检查点，每个局部进程有一个局部状态。</p>
+</li>
+<li><p>局部检查点可能组成如下<em>两种不一致的全局状态</em>： </p>
+</li>
+<li><ul>
+<li><strong>丢失报文</strong>。进程Pi的检查点状态显示它给进程Pj发送了报文m，但是进程Pj并没有关于该报文的纪录。 </li>
+</ul>
+</li>
+<li><ul>
+<li><strong>孤儿报文</strong>。进程Pj的检查点状态显示它收到了一个来自进程Pi的报文m，但是进程Pi的状态显示它没有向进程Pj发送过报文m。</li>
+</ul>
+</li>
+<li><p>不一致全局状态实例：</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\check_point.png" alt="check_point.png"></p>
+</blockquote>
+<ul>
+<li><strong>多米诺效应</strong>(domino effect)</li>
+<li>为了解决孤儿报文的问题，进程Pj回卷到上一个检查点时，要清除对孤儿报文的纪录。然而，这样一来有可能出现这样一种情况：在最近的检查点和上一个检查点之间，Pj向Pi发送了一个报文n，假定Pi在当前检查点之前收到了报文n，现在这个报文n成了孤儿报文。这样，Pi需要进一步回卷。这种由于一个进程的回卷导致另外一个或多个进程的回卷的效应叫做多米诺效应。</li>
+</ul>
+<blockquote>
+<p><img src="\img\domino_effect.png" alt="domino_effect.png"></p>
+</blockquote>
+<ul>
+<li><p>一个强一致(strongly consistent)的检查点集合是由一系列的<em>没有孤儿报文和没有丢失报文</em>的局部检查点组成。 </p>
+</li>
+<li><p>一个一致的检查点集合是由一系列<em>没有孤儿报文</em>的局部检查点组成。 </p>
+</li>
+</ul>
+<blockquote>
+<p>显然一个强一致的检查点集合包括一系列局部检查点，在这些检查点之间，进程之间没有报文传送。如果每个进程都在发送一个报文之后生成一个检查点，那么最近的检查点集合将永远是一致的。</p>
+</blockquote>
+<ul>
+<li>恢复线和切割线：当一个进程或系统失效的时候要求利用这些局部状态重新构造一个全局一致的状态。一个分布式快照对应一个全局一致的状态，这个分布式快照可以作为一个恢复线(recovery line)用于恢复。一个恢复线对应于最近的一个一致性切割线。</li>
+</ul>
+<blockquote>
+<p><img src="\img\check_point1.png" alt="check_point1.png"></p>
+</blockquote>
+<p><strong>异步检查点</strong></p>
+<ul>
+<li>异步检查点算法中程序中检查点状态的保存过程较为简单，程序中各进程周期性地相互独立地保存自己的运行状态，程序各进程之间不需要相互协商。 </li>
+<li>在恢复过程中，各进程之间则需要相互协商通过复杂的回卷算法各自回卷到合适的检查点时刻以使整个程序的各个进程恢复到最近的一个一致的全局状态。 </li>
+<li>一致检查点的检测方法：</li>
+<li><ul>
+<li>比较发送的和接收的报文数量来检测孤儿报文的存在。如果接收到的报文数目和任何发送报文的进程发送的报文的数目是一致的，那么就可以认为找到了一个局部检查点的一致集合。 </li>
+</ul>
+</li>
+<li><ul>
+<li>使用间隔依赖图来进行检测。如果每个进程i的向量时钟是LCi，一个检查点集合是一致的，当且仅当不存在i和j满足LCi＜LCj。</li>
+</ul>
+</li>
+</ul>
+<p>异步检查点算法的优缺点：</p>
+<ul>
+<li>优点是允许分布式程序的各个进程拥有最大程度的自治性，因而算法的延迟较小。</li>
+<li>缺点之一是由于每个进程需要保存若干时刻的检查点信息，空间开销较大；</li>
+<li>缺点之二是在恢复过程中可能会重复回卷，甚至出现多米诺效应，使程序一直回卷到初始状态。</li>
+</ul>
+<blockquote>
+<p>另一个缺点是需要大量存储空间</p>
+</blockquote>
+<p><strong>同步检查点</strong></p>
+<ul>
+<li>在同步检查点算法中，各相关的进程协调它们的局部检查点的建立行为，以保证所有的最近的检查点都是一致的。</li>
+<li><p>在同步检查点中，只有最近的一致的检查点集合才需要被维护和保存。</p>
+</li>
+<li><p>由于使用同步检查点算法，各进程的局部检查点组成的集合是一个全局一致的状态，所以在恢复时各个进程只需要简单地从检查点处重新开始执行。</p>
+</li>
+<li>同步检查点算法的优点是每个进程只需保存最近时刻的检查点信息，空间开销较小，且在恢复的时候没有多米诺效应。</li>
+<li>其缺点是，在建立检查点时，各进程间的同步使程序运行中止时间较长，且牺牲了分布式程序的自治性。</li>
+</ul>
+<p>同步检查点算法</p>
+<ul>
+<li><strong>Sync-and-Stop(SNS)算法</strong>中有一个进程pc负责管理全局检查点建立过程。</li>
+<li>各进程的检查点建立过程如下：</li>
+<li><ul>
+<li>pc向所有进程广播检查点开始报文Mb(第一次同步开始)；</li>
+</ul>
+</li>
+<li><ul>
+<li>任一个进程接收到报文Mb后停止运行，并在自己所发送的报文全部到达接收者后向pc进程发送报文Ms1；</li>
+</ul>
+</li>
+<li><ul>
+<li>pc接收到所有进程发送的报文Ms1后，即意味着第一次同步结束。pc向各进程广播报文Mchk，第二次同步开始；</li>
+</ul>
+</li>
+<li><ul>
+<li>任一个进程接收到报文Mchk后，立即作局部检查点，检查点建立完成之后向pc发送报文Ms2；</li>
+</ul>
+</li>
+<li><ul>
+<li>pc接收到所有进程发送的报文Ms2后，意味着第二次同步结束。pc向所有进程广播报文Me；</li>
+</ul>
+</li>
+<li><ul>
+<li>各进程接收到报文Me后，删除旧的检查点，仅保留新的检查点，然后继续执行。SNS算法的恢复过程十分简单，只需回卷到检查点处继续执行。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>经过第一次同步之后，任何进程所发送的报文都已经被对应的接收进程接收到，任何进程之间不会存在孤儿报文，满足一致性的要求。</p>
+</blockquote>
+<ul>
+<li><strong>Chandy-Lamport(CL)算法</strong>：</li>
+<li>机器mc与m1之间有通道直接相连，机器mc与m1之间可直接相互发送报文，机器mc与m1称为直接相连；机器mc与m2之间没有直接通道相连，机器mc与m2之间相互发送的报文要通过m1转发，机器mc与m2称为间接相连。</li>
+</ul>
+<blockquote>
+<p><img src="\img\ChandyLamport.png" alt="ChandyLamport.png"></p>
+</blockquote>
+<ul>
+<li><ul>
+<li>建立检查点的过程可由任一个进程pc发起，pc进程停止运行，并向与其所在机器直接相连的机器上的进程广播报文Mb，然后进程pc建立局部检查点；</li>
+</ul>
+</li>
+<li><ul>
+<li>进程p接收到报文Mb后，若进程p还未开始建立检查点，则进程p停止运行并立即向与其所在机器直接相连的机器上的进程广播报文Mb，然后进程p建立局部检查点；</li>
+</ul>
+</li>
+<li><ul>
+<li>进程p开始建立检查点后，若接收到其他进程发送的非检查点控制报文m，则保存报文m；</li>
+</ul>
+</li>
+<li><ul>
+<li>当进程p完成局部检查点的建立，并且接收到与其所在机器直接相连的机器上的所有进程发送的报文Mb后，进程p向pc进程发送报文Ms；</li>
+</ul>
+</li>
+<li><ul>
+<li>当进程pc接收到所有进程发送的报文Ms后，pc进程向所有进程发送报文Me，并删除本进程旧的检查点，进程pc继续执行；</li>
+</ul>
+</li>
+<li><ul>
+<li>其他进程p接收到报文Me后，删除本进程旧的检查点，继续执行。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>在恢复过程中，CL算法在回卷到当前检查点重新执行的同时还必须重发过程(3)中保存的报文m。与SNS算法相比，CL算法减少了两次全局同步的开销。CL算法的缺点是其控制报文的数目与机器间的拓扑结构有关。</p>
+</blockquote>
+<p><strong>混合检查点</strong></p>
+<ul>
+<li>其基本思想是在一个较长的时间段中使用同步检查点，而在较短的时间段内使用异步检查点。</li>
+<li>也就是说，在一个同步时间段里，会有若干个异步时间段。</li>
+<li><p>因此，我们可以有一个可以控制的回卷，从而保证不会在建立检查点的过程中引入过多的开销。</p>
+</li>
+<li><p>例如：准同步检查点。这个方法允许每个进程异步地设置检查点，从而保证了进程的独立性。同时，对恢复线的扩展采用发起通信的检查点协调方法，从而可以限制恢复过程中回卷的传播。</p>
+</li>
+</ul>
+<p><strong>报文日志</strong></p>
+<ul>
+<li><p>报文日志：为了减少回卷时撤销的计算工作量，所有接收的和发送的报文都可以记录下来。前者叫做<em>接收者日志</em>，后者叫做<em>发送者日志</em>。</p>
+</li>
+<li><p>当Pj的检查点被恢复到一个没有孤儿报文，而且所有要发送的报文都已经发送的一致状态的时候，可以用Pj的接收者日志减少回卷工作量，即只需要将Pj所收到的报文重新向Pj发送一遍即可。</p>
+</li>
+<li><p>如果进程Pj记录了报文m的接收者日志，那么Pi和Pj的当前检查点集合就可以看作是一致的。一旦由于Pj由于失效回卷到当前检查点重新执行的时候，报文m就可以通过Pj的接收者日志重新发送给进程Pj，不会引起进程Pi的任何回卷。</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\message_log.png" alt="message_log.png"></p>
+</blockquote>
+<ul>
+<li>如果Pi在发送完报文m后失效，那么当进程Pi恢复到当前检查点后，它会根据发送者日志的纪录知道曾经发送过报文m，这样就没有必要再发送一次了。如果接收者Pj失效，而且没有接收者日志，它仍然可以根据从发送者日志中得到的报文正确恢复。</li>
+</ul>
+<blockquote>
+<p><img src="\img\message_log1.png" alt="message_log1.png"></p>
+</blockquote>
+<p><em>Alvisi和Marzullo的报文日志方案</em></p>
+<ul>
+<li><p><em>报文格式</em>：每个报文m包含有一个报文头用于存放重发这个报文和正确处理这个报文所必需的一些信息，例如，该报文的发送者和接收者，用于识别报文重复的序列号，另外还有一个传输号用于决定何时该报文需要传递给接收进程。</p>
+</li>
+<li><p><em>坚固的报文</em>：如果一个报文不再会丢失，则称这个报文是坚固的，例如当一个报文已经被写入到坚固存储器中，就可以说这个报文是坚固的。坚固的报文可以重新发送给失效后重新恢复的进程。</p>
+</li>
+<li><p><em>进程集合DEP(m) 的组成</em>：一个报文m对应于一个进程集合DEP(m) ，该集合包含了与报文m传输有关的所有进程。</p>
+</li>
+<li><ul>
+<li>DEP(m)包含了所有接收该报文m的进程；</li>
+</ul>
+</li>
+<li><ul>
+<li>如果另外一个报文m’和报文m有因果依赖性关系，并且m’是传递给进程Q的，那么DEP(m)集合中应该包含进程Q。</li>
+</ul>
+</li>
+<li><ul>
+<li>因果依赖性关系：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>如果m’和m是由同一个进程发送的，并且m的发送先于m’的发送，则说m’和报文m的传输有因果依赖性关系。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>同样地，如果m”和m’有因果依赖性关系，m’和m有因果依赖性关系，则说m”和m有因果依赖性关系。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><em>进程集合COPY(m) 的组成</em>：如果一个进程有报文m的一个拷贝，但是这个拷贝还没有写入到它的局部坚固存储器中的话，该进程就属于集合COPY(m)。当一个进程发送了报文m，它也属于集合COPY(m)。值得注意的是COPY(m)集合中所包含的进程是那些拥有报文m的拷贝，并且在出现失效的时候，能够重新传输报文m的进程。当COPY(m)中的所有进程都失效时，显然报文m就不能被重新传输。</p>
+</li>
+<li><p><em>孤儿进程</em>：假设在一个分布式系统中，某个或某些进程失效了，Q是一个存活下来的进程。有一个报文m，如果进程Q是集合DEP(m)中的一个元素，而集合COPY(m)中的所有进程都失效了，那么Q就是一个孤儿进程。也就是说，当一个进程依赖于报文m，但是无法向该进程重发报文m，该进程就是一个孤儿进程。</p>
+</li>
+<li><p><strong>避免孤儿进程的出现</strong>：需要确保当集合COPY(m)中的进程都失效的时候，DEP(m)中没有存活的进程。也就是说，DEP(m)中的进程也必须全部失效。这可以通过如下的强制方式得以实现，当一个进程成为DEP(m)中的一个成员的时候，我们强制它也成为COPY(m)的一个成员。也就是说，当一个进程依赖于报文m的传输的时候，它将保持报文m的一个副本。</p>
+</li>
+<li><p><em>悲观的日志协议</em>：每一个非坚固的报文m，确保最多只有一个进程依赖于报文m。也就是说，对于每一个非坚定的报文m，悲观的日志协议确保该报文最多只传给了一个进程。值得注意的是，一旦一个非坚定的报文m传递给了进程P，P就成为集合COPY(m)的一个成员。</p>
+</li>
+<li><ul>
+<li>最坏的情况是在报文m写入到坚固存储器之前，进程P失效了。因为在悲观的日志协议下，在报文m写入到坚固存储器之前，不允许P发送任何报文，所以不会有其他进程依赖于报文m，也就不会有重发报文m的可能性。所以，使用悲观的日志协议避免了孤儿进程的问题。</li>
+</ul>
+</li>
+<li><p><em>乐观的日志协议</em>：在乐观的日志协议下，实际的工作是在失效发生之后进行的。假定对某个报文m来说，如果集合COPY(m)中的每个进程都失效了，DEP(m)中的每个孤儿进程一直要回卷到以前的某个状态，在这个状态下，该进程不再是集合DEP(m)中的一个成员。很明显，乐观的日志协议需要保持追踪依赖性关系，从而使得它的实现变得复杂。</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">分布式计算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/06/06/parellel_and_distributed_computing/distributed_compute5/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/06/13/parellel_and_distributed_computing/distributed_compute6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          分布式系统的容错技术(下)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/04/algoDesign/dp/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 chenxf
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: false
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.2d7529.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分布式计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

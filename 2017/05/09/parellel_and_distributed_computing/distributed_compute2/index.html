@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://chenfeng.github.io">
+  <title>分布式路由算法 | chenxfeng&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="(并行与分布式计算十)
+分布式路由算法导论进程间通信类型
+有效的进程间通信对分布式系统的性能很重要
+
+根据目标个数的不同，进程间通信的类型有：
+
+
+一对一（单播）
+
+
+
+一对多（组播）
+
+
+
+一对所有（广播）
+
+
+
+通信延迟及其原因在基于消息传递的分布式系统中，消息一般在到达目标节点之前可能要通过一个或多个中间节点，故存在通信延迟。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式路由算法">
+<meta property="og:url" content="https://chenfeng.github.io/2017/05/09/parellel_and_distributed_computing/distributed_compute2/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="(并行与分布式计算十)
+分布式路由算法导论进程间通信类型
+有效的进程间通信对分布式系统的性能很重要
+
+根据目标个数的不同，进程间通信的类型有：
+
+
+一对一（单播）
+
+
+
+一对多（组播）
+
+
+
+一对所有（广播）
+
+
+
+通信延迟及其原因在基于消息传递的分布式系统中，消息一般在到达目标节点之前可能要通过一个或多个中间节点，故存在通信延迟。">
+<meta property="og:image" content="https://chenfeng.github.io/\img\distributed_system.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\dij1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\dij2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\dij3.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\dij4.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\dij5.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\dij_end.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ford1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ford2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ford3.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ford4.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ford_end.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ARPAnet1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ARPAnet2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ARPAnet3.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ARPAnet4.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ARPAnet5.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\XY_router.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_adjustive.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_fold_line.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_multiNeighbor.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\router_algo_hypercube.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\hypercube1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\hypercube2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\multicast_hamilton.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\multicast_hamilton2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\multicast_hamilton3.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\multicast_hamilton4.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\multicast_router1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\multicast_router2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\multicast_treeBased_4dHypercube.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\multicast_treeBased.png">
+<meta property="og:updated_time" content="2017-05-19T08:01:49.457Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式路由算法">
+<meta name="twitter:description" content="(并行与分布式计算十)
+分布式路由算法导论进程间通信类型
+有效的进程间通信对分布式系统的性能很重要
+
+根据目标个数的不同，进程间通信的类型有：
+
+
+一对一（单播）
+
+
+
+一对多（组播）
+
+
+
+一对所有（广播）
+
+
+
+通信延迟及其原因在基于消息传递的分布式系统中，消息一般在到达目标节点之前可能要通过一个或多个中间节点，故存在通信延迟。">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\distributed_system.png">
+  
+    <link rel="alternative" href="/atom.xml" title="chenxfeng&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.2d7529.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/">chenxf</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/chenxfeng" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="https://avatars0.githubusercontent.com/u/18254493?v=3&amp;s=460" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">chenxf</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/chenxfeng" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 50%">
+				
+				
+					<li style="width: 100%"><a href="/">主页</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-parellel_and_distributed_computing/distributed_compute2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      分布式路由算法
+    </h1>
+  
+
+        
+        <a href="/2017/05/09/parellel_and_distributed_computing/distributed_compute2/" class="archive-article-date">
+  	<time datetime="2017-05-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算十)</p>
+<h2 id="分布式路由算法导论"><a href="#分布式路由算法导论" class="headerlink" title="分布式路由算法导论"></a>分布式路由算法导论</h2><h3 id="进程间通信类型"><a href="#进程间通信类型" class="headerlink" title="进程间通信类型"></a>进程间通信类型</h3><ul>
+<li><p>有效的进程间通信对分布式系统的性能很重要</p>
+</li>
+<li><p>根据目标个数的不同，进程间通信的类型有：</p>
+</li>
+<li><ul>
+<li>一对一（单播）</li>
+</ul>
+</li>
+<li><ul>
+<li>一对多（组播）</li>
+</ul>
+</li>
+<li><ul>
+<li>一对所有（广播）</li>
+</ul>
+</li>
+</ul>
+<h3 id="通信延迟及其原因"><a href="#通信延迟及其原因" class="headerlink" title="通信延迟及其原因"></a>通信延迟及其原因</h3><p>在基于消息传递的分布式系统中，消息一般在到达目标节点之前可能要通过一个或多个中间节点，故存在通信延迟。</p>
+<a id="more"></a>
+<ul>
+<li><p>分布式系统中的通信延迟依赖于如下四个因素：</p>
+</li>
+<li><ul>
+<li>网络拓扑：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>通常用图表示</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>定义处理单元（PE）之间是如何连接的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>路由</p>
+</li>
+<li><ul>
+<li>决定如何选择路径以便将消息传递到目的地。</li>
+</ul>
+</li>
+<li><p>流量控制</p>
+</li>
+<li><ul>
+<li>流量控制决定在消息沿路径传递时如何分配网络资源，包括：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>信道</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>缓冲区</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>交换</p>
+</li>
+<li><ul>
+<li>这是一个实际的机制，它决定消息如何从一个输人信道转到一个输出信道。</li>
+</ul>
+</li>
+</ul>
+<h3 id="路由算法类型"><a href="#路由算法类型" class="headerlink" title="路由算法类型"></a>路由算法类型</h3><p>路由算法类型包括：</p>
+<ul>
+<li>特殊 vs. 一般</li>
+<li>最短 vs. 非最短</li>
+<li>确定型 vs. 适应型</li>
+<li>容错型 vs. 非容错型</li>
+<li>冗余型 vs. 非冗余型</li>
+<li>死锁避免型 vs. 非死锁避免型</li>
+</ul>
+<p><strong>一般型路由和特殊型路由</strong></p>
+<ul>
+<li>一般型路由算法</li>
+<li><ul>
+<li>适合于所有类型的网络</li>
+</ul>
+</li>
+<li><ul>
+<li>但是对于某种特定网络不是很有效</li>
+</ul>
+</li>
+<li><p>特殊型路由算法</p>
+</li>
+<li><ul>
+<li>只对特定的网络类型有效，如超立方、网格等</li>
+</ul>
+</li>
+<li><ul>
+<li>这些算法由于利用了特定网络的拓扑属性，所以效率往往较高。</li>
+</ul>
+</li>
+</ul>
+<p><strong>最短路由算法和非最短路由算法</strong></p>
+<ul>
+<li>最短路径算法</li>
+<li><ul>
+<li>对给定的源-目标对给出一个代价最小的路径</li>
+</ul>
+</li>
+<li><ul>
+<li>路径的代价: 所有跳步（连接）代价的线性和。</li>
+</ul>
+</li>
+<li><ul>
+<li>缺点：可能会导致网络某一部分的拥塞</li>
+</ul>
+</li>
+<li><p>非最短路由算法</p>
+</li>
+<li><ul>
+<li>可以将消息路由到一个更长的路径从而避免拥塞。</li>
+</ul>
+</li>
+<li><ul>
+<li>在某些情况下，随机路由可能是有效的。</li>
+</ul>
+</li>
+</ul>
+<p><strong>确定型路由和适应型路由</strong></p>
+<ul>
+<li>确定型路径算法</li>
+<li><ul>
+<li>路由路径只在网络的拓扑发生改变时才发生变化，</li>
+</ul>
+</li>
+<li><ul>
+<li>而且它不使用任何有关网络状态的消息。</li>
+</ul>
+</li>
+<li><p>适应型路由算法</p>
+</li>
+<li><ul>
+<li>路径根据网络流量而改变</li>
+</ul>
+</li>
+</ul>
+<p><strong>容错型路由和非容错型路由</strong></p>
+<ul>
+<li>容错型路由算法</li>
+<li><ul>
+<li>即使出现错误，被路由消息也能保证送到。</li>
+</ul>
+</li>
+<li><p>非容错型路由算法</p>
+</li>
+<li><ul>
+<li>假定路由不会出错</li>
+</ul>
+</li>
+<li><ul>
+<li>路由算法不必动态调整自己的活动。</li>
+</ul>
+</li>
+</ul>
+<p><strong>冗余型路由和非冗余路由</strong></p>
+<ul>
+<li>冗余型路由算法</li>
+<li><ul>
+<li>用几个边分离（或节点分离）的路径向同一个目标发送多个拷贝。</li>
+</ul>
+</li>
+<li><ul>
+<li>只要这些路径中的一个是好的，那么就会至少有一个消息拷贝到达目标。</li>
+</ul>
+</li>
+<li><ul>
+<li>必须保证有且只有一个拷贝被接收</li>
+</ul>
+</li>
+<li><p>非冗余型路由算法</p>
+</li>
+<li><ul>
+<li>对每个目标只需转发消息的一个拷贝。</li>
+</ul>
+</li>
+</ul>
+<p><strong>死锁避免型路由</strong></p>
+<ul>
+<li>死锁避免型路由算法</li>
+<li><ul>
+<li>通过仔细设计的路由算法，保证不发生死锁。</li>
+</ul>
+</li>
+<li><p>非死锁避免型路由算法</p>
+</li>
+<li><ul>
+<li>没有特别的设施来预防或避免死锁。</li>
+</ul>
+</li>
+<li><ul>
+<li>可能发生死锁，也可能不发生死锁。</li>
+</ul>
+</li>
+</ul>
+<h3 id="路由函数"><a href="#路由函数" class="headerlink" title="路由函数"></a>路由函数</h3><ul>
+<li>路由函数</li>
+<li><ul>
+<li>定义一个消息如何从源节点路由到目标节点。</li>
+</ul>
+</li>
+<li><ul>
+<li>每个PE在收到一个消息以后，都将决定：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>1）把这条消息传送到本地存储器，还是</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>2）转发到一个邻接的PE</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>有许多不同的路由函数的定义，例如依赖于目标的、依赖于输入的、依赖于源的、依赖于路径的等等</p>
+<p>这里介绍的仅使用依赖于目标的路由函数</p>
+<h2 id="一般类型网络的最短路径路由算法"><a href="#一般类型网络的最短路径路由算法" class="headerlink" title="一般类型网络的最短路径路由算法"></a>一般类型网络的最短路径路由算法</h2><p>许多分组交换网，如法国的Transpac或美国的ARPAnet都使用最短路径路由</p>
+<p>介绍三个一般类型网络的最短路径路由算法：</p>
+<ol>
+<li>Dijkstra集中式算法</li>
+<li>Ford分布式算法</li>
+<li>ARPAnet路由算法</li>
+</ol>
+<p><em>分布式系统图示</em></p>
+<blockquote>
+<p><img src="\img\distributed_system.png" alt="distributed_system.png"></p>
+</blockquote>
+<p>一般地，一个分布式系统可以用图来表示：</p>
+<ul>
+<li>节点代表PE（处理单元）</li>
+<li>边代表通信链接</li>
+<li>每个链接的数字代表链接代价</li>
+</ul>
+<h3 id="Dijkstra集中式算法"><a href="#Dijkstra集中式算法" class="headerlink" title="Dijkstra集中式算法"></a>Dijkstra集中式算法</h3><ul>
+<li><p>第一种类型的算法以集中式的风格进行路由</p>
+</li>
+<li><p>Dijkstra集中式算法可以发现一个源节点到所有其他节点的最短路径。</p>
+</li>
+<li><p>Dijkstra集中式算法需求：</p>
+</li>
+<li><ul>
+<li>需要了解给定网络的全局拓扑消息，即：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>网络中所有其他节点的列表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>节点之间的所有链接</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>每个链接的代价</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><em>算法描述</em></p>
+<ul>
+<li><p>设D(v)是从源s到节点v的距离(沿给定路径的链接的代价的和), l(v,w)是节点v和w之间的代价</p>
+</li>
+<li><p>1.设N={s}；对不在N中的每一个节点v，令D(v)=l(s,v)。对那些没有连接到s的节点赋值为 $\infty$</p>
+</li>
+<li><p>2.找到不在N中的一个节点w，使D(w)最小并将w加入N；然后对所有不在N中的其它节点计算并更新D(v)： D(v) := min[D(v), D(w)+l(w,v)] </p>
+</li>
+<li><p>重复步骤2，直到所有节点都在N中</p>
+</li>
+</ul>
+<p><em>算法举例</em></p>
+<p>上述算法作用于如图所示的网络：以P5为源节点</p>
+<blockquote>
+<p><img src="\img\dij1.png" alt="dij1.png"></p>
+</blockquote>
+<ul>
+<li>1.集合N只包含源节点P5即N = { P5 }。</li>
+<li><ul>
+<li>对不在N中的节点P1,P2,P3,P4计算：</li>
+</ul>
+</li>
+<li><ul>
+<li>D(1)=D(2)= $\infty$ (由于P1和P2不与P5直接相连)</li>
+</ul>
+</li>
+<li><ul>
+<li>D(3)=l(P5, P3) = 20</li>
+</ul>
+</li>
+<li><ul>
+<li>D(4)=l(P5, P4)=2</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\dij2.png" alt="dij2.png"></p>
+</blockquote>
+<ul>
+<li>2.取D(1),D(2),D(3),D(4)中具最小值的对应节点P4加入到集合N中, N = {P5, P4}</li>
+<li><ul>
+<li>对不在N中的其它节点P3,P2,P1更新</li>
+</ul>
+</li>
+<li><ul>
+<li>D(1)=min{D(1), D(4)+l(4,1)} = min{$\infty$, 2+$\infty$}=$\infty$,</li>
+</ul>
+</li>
+<li><ul>
+<li>D(2)=min{D(2), D(4)+l(4,2)} =min{$\infty$, 2+1}=3</li>
+</ul>
+</li>
+<li><ul>
+<li>D(3)=min{D(3), D(4)+l(4,3)} =min{20, 2+2}=4</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\dij3.png" alt="dij3.png"></p>
+</blockquote>
+<ul>
+<li>3.取D(1),D(2),D(3)中具最小值的对应节点P2加入到集合N中，N={P5,P4,P2}</li>
+<li><ul>
+<li>对不在N中的其它节点P3,P1更新</li>
+</ul>
+</li>
+<li><ul>
+<li>D(1)=min{D(1), D(2)+l(2,1)} =min{$\infty$,3+4}=7</li>
+</ul>
+</li>
+<li><ul>
+<li>D(3)=min{D(3), D(2)+l(2,3)} =min{4, 3+3}=4</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\dij4.png" alt="dij4.png"></p>
+</blockquote>
+<ul>
+<li>4.取D(1),D(3)中具最小值的对应节点P3加入到集合N中, N = {P5,P4,P2,P3}</li>
+<li><ul>
+<li>对不在N中的其它节点P1更新</li>
+</ul>
+</li>
+<li><ul>
+<li>D(1)=min{D(1), D(3)+l(3,1)} =min{7, 4+5}=7</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\dij5.png" alt="dij5.png"></p>
+</blockquote>
+<ul>
+<li>5.取D(1)中具有最小值的对应节点P1加入到集合N中, N= { P5,P4,P2,P3,P1}</li>
+<li><ul>
+<li>此时，节点都在N中，算法结束</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\dij_end.png" alt="dij_end.png"></p>
+</blockquote>
+<h3 id="Ford分布式算法"><a href="#Ford分布式算法" class="headerlink" title="Ford分布式算法"></a>Ford分布式算法</h3><ul>
+<li><p>第二种类型的路由算法采用分布式的方法进行路由</p>
+</li>
+<li><p>分布式算法: 每个节点在交互式的基础上和其邻节点交换代价和路由信息，直到这些节点的路由表到达最短路径的要求为止</p>
+</li>
+<li><p>Ford分布式算法也包括两个部分：</p>
+</li>
+<li><ul>
+<li>一个初始步骤</li>
+</ul>
+</li>
+<li><ul>
+<li>一个最短距离计算的步骤(最短距离指一个给定节点和目标节点之间的距离)</li>
+</ul>
+</li>
+<li><p>当所有节点都带有</p>
+</li>
+<li>1）一个表示它们到目标节点距离的标记以及</li>
+<li>2）沿着最短路径到达目标节点要经过的下一个节点的标记时</li>
+<li>算法结束</li>
+</ul>
+<p><em>算法描述</em></p>
+<ul>
+<li>每个节点v，都有(n,D(v))的标记。    </li>
+<li><ul>
+<li>D(v)代表该节点到目标节点的最短距离的当前值；</li>
+</ul>
+</li>
+<li><ul>
+<li>n是截至目前得到的最短路径的下一个节点。</li>
+</ul>
+</li>
+<li><p>初始步骤：</p>
+</li>
+<li><p>设d是目标节点, 令D(d)=0，将所有其它节点标记为(., $\infty$)</p>
+</li>
+<li><p>最短距离计算步骤：</p>
+</li>
+<li>对所有节点的最短路径做标记：</li>
+<li><ul>
+<li>对每个节点v≠d：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>使用v的每个邻节点w的当前D(w)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>计算D(w)+l(w, v)，使得D(v):=min{D(v),D(w)+l(w,v)}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>更新v的标记：用使上述表达式取值最小的邻接节点代替n，并用新值代替D(v)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>对每个节点重复上述操作，直到不再有改变</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><em>举例</em></p>
+<p>上述算法作用于如图所示的网络：以P5为目标节点</p>
+<blockquote>
+<p><img src="\img\ford1.png" alt="ford1.png"></p>
+</blockquote>
+<p>初始：令D(5) = 0，将其他节点P1,P2,P3,P4都标记为(., $\infty$)</p>
+<blockquote>
+<p><img src="\img\ford2.png" alt="ford2.png"></p>
+</blockquote>
+<ul>
+<li>1.对于P1，邻节点为P2,P3，由当前标记可知P2,P3距离P5都为$\infty$，则P1不能通过任何节点到达P5，P1仍标记为(., $\infty$)</li>
+<li>同理，P2仍标记为(., $\infty$)</li>
+<li>对于P3，邻节点为P1,P2,P4,P5，其中D(1)= D(2)=D(4)=$\infty$,D(5)=0</li>
+<li>由于P3到P5的距离20+D(5)为20小于当前D(3)= $\infty$, 表明P3经P5有最短路径可达P5, 故P3标记为(P5, 20)</li>
+<li>同理，P４标记为(P5, 2)</li>
+</ul>
+<blockquote>
+<p><img src="\img\ford3.png" alt="ford3.png"></p>
+</blockquote>
+<ul>
+<li>2.对于P1，邻节点为P2,P3，由当前标记可知P5距离P2为$\infty$，距离P3为20，则P1通过P3有最短路径到达P5，D(1)为P1到P3的距离与P3到P5的距离之和为5+20=25，故P1标记为(P3,25)</li>
+<li>对于P2，邻节点为P1,P3,P4，计算P2到Pi (i = 1,3,4)的距离与当前D(i)之和，并取最小值，可见计算P2到P4的距离与当前D(4)之和最小为3，说明P2经P4有最短路径到达P5，故P2标记更新为(P4,3)</li>
+<li>同理，更新P3和P4的标记为(P4,4)，(P5,2)</li>
+</ul>
+<blockquote>
+<p><img src="\img\ford4.png" alt="ford4.png"></p>
+</blockquote>
+<ul>
+<li><p>4.按同样方法更新P1,P2,P3,P4的标记为： (P2,7),(P4,3),(P4,4),(P5,2)</p>
+</li>
+<li><p>由于此后再重复以上算法试图更新每一个节点的标记都不会改变其标记，算法结束</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\ford_end.png" alt="ford_end.png"></p>
+</blockquote>
+<ul>
+<li>上例中，所有节点的行为在经过几轮之后都被同步了</li>
+<li>上述同步方法仅仅是为了便于演示, 同步方法是指所有节点在每一轮中都更新一次标记</li>
+<li>Ford算法也适用于异步系统，其中每个节点以随机的速率更新其D(v)值</li>
+</ul>
+<h3 id="ARPAnet路由算法"><a href="#ARPAnet路由算法" class="headerlink" title="ARPAnet路由算法"></a>ARPAnet路由算法</h3><ul>
+<li>ARPAnet的路由算法是一个可靠、实用的分布式路由算法，也是今天流行的Internet 路由算法的前身。</li>
+<li>与Ford算法比较相似</li>
+<li>不同的是</li>
+<li><ul>
+<li>算法中的节点都维护一个一般化的路由表，以便记录通过不同邻接节点的最短路径。</li>
+</ul>
+</li>
+<li><ul>
+<li>这个路由表包含从这个节点到所有其它节点的最优路径的延迟。</li>
+</ul>
+</li>
+<li><ul>
+<li>每隔固定的时间间隔，路由表就被传送到它的所有邻接节点，直到最小延迟表在某一点达到稳定为止。</li>
+</ul>
+</li>
+</ul>
+<p><em>举例说明</em></p>
+<ul>
+<li>用ARPAnet路由算法时，P1，P2，P3，P4的一般路由表，仍以P5为目标节点</li>
+<li>每个表格都包含通过每个邻居到达P5的最短距离</li>
+<li>假设在时刻0前已经达到了一个稳定点, 网络延迟表如图</li>
+</ul>
+<blockquote>
+<p><img src="\img\ARPAnet1.png" alt="ARPAnet1.png"></p>
+</blockquote>
+<ul>
+<li>假设0时刻，P4与P5之间链接失效，则它更新它的路由延迟表，并传输给P4的所有邻节点，从而使那些节点的路由延迟表发生变化，直到产生一个新的稳定点</li>
+</ul>
+<blockquote>
+<p><img src="\img\ARPAnet2.png" alt="ARPAnet2.png"></p>
+<p><img src="\img\ARPAnet3.png" alt="ARPAnet3.png"></p>
+<p><img src="\img\ARPAnet4.png" alt="ARPAnet4.png"></p>
+</blockquote>
+<ul>
+<li>上述过程一直持续到达到一个新的稳定点，P1，P2，P3，P4分别用了20，19，17，20个时间间隔，如下图所示</li>
+</ul>
+<blockquote>
+<p><img src="\img\ARPAnet5.png" alt="ARPAnet5.png"></p>
+</blockquote>
+<ul>
+<li>ARPAnet路由算法中, 每个节点对所有邻居都发送相同消息，对接收节点不做任何标识。<br>这样，某些节点就会接收无用消息。</li>
+<li>在链接节点失效时候，这些消息会导致我们不期望的循环。</li>
+<li>例如, ，P4和P5链接失效时，P4的最短路径为4，但是这个4来自于P2，而P2到P5的最短路径原来就依赖于P4与P5的链接，由于P4使用P2的信息时，P2的信息尚未得到更新，导致出现不期望的循环：P4-&gt;P2-&gt;P4</li>
+</ul>
+<p><em>不期望循环的消除</em></p>
+<ul>
+<li>循环的消除是在路由消息中包含路径的所有节点，并把这些消息发给邻居节点。</li>
+<li>然而，它的效率较底，因为它的额外开销太大。</li>
+<li>Shin和Chou，提出了一个避免循环算法：只需在路由消息中存储路径中最近的l个节点，l与相应网络中循环的最大长度有关</li>
+</ul>
+<h2 id="特殊类型网络的单播路由算法"><a href="#特殊类型网络的单播路由算法" class="headerlink" title="特殊类型网络的单播路由算法"></a>特殊类型网络的单播路由算法</h2><ul>
+<li>一般类型网络的路由算法适用于所有拓扑类型的网络。但是，每个节点需要维持路由延迟表，而且不适用于特殊类型的网络，原因是效率太低。</li>
+<li><p>得益于特殊网络的拓扑特性，可以不使用路由延迟表而构造最短路径路由算法</p>
+</li>
+<li><p>介绍三种特殊网络的单播路由算法：</p>
+</li>
+<li><ul>
+<li>双向环单播路由算法</li>
+</ul>
+</li>
+<li><ul>
+<li>网格和圆环单播路由算法</li>
+</ul>
+</li>
+<li><ul>
+<li>超立方单播路由算法</li>
+</ul>
+</li>
+</ul>
+<h3 id="双向环单播路由算法"><a href="#双向环单播路由算法" class="headerlink" title="双向环单播路由算法"></a>双向环单播路由算法</h3><ul>
+<li>在双向环上进行决定型单播路由非常简单：</li>
+<li><ul>
+<li>消息沿着一个方向被转发：顺时针或者逆时针</li>
+</ul>
+</li>
+<li><ul>
+<li>由于消息可以沿两个方向发送，所以由源节点根据目标节点的位置决定发送方向：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>如果目标离顺时针方向近，则用顺时针方向；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>否则选择逆时针方向。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>一个消息通过几个中间节点按照顺时针或逆时针方向传递，直到到达目标节点。</li>
+</ul>
+</li>
+<li><p>双向环上的单播路由算法可以使用两条路径：一条沿着顺时针，另一条沿着逆时针。</p>
+</li>
+<li>消息可以被复制，然后每个方向发一个拷贝；也可以分成两半，每半转发到一个方向。</li>
+</ul>
+<p><em>算法一般化</em></p>
+<ul>
+<li>双向环是k元1维立方，即只有一维度。</li>
+<li>若维度大于1，例如网格和超立方，就用有序维度路由</li>
+<li><ul>
+<li>每次将每个消息向一个维度路由</li>
+</ul>
+</li>
+<li><ul>
+<li>圆环：在一个维度中的各点以环的方式连接起来，带有周边连接</li>
+</ul>
+</li>
+<li><ul>
+<li>网格：一个维度中的各点以线性排列的形式连接起来，没有周边连接</li>
+</ul>
+</li>
+<li><p>环形路由方法可用于在一个维度中对消息进行路由。</p>
+</li>
+<li><ul>
+<li>沿着一个线性排列路由是很简单的。</li>
+</ul>
+</li>
+<li><ul>
+<li>当消息到达每个维度的对等者时，就使用下一个维度。</li>
+</ul>
+</li>
+<li><ul>
+<li>通过使经过的各个维度保持一个单调的顺序，就可以保证不会发生死锁。</li>
+</ul>
+</li>
+<li><ul>
+<li>但这种方法适应性差。</li>
+</ul>
+</li>
+</ul>
+<h3 id="网格和圆环单播路由算法"><a href="#网格和圆环单播路由算法" class="headerlink" title="网格和圆环单播路由算法"></a>网格和圆环单播路由算法</h3><ul>
+<li>网格和圆环是k元2维立方。</li>
+<li><ul>
+<li>圆环有周边邻接，</li>
+</ul>
+</li>
+<li><ul>
+<li>网格没有周边连接。</li>
+</ul>
+</li>
+<li>类似地，3维网格和圆环是k元3维立方。</li>
+<li>介绍以下路由算法</li>
+<li><ul>
+<li>2维网格的XY路由</li>
+</ul>
+</li>
+<li><ul>
+<li>最短且完全适应路由</li>
+</ul>
+</li>
+<li><ul>
+<li>折线路由</li>
+</ul>
+</li>
+<li><ul>
+<li>最大最短路径路由</li>
+</ul>
+</li>
+</ul>
+<p><strong>2维网格的XY路由</strong></p>
+<ul>
+<li>在2维网格中，有序维度路由叫XY路由。</li>
+<li><ul>
+<li>每个节点的地址为(x,y)。</li>
+</ul>
+</li>
+<li><ul>
+<li>消息首先沿着X维度转发，然后沿着Y维度路由。</li>
+</ul>
+</li>
+<li><ul>
+<li>特别地，若源和目标分别为(sx,sy)和(dx,dy)，则路由消息将在X维度上走|dx – sx| 步，然后在Y维度上走|dy– sy|步</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\XY_router.png" alt="XY_router.png"></p>
+</blockquote>
+<p><strong>最短且完全适应路由</strong></p>
+<ul>
+<li>在最短且完全适应路由中，每个中间节点，包括源节点，都要充分利用所有可行的最短路径。</li>
+<li>在2维网格中，</li>
+<li><ul>
+<li>只要dx–sx≠0且dy–sy≠0，每个节点在选择邻居时总有两个选择。</li>
+</ul>
+</li>
+<li><ul>
+<li>一个好的适应性路由算法应该能选择任意－个邻居并能尽可能地保持dx –sx≠0且dy–sy≠0的情况。</li>
+</ul>
+</li>
+<li><ul>
+<li>显然,XY路由是最不灵活的一个。 </li>
+</ul>
+</li>
+</ul>
+<p>适应性路由图示(只要dx–sx≠0且dy–sy≠0，每个节点在选择邻居时总有两个选择：X方向或者Y方向)</p>
+<blockquote>
+<p><img src="\img\router_adjustive.png" alt="router_adjustive.png"></p>
+</blockquote>
+<ul>
+<li>如果每个链接（信道）拥塞的概率是一样的，那么在最短路由的限制下，哪一个是最好的路由方法呢</li>
+<li>这里的最好是指在这种路由方法下，消息到达目标的延迟最小。</li>
+</ul>
+<p><strong>折线路由</strong></p>
+<ul>
+<li>Badr和Podar提出了一个2维网格的折线路由方法</li>
+<li><ul>
+<li>首先建立一个包含源和目标的矩形．</li>
+</ul>
+</li>
+<li><ul>
+<li>源s=(sx,sy)和目标d=(dx,dy)分别位于矩形的两个对角</li>
+</ul>
+</li>
+<li><ul>
+<li>从端点d=(dx,dy)引出一条线L，这条线将平分经过点d的矩形的两边所组成的角。消息将沿着直线L路由，但仍在矩形内部。即所有的中间节点都是依照它们到L的距离来选择的——在所有合格的节点中，总是选择距离L最近的一个。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\router_fold_line.png" alt="router_fold_line.png"></p>
+</blockquote>
+<ul>
+<li>在2维圆环中，折线路由可能不是最优的，因为一个中间节点可能有多于两个的合格邻居。</li>
+<li><p>特别，对一个n为偶数的n*n的圆环，存在一个具有四个合格邻居的节点。而且，有2(n-2)个节点，它们和源的距离为n／2个行或列，因此，在最短路径上就有多个方向。</p>
+</li>
+<li><p>对于最优解，Wu在k元M维立方的最短路径路由算法的基础上提出了一个最大最短路径(MP)路由算法：路由消息总是被转发到与目标节点存在最大个数的最短路径的那个邻居节点。</p>
+</li>
+<li>基于最大最短路径的路由算法是一个对2维网格和M维立方都是最优的路由算法。</li>
+<li><p>然而，关于最大最短路径对2维圆环是不是最优的仍然是一个未决的问题。 </p>
+</li>
+<li><p>若源和目标都有四个邻居，那么很容易在它们之间建立四个边(或点)分离的路径，如图。</p>
+</li>
+<li>一般地，设k(k&lt;=4)是源和目标节点所具有的最小的邻居的数目，那么，在源和目标之间就存在k个边〔点〕分离的路径。</li>
+</ul>
+<blockquote>
+<p><img src="\img\router_multiNeighbor.png" alt="router_multiNeighbor.png"></p>
+</blockquote>
+<h3 id="超立方单播路由算法"><a href="#超立方单播路由算法" class="headerlink" title="超立方单播路由算法"></a>超立方单播路由算法</h3><ul>
+<li>对超立方的单播路由可采用一种相对简单的方法，不必在每个节点中存储路由延迟表。</li>
+<li>一个n维超立方（n-cube）可定义为：</li>
+<li><ul>
+<li>Q0，是一个只有一个节点的退化图</li>
+</ul>
+</li>
+<li><ul>
+<li>$Q_n＝K_2 x Q_{n-1}$, 这里：$K_2$是具有两个节点的完全图；x是两个图的笛卡尔乘积。</li>
+</ul>
+</li>
+<li><ul>
+<li>Qn中的一个节点的地址可以表示为$ u = u_n u_{n-1}…u_1(u_i＝0/1, 1&lt;=i&lt;=n) $</li>
+</ul>
+</li>
+</ul>
+<p><em>海明距离</em></p>
+<ul>
+<li><p>两个节点$u=u_n u{n-1}…u_1$和$w=w_n w{n-1}…w_1$间最短路径长度就是u和w间的海明距离，表示为H(u,w)。</p>
+<script type="math/tex; mode=display">H(u, w) = \sum_{i=1}^{n}h(u_i, w_i), 
+h(u_i,w_i)=\begin{cases}
+1&\text{if $u_i \not= w_i$},\\
+0&\text{if $u_i = w_i$}.
+\end{cases}</script></li>
+<li><p>u和w间的异或操作$u \oplus w＝r_n r_{n-1}… r_1$定义为：</p>
+</li>
+<li><ul>
+<li>如果$u_i＝w_i$，则$r_i＝0$</li>
+</ul>
+</li>
+<li><ul>
+<li>如果$u_i \not= w_i$，则$r_i＝1,1&lt;=i&lt;=n$</li>
+</ul>
+</li>
+<li>显然，<strong>H(u,w)等于$u \oplus w$中1的个数</strong></li>
+<li>u(i)表示改变u的第i位(也叫维)．例如1101(3)=1001</li>
+</ul>
+<p><em>超立方路由</em></p>
+<ul>
+<li>在超立方路由中</li>
+<li><ul>
+<li>当前节点u和目标节点w的相对地址为$w_i \oplus u_i$，它和将要发送到下一个节点(这个节点也叫转发节点)的消息一起传送</li>
+</ul>
+</li>
+<li><ul>
+<li>在每个跳步，相对距离都会通过将$w_i \oplus u_i$中的一个1替换而进行更新</li>
+</ul>
+</li>
+<li><p>在下面的算法中，节点u是当前节点(可以是源节点)，节点w是目标节点。</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\router_algo_hypercube.png" alt="router_algo_hypercube.png"></p>
+</blockquote>
+<ul>
+<li>在上述算法中，i的选择是随机的，这意味着可能有不止一条最短路径。</li>
+<li>实际上，最短边分离的个数等于源节点和目标节点的海明距离。</li>
+<li>如果遵循一个预定的顺序，这种算法就是决定性的，叫做e立方路由。</li>
+<li>例如，维的顺序遵循升序：首先是1维，然后2维，等等。n维在最后</li>
+</ul>
+<p><em>一个3维立方路由的例子</em></p>
+<p>例中：源节点u=000目标节点w＝110。从点000到点110有下列三个点分离路径：</p>
+<ul>
+<li>路径1（红色）：000$\to$100$\to$110</li>
+<li>路径2（蓝色）：000$\to$010$\to$110</li>
+<li>路径3（绿色）：000$\to$001$\to$011$\to$111$\to$110</li>
+</ul>
+<blockquote>
+<p><img src="\img\hypercube1.png" alt="hypercube1.png"></p>
+</blockquote>
+<p><strong>超立方多路径路由的性质</strong></p>
+<ul>
+<li>超立方多路径路由具有如下性质：若两个节点u和w在n维立方中的海明距离是k, 则在u和w之间就有n个点分离路径。在这n条路径中，有k个路径长度为k，其余n-k个路径长度为k+2</li>
+<li>000和110之间的距离|000$\oplus$110|＝2。因此，上述路径中有两条长度为2，一条长度为4</li>
+<li>路径1（红色）：000$\to$100$\to$110</li>
+<li>路径2（蓝色）：000$\to$010$\to$110</li>
+<li><p>路径3（绿色）：000$\to$001$\to$011$\to$111$\to$110</p>
+</li>
+<li><p>类似地．000和100之间的三条点分离路径为：</p>
+</li>
+<li>路径1（红色）：000$\to$100</li>
+<li>路径2（绿色）：000$\to$001$\to$101$\to$100</li>
+<li>路径3（蓝色）：000$\to$010$\to$110$\to$100</li>
+<li>000和100之间的海明距离|000$\oplus$100|=1</li>
+</ul>
+<blockquote>
+<p><img src="\img\hypercube2.png" alt="hypercube2.png"></p>
+</blockquote>
+<h2 id="特殊类型网络的多播路由算法"><a href="#特殊类型网络的多播路由算法" class="headerlink" title="特殊类型网络的多播路由算法"></a>特殊类型网络的多播路由算法</h2><ul>
+<li>多播（一到多）是指从一个源向任意多个目标节点传送同样的消息。</li>
+<li>只有一个目标的单播和以网络中的所有节点为目标的广播都是多播的特例。</li>
+<li>多播在数据并行编程操作中有一些应用，例如复制，障碍同步，对共享存储器失效以及分布式共享内存系统更新的支持等。</li>
+</ul>
+<h3 id="一般的多播路由算法"><a href="#一般的多播路由算法" class="headerlink" title="一般的多播路由算法"></a>一般的多播路由算法</h3><ul>
+<li>两个主要的多播路由参数是通信量和时间。</li>
+<li><ul>
+<li>通信量是以将消息发送到所有的目标所需的通信链接的数目来衡量的。</li>
+</ul>
+</li>
+<li><ul>
+<li>时间就是消息传送的时间。</li>
+</ul>
+</li>
+<li>当两个多播路由算法有相同的时间步数时，应该选择具有较小的通信量步数的那一个。</li>
+<li>通信量可以通过不同的目标共享链接来降低。</li>
+</ul>
+<p><strong>多播优化问题</strong></p>
+<ul>
+<li>通常，多播存在下列四个优化问题：  </li>
+<li><ul>
+<li>多播路径优化问题: 一个最优的多播路径是一个包括所有目标的最短路径。</li>
+</ul>
+</li>
+<li><ul>
+<li>多播回路优化问题: 最优多播回路是包含所有目标的最短长度的回路。</li>
+</ul>
+</li>
+<li><p>steiner树优化问题</p>
+</li>
+<li><ul>
+<li>一个包含所有目标节点的给定拓扑的一个子树</li>
+</ul>
+</li>
+<li><ul>
+<li>最小steiner树具有最小的总长度</li>
+</ul>
+</li>
+<li><ul>
+<li>注意：不一定每个通向目标的路径长度都是最短的。</li>
+</ul>
+</li>
+<li>多播树优化问题</li>
+<li><ul>
+<li>一个包含所有目标的给定拓扑的子树，且树中每个通向目标的路径的长度对于给定的拓扑是最小的。</li>
+</ul>
+</li>
+<li><ul>
+<li>一个最优的多播树具有最小的通信量 </li>
+</ul>
+</li>
+<li><p>不幸的是，对网格和超立方的多播优化问题都是NP完全问题。因此，一般使用启发式多播算法。</p>
+</li>
+<li>目前，已有人给出了在使用分割-通过路由技术(如虫孔路由)的网络中进行最优化多播通信的充分条件。</li>
+<li>考虑两种算法：一个是基于路径的；另一个是基于树的。 </li>
+</ul>
+<h3 id="基于路径的多播路由算法"><a href="#基于路径的多播路由算法" class="headerlink" title="基于路径的多播路由算法"></a>基于路径的多播路由算法</h3><ul>
+<li>基本思想：</li>
+<li><ul>
+<li>首先建立一个哈密尔顿回路，</li>
+</ul>
+</li>
+<li><ul>
+<li>然后根据这个回路把多播集合转发出去。</li>
+</ul>
+</li>
+<li><ul>
+<li>如果有一个邻居位于目标前面，但距离目标更近，那么就可以抄近路。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>1895年，爱尔兰数学家哈密尔顿首先提出“环球周游”问题。他用一个正十二面体的20个顶点代表世界上20个城市，要求旅游者能否找到沿着正十二面体的 棱，从某一个顶点（即城市）出发，经过每一个顶点（即每一座城市）恰好一次，然后回到出发顶点？这便是著名的哈密尔顿问题。它的解称为哈密尔顿回路。 </p>
+</blockquote>
+<p>主要步骤:</p>
+<ul>
+<li>在给定的网格或超立方上建立哈密尔顿回路；</li>
+<li>将哈密尔顿回路上的节点排序。</li>
+<li><ul>
+<li>这个顺序起始于源节点，并包括所有目标节点。</li>
+</ul>
+</li>
+<li><ul>
+<li>这样哈密尔顿回路就被分割成了哈密尔顿路径；</li>
+</ul>
+</li>
+<li>对每个中间节点，</li>
+<li><ul>
+<li>若它是一个目标节点，</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>保留消息的一个拷贝，删除该目标节点的地址。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>将消息和目标列表传给一个邻居。这个邻居必须在当前节点之前（按顺序)，离下一个目标最近，且仍在这个目标之前(或就是这个目标)。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>若使用双向链接，则只需一个哈密尔顿路径(而不是哈密尔顿回路)即可。</p>
+</li>
+<li>哈密尔顿路径为系统中的所有节点定义了一个顺序。</li>
+<li><p>在整个顺序中，每个节点(x,y)都被赋予一个数字r：</p>
+<script type="math/tex; mode=display">
+r(x, y)=\begin{cases}
+yn+x&\text{if y is even}\\
+yn+n-x-1&\text{if y is odd}
+\end{cases}</script></li>
+<li><p>例如，一个4X4的网格上每个节点具有的r值如图所示：</p>
+</li>
+<li>n=4</li>
+<li>若y是偶数，r值沿X方向递增, r(x,y)=yn+x</li>
+<li>若y是奇数，r值沿X方向递减, r(x,y)=yn+n-x-1=yn+(n-1)-x</li>
+</ul>
+<blockquote>
+<p><img src="\img\multicast_hamilton.png" alt="multicast_hamilton.png"></p>
+</blockquote>
+<ul>
+<li>哈密尔顿路径定义: 两个节点在路径中相邻当且仅当|r(v)-r(u)|=1</li>
+<li>例如：4X4网格中，使用粗线连接两个相邻节点</li>
+</ul>
+<blockquote>
+<p><img src="\img\multicast_hamilton2.png" alt="multicast_hamilton2.png"></p>
+</blockquote>
+<ul>
+<li>使用顺序定义，整个网格可以分成两个子网：</li>
+<li><ul>
+<li>一个包括从低序节点到高序节点的链接；</li>
+</ul>
+</li>
+<li><ul>
+<li>另一个包括从高序节点到低序节点的链接。</li>
+</ul>
+</li>
+<li>在两个子网中，除了哈密尔顿路径上的链接以外，其它链接也包含在其中。</li>
+</ul>
+<blockquote>
+<p><img src="\img\multicast_hamilton3.png" alt="multicast_hamilton3.png"></p>
+<p><img src="\img\multicast_hamilton4.png" alt="multicast_hamilton4.png"></p>
+</blockquote>
+<p><strong>最短路径路由函数</strong></p>
+<ul>
+<li>目标依据它们与源的相对位置也分为两个子集。</li>
+<li><ul>
+<li>一个子集将沿着高信道网络传送，</li>
+</ul>
+</li>
+<li><ul>
+<li>另外一个将沿着低信道网络传送。</li>
+</ul>
+</li>
+<li>为了将消息沿着最短路径传送，定义如下路由函数。</li>
+<li><ul>
+<li>假定使用高信道网络。</li>
+</ul>
+</li>
+<li><ul>
+<li>v和d（r(v)&lt;r(d)）分别是中间节点和目标节点。</li>
+</ul>
+</li>
+<li><ul>
+<li>若d是v的一个邻居，那么消息将直接转发到d；</li>
+</ul>
+</li>
+<li><ul>
+<li>否则，选择一个满足下式的v的邻居u：$r(u) = max\{r(w): r(w) &lt; r(d),$ w is a neighbor of v$\}$</li>
+</ul>
+</li>
+</ul>
+<p><em>基于路径的多播路由算法举例</em></p>
+<ul>
+<li>下图显示了一个在4X4网格中进行多播的例子</li>
+<li>哈密尔顿路径连接了那些r值依次递增的节点</li>
+<li>假定节点6(地址为(1,1))为源节点，目标节点为0、2、10、13和14</li>
+</ul>
+<blockquote>
+<p><img src="\img\multicast_router1.png" alt="multicast_router1.png"></p>
+</blockquote>
+<ul>
+<li>显然，转发消息到节点0和2时，应该使用低信道网络。依据路由函数，可以得到如下路径：6$\to$5$\to$2$\to$1$\to$0</li>
+<li>同样，转发消息到节点10，13和14时应使用高信道网络: 6$\to$9$\to$10$\to$13$\to$14</li>
+</ul>
+<blockquote>
+<p><img src="\img\multicast_router2.png" alt="multicast_router2.png"></p>
+</blockquote>
+<p><em>红色：低信道网络路径和具有最小r值的邻居</em><br><em>深紫色：高信道网络路径和具有最大r值的邻居</em></p>
+<h3 id="基于树的多播路由算法"><a href="#基于树的多播路由算法" class="headerlink" title="基于树的多播路由算法"></a>基于树的多播路由算法</h3><ul>
+<li>Lan的贪婪多播算法可以应用于超立方。在这个算法中，每个节点(包括源节点)在收到包含目标节点地址列表的消息后，就把自己的地址和目标节点的地址相比较。</li>
+<li><ul>
+<li>若发现匹配，消息的一个拷贝将被送往本地的处理器</li>
+</ul>
+</li>
+<li><ul>
+<li>若多播集合非空，当前节点将决定把目标列表中的地址转发到哪些邻居。</li>
+</ul>
+</li>
+</ul>
+<p><em>根据维度顺序进行转发</em></p>
+<ul>
+<li>维度顺序由目标节点的相对二进制地址来决定</li>
+<li>n位地址的每一位都有一个计数器。</li>
+<li>计数器的内容代表相应维度的信息。</li>
+<li>具有最大计数值的那一维将被选中。</li>
+<li><ul>
+<li>所有在这一位为1的目标将被转发到这一维上的那个邻居</li>
+</ul>
+</li>
+<li><ul>
+<li>在剩余的目标中，将利用下一个被选中的维度重复上述步骤。</li>
+</ul>
+</li>
+<li><ul>
+<li>当剩余的多播集合为空时，这一过程就结束。</li>
+</ul>
+</li>
+</ul>
+<p><strong>基于树的多播路由算法：4维立方中的多播例子</strong></p>
+<ul>
+<li>考虑一个4维立方体(目标用蓝色节点代表)</li>
+<li>节点0010打算向组播集{0000，0001，1001，1100，1110}中的每个节点发送消息</li>
+<li>所有目标节点的实际地址和源节点0010的实际地址做异或操作，得到多播集合的相对地址{0010，0011，1011，1110，1100}。</li>
+<li>每一列的1的数目组成了一个称为列总和的向量(3, 2, 4, 2) </li>
+</ul>
+<blockquote>
+<p><img src="\img\multicast_treeBased_4dHypercube.png" alt="multicast_treeBased_4dHypercube.png"></p>
+</blockquote>
+<ul>
+<li>沿着第2维的邻居拥有最受欢迎的维度。即节点0000成为下一个转发节点，发往节点0000的消息包含子集(0000，0001，1001，1100)。</li>
+<li>只有节点1110被剩下了，这个节点可以通过第3维的邻居转发，也可以通过第4维的邻居转发。</li>
+<li>上述过程将在每个转发节点重复操作。</li>
+<li>每个多播树的分支都将继续到剩余的多播集合变空为止</li>
+</ul>
+<blockquote>
+<p><img src="\img\multicast_treeBased.png" alt="multicast_treeBased.png"></p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">分布式计算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/05/09/parellel_and_distributed_computing/distributed_compute2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/05/10/computer_network/computer_network_3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          传输层(Transport Layer)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/02/parellel_and_distributed_computing/distributed_compute1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式计算的概念和模型</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 chenxf
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: false
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.2d7529.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">宏观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">微观经济学</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">分布式计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

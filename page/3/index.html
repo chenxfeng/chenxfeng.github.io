@@ -733,19 +733,19 @@
 
 
   
-    <article id="post-economics/宏观经济学鸟瞰" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Cplusplus_thinking/模板（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/economics/宏观经济学鸟瞰/">宏观经济学鸟瞰</a>
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（一）/">模板（一）</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/economics/宏观经济学鸟瞰/" class="archive-article-date">
+        <a href="/2017/01/21/Cplusplus_thinking/模板（一）/" class="archive-article-date">
   	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
 </a>
         
@@ -753,94 +753,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li><p>研究对象：整体经济行为</p>
+        <h2 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h2><p>容器：保存值的集合的数据结构</p>
+<ul>
+<li>语言内建容器：数组、结构体</li>
+<li><p>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</p>
 </li>
-<li><p>个体行为的总体成果</p>
+<li><p>容器包含对象</p>
 </li>
-<li><p>不是研究特定部门或特定经济活动主体的行为</p>
+<li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
 </li>
-<li><p>经济生活中的重大问题</p>
+<li><p>函数传参数方式 void f(const Container<T>&amp;)避免大对象的复制</p>
 </li>
-<li><p>基本研究方法：考察经济的总体趋势</p>
-</li>
-<li><p>收集不同时期、不同国家有关收入、通货膨胀和失业等变量的数据，尝试构建有助于理解这些数据的一般理论</p>
+<li><p>区分读和写</p>
 </li>
 </ul>
-<h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2>
+<p>operator[]只用于取数</p>
+<p>用成员函数update(i, x)修改索引为i的元素为x</p>
         
-          <a class="article-more-a" href="/2017/01/21/economics/宏观经济学鸟瞰/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">宏观经济学</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/economics/宏观经济学鸟瞰/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Cplusplus_thinking/句柄类(handle)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/">句柄类(handle)</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>创建代理会复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
-<h3 id="某些类应当避免复制："><a href="#某些类应当避免复制：" class="headerlink" title="某些类应当避免复制："></a>某些类应当避免复制：</h3><ul>
-<li>对象很大，资源消耗多</li>
-<li>每个对象代表一种不能被轻易复制的资源，如文件</li>
-<li>其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大</li>
-<li>对象代表位于网络连接另一端的其他对象</li>
-<li>多态性环境中只知对象基类类型而不知对象本身类型</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（一）/#more">more >></a>
         
       
 
@@ -864,7 +794,80 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（一）/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-Cplusplus_thinking/模板（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（三）/">模板（三）</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/21/Cplusplus_thinking/模板（三）/" class="archive-article-date">
+  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
+<li><p>已经定义Array<T>、Pointer<T>和Ptr_to_const<T>使得能部分确保安全性避免使用<br>指针</p>
+</li>
+<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
+</li>
+</ul>
+<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
+<ul>
+<li>基类及派生类都要定义这些操作</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/">展开全文 >></a>
         </p>
       
 

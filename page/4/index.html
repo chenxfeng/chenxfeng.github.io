@@ -217,19 +217,19 @@
 
 
   
-    <article id="post-Cplusplus_thinking/句柄类(handle)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Cplusplus_thinking/代理类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/">句柄类(handle)</a>
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/代理类/">代理类</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/" class="archive-article-date">
+        <a href="/2017/01/21/Cplusplus_thinking/代理类/" class="archive-article-date">
   	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
 </a>
         
@@ -237,16 +237,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>创建代理会复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
-<h3 id="某些类应当避免复制："><a href="#某些类应当避免复制：" class="headerlink" title="某些类应当避免复制："></a>某些类应当避免复制：</h3><ul>
-<li>对象很大，资源消耗多</li>
-<li>每个对象代表一种不能被轻易复制的资源，如文件</li>
-<li>其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大</li>
-<li>对象代表位于网络连接另一端的其他对象</li>
-<li>多态性环境中只知对象基类类型而不知对象本身类型</li>
+        <p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
+<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
+<ul>
+<li>surrogate是handle(句柄)类中最简单的一种</li>
 </ul>
         
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/代理类/#more">more >></a>
         
       
 
@@ -270,7 +267,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/代理类/">展开全文 >></a>
         </p>
       
 

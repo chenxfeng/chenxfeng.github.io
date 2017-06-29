@@ -6,63 +6,42 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chenfeng.github.io">
-  <title>模板（一） | chenxfeng&#39;s blog</title>
+  <title>分布式系统的容错技术(下) | chenxfeng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="容器类设计容器：保存值的集合的数据结构
+  <meta name="description" content="(并行与分布式计算十)
+故障模型和拜占庭故障的概念故障模型
+初始死进程: 如果在局部算法中没执行过一步，则称进程为初始死进程
 
-语言内建容器：数组、结构体
-C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)
+损毁模型(crash model): 如果进程正确地执行局部算法到某一时刻，此后并不进一步执行，则称它是损毁的
 
-容器包含对象
-
-复制容器意味复制存储在容器中的值(而不是容器本身)
-
-函数传参数方式 void f(const Container&amp;amp;)避免大对象的复制
-
-区分读和写
-
-
-operator[]只用于取数
-用成员函数update">
+Byzantine行为(Byzantine behavior): 如果进程执行了与局部算法不一致的任意步，则称进程是Byzantine的。尤其是Byzanti">
 <meta property="og:type" content="article">
-<meta property="og:title" content="模板（一）">
-<meta property="og:url" content="https://chenfeng.github.io/2017/01/21/Cplusplus_thinking/模板（一）/index.html">
+<meta property="og:title" content="分布式系统的容错技术(下)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/06/13/parellel_and_distributed_computing/distributed_compute6/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
-<meta property="og:description" content="容器类设计容器：保存值的集合的数据结构
+<meta property="og:description" content="(并行与分布式计算十)
+故障模型和拜占庭故障的概念故障模型
+初始死进程: 如果在局部算法中没执行过一步，则称进程为初始死进程
 
-语言内建容器：数组、结构体
-C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)
+损毁模型(crash model): 如果进程正确地执行局部算法到某一时刻，此后并不进一步执行，则称它是损毁的
 
-容器包含对象
-
-复制容器意味复制存储在容器中的值(而不是容器本身)
-
-函数传参数方式 void f(const Container&amp;amp;)避免大对象的复制
-
-区分读和写
-
-
-operator[]只用于取数
-用成员函数update">
-<meta property="og:updated_time" content="2017-03-25T03:48:36.204Z">
+Byzantine行为(Byzantine behavior): 如果进程执行了与局部算法不一致的任意步，则称进程是Byzantine的。尤其是Byzanti">
+<meta property="og:image" content="https://chenfeng.github.io/\img\process_group_structure.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\consistence_error_stop.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\process_Byzantine.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\consistency_algo.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\inconsistence_error_stop.png">
+<meta property="og:updated_time" content="2017-06-13T11:46:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="模板（一）">
-<meta name="twitter:description" content="容器类设计容器：保存值的集合的数据结构
+<meta name="twitter:title" content="分布式系统的容错技术(下)">
+<meta name="twitter:description" content="(并行与分布式计算十)
+故障模型和拜占庭故障的概念故障模型
+初始死进程: 如果在局部算法中没执行过一步，则称进程为初始死进程
 
-语言内建容器：数组、结构体
-C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)
+损毁模型(crash model): 如果进程正确地执行局部算法到某一时刻，此后并不进一步执行，则称它是损毁的
 
-容器包含对象
-
-复制容器意味复制存储在容器中的值(而不是容器本身)
-
-函数传参数方式 void f(const Container&amp;amp;)避免大对象的复制
-
-区分读和写
-
-
-operator[]只用于取数
-用成员函数update">
+Byzantine行为(Byzantine behavior): 如果进程执行了与局部算法不一致的任意步，则称进程是Byzantine的。尤其是Byzanti">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\process_group_structure.png">
   
     <link rel="alternative" href="/atom.xml" title="chenxfeng&#39;s blog" type="application/atom+xml">
   
@@ -192,101 +171,206 @@ operator[]只用于取数
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Cplusplus_thinking/模板（一）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-parellel_and_distributed_computing/distributed_compute6" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      模板（一）
+      分布式系统的容错技术(下)
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/模板（一）/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+        <a href="/2017/06/13/parellel_and_distributed_computing/distributed_compute6/" class="archive-article-date">
+  	<time datetime="2017-06-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h2><p>容器：保存值的集合的数据结构</p>
-<ul>
-<li>语言内建容器：数组、结构体</li>
-<li><p>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</p>
+        <p>(并行与分布式计算十)</p>
+<h2 id="故障模型和拜占庭故障的概念"><a href="#故障模型和拜占庭故障的概念" class="headerlink" title="故障模型和拜占庭故障的概念"></a>故障模型和拜占庭故障的概念</h2><h3 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h3><ol>
+<li><p>初始死进程: 如果在局部算法中没执行过一步，则称进程为初始死进程</p>
 </li>
-<li><p>容器包含对象</p>
+<li><p>损毁模型(crash model): 如果进程正确地执行局部算法到某一时刻，此后并不进一步执行，则称它是损毁的</p>
 </li>
-<li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
+<li><p>Byzantine行为(Byzantine behavior): 如果进程执行了与局部算法不一致的任意步，则称进程是Byzantine的。尤其是Byzantine进发送的消息可能包含任意内容</p>
 </li>
-<li><p>函数传参数方式 void f(const Container<t>&amp;)避免大对象的复制</t></p>
-</li>
-<li><p>区分读和写</p>
-</li>
-</ul>
-<p>operator[]只用于取数</p>
-<p>用成员函数update(i, x)修改索引为i的元素为x</p>
+</ol>
 <a id="more"></a>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Container &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T <span class="keyword">operator</span>[](Index) <span class="keyword">const</span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">Container&lt; Container&lt;<span class="keyword">int</span>&gt; &gt;c;</div><div class="line">Index i, j;</div><div class="line"><span class="keyword">int</span> k = c[i][j];</div><div class="line"><span class="comment">// only way to modify the element in Container</span></div><div class="line"><span class="comment">// c[i][j]</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(Index, Index, <span class="keyword">const</span> T&amp;)</span></span>;</div><div class="line"><span class="comment">// hard to deal with much more dimension</span></div><div class="line"><span class="comment">// c[i] return type T instead of T&amp;</span></div><div class="line"><span class="comment">// c[i].update(j, new_value) does not work</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>健壮算法提出的正确性要求总是指正确进程的局部状态(或者输出)。初始死进程从不会产生输出，且它的状态总是等于它的初始状态。如果损毁进程有输出，则它的输出是正确的，因为到损毁发生时，进程的行为是正确的。一个Byzantine进程的局部状态或者输出可以使任意的，任何算法都不满足Byzantine进程的非平凡性要求</p>
+</blockquote>
+<h3 id="故障模型的层次"><a href="#故障模型的层次" class="headerlink" title="故障模型的层次"></a>故障模型的层次</h3><ul>
+<li>可将错误模型分为三个层次</li>
+<li>初始死进程课看作损毁进程的特例</li>
+<li><ul>
+<li>损毁出现在进程的第一个事件之前</li>
+</ul>
+</li>
+<li>损毁进程可看作Byzantine进程的特例</li>
+<li><ul>
+<li>对Byzantine进程假设的任意行为包括根本不执行任何一步</li>
+</ul>
+</li>
+<li><p>容忍损毁要比容忍初始死进程要困难，容忍Byzantine进程更困难</p>
+</li>
+<li>由于规定不同，健壮Byzantine算法也是健壮损毁算法，健壮损毁算法也是健壮初始死进程算法</li>
+<li>健壮初始死进程算法的不可能性蕴含着健壮损毁算法的不可能性，而健壮损毁算法的不可能性蕴含着健壮Byzantine算法的不可能性。</li>
+</ul>
+<h2 id="拜占庭故障的恢复"><a href="#拜占庭故障的恢复" class="headerlink" title="拜占庭故障的恢复"></a>拜占庭故障的恢复</h2><ul>
+<li>进程组的内部结构：</li>
+<li><ul>
+<li>平面结构：所有的进程是平等的，没有任何一个进程处于领导地位，任何决定都是共同做出的。</li>
+</ul>
+</li>
+<li><ul>
+<li>层次结构：在最简单的层次结构的进程组中，一个进程是协调者，其他所有的进程为工作者。无论是进程组外的一个顾客，还是进程组中的一个工作者向进程组发出一个工作请求，由协调者决定哪一个工作者最适合这项工作，并且将此工作请求转交给它。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\process_group_structure.png" alt="process_group_structure.png"></p>
+</blockquote>
 <ul>
-<li><p>获取容器的元素严格分清类型T(作右值)和类型T&amp;(作左值)</p>
+<li><p>进程组管理：对于进程组通信来说，需要一定的办法进行进程组的创建和删除，同时还要允许进程能加入到一个进程组中去以及允许一个进程离开一个进程组。</p>
 </li>
-<li><p>容器增长：按区块(chunk)增加容器大小的分配策略</p>
+<li><ul>
+<li>集中式管理：设置一个进程组服务员，所有的服务请求都发送给进程组服务员。进程组服务员使用一个数据库来保存所有进程组的信息和一个进程组中所有成员的有关信息。</li>
+</ul>
 </li>
-<li><p>容器操作<br>容器数组：必须有缺省构造函数<br>“顺序地”遍历容器中所有元素：先给元素强制规定顺序(解决方案：迭代器(iterator))</p>
+<li><ul>
+<li>分布式管理：另外一个进程组管理的办法是采用分布式的方式管理进程组。例如当一个组外的进程要加入到这个进程组时，它向这个进程组中的所有成员发送一个报文，申明自己要加入到这个进程组。</li>
+</ul>
 </li>
-<li><p>容器元素的类型</p>
+<li><p><strong>利用进程组屏蔽错误</strong>：进程组是构造容错系统问题的一部分。特别是，如果用相同的进程来构成一个进程组，那么就能够屏蔽进程组中一个或多个出错的进程。也就是说，我们可以用多个相同的进程构造一个进程组，用这个容错的进程组取代相对脆弱的单个进程。</p>
+</li>
+<li><p>利用进程组进行容错需要多少个进程副本：</p>
+</li>
+<li><ul>
+<li>故障—停止型故障：如果进程组中有k+1个进程，那么就足以提供k故障容错。  </li>
+</ul>
+</li>
+<li><ul>
+<li>拜占庭式故障：那么为了取得k故障容错，那么至少需要2k+1个进程。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>利用进程副本实现的分布式容错:<br>  对于本质上不是分布式却要求高可靠性的计算机应用设计，部分故障性质使得利用分布式(“复制的”)体系结构称为有吸引力的选择。航天飞机的主计算机系统就是一个例子。Spector和Gifford[SG84]描述了它的研制。飞机主要由不需定制的微处理器控制，在设计中主要关注的是它在航行过程中处理器发生故障的可能性。最终控制系统由4个相同处理器组成。<br>  每个处理器只进行同样的计算，激励者号对结果进行投票，即使一个处理器发生故障，也能完全控制系统。(激励者号的物理实现表明，即使第二个处理器后来发生故障，系统也能继续运行。)尽管复制是增加可靠性的有吸引力的一种选择，但是需要协调一群(不可靠)的处理器的算法设计远非那么简单。</p>
+</blockquote>
+<h2 id="容错系统中的一致性算法简介"><a href="#容错系统中的一致性算法简介" class="headerlink" title="容错系统中的一致性算法简介"></a>容错系统中的一致性算法简介</h2><ul>
+<li><strong>分布式一致算法基本目标</strong>：是使得对于某个问题来说，所有非出错的进程能够达成一致，并且能够在有限的步骤内达成一致。</li>
+</ul>
+<blockquote>
+<p><img src="\img\consistence_error_stop.png" alt="consistence_error_stop.png"></p>
+<p><img src="\img\process_Byzantine.png" alt="process_Byzantine.png"></p>
+</blockquote>
+<ul>
+<li>分布式一致算法的正确性条件：</li>
+<li><ul>
+<li>(1) 一致性。所有正确的进程取得一致的结果，而且是最后的结果；</li>
+</ul>
+</li>
+<li><ul>
+<li>(2) 合法性。所有进程同意的结果必须来自某个正确的进程的输入；</li>
+</ul>
+</li>
+<li><ul>
+<li>(3) 有限性。每个进程在有限的步骤内取得一致的结果。</li>
+</ul>
+</li>
+<li><p><strong>交互一致性</strong>：系统中的每个非出错进程都使用来自进程Pi的同样的值来进行决策。这样，一般的一致性问题就变为系统中的进程都同意一个特殊的进程(比如P0)的值。确切地说：</p>
+</li>
+<li><ul>
+<li>所有非出错进程都使用进程P0的同样的值v0。</li>
+</ul>
+</li>
+<li><ul>
+<li>如果发送进程P0是非出错的，那么所有非出错进程都使用P0发送的值。</li>
+</ul>
+</li>
+<li>结论：在有k个出错节点的情况下，只有进程的总数至少为3k+1时才能获得一致。</li>
+</ul>
+<h2 id="LAMPORT交互一致性算法IC"><a href="#LAMPORT交互一致性算法IC" class="headerlink" title="LAMPORT交互一致性算法IC"></a>LAMPORT交互一致性算法IC</h2><ul>
+<li><p>该算法是一个递归算法，存在多个递归轮次。</p>
+</li>
+<li><p>算法IC(m)，m&lt;k，开始时m=0，S={}：</p>
 </li>
 </ul>
 <ol>
-<li><p>类型为T的元素可以进行行为正确的复制、赋值和销毁<br>T::T(const T&amp;)</p>
+<li><p>发送者将它的值和发送者列表S发送给其他的进程，共(n-1-m)个；</p>
 </li>
-<li><p>可以判定两个元素是否相等<br>operator==(const T&amp;, cosnt T&amp;)</p>
+<li><p>设v_i是进程P_i从发送者接收到的值或者是如果没有收到值时使用的缺省值。在IC(m+1≠k)时进程P_i作为发送者，将结果v_i和发送者列表S∪{P_i}发送给其他不在发送者列表中的n-2-m个进程。如果m+1=k，则调用IC(k)；</p>
 </li>
-<li><p>为增加性能，有关于偏序关系或全序关系的定义(如set)<br>operator&lt;(const T&amp;, const T&amp;)</p>
-</li>
-<li><p>考虑是否重载operator&lt;&lt;(ostream&amp;, const Container<t>&amp;)<br>兼顾不使用标准输入输出操作库或不用输入输出操作的用户，提供遍历整个容器的机制</t></p>
+<li><p>对每个进程P_i，设v_j是进程P_j接收到的值(但是由P_j转发给P_i)。节点使用值majority(v_j)，$j \in S$；</p>
 </li>
 </ol>
 <ul>
-<li>容器不可通过继承关联起来<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// if Container&lt;Airplane&gt; is derived from Container&lt;Vehicle&gt;</span></div><div class="line">Vehicle v;</div><div class="line">Container&lt;Airplane&gt; ca;</div><div class="line"></div><div class="line">Container&lt;Vehicle&gt;&amp; vp = ca;</div><div class="line">vp.insert(v);</div><div class="line"><span class="comment">// that does not make any sence</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Demo-an-array-like-class"><a href="#Demo-an-array-like-class" class="headerlink" title="Demo : an array-like class"></a>Demo : an array-like class</h3><ul>
-<li>使用指针和使用下标的差别</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// by index</span></div><div class="line"><span class="keyword">int</span> i;</div><div class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    f(x[i]);</div><div class="line"></div><div class="line"><span class="comment">// by pointer</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">for</span> (p = x; p &lt; x + N; ++p)</div><div class="line">    f(*p);</div><div class="line"><span class="comment">// a simplified version</span></div><div class="line">T* p;</div><div class="line"><span class="keyword">while</span> (p &lt; x + N)</div><div class="line">    f(*p++);</div></pre></td></tr></table></figure>
-<p>区别：</p>
-<ol>
-<li>下标值本身就有意义，与是否用作下标无关：通过下标进行元素访问的程序要另外知道<br>正在使用的数组(才能访问整个数组)</li>
-<li>要访问容器的元素没必要知道容器的标识，指针本身就包含所有的必要信息：程序只要<br>拥有拥有一个指向数组元素的指针就能访问整个数组</li>
-</ol>
-<p>这些影响设计，比”下标易于理解，指针效率高”的区别更为重要</p>
-<ul>
-<li><p>禁止(数组)复制和赋值</p>
-</li>
-<li><p>使用operator[]存取元素</p>
-</li>
-<li><p>关于扩展：定长</p>
-</li>
-<li><p>缺省构造函数：可以创建包含数组的数组</p>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Array(): data(<span class="number">0</span>), sz(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Array(<span class="keyword">unsigned</span> size): sz(size), data(<span class="keyword">new</span> T(size)) &#123;&#125;</div><div class="line">    ~Array() &#123; <span class="keyword">delete</span> [] data; &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz || data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> <span class="keyword">const</span> T*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> T*() &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    T* data;</div><div class="line">    <span class="keyword">unsigned</span> sz;</div><div class="line">    Array(<span class="keyword">const</span> Array* a);</div><div class="line">    Array&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array&amp;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<ul>
-<li>缺陷</li>
+<li>算法IC(k)：</li>
 </ul>
 <ol>
-<li><p>(也存在于内建数组中)包含元素的Array消失后，它的元素地址还在</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> *p;</div><div class="line">    &#123;</div><div class="line">        Array&lt;<span class="keyword">int</span>&gt; x(<span class="number">20</span>);</div><div class="line">        p = &amp;x[<span class="number">10</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; *p; <span class="comment">// no exist</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>发送者将它的值发送给其他n-k-1个进程；</p>
 </li>
-<li><p>允许用户访问它的元素地址，透露太多内部运作的信息，违背了封装理念</p>
+<li><p>每个进程使用从接收者收到的值，或者，如果它没有收到任何值，就使用缺省值。</p>
 </li>
 </ol>
 <ul>
-<li>允许Array被构造后改变长度会导致旧指针失效</li>
+<li>结论：上述算法中，被交换的报文总数为(n-1)(n-2)…(n-k-1)，其复杂度为O(n^k)，k可以是(n-1)/3。</li>
+</ul>
+<hr>
+<ul>
+<li><p>实例：具有7个进程的例子，P_i，0≤i≤6。假定k=2，即最多有2个故障，n=7。设P_0是初始发送者，发送值为1。不妨设P_5和P_6是出错进程，它向其他进程发送不确定的值。在这个例子中共需要k+1=3轮信息交换：</p>
+</li>
+<li><ul>
+<li>P_0将{V_0,S}={1,{P_0}}发送给进程P_1，P_2，…，P_6</li>
+</ul>
+</li>
+<li><ul>
+<li>P_1至P_6中每个进程都接收到报文{1,{P_0}} ，它们将所收到的报文转发给除了开始的发送者和它本身之外的所有其他的进程。例如P_1向P_2至P_6发送报文{1,{P_0,P_1}}。它分别从P_2至P_6处接收到报文{1,{P_0,P_2}}、{1,{P_0,P_3}}、{1,{P_0,P_4}}、{d,{P_0,P_5}}、{d,{P_0,P_6}}</li>
+</ul>
+</li>
+<li><ul>
+<li>在第三轮中，P_1将报文{1,{P_0,P_2}}以{1,{P_0,P_2,P_1}}的形式分别发送给进程P_3、P_4、P_5、P_6，将报文{1,{P_0,P_3}}以{1,{P_0,P_3,P_1}}的形式分别发送给进程P_2、P_4、P_5、P_6，将报文{1,{P_0,P_4}}以{1,{P_0,P_4,P_1}}的形式分别发送给进程P_2、P_3、P_5、P_6，将报文{d,{P_0,P_5}}以{d,{P_0,P_5,P_1}}的形式分别发送给进程P_2、P_3、P_4、P_6，将报文{d,{P_0,P_6}}以{d,{P_0,P_6,P_1}}的形式分别发送给进程P_2、P_3、P_4、P_5。第三轮递归结束，返回第二轮</li>
+</ul>
+</li>
+<li><ul>
+<li>进程P1收到报文{1,{P_0,P_2,P_3}}、{1,{P_0,P_2,P_4}}、{d,{P_0,P_2,P_5}}、{d,{P_0,P_2,P_6}}，连同在第二轮中收到的报文{1,{P_0,P_2}}，将这5个报文中的值执行majority(1,1,d,d,1)=1，得到的这个新值1作为报文{1,{P_0,P_2}}的新值，记为新报文{1,{P_0,P_2}}’。同样的道理，得到新报文{1,{P_0,P_3}}’、{1,{P_0,P_4}}’、{1,{P_0,P_5}}’、{1,{P_0,P_6}}’。第二轮递归结束，返回第1轮</li>
+</ul>
+</li>
+<li><ul>
+<li>P1对6个报文{1,{P_0}}、{1,{P_0,P_2}}’、{1,{P_0,P_3}}’、{1,{P_0,P_4}}’、{1,{P_0,P_5}}’、{1,{P_0,P_6}}’ 中的值执行majority(1,1,1,1,1,1)=1，这个新值是P1所确信的最终值。</li>
+</ul>
+</li>
+<li><p>可以通过对每个发送者都重复同样的协议将交互一致性扩展到多个发送者的情况。 扩展的方法：在第k轮收到的值将被发送到所有的其他节点，而不仅仅是那些没有被发送过的节点。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>实例：假定有4位将军，其中有一个叛徒。将军之间相互通报自己的人数，忠诚的将军说实话，叛徒恶意地将不同的值通报给其他将军。不失一般性，设将军P1是叛徒，它分别向其他3位将军谎报自己军队的人数是x、y、z，将军P2向所有的将军通报自己的人数是4000，将军P3向所有的将军通报自己的人数是5000，将军P4向所有的将军通报自己的人数是6000。</li>
+</ul>
+<blockquote>
+<p><img src="\img\consistency_algo.png" alt="consistency_algo.png"></p>
+<p><img src="\img\inconsistence_error_stop.png" alt="inconsistence_error_stop.png"></p>
+</blockquote>
+<hr>
+<ul>
+<li>分析：</li>
+<li><ul>
+<li>P_i要对每个P_j的值做判定</li>
+</ul>
+</li>
+<li><ul>
+<li>判定的方法是根据其它进程的内一轮的判定来取多数值（majority）</li>
+</ul>
+</li>
+<li><ul>
+<li>P_i对于每个P_j来做的判定，如果系统中存在k个错误，则在IC算法的最内轮次至少需要2k+1个进程的投票才能实现可靠的判定（因为有k个投票可能是错的）</li>
+</ul>
+</li>
 </ul>
 
       
@@ -301,7 +385,7 @@ operator[]只用于取数
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">分布式计算</a>
         		</li>
       		
 		</ul>
@@ -357,7 +441,7 @@ operator[]只用于取数
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/01/21/Cplusplus_thinking/模板（一）/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://chenfeng.github.io/2017/06/13/parellel_and_distributed_computing/distributed_compute6/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -371,18 +455,9 @@ operator[]只用于取数
   
 <nav id="article-nav">
   
-    <a href="/2017/01/21/economics/经济学基础知识/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          经济学基础知识
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/01/21/Cplusplus_thinking/模板（二）/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">模板（二）</div>
+    <a href="/2017/06/06/parellel_and_distributed_computing/distributed_compute5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式系统的容错技术(上)</div>
       <i class="icon-circle-right"></i>
     </a>
   

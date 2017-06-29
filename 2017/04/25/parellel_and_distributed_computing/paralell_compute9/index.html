@@ -269,7 +269,7 @@ $P_r{ X \leq">
 <p>定理9.2: 任意平面图G = (V, E)都能在线性串行时间内建立一个分数阶独立集X</p>
 <ul>
 <li>令 $V_d$ 为G的一个阶不大于d的顶点子集(d &gt;= 6)</li>
-<li>令$V_h = V - V<em>d$ ，则 $\sum</em>{v \in V_h}deg(v) \geq (d + 1)|V_h|$</li>
+<li>令$V<em>h = V - V_d$ ，则 $\sum</em>{v \in V_h}deg(v) \geq (d + 1)|V_h|$</li>
 <li>$(d + 1)|V<em>h| \leq \sum</em>{v \in V}deg(v) \leq 6|V| - 12$</li>
 <li>$|V_h| \leq (6|V| - 12)/(d + 1)$</li>
 <li><p>$|v_d| = |V| - |V_h| \geq (d - 5)|V|/(d + 1)$</p>
@@ -370,9 +370,19 @@ $P_r{ X \leq">
 <li>将{0, 1}映射到 整数环Z上的2*2矩阵</li>
 <li>(满足性质2但不满足1和3)</li>
 </ul>
-<p>$$ f(0) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 0 \<br>   1 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
-<p>$$ f(1) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 1 \<br>   0 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
-<ul>
+<script type="math/tex; mode=display">f(0) = 
+ \left[
+ \begin{matrix}
+   1 & 0 \\
+   1 & 1
+  \end{matrix}
+  \right]</script><script type="math/tex; mode=display">f(1) = 
+ \left[
+ \begin{matrix}
+   1 & 1 \\
+   0 & 1
+  \end{matrix}
+  \right]</script><ul>
 <li>对字符串XY，f(XY)=f(X)f(Y)(Z上的矩阵乘法)</li>
 <li>指纹是一一对应的</li>
 <li>通过比较行内元素的大小，可以知道最后是0还是1（0是左大右小，1是左小右大）</li>
@@ -389,13 +399,19 @@ $P_r{ X \leq">
 </ul>
 </li>
 <li><ul>
-<li>f(X) = $<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 0 \<br>1 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$ = $<br>\left[<br>\begin{matrix}<br>2 &amp; 5 \<br>1 &amp; 3<br>\end{matrix}<br>\right]<br>$</li>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<script type="math/tex; mode=display">
+\left[
+\begin{matrix}
+1 & 0 \\
+1 & 1
+\end{matrix}
+\right]</script>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$ = $<br>\left[<br>\begin{matrix}<br>2 &amp; 5 \<br>1 &amp; 3<br>\end{matrix}<br>\right]<br>$</li>
 </ul>
 </li>
 </ul>
 <p><strong>指纹的增长速度</strong>(不满足性质1)</p>
 <ul>
-<li><p>X长度为m，则f(X)的每个元是不大于 $F<em>{m+1}$ 的整数，其中 $F</em>{m+1}$ 是第(m + 1)个斐波那契数($ F_1 = F<em>2 = 1, F</em>{m + 1} = F<em>m + F</em>{m - 1} $)</p>
+<li><p>X长度为m，则f(X)的每个元是不大于 $F<em>{m+1}$ 的整数，其中 $F</em>{m+1}$ 是第(m + 1)个斐波那契数($ F<em>1 = F_2 = 1, F</em>{m + 1} = F<em>m + F</em>{m - 1} $)</p>
 </li>
 <li><p>f(X)的元会大至 $F_{m + 1} \approx \frac{\phi^{m+1}}{\sqrt{5}}$</p>
 </li>

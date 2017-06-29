@@ -257,11 +257,11 @@
 <li>针对硬件特性的算法改进和程序调优</li>
 </ul>
 <h2 id="并行计算的基本方法"><a href="#并行计算的基本方法" class="headerlink" title="并行计算的基本方法"></a>并行计算的基本方法</h2><h3 id="平衡树方法-Balanced-Trees"><a href="#平衡树方法-Balanced-Trees" class="headerlink" title="平衡树方法(Balanced Trees)"></a>平衡树方法(Balanced Trees)</h3><ul>
-<li>例: 设<em>是满足结合律的二元运算符，考虑计算<br>$$ S_i = x_1 </em> x_2 <em> … </em> x_i, 1 \leq i \leq n $$</li>
+<li>例: 设*是满足结合律的二元运算符，考虑计算<script type="math/tex; mode=display">S_i = x_1 * x_2 * ... * x_i, 1 \leq i \leq n</script></li>
 </ul>
 <p>Algorithm 2.1<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># Prefix Sums</div><div class="line"></div><div class="line">Input: An <span class="built_in">array</span> of n = <span class="number">2</span>^k elements (x_1, x_2, ..., x_n), where k is a nonnegative integer.</div><div class="line"></div><div class="line">Output: The prefix sums s_i, <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">if</span> n = <span class="number">1</span> then &#123;<span class="built_in">set</span> s_1 := x_1; <span class="built_in">exit</span>&#125;</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n/<span class="number">2</span> pardo</div><div class="line">    <span class="built_in">set</span> y_i := x_2i<span class="number">-1</span> * x_2i</div><div class="line"><span class="number">3.</span> Recursively, compute the prefix sums of &#123;y_1, y_2, ..., y_n&#125;, and store them in z_1, z_2, ..., z_n/<span class="number">2</span></div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    &#123;i even     :  <span class="built_in">set</span> s_i := z_i/<span class="number">2</span></div><div class="line">     i = <span class="number">1</span>      :  <span class="built_in">set</span> s_1 := x_1</div><div class="line">     i odd &gt; <span class="number">1</span>  :  <span class="built_in">set</span> s_i := z_(i<span class="number">-1</span>)/<span class="number">2</span> * x_i&#125;</div><div class="line">end</div></pre></td></tr></table></figure></p>
 <ul>
-<li>复杂度分析<br>$$ T(n) = T(\frac{n}{2}) + a  $$<br>$$ W(n) = W(\frac{n}{2}) + bn $$<br>求解递归方程<br>$$ T(n) = O(logn) $$<br>$$ W(n) = O(n) $$</li>
+<li>复杂度分析<script type="math/tex; mode=display">T(n) = T(\frac{n}{2}) + a</script><script type="math/tex; mode=display">W(n) = W(\frac{n}{2}) + bn</script>求解递归方程<script type="math/tex; mode=display">T(n) = O(logn)</script><script type="math/tex; mode=display">W(n) = O(n)</script></li>
 </ul>
 <blockquote>
 <p><img src="/img/prefix_sum_balance_tree.png" alt="prefix_sum_balance_tree.png"></p>
@@ -294,7 +294,7 @@
 <li>合: 把两组凸包用快速算法合为一个</li>
 </ul>
 <p>Algorithm 2.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Simple Upper Hull</div><div class="line"></div><div class="line">Input: A set S of n points in the plane, no two of which have the same x or y coordinates such that x(p_1) &lt; x(p_2) &lt; ... &lt; x(p_n), where n is a power of 2.</div><div class="line"></div><div class="line">Output: The upper hull of S.</div><div class="line"></div><div class="line">begin</div><div class="line">1. If n &lt;= 4, then use a brute-force method to determine UH(S), and exit.</div><div class="line">2. Let S_1 = (p_1, p_2, ..., P_n/2) and S_2 = (p_n/2+1, ..., p_n). Recursively, compute UH(S_1) and UH(S_2) in parallel.</div><div class="line">3. find the upper common tangent between UH(S_1) nad UH(S_2), and deduce the upper hull of S.</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<p>$$ T(n) \leq T(\frac{n}{2}) + alogn $$<br>$$ W(n) \leq 2W(\frac{n}{2} + bn) $$<br>并行复杂度: $ T = O(log^2 n); W = O(nlogn) $</p>
+<script type="math/tex; mode=display">T(n) \leq T(\frac{n}{2}) + alogn</script><script type="math/tex; mode=display">W(n) \leq 2W(\frac{n}{2} + bn)</script><p>并行复杂度: $ T = O(log^2 n); W = O(nlogn) $</p>
 <h3 id="数据划分法-partition-strategy"><a href="#数据划分法-partition-strategy" class="headerlink" title="数据划分法(partition strategy)"></a>数据划分法(partition strategy)</h3><ul>
 <li>例: 归并排序</li>
 </ul>
@@ -332,7 +332,7 @@
 <li><p>倒数第二层每个节点有常数个子节点</p>
 </li>
 <li>向上合并用常数复杂度求最大值方法</li>
-<li>整体并行复杂度: $$ T(n) = O(log log n) $$ $$ W(n) = O(n log log n) $$</li>
+<li>整体并行复杂度: <script type="math/tex">T(n) = O(log log n)</script> <script type="math/tex">W(n) = O(n log log n)</script></li>
 </ul>
 <p>accelerated cascading:</p>
 <ol>
@@ -353,7 +353,7 @@
 <p>definition: $log^{(1)}x = logx$, and $log^{(i)}x = log(log^{(i-1)}x)$</p>
 </blockquote>
 <ul>
-<li>Fast Coloring<br>反复运用这个算法使得从颜色序号{0, 1, 2}中重新选择颜色给每个顶点着色且相邻顶点色不同, 整体并行复杂度为: $$ T = O(log<em>n); W = O(nlog</em>n) $$</li>
+<li>Fast Coloring<br>反复运用这个算法使得从颜色序号{0, 1, 2}中重新选择颜色给每个顶点着色且相邻顶点色不同, 整体并行复杂度为: <script type="math/tex">T = O(log*n); W = O(nlog*n)</script></li>
 </ul>
 <p>Algorithm 2.10<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># <span class="number">3</span>-coloring of a Cycle</div><div class="line"></div><div class="line">Input: A directed cycle of length n whose arcs are specified by an <span class="built_in">array</span> S.</div><div class="line"></div><div class="line">Output: A <span class="number">3</span>-coloring of the vertices of the cycle.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= i &lt;= n pardo</div><div class="line">    <span class="built_in">set</span> C(i) := i</div><div class="line"><span class="number">2.</span> Apply Algorithm <span class="number">2.9</span> once.</div><div class="line"><span class="number">3.</span> Sort the vertices by their colors.</div><div class="line"><span class="number">4.</span> <span class="keyword">for</span> i = <span class="number">3</span> to <span class="number">2</span> \ceiling(logn) <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> all vertices v of color i pardo</div><div class="line">    color v with the smallest color from &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125; that is diffrrent from the colors of its two neighbors.</div><div class="line">end</div></pre></td></tr></table></figure></p>
 <p>T = O(logn); W = O(n)</p>
@@ -362,7 +362,7 @@
 </ul>
 <ol>
 <li>迭代调用算法2.9，把颜色降至c种以下(c是较小常数，如10等)</li>
-<li>遍历从3到c-1种颜色:<br>for(color = 3; color &lt; c; ++color) {<br> 环中结点号i<br> if i的颜色为color pardo<pre><code>根据左右邻居占用3颜色0,1,2中的哪几种，决定结点i可以取得颜色({0,1,2}中的某一个)
+<li>遍历从3到c-1种颜色:<br>for(color = 3; color &lt; c; ++color) {<br> 环中结点号i<br> if i的颜色为color pardo<pre><code> 根据左右邻居占用3颜色0,1,2中的哪几种，决定结点i可以取得颜色({0,1,2}中的某一个)
 </code></pre>}</li>
 </ol>
 <blockquote>
@@ -451,18 +451,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/02/28/computer_network/computer_network_1/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          列表和树
+          计算机网络和因特网
         
       </div>
     </a>
   
   
-    <a href="/2017/02/28/computer_network/computer_network_1/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">计算机网络和因特网</div>
+    <a href="/2017/01/21/Cplusplus_thinking/类设计者的核查表/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">类设计者的核查表</div>
       <i class="icon-circle-right"></i>
     </a>
   

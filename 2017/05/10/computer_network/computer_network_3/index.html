@@ -1049,8 +1049,10 @@ send side: breaks">
 <li>timeout interval: EstimatedRTT plus “safety margin” </li>
 <li><p>large variation in EstimatedRTT -&gt; larger safety margin</p>
 </li>
-<li><p>estimate SampleRTT deviation from EstimatedRTT:<br>$$<br>DevRTT = (1-\beta)<em>DevRTT +\beta</em> |SampleRTT-EstimatedRTT|<br>(typically, \beta = 0.25)<br>$$</p>
-</li>
+<li><p>estimate SampleRTT deviation from EstimatedRTT: </p>
+<script type="math/tex; mode=display">
+DevRTT = (1-\beta)*DevRTT +\beta* |SampleRTT-EstimatedRTT|
+(typically, \beta = 0.25)</script></li>
 </ul>
 <p>TimeoutInterval = EstimatedRTT(estimated RTT) + 4*DevRTT(“safety margin”)</p>
 <h3 id="TCP-reliable-data-transfer-可靠数据传输"><a href="#TCP-reliable-data-transfer-可靠数据传输" class="headerlink" title="TCP reliable data transfer(可靠数据传输)"></a>TCP reliable data transfer(可靠数据传输)</h3><ul>
@@ -1140,6 +1142,7 @@ send side: breaks">
 <p><img src="\img\TCP_retransmission_scenarios1.png" alt="TCP_retransmission_scenarios1.png"></p>
 </blockquote>
 <p><em>TCP ACK generation [RFC 1122, RFC 2581]</em></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1166,6 +1169,7 @@ send side: breaks">
 </tr>
 </tbody>
 </table>
+</div>
 <p><em>TCP fast retransmit</em>(快速重传)</p>
 <ul>
 <li>time-out period often relatively long: long delay before resending lost packet</li>

@@ -359,6 +359,77 @@
 
 
   
+    <article id="post-parellel_and_distributed_computing/paralell_compute5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">搜索、归并与排序的并行算法</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" class="archive-article-date">
+  	<time datetime="2017-03-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(并行与分布式计算三<rev2>)</p>
+<h2 id="并行搜索的基本思想"><a href="#并行搜索的基本思想" class="headerlink" title="并行搜索的基本思想"></a>并行搜索的基本思想</h2><p>在升序数组中采用与二分搜索类似的p+1分搜索: </p>
+<ul>
+<li>使用递归按比例缩小搜索范围的办法</li>
+<li>二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较</li>
+<li>上述的每层p次比较可以用p个处理器同时进行</li>
+</ul>
+<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$</p>
+        
+          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-parellel_and_distributed_computing/paralell_compute6" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -414,77 +485,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-parellel_and_distributed_computing/paralell_compute5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">搜索、归并与排序的并行算法</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" class="archive-article-date">
-  	<time datetime="2017-03-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>(并行与分布式计算三<rev2>)</p>
-<h2 id="并行搜索的基本思想"><a href="#并行搜索的基本思想" class="headerlink" title="并行搜索的基本思想"></a>并行搜索的基本思想</h2><p>在升序数组中采用与二分搜索类似的p+1分搜索: </p>
-<ul>
-<li>使用递归按比例缩小搜索范围的办法</li>
-<li>二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较</li>
-<li>上述的每层p次比较可以用p个处理器同时进行</li>
-</ul>
-<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$</p>
-        
-          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并行计算</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">展开全文 >></a>
         </p>
       
 
@@ -781,19 +781,19 @@
 
 
   
-    <article id="post-Cplusplus_thinking/代理类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Cplusplus_thinking/模板（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/代理类/">代理类</a>
+      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/模板（三）/">模板（三）</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/代理类/" class="archive-article-date">
+        <a href="/2017/01/21/Cplusplus_thinking/模板（三）/" class="archive-article-date">
   	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
 </a>
         
@@ -801,13 +801,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
-<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
+        <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
+<li><p>已经定义Array<T>、Pointer<T>和Ptr_to_const<T>使得能部分确保安全性避免使用<br>指针</p>
+</li>
+<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
+</li>
+</ul>
+<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
 <ul>
-<li>surrogate是handle(句柄)类中最简单的一种</li>
+<li>基类及派生类都要定义这些操作</li>
 </ul>
         
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/代理类/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/#more">more >></a>
         
       
 
@@ -831,7 +836,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/代理类/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/模板（三）/">展开全文 >></a>
         </p>
       
 
@@ -963,15 +968,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">分布式计算</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -983,7 +984,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">computer network</a>
+                <a href="javascript:void(0)" class="js-tag color1">分布式计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">并行计算</a>
               </li>
             
             <div class="clearfix"></div>

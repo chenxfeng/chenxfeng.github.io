@@ -145,36 +145,33 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Cplusplus_thinking/句柄类(handle)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Cplusplus_thinking/代理类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/">句柄类(handle)</a>
+      <a class="article-title" href="/2017/01/16/Cplusplus_thinking/代理类/">代理类</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+        <a href="/2017/01/16/Cplusplus_thinking/代理类/" class="archive-article-date">
+  	<time datetime="2017-01-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>创建代理会复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
-<h3 id="某些类应当避免复制："><a href="#某些类应当避免复制：" class="headerlink" title="某些类应当避免复制："></a>某些类应当避免复制：</h3><ul>
-<li>对象很大，资源消耗多</li>
-<li>每个对象代表一种不能被轻易复制的资源，如文件</li>
-<li>其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大</li>
-<li>对象代表位于网络连接另一端的其他对象</li>
-<li>多态性环境中只知对象基类类型而不知对象本身类型</li>
+        <p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
+<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
+<ul>
+<li>surrogate是handle(句柄)类中最简单的一种</li>
 </ul>
         
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/16/Cplusplus_thinking/代理类/#more">more >></a>
         
       
 
@@ -198,7 +195,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/句柄类(handle)/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/16/Cplusplus_thinking/代理类/">展开全文 >></a>
         </p>
       
 
@@ -216,41 +213,31 @@
 
 
   
-    <article id="post-Cplusplus_thinking/不应当使用虚函数的情况" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Cplusplus_thinking/类设计者的核查表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/">不应当使用虚函数的情况</a>
+      <a class="article-title" href="/2017/01/15/Cplusplus_thinking/类设计者的核查表/">类设计者的核查表</a>
     </h1>
   
 
         
-        <a href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/" class="archive-article-date">
-  	<time datetime="2017-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-21</time>
+        <a href="/2017/01/15/Cplusplus_thinking/类设计者的核查表/" class="archive-article-date">
+  	<time datetime="2017-01-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>关于是否应该所有成员函数缺省为虚函数的争论</p>
-<p><em>只有涉及继承时，才需要考虑与此相关的问题</em></p>
-<h2 id="适用的情况"><a href="#适用的情况" class="headerlink" title="适用的情况"></a>适用的情况</h2><ul>
-<li>基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数</li>
-</ul>
-<h2 id="不适用的情况"><a href="#不适用的情况" class="headerlink" title="不适用的情况"></a>不适用的情况</h2><ul>
-<li><p>虚函数代价并不是非常高，当时会带来一定的额外开销</p>
-</li>
-<li><p>有些情况下非虚函数能够正确运行而虚函数不能</p>
-</li>
-<li><p>有些类并非为继承而设计(设计时并不兼容被继承)</p>
-</li>
-</ul>
+        <h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>简单的类 结构就是接口 不需要构造函数</p>
+<h2 id="数据成员私有"><a href="#数据成员私有" class="headerlink" title="数据成员私有"></a>数据成员私有</h2><p>阻止类的使用者私自改动<br>提供相应接口 供使用者执行修改或访问等操作</p>
+<h2 id="无参构造函数"><a href="#无参构造函数" class="headerlink" title="无参构造函数"></a>无参构造函数</h2><p>声明对象数组必需</p>
         
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/#more">more >></a>
+          <a class="article-more-a" href="/2017/01/15/Cplusplus_thinking/类设计者的核查表/#more">more >></a>
         
       
 
@@ -274,7 +261,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/21/Cplusplus_thinking/不应当使用虚函数的情况/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/01/15/Cplusplus_thinking/类设计者的核查表/">展开全文 >></a>
         </p>
       
 

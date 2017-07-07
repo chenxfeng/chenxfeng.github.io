@@ -454,7 +454,7 @@
 <h3 id="一个不同的算法"><a href="#一个不同的算法" class="headerlink" title="一个不同的算法"></a>一个不同的算法</h3><ul>
 <li>颠倒一个序列中的所有元素的顺序</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 不是很正确</div><div class="line">template &lt;class P, class T&gt;</div><div class="line">void reverse(P start, P beyond) &#123;</div><div class="line">    while (start &lt; beyond) &#123;</div><div class="line">        T t = *start;</div><div class="line">        --beyond;</div><div class="line">        *start = *beyond;</div><div class="line">        *beyond = t;</div><div class="line">        ++start;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 不是很正确</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> P, <span class="keyword">class</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(P start, P beyond)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start &lt; beyond) &#123;</div><div class="line">        T t = *start;</div><div class="line">        --beyond;</div><div class="line">        *start = *beyond;</div><div class="line">        *beyond = t;</div><div class="line">        ++start;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>需要定义++p、p!=beyond和*p</li>
 <li><p>需要定义p&lt;beyond和—p，并且确保*p是一个左值</p>
@@ -599,14 +599,145 @@
           <ul>
 <li>一个小程序，使用不同类型迭代器做不同的事</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 复制顺序的数据结构</div><div class="line">template &lt;class In, class Out&gt;</div><div class="line">Out copy(In start, In end, Out dest) &#123;</div><div class="line">    while (start != end)</div><div class="line">        *dest++ = *start++;</div><div class="line">    return dest;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 复制顺序的数据结构</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> In, <span class="keyword">class</span> Out&gt;</div><div class="line"><span class="function">Out <span class="title">copy</span><span class="params">(In start, In end, Out dest)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != end)</div><div class="line">        *dest++ = *start++;</div><div class="line">    <span class="keyword">return</span> dest;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>调用例子</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">int main() &#123;</div><div class="line">    char* hello = &quot;Hello &quot;;</div><div class="line">    char* world = &quot;world&quot;;</div><div class="line">    char message[15];</div><div class="line">    char* p = message;</div><div class="line"></div><div class="line">    p = copy(hello, hello + 6, p);</div><div class="line">    p = copy(world, world + 5, p);</div><div class="line">    *p = &apos;\0&apos;;</div><div class="line"></div><div class="line">    cout &lt;&lt; message &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">char</span>* hello = <span class="string">"Hello "</span>;</div><div class="line">    <span class="keyword">char</span>* world = <span class="string">"world"</span>;</div><div class="line">    <span class="keyword">char</span> message[<span class="number">15</span>];</div><div class="line">    <span class="keyword">char</span>* p = message;</div><div class="line"></div><div class="line">    p = copy(hello, hello + <span class="number">6</span>, p);</div><div class="line">    p = copy(world, world + <span class="number">5</span>, p);</div><div class="line">    *p = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">    <span class="built_in">cout</span> &lt;&lt; message &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/05/Cplusplus_thinking/模板之使用泛型迭代器/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/04/Cplusplus_thinking/模板之抽象接口/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/04/Cplusplus_thinking/模板之抽象接口/" itemprop="url">
+                  模板之抽象接口
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-04T00:00:00+08:00">
+                2017-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>前面探讨了模板的经典用途: 建立容器类</p>
+</blockquote>
+<ul>
+<li>描述一个或一组程序的接口的通用方式</li>
+<li>使用模板提供抽象接口，可以写出独立于任何一种实际类型的函数</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/04/Cplusplus_thinking/模板之抽象接口/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -742,137 +873,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/04/Cplusplus_thinking/模板和泛型算法/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/04/Cplusplus_thinking/模板之抽象接口/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/04/Cplusplus_thinking/模板之抽象接口/" itemprop="url">
-                  模板之抽象接口
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-04T00:00:00+08:00">
-                2017-07-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>前面探讨了模板的经典用途: 建立容器类</p>
-</blockquote>
-<ul>
-<li>描述一个或一组程序的接口的通用方式</li>
-<li>使用模板提供抽象接口，可以写出独立于任何一种实际类型的函数</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/04/Cplusplus_thinking/模板之抽象接口/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>

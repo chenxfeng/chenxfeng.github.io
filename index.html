@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -204,7 +204,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -237,6 +237,288 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/07/algoDesign/dp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/07/algoDesign/dp/" itemprop="url">
+                  Unbenannt
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-07T18:46:04+08:00">
+                2017-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="动态规划题目"><a href="#动态规划题目" class="headerlink" title="动态规划题目"></a>动态规划题目</h2><p>[转载]整理自<a href="http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html">http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html</a></p>
+<p><strong>递推</strong></p>
+<ul>
+<li><p>[例题1]在一个3 X N的长方形方格中，铺满1X2的骨牌（骨牌个数不限制），给定N，求方案数（图一 -1-1为N=2的所有方案），所以N=2时方案数为3。</p>
+</li>
+<li><p>二维状态</p>
+</li>
+<li><p>状态转移方程</p>
+</li>
+<li><ul>
+<li>f[i][0] = f[i-2][0] + f[i-1][1] + f[i-2][2]</li>
+</ul>
+</li>
+<li><ul>
+<li>f[i][1] = f[i-1][2]</li>
+</ul>
+</li>
+<li><ul>
+<li>f[i][2] = f[i][0] + f[i-1][1]</li>
+</ul>
+</li>
+<li>边界条件</li>
+<li><ul>
+<li>f[0][0] = f[1][1] = f[0][2] = 1</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\donggui_5.png" alt="donggui_5.png"></p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/07/algoDesign/dp/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/07/algoDesign/backpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/07/algoDesign/backpack/" itemprop="url">
+                  Unbenannt
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-07T18:46:04+08:00">
+                2017-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="背包"><a href="#背包" class="headerlink" title="背包"></a>背包</h2><p>[转载]整理自背包九讲</p>
+<h3 id="01背包问题"><a href="#01背包问题" class="headerlink" title="01背包问题"></a>01背包问题</h3><ul>
+<li>[题目]有N件物品和一个容量为V的背包。放入第i件物品耗费的空间是C_i，得到的价值是W_i。求解将哪些物品装入背包可使价值总和最大</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/07/algoDesign/backpack/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -284,7 +566,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-01T00:00:00+08:00">
                 2017-07-01
@@ -329,7 +611,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/01/computer_network/computer_network_9/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -411,7 +693,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-30T00:00:00+08:00">
                 2017-06-30
@@ -470,7 +752,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/06/30/computer_network/computer_network_8/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -552,7 +834,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-29T00:00:00+08:00">
                 2017-06-29
@@ -630,7 +912,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/06/29/computer_network/computer_network_7/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -712,7 +994,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
                 2017-06-28
@@ -774,7 +1056,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/06/28/computer_network/computer_network_6/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -856,7 +1138,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-13T00:00:00+08:00">
                 2017-06-13
@@ -907,7 +1189,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/06/13/parellel_and_distributed_computing/distributed_compute6/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -989,7 +1271,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-06T00:00:00+08:00">
                 2017-06-06
@@ -1046,289 +1328,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/06/06/parellel_and_distributed_computing/distributed_compute5/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/06/04/algoDesign/dp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/04/algoDesign/dp/" itemprop="url">
-                  Untitled
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-04T20:02:38+08:00">
-                2017-06-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="动态规划题目"><a href="#动态规划题目" class="headerlink" title="动态规划题目"></a>动态规划题目</h2><p>[转载]整理自<a href="http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html">http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html</a></p>
-<p><strong>递推</strong></p>
-<ul>
-<li><p>[例题1]在一个3 X N的长方形方格中，铺满1X2的骨牌（骨牌个数不限制），给定N，求方案数（图一 -1-1为N=2的所有方案），所以N=2时方案数为3。</p>
-</li>
-<li><p>二维状态</p>
-</li>
-<li><p>状态转移方程</p>
-</li>
-<li><ul>
-<li>f[i][0] = f[i-2][0] + f[i-1][1] + f[i-2][2]</li>
-</ul>
-</li>
-<li><ul>
-<li>f[i][1] = f[i-1][2]</li>
-</ul>
-</li>
-<li><ul>
-<li>f[i][2] = f[i][0] + f[i-1][1]</li>
-</ul>
-</li>
-<li>边界条件</li>
-<li><ul>
-<li>f[0][0] = f[1][1] = f[0][2] = 1</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p><img src="\img\donggui_5.png" alt="donggui_5.png"></p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/04/algoDesign/dp/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/06/04/algoDesign/backpack/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/04/algoDesign/backpack/" itemprop="url">
-                  Untitled
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-04T20:02:36+08:00">
-                2017-06-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="背包"><a href="#背包" class="headerlink" title="背包"></a>背包</h2><p>[转载]整理自背包九讲</p>
-<h3 id="01背包问题"><a href="#01背包问题" class="headerlink" title="01背包问题"></a>01背包问题</h3><ul>
-<li>[题目]有N件物品和一个容量为V的背包。放入第i件物品耗费的空间是C_i，得到的价值是W_i。求解将哪些物品装入背包可使价值总和最大</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/04/algoDesign/backpack/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1410,7 +1410,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-31T00:00:00+08:00">
                 2017-05-31
@@ -1470,7 +1470,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/05/31/computer_network/computer_network_5/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1515,7 +1515,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/05/29/economics/finacial_market/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/05/29/economics/good_market/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -1537,8 +1537,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/05/29/economics/finacial_market/" itemprop="url">
-                  金融市场
+                <a class="post-title-link" href="/2017/05/29/economics/good_market/" itemprop="url">
+                  商品市场
                 </a>
               
             
@@ -1552,7 +1552,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-29T00:00:00+08:00">
                 2017-05-29
@@ -1591,18 +1591,15 @@
 
       
         
-          <h2 id="The-Demand-for-Money"><a href="#The-Demand-for-Money" class="headerlink" title="The Demand for Money"></a>The Demand for Money</h2><ul>
-<li><p>Money, used for transactions, pays no interest (货币可以用于交易, 没有利率)</p>
-</li>
-<li><p>两种货币: 通货(currency, coins and bills), 支票(checkable deposits, the bank deposits on which you can write checks)</p>
-</li>
-<li><p>bonds pay a positive interest rate, i, cannot be used for transactions (债券无法用于交易, 一定正利率)</p>
-</li>
+          <p><strong>GDP目标：衡量福利水平</strong></p>
+<ul>
+<li>提高GDP不一定提高福利水</li>
+<li>比较极端的例子：犯罪活动可以增加GDP，但不利于福利</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/29/economics/finacial_market/#more" rel="contents">
-              Read more &raquo;
+            <a class="btn" href="/2017/05/29/economics/good_market/#more" rel="contents">
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1688,7 +1685,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">42</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -1701,7 +1698,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -1751,7 +1748,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

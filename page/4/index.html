@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -204,7 +204,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -247,7 +247,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/供给与需求的基本原理/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -269,8 +269,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/21/economics/供给与需求的基本原理/" itemprop="url">
-                  供给与需求的基本原理
+                <a class="post-title-link" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" itemprop="url">
+                  搜索、归并与排序的并行算法
                 </a>
               
             
@@ -284,10 +284,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
-                2017-01-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">
+                2017-03-28
               </time>
             
 
@@ -323,19 +323,18 @@
 
       
         
-          <h3 id="需求表"><a href="#需求表" class="headerlink" title="需求表"></a>需求表</h3><ul>
-<li><p>在其他条件相同时，一种物品的价格越高，人们愿意购买的数量就越少；而市场价格越低，人们愿意购买的数量就越多</p>
-</li>
-<li><p>价格与需求之间的关系可以用一张需求表(demand schedule)或一条需求曲线(demand curve)表示</p>
-</li>
-</ul>
+          <p>(并行与分布式计算三<rev2>)</p>
+<h2 id="并行搜索的基本思想"><a href="#并行搜索的基本思想" class="headerlink" title="并行搜索的基本思想"></a>并行搜索的基本思想</h2><p>在升序数组中采用与二分搜索类似的p+1分搜索: </p>
 <ul>
-<li>需求曲线：数量和价格呈反比关系</li>
+<li>使用递归按比例缩小搜索范围的办法</li>
+<li>二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较</li>
+<li>上述的每层p次比较可以用p个处理器同时进行</li>
 </ul>
+<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/21/economics/供给与需求的基本原理/#more" rel="contents">
-              Weiterlesen &raquo;
+            <a class="btn" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/#more" rel="contents">
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -380,7 +379,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/Cplusplus_thinking/模板（二）/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/21/parellel_and_distributed_computing/paralell_compute4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -402,8 +401,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/21/Cplusplus_thinking/模板（二）/" itemprop="url">
-                  模板之访问容器中的元素
+                <a class="post-title-link" href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/" itemprop="url">
+                  图的并行算法
                 </a>
               
             
@@ -417,10 +416,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
-                2017-01-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-21T00:00:00+08:00">
+                2017-03-21
               </time>
             
 
@@ -456,20 +455,20 @@
 
       
         
-          <h2 id="访问容器中的元素"><a href="#访问容器中的元素" class="headerlink" title="访问容器中的元素"></a>访问容器中的元素</h2><p>保留Array<T>和一个指向T的指针之间的密切关系要付出一定的代价</p>
-<ol>
-<li><p>用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留</p>
+          <p>(并行与分布式计算四)</p>
+<h2 id="连通分量"><a href="#连通分量" class="headerlink" title="连通分量"></a>连通分量</h2><ul>
+<li><p>顶点之间的连通性：在无向图G中，若从顶点$v_i$到顶点$v_j$有路径(当然从$v_j$到$v_i$也一定有路径)，则称$v_i$和$v_j$是连通的(Connected)</p>
 </li>
-<li><p>不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误</p>
+<li><p>连通图：若V(G)中任意两个不同的顶点$v_i$和$v_j$都连通(即有路径)，则称G为连通图(Connected Graph)</p>
 </li>
-</ol>
-<ul>
-<li>增加防止出错的中间层</li>
+<li><p>连通分量：无向图G的极大连通子图称为G的连通分量(Connected Component)</p>
+</li>
 </ul>
+<h3 id="寻找连通分量的串行算法"><a href="#寻找连通分量的串行算法" class="headerlink" title="寻找连通分量的串行算法"></a>寻找连通分量的串行算法</h3>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/21/Cplusplus_thinking/模板（二）/#more" rel="contents">
-              Weiterlesen &raquo;
+            <a class="btn" href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/#more" rel="contents">
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -514,7 +513,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/经济学基础知识/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/14/parellel_and_distributed_computing/paralell_compute3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -536,8 +535,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/21/economics/经济学基础知识/" itemprop="url">
-                  经济学基础知识
+                <a class="post-title-link" href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/" itemprop="url">
+                  列表和树
                 </a>
               
             
@@ -551,10 +550,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
-                2017-01-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T00:00:00+08:00">
+                2017-03-14
               </time>
             
 
@@ -590,17 +589,19 @@
 
       
         
-          <p>研究一个社会如何利用<strong>稀缺</strong>资源生产有价值的物品和劳务并将它们在不同人中间进行分配。</p>
+          <p>(并行与分布式计算二)</p>
+<h2 id="列表排序"><a href="#列表排序" class="headerlink" title="列表排序"></a>列表排序</h2><p>The list-ranking problem is to determine the distance of each node i from the end of the list</p>
+<h3 id="指针跳转法-pointer-jumping-technique"><a href="#指针跳转法-pointer-jumping-technique" class="headerlink" title="指针跳转法(pointer jumping technique)"></a>指针跳转法(pointer jumping technique)</h3><p>思想：</p>
 <ul>
-<li>物品和资源是稀缺的</li>
-<li>社会必须有效地加以利用</li>
+<li>链表中的指针跳转可以由一次跳转一步改为一次跳转多步</li>
+<li>如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间</li>
+<li>如果为每个节点，把一次跳转2k步的跳转结果记录下来，那么以后一次跳转2k步也只需要O（1）时间</li>
+<li>反复利用跳转步数翻倍和跳转结果记录的技巧，可以在O（log N）的时间内把跳转步数扩大为N</li>
 </ul>
-<p>稀缺(sarcity)：相对于需求，物品总是有限的</p>
-<p>效率(efficiency)：最有效地使用社会资源以满足人类的愿望和需要</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/21/economics/经济学基础知识/#more" rel="contents">
-              Weiterlesen &raquo;
+            <a class="btn" href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/#more" rel="contents">
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -645,7 +646,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/现代经济中的市场和政府/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/02/28/computer_network/computer_network_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -667,8 +668,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/21/economics/现代经济中的市场和政府/" itemprop="url">
-                  现代经济中的市场和政府
+                <a class="post-title-link" href="/2017/02/28/computer_network/computer_network_1/" itemprop="url">
+                  计算机网络和因特网
                 </a>
               
             
@@ -682,10 +683,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
-                2017-01-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T00:00:00+08:00">
+                2017-02-28
               </time>
             
 
@@ -721,13 +722,276 @@
 
       
         
-          <h3 id="什么是市场"><a href="#什么是市场" class="headerlink" title="什么是市场"></a>什么是市场</h3><ul>
-<li>市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制</li>
+          <h2 id="因特网"><a href="#因特网" class="headerlink" title="因特网"></a>因特网</h2><p>连接到因特网的设备：主机(host)或端系统(end system)</p>
+<p>端系统通过通信链路(communication link)和分组交换机(parket switch)连接到一起</p>
+<p>路由器(router) 链路层交换机(link-layer switch)</p>
+<p>端系统通过因特网服务提供商(Internet Service Provider, ISP)接入因特网</p>
+<p>因特网部件运行一系列协议(protocol),协议控制因特网中信息的接受和发送</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/28/computer_network/computer_network_1/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/" itemprop="url">
+                  并行计算基础知识及基本并行算法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T00:00:00+08:00">
+                2017-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>(并行与分布式计算一)</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="设计分布式并行算法基本流程"><a href="#设计分布式并行算法基本流程" class="headerlink" title="设计分布式并行算法基本流程"></a>设计分布式并行算法基本流程</h3><p>1.1发现计算问题的<strong>内在并行性</strong></p>
+<p>1.2设计<strong>与硬件无关</strong>的并行算法</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/22/Cplusplus_thinking/模板（三）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/22/Cplusplus_thinking/模板（三）/" itemprop="url">
+                  模板之迭代器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-22T00:00:00+08:00">
+                2017-01-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
+<li><p>已经定义Array<T>、Pointer<T>和Ptr_to_const<T>使得能部分确保安全性避免使用<br>指针</p>
+</li>
+<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
+</li>
+</ul>
+<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
+<ul>
+<li>基类及派生类都要定义这些操作</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/21/economics/现代经济中的市场和政府/#more" rel="contents">
-              Weiterlesen &raquo;
+            <a class="btn" href="/2017/01/22/Cplusplus_thinking/模板（三）/#more" rel="contents">
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -809,7 +1073,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
                 2017-01-21
@@ -859,7 +1123,134 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/21/economics/宏观经济现象鸟瞰/#more" rel="contents">
-              Weiterlesen &raquo;
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/现代经济中的市场和政府/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/21/economics/现代经济中的市场和政府/" itemprop="url">
+                  现代经济中的市场和政府
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
+                2017-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="什么是市场"><a href="#什么是市场" class="headerlink" title="什么是市场"></a>什么是市场</h3><ul>
+<li>市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/21/economics/现代经济中的市场和政府/#more" rel="contents">
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -941,7 +1332,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
                 2017-01-21
@@ -998,7 +1389,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/21/economics/宏观经济学鸟瞰/#more" rel="contents">
-              Weiterlesen &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1043,7 +1434,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/20/Cplusplus_thinking/模板（一）/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/Cplusplus_thinking/模板（二）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -1065,8 +1456,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/20/Cplusplus_thinking/模板（一）/" itemprop="url">
-                  模板之设计容器类
+                <a class="post-title-link" href="/2017/01/21/Cplusplus_thinking/模板（二）/" itemprop="url">
+                  模板之访问容器中的元素
                 </a>
               
             
@@ -1080,10 +1471,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-20T00:00:00+08:00">
-                2017-01-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
+                2017-01-21
               </time>
             
 
@@ -1119,428 +1510,20 @@
 
       
         
-          <h2 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h2><p>容器：保存值的集合的数据结构</p>
-<ul>
-<li>语言内建容器：数组、结构体</li>
-<li><p>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</p>
-</li>
-<li><p>容器包含对象</p>
-</li>
-<li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
-</li>
-<li><p>函数传参数方式 void f(const Container<T>&amp;)避免大对象的复制</p>
-</li>
-<li><p>区分读和写</p>
-</li>
-</ul>
-<p>operator[]只用于取数</p>
-<p>用成员函数update(i, x)修改索引为i的元素为x</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/20/Cplusplus_thinking/模板（一）/#more" rel="contents">
-              Weiterlesen &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/19/Cplusplus_thinking/不应当使用虚函数的情况/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/19/Cplusplus_thinking/不应当使用虚函数的情况/" itemprop="url">
-                  不应当使用虚函数的情况
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T00:00:00+08:00">
-                2017-01-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>关于是否应该所有成员函数缺省为虚函数的争论</p>
-<p><em>只有涉及继承时，才需要考虑与此相关的问题</em></p>
-<h2 id="适用的情况"><a href="#适用的情况" class="headerlink" title="适用的情况"></a>适用的情况</h2><ul>
-<li>基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数</li>
-</ul>
-<h2 id="不适用的情况"><a href="#不适用的情况" class="headerlink" title="不适用的情况"></a>不适用的情况</h2><ul>
-<li><p>虚函数代价并不是非常高，当时会带来一定的额外开销</p>
-</li>
-<li><p>有些情况下非虚函数能够正确运行而虚函数不能</p>
-</li>
-<li><p>有些类并非为继承而设计(设计时并不兼容被继承)</p>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/19/Cplusplus_thinking/不应当使用虚函数的情况/#more" rel="contents">
-              Weiterlesen &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/18/Cplusplus_thinking/面向对象编程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/18/Cplusplus_thinking/面向对象编程/" itemprop="url">
-                  面向对象编程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-18T00:00:00+08:00">
-                2017-01-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>一个面向对象程序范例</strong></p>
-<p>面向对象对象编程三要素：</p>
+          <h2 id="访问容器中的元素"><a href="#访问容器中的元素" class="headerlink" title="访问容器中的元素"></a>访问容器中的元素</h2><p>保留Array<T>和一个指向T的指针之间的密切关系要付出一定的代价</p>
 <ol>
-<li>数据抽象</li>
-<li>继承</li>
-<li>动态绑定</li>
+<li><p>用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留</p>
+</li>
+<li><p>不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误</p>
+</li>
 </ol>
-<p><strong>适用于大型程序</strong></p>
-<h3 id="以算术表达式树形表示的面向对象解决方案为例"><a href="#以算术表达式树形表示的面向对象解决方案为例" class="headerlink" title="以算术表达式树形表示的面向对象解决方案为例"></a>以算术表达式树形表示的面向对象解决方案为例</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/18/Cplusplus_thinking/面向对象编程/#more" rel="contents">
-              Weiterlesen &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/17/Cplusplus_thinking/句柄类(handle)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/17/Cplusplus_thinking/句柄类(handle)/" itemprop="url">
-                  句柄类(handle)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-17T00:00:00+08:00">
-                2017-01-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>创建代理会复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
-<h3 id="某些类应当避免复制："><a href="#某些类应当避免复制：" class="headerlink" title="某些类应当避免复制："></a>某些类应当避免复制：</h3><ul>
-<li>对象很大，资源消耗多</li>
-<li>每个对象代表一种不能被轻易复制的资源，如文件</li>
-<li>其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大</li>
-<li>对象代表位于网络连接另一端的其他对象</li>
-<li>多态性环境中只知对象基类类型而不知对象本身类型</li>
+<ul>
+<li>增加防止出错的中间层</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/17/Cplusplus_thinking/句柄类(handle)/#more" rel="contents">
-              Weiterlesen &raquo;
+            <a class="btn" href="/2017/01/21/Cplusplus_thinking/模板（二）/#more" rel="contents">
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1625,8 +1608,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">42</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -1639,7 +1622,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -1689,7 +1672,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

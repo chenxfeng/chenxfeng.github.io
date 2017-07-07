@@ -1,0 +1,913 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前面探讨了模板的经典用途: 建立容器类
+
+
+描述一个或一组程序的接口的通用方式
+使用模板提供抽象接口，可以写出独立于任何一种实际类型的函数
+
+问题
+系统的在概念上具有不同特性的部分能谨慎地分隔开，有利于(代码)复用
+
+小例子
+一个将整数数组元素相加的函数
+
+123456int sum(int * p, int n) &amp;#123;    int result = 0;    for (int i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模板之抽象接口">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/04/Cplusplus_thinking/模板之抽象接口/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="前面探讨了模板的经典用途: 建立容器类
+
+
+描述一个或一组程序的接口的通用方式
+使用模板提供抽象接口，可以写出独立于任何一种实际类型的函数
+
+问题
+系统的在概念上具有不同特性的部分能谨慎地分隔开，有利于(代码)复用
+
+小例子
+一个将整数数组元素相加的函数
+
+123456int sum(int * p, int n) &amp;#123;    int result = 0;    for (int i">
+<meta property="og:updated_time" content="2017-07-04T15:00:35.525Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模板之抽象接口">
+<meta name="twitter:description" content="前面探讨了模板的经典用途: 建立容器类
+
+
+描述一个或一组程序的接口的通用方式
+使用模板提供抽象接口，可以写出独立于任何一种实际类型的函数
+
+问题
+系统的在概念上具有不同特性的部分能谨慎地分隔开，有利于(代码)复用
+
+小例子
+一个将整数数组元素相加的函数
+
+123456int sum(int * p, int n) &amp;#123;    int result = 0;    for (int i">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/04/Cplusplus_thinking/模板之抽象接口/"/>
+
+
+
+
+
+  <title> 模板之抽象接口 | chenxfeng's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/04/Cplusplus_thinking/模板之抽象接口/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                模板之抽象接口
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-04T00:00:00+08:00">
+                2017-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>前面探讨了模板的经典用途: 建立容器类</p>
+</blockquote>
+<ul>
+<li>描述一个或一组程序的接口的通用方式</li>
+<li>使用模板提供抽象接口，可以写出独立于任何一种实际类型的函数</li>
+</ul>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
+<li>系统的在概念上具有不同特性的部分能谨慎地分隔开，有利于(代码)复用</li>
+</ul>
+<h3 id="小例子"><a href="#小例子" class="headerlink" title="小例子"></a>小例子</h3><ul>
+<li>一个将整数数组元素相加的函数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int sum(int * p, int n) &#123;</div><div class="line">    int result = 0;</div><div class="line">    for (int i = 0; i &lt; n; i++)</div><div class="line">        result += p[i];</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>使用这个函数：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int main() &#123;</div><div class="line">    int x[10];</div><div class="line">    for (int i = 0; i &lt; 10; i++) </div><div class="line">        x[i] = i;</div><div class="line">    cout &lt;&lt; sum(x, 10) &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>sum函数知道三件事: </p>
+<ol>
+<li><p>它把一组数加在一起</p>
+</li>
+<li><p>它所加的数是整数</p>
+</li>
+<li><p>它所加的整数以一种特殊的方式存储了起来</p>
+</li>
+</ol>
+<blockquote>
+<p>划分这个程序使把每一个特征分离到不同的部分中</p>
+</blockquote>
+<h3 id="分离迭代方式"><a href="#分离迭代方式" class="headerlink" title="分离迭代方式"></a>分离迭代方式</h3><ul>
+<li><p>函数的一个依赖: 添加的元素是放在数组中</p>
+</li>
+<li><p>用类抽象这种依赖: 迭代器</p>
+</li>
+<li><ul>
+<li>一个构造函数用来创建要处理的数据</li>
+</ul>
+</li>
+<li><ul>
+<li>请求序列中下一个元素的方法</li>
+</ul>
+</li>
+<li><ul>
+<li>告知遍历元素何时完成的方法</li>
+</ul>
+</li>
+<li><ul>
+<li>赋值操作符、复制构造函数、析构函数，使对象可以当作值使用</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Int_iterator &#123;</div><div class="line">public:</div><div class="line">    Int_iterator(int*, int);  // 第一个元素的地址、元素数量</div><div class="line">    ~Int_iterator();</div><div class="line"></div><div class="line">    int valid() const;</div><div class="line">    int next();</div><div class="line"></div><div class="line">    Int_iterator(const Int_iterator&amp;);</div><div class="line">    Int_iterator&amp; operator=(const Int_iterator&amp;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>改写sum函数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int sum(Int_iterator ir) &#123;</div><div class="line">    int result = 0;</div><div class="line">    while (ir.valid())</div><div class="line">        result += ir.next()</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>不需要再<strong>直接</strong>知道正在添加的元素是如何保存的: 封装在Int_iterator中</p>
+</li>
+<li><p>使用新的函数: </p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int main() &#123;</div><div class="line">    int x[10];</div><div class="line">    for (int i = 0; i &lt; 10; i++) </div><div class="line">        x[i] = i;</div><div class="line">    cout &lt;&lt; sum(Int_iterator(x, 10)) &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>实现未泛型化的迭代器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class Int_iterator &#123;</div><div class="line">public:</div><div class="line">    Int_iterator(int* p, int c): data(p), len(c) &#123; &#125;</div><div class="line"></div><div class="line">    int valid() const &#123;</div><div class="line">        return len &gt; 0;</div><div class="line">    &#125;</div><div class="line">    int next() &#123;</div><div class="line">        --len;</div><div class="line">        return *data++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">private:</div><div class="line">    int* data;</div><div class="line">    int len;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="遍历任意类型"><a href="#遍历任意类型" class="headerlink" title="遍历任意类型"></a>遍历任意类型</h3><ul>
+<li>通用的Iterator模板</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">template&lt;class T&gt;</div><div class="line">class Iterator &#123;</div><div class="line">public:</div><div class="line">    Iterator(T* p, int c): data(p), len(c) &#123; &#125;</div><div class="line"></div><div class="line">    int valid() const &#123;</div><div class="line">        return len &gt; 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    T next() &#123;</div><div class="line">        --len;</div><div class="line">        return *data++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">private:</div><div class="line">    T* data;</div><div class="line">    int len;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>typedef Iterator&lt;int&gt; Int_iterator</code>使Int_iterator类型等价于Iterator<int></int></li>
+</ul>
+<h3 id="增加其他类型"><a href="#增加其他类型" class="headerlink" title="增加其他类型"></a>增加其他类型</h3><ul>
+<li><p>求出任意类型的值的和</p>
+</li>
+<li><p>将sum函数做成模板</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">template &lt;class T&gt;</div><div class="line">T sum(Iterator&lt;T&gt; ir) &#123;</div><div class="line">    T result = 0;</div><div class="line">    while (ir.valid())</div><div class="line">        result += ir.next();</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>类型T满足: </li>
+<li><ul>
+<li>可以把0转换成该类的对象</li>
+</ul>
+</li>
+<li><ul>
+<li>对该类的对象定义类</li>
+</ul>
+</li>
+<li><ul>
+<li>对象具有类似值的语义，sum函数可以把对象作为值返回</li>
+</ul>
+</li>
+</ul>
+<h3 id="存储技术抽象化"><a href="#存储技术抽象化" class="headerlink" title="存储技术抽象化"></a>存储技术抽象化</h3><ul>
+<li><p>该迭代器只能访问存储在数组中的值</p>
+</li>
+<li><p>值可以保存在链表、文件中</p>
+</li>
+<li><p>需要反映不同数据结构的不同迭代器</p>
+</li>
+<li><p>把Iterator类转变成一个抽象基类，可以表示许多不同类型的迭代器类中的任何一个</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">template &lt;class T&gt;</div><div class="line">class Iterator &#123;</div><div class="line">public:</div><div class="line">    virtual int valid() const = 0;</div><div class="line">    virtual T next() const = 0;</div><div class="line">    virtual ~Iterator() &#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Array_iterator<t>就是一种Iterator<t>: </t></t></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">template &lt;class T&gt;</div><div class="line">class Array_iterator : public Iterator&lt;T&gt; &#123;</div><div class="line">public:</div><div class="line">    Array_iterator(T* p, int c): data(p), len(c) &#123;&#125;</div><div class="line"></div><div class="line">    int valid() const &#123;</div><div class="line">        return len &gt; 0;</div><div class="line">    &#125;</div><div class="line">    T next() &#123;</div><div class="line">        --len;</div><div class="line">        return *data++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">private:</div><div class="line">    T* data;</div><div class="line">    int len;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>sum函数接受指向Iterator的引用作为参数以允许动态绑定</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">template &lt;class T&gt;</div><div class="line">T sum(Iterator&lt;T&gt;&amp; ir) &#123;</div><div class="line">    T result = 0;</div><div class="line">    while (ir.valid())</div><div class="line">        result += ir.next();</div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>调用sum时将迭代器传给它</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">int main() &#123;</div><div class="line">    int x[10];</div><div class="line">    for (int i = 0; i &lt; 10; i++)</div><div class="line">        x[i] = i;</div><div class="line">    Array_iterator&lt;int&gt; it(x, 10);</div><div class="line">    cout &lt;&lt; sum(it) &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>不能使用如下的调用方式: </li>
+<li><ul>
+<li><code>cout &lt;&lt; sum(Array_iterator&lt;int&gt;(x, 10)) &lt;&lt; endl</code></li>
+</ul>
+</li>
+<li><ul>
+<li>子表达式<code>Array_iterator&lt;int&gt;(x, 10)</code>不是左值，没有绑定其上的非const引用</li>
+</ul>
+</li>
+<li><p><strong>每次遍历sum函数中的内部循环时都需要调用虚函数: 动态绑定(开销较大，尤其对象复杂时)</strong></p>
+</li>
+<li><ul>
+<li>可以取消动态绑定减少额外开销，但需要在编译时知道相加元素类型</li>
+</ul>
+</li>
+</ul>
+<p><em>另一种实现方式(不采用继承)</em></p>
+<ul>
+<li>让sum函数有两种类型的参数: 迭代器类型以及被加对象的类型</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">template &lt;class Iter, class T&gt;</div><div class="line">T sum(Iter it) &#123;/*...*/&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>并不奏效: 定义了一个返回类型与参数无关的函数</li>
+<li><ul>
+<li>sum(x)的类型独立于x的类型(可能在C++中非法)</li>
+</ul>
+</li>
+<li><ul>
+<li>需要检查大量上下文条件才有办法判断表达式的类型</li>
+</ul>
+</li>
+<li><p>solution: 定义sum接收一个对求和结果的引用</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">template &lt;class T, class Iter&gt;</div><div class="line">void sum2(T&amp; result, Iter it) &#123;</div><div class="line">    result = 0;</div><div class="line">    while (ir.valid()) </div><div class="line">        result += ir.next();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>重写main程序</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">int main() &#123;</div><div class="line">    int x[10];</div><div class="line">    for (int i = 0; i &lt; 10; ++i)</div><div class="line">        x[i] = i;</div><div class="line">    int r;</div><div class="line">    sum2(r, Iterator&lt;int&gt;(x, 10));</div><div class="line">    cout &lt;&lt; r &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>可以通过保留sum接口使得原来的主程序可以运行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">template &lt;class T&gt;</div><div class="line">T sum(T* p, int n) &#123;</div><div class="line">    T r = 0;</div><div class="line">    sum2(r, Iterator&lt;T&gt;(p, n));</div><div class="line">    return r;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main() &#123;</div><div class="line">    int x[10];</div><div class="line">    for (int i = 0; i &lt; 10; ++i)</div><div class="line">        x[i] = i;</div><div class="line">    cout &lt;&lt; sum(x, 10) &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="实证"><a href="#实证" class="headerlink" title="实证"></a>实证</h3><ul>
+<li><p>利用sum2对一个从istream中生成的、数量不限的数字集合求和</p>
+</li>
+<li><p>可以当做迭代器的类: Reader</p>
+</li>
+<li><ul>
+<li>Reader<t>对象从一个istream中读取一个T值的序列</t></li>
+</ul>
+</li>
+<li><p>必须在读取数据前检查istream中是否还有数据存在</p>
+</li>
+<li><ul>
+<li>从istream中读取数据看读取是否有效</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">template &lt;class T&gt;</div><div class="line">class Reader &#123;</div><div class="line">public:</div><div class="line">    Reader(istream&amp; is): i(is) &#123; advance(); &#125;</div><div class="line">    int valid() const &#123;</div><div class="line">        return status;</div><div class="line">    &#125;</div><div class="line">    T next() &#123;</div><div class="line">        T result = data;</div><div class="line">        advance();</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">private:</div><div class="line">    istream&amp; i;</div><div class="line">    int status;</div><div class="line">    T data;</div><div class="line">    void advance() &#123;</div><div class="line">        i &gt;&gt; data;</div><div class="line">        status = i != 0;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>每个Reader对象绑定一个给予构造函数的istream的引用</li>
+<li><ul>
+<li><code>Reader&lt;double&gt;(cin)</code>是一个从cin中取回double值的Reader对象</li>
+</ul>
+</li>
+<li><p>从输入中读取的数字相加</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int main() &#123;</div><div class="line">    cout &lt;&lt; &quot;Enter numbers: &quot; &lt;&lt; endl;</div><div class="line">    double r = 0;</div><div class="line">    sum2(r, Reader&lt;double&gt;(cin));</div><div class="line">    cout &lt;&lt; r &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li>任何一个大规模系统的关键在于将它划分成可以独立处理的小模块</li>
+<li><ul>
+<li>在小模块之间定义清晰的接口</li>
+</ul>
+</li>
+<li><p>学生注册系统: </p>
+</li>
+<li><ul>
+<li>窗口接口 + 数据库接口</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">template &lt;class W, class DB&gt;</div><div class="line">class Registration &#123;</div><div class="line">public:</div><div class="line">    // 学生注册所需的任何操作</div><div class="line">&#125;；</div><div class="line"></div><div class="line">// 为正在使用的任何窗口和数据库系统实例化一个Registration对象</div><div class="line">int main() &#123;</div><div class="line">    Registration&lt;wizzy_window, dazzling_DB&gt; r;</div><div class="line">    // ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>只要wizzy_window满足窗口系统的规范，dazzling_DB满足数据库系统的规范</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/01/computer_network/computer_network_9/" rel="next" title="网络管理(Network Management)">
+                <i class="fa fa-chevron-left"></i> 网络管理(Network Management)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/04/Cplusplus_thinking/模板和泛型算法/" rel="prev" title="模板之抽象接口">
+                模板之抽象接口 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小例子"><span class="nav-number">2.</span> <span class="nav-text">小例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分离迭代方式"><span class="nav-number">3.</span> <span class="nav-text">分离迭代方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历任意类型"><span class="nav-number">4.</span> <span class="nav-text">遍历任意类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加其他类型"><span class="nav-number">5.</span> <span class="nav-text">增加其他类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储技术抽象化"><span class="nav-number">6.</span> <span class="nav-text">存储技术抽象化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实证"><span class="nav-number">7.</span> <span class="nav-text">实证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">8.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

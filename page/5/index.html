@@ -194,23 +194,13 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archives
+            Startseite
           </a>
         </li>
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/index.html" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -247,7 +237,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/经济学基础知识/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/宏观经济现象鸟瞰/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -269,8 +259,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/21/economics/经济学基础知识/" itemprop="url">
-                  经济学基础知识
+                <a class="post-title-link" href="/2017/01/21/economics/宏观经济现象鸟瞰/" itemprop="url">
+                  宏观经济现象鸟瞰
                 </a>
               
             
@@ -284,7 +274,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
                 2017-01-21
@@ -323,17 +313,18 @@
 
       
         
-          <p>研究一个社会如何利用<strong>稀缺</strong>资源生产有价值的物品和劳务并将它们在不同人中间进行分配。</p>
-<ul>
-<li>物品和资源是稀缺的</li>
-<li>社会必须有效地加以利用</li>
+          <h2 id="三个重要的宏观经济变量"><a href="#三个重要的宏观经济变量" class="headerlink" title="三个重要的宏观经济变量"></a>三个重要的宏观经济变量</h2><ul>
+<li><p>实际国内生产总值(real GDP<gross domestic product>):<br>经济体内所有人的实际总收入。<br>人均国内生产总值(GDP per capita): 经济体内平均而言每个人的实际收入。</p>
+</li>
+<li><p>通货膨胀率(inflation rate):<br>物价水平变动的百分比。(物价指数)<br>用消费者价格指数(consumer price index, CPI)或GDP缩减指数(GDP deflator index)<br>衡量。</p>
+</li>
+<li><p>失业率(unemployment rate):<br>经济体中没有工作当正在积极找工作的劳动力比重。</p>
+</li>
 </ul>
-<p>稀缺(sarcity)：相对于需求，物品总是有限的</p>
-<p>效率(efficiency)：最有效地使用社会资源以满足人类的愿望和需要</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/21/economics/经济学基础知识/#more" rel="contents">
-              Read more &raquo;
+            <a class="btn" href="/2017/01/21/economics/宏观经济现象鸟瞰/#more" rel="contents">
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -378,7 +369,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/现代经济中的市场和政府/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/Cplusplus_thinking/模板（二）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -400,8 +391,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/21/economics/现代经济中的市场和政府/" itemprop="url">
-                  现代经济中的市场和政府
+                <a class="post-title-link" href="/2017/01/21/Cplusplus_thinking/模板（二）/" itemprop="url">
+                  模板之访问容器中的元素
                 </a>
               
             
@@ -415,7 +406,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
                 2017-01-21
@@ -454,13 +445,20 @@
 
       
         
-          <h3 id="什么是市场"><a href="#什么是市场" class="headerlink" title="什么是市场"></a>什么是市场</h3><ul>
-<li>市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制</li>
+          <h2 id="访问容器中的元素"><a href="#访问容器中的元素" class="headerlink" title="访问容器中的元素"></a>访问容器中的元素</h2><p>保留Array<T>和一个指向T的指针之间的密切关系要付出一定的代价</p>
+<ol>
+<li><p>用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留</p>
+</li>
+<li><p>不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误</p>
+</li>
+</ol>
+<ul>
+<li>增加防止出错的中间层</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/21/economics/现代经济中的市场和政府/#more" rel="contents">
-              Read more &raquo;
+            <a class="btn" href="/2017/01/21/Cplusplus_thinking/模板（二）/#more" rel="contents">
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -542,7 +540,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-20T00:00:00+08:00">
                 2017-01-20
@@ -600,7 +598,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/20/Cplusplus_thinking/模板（一）/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -682,7 +680,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T00:00:00+08:00">
                 2017-01-19
@@ -737,7 +735,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/19/Cplusplus_thinking/不应当使用虚函数的情况/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -819,7 +817,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-18T00:00:00+08:00">
                 2017-01-18
@@ -870,7 +868,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/18/Cplusplus_thinking/面向对象编程/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -952,7 +950,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-17T00:00:00+08:00">
                 2017-01-17
@@ -1002,7 +1000,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/17/Cplusplus_thinking/句柄类(handle)/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1084,7 +1082,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T00:00:00+08:00">
                 2017-01-16
@@ -1131,7 +1129,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/16/Cplusplus_thinking/代理类/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1213,7 +1211,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-15T00:00:00+08:00">
                 2017-01-15
@@ -1258,7 +1256,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/15/Cplusplus_thinking/类设计者的核查表/#more" rel="contents">
-              Read more &raquo;
+              Weiterlesen &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1342,9 +1340,9 @@
 
           
             <div class="site-state-item site-state-posts">
-              <a href="/archives">
+              <a href="/">
                 <span class="site-state-item-count">48</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -1357,7 +1355,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">7</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -1407,7 +1405,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

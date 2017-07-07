@@ -93,9 +93,9 @@
 进一步取代指针，需实现加法、减法和关系运算符
 
 
-‘’’C++void f() {    int a[10];    int pa = a;    int end = pa + 10;    while (pa != end)        *pa++ = 0;}‘’’
+1234567void f() &amp;#123;    int a[10];    int* pa = a;    int* end = pa + 10;    while (pa != end)        *pa++ = 0;&amp;#125;
 
-基类及派生类都要定义这">
+基">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模板之迭代器">
 <meta property="og:url" content="https://chenfeng.github.io/2017/01/22/Cplusplus_thinking/模板（三）/index.html">
@@ -106,10 +106,10 @@
 进一步取代指针，需实现加法、减法和关系运算符
 
 
-‘’’C++void f() {    int a[10];    int pa = a;    int end = pa + 10;    while (pa != end)        *pa++ = 0;}‘’’
+1234567void f() &amp;#123;    int a[10];    int* pa = a;    int* end = pa + 10;    while (pa != end)        *pa++ = 0;&amp;#125;
 
-基类及派生类都要定义这">
-<meta property="og:updated_time" content="2017-07-04T10:47:16.000Z">
+基">
+<meta property="og:updated_time" content="2017-07-07T15:05:23.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模板之迭代器">
 <meta name="twitter:description" content="迭代器
@@ -118,9 +118,9 @@
 进一步取代指针，需实现加法、减法和关系运算符
 
 
-‘’’C++void f() {    int a[10];    int pa = a;    int end = pa + 10;    while (pa != end)        *pa++ = 0;}‘’’
+1234567void f() &amp;#123;    int a[10];    int* pa = a;    int* end = pa + 10;    while (pa != end)        *pa++ = 0;&amp;#125;
 
-基类及派生类都要定义这">
+基">
 
 
 
@@ -351,48 +351,16 @@
 <li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
 </li>
 </ul>
-<p>‘’’C++<br>void f() {<br>    int a[10];<br>    int<em> pa = a;<br>    int</em> end = pa + 10;<br>    while (pa != end)<br>        *pa++ = 0;<br>}<br>‘’’</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> a[<span class="number">10</span>];</div><div class="line">    <span class="keyword">int</span>* pa = a;</div><div class="line">    <span class="keyword">int</span>* end = pa + <span class="number">10</span>;</div><div class="line">    <span class="keyword">while</span> (pa != end)</div><div class="line">        *pa++ = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>基类及派生类都要定义这些操作</li>
 </ul>
 <a id="more"></a>
-<p>‘’’C++<br>template <class t=""> class Pointer: public Ptr_to_const<t> {<br>public:<br>    Pointer&amp; operator++() {<br>        ++sub;<br>        return *this;<br>    }</t></class></p>
-<pre><code>Pointer&amp; operator--() {
-    --sub;
-    return *this;
-}
-
-Pointer&amp; operator++(int) {
-    Pointer ret = *this;
-    ++sub;
-    return ret;
-}
-
-Pointer&amp; operator--(int) {
-    Pointer ret = *this;
-    --sub;
-    return ret;
-}
-
-Pointer&amp; operator+=(int n) {
-    sub += n;
-    return *this;
-}
-
-Pointer&amp; operator-=(int n) {
-    sub -= n;
-    return *this;
-}
-// ...
-</code></pre><p>};</p>
-<p>template <class t=""> Pointer<t> operator+(const Pointer<t>&amp; p, int n) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
-<p>template <class t=""> Pointer<t> operator+(int n, const Pointer<t>&amp; p) {<br>    Pointer<t> ret = p;<br>    return ret += n;<br>}</t></t></t></class></p>
-<p>// subtration is similar<br>‘’’</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Pointer: <span class="keyword">public</span> Ptr_to_const&lt;T&gt; &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Pointer&amp; <span class="keyword">operator</span>++() &#123;</div><div class="line">        ++sub;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Pointer&amp; <span class="keyword">operator</span>--() &#123;</div><div class="line">        --sub;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Pointer&amp; <span class="keyword">operator</span>++(<span class="keyword">int</span>) &#123;</div><div class="line">        Pointer ret = *<span class="keyword">this</span>;</div><div class="line">        ++sub;</div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Pointer&amp; <span class="keyword">operator</span>--(<span class="keyword">int</span>) &#123;</div><div class="line">        Pointer ret = *<span class="keyword">this</span>;</div><div class="line">        --sub;</div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Pointer&amp; <span class="keyword">operator</span>+=(<span class="keyword">int</span> n) &#123;</div><div class="line">        sub += n;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Pointer&amp; <span class="keyword">operator</span>-=(<span class="keyword">int</span> n) &#123;</div><div class="line">        sub -= n;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; Pointer&lt;T&gt; <span class="keyword">operator</span>+(<span class="keyword">const</span> Pointer&lt;T&gt;&amp; p, <span class="keyword">int</span> n) &#123;</div><div class="line">    Pointer&lt;T&gt; ret = p;</div><div class="line">    <span class="keyword">return</span> ret += n;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; Pointer&lt;T&gt; <span class="keyword">operator</span>+(<span class="keyword">int</span> n, <span class="keyword">const</span> Pointer&lt;T&gt;&amp; p) &#123;</div><div class="line">    Pointer&lt;T&gt; ret = p;</div><div class="line">    <span class="keyword">return</span> ret += n;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// subtration is similar</span></div></pre></td></tr></table></figure>
 <ul>
 <li>两个指针当且仅当指向同一个Array的同一个元素(或都不指向任何Array)时才相等</li>
 </ul>
-<p>‘’’C++<br>template <class t=""><br>int operator==(const Ptr_to_const<t>&amp; op1, cosnt Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        return 0;<br>    return (op1.sub == op2.sub);<br>}</t></t></class></p>
-<p>template <class t=""><br>int operator&lt;(const Ptr_to_const<t>&amp; op1, const Ptr_to_const<t>&amp; op2) {<br>    if (op1.ap != op2.ap)<br>        throw “&lt; on different Arrays”;<br>    return op1.sub &lt; op2.sub;<br>}<br>‘’’</t></t></class></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">int</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Ptr_to_const&lt;T&gt;&amp; op1, cosnt Ptr_to_const&lt;T&gt;&amp; op2) &#123;</div><div class="line">    <span class="keyword">if</span> (op1.ap != op2.ap)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> (op1.sub == op2.sub);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">int</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> Ptr_to_const&lt;T&gt;&amp; op1, <span class="keyword">const</span> Ptr_to_const&lt;T&gt;&amp; op2) &#123;</div><div class="line">    <span class="keyword">if</span> (op1.ap != op2.ap)</div><div class="line">        <span class="keyword">throw</span> <span class="string">"&lt; on different Arrays"</span>;</div><div class="line">    <span class="keyword">return</span> op1.sub &lt; op2.sub;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>迭代器能在不暴露容器内部结构的情况下访问容器的元素</li>
 </ul>
@@ -462,8 +430,8 @@ Pointer&amp; operator-=(int n) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/21/economics/经济学基础知识/" rel="next" title="经济学基础知识">
-                <i class="fa fa-chevron-left"></i> 经济学基础知识
+              <a href="/2017/01/21/Cplusplus_thinking/模板（二）/" rel="next" title="模板之访问容器中的元素">
+                <i class="fa fa-chevron-left"></i> 模板之访问容器中的元素
               </a>
             
           </div>

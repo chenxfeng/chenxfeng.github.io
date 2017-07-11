@@ -1,0 +1,908 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="标准库提供用于简化使用函数对象的繁杂的过程的类和函数
+为什么是函数对象
+可以把一个函数和一个值捆绑到单个实体中
+
+
+如果把值n放到具有一个文件作用域(file scope)的变量中也可以使用函数
+
+
+
+123456static int n;static int add_n(int x) &amp;#123;    return x + n;&amp;#125;transform(a, a+100, a, add_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模板之函数配接器">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/08/Cplusplus_thinking/模板之函数配接器/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="标准库提供用于简化使用函数对象的繁杂的过程的类和函数
+为什么是函数对象
+可以把一个函数和一个值捆绑到单个实体中
+
+
+如果把值n放到具有一个文件作用域(file scope)的变量中也可以使用函数
+
+
+
+123456static int n;static int add_n(int x) &amp;#123;    return x + n;&amp;#125;transform(a, a+100, a, add_">
+<meta property="og:updated_time" content="2017-07-08T08:07:48.067Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模板之函数配接器">
+<meta name="twitter:description" content="标准库提供用于简化使用函数对象的繁杂的过程的类和函数
+为什么是函数对象
+可以把一个函数和一个值捆绑到单个实体中
+
+
+如果把值n放到具有一个文件作用域(file scope)的变量中也可以使用函数
+
+
+
+123456static int n;static int add_n(int x) &amp;#123;    return x + n;&amp;#125;transform(a, a+100, a, add_">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/08/Cplusplus_thinking/模板之函数配接器/"/>
+
+
+
+
+
+  <title> 模板之函数配接器 | chenxfeng's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/08/Cplusplus_thinking/模板之函数配接器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                模板之函数配接器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-08T23:00:00+08:00">
+                2017-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>标准库提供用于简化使用函数对象的繁杂的过程的类和函数</p>
+<h3 id="为什么是函数对象"><a href="#为什么是函数对象" class="headerlink" title="为什么是函数对象"></a>为什么是函数对象</h3><ul>
+<li><p>可以把一个函数和一个值捆绑到单个实体中</p>
+</li>
+<li><ul>
+<li>如果把值n放到具有一个文件作用域(file scope)的变量中也可以使用函数</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> n;</div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">add_n</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> x + n;</div><div class="line">&#125;</div><div class="line"></div><div class="line">transform(a, a+<span class="number">100</span>, a, add_n);</div></pre></td></tr></table></figure>
+<ul>
+<li><ul>
+<li>不方便</li>
+</ul>
+</li>
+<li><p>标准库提供</p>
+</li>
+<li>调用：</li>
+<li><ul>
+<li><code>transform(a, a+100, a, bind1st(plus&lt;int&gt;(), n));</code></li>
+</ul>
+</li>
+<li><p>bind1st(plus<int>(), n)使用标准库创建了一个函数对象</int></p>
+</li>
+</ul>
+<h3 id="用于內建操作符的函数对象"><a href="#用于內建操作符的函数对象" class="headerlink" title="用于內建操作符的函数对象"></a>用于內建操作符的函数对象</h3><ul>
+<li>plus是一个类型</li>
+<li>plus<int>()是一个等价于类型为plus的匿名对象的表达式</int></li>
+<li><ul>
+<li>把两个类型为int的值相加，以和作为结果</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">plus&lt;<span class="keyword">int</span>&gt; p;</div><div class="line"><span class="keyword">int</span> k = p(<span class="number">3</span>, <span class="number">7</span>);</div><div class="line"></div><div class="line"><span class="keyword">int</span> k = (plus&lt;<span class="keyword">int</span>&gt;())(<span class="number">3</span>, <span class="number">7</span>);</div></pre></td></tr></table></figure>
+<ul>
+<li>三个类型成员</li>
+<li><ul>
+<li>first_argument_type</li>
+</ul>
+</li>
+<li><ul>
+<li>second_argument_type</li>
+</ul>
+</li>
+<li><ul>
+<li>result_argument_type</li>
+</ul>
+</li>
+<li><p>标准库包含內建操作符所需要的绝大部分函数对象</p>
+</li>
+</ul>
+<h3 id="绑定者-Binders"><a href="#绑定者-Binders" class="headerlink" title="绑定者(Binders)"></a>绑定者(Binders)</h3><ul>
+<li>创建能够记住一个值并把该值加到参数上的函数对象</li>
+<li><ul>
+<li>bind1st和bind2nd库模板函数</li>
+</ul>
+</li>
+<li><p>bind1st创建一个函数对象，绑定函数的第一个参数</p>
+</li>
+<li><p>函数对象bind1st(f, x)只接受一个参数</p>
+</li>
+<li><ul>
+<li>f有接受两个参数的operator()</li>
+</ul>
+</li>
+<li><ul>
+<li>x是可以作为f的第一个参数的值</li>
+</ul>
+</li>
+<li><p><code>(bind1st(f, x))(y)</code>和<code>f(x, y)</code>相同的值</p>
+</li>
+<li><p><code>bind1st(plus&lt;int&gt;(), n)(y)</code>等价于n+y</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// p是一个将两个整数相加的函数对象</span></div><div class="line">plus&lt;<span class="keyword">int</span>&gt; p;</div><div class="line"></div><div class="line"><span class="comment">// b是一个将参数加到n上去的函数对象</span></div><div class="line">some_type b = bind1st(p, n);</div><div class="line"></div><div class="line"><span class="comment">// 初始化z为n+y</span></div><div class="line"><span class="keyword">int</span> z = b(y);</div></pre></td></tr></table></figure>
+<ul>
+<li>b的类型？</li>
+<li><ul>
+<li><code>sometype b = bind1st(p, n);</code> -&gt; <code>binder1st&lt;plus&lt;int&gt; &gt; b = bind1st(p, n)</code></li>
+</ul>
+</li>
+<li><p>p是一个函数对象，负责把两个数相加</p>
+</li>
+<li>b是一个函数独享，负责把n绑定在两个被相加的数的第一个数上</li>
+</ul>
+<h3 id="深入探讨"><a href="#深入探讨" class="headerlink" title="深入探讨"></a>深入探讨</h3><ul>
+<li>写bind1st的声明</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">template &lt;class T&gt;</div><div class="line">class binder1st &#123;</div><div class="line">public:</div><div class="line">    T1 operator() (T2)</div><div class="line">    // ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>约定遵循类型规定的类才能使用binder1st</li>
+<li><ul>
+<li>first_argument_type</li>
+</ul>
+</li>
+<li><ul>
+<li>second_argument_type</li>
+</ul>
+</li>
+<li><ul>
+<li>result_argument_type</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> binder1st &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    binder1st(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> T::first_argument_type&amp;);</div><div class="line">    T::<span class="function">result_type <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">const</span> T::second_argument_type*)</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="接口继承"><a href="#接口继承" class="headerlink" title="接口继承"></a>接口继承</h3><ul>
+<li>C++库如模板类plus的函数对象类都定义了成员类型first_argument_type、second_argument_type和result_type</li>
+<li>具有共同的基类: binary_function</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> A1, <span class="keyword">class</span> A2, <span class="keyword">class</span> R&gt;</div><div class="line"><span class="keyword">class</span> binary_function &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">typedef</span> A1 first_argument_type;</div><div class="line">    <span class="keyword">typedef</span> A2 second_argument_type;</div><div class="line">    <span class="keyword">typedef</span> R result_type;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>plus定义</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> plus: <span class="keyword">public</span> binary_function&lt;T, T, T&gt; &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">T <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">const</span> T&amp; x, <span class="keyword">const</span> T&amp; y)</span> <span class="keyword">const</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> x + y;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>标准库的unary_function基类</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> A, <span class="keyword">class</span> R&gt;</div><div class="line"><span class="keyword">class</span> unary_function &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">typedef</span> A argument_type;</div><div class="line">    <span class="keyword">typedef</span> R result_type;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>可以作为negate的基类</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> negate: <span class="keyword">public</span> unary_function&lt;T, T&gt; &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function">T <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">const</span> T&amp; x)</span> <span class="keyword">const</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> -x;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="使用这些类"><a href="#使用这些类" class="headerlink" title="使用这些类"></a>使用这些类</h3><ul>
+<li>标准库容器c，x是某个放在其中的值</li>
+<li><ul>
+<li><code>find(c.begin(), c.end(), x);</code></li>
+</ul>
+</li>
+<li><ul>
+<li>生成一个指向c中第一个x相等的迭代器或逾尾迭代器(找不到x)</li>
+</ul>
+</li>
+<li><p>使用函数配接器以更精巧的方法</p>
+</li>
+<li><ul>
+<li><code>find_if(c.begin(), c.end(), bind1st(equal_to&lt;c::value_type&gt;(), x));</code></li>
+</ul>
+</li>
+<li><ul>
+<li>约定了所有库容器用名为value_type的成员类型表示元素的类型</li>
+</ul>
+</li>
+<li><p>想知道是否每个元素e都存在e &gt; x，采用bind2nd</p>
+</li>
+<li><ul>
+<li><code>find_if(c.begin(), c.end(), bind2nd(greater&lt;c::value_type&gt;(), x));</code></li>
+</ul>
+</li>
+<li><p>容器x和w具有相同个数的元素</p>
+</li>
+<li><ul>
+<li><code>transform(v.begin(), v.end(), w.begin(), v.begin(), plus&lt;v::value_type&gt;());</code></li>
+</ul>
+</li>
+<li><ul>
+<li>将相应元素相加，结果存放到第四个参数指向开始位置的序列中</li>
+</ul>
+</li>
+<li><p>找出每个指向包含”C”的以null结尾的字符串的指针并用指向字符串”C++”的指针替换</p>
+</li>
+<li><ul>
+<li><code>char* p[N];</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>replace_if(p, p+N, not1(bind2nd(ptr_fun(strcmp), &quot;C&quot;)), &quot;C++&quot;);</code></li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>ptr_fun创建一个适合于传递给strcmp的函数对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>bind2nd使用这个对象创建另一个函数对象: 用”C”和它的参数进行比较</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>not1否定判断的意义</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li><p><strong>这些程序不比相应的常规程序运行得慢</strong></p>
+</li>
+<li><p>理论上可以更快: 标准库的一部分，编译器在适当的时候可以识别并产生高效的代码</p>
+</li>
+<li><p>使得一次处理整个容器成为现实，不必采用循环逐个处理单个元素</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/07/Cplusplus_thinking/模板之函数对象/" rel="next" title="模板之函数对象">
+                <i class="fa fa-chevron-left"></i> 模板之函数对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/08/mathematical_logic/命题逻辑的形式结构和规律特征/" rel="prev" title="命题逻辑的形式结构和规律特征">
+                命题逻辑的形式结构和规律特征 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么是函数对象"><span class="nav-number">1.</span> <span class="nav-text">为什么是函数对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用于內建操作符的函数对象"><span class="nav-number">2.</span> <span class="nav-text">用于內建操作符的函数对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定者-Binders"><span class="nav-number">3.</span> <span class="nav-text">绑定者(Binders)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深入探讨"><span class="nav-number">4.</span> <span class="nav-text">深入探讨</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口继承"><span class="nav-number">5.</span> <span class="nav-text">接口继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用这些类"><span class="nav-number">6.</span> <span class="nav-text">使用这些类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">7.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1360 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数理逻辑," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="命题逻辑中，简单命题作为基本单位，不再分析成主词、谓词和量词等有些推理形式是命题逻辑所不能包括的，如：凡循环小数都可以化为分数；0.2是循环小数所以0.2可以化为小数就不是命题逻辑中正确的推理形式
+
+狭谓词逻辑(一阶谓词逻辑)：将量词只用于个体变项，而不用于谓词变项和命题变项的谓词逻辑
+广义谓词逻辑：将量词也用于命题变项和谓词变项的谓词逻辑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="狭谓词逻辑的形式结构 普遍有效性和可满足性">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/19/mathematical_logic/狭谓词逻辑的形式结构/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="命题逻辑中，简单命题作为基本单位，不再分析成主词、谓词和量词等有些推理形式是命题逻辑所不能包括的，如：凡循环小数都可以化为分数；0.2是循环小数所以0.2可以化为小数就不是命题逻辑中正确的推理形式
+
+狭谓词逻辑(一阶谓词逻辑)：将量词只用于个体变项，而不用于谓词变项和命题变项的谓词逻辑
+广义谓词逻辑：将量词也用于命题变项和谓词变项的谓词逻辑">
+<meta property="og:updated_time" content="2017-07-22T04:50:49.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="狭谓词逻辑的形式结构 普遍有效性和可满足性">
+<meta name="twitter:description" content="命题逻辑中，简单命题作为基本单位，不再分析成主词、谓词和量词等有些推理形式是命题逻辑所不能包括的，如：凡循环小数都可以化为分数；0.2是循环小数所以0.2可以化为小数就不是命题逻辑中正确的推理形式
+
+狭谓词逻辑(一阶谓词逻辑)：将量词只用于个体变项，而不用于谓词变项和命题变项的谓词逻辑
+广义谓词逻辑：将量词也用于命题变项和谓词变项的谓词逻辑">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/19/mathematical_logic/狭谓词逻辑的形式结构/"/>
+
+
+
+
+
+  <title> 狭谓词逻辑的形式结构 普遍有效性和可满足性 | chenxfeng's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Accueil
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/19/mathematical_logic/狭谓词逻辑的形式结构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                狭谓词逻辑的形式结构 普遍有效性和可满足性
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T22:00:00+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>命题逻辑中，简单命题作为基本单位，不再分析成主词、谓词和量词等<br>有些推理形式是命题逻辑所不能包括的，如：<br>凡循环小数都可以化为分数；<br>0.2是循环小数<br>所以0.2可以化为小数<br>就不是命题逻辑中正确的推理形式</p>
+</blockquote>
+<p>狭谓词逻辑(一阶谓词逻辑)：将量词只用于个体变项，而不用于谓词变项和命题变项的谓词逻辑</p>
+<p>广义谓词逻辑：将量词也用于命题变项和谓词变项的谓词逻辑</p>
+<a id="more"></a>
+<h3 id="谓词-变项和量词"><a href="#谓词-变项和量词" class="headerlink" title="谓词 变项和量词"></a>谓词 变项和量词</h3><p><strong>谓词</strong></p>
+<p>通常将一命题里表示思维对象的词称为主词，将表示对象性质的词称为谓词</p>
+<ul>
+<li>例：2是有理数</li>
+<li><ul>
+<li>“2” 是主词</li>
+</ul>
+</li>
+<li><ul>
+<li>“是有理数” 是谓词</li>
+</ul>
+</li>
+</ul>
+<p>数理逻辑中不用主词这个名词，而将代表个体的词称为个体词，将表示一个个体和两个或两个以上个体间的关系的词称为谓词</p>
+<ul>
+<li>n个个体之间的关系称为n项关系</li>
+<li>表示n项关系的谓词称为n项谓词</li>
+<li><ul>
+<li>表示一个事物的性质的谓词则称为一项谓词</li>
+</ul>
+</li>
+<li><ul>
+<li>n项谓词有n个空位，也称n目谓词或n元谓词</li>
+</ul>
+</li>
+</ul>
+<p><strong>变项</strong></p>
+<p>变项表示某类特定事物中的任一个；相对于某一变项的这类事物必须是确定的，具体哪个是不确定的</p>
+<ul>
+<li><p>变项的变程(domain)：变项表示某类事物，此类事物就是~</p>
+</li>
+<li><p>变项的值：变项的变程里的任一分子都可以作为变项的值；变项必须从它的变程中取值</p>
+</li>
+</ul>
+<p>变项的作用：</p>
+<ul>
+<li>作为同异的标志：相同的变项取相同值，标志相同的对象</li>
+<li>表示形式结构：反映一类命题的共同特征</li>
+</ul>
+<p><strong>量词</strong></p>
+<p>量词是命题里表示数量的词</p>
+<ul>
+<li>全称量词：一切、所有、凡 等</li>
+<li>存在量词：有的、有、至少有一 等</li>
+</ul>
+<p><em>量词的符号表示</em>：</p>
+<ul>
+<li><p>全称量词</p>
+</li>
+<li><ul>
+<li>“凡事物都是变化发展的”</li>
+</ul>
+</li>
+<li><ul>
+<li>对任一x而言，x是变化发展的</li>
+</ul>
+</li>
+<li><ul>
+<li>用符号表示： </li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>(x), (y), …</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>所有x，所有y，…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>(x)(x是变化发展的)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>或</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>(y)(y是变化发展的)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>“凡有理数都等于一分数”</li>
+</ul>
+</li>
+<li><ul>
+<li>对任一x而言，如果x是有理数，那么x等于一分数</li>
+</ul>
+</li>
+<li><ul>
+<li>用符号表示：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>(x)(x是有理数 $\rightarrow$ x等于一分数)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>存在量词</p>
+</li>
+<li><ul>
+<li>“有的事物是新陈代谢的”</li>
+</ul>
+</li>
+<li><ul>
+<li>至少有一x，x是新陈代谢的</li>
+</ul>
+</li>
+<li><ul>
+<li>用符号表示：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>$(exits x)$, $(exits y)$, …</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>至少有一x，至少有一y，…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>$(\exits x)$ (x是有新陈代谢的)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>或</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>$(\exits y)$ (y是有新陈代谢的)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>“有的自然数是素数”</li>
+</ul>
+</li>
+<li><ul>
+<li>至少有一x，x是自然数并且x是素数</li>
+</ul>
+</li>
+<li><ul>
+<li>用符号表示：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>$(\exits x)$ (x是自然数 $\bigwedge$ x是素数)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>自由变项和约束变项</strong></p>
+<p>自由变项：</p>
+<ul>
+<li>x是有理数</li>
+<li><ul>
+<li>是一命题形式</li>
+</ul>
+</li>
+<li><ul>
+<li>变项x的值未定</li>
+</ul>
+</li>
+<li><ul>
+<li>既不真也不假</li>
+</ul>
+</li>
+<li><p>x &gt; y</p>
+</li>
+<li><ul>
+<li>是一个命题形式</li>
+</ul>
+</li>
+<li><ul>
+<li>变项x和y的值未定</li>
+</ul>
+</li>
+<li><ul>
+<li>既不真也不假</li>
+</ul>
+</li>
+</ul>
+<p>约束变项：被量词所约束化了的变项</p>
+<ul>
+<li>(x)(x是发展变化的)</li>
+<li><ul>
+<li>是一个命题</li>
+</ul>
+</li>
+<li><ul>
+<li>变项x不需要再作代入</li>
+</ul>
+</li>
+<li><ul>
+<li>命题的涵义已经是确定的，是真命题</li>
+</ul>
+</li>
+<li><p>($\exits x$)(x是偶数 $\bigwedge$ x &gt; 2 $\bigwedge$ x是素数)</p>
+</li>
+<li><ul>
+<li>假命题</li>
+</ul>
+</li>
+</ul>
+<p>约束变项不需要作代入：变项的变程确定以后，命题的意义是确定的</p>
+<ul>
+<li>约束变项是被量词所约束了的变项；量词内的变项也被此量词所约束，是约束变项</li>
+<li><ul>
+<li>例如：</li>
+</ul>
+</li>
+<li><ul>
+<li>(x)(x是发展变化的)</li>
+</ul>
+</li>
+<li><ul>
+<li>两个x都是约束变项</li>
+</ul>
+</li>
+</ul>
+<h3 id="狭谓词逻辑的命题形式和公式"><a href="#狭谓词逻辑的命题形式和公式" class="headerlink" title="狭谓词逻辑的命题形式和公式"></a>狭谓词逻辑的命题形式和公式</h3><p>谓词逻辑：命题 -&gt; 个体词、谓词和量词等命题成分</p>
+<p>狭谓词逻辑：全称量词和存在量词只被引用于个体变项而不被引用于命题变项或谓词变项</p>
+<p><em>符号</em></p>
+<ul>
+<li>(甲)命题变项： $p, q, r, s, p_1, q_1, r_1, s_1, p_2, q_2, …$</li>
+<li>(乙)个体变项： $u, v, w, x, y, z, u_1, v_1, w_1, x_1, y_1, z_1, u_2, …$</li>
+<li>(丙)谓词变项： $F, G, H, P, Q, R, S, F_1, G_1, …$</li>
+<li>(丁)真值联结词： $¬, \bigvee, \bigwedge, \rightarrow, \leftrightarrow$</li>
+<li>(戊)量词： $(…), (\exists…)$</li>
+<li>(己)括号： $(, )$</li>
+</ul>
+<p>个体变项的变程：个体域</p>
+<p>单称命题形式：谓词逻辑最简单的命题形式</p>
+<ul>
+<li><p>其他命题形式都可以由单称命题形式和命题变项再加上联结词和量词组合而成</p>
+</li>
+<li><p>不含量词的单称命题可以分析为二类因素</p>
+</li>
+<li><ul>
+<li>一个或多个个体词</li>
+</ul>
+</li>
+<li><ul>
+<li>一元谓词或多元谓词</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>x是F ： F(x)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>x和y有关系R ： R(x, y) </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>x, y, z有关系S ： S(x, y, z)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>古典形式逻辑的A、E、I、O</strong></p>
+<p>全称肯定命题 S A P ： 一切 S 都是 P </p>
+<ul>
+<li>对任一x而言，若x是S，则x是P</li>
+<li>符号表示： $(x)(S(x) \rightarrow P(x))$</li>
+</ul>
+<p>全称否定命题 S E P ： 没有 S 是 P</p>
+<ul>
+<li>对任一x而言，若x是S，则x不是P</li>
+<li><p>符号表示： $(x)(S(x) \rightarrow ¬P(x))$</p>
+</li>
+<li><p>全称肯定和全称否定命题用全称量词和蕴涵表示</p>
+</li>
+<li><ul>
+<li>形式蕴涵</li>
+</ul>
+</li>
+<li><ul>
+<li>形式蕴涵对S的存在问题无所表示：既未断定有S也未断定无S</li>
+</ul>
+</li>
+<li><ul>
+<li>若主词表示的事物是存在的，如 “凡人都能劳动”</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>$(\exists x) S(x) \bigwedge (x) (S(x) \rightarrow P(x))$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>特称肯定命题 S I P ： 有的 S 是 P</p>
+<ul>
+<li>有的x，它既是S又是P</li>
+<li>符号表示： $(\exists x)(S(x) \bigwedge P(x))$</li>
+</ul>
+<p>特称否定命题 S O P ： 有的 S 不是 P</p>
+<ul>
+<li>符号表示： $(\exists x)(S(x) \bigwedge ¬P(x))$</li>
+</ul>
+<h3 id="量化式的否定"><a href="#量化式的否定" class="headerlink" title="量化式的否定"></a>量化式的否定</h3><p>量化式：表示全称或存在命题的公式</p>
+<p>全称量化式的否定式</p>
+<ul>
+<li>“并非一切都是必然的”</li>
+<li>$¬(x)(x是必然的)$</li>
+<li>$¬(x)F(x)$</li>
+</ul>
+<p>存在量化式的否定式</p>
+<ul>
+<li>“不存在着孤立的事物”</li>
+<li>$¬(\exists x)(x是孤立的)$</li>
+<li>$¬(\exists x)F(x)$</li>
+</ul>
+<p>否定式的全称量化式</p>
+<ul>
+<li>“一切事物都不是静止的”</li>
+<li>$(x)¬(x是静止的)$</li>
+<li>$(x)¬F(x)$</li>
+</ul>
+<p>否定式的存在量化式</p>
+<ul>
+<li>“有的事物不是生物”</li>
+<li>$(\exists x)¬(x是生物)$</li>
+<li>$(\exists x)¬F(x)$</li>
+</ul>
+<blockquote>
+<p>¬(x)F(x) 和 $(\exists x)¬F(x)$ 的涵义是相等的<br>$¬(\exists x)F(x)$ 和 (x)¬F(x) 的涵义也是相等的</p>
+</blockquote>
+<p><strong>量化式的联结</strong></p>
+<ul>
+<li>“至少有一偶数是素数”</li>
+<li><ul>
+<li>$(\exists x)(F(x) \bigwedge G(x))$</li>
+</ul>
+</li>
+<li>“至少有一偶数，并且至少有一素数”</li>
+<li><ul>
+<li>$(\exists x)F(x) \bigwedge (\exists x)G(x)$</li>
+</ul>
+</li>
+<li><p>量词约束的范围不同，两个命题形式的涵义不同</p>
+</li>
+<li><p>“一切事物，它或者是生物或者是非生物”</p>
+</li>
+<li><ul>
+<li>$(x)(F(x) \bigvee G(x))$</li>
+</ul>
+</li>
+<li>“或者一切都是生物，或者一切都是非生物”</li>
+<li><ul>
+<li>$(x)F(x) \bigvee (x)G(x)$</li>
+</ul>
+</li>
+<li><p>$(x)(F(x) \rightarrow G(x))$</p>
+</li>
+<li>$(x)F(x) \rightarrow (x)G(x)$</li>
+</ul>
+<p><strong>重迭量词</strong></p>
+<ul>
+<li>一元谓词只能引用一次量词</li>
+<li><ul>
+<li>$(x)P(x)$ : 凡x都是P</li>
+</ul>
+</li>
+<li><ul>
+<li>$(\exists x)P(x)$ : 有x是P</li>
+</ul>
+</li>
+<li><p>n元谓词可以n次引用量词，得到2n!种形式</p>
+</li>
+</ul>
+<p>重迭量词：有先后次序的量词序列</p>
+<p><strong>辖域</strong></p>
+<p>量词的辖域是量词所约束的范围</p>
+<ul>
+<li>量词的辖域里一切和量词里的变项相同的变项都被此量词所约束</li>
+<li>量词后有括号：括号内为此量词的辖域</li>
+<li>量词后无括号：量词后最短的公式为此量词的辖域</li>
+</ul>
+<p>例：</p>
+<ul>
+<li>$(x)R(x, y)$</li>
+<li><ul>
+<li>$R(x, y)$ 是 $(x)$ 的辖域</li>
+</ul>
+</li>
+<li><p>$(\exists x)(y)R(x, y)$</p>
+</li>
+<li><ul>
+<li>$(y)R(x, y)$ 是 $(\exists x)$ 的辖域</li>
+</ul>
+</li>
+<li><ul>
+<li>$R(x, y)$ 是 $(y)$ 的辖域</li>
+</ul>
+</li>
+<li><p>$(x)(P(x) \rightarrow (\exists y)(R(x, y) \bigwedge Q(y)))$</p>
+</li>
+<li><ul>
+<li>$P(x) \rightarrow (\exists y)(R(x, y) \bigwedge Q(y))$ 是 $(x)$ 的辖域</li>
+</ul>
+</li>
+<li><ul>
+<li>$R(x, y) \bigwedge Q(y)$ 是 $(\exists y)$ 的辖域</li>
+</ul>
+</li>
+</ul>
+<p>全称式：最前方为一全称量词，且此量词的辖域延伸至公式的末端的公式</p>
+<p>存在式：最前方为一存在量词，且此量词的辖域延伸至公式的末端的公式</p>
+<p><strong>推理形式</strong></p>
+<ol>
+<li>古典形式逻辑三段论第一格的Barbara</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">所有M都是P,</div><div class="line">所有S都是M,</div><div class="line">----------</div><div class="line">所有S都是P</div></pre></td></tr></table></figure>
+<ul>
+<li>用谓词逻辑符号表示为</li>
+</ul>
+<blockquote>
+<p>$(x)(M(x) \rightarrow P(x))$</p>
+<h2 id="x-S-x-rightarrow-M-x"><a href="#x-S-x-rightarrow-M-x" class="headerlink" title="$(x)(S(x) \rightarrow M(x))$"></a>$(x)(S(x) \rightarrow M(x))$</h2><p>$(x)(S(x) \rightarrow P(x))$</p>
+</blockquote>
+<ul>
+<li>写成蕴涵式为</li>
+</ul>
+<blockquote>
+<p>$(x)(M(x) \rightarrow P(x)) \bigwedge (x)(S(x) \rightarrow M(x)) \rightarrow (x)(S(x) \rightarrow P(x))$</p>
+</blockquote>
+<ol>
+<li>古典形式逻辑全称否定命题的换位</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">没有S是P</div><div class="line">--------</div><div class="line">没有P是S</div></pre></td></tr></table></figure>
+<ul>
+<li>谓词逻辑中表达为</li>
+</ul>
+<blockquote>
+<h2 id="x-S-x-rightarrow-¬P-x"><a href="#x-S-x-rightarrow-¬P-x" class="headerlink" title="$(x)(S(x) \rightarrow ¬P(x))$"></a>$(x)(S(x) \rightarrow ¬P(x))$</h2><p>$(x)(P(x) \rightarrow ¬S(x))$</p>
+</blockquote>
+<ul>
+<li>写成蕴涵式</li>
+</ul>
+<blockquote>
+<p>$(x)(S(x) \rightarrow ¬P(x)) \rightarrow (x)(P(x) \rightarrow ¬S(x))$</p>
+</blockquote>
+<ol>
+<li>关于重叠量词的推理形式</li>
+</ol>
+<ul>
+<li>“有的液体可以溶解一切固体”</li>
+<li><ul>
+<li>用符号表示</li>
+</ul>
+</li>
+<li><ul>
+<li>$(\exists y)(液体(y) \bigwedge (x)(固体(x) \rightarrow y溶解x))$</li>
+</ul>
+</li>
+<li><ul>
+<li>形式</li>
+</ul>
+</li>
+<li><ul>
+<li>$(\exists y)(Q(y) \bigwedge (x)(P(x) \rightarrow R(x, y)))$</li>
+</ul>
+</li>
+<li>可以推论</li>
+<li>“一切固体都可以被某些液体所溶解”</li>
+<li><ul>
+<li>符号表示</li>
+</ul>
+</li>
+<li><ul>
+<li>$(x)(固体(x) \rightarrow (\exists y)(液体(y) \bigwedge y溶解x))$</li>
+</ul>
+</li>
+<li><ul>
+<li>形式</li>
+</ul>
+</li>
+<li><ul>
+<li>$(x)(P(x) \rightarrow (\exists y)(Q(y) \bigwedge R(x, y)))$</li>
+</ul>
+</li>
+<li>但后者不能推论前者</li>
+</ul>
+<p>推理形式相当于蕴含式</p>
+<p>$(\exists y)(Q(y) \bigwedge (x)(P(x) \rightarrow R(x, y))) \rightarrow (x)(P(x) \rightarrow (\exists y)(Q(y) \bigwedge R(x, y)))$</p>
+<ol>
+<li>有关量词分配的推理形式</li>
+</ol>
+<ul>
+<li>至少有一x，x既是F又是G</li>
+<li>可以推论</li>
+<li>至少有一x是F，并且至少有一x是G</li>
+<li>但从后者不能推论前者</li>
+</ul>
+<p>推理形式相当于蕴涵式</p>
+<p>$(\exists x)(F(x) \bigwedge G(x)) \rightarrow (\exists x)F(x) \bigwedge (\exists x)G(x)$</p>
+<ul>
+<li>一切x，或者x是F，或者x是G</li>
+<li>不能推论得</li>
+<li>或者一切x是F，或者一切x是G</li>
+<li>但从后者可以推论前者</li>
+</ul>
+<p>推理形式相当于蕴涵式</p>
+<p>$(x)F(x) \bigvee (x)G(x) \rightarrow (x)(F(x) \bigvee G(x))$</p>
+<h3 id="普遍有效性和可满足性"><a href="#普遍有效性和可满足性" class="headerlink" title="普遍有效性和可满足性"></a>普遍有效性和可满足性</h3><ul>
+<li><p>狭谓词逻辑里的公式分为三类</p>
+</li>
+<li><ul>
+<li>普遍有效的</li>
+</ul>
+</li>
+<li><ul>
+<li>可满足的但不普遍有效</li>
+</ul>
+</li>
+<li><ul>
+<li>不可满足的</li>
+</ul>
+</li>
+</ul>
+<p><strong>普遍有效</strong>：狭谓词逻辑的一个公式是普遍有效的，当且仅当用任一特定的命题代入其中的命题变项，用任一特定的个体变项代入其中的个体变项，用任一特定的谓词代入其中的谓词变项，其结果总是真的</p>
+<p><strong>可满足</strong>：狭谓词逻辑的一个公式是可满足的，当且仅当至少有一特定命题，一特定个体词和一特定谓词，代入公式的相应变项以后结果是真的</p>
+<p><strong>普遍有效性的判定</strong></p>
+<ul>
+<li><p>命题逻辑的公理和定理都是重言式，是常真的</p>
+</li>
+<li><p>狭谓词逻辑的公理和定理是常真的，是普遍有效的公式</p>
+</li>
+<li><p>命题逻辑是狭谓词逻辑的一部分，重言式都是普遍有效的</p>
+</li>
+<li><p>重言式</p>
+</li>
+<li><ul>
+<li>有一能行的真值表方法判定一公式是不是重言式</li>
+</ul>
+</li>
+<li><ul>
+<li>能行的方法：每一步按事先给出的规则明确规定了的并且在有穷步内能完成的方法</li>
+</ul>
+</li>
+<li><p>普遍有效式</p>
+</li>
+<li><ul>
+<li>除了重言式和某些情况外一般没有一个能行的方法判定一公式是不是普遍有效</li>
+</ul>
+</li>
+</ul>
+<p><strong>有穷个体域内的判定问题</strong></p>
+<ul>
+<li><p>宇宙间的个体数无穷</p>
+</li>
+<li><p>有穷个体域的情况下狭谓词逻辑的公式可以转换成命题逻辑的公式，普遍有效性的问题可以归约为重言式的判定问题</p>
+</li>
+<li><p>数理逻辑中，</p>
+</li>
+<li><ul>
+<li>用自然数1, 2, 3 …等 代表个体</li>
+</ul>
+</li>
+<li><ul>
+<li>用 {1, 2, 3, …} 表示一无穷个体域</li>
+</ul>
+</li>
+<li><ul>
+<li>用 {1, 2, 3, …, k} 表示一有k个个体的有穷个体域</li>
+</ul>
+</li>
+</ul>
+<p><strong>转换方法</strong></p>
+<ul>
+<li>全称式 $(x)F(x)$ 表示 一切x都是F</li>
+<li><ul>
+<li>在个体域中，1是F，2是F，…，k是F</li>
+</ul>
+</li>
+<li><ul>
+<li>$(x)F(x) = F(1) \bigwedge F(2) \bigwedge … \bigwedge F(k)$</li>
+</ul>
+</li>
+<li><ul>
+<li>全称式是一个合取</li>
+</ul>
+</li>
+<li><p>存在式 $(\exists x)F(x)$ 表示 至少有一x是F</p>
+</li>
+<li><ul>
+<li>在个体域里，或者1是F，或者2是F，…，或者k是F</li>
+</ul>
+</li>
+<li><ul>
+<li>$(\exists x)F(x) = F(1) \bigvee F(2) \bigvee … \bigvee F(k)$</li>
+</ul>
+</li>
+<li><ul>
+<li>存在式是一个析取</li>
+</ul>
+</li>
+<li><p>以上转换只有在个体域有穷时才能进行</p>
+</li>
+<li><ul>
+<li>无穷合取和无穷析取都不是命题逻辑的合式公式</li>
+</ul>
+</li>
+<li><p>含有自由个体变项的公式 F(x) </p>
+</li>
+<li><ul>
+<li>x 可以取 {1, 2, …, k} 中任一个体为值，F(x)可以转换为F(1)，也可以转换为F(2)，…，也可以转换为F(k)</li>
+</ul>
+</li>
+<li><ul>
+<li>谓词逻辑的公式就转换为一个或一系列命题逻辑的公式</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《数理逻辑引论》，王宪钧，北京大学出版社</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数理逻辑/" rel="tag"># 数理逻辑</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/17/Cplusplus_thinking/在簇中分配对象/" rel="next" title="在簇中分配对象">
+                <i class="fa fa-chevron-left"></i> 在簇中分配对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/20/Cplusplus_thinking/应用器、操纵器和函数对象/" rel="prev" title="应用器、操纵器和函数对象">
+                应用器、操纵器和函数对象 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Des Matières
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Ensemble
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">articles</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#谓词-变项和量词"><span class="nav-number">1.</span> <span class="nav-text">谓词 变项和量词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#狭谓词逻辑的命题形式和公式"><span class="nav-number">2.</span> <span class="nav-text">狭谓词逻辑的命题形式和公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#量化式的否定"><span class="nav-number">3.</span> <span class="nav-text">量化式的否定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x-S-x-rightarrow-M-x"><span class="nav-number"></span> <span class="nav-text">$(x)(S(x) \rightarrow M(x))$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x-S-x-rightarrow-¬P-x"><span class="nav-number"></span> <span class="nav-text">$(x)(S(x) \rightarrow ¬P(x))$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普遍有效性和可满足性"><span class="nav-number">1.</span> <span class="nav-text">普遍有效性和可满足性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">2.</span> <span class="nav-text">引用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Thème -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+</body>
+</html>

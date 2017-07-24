@@ -1,0 +1,1078 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数理逻辑," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="狭谓词逻辑的不同系统
+不同的狭谓词演算
+
+初始概念、公理和变形规则的差别
+
+
+
+形成规则的差别
+
+
+自然推理系统是一个演算
+
+
+出发点没有公理，只有形成规则和变形规则或推演规则
+
+
+
+
+应用变形规则，不需要公理就可推出狭谓词演算的一切定理
+
+
+
+
+
+变形规则是具体思维里推理的规则
+
+
+
+主要特征：其中的变形规则或推演规则较之狭谓词演算更接近于一般的数学思维
+
+
+
+真值联结词的图式
+
+
+
+有等词的狭">
+<meta property="og:type" content="article">
+<meta property="og:title" content="狭谓词逻辑的不同系统 有等词的狭谓词演算 摹状词">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/23/mathematical_logic/有等词的狭谓词演算和摹状词/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="狭谓词逻辑的不同系统
+不同的狭谓词演算
+
+初始概念、公理和变形规则的差别
+
+
+
+形成规则的差别
+
+
+自然推理系统是一个演算
+
+
+出发点没有公理，只有形成规则和变形规则或推演规则
+
+
+
+
+应用变形规则，不需要公理就可推出狭谓词演算的一切定理
+
+
+
+
+
+变形规则是具体思维里推理的规则
+
+
+
+主要特征：其中的变形规则或推演规则较之狭谓词演算更接近于一般的数学思维
+
+
+
+真值联结词的图式
+
+
+
+有等词的狭">
+<meta property="og:updated_time" content="2017-07-24T06:01:12.679Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="狭谓词逻辑的不同系统 有等词的狭谓词演算 摹状词">
+<meta name="twitter:description" content="狭谓词逻辑的不同系统
+不同的狭谓词演算
+
+初始概念、公理和变形规则的差别
+
+
+
+形成规则的差别
+
+
+自然推理系统是一个演算
+
+
+出发点没有公理，只有形成规则和变形规则或推演规则
+
+
+
+
+应用变形规则，不需要公理就可推出狭谓词演算的一切定理
+
+
+
+
+
+变形规则是具体思维里推理的规则
+
+
+
+主要特征：其中的变形规则或推演规则较之狭谓词演算更接近于一般的数学思维
+
+
+
+真值联结词的图式
+
+
+
+有等词的狭">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/23/mathematical_logic/有等词的狭谓词演算和摹状词/"/>
+
+
+
+
+
+  <title> 狭谓词逻辑的不同系统 有等词的狭谓词演算 摹状词 | chenxfeng's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Accueil
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/23/mathematical_logic/有等词的狭谓词演算和摹状词/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                狭谓词逻辑的不同系统 有等词的狭谓词演算 摹状词
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T16:44:44+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="狭谓词逻辑的不同系统"><a href="#狭谓词逻辑的不同系统" class="headerlink" title="狭谓词逻辑的不同系统"></a>狭谓词逻辑的不同系统</h2><ul>
+<li>不同的狭谓词演算</li>
+<li><ul>
+<li>初始概念、公理和变形规则的差别</li>
+</ul>
+</li>
+<li><ul>
+<li>形成规则的差别</li>
+</ul>
+</li>
+<li><p>自然推理系统是一个演算</p>
+</li>
+<li><ul>
+<li>出发点没有公理，只有形成规则和变形规则或推演规则</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>应用变形规则，不需要公理就可推出狭谓词演算的一切定理</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>变形规则是具体思维里推理的规则</li>
+</ul>
+</li>
+<li><ul>
+<li>主要特征：其中的变形规则或推演规则较之狭谓词演算更接近于一般的数学思维</li>
+</ul>
+</li>
+<li><ul>
+<li>真值联结词的图式</li>
+</ul>
+</li>
+</ul>
+<h2 id="有等词的狭谓词演算-摹状词"><a href="#有等词的狭谓词演算-摹状词" class="headerlink" title="有等词的狭谓词演算 摹状词"></a>有等词的狭谓词演算 摹状词</h2><p>等词是一个具体的二元谓词，符号表示为 $… = …$</p>
+<ul>
+<li>一般地，等词表示两个不同(有时可以相同)的词项的外延或所指示相同的</li>
+</ul>
+<p>语言里指称个别事物的语词有两种：专名词和摹状词</p>
+<ul>
+<li>专名词直接指称某一个单独事物，摹状词借助于特征的描述指称某一个特定事物</li>
+</ul>
+<a id="more"></a>
+<h3 id="数量公式-数量量词"><a href="#数量公式-数量量词" class="headerlink" title="数量公式 数量量词"></a>数量公式 数量量词</h3><p><strong>数量公式</strong></p>
+<ol>
+<li>至少有若干个体：用等词、存在量词及合取表示</li>
+</ol>
+<ul>
+<li>至少有n个体可表示为 $(\exists x_1)(\exists x_2)…(\exists x_n)(x_1 \not= x_2 \bigwedge … \bigwedge x_1 \not=x_n \bigwedge … \bigwedge x_{n-1} \not= x_n)$</li>
+</ul>
+<ol>
+<li>至多有若干个体：用等词、全称量词及析取表示</li>
+</ol>
+<ul>
+<li>至多有n个体可表示为 $(x_1)(x_2)…(x_{n+1})(x_1 = x_2) \bigvee … \bigvee x_1 = x_{n+1} \bigvee … \bigvee x_n = x_{n+1}$</li>
+<li><ul>
+<li>任给n+1个必有2个相等，就是至多有n个</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>恰好有若干个体：用 “至多” 和 “至少” 的合取表示</li>
+</ol>
+<ul>
+<li>恰好有一个体：$(\exists x_1)(x_1 = x_1) \bigwedge (x_1)(x_2)(x_1 = x_2)$</li>
+</ul>
+<ol>
+<li>至少有n个体是F</li>
+</ol>
+<ul>
+<li>至少有二个F：$(\exists x_1)(\exists x_2)(F(x_1) \bigwedge F(x_2) \bigwedge x_1 \not= x_2)$</li>
+</ul>
+<ol>
+<li>至多有n个体是F</li>
+</ol>
+<ul>
+<li>至多有n个F：$(x_1)…(x_{n+1})(F(x_1) \bigwedge … \bigwedge F(x_{n+1}) \rightarrow x_1 = x_2 \bigwedge … \bigvee x_1 = x_{n+1} \bigvee … \bigvee x_n = x_{n+1})$ </li>
+</ul>
+<ol>
+<li>恰好有n个体是F</li>
+</ol>
+<ul>
+<li>“至少有n个体是F” 和 “至多有n个体是F” 的合取</li>
+</ul>
+<p><strong>数量量词</strong></p>
+<ul>
+<li>至少有n个F</li>
+</ul>
+<p>$(\exists _{n}x)F(x) = \begin{cases} (\exists x_1)F(x_1),  \ \ \text{当n=1} \\ (\exists x_1)…(\exists x_n)(F(x_1) \bigwedge … \bigwedge F(x_n) \rightarrow x_1 \not=x_2 \bigwedge … \bigwedge x_1 \not= x_n \bigwedge … \bigwedge x_{n-1} \not= x_n) \ \ \text{当n &gt; 1}\end{cases}$</p>
+<ul>
+<li>至多有n个F</li>
+</ul>
+<p>$(_{n+1}x)F(x) = \begin{cases} (x_1)F(x_1),  \ \ \text{当n=1} \\ (x_1)…(x_{n+1})(F(x_1) \bigvee … \bigvee F(x_{n+1}) \rightarrow x_1 = x_2 \bigvee … \bigvee x_1 = x_{n+1} \bigvee … \bigvee x_{n} = x_{n+1}) \ \ \text{当n &gt; 1}\end{cases}$</p>
+<ul>
+<li>恰好有n个F可表示为 $(\exists _n x)F(x) \bigwedge (_{n+1}x)F(x)$</li>
+</ul>
+<h3 id="摹状词"><a href="#摹状词" class="headerlink" title="摹状词"></a>摹状词</h3><ul>
+<li>思维中反映某一特定事物的概念叫做单独概念：专名词和摹状词</li>
+</ul>
+<p><strong>摹状词的结构</strong></p>
+<ul>
+<li><p>摹状词反映某一特定事物某方面的特征，通过对于特征的描述而指称这个事物</p>
+</li>
+<li><ul>
+<li>内容上要求一摹状词能包括足够的特征使得能够区别这个事物和其他事物</li>
+</ul>
+</li>
+<li><ul>
+<li>语言结构上要求能表示所指称的是一个单独的而不是许多事物</li>
+</ul>
+</li>
+<li><p>有定冠词的语言里，摹状词结构：定冠词 + 形容词组 + 普遍名词(单数)</p>
+</li>
+<li><ul>
+<li>汉语没有定冠词：形容词组 + 普遍名词</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>必要时可以用指示形容词 “那个” 代替定冠词</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数理逻辑里用希腊文字母 $\iota$ 代替定冠词，用 $_{\iota}xF(x)$ 表示 “那个唯一具有性质F的个体”(摹状词的一般形式)</p>
+</li>
+</ul>
+<p><strong>含有摹状词的命题的真假</strong></p>
+<ul>
+<li><p>摹状词所反映的事物应该是唯一存在的，有一个只有一个，不能多于一个或者没有</p>
+</li>
+<li><p>一个含有摹状词 $H(_{\iota}xF(x))$ 只有在下列三条得到满足时才是真的</p>
+</li>
+<li><ol>
+<li>至少有一x是F</li>
+</ol>
+</li>
+<li><ol>
+<li>至多有一x是F</li>
+</ol>
+</li>
+<li><ol>
+<li>这x又是H</li>
+</ol>
+</li>
+</ul>
+<h3 id="有等词的狭谓词演算"><a href="#有等词的狭谓词演算" class="headerlink" title="有等词的狭谓词演算"></a>有等词的狭谓词演算</h3><ul>
+<li><p>把关于等词的公理增加到狭谓词演算中构成一个包含等词的形式化公理系统</p>
+</li>
+<li><p>出发点作以下补充：</p>
+</li>
+<li>(一)初始符号</li>
+<li><ul>
+<li>乙：常项</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)二元谓词 = ：相等，读作“等于”</li>
+</ul>
+</li>
+<li>(二)形成规则</li>
+<li><ul>
+<li>乙*：等词后继有写在一对括号内并且用逗点分开的两个个体变项是一合式公式</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>例：=(x, z)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>(四)公理</li>
+<li><ul>
+<li>(7) $├ =(x, x)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(8) $├ =(x, y) \rightarrow (F(x) \rightarrow F(y))$</li>
+</ul>
+</li>
+<li><p>引入定义</p>
+</li>
+<li>$(\Delta_1 = \Delta_2)$ 定义为 $=(\Delta_1, \Delta_2)$</li>
+<li><p>$(\Delta_1 \not= \Delta_2)$ 定义为 $¬=(\Delta_1, \Delta_2)$</p>
+</li>
+<li><p>括号省略方法：联结词 $\bigvee, \bigwedge, \rightarrow, \leftrightarrow$ 两旁的等式外面一对括号可以省略</p>
+</li>
+</ul>
+<p>定理的推演</p>
+<ul>
+<li><strong>定理201</strong>：$├ x = y \leftrightarrow y = x$</li>
+<li><ul>
+<li>等词的对称性定律</li>
+</ul>
+</li>
+<li><p><strong>定理202</strong>：$├ x = y \rightarrow (y = z \rightarrow x = z)$</p>
+</li>
+<li><ul>
+<li>等词的传递性定律</li>
+</ul>
+</li>
+<li><p><strong>定理203</strong>：$├ x = z \rightarrow (y = z \rightarrow x = y)$</p>
+</li>
+<li><ul>
+<li>如果x和y都等于z，则x等于y</li>
+</ul>
+</li>
+<li><p><strong>定理204</strong>：$├ x \not= y \leftrightarrow y \not= x$</p>
+</li>
+<li><p><strong>定理205</strong>：$├ x = y \rightarrow (x \not= z \rightarrow y \not= z)$</p>
+</li>
+<li><p><strong>定理206</strong>：$├ F(x) \bigwedge ¬F(y) \rightarrow x \not= y$</p>
+</li>
+<li><ul>
+<li>如果性质F不为x和y所共同具有，那么x不等于y</li>
+</ul>
+</li>
+<li><p><strong>定理207</strong>：$├ F(y) \leftrightarrow (x)(x = y \rightarrow F(x))$</p>
+</li>
+<li><ul>
+<li>y有性质F，当且仅当一切等于y的个体都具有性质F</li>
+</ul>
+</li>
+<li><p><strong>定理208</strong>：$├ F(y) \leftrightarrow (\exists x)(x = y \bigwedge F(x))$</p>
+</li>
+<li><ul>
+<li>y是F，当且仅当至少有一等于y的个体是F</li>
+</ul>
+</li>
+</ul>
+<h3 id="摹状词的不同处理"><a href="#摹状词的不同处理" class="headerlink" title="摹状词的不同处理"></a>摹状词的不同处理</h3><p>(一)若一摹状词不具有唯一性，则含此摹状词的命题为假</p>
+<ul>
+<li>简单明确却有缺点</li>
+<li>对于一含有摹状词的公式 $H(_{\iota}xF(x))$，不能却区别下列两种情况：</li>
+<li><ul>
+<li>甲：$_{\iota}xF(x)$ 存在但不是H，因而 $H(_{\iota}xF(x))$ 为假</li>
+</ul>
+</li>
+<li><ul>
+<li>乙：$_{\iota}xF(x)$ 不存在，当然无所谓有无性质H</li>
+</ul>
+</li>
+<li><p>情况乙一般地被认为是无意义；这种处理方法未能区分“假”和“无意义”</p>
+</li>
+</ul>
+<p>(二)第二种处理方法，若摹状词不具有唯一性，则含有此摹状词的公式无意义，不是一个合式公式</p>
+<ul>
+<li><p>区别了“假”和“无意义”</p>
+</li>
+<li><p>有较大缺点：</p>
+</li>
+<li><ul>
+<li>摹状词的意义决定于它的唯一性</li>
+</ul>
+</li>
+<li><ul>
+<li>唯一性公式的证明一般不是能行的</li>
+</ul>
+</li>
+<li><ul>
+<li>一个含有摹状词的符号序列是否有意义(为一合式公式)，其判定也就不是能行的</li>
+</ul>
+</li>
+<li><ul>
+<li>对于一个形式化的公理系统是带有本质性的缺点</li>
+</ul>
+</li>
+</ul>
+<p>(三)第三种处理方法，若摹状词不具有唯一性，则它等于一个体变项，或者指称某一规定的事物</p>
+<ul>
+<li>摹状词没有唯一性时</li>
+<li><ul>
+<li>含有摹状词的公式不是没有意义</li>
+</ul>
+</li>
+<li><ul>
+<li>也不能算假，而是和其他公式一样，真假待定</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《数理逻辑引论》，王宪钧，北京大学出版社</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数理逻辑/" rel="tag"># 数理逻辑</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/mathematical_logic/判定问题及一致性和完全性/" rel="next" title="判定问题 一致性和完全性">
+                <i class="fa fa-chevron-left"></i> 判定问题 一致性和完全性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/24/mathematical_logic/数理逻辑发展简史/" rel="prev" title="数理逻辑发展简史">
+                数理逻辑发展简史 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Des Matières
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Ensemble
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">articles</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#狭谓词逻辑的不同系统"><span class="nav-number">1.</span> <span class="nav-text">狭谓词逻辑的不同系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有等词的狭谓词演算-摹状词"><span class="nav-number">2.</span> <span class="nav-text">有等词的狭谓词演算 摹状词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数量公式-数量量词"><span class="nav-number">2.1.</span> <span class="nav-text">数量公式 数量量词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#摹状词"><span class="nav-number">2.2.</span> <span class="nav-text">摹状词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有等词的狭谓词演算"><span class="nav-number">2.3.</span> <span class="nav-text">有等词的狭谓词演算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#摹状词的不同处理"><span class="nav-number">2.4.</span> <span class="nav-text">摹状词的不同处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">2.5.</span> <span class="nav-text">引用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Thème -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+</body>
+</html>

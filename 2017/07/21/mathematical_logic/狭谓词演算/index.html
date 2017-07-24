@@ -1,0 +1,1501 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数理逻辑," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="狭谓词演算的出发点(一)初始符号
+
+甲：变项
+
+
+命题变项：小写拉丁字母
+
+
+
+
+
+
+$p, q, r, s, p_1, q_1, r_1, s_1, p_2, …$
+
+
+
+
+
+
+个体变项：小写拉丁字母
+
+
+
+
+
+
+$u, v, w, x, y, z, u_1, v_1, …$
+
+
+
+
+
+
+谓词变项：大写拉丁字母
+
+
+
+
+
+
+$F, G, H, P, Q, R, S, F_1, G_1, …$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="狭谓词演算">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/21/mathematical_logic/狭谓词演算/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="狭谓词演算的出发点(一)初始符号
+
+甲：变项
+
+
+命题变项：小写拉丁字母
+
+
+
+
+
+
+$p, q, r, s, p_1, q_1, r_1, s_1, p_2, …$
+
+
+
+
+
+
+个体变项：小写拉丁字母
+
+
+
+
+
+
+$u, v, w, x, y, z, u_1, v_1, …$
+
+
+
+
+
+
+谓词变项：大写拉丁字母
+
+
+
+
+
+
+$F, G, H, P, Q, R, S, F_1, G_1, …$">
+<meta property="og:updated_time" content="2017-07-22T04:51:01.287Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="狭谓词演算">
+<meta name="twitter:description" content="狭谓词演算的出发点(一)初始符号
+
+甲：变项
+
+
+命题变项：小写拉丁字母
+
+
+
+
+
+
+$p, q, r, s, p_1, q_1, r_1, s_1, p_2, …$
+
+
+
+
+
+
+个体变项：小写拉丁字母
+
+
+
+
+
+
+$u, v, w, x, y, z, u_1, v_1, …$
+
+
+
+
+
+
+谓词变项：大写拉丁字母
+
+
+
+
+
+
+$F, G, H, P, Q, R, S, F_1, G_1, …$">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/21/mathematical_logic/狭谓词演算/"/>
+
+
+
+
+
+  <title> 狭谓词演算 | chenxfeng's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Accueil
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/21/mathematical_logic/狭谓词演算/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                狭谓词演算
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-21T23:00:00+08:00">
+                2017-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="狭谓词演算的出发点"><a href="#狭谓词演算的出发点" class="headerlink" title="狭谓词演算的出发点"></a>狭谓词演算的出发点</h3><p><strong>(一)初始符号</strong></p>
+<ul>
+<li>甲：变项</li>
+<li><ul>
+<li><ol>
+<li>命题变项：小写拉丁字母</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>$p, q, r, s, p_1, q_1, r_1, s_1, p_2, …$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>个体变项：小写拉丁字母</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>$u, v, w, x, y, z, u_1, v_1, …$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>谓词变项：大写拉丁字母</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>$F, G, H, P, Q, R, S, F_1, G_1, …$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>乙：常项</p>
+</li>
+<li><ul>
+<li><ol>
+<li>命题联结词：¬，并非；$\bigvee$，或者</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>量词：(.x.x.)，全称；($\exists .x.x.$)，存在</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>丙：括号和逗点</p>
+</li>
+<li><ul>
+<li>左括号 “(”；右括号 “)”；逗点 “,”</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<blockquote>
+<p>有意义的符号序列是系统里的合式公式<br>合式公式(简称公式)是演算里的命题形式</p>
+</blockquote>
+<ul>
+<li><p>语法符号</p>
+</li>
+<li><ol>
+<li>小写希腊字母 $\pi$，代表任一命题变项</li>
+</ol>
+</li>
+<li><ol>
+<li>大写希腊字母 $\Delta$，代表任一个体变项</li>
+</ol>
+</li>
+<li><ol>
+<li>大写希腊字母 $\Gama$</li>
+</ol>
+</li>
+<li><ol>
+<li>大写拉丁字母 $X, Y, Z$，代表任一符号序列</li>
+</ol>
+</li>
+<li><ol>
+<li>大写拉丁字母 $A, B, C, D, E$ 等，代表任一合式公式1</li>
+</ol>
+</li>
+</ul>
+<p><strong>(二)形成规则</strong></p>
+<ul>
+<li>两个语法概念</li>
+<li><ul>
+<li>$\Delta$ 在X中是约束的当且仅当 $(\Delta)$ 或 $(\exists \Delta)$ 在X中出现</li>
+</ul>
+</li>
+<li><ul>
+<li>$\Delta$ 在X中是自由的当且仅当 $\Delta$ 在X中出现并且 $\Delta$ 在X中不是约束的</li>
+</ul>
+</li>
+</ul>
+<p>狭谓词演算的形成规则有六条：</p>
+<ul>
+<li><p>甲：一命题变项 $\pi$ 是一合式公式</p>
+</li>
+<li><p>乙：一谓词变项 $\Gama$ 后继有写在一堆括号内并用逗点分开的适当数目的个体变项是一合式公式</p>
+</li>
+<li><p>丙：若 $X$ 是合式公式，则 $¬X$ 是合式公式</p>
+</li>
+<li><p>丁：若 $X$和$Y$ 是合式公式，并且无一个体变项 $\Delta$，此 $\Delta$ 在二者之一中是约束的但在另一个中是自由的，则 $(X \bigvee Y)$ 是合式公式</p>
+</li>
+<li><p>戊：若 $X$ 为一合式公式并且 $\Delta$ 在其中是自由的，则 $(\Delta)X$ 和 $(\exists \Delta)X$ 是合式公式</p>
+</li>
+<li><p>己：只有适合以上各条的是合式公式</p>
+</li>
+</ul>
+<p>形成规则的制定要满足：</p>
+<ul>
+<li><ol>
+<li>经过解释后合式公式是有意义的</li>
+</ol>
+</li>
+<li><ol>
+<li>公式的涵义是唯一的</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>丁条排除了一个个体变项在一公式的一部分是约束的但在另一部分是自由的这种情况<br>戊条排除了空的约束和重复的约束</p>
+</blockquote>
+<ul>
+<li><p>量词的辖域：量词后面最短的合式公式</p>
+</li>
+<li><p>约束变量：变量的约束出现</p>
+</li>
+<li><ul>
+<li>变项 $\Delta$ 在公式的某一位置上约束出现当且仅当</li>
+</ul>
+</li>
+<li><ul>
+<li>在量词 $(.x.x.)$ 或 $(\exists .x.x.)$ 之中</li>
+</ul>
+</li>
+<li><ul>
+<li>在量词 $(\Delta)$ 或 $(\exists \Delta)$ 的辖域之中</li>
+</ul>
+</li>
+<li><p>自由变项：变项的自由出现</p>
+</li>
+<li><ul>
+<li>不是约束出现</li>
+</ul>
+</li>
+</ul>
+<p><strong>(三)定义</strong></p>
+<ul>
+<li>甲：$(A \rightarrow B)$ 定义为 $(¬A \bigvee B)$</li>
+<li>乙：$(A \bigwedge B)$ 定义为 $¬(¬A \bigvee ¬B)$</li>
+<li>丙：$(A \leftrightarrow B)$ 定义为 $((A \rightarrow B) \bigwedge (B \rightarrow A))$</li>
+</ul>
+<blockquote>
+<p>引入否定和析取以外的三个联结词</p>
+</blockquote>
+<p><strong>(四)公理</strong></p>
+<ul>
+<li>(1) $├ ((p \bigvee p) \rightarrow p)$</li>
+<li>(2) $├ (p \rightarrow (p \bigvee q))$</li>
+<li>(3) $├ ((p \bigvee q) \rightarrow (q \bigvee p))$</li>
+<li>(4) $├ ((q \rightarrow r) \rightarrow ((p \bigvee q) \rightarrow (p \bigvee r)))$</li>
+<li>(5) $├ ((x)F(x) \rightarrow F(y))$</li>
+<li>(6) $├ (F(y) \rightarrow (\exists x)F(x))$</li>
+</ul>
+<blockquote>
+<p>谓词演算的括号省略规则和命题演算是相同的</p>
+</blockquote>
+<p><strong>(五)变形规则</strong></p>
+<ul>
+<li>代入规则两个要求：</li>
+<li><ul>
+<li>对一合式公式作代入的结果必须仍是一个合式公式</li>
+</ul>
+</li>
+<li><ul>
+<li>从普遍有效式出发，代入的结果必须还是普遍有效的</li>
+</ul>
+</li>
+<li><p>三条代入规则：</p>
+</li>
+<li><p>甲：命题变项代入规则</p>
+</li>
+<li><ul>
+<li>在公式A中出现的命题变项 $\pi$ 可由一公式B代入</li>
+</ul>
+</li>
+<li><ul>
+<li>代入必须在 $\pi$ 出现的一切位置上进行；代入结果可记为 $A \frac{\pi}{B}$</li>
+</ul>
+</li>
+<li><ul>
+<li>如果 $├ A$，则 $├ A \frac{\pi}{B}$</li>
+</ul>
+</li>
+<li><ul>
+<li>对B的要求：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>若 $\Delta$ 在A中为自由变项，则B不得含有约束变现 $\Delta$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>若 $\Delta$ 在A中为约束变项，则B不得含有自由变项 $\Delta$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>若 $\Delta$ 在A中为约束变项且$\pi$又在$(\Delta)$或$(\exists \Delta)$的辖域中，则B中不得有约束变项 $\Delta$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>三个要求都是为了避免代入的结果不合式；第二条保持普遍有效性</p>
+</blockquote>
+<ul>
+<li>乙：自由个体变项代入规则</li>
+<li><ul>
+<li>公式A中的自由个体变项 $\Delta_1$ 可由另一个体变项 $\Delta_2$ 代入</li>
+</ul>
+</li>
+<li><ul>
+<li>代入必须在 $\Delta_1$ 出现的一切位置上进行；代入结果可记为 $A \frac{\Delta_1}{\Delta_2}$</li>
+</ul>
+</li>
+<li><ul>
+<li>如果 $├ A$，则 $A \frac{\Delta_1}{\Delta_2}$</li>
+</ul>
+</li>
+<li><ul>
+<li>代入的要求：$\Delta_2$ 在A中不作为约束变项出现</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>保证代入结果合式和普遍有效性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>丙：谓词变项代入规则</p>
+</li>
+<li><ul>
+<li>概念：</li>
+</ul>
+</li>
+<li><ul>
+<li>目式：在一n元谓词变项后面由n个个体变项组成的n元组是此谓词的目式</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>如 $R(x, y)$ 目式为 $(x, y)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>名式：表示一谓词的结构</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>同一谓词变项的不同出现可以跟随不同的目式，用语法变项n元谓词可写作 $R(\Delta_1, \Delta_2, …, \Delta_n)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>复合谓词：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>含有自由个体变项的合式公式，其值随自由变项之值而定，此公式可看作其中某些个体变项的谓词，即复合谓词</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>语法符号：n元复合谓词 $B(\Delta_1, \Delta_2, …, \Delta_n)$, (n &gt; 0); 其中自由个体变项不必不相同也不必按序出现</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>谓词代入规则</strong>：一公式A中的n元谓词变项 $\Gama(\Delta_1, \Delta_2, …, \Delta_n)$ 可处处代之以一复合谓词 $B(\Delta_1, \Delta_2, …, \Delta_n, \Delta_{n+1}, …, \Delta_{n+m}), (m &gt; 0)$</li>
+</ul>
+</li>
+<li><ul>
+<li>代入结果可记为：$A \frac{$\Gama(\Delta_1, \Delta_2, …, \Delta_n)$}{$B(\Delta_1, \Delta_2, …, \Delta_n, \Delta_{n+1}, …, \Delta_{n+m})$}$</li>
+</ul>
+</li>
+<li><ul>
+<li>如果 $├ A$，则 $├ A \frac{$\Gama(\Delta_1, \Delta_2, …, \Delta_n)$}{$B(\Delta_1, \Delta_2, …, \Delta_n, \Delta_{n+1}, …, \Delta_{n+m})$}$</li>
+</ul>
+</li>
+<li><ul>
+<li>谓词代入要求：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>代入结果必须是合式的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>A中的自由个体变项在代入后不得为B中的量词所约束</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>如果m &gt; 0，$B(\Delta_1, \Delta_2, …, \Delta_n, \Delta_{n+1}, …, \Delta_{n+m}), (m &gt; 0)$ 中的变项 $\Delta_{n+1}, …, \Delta_{n+m}$ 等在代入后不得为A中原有的量词所约束</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>丁：分离规则</p>
+</li>
+<li><ul>
+<li>从 $├ A$ 和 $├ A \rightarrow B$，可得 $├ B$</li>
+</ul>
+</li>
+<li><ul>
+<li>承认前件的假言推理</li>
+</ul>
+</li>
+<li><p>戊：后件概括规则</p>
+</li>
+<li><ul>
+<li>如果 $\Delta$ 在A中不出现，从 $├ A \rightarrow B(\Delta)$ 可得 $├ A \rightarrow (\Delta)B(\Delta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>引入全称量词的规则</li>
+</ul>
+</li>
+<li><ul>
+<li>以下图式的推广</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>图式(n是有限的)：<br>$├ A \rightarrow B_1$<br>$├ A \rightarrow B_2$<br>…</p>
+<h2 id="├-A-rightarrow-B-n"><a href="#├-A-rightarrow-B-n" class="headerlink" title="$├ A \rightarrow B_n$"></a>$├ A \rightarrow B_n$</h2><p>$├ A \rightarrow B_1 \bigwedge B_2 \bigwedge … \bigwedge B_n$</p>
+</blockquote>
+<ul>
+<li>己：前件存在规则</li>
+<li><ul>
+<li>如果 $\Delta$ 在B中不出现，从 $├ A(\Delta) \rightarrow B$ 可得 $├ (\exists \Delta)A(\Delta) \rightarrow B$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>图式(n是有限的)<br>$├ A_1 \rightarrow B$<br>$├ A_2 \rightarrow B$<br>…</p>
+<h2 id="├-A-n-rightarrow-B"><a href="#├-A-n-rightarrow-B" class="headerlink" title="$├ A_n \rightarrow B$"></a>$├ A_n \rightarrow B$</h2><p>$├ A_1 \bigvee A_2 \bigvee … \bigvee A_n \rightarrow B$</p>
+</blockquote>
+<ul>
+<li>庚：约束个体变项易字规则</li>
+<li><ul>
+<li>公式A中的一约束个体变项 $\Delta_1$，可由另一个体变项 $\Delta_2$ 替换</li>
+</ul>
+</li>
+<li><ul>
+<li>替换必须在一特定量词及其辖域内到处实现；若 $\Delta_1$在多个量词内出现，替换可以只在一量词及其辖域内进行，也可以在几个辖域内同时进行</li>
+</ul>
+</li>
+<li><ul>
+<li>替换的要求</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>$\Delta_2$ 在A中不能作自由变项出现</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>若 $\Delta_2$ 在A中约束，则被替换的 $\Delta_1$ 不能在 $\Delta_2$ 的辖域中出现</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>辛：定义置换规则</p>
+</li>
+<li><ul>
+<li>定义的左右两方可以互相置换</li>
+</ul>
+</li>
+</ul>
+<h3 id="定理的推演-语法规则-基本置换定理"><a href="#定理的推演-语法规则-基本置换定理" class="headerlink" title="定理的推演 语法规则 基本置换定理"></a>定理的推演 语法规则 基本置换定理</h3><blockquote>
+<p>命题演算是谓词演算的一个子系统<br>命题演算的出发点是谓词演算出发点的一部分<br>命题演算的定理也都是谓词演算的定理</p>
+</blockquote>
+<ul>
+<li>定理101：$├ (x)(F(x) \bigvee ¬F(x))$</li>
+<li><ul>
+<li>排中律</li>
+</ul>
+</li>
+<li><ul>
+<li>对一切x，x是F或者不是F</li>
+</ul>
+</li>
+</ul>
+<p><strong>推演规则101 概括规则</strong>：从 $├ A(x)$，其中x自由出现，可得 $├ (x)A(x)$</p>
+<ul>
+<li>定理102：$├ (x)F(x) \rightarrow (\exists x)F(x)$</li>
+<li><ul>
+<li>如果一切个体都是F，那么有个体是F</li>
+</ul>
+</li>
+<li><ul>
+<li>全称蕴涵存在</li>
+</ul>
+</li>
+<li><p>定理103：$├ (x)(F(x) \bigwedge G(x)) \rightarrow (x)F(x) \bigwedge (x)G(x)$</p>
+</li>
+<li><p>定理104：$├ (x)F(x) \bigwedge (x)G(x) \rightarrow (x)(F(x) \bigwedge G(x))$</p>
+</li>
+<li><p>定理105：$├ (x)(F(x) \bigwedge G(x)) \leftrightarrow (x)F(x) \bigwedge (x)G(x)$</p>
+</li>
+<li><ul>
+<li>全称量词对于合取的分配律</li>
+</ul>
+</li>
+<li><p>定理106：$├ (x)(F(x) \rightarrow G(x)) \rightarrow ((x)F(x) \rightarrow (x)G(x))$</p>
+</li>
+<li><ul>
+<li>全称量词对于蕴涵的分配律</li>
+</ul>
+</li>
+<li><p>定理107：$├ (x)(F(x) \leftrightarrow G(x)) \rightarrow ((x)F(x) \leftrightarrow (x)G(x))$</p>
+</li>
+<li><ul>
+<li>全称量词对于等值的分配率</li>
+</ul>
+</li>
+<li><p>定理108：$├ (x)F(x) \bigvee (x)G(x) \rightarrow (x)(F(x) \bigvee G(x))$</p>
+</li>
+<li><ul>
+<li>关于全称量词对于析取能否分配的定理；逆命题不成立</li>
+</ul>
+</li>
+<li><p>定理109：$├ (\exists x)F(x) \leftrightarrow ¬(x)¬F(x)$</p>
+</li>
+<li><p>定理110：$├ (\exists x)¬F(x) \leftrightarrow ¬(x)F(x)$</p>
+</li>
+<li><p>定理111：$├ ¬(\exists x)¬F(x) \leftrightarrow (x)F(x)$</p>
+</li>
+<li><p>定理112：$¬(\exists x)F(x) \leftrightarrow (x)¬F(x)$</p>
+</li>
+<li><ul>
+<li>全称量词和存在量词的相互关系：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>全称量词可以用存在量词和否定来定义</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>存在量词也可用全称量词和否定来定义</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>定理113：$├ (x)(F(x) \rightarrow G(x)) \rightarrow ((\exists x)F(x) \rightarrow (\exists x)G(x))$</p>
+</li>
+<li><ul>
+<li>如果凡F都是G，那么有F就有G</li>
+</ul>
+</li>
+<li><p>定理114：$├ (x)(F(x) \leftrightarrow G(x)) \rightarrow ((\exists x)F(x) \leftrightarrow (\exists x)G(x))$</p>
+</li>
+<li><ul>
+<li>如果F等值于G，那么有F等值于有G</li>
+</ul>
+</li>
+</ul>
+<p><strong>推演规则102 谓词演算的基本置换定理</strong></p>
+<ul>
+<li><ul>
+<li>设</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>$A(\Delta_1, …, \Delta_n)$ 和 $B(\Delta_1, …, \Delta_n)$ 为谓词演算的两个公式，其中除 $\Delta_1, …, \Delta_n$ 外无其它自由个体变项</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>$\Phi(A)$ 为谓词演算的一合式公式，以B置换 $\Phi(A)$ 中的A得 $\Phi(B)$，$\Phi(B)$ 仍为一合式公式</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>如果 $├ A(\Delta_1, …, \Delta_n) \leftrightarrow B(\Delta_1, …, \Delta_n)$，则 $├ \Phi(A) \leftrightarrow \Phi(B)$</li>
+</ul>
+</li>
+<li><p>定理115：$├ (x)(p \bigvee F(x)) \rightarrow p \bigvee (x)F(x)$</p>
+</li>
+<li><p>定理116：$├ p \bigvee (x)F(x) \leftrightarrow (x)(p \bigvee F(x))$</p>
+</li>
+<li><p>定理117：$├ (x)(p \bigvee F(x)) \leftrightarrow p \bigvee (x)F(x)$</p>
+</li>
+<li><ul>
+<li>量词转置规律：全称量词对于析取的移置律</li>
+</ul>
+</li>
+<li><p>定理118：$├ (x)(p \bigwedge F(x)) \rightarrow p \bigwedge (x)F(x)$</p>
+</li>
+<li><p>定理119：$├ p \bigwedge (x)F(x) \rightarrow (x)(p \bigwedge F(x))$</p>
+</li>
+<li><p>定理120：$├ (x)(p \bigwedge F(x)) \leftrightarrow p \bigwedge (x)F(x)$</p>
+</li>
+<li><ul>
+<li>全称量词对于合取的移置律</li>
+</ul>
+</li>
+<li><p>定理121：$├ (x)(p \rightarrow F(x)) \leftrightarrow p \rightarrow (x)F(x)$</p>
+</li>
+<li><ul>
+<li>全称量词对于蕴涵的移置律</li>
+</ul>
+</li>
+<li><p>定理122：$├ (x)(F(x) \rightarrow p) \leftrightarrow (\exists x)F(x) \rightarrow p$</p>
+</li>
+<li><ul>
+<li>量词转移律：全称转换为存在</li>
+</ul>
+</li>
+<li><p>定理123：$├ (x)(y)R(x, y) \leftrightarrow (y)(x)R(x, y)$</p>
+</li>
+<li><ul>
+<li>全称量词的交换律：两个连接的全称量词可以任意交换，不影响公式真值</li>
+</ul>
+</li>
+<li><p>定理124：$├ (\exists x)(y)R(x, y) \rightarrow (y)(\exists x)R(x, y)$</p>
+</li>
+<li><ul>
+<li>重迭量词的特征；逆命题不真</li>
+</ul>
+</li>
+<li><p>定理125：$├ (x)(y)R(x, y) \rightarrow (x)R(x, x)$</p>
+</li>
+</ul>
+<p><strong>推演规则103 谓词演算的求否定规则</strong></p>
+<ul>
+<li><ul>
+<li>设E为谓词演算的公式，其中 $\rightarrow$ 和 $\leftrightarrow$ 不出现</li>
+</ul>
+</li>
+<li><ul>
+<li>E的否定式 $E^{-}$ 可用以下方法直接求得</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>$\bigvee$ 被代以 $\bigwedge$</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>$\bigwedge$ 被代以 $\bigvee$</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>$(\Delta)$ 被代以 $(\exists \Delta)$</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>$(\exists \Delta)$ 被代以 $(\Delta)$</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>$¬\pi$ 被代以 $\pi$；$¬ \Gama(\Delta_1, …, \Delta_n)$ 被代以 $\Gama(\Delta_1, …, \Delta_n)$</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>不出现于部分合式公式 $¬ \pi$ 中的 $\pi$ 被代以 $¬ \pi$；不出现于部分合式公式 $¬ \Gama$ 中的 $\Gama(\Delta_1, …, \Delta_n)$ 被代以 $¬ \Gama(\Delta_1, …, \Delta_n)$</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>推演规则104 对偶规则</strong></p>
+<ul>
+<li><ul>
+<li>设A和B为谓词演算两个公式，$A^{<em>}$ 和 $B^{</em>}$ 是在A和B中</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ol>
+<li>把 $\bigvee$ 和 $\bigwedge$</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><ol>
+<li>把 $(\Delta)$ 和 $(\exists \Delta)$ 互换</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>的结果，则</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>甲：从 $├ A \leftrightarrow B$，可得 $├ A^{<em>} \leftrightarrow B^{</em>}$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>乙：从 $├ A \rightarrow B$，可得 $├ B^{<em>} \rightarrow A^{</em>}$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>定理126：$├ (\exists x)(F(x) \bigvee G(x)) \leftrightarrow (\exists x)F(x) \bigvee (\exists x)G(x)$</p>
+</li>
+<li><p>定理127：$├ (\exists x)(F(x) \bigwedge G(x)) \rightarrow (\exists x)F(x) \bigwedge (\exists x)G(x)$</p>
+</li>
+<li><p>定理128：$├ (\exists x)(p \bigwedge F(x)) \leftrightarrow p \bigwedge (\exists x)F(x)$</p>
+</li>
+<li><p>定理129：$├ (\exists x)(p \bigvee F(x)) \leftrightarrow p \bigvee (\exists x)F(x)$</p>
+</li>
+<li><p>定理130：$├ (\exists x)(\exists y)R(x, y) \leftrightarrow (\exists y)(\exists x)R(x, y)$</p>
+</li>
+<li><p>定理131：$├ (\exists x)R(x, x) \rightarrow (\exists x)(\exists y)R(x, y)$</p>
+</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《数理逻辑引论》，王宪钧，北京大学出版社</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数理逻辑/" rel="tag"># 数理逻辑</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/20/Cplusplus_thinking/C++沉思录总结/" rel="next" title="C++沉思录总结">
+                <i class="fa fa-chevron-left"></i> C++沉思录总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/22/mathematical_logic/演绎定理和范式/" rel="prev" title="演绎定理 范式">
+                演绎定理 范式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Des Matières
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Ensemble
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-name">articles</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#狭谓词演算的出发点"><span class="nav-number">1.</span> <span class="nav-text">狭谓词演算的出发点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#├-A-rightarrow-B-n"><span class="nav-number"></span> <span class="nav-text">$├ A \rightarrow B_n$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#├-A-n-rightarrow-B"><span class="nav-number"></span> <span class="nav-text">$├ A_n \rightarrow B$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定理的推演-语法规则-基本置换定理"><span class="nav-number">1.</span> <span class="nav-text">定理的推演 语法规则 基本置换定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">2.</span> <span class="nav-text">引用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Thème -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,848 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="高等代数与解析几何," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="$\lambda$-矩阵
+元素是 $\lambda$ 的多项式的矩阵称为 $\lambda$-矩阵，记作 $A(\lambda) = (a_{ij}(\lambda))_{m*n}$；常数矩阵是其特殊形式
+
+
+定义：若 $\lambda$-矩阵 $A(\lambda)$ 中不恒等于零的子式的最大阶数是r，则称 $A(\lambda)$ 的秩是r，记作 $rankA(\lambda) = r$
+
+定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="矩阵的若尔当标准形">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/29/linear_algebra&analytic_geometry/矩阵的若尔当标准形/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="$\lambda$-矩阵
+元素是 $\lambda$ 的多项式的矩阵称为 $\lambda$-矩阵，记作 $A(\lambda) = (a_{ij}(\lambda))_{m*n}$；常数矩阵是其特殊形式
+
+
+定义：若 $\lambda$-矩阵 $A(\lambda)$ 中不恒等于零的子式的最大阶数是r，则称 $A(\lambda)$ 的秩是r，记作 $rankA(\lambda) = r$
+
+定">
+<meta property="og:updated_time" content="2017-07-31T11:17:18.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="矩阵的若尔当标准形">
+<meta name="twitter:description" content="$\lambda$-矩阵
+元素是 $\lambda$ 的多项式的矩阵称为 $\lambda$-矩阵，记作 $A(\lambda) = (a_{ij}(\lambda))_{m*n}$；常数矩阵是其特殊形式
+
+
+定义：若 $\lambda$-矩阵 $A(\lambda)$ 中不恒等于零的子式的最大阶数是r，则称 $A(\lambda)$ 的秩是r，记作 $rankA(\lambda) = r$
+
+定">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/29/linear_algebra&analytic_geometry/矩阵的若尔当标准形/"/>
+
+
+
+
+
+  <title> 矩阵的若尔当标准形 | chenxfeng's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/29/linear_algebra&analytic_geometry/矩阵的若尔当标准形/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                矩阵的若尔当标准形
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T11:00:00+08:00">
+                2017-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="lambda-矩阵"><a href="#lambda-矩阵" class="headerlink" title="$\lambda$-矩阵"></a>$\lambda$-矩阵</h3><blockquote>
+<p>元素是 $\lambda$ 的多项式的矩阵称为 $\lambda$-矩阵，记作 $A(\lambda) = (a_{ij}(\lambda))_{m*n}$；常数矩阵是其特殊形式</p>
+</blockquote>
+<ul>
+<li><p>定义：若 $\lambda$-矩阵 $A(\lambda)$ 中不恒等于零的子式的最大阶数是r，则称 $A(\lambda)$ 的秩是r，记作 $rankA(\lambda) = r$</p>
+</li>
+<li><p>定义：$\lambda$-矩阵 $A(\lambda)$ 的初等变换，指以下三种变换</p>
+</li>
+<li><ul>
+<li>(1)互换 $A(\lambda)$ 的第i行(列)与第j行(列)</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)用一个不为零的数k称 $A(\lambda)$ 的第i行(列)</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)用一个 $\lambda$ 的多项式 $\phi(\lambda)$ 乘 $A(\lambda)$ 的第j行(列)加到第i行(列)上</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>$E_{ij}，E_i(k)(k \not= 0)，E_{ij}(\phi(\lambda))$ 分别表达以上三种变换的初等矩阵</p>
+</blockquote>
+<ul>
+<li>定义：若 $\lambda$-矩阵 $A(\lambda)$ 经过有限次初等变换变到 $\lambda$-矩阵 $B(\lambda)$，则称 $A(\lambda)$ 与 $B(\lambda)$ 等价，记作 $A(\lambda) \cong B(\lambda)$</li>
+</ul>
+<blockquote>
+<p>$\lambda$-矩阵间的等价关系也有自反性、对称性和传递性</p>
+</blockquote>
+<ul>
+<li><p>定理：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，则 $A(\lambda)$ 等价于对角形矩阵(矩阵$A(\lambda)$的标准形) <script type="math/tex">\left[ \begin{matrix} 
+d_1(\lambda) & & & & & & & & & & \\
+& d_2(\lambda) & & & & & & & & & \\
+& & . & & & & & & & & \\
+& & & . & & & & & & & \\
+& & & & . & & & & & & \\
+& & & & & d_r(\lambda) & & & & & \\
+& & & & & & 0            & & & & \\
+& & & & & & & . & & & \\
+& & & & & & & & . & & \\
+& & & & & & & & & . & \\
+& & & & & & & & & & 0
+\end{matrix} \right]</script><br>其中 $d_1(\lambda)|d_2(\lambda), …, d_{r-1}(\lambda)|d_r(\lambda)$，且 $d_i(\lambda)(1, 2, …, r)$ 是首一多项式</p>
+</li>
+<li><p>定义：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，于是对任何正整数k，只要 $1 \leq k \leq r$，$A(\lambda)$ 中必有非零的k阶子式存在，$A(\lambda)$ 中所有k阶子式的首一最高公因式，叫 $A(\lambda)$ 的k阶行列式因式，记作 $D_k^A{\lambda}$ 或 $\lambda_k(\lambda)$. 可见当 $A(\lambda)$ 中共有r个行列式因式 $D_1(\lambda), D_2(\lambda), …, D_r(\lambda)$</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$ 的充要条件是它们有相同的标准形</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $\B(\lambda)$ 是 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$</p>
+</li>
+<li><p>定义：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，则 $A(\lambda)$ 的标准形中的 $d_1{\lambda}, d_2{\lambda}, …, \d_r(\lambda)$ 加 $A(\lambda)$ 的不变因子</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$</p>
+</li>
+<li><p>定义：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，$d_1(\lambda), d_2(\lambda), …, d_r(\lambda)$ 是它的不变因子，在复数域内分别把它们分解成一次因式的幂的乘积，即 <script type="math/tex">\begin{matrix}
+d_1(\lambda) = (\lambda - \lambda_1)^{k_{11}}(\lambda - \lambda_2)^{k_{12}}...(\lambda - \lambda_s)^{k_{1s}} \\
+d_2(\lambda) = (\lambda - \lambda_1)^{k_{21}}(\lambda - \lambda_2)^{k_{22}}...(\lambda - \lambda_s)^{k_{2s}} \\
+...... \\
+d_r(\lambda) = (\lambda - \lambda_1)^{k_{r1}}(\lambda - \lambda_2)^{k_{r2}}...(\lambda - \lambda_s)^{k_{rs}} \\
+\end{matrix}</script> 则所有的 $(\lambda - \lambda_j)^{k_{ij}}(k_{ij} \geq 1)$ 称为 $A(\lambda)$ 的初等因子</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$ 的充要条件是它们有相同的秩和相同的初等因子</p>
+</li>
+<li><p>定理：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，且 </p>
+<script type="math/tex; mode=display">A(\lambda) \cong \left[ \begin{matrix} 
+f_1(\lambda) & & & & & & & & & & \\
+& f_2(\lambda) & & & & & & & & & \\
+& & . & & & & & & & & \\
+& & & . & & & & & & & \\
+& & & & . & & & & & & \\
+& & & & & f_r(\lambda) & & & & & \\
+& & & & & & 0            & & & & \\
+& & & & & & & . & & & \\
+& & & & & & & & . & & \\
+& & & & & & & & & . & \\
+& & & & & & & & & & 0
+\end{matrix} \right] = B(\lambda)</script><p>则 $f_1(\lambda), f_2(\lambda), …, \f_r(\lambda)$ 的所有一次因式的幂就是 $A(\lambda)$ 的全部初等因子</p>
+</li>
+<li><p>定义：设 $A(\lambda)$ 是n阶 $\lambda$-矩阵，若存在n阶 $\lambda$-矩阵 $B(\lambda)$，使 $A(\lambda)B(\lambda) = B(\lambda)A(\lambda) = E$，则称 $A(\lambda)$ 为可逆矩阵，$B(\lambda)$ 是 $A(\lambda)$ 的逆矩阵</p>
+</li>
+</ul>
+<blockquote>
+<p>$\lambda$-矩阵的逆唯一，可逆$\lambda$-矩阵的乘积仍可逆；初等矩阵可逆，其逆仍为初等矩阵</p>
+</blockquote>
+<ul>
+<li><p>性质1：设 $A(\lambda)$ 是n阶 $\lambda$-矩阵，则 $A(\lambda)$ 可逆的充要条件是 $|A(\alpha)|$ 为非零常数</p>
+</li>
+<li><p>性质2：设 $A(\lambda)$ 是n阶 $\lambda$-矩阵，则 $A(\lambda)$ 可逆的充要条件是 $A(\lambda)$ 与单位矩阵等价</p>
+</li>
+<li><p>性质3：设 $A(\lambda)$ 是n阶 $\lambda$-矩阵，则 $A(\lambda)$ 可逆的充要条件是 $A(\lambda)$ 可表成若干个初等矩阵的乘积</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$ 的充要条件是存在可逆的 $\lambda$-矩阵 $P(\lambda)$ 和 $Q(\lambda)$，使 $P(\lambda)A(\lambda)Q(\lambda) = B(\lambda)$</p>
+</li>
+</ul>
+<h3 id="特征矩阵"><a href="#特征矩阵" class="headerlink" title="特征矩阵"></a>特征矩阵</h3><ul>
+<li><p>定义：设 $A = (a_{ij})_{n<em>n}$，则 $\lambdaE - A$ 称为 A 的<em>*特征矩阵</em></em></p>
+</li>
+<li><p>定理(凯莱-哈密顿定理)：设 $A \in K^{n*n}$，则 A 是其特征多项式的根，即有 $\Delta_A(A) = 0$</p>
+</li>
+</ul>
+<blockquote>
+<p>$\Delta_A(A) = A^n + a_{n-1}A^{n-1} + … + a_1 A + a_0 E$</p>
+<p>对任何矩阵A，至少存在一个非零的多项式 $f(\lambda)$ 使 $f(A) = 0$，具有此性质的多项式称为 A 的<strong>零化多项式</strong>($f(\lambda)$的任何倍式$g(\lambda)f(\lambda)$都是A的零化多项式)</p>
+</blockquote>
+<ul>
+<li>定义：在n阶矩阵A的零化多项式中，次数最低且首项系数为1的多项式称为A的<strong>最小多项式</strong>，记作 $m_A(\lambda)$</li>
+</ul>
+<blockquote>
+<p>A的最小多项式 $m_A(\lambda)$ 是唯一的</p>
+</blockquote>
+<ul>
+<li>定理：设 $A \in K^{n*n}$，$f(\lambda)$ 是A的零化多项式，$m_A(\lambda)$ 是A的最小多项式，则 $m_A(\lambda)|f(\lambda)$. 特别地，$m_A(\lambda)|\Delta_A(\lambda)$</li>
+</ul>
+<p>……</p>
+<h3 id="矩阵的若尔当标准形"><a href="#矩阵的若尔当标准形" class="headerlink" title="矩阵的若尔当标准形"></a>矩阵的若尔当标准形</h3><ul>
+<li><p>定理：设 A 是复数域上的n阶方阵，它的特征矩阵 $\lambda E - A$ 的初等因子为 $(\lambda - \lambda_1)^{m_1}, (\lambda - \lambda_2)^{m_2}, …, (\lambda - \lambda_s)^{m_s}$，则 </p>
+<script type="math/tex; mode=display">A \sim J = \left[ \begin{matrix} 
+J_1 & & & & & \\
+& J_2 & & & & \\
+& & .   & & & \\
+& & & .   & & \\
+& & & & .   & \\
+& & & & & J_s
+\end{matrix} \right]</script><p>其中</p>
+<script type="math/tex; mode=display">J_i = \left[ \begin{matrix} 
+\lambda_i & 1 & & & & & &  \\
+& \lambda_i & 1 & & & & & \\
+& & . & .& & & &  \\
+& & & . & . & & & \\
+& & & & . & . & & \\
+& & & & & . & 1 & \\
+& & & & & & \lambda_i & 1 \\
+& & & & & & & \lambda_i
+\end{matrix} \right]
+(i = 1, 2, ..., s)</script><p>是 $m_i$阶方阵. 这J称为A的<strong>若尔当标准形</strong>，$J_i$ 称为对应于 $(\lambda - \lambda_i)^{m_i}$ 的若尔当块，并且这若尔当标准形除去诸 $J_i$ 的顺序外是被 A 唯一决定的</p>
+</li>
+<li><p>定理：设 $\sigma$ 是数域 K 上n维线性空间 V 的线性变换，则在 V 中必存在一组基，使 $\sigma$ 对这基的矩阵是若尔当标准形，并且这若尔当标准形除去诸 $J_i$ 的顺序外是被 $\sigma$ 唯一决定的</p>
+</li>
+<li><p>推论：复数域上的n阶方阵A与对角形矩阵相似的充要条件是，其特征矩阵 $\lambda E - A$ 的初等因子都是 $\lambda$ 的一次式</p>
+</li>
+</ul>
+<h3 id="若尔当标准形与空间分解"><a href="#若尔当标准形与空间分解" class="headerlink" title="若尔当标准形与空间分解"></a>若尔当标准形与空间分解</h3><p>……</p>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/高等代数与解析几何/" rel="tag"># 高等代数与解析几何</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/28/linear_algebra&analytic_geometry/线性空间与线性变换/" rel="next" title="线性空间与线性变换、特征值">
+                <i class="fa fa-chevron-left"></i> 线性空间与线性变换、特征值
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/30/linear_algebra&analytic_geometry/实、复内积空间 与 奇异值分解、广义逆/" rel="prev" title="实、复内积空间 与 奇异值分解、广义逆">
+                实、复内积空间 与 奇异值分解、广义逆 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda-矩阵"><span class="nav-number">1.</span> <span class="nav-text">$\lambda$-矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征矩阵"><span class="nav-number">2.</span> <span class="nav-text">特征矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵的若尔当标准形"><span class="nav-number">3.</span> <span class="nav-text">矩阵的若尔当标准形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#若尔当标准形与空间分解"><span class="nav-number">4.</span> <span class="nav-text">若尔当标准形与空间分解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">5.</span> <span class="nav-text">引用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+</body>
+</html>

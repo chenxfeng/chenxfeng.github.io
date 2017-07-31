@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Accueil
+            Home
           </a>
         </li>
       
@@ -227,6 +227,2354 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/30/linear_algebra&analytic_geometry/实、复内积空间 与 奇异值分解、广义逆/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/30/linear_algebra&analytic_geometry/实、复内积空间 与 奇异值分解、广义逆/" itemprop="url">
+                  实、复内积空间 与 奇异值分解、广义逆
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-30T11:00:00+08:00">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="实内积空间"><a href="#实内积空间" class="headerlink" title="实内积空间"></a>实内积空间</h3><ul>
+<li>定义：设 V 是实数域 R 上的线性空间，如果对 V 中任意向量 $\alpha$ 与 $\beta$，在 R 中都有唯一的实数与之对应，记作 $(\alpha, \beta)$，并对任意的$\alpha, \beta, \gamma \in V, k \in R$，这对应具有性质：</li>
+<li><ul>
+<li>(1)$(\alpha, \beta) = (\beta, \alpha)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$(k \alpha, \beta) = k(\alpha, \beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$(\alpha + \beta, \gamma) = (\alpha, \gamma) + (\beta, \gamma)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)$(\alpha, \alpha) \geq 0$ 当且仅当 $\alpha = 0$，$(\alpha, \alpha) = 0$</li>
+</ul>
+</li>
+<li><ul>
+<li>则称这对应是 V 的一个内积，具有这种内积的线性空间称为实内积空间或欧几里得(Euclid)空间</li>
+</ul>
+</li>
+<li><p>例如：在线性空间 $R^n$ 中，对于向量 $\alpha = (a_1, a_2, …, a_n), \beta = (b_1, b_2, …, b_n)$，定义 $(\alpha, \beta) = a_1 b_1 + a_2 b_2 + … + a_n b_n$. 容易验证 $(\alpha, \beta)$ 是空间 $R^n$ 的一个内积，$R^n$ 是一实内积空间(常用的内积定义)</p>
+</li>
+<li><p>又例如：设 C[a, b] 是 [a, b] 上实连续函数构成的线性空间，对于 f(x), g(x)，定义 $(f(x), g(x)) = \int_a^b f(x)g(x)dx$，是空间 C[a, b] 的一个内积，因而 C[a, b] 是一个实内积空间</p>
+</li>
+</ul>
+<p>实内积空间 V 中的内积具有的基本性质：</p>
+<ul>
+<li>(1)$(\alpha, k \beta) = k(\alpha, \beta)$</li>
+<li>(2)$(\alpha, \beta + \gamma) = (\alpha, \beta) + (\alpha, \gamma)$</li>
+<li>(3)$(\alpha, 0) = (0, \beta) = 0$</li>
+<li><p>(4)$(\sum\limits_{i=1}^m k_i\alpha_i, \sum\limits_{i=1}^n l_j\beta_j) = \sum\limits_{i=1}^m\sum\limits_{j=1}^n k_i l_j(\alpha_i, \beta_j)$</p>
+</li>
+<li><p>定义：设 $\alpha$ 是实内积空间的一个向量，则称非负实数 $\sqrt{(\alpha, \alpha)}$ 是向量 $\alpha$ 的长度，记作 $|\alpha| = \sqrt{(\alpha, \alpha)}$</p>
+</li>
+</ul>
+<blockquote>
+<p>$|\alpha| = 1$，则 $\alpha$ 称为单位向量；$|\alpha| = 0$ 的充要条件是 $\alpha$ 是零向量</p>
+</blockquote>
+<ul>
+<li><p>定理：对实内积空间 V 中任意两个向量 $\alpha, \beta$，恒有不等式 $|(\alpha, \beta)| \leq |\alpha||\beta|$(柯西-彭雅斯基不等式)成立. 即，当 $\alpha, \beta$ 线性相关时，$|(\alpha, \beta)| = |\alpha||\beta|$；当 $\alpha, \beta$ 线性无关时，$|(\alpha, \beta)| &lt; |\alpha||\beta|$</p>
+</li>
+<li><p>定义：设 $\alpha, \beta$ 是实内积空间的两个非零向量，则 $\alpha$ 与 $\beta$ 的夹角 $\theta$ 的余弦规定为 $\cos\theta = \frac{(\alpha, \beta)}{|\alpha||\beta|}$</p>
+</li>
+<li><p>定义：设 $\alpha, \beta$ 是实内积空间的两个向量，若 $(\alpha, \beta) = 0$，则称 $\alpha$ 与 $\beta$ 正交. 记作 $\alpha \perp \beta$</p>
+</li>
+</ul>
+<blockquote>
+<p>两个非零向量正交的充要条件是它们之间的夹角 $\theta = \frac{\pi}{2}$<br>规定零向量与任意向量正交</p>
+</blockquote>
+<ul>
+<li><p>定义：设 $\alpha_1, \alpha_2, …, \alpha_n$ 是n维实内积空间 V 的基，若它们都是单位向量，而又两两正交，即 <script type="math/tex">(\alpha_i, \alpha_j) = \delta_{ij} = \begin{cases} 0, i \not= j \\ 1, i = j \end{cases}</script> 则称 $\alpha_1, \alpha_2, …, \alpha_n$ 是 V 的标准正交基</p>
+</li>
+<li><p>例如：n维实内积空间 $R^n$ 中的自然基 $e_1 = (1, 0, …, 0), e_2 = (0, 1, …, 0), …, e_n = (0, 0, …, 1)$ 就是一组标准正交基</p>
+</li>
+<li><p>定理：设 $\alpha_1, \alpha_2, …, \alpha_m$ 是实内积空间 V 中两两正交的非零向量，且 $|\alpha_i| = 1(i = 1, 2, …, m)$，则 $\alpha_1, \alpha_2, …, \alpha_m$ 线性无关，而且对于 V 中任意向量 $\alpha$，向量 $\beta = \alpha - (\alpha, \alpha_1)\alpha_1 - (\alpha, \alpha_2)\alpha_2 - … - (\alpha, \alpha_m)\alpha_m$ 正交于每一个 $\alpha_i(i = 1, 2, …, m)$</p>
+</li>
+<li><p>定理：设 $\alpha_1, \alpha_2, …, \alpha_n$ 是n维实内积空间 V 的任意基，则必存在 V 的标准正交基 $\gamma_1, \gamma_2, …, \gamma_n$，使 $\alpha_1, \alpha_2, …, \alpha_n$ 到 $\gamma_1, \gamma_2, …, \gamma_n$ 的过渡矩阵是三角形矩阵，即 $\gamma_i = a_{i1}\alpha_1 + a_{i2}\alpha_2 + … + a_{ii}\alpha_i(i = 1, 2, …, n)$</p>
+</li>
+<li><p>定理：设 $e_1, e_2, …, e_n$ 是实内积空间 V 的一组标准正交基，而且 $(f_1, f_2, …, f_n) = (e_1, e_2, …, e_n)Q$，则 $f_1, f_2, …, f_n$ 是 V 的标准正交基的充要条件是，Q具有性质 $Q^TQ = E$</p>
+</li>
+</ul>
+<blockquote>
+<p>若方阵满足 $Q^TQ = E$，则称Q是<strong>正交矩阵</strong>. 显然其行列式为 $\pm 1$<br>Q是 $m*n$ 矩阵，若 $Q^TQ = E$，则称Q是具有标准正交列的矩阵</p>
+</blockquote>
+<ul>
+<li>定义：设 V 与 W 是两个实内积空间，如果存在 V 到 W 的 1-1 而且映上的映射 $\sigma$，并且对于任意的 $\alpha, \beta \in V, k \in R$，具有性质：</li>
+<li><ul>
+<li>(1)$\sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\sigma(k \alpha) = k \sigma(\alpha)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$(\sigma(\alpha), \sigma(\beta)) = (\alpha, \beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>则称 $\sigma$ 为 V 到 W 的同构映射，而称 V 与 W 同构，记作 $V \cong W$</li>
+</ul>
+</li>
+<li><p>定理：两个有限维实内积空间同构的充要条件是它们的维数相等</p>
+</li>
+<li><p>定义：设 $V_1, V_2$ 是实内积空间 V 的两个子空间，若对任意的 $\alpha \in V_1, \beta \in V_2$，恒有 $(\alpha, \beta) = 0$，则称 $V_1$ 与 $V_2$ 互为正交，记作 $V_1 \perp V_2$. V 中的一个向量 $\alpha$，若对任意的 $\beta \in V_1$，恒有 $(\alpha, \beta) = 0$，则恒称 $\alpha$ 与 $V_1$ 正交，记作 $\alpha \perp V_1$</p>
+</li>
+<li><p>定理：若子空间 $V_1, V_2, …, V_s$ 两两相交，则 $V_1 + V_2 + … + V_s = V_1 \bigoplus V_2 \bigoplus \bigoplus … \bigoplus V_s$</p>
+</li>
+<li><p>定义：设 $V_1, V_2$ 是实内积空间 V 的两个子空间，若 $V_1 \perp V_2$，且 $V = V_1 + V_2$，则称 $V_2$ 是 $V_1$ 的正交补</p>
+</li>
+<li><p>定理：n维实内积空间 V 的每一个子空间 W 都有唯一的正交补</p>
+</li>
+</ul>
+<blockquote>
+<p>子空间 W 的正交补用 $W^{\perp}$ 表示</p>
+</blockquote>
+<ul>
+<li>推论：$W^{\perp}$ 是所有与 W 正交的向量组成的，即 $W^{\perp} = \{x \in V | x \perp W\}$</li>
+</ul>
+<h3 id="实内积空间的线性变换"><a href="#实内积空间的线性变换" class="headerlink" title="实内积空间的线性变换"></a>实内积空间的线性变换</h3><ul>
+<li><p>引理：设 $\psi$ 是n维实内积空间 V 到实数域 R 的一个同态映射，则 V 中存在一个唯一向量 $\beta$，使对任意 $\alpha \in V$，有 $\psi(\alpha) = (\alpha, \beta)$</p>
+</li>
+<li><p>定理(共轭变换的存在定理)：设 $\sigma$ 是n维实内积空间 V 的线性变换，则存在 V 的唯一线性变换 $\sigma^{<em>}$，使对任意 $\alpha, \beta \in V$，有 $(\sigma(\alpha), \beta) = (\alpha, \sigma^{</em>}(\beta))$，而且对 V 的任意一组标准正交基，若 $\sigma$ 对应矩阵A，则 $\sigma^{*}$ 对应 $A^T$</p>
+</li>
+<li><p>定义：设 $\sigma$ 是n维实内积空间 V 的线性变换，如果存在 V 的线性变换 $\sigma^{<em>}$，使对 V 中任意向量 $\alpha, \beta$，有 $(\sigma(\alpha), \beta) = (\alpha, \sigma^{</em>}(\beta))$，则称 $\sigma^{<em>}$ 是 $\sigma$ 的<strong>共轭变换</strong>或<em>*伴随变换</em></em></p>
+</li>
+</ul>
+<blockquote>
+<p>当 V 为有限维时，它的每一个线性变换都有唯一的共轭变换</p>
+</blockquote>
+<p>共轭变换的基本性质：</p>
+<ul>
+<li>(1)$(\sigma^<em>)^</em> = \sigma$</li>
+<li>(2)$(\sigma + \tau)^<em> = \sigma^</em> + \tau^*$</li>
+<li>(3)$(k\sigma)^<em> = k\sigma^</em>$</li>
+<li><p>(4)$(\sigma \tau)^<em> = \tau^</em> + \sigma^*$</p>
+</li>
+<li><p>定义：设 $\sigma$ 是n维实内积空间 V 的一个线性变换，若对任意 $\alpha, \beta \in V$，$(\sigma(\alpha), \sigma(\beta)) = (\alpha, \beta)$，则称 $\sigma$ 是 V 的一个<strong>正交变换</strong></p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维实内积空间 V 的一个线性变换，则以下提法等价：</p>
+</li>
+<li><ul>
+<li>(1)$\sigma$ 为正交变换</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\sigma^<em>$ 为 $\sigma$ 的逆变换，即 $\sigma^</em> = \sigma^{-1}$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$\sigma$ 在任意标准正交基 $e_1, e_2, …, e_n$ 下的矩阵A为正交矩阵，即 $A^T = A^{-1}$</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)$\sigma$ 把标准正交基仍变为标准正交基</li>
+</ul>
+</li>
+<li><ul>
+<li>(5)$\sigma$ 保持向量的长度不变，即对 $\alpha \in V, |\sigma(\alpha)| = |\alpha|$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>设正交变换在标准正交基下的矩阵为正交矩阵A，显然 $detA = \pm 1$.<br>若 $detA = 1$，则称 $\sigma$ 为旋转，或为第一类的<br>若 $detA = -1$，则称 $\sigma$ 为第二类的</p>
+</blockquote>
+<ul>
+<li><p>定义：设 $\sigma$ 是n维实内积空间 V 的一个线性变换. 若对 V 中任意向量 $\alpha$ 与 $\beta$，$(\sigma(\alpha), \beta) = (\alpha, \sigma(\beta))$，则称 $\sigma$ 是 V 的一个<strong>对称变换</strong></p>
+</li>
+<li><p>若$\sigma$ 是 V 的对称变换，则以下提法等价：</p>
+</li>
+<li><ul>
+<li>(1)$\sigma$ 是对称变换</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\sigma = \sigma^*$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$\sigma$ 对任意一组标准正交基 $e_1, e_2, …, e_n$ 的矩阵是实对称矩阵</li>
+</ul>
+</li>
+<li><p>定义：设 $\sigma$ 是n维实内积空间 V 的一个线性变换. 若对 V 中任意向量 $\alpha, \beta$，$(\sigma(\alpha), \beta) = - (\alpha, \sigma(\beta))$，则称 $\sigma$ 是 V 的一个<strong>反对称变换</strong></p>
+</li>
+<li><p>若$\sigma$ 是 V 的反对称变换，则以下提法等价：</p>
+</li>
+<li><ul>
+<li>(1)$\sigma$ 是反对称变换</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\sigma^* = \sigma^{-1}$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$\sigma$ 对任意一组标准正交基 $e_1, e_2, …, e_n$ 的矩阵是实反对称矩阵</li>
+</ul>
+</li>
+<li><p>定义：设 W 是n维实内积空间 V 的子空间，因而 $V = W \bigoplus W^{\perp}$，即 V 中每个向量 X 都可唯一分解成以下形式：<script type="math/tex">X = Y + Z(Y \in W, Z \in W^{\perp})</script> 若映射 $\sigma : V \rightarrow W$ 定义为 $\sigma(X) = Y$，则称 $\sigma$ 是 V 到 W 的一个正交投影变换. Y 称为向量 X 在子空间 W 上的正交投影或内射影，而 |Z| 称为向量 X 到子空间 W 的距离</p>
+</li>
+</ul>
+<blockquote>
+<p>若线性变换 $\sigma$ 满足 $\sigma = \sigma^2, \sigma = \sigma^*$，则 $\sigma$ 是正交投影变换</p>
+</blockquote>
+<ul>
+<li><p>定理：设 $\alpha \in V$，则 W 中向量 $\beta$ 是 $\alpha$ 在子空间 W 上的内射影的充要条件是，对任意 $\xi \in W$，有 $|\alpha - \beta| \leq |\alpha - \xi|$</p>
+</li>
+<li><p>定理：推广集合空间中点到直线或平面“垂线最短”的命题. 此几何事实可用于解决最小二乘问题</p>
+</li>
+<li><p>定理：(1)$x^0$ 是 $Ax = b$ 的最小二乘解的充要条件是 $x^0$ 是 $A^TAx = A^Tb$ 的解. (2)若 A 是满列秩矩阵，则 $Ax = b$ 的最小二乘解为 $x^0 = (A^TA)^{-1}A^Tb$</p>
+</li>
+</ul>
+<h3 id="实对称矩阵的标准形"><a href="#实对称矩阵的标准形" class="headerlink" title="实对称矩阵的标准形"></a>实对称矩阵的标准形</h3><ul>
+<li><p>引理：设 $\sigma$ 是n维实内积空间 V 的对称变换，则 $\sigma$ 的特征根都是实数</p>
+</li>
+<li><p>引理：设 W 是n维实内积空间 V 的对称变换 $\sigma$ 的一个不变子空间，则 W 的正交补 $W^{\perp}$ 仍为 $\sigma$ 的不变子空间</p>
+</li>
+<li><p>引理：设 $\sigma$ 是n维实内积空间 V 的对称变换，则 V 中属于 $\sigma$ 的不同特征根的特征向量正交</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维实内积空间 V 的对称变换，则必存在一组标准正交基，使 $\sigma$ 对这组基的矩阵是实对角形矩阵</p>
+</li>
+</ul>
+<h3 id="复内积空间"><a href="#复内积空间" class="headerlink" title="复内积空间"></a>复内积空间</h3><ul>
+<li>定义：设 V 是复数域 C 上的线性空间，如果对 V 中任意向量 $\alpha$ 与 $\beta$，在 C 中都有唯一的复数与之对应，记作 $(\alpha, \beta)$，并且这对应满足以下条件 $(k \in C, \alpha, \beta, \gamma \in V)$</li>
+<li><ul>
+<li>(1)$(\alpha, \beta) = \overline{(\beta, \alpha)}$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$(k \alpha, \beta) = k(\alpha, \beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$(\alpha + \beta, \gamma) = (\alpha, \gamma) + (\beta, \gamma)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)$(\alpha, \alpha) \geq 0$，当且仅当 $\alpha = 0$ 时，$(\alpha, \alpha) = 0$</li>
+</ul>
+</li>
+<li><ul>
+<li>则这对应称为 V 中的一个内积，具有内积的线性空间称为<strong>复内积空间</strong>或<strong>酉空间</strong></li>
+</ul>
+</li>
+<li><p>例如(通常定义的内积)：在线性空间 $C^n$ 中，对于向量 $\alpha = (a_1, a_2, …, a_n)$ 与 $\beta = (b_1, b_2, …, b_n)$，定义 $(\alpha, \beta) = a_1 \overline{b_1} + a_2 \overline{b_2} + … + a_n \overline{b_n}$，为 $C^n$ 的一个内积，$C^n$ 是一个复内积空间</p>
+</li>
+</ul>
+<p>复内积空间 V 中的内积的基本性质：</p>
+<ul>
+<li>(1)$(\alpha, k \beta) = \overline{k}(\alpha, \beta)$</li>
+<li>(2)$(\alpha, \beta + \gamma) = (\alpha, \beta) + (\alpha, \gamma)$</li>
+<li>(3)$(\alpha, 0) = (0, \beta) = 0$</li>
+<li>(4)$(\sum\limits_{i=1}^m k_i \alpha_i, \sum\limits_{j=1}^n l_j \beta_j) = \sum\limits_{i=1}^m \sum\limits_{j=1}^n k_i \overline{l_j}(\alpha_i, \beta_j)$</li>
+</ul>
+<blockquote>
+<p>非负实数 $\sqrt{(\alpha, \alpha)}$ 称为向量 $\alpha$ 的长度，记作 $|\alpha|$<br>柯西-彭雅可夫斯基不等式仍然成立：对任意向量 $\alpha$ 和 $\beta$，$(\alpha, \beta)(\beta, \alpha) \leq (\alpha, \alpha)(\beta, \beta)$<br>非零向量 $\alpha$ 与 $\beta$ 的夹角 $\theta$ 规定为 <script type="math/tex">\cos^2\theta = \frac{(\alpha, \beta)(\beta, \alpha)}{(\alpha, \alpha)(\beta, \beta)}</script><br>非零向量 $\alpha$ 与 $\beta$，如果 $(\alpha, \beta) = 0$，那么称 $\alpha$ 与 $\beta$ 正交(可与实内积空间一样定义标准正交基)</p>
+<p>矩阵 $Q_{n<em>n}$，若 $Q^HQ = E$，则称 Q 为<strong>酉阵</strong><br>若 $U = U_{m</em>n}$，且 $U^HU = E$，则称 U 是具有标准正交列的矩阵</p>
+<p>复内积空间中有类似的<strong>共轭变换</strong>、<strong>埃尔米特变换</strong>和<strong>酉变换</strong>对应实内积空间的共轭变换、对称变换和正交变换，线性变换 $\sigma$ 在标准正交基下的矩阵A，$\sigma$对应变换在此基下的矩阵分别为共轭转置矩阵、埃尔米特矩阵和酉阵</p>
+</blockquote>
+<ul>
+<li><p>定义：设 $\sigma$ 是n维复内积空间的线性变换，若 $\sigma\sigma^<em> = \sigma^</em>\sigma$，则 $\sigma$ 称为<strong>正规变换</strong>或<strong>正规算子</strong>. 类似的，设 $A \in C^{n<em>n}$，若 $AA^H = A^HA$，则 A 称为<em>*正规矩阵</em></em></p>
+</li>
+<li><p>定理：设 $\sigma$ 是正规变换，则</p>
+</li>
+<li><ul>
+<li>(1)$\sigma(\alpha) = 0$ 的充要条件是 $\sigma^*(\alpha) = 0$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\sigma - \lambda I$ 是正规变换</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$\sigma$ 的任何特征向量也是 $\sigma^*$ 的特征向量</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)$\sigma$ 的属于不同特征根的特征向量是正交的</li>
+</ul>
+</li>
+<li><ul>
+<li>(5)若 W 是 $\sigma$ 的不变子空间，则 $W^{\perp}$ 仍是 $\sigma$ 的不变子空间</li>
+</ul>
+</li>
+<li><ul>
+<li>(6)必存在一组标准正交基，使 $\sigma$ 对这组基的矩阵是对角阵</li>
+</ul>
+</li>
+</ul>
+<h3 id="矩阵的奇异值分解与广义逆"><a href="#矩阵的奇异值分解与广义逆" class="headerlink" title="矩阵的奇异值分解与广义逆"></a>矩阵的奇异值分解与广义逆</h3><ul>
+<li><p>定理：设 $A \in C^{m*n}$，$rank(A) = r$，则 $AA^H$ 与 $A^HA$ 各有r个正的特征值，而且对应相等</p>
+</li>
+<li><p>定义：设 $A \in C^{m<em>n}$，$rank(A) = r$，$A^HA$ 的特征值是 $\lambda_1 \geq \lambda_2 \geq … \geq \lambda_r &gt; \lambda_{r+1} = … = \lambda_n = 0$，则称 $\mu_i = \sqrt{\lambda_i}(i = 1, 2, …, n)$ 是 A 的<strong>奇异值</strong>，其中 $\mu_1, …, \mu_r$ 称为 A 的<em>*正奇异值</em></em></p>
+</li>
+</ul>
+<blockquote>
+<p>埃米尔特矩阵的奇异值恰是其特征值的绝对值</p>
+</blockquote>
+<ul>
+<li>定理：设 $A, B \in C^{m*n}$，若 A 与 B 酉等价，则 A 与 B 有相同的奇异值</li>
+</ul>
+<blockquote>
+<p>A 与 B 酉等价，即存在两个酉阵 S 和 T，使 B = SAT</p>
+</blockquote>
+<ul>
+<li>定理(奇异值分解定理)：设 $A \in C^{m<em>n}, rank(A) = r$，若 A 的正奇异值按降序排列为 $\mu_1 \geq \mu_2 \geq … \geq \mu_r &gt; 0$，则存在m阶酉阵U和n阶酉阵V，使 $U^HAV = \begin{matrix} \Delta &amp; 0 \\ 0 &amp; 0 \end{matrix} = D \in C^{m</em>n}$，其中 $\Delta = diag(\mu_1, \mu_2, …, \mu_r)$</li>
+</ul>
+<blockquote>
+<p>$A = UDV^H$ 时称这个分解为 A 的奇异值分解</p>
+</blockquote>
+<ul>
+<li><p>定理：设 $A \in R^{m*n}, rank(A) = r$，若 A 的正奇异值按降序排列为 $\mu_1 \geq \mu_2 \geq … \geq \mu_r &gt; 0$，则存在m阶正交矩阵P和n阶正交矩阵Q，使 $P^TAQ = \begin{matrix} \Delta &amp; 0 \\ 0 &amp; 0 \end{matrix}$，其中 $\Delta = diag(\mu_1, \mu_2, …, \mu_r)$</p>
+</li>
+<li><p>定义：设 $A \in C^{m*n}$，若存在矩阵 X，使得 $AXA = A, XAX = X, AX = (AX)^H, XA = (XA)^H$(Penrose方程)，则称 X 是 A 的广义逆矩阵</p>
+</li>
+<li><p>定理：设 $A \in C^{m*n}, rank(A) = r$，则 A 的广义逆矩阵存在并且唯一，当 $A = U \begin{matrix} \Delta &amp; 0 \\ 0 &amp; 0 \end{matrix} V^H$ 为 A 的奇异值分解时，A 的广义逆矩阵 $A^+$ 为 <script type="math/tex">A^+ = V \begin{matrix} \Delta^{-1} & 0 \\ 0 & 0 \end{matrix} U</script></p>
+</li>
+</ul>
+<p>$A^+$ 具有以下性质：</p>
+<ul>
+<li>(1)$(A^+)^+ = A, (A^H)^+ = (A^+)^H$</li>
+<li>(2)$A^{-1}$ 存在时，$A^+ = A^{-1}$</li>
+<li>(3)$A^+ = (A^HA)^+A^H = A^H(AA^H)^+$</li>
+<li>(4)$(A^HA)^+ = A^+(A^H)^+$</li>
+<li>(5)设 $A^H = A, A^2 = A$，则 $A^+ = A$</li>
+<li>(6)$AA^+$ 与 $A^+A$ 均为半正定埃米尔特矩阵</li>
+<li>(7)$rank(A) = rank(A^+) = rank(A^+A) = rank(AA^+)$</li>
+<li><p>(8)设 $A \in C^{m*n}$，则 $rank(A) = m - rank(E_m - AA^+) = n - rank(E_n - A^+A)$</p>
+</li>
+<li><p>定理：设线性方程组 $Ax=b$ 有解，则它的全部解可表示为 $x = A^+b + (E_n - A^+A)\alpha$($\alpha$ 为任意n维列向量)</p>
+</li>
+<li><p>定理：线性方程组 $Ax=b$ 的全部最小二乘解为 $\xi = A^+b + (E_n - A^+A)\alpha$($\alpha$ 为任意n维列向量)</p>
+</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/29/linear_algebra&analytic_geometry/矩阵的若尔当标准形/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/29/linear_algebra&analytic_geometry/矩阵的若尔当标准形/" itemprop="url">
+                  矩阵的若尔当标准形
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T11:00:00+08:00">
+                2017-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="lambda-矩阵"><a href="#lambda-矩阵" class="headerlink" title="$\lambda$-矩阵"></a>$\lambda$-矩阵</h3><blockquote>
+<p>元素是 $\lambda$ 的多项式的矩阵称为 $\lambda$-矩阵，记作 $A(\lambda) = (a_{ij}(\lambda))_{m*n}$；常数矩阵是其特殊形式</p>
+</blockquote>
+<ul>
+<li><p>定义：若 $\lambda$-矩阵 $A(\lambda)$ 中不恒等于零的子式的最大阶数是r，则称 $A(\lambda)$ 的秩是r，记作 $rankA(\lambda) = r$</p>
+</li>
+<li><p>定义：$\lambda$-矩阵 $A(\lambda)$ 的初等变换，指以下三种变换</p>
+</li>
+<li><ul>
+<li>(1)互换 $A(\lambda)$ 的第i行(列)与第j行(列)</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)用一个不为零的数k称 $A(\lambda)$ 的第i行(列)</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)用一个 $\lambda$ 的多项式 $\phi(\lambda)$ 乘 $A(\lambda)$ 的第j行(列)加到第i行(列)上</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>$E_{ij}，E_i(k)(k \not= 0)，E_{ij}(\phi(\lambda))$ 分别表达以上三种变换的初等矩阵</p>
+</blockquote>
+<ul>
+<li>定义：若 $\lambda$-矩阵 $A(\lambda)$ 经过有限次初等变换变到 $\lambda$-矩阵 $B(\lambda)$，则称 $A(\lambda)$ 与 $B(\lambda)$ 等价，记作 $A(\lambda) \cong B(\lambda)$</li>
+</ul>
+<blockquote>
+<p>$\lambda$-矩阵间的等价关系也有自反性、对称性和传递性</p>
+</blockquote>
+<ul>
+<li><p>定理：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，则 $A(\lambda)$ 等价于对角形矩阵(矩阵$A(\lambda)$的标准形) <script type="math/tex">\left[ \begin{matrix} 
+d_1(\lambda) & & & & & & & & & & \\
+& d_2(\lambda) & & & & & & & & & \\
+& & . & & & & & & & & \\
+& & & . & & & & & & & \\
+& & & & . & & & & & & \\
+& & & & & d_r(\lambda) & & & & & \\
+& & & & & & 0            & & & & \\
+& & & & & & & . & & & \\
+& & & & & & & & . & & \\
+& & & & & & & & & . & \\
+& & & & & & & & & & 0
+\end{matrix} \right]</script><br>其中 $d_1(\lambda)|d_2(\lambda), …, d_{r-1}(\lambda)|d_r(\lambda)$，且 $d_i(\lambda)(1, 2, …, r)$ 是首一多项式</p>
+</li>
+<li><p>定义：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，于是对任何正整数k，只要 $1 \leq k \leq r$，$A(\lambda)$ 中必有非零的k阶子式存在，$A(\lambda)$ 中所有k阶子式的首一最高公因式，叫 $A(\lambda)$ 的k阶行列式因式，记作 $D_k^A{\lambda}$ 或 $\lambda_k(\lambda)$. 可见当 $A(\lambda)$ 中共有r个行列式因式 $D_1(\lambda), D_2(\lambda), …, D_r(\lambda)$</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$ 的充要条件是它们有相同的标准形</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $\B(\lambda)$ 是 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$</p>
+</li>
+<li><p>定义：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，则 $A(\lambda)$ 的标准形中的 $d_1{\lambda}, d_2{\lambda}, …, \d_r(\lambda)$ 加 $A(\lambda)$ 的不变因子</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$</p>
+</li>
+<li><p>定义：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，$d_1(\lambda), d_2(\lambda), …, d_r(\lambda)$ 是它的不变因子，在复数域内分别把它们分解成一次因式的幂的乘积，即 <script type="math/tex">\begin{matrix}
+d_1(\lambda) = (\lambda - \lambda_1)^{k_{11}}(\lambda - \lambda_2)^{k_{12}}...(\lambda - \lambda_s)^{k_{1s}} \\
+d_2(\lambda) = (\lambda - \lambda_1)^{k_{21}}(\lambda - \lambda_2)^{k_{22}}...(\lambda - \lambda_s)^{k_{2s}} \\
+...... \\
+d_r(\lambda) = (\lambda - \lambda_1)^{k_{r1}}(\lambda - \lambda_2)^{k_{r2}}...(\lambda - \lambda_s)^{k_{rs}} \\
+\end{matrix}</script> 则所有的 $(\lambda - \lambda_j)^{k_{ij}}(k_{ij} \geq 1)$ 称为 $A(\lambda)$ 的初等因子</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$ 的充要条件是它们有相同的秩和相同的初等因子</p>
+</li>
+<li><p>定理：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，且 </p>
+<script type="math/tex; mode=display">A(\lambda) \cong \left[ \begin{matrix} 
+f_1(\lambda) & & & & & & & & & & \\
+& f_2(\lambda) & & & & & & & & & \\
+& & . & & & & & & & & \\
+& & & . & & & & & & & \\
+& & & & . & & & & & & \\
+& & & & & f_r(\lambda) & & & & & \\
+& & & & & & 0            & & & & \\
+& & & & & & & . & & & \\
+& & & & & & & & . & & \\
+& & & & & & & & & . & \\
+& & & & & & & & & & 0
+\end{matrix} \right] = B(\lambda)</script><p>则 $f_1(\lambda), f_2(\lambda), …, \f_r(\lambda)$ 的所有一次因式的幂就是 $A(\lambda)$ 的全部初等因子</p>
+</li>
+<li><p>定义：设 $A(\lambda)$ 是n阶 $\lambda$-矩阵，若存在n阶 $\lambda$-矩阵 $B(\lambda)$，使 $A(\lambda)B(\lambda) = B(\lambda)A(\lambda) = E$，则称 $A(\lambda)$ 为可逆矩阵，$B(\lambda)$ 是 $A(\lambda)$ 的逆矩阵</p>
+</li>
+</ul>
+<blockquote>
+<p>$\lambda$-矩阵的逆唯一，可逆$\lambda$-矩阵的乘积仍可逆；初等矩阵可逆，其逆仍为初等矩阵</p>
+</blockquote>
+<ul>
+<li><p>性质1：设 $A(\lambda)$ 是n阶 $\lambda$-矩阵，则 $A(\lambda)$ 可逆的充要条件是 $|A(\alpha)|$ 为非零常数</p>
+</li>
+<li><p>性质2：设 $A(\lambda)$ 是n阶 $\lambda$-矩阵，则 $A(\lambda)$ 可逆的充要条件是 $A(\lambda)$ 与单位矩阵等价</p>
+</li>
+<li><p>性质3：设 $A(\lambda)$ 是n阶 $\lambda$-矩阵，则 $A(\lambda)$ 可逆的充要条件是 $A(\lambda)$ 可表成若干个初等矩阵的乘积</p>
+</li>
+<li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$ 的充要条件是存在可逆的 $\lambda$-矩阵 $P(\lambda)$ 和 $Q(\lambda)$，使 $P(\lambda)A(\lambda)Q(\lambda) = B(\lambda)$</p>
+</li>
+</ul>
+<h3 id="特征矩阵"><a href="#特征矩阵" class="headerlink" title="特征矩阵"></a>特征矩阵</h3><ul>
+<li><p>定义：设 $A = (a_{ij})_{n<em>n}$，则 $\lambdaE - A$ 称为 A 的<em>*特征矩阵</em></em></p>
+</li>
+<li><p>定理(凯莱-哈密顿定理)：设 $A \in K^{n*n}$，则 A 是其特征多项式的根，即有 $\Delta_A(A) = 0$</p>
+</li>
+</ul>
+<blockquote>
+<p>$\Delta_A(A) = A^n + a_{n-1}A^{n-1} + … + a_1 A + a_0 E$</p>
+<p>对任何矩阵A，至少存在一个非零的多项式 $f(\lambda)$ 使 $f(A) = 0$，具有此性质的多项式称为 A 的<strong>零化多项式</strong>($f(\lambda)$的任何倍式$g(\lambda)f(\lambda)$都是A的零化多项式)</p>
+</blockquote>
+<ul>
+<li>定义：在n阶矩阵A的零化多项式中，次数最低且首项系数为1的多项式称为A的<strong>最小多项式</strong>，记作 $m_A(\lambda)$</li>
+</ul>
+<blockquote>
+<p>A的最小多项式 $m_A(\lambda)$ 是唯一的</p>
+</blockquote>
+<ul>
+<li>定理：设 $A \in K^{n*n}$，$f(\lambda)$ 是A的零化多项式，$m_A(\lambda)$ 是A的最小多项式，则 $m_A(\lambda)|f(\lambda)$. 特别地，$m_A(\lambda)|\Delta_A(\lambda)$</li>
+</ul>
+<p>……</p>
+<h3 id="矩阵的若尔当标准形"><a href="#矩阵的若尔当标准形" class="headerlink" title="矩阵的若尔当标准形"></a>矩阵的若尔当标准形</h3><ul>
+<li><p>定理：设 A 是复数域上的n阶方阵，它的特征矩阵 $\lambda E - A$ 的初等因子为 $(\lambda - \lambda_1)^{m_1}, (\lambda - \lambda_2)^{m_2}, …, (\lambda - \lambda_s)^{m_s}$，则 </p>
+<script type="math/tex; mode=display">A \sim J = \left[ \begin{matrix} 
+J_1 & & & & & \\
+& J_2 & & & & \\
+& & .   & & & \\
+& & & .   & & \\
+& & & & .   & \\
+& & & & & J_s
+\end{matrix} \right]</script><p>其中</p>
+<script type="math/tex; mode=display">J_i = \left[ \begin{matrix} 
+\lambda_i & 1 & & & & & &  \\
+& \lambda_i & 1 & & & & & \\
+& & . & .& & & &  \\
+& & & . & . & & & \\
+& & & & . & . & & \\
+& & & & & . & 1 & \\
+& & & & & & \lambda_i & 1 \\
+& & & & & & & \lambda_i
+\end{matrix} \right]
+(i = 1, 2, ..., s)</script><p>是 $m_i$阶方阵. 这J称为A的<strong>若尔当标准形</strong>，$J_i$ 称为对应于 $(\lambda - \lambda_i)^{m_i}$ 的若尔当块，并且这若尔当标准形除去诸 $J_i$ 的顺序外是被 A 唯一决定的</p>
+</li>
+<li><p>定理：设 $\sigma$ 是数域 K 上n维线性空间 V 的线性变换，则在 V 中必存在一组基，使 $\sigma$ 对这基的矩阵是若尔当标准形，并且这若尔当标准形除去诸 $J_i$ 的顺序外是被 $\sigma$ 唯一决定的</p>
+</li>
+<li><p>推论：复数域上的n阶方阵A与对角形矩阵相似的充要条件是，其特征矩阵 $\lambda E - A$ 的初等因子都是 $\lambda$ 的一次式</p>
+</li>
+</ul>
+<h3 id="若尔当标准形与空间分解"><a href="#若尔当标准形与空间分解" class="headerlink" title="若尔当标准形与空间分解"></a>若尔当标准形与空间分解</h3><p>……</p>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/28/linear_algebra&analytic_geometry/线性空间与线性变换/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/28/linear_algebra&analytic_geometry/线性空间与线性变换/" itemprop="url">
+                  线性空间与线性变换、特征值
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-28T17:00:00+08:00">
+                2017-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="线性空间"><a href="#线性空间" class="headerlink" title="线性空间"></a>线性空间</h3><ul>
+<li>定义：设 K 是给定的数域，V 是具有加法和数量乘法的非空集合，即对任何 $\alpha, \beta \in V, k \in K$，确定和 $\alpha + \beta \in V$，确定积 $k \alpha \in V$. 如果以下公理成立：</li>
+<li><ul>
+<li>(1)对任何 $\alpha, \beta \in V$，有 $\alpha + \beta = \beta + \alpha$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)对任何 $\alpha, \beta, \gamma \in V$，有 $(\alpha + \beta) + \gamma = \alpha + (\beta + \gamma)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)对任何 $\alpha \in V$，在 V 中存在一个元素0，使 $\alpha + 0 = \alpha$，其中0称为 V 的零元素</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)对于所有的 $\alpha \in V$，存在 $\beta \in V$，使 $\alpha + \beta = 0$，其中 $\beta$ 称为 $\alpha$ 的负元素</li>
+</ul>
+</li>
+<li><ul>
+<li>(5)$1 \cdot \alpha = \alpha$</li>
+</ul>
+</li>
+<li><ul>
+<li>(6)对任何 $k, l \in K, \alpha \in V$，有 $k(l \alpha) = (kl)\alpha$</li>
+</ul>
+</li>
+<li><ul>
+<li>(7)对任何 $k, l \in K, \alpha \in V$，有 $(k + l)\alpha = k \alpha + l \alpha$</li>
+</ul>
+</li>
+<li><ul>
+<li>(8)对任何 $k \in K, \alpha, \beta \in V$，有 $k(\alpha + \beta) = k \alpha + k \beta$</li>
+</ul>
+</li>
+<li><ul>
+<li>则称 V 是数域K上的线性空间</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>线性空间中的元素又称向量</p>
+</blockquote>
+<p>线性空间的基本性质：</p>
+<ul>
+<li>(1)线性空间的零元唯一</li>
+<li>(2)线性空间的每个元的负元唯一</li>
+<li>(3)$0 \alpha = 0, k 0 = 0, (-1)\alpha = - \alpha$</li>
+<li>(4)若 $k \alpha = 0$，则 $k = 0$ 或 $\alpha = 0$</li>
+</ul>
+<blockquote>
+<p>线性空间定义中规定的两种代数运算并没有具体给出，一般由具体问题指定<br>零元不一定是数零，$\alpha$ 的负元不一定是 $-\alpha$</p>
+</blockquote>
+<h3 id="子空间"><a href="#子空间" class="headerlink" title="子空间"></a>子空间</h3><ul>
+<li>定义：设 W 是数域 K 上线性空间 V 的一个非空子集，如果 W 对于 V 的两种运算又构成 K 上的线性空间，则称 W 是 V 的子空间</li>
+</ul>
+<blockquote>
+<p>对于任意的线性空间，零空间 {0} 和 V 本身都是 V 的子空间，此两个子空间通常称为 V 的平凡子空间.<br>V 的非平凡子空间称为 V 的真子空间</p>
+<p>W 是 V 的子空间的充要条件是 W 对 V 两种运算封闭</p>
+</blockquote>
+<ul>
+<li><p>定义：如果 $V_1, V_2$ 是线性空间 V 的两个子空间，那么属于 $V_1, V_2$ 的所有公共向量的集合，称为 $V_1$ 与 $V_2$ 的交，记作 $V_1 \bigcap V_2$</p>
+</li>
+<li><p>定理：如果 $V_1, V_2$ 是 V 的两个子空间，则 $V_1 \bigcap V_2$ 仍为 V 的子空间</p>
+</li>
+<li><p>定理：设 $V_1$ 与 $V_2$ 是 V 的两个子空间，则 $dim V_1 + dim V_2 = dim(V_1 + V_2) + dim_(V_1 \bigcap V_2)$</p>
+</li>
+<li><p>定义：设 $V_1$ 与 $V_2$ 是 V 的两个子空间，如果 $V_1 + V_2$ 中每个向量 $\alpha$ 的分解式 $\alpha = \alpha_1 + \alpha_2, \alpha_1 \in V_1, \alpha_2 \in V_2$ 唯一，则称 $V_1 + V_2$ 为 $V_1$ 与 $V_2$ 的直和，记作 $V_1 \bigoplus V_2$</p>
+</li>
+<li><p>定理：设 $V_1$ 与 $V_2$ 是 V 的两个子空间，若 $W = V_1 + V_2$，则下述提法等价：</p>
+</li>
+<li><ul>
+<li>(1)$W = V_1 + V_2$ 是直和</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)如果 $0 = \alpha_1 + \alpha_2, \alpha_1 \in V_1, \alpha_2 \in V_2$，那么 $\alpha_1 = \alpha_2 = 0$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$V_1 \bigcap V_2 = {0}$</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)如果 $\alpha_1, \alpha_2, …, \alpha_s$ 是 $V_1$ 的基，$\beta_1, \beta_2, …, \beta_t$ 是 $V_2$ 的基，那么 $\alpha_1, \alpha_2, …, \alpha_s, \beta_1, \beta_2, …, \beta_t$ 是 W 的基</li>
+</ul>
+</li>
+<li><ul>
+<li>(5)$dim W = dim V_1 + dim V_2$</li>
+</ul>
+</li>
+<li><p>定义：设 $V_1, V_2, …, V_s$ 是 V 的子空间，若 $W = V_1 + V_2 + … + V_s$，则下述提法等价：</p>
+</li>
+<li><ul>
+<li>(1)$W = V_1 + V_2 + … + V_s$ 是直和</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)如果 $0 = \alpha_1 + \alpha_2 + … + \alpha_s, \alpha_i \in V_i(i = 1, 2, …, s)$，那么 $\alpha_1 = \alpha_2 = … = \alpha_s = 0$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$V_i \bigcap \sum_{j \not= i} V_j = \{ 0 \}, (i = 1, 2, …, s)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)如果 $e_1^{(i)}, e_2^{(i)}, …, e_{k_i}^{(i)}(i = 1, 2, …, s)$ 是 $V_i$ 的基，那么它们合在一起构成 W 的基</li>
+</ul>
+</li>
+<li><ul>
+<li>(5)$dim W = \sum_{i=1}^s dim V_i$</li>
+</ul>
+</li>
+</ul>
+<h3 id="线性空间的同态与同构"><a href="#线性空间的同态与同构" class="headerlink" title="线性空间的同态与同构"></a>线性空间的同态与同构</h3><ul>
+<li>定义：设 V 与 U 是同一数域 K 上的两个线性空间，$\sigma$ 为 V 到 U 的映射，若对任意 $\alpha, \beta \in V, k \in K$，有</li>
+<li><ul>
+<li>(1)$\sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\sigma(k \alpha) = k \sigma(\alpha)$</li>
+</ul>
+</li>
+<li><ul>
+<li>则称 $\sigma$ 为 V 到 U 的同态映射(线性映射)</li>
+</ul>
+</li>
+<li><ul>
+<li>若 $\sigma$ 还是 1-1映上的映射(单射)，则称 $\sigma$ 为 V 到 U 的同构映射. 此时称为 V 与 U 同构，记作 $V \cong U$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>映射 $\sigma : V \rightarrow U$ 对 V 的不同元有不同的象，即当 $\alpha \not= \beta$ 时可推得 $\sigma(\alpha) \not= \sigma(\beta)$，那么称 $\sigma$ 为 1-1 映射(单射)<br>映射 $\sigma : V \rightarrow U$ 对每个 $\beta \in U$ 至少是一个 $\alpha \in V$ 的象，那么称 $\sigma$ 为映上映射(满射)<br>既是1-1映射，又是映上映射的映射称为双射</p>
+</blockquote>
+<p>同态映射的性质：</p>
+<ul>
+<li>(1)如果 $\alpha = 0 \in V$，则 $\sigma(\alpha) = 0$；如果 $\alpha \in V$，则 $\sigma(-\alpha) = - \sigma(\alpha)$. </li>
+<li>(2)同态映射把线性相关的元变为线性相关的元</li>
+<li>(3)V 中所有元的象的集合称为 $\sigma$ 的象(image)，记作 $I_m(\sigma)$，即 $I_m(\sigma) = \{ \sigma(\alpha)|\alpha \in V \}$ 是 U 的子空间，称为 $\sigma$ 的<strong>象子空间</strong></li>
+<li>(4)U 中零元的所有象源的集合称为 $\sigma$ 的<strong>核(kernel)</strong>，记作 $Ker(\sigma)$，即 $Ker(\sigma) = \{ \alpha \in V | \sigma(\alpha) = 0 \}$ 是 V 的子空间，称为 $\sigma$ 的<strong>核子空间</strong></li>
+<li>(5)$\sigma$ 是同构映射的充要条件是 $I_m(\sigma) = U, Ker(\sigma) = {0}$</li>
+<li>(6)同构映射把线性无关的元变为线性无关的元</li>
+<li>(7)同构映射的逆映射是同构映射</li>
+<li>(8)同构映射的乘积是同构映射</li>
+</ul>
+<blockquote>
+<p>$\sigma, \tau$ 分别是 V到 U 与 U 到 W 的映射，若对任意 $\alpha \in V$，有 $\tau \sigma(\alpha) = \tau(\sigma(\alpha))$，则称 $\tau \sigma$为 $\tau$ 与 $\sigma$ 的乘积<br>$\sigma$ 是 V 到 V 的映射，若对任意 $\alpha \in V$，有 $\sigma(\alpha) = \alpha$，则称 $\sigma$ 为 V 上的恒等映射，记作 $I_V$，也记作 $I$<br>$\sigma$ 是 V 到 U 的映射，若存在 U 到 V 的映射 $\tau$，使 $\tau \sigma = I_V, \sigma \tau = I_U$，则称 $\tau$ 为 $\sigma$ 的逆映射，$\sigma$ 的逆映射是唯一的，记作 $\sigma^{-1}$<br>$\sigma$ 是 V 到 U 的映射，若对任意 $\alpha \in V$，有 $\sigma(\alpha) = 0$，则称 $\sigma$ 为 V 到 U 的零映射，记作 $0$，即 $0(\alpha) = 0$</p>
+</blockquote>
+<ul>
+<li><p>定理：设 V 与 U 是同一数域 K 上的两个n维线性空间，则 $V \cong U$</p>
+</li>
+<li><p>定理：设 V 与 U 是同一数域 K 上的两个有限维线性空间，如果 $V \cong U$，则 $dim V = dim U$</p>
+</li>
+</ul>
+<h3 id="线性空间的线性变换"><a href="#线性空间的线性变换" class="headerlink" title="线性空间的线性变换"></a>线性空间的线性变换</h3><ul>
+<li>定义：设 V 是数域 K 上的线性空间，如果 $\sigma : V \rightarrow V$ 具有下列性质：</li>
+<li><ul>
+<li>(1)对任何的 $\alpha, \beta \in V, \sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)对任何的 $k \in K, \alpha \in V, \sigma(k \alpha) = k \sigma(\alpha)$</li>
+</ul>
+</li>
+<li><ul>
+<li>则称 $\sigma$ 是一个线性变换</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>线性变换是线性空间到自身的同态映射<br>$\sigma : V \rightarrow V$，若对任何 $\alpha \in V, \sigma(\alpha) = 0$，则 $\sigma$ 是 V 的一个线性变换，称为<strong>零变换</strong>，记作 $0$<br>$\sigma : V \rightarrow V$，若对任何 $\alpha \in V, \sigma(\alpha) = \alpha$，则 $\sigma$ 是 V 的一个线性变换，称为<strong>恒等变换</strong>，记作 $I$</p>
+</blockquote>
+<p>线性变换是一种特殊的同态映射，具有所有同态映射所具有的性质:</p>
+<ul>
+<li>(1)$\sigma(0) = 0, \sigma(- \alpha) = -\sigma(\alpha)$</li>
+<li>(2)$\sigma$ 把线性相关元变为线性相关元，但线性无关元经 $\sigma$ 作用未必其象线性无关，如零变换</li>
+<li><p>(3)$I_m(\sigma)$ (象空间)与 $Ker(\sigma)$ (零空间)都是 V 的子空间，$I_m(\sigma)$ 的维数称为 $\sigma$ 的秩，记作 $rank(\sigma)$，$Ker(\sigma)$ 的维数称为 $\sigma$ 的零度，记作 $nullity(\sigma)$</p>
+</li>
+<li><p>定理：设 $\sigma : V \rightarrow V$ 是线性的，$dim V = n$，则 $rank(\sigma) + nullity(\sigma) = n$</p>
+</li>
+<li><p>定义：设 $\sigma, \tau \in A(V)$(A(V)表示V上所有线性变换的集合)，由 $(\sigma + \tau)(\alpha) = \sigma(\alpha) + \tau(\alpha), \alpha \in V$ 所决定的变换 $\sigma + \tau$ 称为 $\sigma$ 与 $\tau$ 的和；由$(k \sigma)(\alpha) = k \sigma(\alpha), k \in K$ 所决定的变换 $k \sigma$ 称为 $k$ 与 $\sigma$ 的数乘</p>
+</li>
+<li><p>定理：A(V) 对于上述定义的加法和数量乘法构成数域 K 上的一个线性空间</p>
+</li>
+<li><p>定义：设 $\sigma, \tau \in A(v)$，那么由 $(\sigma \tau)(\alpha) = \sigma(\tau \alpha), \alpha in V$ 所决定的变换称为 $\sigma$ 与 $\tau$ 的乘积</p>
+</li>
+<li><p>定理：A(V) 是数域 K 上的一个结合代数</p>
+</li>
+</ul>
+<blockquote>
+<p>设 A 是数域 k 上的线性空间，若在 A 中定义了乘法运算，并且对任何的 $\alpha, \beta, \gamma \in A, k \in K$，以下性质成立：(1)$\alpha(\beta + \gamma) = \alpha \beta + \alpha \gamma$; (2)$(\beta + \gamma)\alpha = \beta \alpha + \gamma \alpha$; (3)$k(\beta \gamma) = (k \beta)\gamma = \beta (k \gamma)$. 则称 A 是 K 上的一个代数，又若 $(\alpha \beta)\gamma = \alpha(\beta \gamma)$，则称 A 是 K 上的一个结合代数</p>
+</blockquote>
+<ul>
+<li>定义：设 $\sigma \in A(V)$，如果存在 $\tau \in A(V)$，使 $\sigma \tau = \tau \sigma = I$，则称 $\sigma$ 是可逆的，$\tau$ 称为 $\sigma$ 的逆变换</li>
+</ul>
+<blockquote>
+<p>可逆变换 $\sigma$ 的逆变换是唯一的<br>如果 $\sigma$ 与 $\tau$ 都是可逆的线性变换，则 $\sigma \tau$ 可逆，且 $(\sigma \tau)^{-1} = \sigma^{-1} \tau^{-1}$<br>线性变换 $\sigma$ 可逆的充要条件是 $\sigma$ 是 1-1 而且映上的</p>
+<p>V是有限维时，$\sigma$ 可逆的充要条件是 $\sigma$ 是 1-1 的映射<br>V 的 1-1 映射常称为是非奇异的，因而在有限维线性空间中，可逆与非奇异是一致的</p>
+</blockquote>
+<ul>
+<li><p>定义：设 W 与 U 是n维线性空间V的两个子空间，且 $V = W \bigoplus U$，即V中每个向量 X 都可以唯一地分解成下列形式 $X = Y + Z, Y \in W, Y \in W, Z \in U$. 若映射 $\sigma : V \rightarrow W$ 定义为 $\sigma(x) = Y$，则称 $\sigma$ 是 V 到 W 的<strong>投影变换</strong></p>
+</li>
+<li><p>定理：若 $\sigma$ 是 V 到 W 的投影变换，则 $\sigma$ 是线性的，且 $\sigma^2 = \sigma$</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，且$\sigma^2 = \sigma$，则有</p>
+</li>
+<li><ul>
+<li>(1)对任何 $X \in I_m(\sigma)$，有 $\sigma(X) = X$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$V = I_m(\sigma) \bigoplus Ker(\sigma)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$\sigma$ 是 V 到 $I_m(\sigma)$ 的投影变换</li>
+</ul>
+</li>
+</ul>
+<h3 id="线性变换的矩阵表示"><a href="#线性变换的矩阵表示" class="headerlink" title="线性变换的矩阵表示"></a>线性变换的矩阵表示</h3><blockquote>
+<p>设 $\sigma$ 是数域 K 上n维线性空间 V 的一个线性变换，$\alpha_1, \alpha_2, …, \alpha_n$ 是V的基，$\sigma(\alpha_1), \sigma(\alpha_2), …, \sigma(\alpha_n) \in V$ 都是 $\alpha_1, \alpha_2, …, \alpha_n$ 的线性组合，即有<br>$ \begin{matrix}<br>\sigma(\alpha_1) = a_{11}\alpha_1 + a_{21}\alpha_2 + … + a_{n1}\alpha_n \\<br>\sigma(\alpha_2) = a_{12}\alpha_1 + a_{22}\alpha_2 + … + a_{n2}\alpha_n \\<br>……       \\<br>\sigma(\alpha_n) = a_{1n}\alpha_1 + a_{2n}\alpha_2 + … + a_{nn}\alpha_n \end{matrix}$</p>
+</blockquote>
+<ul>
+<li><p>引理：设 V 是数域 K 上的线性空间，$\alpha_1, \alpha_2, …, \alpha_n$ 是 V 的基，$\beta_1, \beta_2, …, \beta_n$ 是 V 中任意个向量，则存在唯一的线性变换 $\sigma : V \rightarrow V$，使 $\sigma(\alpha_1) = \beta_1, \sigma(\alpha_2) = \beta_2, …, \sigma(\alpha_n) = \beta_n$</p>
+</li>
+<li><p>定理：数域 K 上的n维线性空间 V 的线性变换 $\sigma$ 与 K 上n阶矩阵A之间可以建立一一对应关系，并且关系如下所示：</p>
+</li>
+<li><ul>
+<li>$\sigma(\alpha_1, \alpha_2, …, \alpha_n) = (\sigma(\alpha_1), \sigma(\alpha_2), …, \sigma(\alpha_n)) = (\alpha_1, \alpha_2, …, \alpha_n)A$</li>
+</ul>
+</li>
+<li><ul>
+<li>其中 <script type="math/tex; mode=display">A = 
+\left[ \begin{matrix} 
+a_{11} & a_{12} & ... & a_{1n} \\ 
+a_{21} & a_{22} & ... & a_{2n} \\
+.      & .      &     & .      \\
+.      & .      &     & .      \\
+.      & .      &     & .      \\
+a_{n1} & a_{n2} & ... & a_{nn}
+\end{matrix}
+\right]</script></li>
+</ul>
+</li>
+<li><p>定理：设 A(V) 和 $K^{n<em>n}$ 是数域 K 上的两个线性空间，则 $A(V) \cong K^{n</em>n}$</p>
+</li>
+<li><p>定理：设 A(V) 和 $K^{n<em>n}$ 是数域 K 上的两个结合代数，则 $A(V) \cong K^{n</em>n}$</p>
+</li>
+<li><p>推论：设数域 K 上n维线性空间 V 的一个线性变换 $\sigma$ 对于给定基的矩阵是A，那么 $\sigma$ 可逆的充要条件是A可逆，而且 $\sigma^{-1}$ 对于这个基的矩阵恰为 $A^{-1}$</p>
+</li>
+<li><p>推论：设 $\alpha_1, \alpha_2, …, \alpha_n; \beta_1, \beta_2, …, \beta_n$ 是线性空间 V 的任意两组基底，则存在唯一的可逆的线性变换 $\sigma$，使 $\sigma(\alpha_1, \alpha_2, …, \alpha_n) = (\beta_1, \beta_2, …, \beta_n)$</p>
+</li>
+<li><p>推论：线性空间 V 的一个线性变换 $\sigma$ 是可逆的充要条件是，$\sigma$ 把 V 的一组基变为另一组基</p>
+</li>
+<li><p>定义：设 A、B 是数域 K 上两个n阶矩阵，如果在 K 上存在一个可逆矩阵P，使 $B = P^{-1}AP$，则说 A 与 B相似，记作 $A \sim B$</p>
+</li>
+</ul>
+<p>相似关系的基本性质：</p>
+<ul>
+<li>(1)自反性：$A \sim A$；对任意的 A 显然有 $A = E^{-1}AE$</li>
+<li>(2)对称性：若 $A \sim B$，则 $B \sim A$; 由 $A \sim B$ 得 $B = P^{-1}AP$，由此有 $Q = P^{-1}$，使 $A = Q^{-1}BQ$</li>
+<li>(3)传递性：如果 $A \sim B, B \sim C$，则 $A \sim C$; 由 $A \sim B, B \sim C$，得 $B = P^{-1}AP, C = Q^{-1}BQ$，由此有 $R = PQ$，使 $C = R^{-1}AR$</li>
+<li><p>(4)若 $A \sim B$，$f(x) \in K[x]$，则 $f(A) \sim f(B)$ (K[x]表示数域K上的多项式空间)</p>
+</li>
+<li><p>定理：线性变换在不同基下的矩阵是相似的. 反之，如果两个矩阵相似，那么它们便可以看作同一个线性变换在不同基下的矩阵，即两个矩阵相似的充要条件是它们表示同一个线性变换</p>
+</li>
+</ul>
+<h3 id="特征向量与对角化"><a href="#特征向量与对角化" class="headerlink" title="特征向量与对角化"></a>特征向量与对角化</h3><ul>
+<li>定义：设 $\sigma$ 是数域 K 上线性空间 V 的线性变换，对于 $\lambda \in K$，若存在一非零向量 $\alpha$，使 $\sigma(\alpha) = \lambda \alpha$，则称 $\lambda$ 是 $\sigma$ 的一个<strong>特征根</strong>或<strong>特征值</strong>，$\alpha$ 称为 $\sigma$ 的属于特征根 $\lambda$ 的一个<strong>特征向量</strong></li>
+</ul>
+<blockquote>
+<p>特征向量不被特征根所唯一决定：$\sigma(k\alpha) = k\sigma(\alpha) = k(\lambda \alpha) = \lambda(k \alpha) (k \not= 0)$<br>特征根被特征向量唯一决定</p>
+<p><strong>特征子空间</strong>：$V_{\lambda} = \{ \alpha | \sigma(\alpha) = \lambda \alpha, \alpha \in V \}$</p>
+<p>线性变换 $\sigma$ 对数域 K 上线性空间 V 的一组基 $\alpha_1, \alpha_2, …, \alpha_n$ 的矩阵为 $A = (a_{ij})_{n*n}$.<br>$\lambda$ 是 $\sigma$ 的特征根，$\sigma$ 的属于 $\lambda$ 的特征向量 $\alpha$ 在这组基下的坐标是 $x_1, x_2, …, x_n$，即 $\alpha = x_1 \alpha_1 + x_2 \alpha_2 + … x_n \alpha_n$<br>$\sigma(\alpha)$ 在这组基下的坐标为 <script type="math/tex">A \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right]</script><br>$\lambda \alpha$ 在这组基下的坐标为 <script type="math/tex">\lambda \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right]</script><br>由 $\sigma(\alpha) = \lambda \alpha$，故有 <script type="math/tex">A \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right] = \lambda \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right]</script> 或 <script type="math/tex">(\lambda E - A)X = 0</script> 其中 <script type="math/tex">X = \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right]</script><br>由于 $\alpha \not= 0$，即 $x_1, x_2, …, x_n$ 不全为零，故齐次线性方程组有非零解，因而系数行列式 $$det(\lambda E - A) =<br>\left| \begin{matrix}<br>\lambda - \alpha_{11} &amp; -\alpha_{12} &amp; … &amp; -\alpha_{1n} \\<br>-\alpha_{21} &amp; \lambda - \alpha_{22} &amp; … &amp; -\alpha_{2n} \\<br>.            &amp; .                     &amp;     &amp; .            \\<br>.            &amp; .                     &amp;     &amp; .            \\<br>.            &amp; .                     &amp;     &amp; .            \\<br>-\alpha_{n1} &amp; \alpha_{n2} &amp; … &amp; \lambda - \alpha_{nn}<br>\end{matrix}<br>\right|</p>
+<p>$$</p>
+<p>矩阵A的<strong>特征多项式</strong>：$det(\lambda E - A)$，记作 $\Delta_A(\lambda)$</p>
+</blockquote>
+<ul>
+<li><p>定理：设 $A \sim B$，则 $\Delta_A(\lambda) = \Delta_B(\lambda)$，从而有相同的特征根</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，则 $\sigma$ 的特征根的几何重数(特征子空间 $V_{\lambda}$的维数)小于或者等于它的代数重数(特征根 $\lambda$ 的重数)</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，则 $\sigma$ 的分别属于不同特征根 $\lambda_1, \lambda_2, …, \lambda_m$ 的特征向量 $\alpha_1, \alpha_2, …, \alpha_m$ 线性无关</p>
+</li>
+<li><p>定理：设 $\lambda_1, \lambda_2, …, \lambda_k$ 是n维线性空间 V 的线性变换 $\sigma$ 的不同的特征根，$\alpha_{i1}, \alpha_{i2}, …, \alpha_{ir_i}(i = 1, 2, …, k)$ 是属于 $\lambda_i$ 的线性无关的特征向量，则 $\alpha_{11}, …, \alpha_{1r_1}, …, \alpha_{k1}, …, \alpha_{kr_k}$ 线性无关</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，则 $\sigma$ 的特征根的几何重数等于它的代数重数的充要条件是，$\sigma$ 有n个线性无关的特征向量</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，则存在一组基，使 $\sigma$ 对这基的矩阵为对角形的充分条件是，$\sigma$ 有n个线性无关的特征向量</p>
+</li>
+<li><p>推论：如果n维线性空间 V 的线性变换 $\sigma$ 在数域 K 中有n个不同的特征根，则必存在一组基，使 $\sigma$ 对这基的矩阵是对角形</p>
+</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/27/linear_algebra&analytic_geometry/向量空间/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/27/linear_algebra&analytic_geometry/向量空间/" itemprop="url">
+                  向量空间
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-27T11:00:00+08:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="n维向量空间-K-n"><a href="#n维向量空间-K-n" class="headerlink" title="n维向量空间 $K^n$"></a>n维向量空间 $K^n$</h3><ul>
+<li><p>$K^n$ 表示 K 上所有n维向量的集合：向量空间</p>
+</li>
+<li><p>定义：设 W 是 $K^n$ 的一个非空子集，如果对任何 $\alpha, \beta \in W, k \in K$，有 $\alpha + \beta \in W, k \alpha \in W$，则称 W 是 $K^n$ 的子空间</p>
+</li>
+</ul>
+<blockquote>
+<p>零向量形成 $K^n$ 的一个子空间，记作 {0}，和 $K^n$ 都称为 $K^n$ 的平凡子空间</p>
+</blockquote>
+<ul>
+<li><p>设 $\alpha_1, \alpha_2, …, \alpha_m \in K^n$，则 $\alpha = k_1 \alpha_1 + k_2 \alpha_2 + … + k_m \alpha_m$ 称为 $\alpha_1, \alpha_2, …, \alpha_m$ 的线性组合(线性表示)</p>
+</li>
+<li><p>定义：设 $\alpha_1, \alpha_2, …, \alpha_m \in K^n$，若存在一组不全为零的数 $k_1, k_2, …, k_m \in K$，使 $k_1 \alpha_1 + k_2 \alpha_2 + … + k_m \alpha_m = 0$，则称 $\alpha_1, \alpha_2, …, \alpha_m$ 线性相关. 若这样的数不存在，或者说只有当 $k_1 = k_2 = … = k_m = 0$ 时，上式才成立，则称 $\alpha_1, \alpha_2, …, \alpha_m$ 线性无关</p>
+</li>
+</ul>
+<p>向量的线性关系的基本性质：</p>
+<ul>
+<li><p>(1)在向量组 $\alpha_1, \alpha_2, …, \alpha_n$ 中，若 $\alpha_1, \alpha_2, …, \alpha_m(m &lt; n)$ 线性相关，则 $\alpha_1, \alpha_2, …, \alpha_m, …, \alpha_n$ 也线性相关</p>
+</li>
+<li><p>(2)若 $\alpha_1, \alpha_2, …, \alpha_m$ 线性无关，而 $\alpha_1, \alpha_2, …, \alpha_m, \alpha$ 线性相关，则 $\alpha$ 是 $\alpha_1, \alpha_2, …, \alpha_m$ 的线性组合</p>
+</li>
+<li><p>(3)若 $\alpha$ 是 $\alpha_1, \alpha_2, …, \alpha_n$ 的线性组合，则这种表示法唯一的充要条件是 $\alpha_1, \alpha_2, …, \alpha_n$ 线性无关</p>
+</li>
+<li><p>(4)m(m &gt; 1)个n维向量线性相关的充要条件是，其中某一向量是其余向量的线性组合</p>
+</li>
+<li><p>定义：若向量组 $\alpha_1, \alpha_2, …, \alpha_r$ 中每一向量都是 $\beta_1, \beta_2, …, \beta_s$ 的线性组合，则称 $\alpha_1, \alpha_2, …, \alpha_r$ 是 $\beta_1, \beta_2, …, \beta_s$ 的线性组合或线性表示. 若两个向量互为线性组合，则它们等价</p>
+</li>
+</ul>
+<blockquote>
+<p>矩阵的行初等变换把一个向量组变为与其等价的一个向量组<br>向量组间的等价关系满足自反性、对称性与传递性</p>
+</blockquote>
+<ul>
+<li><p>定义：设 $\alpha_1, \alpha_2, …, \alpha_r$ 与 $\beta_1, \beta_2, …, \beta_s$ 是两个向量组，若 (1)$\alpha_1, \alpha_2, …, \alpha_r$ 可用 $\beta_1, \beta_2, …, \beta_s$，且(2)r &gt; s，则 $\alpha_1, \alpha_2, …, \alpha_r$ 线性相关</p>
+</li>
+<li><p>推论：$K^n$ 中任意n+1个n维向量线性相关</p>
+</li>
+<li><p>推论：设 $\alpha_1, \alpha_2, …, \alpha_r$ 与 $\beta_1, \beta_2, …, \beta_s$ 线性无关且等价，则 r = s</p>
+</li>
+<li><p>定义：设 $\alpha_{i_1}, \alpha_{i_2}, …, \alpha_{i_r}$ 是 $\alpha_1, \alpha_2, …, \alpha_m$ 的一部分向量. 若</p>
+</li>
+<li><ul>
+<li>(1)$\alpha_{i_1}, \alpha_{i_2}, …, \alpha_{i_r}$ 线性无关；</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\alpha_1, \alpha_2, …, \alpha_m$ 中每一向量都是 $\alpha_{i_1}, \alpha_{i_2}, …, \alpha_{i_r}$ 的线性组合，则称 $\alpha_{i_1}, \alpha_{i_2}, …, \alpha_{i_r}$ 是 $\alpha_1, \alpha_2, …, \alpha_m$的一个极大无关组</li>
+</ul>
+</li>
+<li><p>定义：一个向量组的极大无关组所包含的向量的个数称为这向量组的秩</p>
+</li>
+<li><p>推论：设 $\alpha_1, \alpha_2, …, \alpha_m$ 与 $\beta_1, \beta_2, …, \beta_n$ 是两个向量组，若它们等价，则其秩相等</p>
+</li>
+</ul>
+<h3 id="基底、维数与坐标"><a href="#基底、维数与坐标" class="headerlink" title="基底、维数与坐标"></a>基底、维数与坐标</h3><ul>
+<li>定义：设 W 是 $K^n$ 的一个子空间，如果 $\alpha_1, \alpha_2, …, \alpha_m \in W$ 线性无关，且任意向量 $\alpha \in W$ 是 $\alpha_1, \alpha_2, …, \alpha_m$ 的线性组合，即 $\alpha = k_1 \alpha_1 + k_2 \alpha_2 + … + k_m \alpha_m$，则称 $\alpha_1, \alpha_2, …, \alpha_m$ 是 W 的一组基底. 基底所含向量的个数 m 称为 W 的维数，记作 dimW = m. $k_1, k_2, …, k_m$ 称为 $\alpha$ 在基 $\alpha_1, \alpha_2, …, \alpha_m$ 下的坐标，记作 $[\alpha]_{\alpha_i} = (k_1, k_2, …, k_m)$</li>
+</ul>
+<blockquote>
+<p>$e_1, e_2, …, e_n$ 是 $K^n$ 的一组基底，称为 $K^n$ 的自然基底，$K^n$ 的维数是n，且任意向量 $\alpha = (\alpha_1, \alpha_2, …, \alpha_n)$对于这组基的坐标是 $\alpha_1, \alpha_2, …, \alpha_n$</p>
+<p>$dim W \leq dim K^n$，规定零空间的维数是0</p>
+</blockquote>
+<ul>
+<li><p>定理：在向量空间 $K^n$ 中，任意n个线性无关的向量构成它的基底</p>
+</li>
+<li><p>定理：如果 $\alpha_1, \alpha_2, …, \alpha_r$ 线性无关，($r \leq n$)，那么在 $K^n$ 中可以选取 n-r 个向量，使 $\alpha_1, \alpha_2, …, \alpha_r, \alpha_{r+1}, …, \alpha_n$ 为 $K^n$ 的一组基底</p>
+</li>
+<li><p>定理：(1)两个向量组 $\alpha_1, \alpha_2, …, \alpha_r$ 与 $\beta_1, \beta_2, …, \beta_s$ 等价的充要条件是 $L(\alpha_1, \alpha_2, …, \alpha_r) = L(\beta_1, \beta_2, …, \beta_s)$</p>
+</li>
+<li><ul>
+<li>(2)$L(\alpha_1, \alpha_2, …, \alpha_r)$ 的维数等于 $\alpha_1, \alpha_2, …, \alpha_r$ 的秩</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>$L(\alpha_1, \alpha_2, …, \alpha_m) = \{ \sum_{i=1}^{m} k_i \alpha_i | k_i \in K \}$</p>
+</blockquote>
+<ul>
+<li>定理：设 $\alpha_1, \alpha_2, …, \alpha_n$ 与 $\beta_1, \beta_2, …, \beta_n$ 是向量空间 $K^n$ 的两组基，而且 <script type="math/tex; mode=display">
+\begin{matrix}
+\beta_1 = a_{11} \alpha_1 + a_{21} \alpha_2 + ... + a_{n1} \alpha_n \\
+\beta_2 = a_{12} \alpha_1 + a_{22} \alpha_2 + ... + a_{n2} \alpha_n \\
+......   \\
+\beta_1 = a_{1n} \alpha_1 + a_{2n} \alpha_2 + ... + a_{nn} \alpha_n
+\end{matrix}</script>即(基底的变换公式) <script type="math/tex">(\beta_1, \beta_2, ..., \beta_n) = (\alpha_1, \alpha_2, ..., \alpha_n)A</script><br>其中<script type="math/tex; mode=display">A (过渡矩阵) = \left[ \begin{matrix}
+a_{11} & a_{12} & ... & a_{1n} \\
+a_{21} & a_{22} & ... & a_{2n} \\
+.      & .      &     & .      \\
+.      & .      &     & .      \\
+.      & .      &     & .      \\
+a_{n1} & a_{n2} & ... & a_{nn}
+\end{matrix} \right]</script>如果 $[\alpha]_{\alpha_i} = (x_1, x_2, …, x_n), [\alpha]_{\beta_i} = (y_1, y_2, …, y_n)$，那么(向量的坐标变换公式) $[\alpha]_{\beta_i} = [\alpha]_{\alpha_i}(A^T)^{-1}$ </li>
+</ul>
+<h3 id="矩阵的秩"><a href="#矩阵的秩" class="headerlink" title="矩阵的秩"></a>矩阵的秩</h3><ul>
+<li><p>定义：设 $A \in K^{m*n}$，则A的行空间的维数和列空间的维数，分别称为A的行秩和列秩</p>
+</li>
+<li><p>定理：设 $A = (a_{ij})_{m*n}$，则A的行秩等于A的列秩</p>
+</li>
+<li><p>定理：矩阵A的行秩或列秩称为A的秩，记作 rank(A) 或 r(A)</p>
+</li>
+</ul>
+<blockquote>
+<p>$A \cong B$ 时，rank(A) = rank(B).<br>矩阵A的标准形是唯一的；任意矩阵A乘以可逆矩阵后其秩不变</p>
+</blockquote>
+<ul>
+<li>定理：设 $A = (a_{ij})_{m*n}$，则 rank(A) = r 的充要条件是A中有一个r阶子式不为零，而所有高于r阶的子式全为零</li>
+</ul>
+<blockquote>
+<p>rank(A) = rank($A^T$)</p>
+</blockquote>
+<ul>
+<li>定理：设 $A = (a_{ij})_{m<em>l}, B = (b_{ij})_{l</em>n}$，则 $rank(AB) \leq min\{ rank(A), rank(B) \}$</li>
+</ul>
+<h3 id="线性方程组"><a href="#线性方程组" class="headerlink" title="线性方程组"></a>线性方程组</h3><ul>
+<li><p>定理：设 $A \in K^{m*n}$，则 Ax = b 有解的充要条件是 $b \in R(A)$</p>
+</li>
+<li><p>定理：设 $A \in K^{m*n}$，则 Ax = b 有解的充要条件是 rank(A) = rank(A, b)</p>
+</li>
+<li><p>定理：设 $A \in K^{m*n}$，rank(A) = rank(A, b)，则 AX = b 有唯一解的充要条件是 rank(A) = n</p>
+</li>
+<li><p>定理：设 $A = (a_{ij})_{m*n}, rank(A) = r &lt; n$，则 dim N(A) = n-r</p>
+</li>
+<li><p>定理：AX = b 的一个已知解与其对应齐次线性方程组 AX = 0 的任意解之和，等于 AX = b 的全部解</p>
+</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/26/linear_algebra&analytic_geometry/向量的内积、外积与混合积/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/26/linear_algebra&analytic_geometry/向量的内积、外积与混合积/" itemprop="url">
+                  向量的内积、外积与混合积以及平面、直线
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-26T17:00:00+08:00">
+                2017-07-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h3><ul>
+<li><p>定义：平行于同一直线的一组向量称为共线向量，平行于同一平面的一组向量称为共面向量</p>
+</li>
+<li><p>引理：设向量 $\alpha$ 不为零向量，则 $\alpha$ 与 $\beta$ 共线的充要条件是存在唯一实数 k 使 $\beta = k \alpha$</p>
+</li>
+<li><p>定理：向量 $\alpha$ 与 $\beta$ 共线的充要条件是存在不全为零的实数 $k_1, k_2$ 使 $k_1 \alpha + k_2 \beta = 0$</p>
+</li>
+<li><p>引理：设 $\gamma = k_1 \alpha + k_2 \beta$，则向量 $\alpha, \beta, \gamma$ 共面</p>
+</li>
+<li><p>引理：设向量 $\alpha, \beta, \gamma$ 共面，且 $\alpha, \beta$ 不共线，则存在唯一的实数 $k_1, k_2$ 使 $\gamma = k_1 \alpha + k_2 \beta$</p>
+</li>
+<li><p>定理：向量 $\alpha, \beta, \gamma$ 共面的充要条件是存在不全为零的实数 $k_1, k_2, k_3$ 使得 $k_1 \alpha + k_2 \beta + k_3 \gamma = 0$</p>
+</li>
+</ul>
+<h3 id="坐标系"><a href="#坐标系" class="headerlink" title="坐标系"></a>坐标系</h3><ul>
+<li><p>定理：向量 $\alpha_1 = (x_1, x_2, x_3)$ 和 $\alpha_2 = (y_1, y_2, y_3)$ 共线的充要条件是对应坐标成比例</p>
+</li>
+<li><p>定理：向量 $\alpha_1 = (x_1, x_2, x_3), \alpha_2 = (y_1, y_2, y_3), \alpha_3 = (z_1, z_2, z_3)$ 共面的充要条件是</p>
+<script type="math/tex; mode=display">\left|
+\begin{matrix}
+x_1 & x_2 & x_3 \\ y_1 & y_2 & y_3 \\ z_1 & z_2 & z_3
+\end{matrix}
+\right| = 0</script></li>
+<li><p>定理：设 A 与 B 的坐标分别为 $(x_1, x_2, x_3), (y_1, y_2, y_3)$，则使有向线段 $\overrightarrow{AB}$ 成定比 $\lambda(\lambda \not= -1)$ 的分点 C 的坐标为 $z_1 = \frac{x_1 + \lambda y_1}{1 + \lambda}, z_2 = \frac{x_2 + \lambda y_2}{1 + \lambda}, z_3 = \frac{x_3 + \lambda y_3}{1 + \lambda}$</p>
+</li>
+</ul>
+<blockquote>
+<p>对于有向线段 $\overrightarrow{AB}$，若点C满足 $\overrightarrow{AC} = \lambda \overrightarrow{CB}$，则称C是使用 $\overrightarrow{AB}$分成定比 $\lambda$</p>
+</blockquote>
+<h3 id="向量的内积、外积与混合积"><a href="#向量的内积、外积与混合积" class="headerlink" title="向量的内积、外积与混合积"></a>向量的内积、外积与混合积</h3><h4 id="内积"><a href="#内积" class="headerlink" title="内积"></a><strong>内积</strong></h4><ul>
+<li>定义：设 $\alpha, \beta$ 为任意两个向量，则称 $|\alpha||\beta|\cos&lt;\alpha, \beta&gt;$ 为 $\alpha$ 与 $\beta$ 的内积，记作 $(\alpha, \beta)$</li>
+</ul>
+<blockquote>
+<p>若 $\alpha, \beta$ 中有一个是零向量，则 $(\alpha, \beta) = 0$<br>$|\alpha| = \sqrt{(\alpha, \alpha)}$<br>若 $\alpha \not= 0, \beta \not= 0$，则 $\cos&lt;\alpha, \beta&gt; = \frac{(\alpha, \beta)}{|\alpha||\beta|}$<br>$\alpha \perp \beta$ 的充要条件是 $(\alpha, \beta) = 0$</p>
+</blockquote>
+<ul>
+<li>定理：对任意向量 $\alpha, \beta, \gamma$ 及任意实数k，有</li>
+<li><ul>
+<li>(1)$(\alpha, \beta) = (\beta, \alpha)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$(\alpha + \beta, \gamma) = (\alpha, \gamma) + (\beta, \gamma)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$(k \alpha, \beta) = k(\alpha, \beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)$(\alpha, \alpha) \geq 0$; $(\alpha, \alpha) = 0$ 当且仅当 $\alpha = 0$</li>
+</ul>
+</li>
+</ul>
+<h4 id="外积"><a href="#外积" class="headerlink" title="外积"></a><strong>外积</strong></h4><ul>
+<li>定义：$\alpha$ 与 $\beta$ 的外积是一个向量，记作 $\alpha \times \beta$，其长度 <script type="math/tex">|\alpha \times \beta| = |\alpha||\beta|\sin<\alpha, \beta></script> 其方向与 $\alpha, \beta$ 垂直，并按 $\alpha, \beta, \alpha \times \beta$ 构成右手系 $[O; \alpha, \beta, \alpha \times \beta]$</li>
+</ul>
+<blockquote>
+<p>若 $\alpha \not= 0, \beta \not= 0$，$\alpha$ 与 $\beta$ 不共线，则 $|\alpha \times \beta|$ 是以 $\alpha, \beta$ 为邻边的平行四边形的面积<br>$\alpha | \beta$ 的充要条件是 $\alpha \times \beta = 0$<br>对任意向量 $\alpha$，有 $\alpha \times \alpha = 0$</p>
+</blockquote>
+<ul>
+<li>定理：对任意向量 $\alpha, \beta, \gamma$ 及任意实数k，有</li>
+<li><ul>
+<li>(1)$\alpha \times \beta = - \beta \times \alpha$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$(k \alpha) \times \beta = k(\alpha \times \beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$\alpha \times (\beta + \gamma) = \alpha \times \beta + \alpha \times \gamma$, $(\beta + \gamma) \times \alpha = \beta \times \alpha + \gamma \times \alpha$</li>
+</ul>
+</li>
+<li><p>定义：$\alpha, \beta, \gamma$ 的二重外积是一个向量，记作 $(\alpha \times \beta) \times \gamma$ 或 $\alpha \times (\beta \times \gamma)$，是先将其中两个向量作外积，再将其结果与另一向量作外积</p>
+</li>
+<li><p>定理(外积公式)：对任意向量 $\alpha, \beta, \gamma$，有 <script type="math/tex">\alpha \times (\beta \times \gamma) = (\alpha, \gamma)\beta - (\alpha, \beta)\gamma</script></p>
+</li>
+</ul>
+<h4 id="混合积"><a href="#混合积" class="headerlink" title="混合积"></a><strong>混合积</strong></h4><ul>
+<li><p>定义：$\alpha, \beta, \gamma$ 的混合积是一个实数，记作 $(\alpha \times \beta, \gamma)$ 或 $(\alpha, \beta, \gamma)$，是先将 $\alpha$ 与 $\beta$ 作外积，在将其结果与 $\gamma$ 作内积</p>
+</li>
+<li><p>定理：$\alpha, \beta, \gamma$ 的混合积的绝对值是表示以 $\alpha, \beta, \gamma$ 为棱的平行六面体的体积，当 $\alpha, \beta, \gamma$ 为右手系是，混合积为正数. 当 $\alpha, \beta, \gamma$ 为左手系时，混合积为负数</p>
+</li>
+</ul>
+<blockquote>
+<p>$\alpha, \beta, \gamma$ 共面的充要条件是 $(\alpha, \beta, \gamma)=0$<br>$(\alpha, \beta, \gamma) = (\beta, \gamma, \alpha) = (\gamma, \alpha, \beta), (\alpha \times \beta, \gamma) = (\alpha, \beta \times \gamma)$</p>
+</blockquote>
+<ul>
+<li>定理(Lagrange公式)：对任意向量 $\alpha, \beta, \gamma$，有 <script type="math/tex">(\alpha \times \beta, \gamma \times \delta) = 
+\left|
+\begin{matrix} (\alpha, \gamma) & (\alpha, \delta) \\ (\beta, \gamma) & (\beta, \delta)
+\end{matrix}
+\right|</script></li>
+</ul>
+<h3 id="平面及其方程"><a href="#平面及其方程" class="headerlink" title="平面及其方程"></a>平面及其方程</h3><p>空间一点 $M_0(x_0, y_0, z_0)$，不共线的向量 $\alpha_1 = (x_1, y_1, z_1), \alpha_2 = (x_2, y_2, z_2)$ 确定平面 $\pi$</p>
+<ul>
+<li>点 $M(x, y, z) \in \pi$ 的充要条件是 $ \overrightarrow{M_0M}$ 与 $\alpha_1, \alpha_2$ 共面，即 $\overrightarrow{M_0M} = k_1 \alpha_1 + k_2 \alpha_2$</li>
+<li><ul>
+<li>平面 $\pi$ 的参数方程 <script type="math/tex; mode=display">
+\begin{cases}
+x = x_0 + k_1 x_1 + k_2 x_2 \\
+y = y_0 + k_1 y_1 + k_2 y_2 \\
+z = z_0 + k_1 z_1 + k_2 z_2
+\end{cases}</script></li>
+</ul>
+</li>
+<li><p>由 $\overrightarrow{M_0M}, \alpha_1, \alpha_2$ 共线，</p>
+<script type="math/tex; mode=display">
+\left|
+\begin{matrix} x - x_0 & y - y_0 & z - z_0 \\ x_1 & y_1 & z_1 \\ x_2 & y_2 & z_2
+\end{matrix}
+\right| = 0</script></li>
+<li><ul>
+<li>平面 $\pi$ 的一般方程 <script type="math/tex">Ax + By + Cz + D = 0</script> 其中 <script type="math/tex; mode=display">
+A = \left| \begin{matrix} y_1 & z_1 \\ y_2 & z_2 \end{matrix} \right|, 
+B = - \left| \begin{matrix} x_1 & z_1 \\ x_2 & z_2 \end{matrix} \right|</script><script type="math/tex; mode=display">
+C = \left| \begin{matrix} x_1 & y_1 \\ x_2 & y_2 \end{matrix} \right|, 
+D = - (A x_0 + B y_0 + C z_0)</script></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>A, B, C 不全为零</p>
+</blockquote>
+<ul>
+<li><p>定理：在仿射坐标系 $[O;e_1, e_2, e_3]$ 中，平面可用三元一次方程表示；反之，任意一个三元一次方程表示一个平面</p>
+</li>
+<li><p>定理：在仿射坐标系 $[O;e_1, e_2, e_3]$ 中，设平面 $\pi_1$ 与 $\pi_2$ 的方程分别为 $\pi_1 : A_1 x + B_1 y + C_1 z + D_1 = 0$ 和 $A_2 x + B_2 y + C_2 z + D_2 = 0$，则</p>
+</li>
+<li><ul>
+<li>(1)$\pi_1$ 与 $\pi_2$ 相交的充要条件是 $A_1 : B_1 : C_1 \not= A_2 : B_2 : C_2$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\pi_1$ 与 $\pi_2$ 平行的充要条件是 $\frac{A_1}{A_2} = \frac{B_1}{B_2} = \frac{C_1}{C_2} \not= \frac{D_1}{D_2}$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$\pi_1$ 与 $\pi_2$ 重合的充要条件是 $\frac{A_1}{A_2} = \frac{B_1}{B_2} = \frac{C_1}{C_2} = \frac{D_1}{D_2}$</li>
+</ul>
+</li>
+</ul>
+<p>空间一点 $M_0(x_0, y_0, z_0)$，平面 $\pi$ 的法向量 $\overrightarrow{n} = (A, B, C)$</p>
+<ul>
+<li>$M(x, y, z) \in \pi$ 的充要条件是 $\overrightarrow{M_0M} \perp \overrightarrow{n}$，即 $(\overrightarrow{M_0M}, \overrightarrow{n}) = 0$</li>
+<li><ul>
+<li>过点 $M_0$ 且法向量为 $\overrightarrow{n}$ 的平面 $\pi$ 的方程 $A(x - x_0) + B(y - y_0) + C(z - z_0) = 0$</li>
+</ul>
+</li>
+<li><ul>
+<li>$Ax + By + Cz + D = 0$，其中 $D = -(Ax_0 + By_0 + Cz_0)$</li>
+</ul>
+</li>
+</ul>
+<h3 id="空间直线及其方程"><a href="#空间直线及其方程" class="headerlink" title="空间直线及其方程"></a>空间直线及其方程</h3><ul>
+<li><p>点 $M_0(x_0, y_0, z_0)$ 和 非零向量 $\overrightarrow{v} = (X, Y, Z)$ 确定的直线 $l$ 的参数方程：</p>
+<script type="math/tex; mode=display">\begin{cases} x = x_0 + kX \\ y = y_0 + kY \\ z = z_0 + kZ \end{cases}</script></li>
+<li><p>直线 $l$ 的标准方程：<script type="math/tex">\frac{x - x_0}{X} = \frac{y - y_0}{Y} = \frac{z - z_0}{Z}</script></p>
+</li>
+<li><p>直线可看作两平面的交线，平面 $\pi_1 : A_1 x + B_1 y + C_1 z + D_1 = 0$ 与 $\pi_2 : A_2 x + B_2 y + C_2 + D_2 = 0$ 的交线为 $l$，故直线 $l$ 的一般方程 </p>
+<script type="math/tex; mode=display">\begin{cases} A_1 x + B_1 y + C_1 z + D_1 = 0 \\ A_2 x + B_2 y + C_2 + D_2 = 0 \end{cases}</script></li>
+</ul>
+<blockquote>
+<p>直线的方向向量 <script type="math/tex">\big( \left| \begin{matrix} B_1 & C_1 \\ B_2 & C_2 \end{matrix} \right|, \left| \begin{matrix} C_1 & A_1 \\ C_2 & A_2 \end{matrix} \right|, \left| \begin{matrix} A_1 & B_1 \\ A_2 & B_2 \end{matrix} \right| \big)</script></p>
+</blockquote>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/26/linear_algebra&analytic_geometry/矩阵的初等变换/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/26/linear_algebra&analytic_geometry/矩阵的初等变换/" itemprop="url">
+                  矩阵的初等变换
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-26T10:22:00+08:00">
+                2017-07-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="矩阵运算"><a href="#矩阵运算" class="headerlink" title="矩阵运算"></a>矩阵运算</h3><ul>
+<li><p>定义：若 $A = (a_{ij}) \in C^{m<em>n}$，则矩阵 $\overline A = ( \overline a_{ij})_{m</em>n}$，其中 $\overline a_{ij}$ 是 a 的共轭复数，称为 A 的<strong>共轭矩阵</strong>；若 $A^{<em>} = (a_{ji}^{</em>}) = \overline A^{T}$，即 $a_{ji}^{<em>} = \overline a_{ij}(i = 1, 2, …, m; j = 1, 2, …, n)$，则矩阵 $A^{</em>}$ 称为 A 的<strong>共轭转置矩阵</strong>，有时记作 $A^{H}$</p>
+</li>
+<li><p>定义：设 $A = R^{n<em>n}$，如果 $A = A^{T}$，则 A 叫<strong>实对称矩阵</strong>，设 $B \in C^{n</em>n}$，如果 $B = B^{H}$，则 B 称为<strong>埃尔米特(Hermite)矩阵</strong></p>
+</li>
+<li><ul>
+<li>例如：<br>实对称矩阵<script type="math/tex; mode=display">
+\left[ \begin{matrix} 3 & 0 & 5 \\ 0 & 1 & -1 \\ 5 & -1 & 0 \end{matrix} \right]</script>埃米尔特矩阵<script type="math/tex; mode=display">
+\left[ \begin{matrix} a & a + di \\ a - di & b \end{matrix}
+\right]</script></li>
+</ul>
+</li>
+<li><p>定义：设 $A = R^{n<em>n}$，如果 $A^{T} = -A$，则 A 称<strong>实反对称矩阵</strong>；设 $B \in C^{n</em>n}$，如果 $B^{H} = -B$，则 B 称为<strong>反埃米尔特矩阵</strong></p>
+</li>
+<li><ul>
+<li>例如：<br>实反对称矩阵<script type="math/tex; mode=display">
+\left[ \begin{matrix} 0 & 3 & 2 \\ -3 & 0 & 1 \\ -2 & -1 & 0 \end{matrix} \right]</script>反埃米尔特矩阵<script type="math/tex; mode=display">
+\left[ \begin{matrix} 3i & 5 + 4i \\ -5 + 4i & -7i \end{matrix}
+\right]</script></li>
+</ul>
+</li>
+</ul>
+<h3 id="矩阵的逆"><a href="#矩阵的逆" class="headerlink" title="矩阵的逆"></a>矩阵的逆</h3><ul>
+<li>定义：设 $A$ 为 n<em>n 矩阵，如果存在 n</em>n 矩阵 B ，使 $AB = BA = E$，则称 A 为<strong>可逆矩阵</strong>或<strong>非奇异矩阵</strong>，称 B 是 A 的逆矩阵</li>
+</ul>
+<blockquote>
+<p>A、B互为逆矩阵</p>
+</blockquote>
+<ul>
+<li><p>定义：设 $A_{ij}$ 是 $A = (a_{ij})_{n<em>n}$ 中元素 $a_{ij}$ 的代数余子式，则 <script type="math/tex">adjA = 
+\left[ \begin{matrix} A_{11} & A_{21} & ... & A_{n1} \\ A_{12} & A_{22} & ... & A_{n2} \\ . & . & . \\ . & . & . \\ . & . & . \\ A_{1n} & A_{2n} & ... & A_{nn}
+\end{matrix}
+\right]</script><br>称 A 的<em>*伴随矩阵</em></em></p>
+</li>
+<li><ul>
+<li>$A(adjA) = (adjA)A = |A|E$</li>
+</ul>
+</li>
+<li><p>定理：矩阵A可逆的充要条件是 $|A| \not= 0$，而当 $|A| \not= 0$ 时，其逆为$A^{-1} = \frac{1}{|A|}adjA$</p>
+</li>
+</ul>
+<p>矩阵的逆的基本性质：</p>
+<ul>
+<li><p>(1)可逆矩阵A的逆是唯一的</p>
+</li>
+<li><p>(2)设A为可逆矩阵，则 $A^{T}$ 可逆，且 $(A^{T})^{-1} = (A^{-1})^{T}$</p>
+</li>
+<li><p>(3)设A和B都是同阶可逆矩阵，则AB可逆，且 $(AB)^{-1} = B^{-1}A^{-1}$</p>
+</li>
+<li><p>定义矩阵的方幂：设 $A = A_{n*n}$，记 $A^{0} = E, \ \ \ A^{k} = \overbrace{AA…A}^{k个A}$，称 $A^{k}$ 是A的k次幂</p>
+</li>
+<li><ul>
+<li>若A可逆，记 $A^{-k} = \overbrace{A^{-1}A^{-1}…A^{-1}}^{k个A^{-1}}$</li>
+</ul>
+</li>
+<li><ul>
+<li>$A^k · A^l = A^{k+l}, (A^k)^l = A^{kl}$</li>
+</ul>
+</li>
+</ul>
+<h3 id="矩阵的初等变换与初等矩阵"><a href="#矩阵的初等变换与初等矩阵" class="headerlink" title="矩阵的初等变换与初等矩阵"></a>矩阵的初等变换与初等矩阵</h3><ul>
+<li>定义：矩阵A的行初等变换系指以下三种变换</li>
+<li><ul>
+<li>(1)互换矩阵的第i行与第j行，记作 $R_i \leftrightarrow R_j$;</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)用K中一个非零的数k乘矩阵的第i行，记作 $R_i \leftrightarrow k R_i$;</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)用K中一个数k乘矩阵的第j行加到第i行上，记作 $R_i \leftrightarrow k R_j + R_i$</li>
+</ul>
+</li>
+<li><p>定义：若A经过有限次行初等变换变到B，则称A与B行等价</p>
+</li>
+</ul>
+<blockquote>
+<p>行等价具有性质：<br>自反性：A和自身行等价<br>对称性：若A和B等价，则B与A行等价<br>传递性：若A与B行等价，B与C行等价，则A与C行等价</p>
+</blockquote>
+<ul>
+<li><p>定义：对于矩阵 $A = (a_{ij})$，如果它的每一行的第一个非零元前面的零的个数逐行增加，直到剩下全部都是零的行(如果有零的话)，即 $a_{1j_1} \not= 0, a_{2j_2} \not= 0, …, a_{rj_r} \not= 0, i_1 &lt; j_2 &lt; … &lt; j_r, a_{ij} = 0, i \geq r, j &lt; j_i与i &gt; r$，则称A是<strong>梯形阵</strong>(阶梯型矩阵)</p>
+</li>
+<li><p>定理：任意矩阵A行等价与一个梯形阵</p>
+</li>
+<li><p>定义：如果矩阵A经过有限次初等变换到B，则称A与B等价，记作 $A \cong B$. </p>
+</li>
+<li><ul>
+<li>矩阵间的等价关系具有自反性、对称性和传递性</li>
+</ul>
+</li>
+<li><p>定理：任意矩阵A等价于以下对角形矩阵</p>
+<script type="math/tex; mode=display">
+\left[ \begin{matrix} 
+1 & & & & & & & & & & & \\
+& 1 & & & & & & & & & & \\
+& & . & & & & & & & & & \\
+& & & . & & & & & & & & \\
+& & & & . & & & & & & & \\
+& & & & & 1 & & & & & & \\
+& & & & & & 0 & & & & & \\
+& & & & & & & 0 & & & & \\
+& & & & & & & & . & & & \\
+& & & & & & & & & . & & \\
+& & & & & & & & & & . & \\
+& & & & & & & & & & & . 
+\end{matrix}
+\right]</script><p>此矩阵称为A的标准形</p>
+</li>
+<li><p>定义：对单位矩阵E进行一次初等变换得到的矩阵，称初等矩阵</p>
+</li>
+<li><ul>
+<li>$E_{ij}$ 称为<strong>对换阵</strong>：互换E的第i行与第j行</li>
+</ul>
+</li>
+<li><ul>
+<li>$E_i(k)$ 称为<strong>倍乘阵</strong>：用K中一个非零的数k乘E的第i行</li>
+</ul>
+</li>
+<li><ul>
+<li>$E_{ij}(k)$ 称为<strong>倍加阵</strong>：用K中一个数k乘E的第j行加到第i(&lt;j)行上去</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>列初等变换得到的初等矩阵与行初等变换是相同的</p>
+</blockquote>
+<ul>
+<li>定理：设 $A \in K^{m*n}$，对A施行一次行初等变换的结果，恰等于用相应的初等矩阵左乘A；对A施行一次列初等变换的结果，恰等于用相应的初等矩阵右乘A</li>
+</ul>
+<p>初等矩阵的性质：</p>
+<ul>
+<li>$E_{ij}^{-1} = E_{ij}$</li>
+<li>$E_i^{-1}(k) = E_i(\frac{1}{k})$</li>
+<li>$E_{ij}^{-1}(k) = E_{ij}(-k)$</li>
+<li>$E_{ij}^{T} = E_{ij}$</li>
+<li>$E_i^{T}(k) = E_i(k)$</li>
+<li><p>$E_{ij}^{T}(k) = E_{ji}(k)$</p>
+</li>
+<li><p>定理：设 $A \cong B$，则存在可逆矩阵P、Q使 $PAQ = B$</p>
+</li>
+<li><p>定理：设 $A \in K^{n*n}$，且可逆，则A一定是若干个初等矩阵的乘积</p>
+</li>
+</ul>
+<p>求可逆矩阵A的逆$A^{-1}$：</p>
+<ul>
+<li>$R_1 R_2 … R_m A = E$</li>
+<li>$R_1 R_2 … R_m E = A^{-1}$</li>
+<li>对A作m次行初初等变换化A为E的同时也把E化为 $A^{-1}$</li>
+<li>若用列初等变换求逆，E须放在A的下面</li>
+</ul>
+<blockquote>
+<p><img src="\img\matrix_inverse.jpg" alt="matrix_inverse.jpg"></p>
+</blockquote>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/25/linear_algebra&analytic_geometry/克拉默(Cramer)规则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/25/linear_algebra&analytic_geometry/克拉默(Cramer)规则/" itemprop="url">
+                  行列式与克拉默(Cramer)规则
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-25T14:48:00+08:00">
+                2017-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h3><ul>
+<li>定义：数域K中mn个数 $a_{ij}, (i = 1, 2, …, m; j = 1, 2, …, n)$排成的数表</li>
+</ul>
+<script type="math/tex; mode=display">A = 
+\left[
+  \begin{matrix}
+    a_{11} & a_{12} & ... & a_{1n} \\
+    a_{21} & a_{22} & ... & a_{2n} \\
+    .      & .      &     & .      \\
+    .      & .      &     & .      \\
+    .      & .      &     & .      \\
+    a_{m1} & a_{m2} & ... & a_{mn}
+  \end{matrix}
+\right]</script><p>称为K上的 m<em>n 矩阵；也为 $A = (a_{ij})_{m </em> n}$ 或 $A = A_{m <em> n}$. $a_{ij}$ 称为A的第i行第j列元素；一般用大写字母表示矩阵，小写字母表示矩阵中的元素，横的有序数组 $(a_{i1}, a_{i2}, …, a_{in})$ 称为A的第i行，纵的有序数组 $\left[ \begin{matrix}<br>a_{1j} \\<br>. \\<br>. \\<br>. \\<br>a_{mj}<br>\end{matrix}<br>\right]$ 称为A的第j列. K上所有 m</em>n矩阵的全体记为 $K^{m*n}$ 或 $M_{m, n}(K)$</p>
+<h3 id="行列式的性质"><a href="#行列式的性质" class="headerlink" title="行列式的性质"></a>行列式的性质</h3><ul>
+<li>(1)行列式对行有多重线性性，即<br>$$ det<br>\left( \begin{matrix} a_1 \\ . \\ . \\ . \\<br>a_{i - 1} \\ k a_i + t a_i^{*} \\<br>a_{i+1} \\ . \\ . \\ . \\ a_n<br>\end{matrix} \right)<br>= k\ det \left( \begin{matrix} a_1 \\ . \\ . \\ . \\<br>a_{i - 1} \\ a_i \\<br>a_{i+1} \\ . \\ . \\ . \\ a_n<br>\end{matrix} \right)</li>
+</ul>
+<ul>
+<li>t\ det \left( \begin{matrix} a_1 \\ . \\ . \\ . \\<br>a_{i - 1} \\ a_i^{<em>} \\<br>a_{i+1} \\ . \\ . \\ . \\ a_n<br>\end{matrix} \right)<br>$$<br>这里 $k, t \in K, a_i, a_i^{</em>} \in K^n, i = 1, 2, …, n$</li>
+</ul>
+<ul>
+<li><p>(2)行列式对行有交错性，即行列式中若有两行相同，则行列式为零</p>
+</li>
+<li><p>(3)互换行列式的两行，则行列式变号</p>
+</li>
+<li><p>(4)将行列式某一行的k倍加到另一行上去，行列式不变</p>
+</li>
+<li><p>(5)行列式中某一行的公因子k可以提到行列式外面，即</p>
+<script type="math/tex; mode=display">det \left( \begin{matrix} . \\ . \\ . \\ k a_i \\ . \\ . \\ . \end{matrix} \right) = k\ det \left( \begin{matrix} . \\ . \\ .\\ a_i \\ . \\ . \\ . \end{matrix} \right)</script></li>
+<li><p>(6)行列式中若有两行成比例，则行列式为0</p>
+</li>
+<li><p>(7)设 $A = (a_{ij})_{n*n}$，则 $det(A) = det(A^{T})$</p>
+</li>
+</ul>
+<h3 id="行列式的展开"><a href="#行列式的展开" class="headerlink" title="行列式的展开"></a>行列式的展开</h3><ul>
+<li><p>定义：设 $A = (a_{ij})_{n*n}$，划去 $det(A)$ 中元素 $a_{ij}$ 所在的行及列后所得到的 (n-1) 阶子式 $M_{ij}$ 称为 $a_{ij}$ 的余子式，而 $A_{ij} = (-1)^{i + j}M_{ij}$ 称为 $a_{ij}$ 的代数余子式</p>
+</li>
+<li><p>定理：设 $A = (a_{ij})_{n*n}$，则 <script type="math/tex">det(A) = a_{i1}A_{i1} + a_{i2}A_{i2} + ... + a_{in}A_{in}</script> 及 <script type="math/tex">det(A) = a_{1j}A_{1j} + a_{2j}A_{2j} + ... + a_{nj}A_{nj}</script>  以上两式分别称为 $det(A)$ 按第i行展开及按第j列展开.</p>
+</li>
+<li><p>定理：设 $A = (a_{ij})_{n*n}$，则 <script type="math/tex">a_{j1}A_{i1} + a_{j2}A_{i2} + ... + a_{jn}A_{in} = 0, i \not= j</script> 及 <script type="math/tex">a_{1j}A_{1i} + a_{2j}A_{2i} + ... + a_{nj}A_{ni}, i \not= j</script></p>
+</li>
+<li><p>定理(Laplace定理)：若在n阶方阵A中任意取定某k行 $1 \leq i_1 &lt; i_2 &lt; … &lt; i_k \leq n$，则由这k个行中所有k阶子式及其代数余子式的乘积之和为 $det(A)$，即 <script type="math/tex">det(A) = \sum_{j_1 j_2 ... j_k}(-1)^{\sum_{t=1}^{k}(i_t + j_t)} detA[i_1i_2...i_k | j_1j_2...j_k]detA(i_1i_2...i_k | j_1j_2...j_k)</script>  其中求和遍及所有 $1 \leq j_1 &lt; j_2 &lt; … &lt; j_k \leq n$. </p>
+</li>
+</ul>
+<h3 id="克拉默-Cramer-规则"><a href="#克拉默-Cramer-规则" class="headerlink" title="克拉默(Cramer)规则"></a>克拉默(Cramer)规则</h3><ul>
+<li>n个未知数的线性方程组①<script type="math/tex; mode=display">
+\begin{cases} 
+a_{11}x_1 + a_{12}x_2 + ... + a_{1n}x_n = b_1 \\ 
+a_{21}x_1 + a_{22}x_2 + ... + a_{2n}x_n = b_2 \\
+...... \\
+a_{n1}x_1 + a_{n2}x_2 + ... + a_{nn}x_n = b_n
+\end{cases}</script></li>
+</ul>
+<ul>
+<li><p>定理：设线性方程组①的系数矩阵 $A = (a_{ij})$ 的行列式 $det(A) = D \not= 0$，则①存在唯一解 <script type="math/tex">x_j = \frac{D_j}{D}, \ \ \ j = 1, 2, ..., n</script> 这里 $D_j$ 是把A的第j列换成①的常数项后所得的矩阵的行列式，且<script type="math/tex">D_j = \sum_{k=1}^{n}b_kA_{kj}, \ \ \ j = 1, 2, ..., n</script></p>
+</li>
+<li><p>推论：设①为齐次线性方程组，若 $det(A) \not= 0$，则①只有零解</p>
+</li>
+<li><ul>
+<li>因 $D_1 = D_2 = … = D_n = 0$</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/25/linear_algebra&analytic_geometry/复系数和实系数多项式的因式分解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/25/linear_algebra&analytic_geometry/复系数和实系数多项式的因式分解/" itemprop="url">
+                  多项式与复系数和实系数多项式的因式分解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-25T11:00:00+08:00">
+                2017-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="数域"><a href="#数域" class="headerlink" title="数域"></a>数域</h3><ul>
+<li>定义：设K是一些数组成的集合，若</li>
+<li><ul>
+<li><ol>
+<li>K中至少含有一个非零的数</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>对K中任意两数a, b, 恒有 $a+b, a-b, ab \in K$, 而且当 $b \not= 0$ 时，还有 $\frac{a}{b} \in K$，则K称为一个数域</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>数域对加，减，乘，除(除数非零)四种运算封闭</p>
+</blockquote>
+<h3 id="一元多项式"><a href="#一元多项式" class="headerlink" title="一元多项式"></a>一元多项式</h3><ul>
+<li>设K是数域，x是一个符号(文字)</li>
+<li>定义：形式表达式 $f(x) = a_n x^n + a_{n-1} x^{n-1} + … + a_1 x + a_0$ 其中n是非负整数，$a_i \in K$，称为数域K上的一元多项式，$a_i$ 称为它的第i个系数</li>
+<li><ul>
+<li>若 $a_i = 0(i = 0, 1, 2, …, n)$，则称f(x)是零多项式，记作f(x)=0，其次数不予定义</li>
+</ul>
+</li>
+<li><ul>
+<li>若n是使 $a_n \not= 0$ 的最大整数，则称非f(x)是n次的，记作 deg$f(x)$=n</li>
+</ul>
+</li>
+<li>数域K上所有一元多项式的集合用 $K[x]$ 表示</li>
+</ul>
+<blockquote>
+<p>符号 $x \not \in K$，不受任何限定，常称未定元</p>
+</blockquote>
+<h3 id="因式分解"><a href="#因式分解" class="headerlink" title="因式分解"></a>因式分解</h3><ul>
+<li><p>定义：设 $p(x) \in K[x]$，deg$p(x) \geq 1$，若 $p(x)$ 不能表示为 $K[x]$ 中两个次数小于 deg$p(x)$ 的多项式的乘积，则称 $p(x)$ 在 $K[x]$ 中是不可约多项式. 否则称 $p(x)$ 在 $K[x]$ 中是可约多项式. </p>
+</li>
+<li><p>定理(因式分解唯一性定理)：设 $f(x)$ 是 $K[x]$ 中正次数的多项式，则 $f(x)$ 可唯一(除次序外)分解成乘积 $f(x) = p_1(x) p_2(x)…p_n(x)$，其中 $p_i(x) \in K[x]$ 是不可约多项式</p>
+</li>
+</ul>
+<h3 id="复系数与实系数多项式的因式分解"><a href="#复系数与实系数多项式的因式分解" class="headerlink" title="复系数与实系数多项式的因式分解"></a>复系数与实系数多项式的因式分解</h3><ul>
+<li>定理(代数基本定理)：设 $f(x) \in C[x]$，且 deg$f(x) \geq 1$，则 $f(x)$ 在C(复数域)中有根</li>
+<li><ul>
+<li>等价说法：</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>若 $f(x) \in C[x]$，则 $f(x)$ 有一次因式</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>若 $f(x) \in C[x]$，则 $f(x)$ 不可约的充要条件是 deg$f(x)$ = 1</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>定理：设 $f(x) \in C[x]$，deg$f(x) \geq 1$，则 $f(x)$ 在 C 上总可以分解为一次因式的乘积 $f(x) = a(x - a_1)^{r_1}(x - a_2)^{r_2}…(x - a_s)^{r_s}, (a, a_i \in C)$</p>
+</li>
+<li><ul>
+<li>设n次多项式 $f(x)$ 有根 $a \in C$，由 $(x - a)|f(x)$，因而 $f(x) = (x - a)f_1(x)$，这里 deg$f_1(x) = n-1$；继续进行下去即得 $f(x)$ 在C中恰有n个根，由此证得</li>
+</ul>
+</li>
+<li><p>引理：设 $f(x) \in R[x]$，$a \in C$ 为 $f(x)$ 的根，则复共轭 $\overline a$ 也是 $f(x)$ 的根</p>
+</li>
+<li><p>定理：设 $f(x) \in R[x]$，deg$f(x) \geq 1$，则 $f(x)$ 在R上总可以唯一分解为一次和二次不可约因式之积 $f(x) = a(x - c_1)^{l_1}…(x - c_s)^{l_s}(x^2 + p_1x + q_1)^{k_1}…(x^2 + p_rx + q_r)^{k_r}$，其中 a 为 $f(x)$ 的首项系数，$p_j^2 - 4q_j &lt; 0, j = 1, 2, …, r$</p>
+</li>
+</ul>
+<h3 id="有理系数多项式"><a href="#有理系数多项式" class="headerlink" title="有理系数多项式"></a>有理系数多项式</h3><ul>
+<li>定义：设 $f(x) = a_n x^n + a_{n-1} x^{n-1} + … + a_1 x + a_0 \in Z[x]$，若 $a_0, a_1, …, a_n$ 互质，则称 $f(x)$ 为本原多项式</li>
+</ul>
+<blockquote>
+<p>f(x)是本原的，则 -f(x) 也是本原的</p>
+</blockquote>
+<ul>
+<li><p>引理：设 $f(x) \in Q[x]$，则存在 $r \in Q$ 及本原多项式 $g(x)$ 使 $f(x) = r g(x)$，且r与 $g(x)$ 除差一个正负号外是唯一的. </p>
+</li>
+<li><p>引理(Gauss定理)：本原多项式之积仍为本原多项式</p>
+</li>
+<li><p>定理：设 $f(x) \in Z[x]$，若 $f(x)$ 可分解为 Q[x] 中r, s($\not=0$)次多项式的乘积，则 $f(x)$ 可分解为 Z[x] 中r, s次多项式的乘积</p>
+</li>
+<li><p>推论：设 $f(x), g(x) \in Z[x]$，其中 $g(x)$ 是本原多项式，若 $f(x) = g(x)h(x)$，且 $h(x) \in Q[x]$，则 $h(x) \in Z[x]$</p>
+</li>
+<li><p>定理：设 $f(x) = \sum_{i=0}^{n} a_i x^i \in Z[x]$，而 $\frac{r}{s}$ 是它的一个有理根，(r, s)=1，则 $r|a_0$, $s|a_n$(整除)；特别地，若 $f(x)$ 是首一多项式，则 $f(x)$ 的有理根为整数，而且是 $a_0$ 的因子</p>
+</li>
+</ul>
+<blockquote>
+<p>(x, y)=1 : 表示x和y的最大公约数为1<br>x|y : 表示x整除y<br>首一多项式：首项系数为1的多项式(一元多项式中次数最高的项称为首项)</p>
+</blockquote>
+<ul>
+<li>定理(Eisenstein判别法)：设 $f(x) = \sum_{i=0}^{n} a_i x^i \in Z[x]$，若存在质数p使 $p \not | a_n; p | a_i, i = 0, 1, …, n-1, p^2 \not | a_0$，则 $f(x)$ 在 Q[x] 中不可约</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -274,7 +2622,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T14:00:00+08:00">
                 2017-07-24
@@ -318,7 +2666,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/24/mathematical_logic/数理逻辑发展简史/#more" rel="contents">
-              Lire la suite &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -400,7 +2748,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T16:44:44+08:00">
                 2017-07-23
@@ -486,1178 +2834,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/23/mathematical_logic/有等词的狭谓词演算和摹状词/#more" rel="contents">
-              Lire la suite &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/23/mathematical_logic/判定问题及一致性和完全性/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/23/mathematical_logic/判定问题及一致性和完全性/" itemprop="url">
-                  判定问题 一致性和完全性
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posté le</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T10:53:00+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="判定问题"><a href="#判定问题" class="headerlink" title="判定问题"></a>判定问题</h3><p>数理逻辑中解决判定问题是要寻求一个具有一般性的方法(能行的方法)，从而能够判定某一类事物中的任一个是否有某种性质，能够得到某一类问题中的任一个的解答</p>
-<p><strong>能行方法</strong></p>
-<ul>
-<li>直观来说，能行的方法就是机械的方法：<strong>每一步</strong>都是由某个事先给定的规则明确规定了的并且在<strong>有穷步</strong>内可以结束的方法</li>
-<li><ul>
-<li>规定了第一步如何作，并且在某一步作完之后下一步的作法也是明确规定了的</li>
-</ul>
-</li>
-<li><ul>
-<li>数学中一般的定理证明就不是能行的</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/23/mathematical_logic/判定问题及一致性和完全性/#more" rel="contents">
-              Lire la suite &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/22/mathematical_logic/演绎定理和范式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/22/mathematical_logic/演绎定理和范式/" itemprop="url">
-                  演绎定理 范式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posté le</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-22T12:00:00+08:00">
-                2017-07-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="演绎定理"><a href="#演绎定理" class="headerlink" title="演绎定理"></a>演绎定理</h3><ul>
-<li>狭谓词演算是一个逻辑系统，其公理和定理都是普遍有效的</li>
-<li><ul>
-<li>其中一部分是蕴涵式，相当于正确的推理的规则或形式</li>
-</ul>
-</li>
-<li><p>狭谓词演算是一个公理系统</p>
-</li>
-<li><ul>
-<li>推演的出发点是公理</li>
-</ul>
-</li>
-<li><ul>
-<li>推演的根据是基本的推演规则</li>
-</ul>
-</li>
-<li><ul>
-<li><ul>
-<li>变形规则和推导出的推演规则</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>有前提的推演</strong>：一个应用狭谓词演算的变形规则进行的推演，除了公理以外还以其它非普遍有效公式作为出发点</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/22/mathematical_logic/演绎定理和范式/#more" rel="contents">
-              Lire la suite &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/21/mathematical_logic/狭谓词演算/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/21/mathematical_logic/狭谓词演算/" itemprop="url">
-                  狭谓词演算
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posté le</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-21T23:00:00+08:00">
-                2017-07-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="狭谓词演算的出发点"><a href="#狭谓词演算的出发点" class="headerlink" title="狭谓词演算的出发点"></a>狭谓词演算的出发点</h3><p><strong>(一)初始符号</strong></p>
-<ul>
-<li>甲：变项</li>
-<li><ul>
-<li><ol>
-<li>命题变项：小写拉丁字母</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ul>
-<li>$p, q, r, s, p_1, q_1, r_1, s_1, p_2, …$</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ol>
-<li>个体变项：小写拉丁字母</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ul>
-<li>$u, v, w, x, y, z, u_1, v_1, …$</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ol>
-<li>谓词变项：大写拉丁字母</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ul>
-<li>$F, G, H, P, Q, R, S, F_1, G_1, …$</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>乙：常项</p>
-</li>
-<li><ul>
-<li><ol>
-<li>命题联结词：¬，并非；$\bigvee$，或者</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ol>
-<li>量词：(.x.x.)，全称；($\exists .x.x.$)，存在</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>丙：括号和逗点</p>
-</li>
-<li><ul>
-<li>左括号 “(”；右括号 “)”；逗点 “,”</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/21/mathematical_logic/狭谓词演算/#more" rel="contents">
-              Lire la suite &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/20/Cplusplus_thinking/C++沉思录总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/20/Cplusplus_thinking/C++沉思录总结/" itemprop="url">
-                  C++沉思录总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posté le</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T13:31:00+08:00">
-                2017-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="通过复杂性获取简单性"><a href="#通过复杂性获取简单性" class="headerlink" title="通过复杂性获取简单性"></a>通过复杂性获取简单性</h2><p>世界是复杂的，复杂性变得隐蔽；计算机也是一样的</p>
-<p>抽象是C++的主题，C++的复杂性大部分是为了提供某种手段进行问题抽象</p>
-<ul>
-<li>C++没有內建复数算法的概念，但允许以几乎和FORTRAN中內建形式一样的方式实现复数</li>
-<li><ul>
-<li>FORTRAN的方法(內建复数)更好</li>
-</ul>
-</li>
-<li><ul>
-<li>但是FORTRAN很难实现其他算术数据结构如四元数</li>
-</ul>
-</li>
-<li><ul>
-<li>C++的抽象机制使得在别的语言中很困难甚至根本不可能实现的工作变得简单</li>
-</ul>
-</li>
-<li><ul>
-<li><ul>
-<li>例如：</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ul>
-<li>赋值和初始化的区别</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ul>
-<li>不使赋值等价于初始化后紧跟析构操作，使如字符串切片替换之类的操作的实现相对容易得多</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>C++提供给库设计者们更策略化的可能性，从而使他们能考虑更多</p>
-<ul>
-<li>经过精心设计的C++库很好用</li>
-<li>优秀的库难实现</li>
-<li>內建在编译器中更困难</li>
-<li>C++提供中等程度的抽象粒度，允许无需改变编译器内部的工作模式就能够详细地定义抽象概念的具体行为</li>
-</ul>
-<h2 id="打开C-的正确方式"><a href="#打开C-的正确方式" class="headerlink" title="打开C++的正确方式"></a>打开C++的正确方式</h2><ol>
-<li><p>避免使用指针</p>
-</li>
-<li><p>提倡使用程序库</p>
-</li>
-<li><p>使用类表示概念</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/20/Cplusplus_thinking/将应用程序库从输入输出中分离出来/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/20/Cplusplus_thinking/将应用程序库从输入输出中分离出来/" itemprop="url">
-                  将应用程序库从输入输出中分离出来
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posté le</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T13:00:00+08:00">
-                2017-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>应用程序库对I/O设备的选择：捆绑到特定的I/O会限制库的灵活性</p>
-<p>用类表示概念：设计一个类表示任意I/O接口</p>
-<ul>
-<li>使应用程序性与I/O之间的耦合度降低</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/20/Cplusplus_thinking/将应用程序库从输入输出中分离出来/#more" rel="contents">
-              Lire la suite &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/20/转载/Linux命令行挂载Win系统的磁盘/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/20/转载/Linux命令行挂载Win系统的磁盘/" itemprop="url">
-                  Linux命令行挂载Win系统的磁盘(转)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posté le</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T10:00:00+08:00">
-                2017-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <hr>
-<h2 id="转：https-jingyan-baidu-com-article-93f9803fef4df9e0e46f559e-html"><a href="#转：https-jingyan-baidu-com-article-93f9803fef4df9e0e46f559e-html" class="headerlink" title="转：https://jingyan.baidu.com/article/93f9803fef4df9e0e46f559e.html"></a>转：<a href="https://jingyan.baidu.com/article/93f9803fef4df9e0e46f559e.html" target="_blank" rel="external">https://jingyan.baidu.com/article/93f9803fef4df9e0e46f559e.html</a></h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/20/Cplusplus_thinking/应用器、操纵器和函数对象/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/20/Cplusplus_thinking/应用器、操纵器和函数对象/" itemprop="url">
-                  应用器、操纵器和函数对象
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posté le</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T10:00:00+08:00">
-                2017-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>以类似文件操作的语法，通过某种方式发送一个带外信号(out-of-band signal)给某个类似文件的东西</p>
-<ul>
-<li><p><code>cout &lt;&lt; flush</code> 强行立即输出缓冲区数据</p>
-</li>
-<li><p>基于两种函数的解决方法</p>
-</li>
-<li><ul>
-<li>操纵器(manipalator)：以某种方式作用于由它的参数表示的数据</li>
-</ul>
-</li>
-<li><ul>
-<li>应用器(applicator)：一个重载操作符，操作数为一个可操纵的值和一个将作用于这个值的操纵器</li>
-</ul>
-</li>
-</ul>
-<p>将flush定义为一个操纵器，把&lt;&lt;操作符定义为应用器</p>
-<p>扩展：定义一种函数对象得到具有多个参数的应用器</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/20/Cplusplus_thinking/应用器、操纵器和函数对象/#more" rel="contents">
-              Lire la suite &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/19/mathematical_logic/狭谓词逻辑的形式结构/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/19/mathematical_logic/狭谓词逻辑的形式结构/" itemprop="url">
-                  狭谓词逻辑的形式结构 普遍有效性和可满足性
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posté le</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T22:00:00+08:00">
-                2017-07-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>命题逻辑中，简单命题作为基本单位，不再分析成主词、谓词和量词等<br>有些推理形式是命题逻辑所不能包括的，如：<br>凡循环小数都可以化为分数；<br>0.2是循环小数<br>所以0.2可以化为小数<br>就不是命题逻辑中正确的推理形式</p>
-</blockquote>
-<p>狭谓词逻辑(一阶谓词逻辑)：将量词只用于个体变项，而不用于谓词变项和命题变项的谓词逻辑</p>
-<p>广义谓词逻辑：将量词也用于命题变项和谓词变项的谓词逻辑</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/19/mathematical_logic/狭谓词逻辑的形式结构/#more" rel="contents">
-              Lire la suite &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1697,7 +2874,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1742,8 +2919,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">70</span>
-                <span class="site-state-item-name">articles</span>
+                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -1755,7 +2932,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">tags</span>
               
             </div>
@@ -1810,7 +2987,7 @@
 </div>
 
 <div class="theme-info">
-  Thème -
+  Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>

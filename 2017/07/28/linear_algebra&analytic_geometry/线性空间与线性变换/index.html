@@ -1,0 +1,990 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="高等代数与解析几何," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="线性空间
+定义：设 K 是给定的数域，V 是具有加法和数量乘法的非空集合，即对任何 $\alpha, \beta \in V, k \in K$，确定和 $\alpha + \beta \in V$，确定积 $k \alpha \in V$. 如果以下公理成立：
+
+(1)对任何 $\alpha, \beta \in V$，有 $\alpha + \beta = \beta + \alpha$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性空间与线性变换、特征值">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/28/linear_algebra&analytic_geometry/线性空间与线性变换/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="线性空间
+定义：设 K 是给定的数域，V 是具有加法和数量乘法的非空集合，即对任何 $\alpha, \beta \in V, k \in K$，确定和 $\alpha + \beta \in V$，确定积 $k \alpha \in V$. 如果以下公理成立：
+
+(1)对任何 $\alpha, \beta \in V$，有 $\alpha + \beta = \beta + \alpha$">
+<meta property="og:updated_time" content="2017-07-31T11:17:09.778Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线性空间与线性变换、特征值">
+<meta name="twitter:description" content="线性空间
+定义：设 K 是给定的数域，V 是具有加法和数量乘法的非空集合，即对任何 $\alpha, \beta \in V, k \in K$，确定和 $\alpha + \beta \in V$，确定积 $k \alpha \in V$. 如果以下公理成立：
+
+(1)对任何 $\alpha, \beta \in V$，有 $\alpha + \beta = \beta + \alpha$">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/28/linear_algebra&analytic_geometry/线性空间与线性变换/"/>
+
+
+
+
+
+  <title> 线性空间与线性变换、特征值 | chenxfeng's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/index.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/28/linear_algebra&analytic_geometry/线性空间与线性变换/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                线性空间与线性变换、特征值
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-28T17:00:00+08:00">
+                2017-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="线性空间"><a href="#线性空间" class="headerlink" title="线性空间"></a>线性空间</h3><ul>
+<li>定义：设 K 是给定的数域，V 是具有加法和数量乘法的非空集合，即对任何 $\alpha, \beta \in V, k \in K$，确定和 $\alpha + \beta \in V$，确定积 $k \alpha \in V$. 如果以下公理成立：</li>
+<li><ul>
+<li>(1)对任何 $\alpha, \beta \in V$，有 $\alpha + \beta = \beta + \alpha$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)对任何 $\alpha, \beta, \gamma \in V$，有 $(\alpha + \beta) + \gamma = \alpha + (\beta + \gamma)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)对任何 $\alpha \in V$，在 V 中存在一个元素0，使 $\alpha + 0 = \alpha$，其中0称为 V 的零元素</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)对于所有的 $\alpha \in V$，存在 $\beta \in V$，使 $\alpha + \beta = 0$，其中 $\beta$ 称为 $\alpha$ 的负元素</li>
+</ul>
+</li>
+<li><ul>
+<li>(5)$1 \cdot \alpha = \alpha$</li>
+</ul>
+</li>
+<li><ul>
+<li>(6)对任何 $k, l \in K, \alpha \in V$，有 $k(l \alpha) = (kl)\alpha$</li>
+</ul>
+</li>
+<li><ul>
+<li>(7)对任何 $k, l \in K, \alpha \in V$，有 $(k + l)\alpha = k \alpha + l \alpha$</li>
+</ul>
+</li>
+<li><ul>
+<li>(8)对任何 $k \in K, \alpha, \beta \in V$，有 $k(\alpha + \beta) = k \alpha + k \beta$</li>
+</ul>
+</li>
+<li><ul>
+<li>则称 V 是数域K上的线性空间</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>线性空间中的元素又称向量</p>
+</blockquote>
+<p>线性空间的基本性质：</p>
+<ul>
+<li>(1)线性空间的零元唯一</li>
+<li>(2)线性空间的每个元的负元唯一</li>
+<li>(3)$0 \alpha = 0, k 0 = 0, (-1)\alpha = - \alpha$</li>
+<li>(4)若 $k \alpha = 0$，则 $k = 0$ 或 $\alpha = 0$</li>
+</ul>
+<blockquote>
+<p>线性空间定义中规定的两种代数运算并没有具体给出，一般由具体问题指定<br>零元不一定是数零，$\alpha$ 的负元不一定是 $-\alpha$</p>
+</blockquote>
+<h3 id="子空间"><a href="#子空间" class="headerlink" title="子空间"></a>子空间</h3><ul>
+<li>定义：设 W 是数域 K 上线性空间 V 的一个非空子集，如果 W 对于 V 的两种运算又构成 K 上的线性空间，则称 W 是 V 的子空间</li>
+</ul>
+<blockquote>
+<p>对于任意的线性空间，零空间 {0} 和 V 本身都是 V 的子空间，此两个子空间通常称为 V 的平凡子空间.<br>V 的非平凡子空间称为 V 的真子空间</p>
+<p>W 是 V 的子空间的充要条件是 W 对 V 两种运算封闭</p>
+</blockquote>
+<ul>
+<li><p>定义：如果 $V_1, V_2$ 是线性空间 V 的两个子空间，那么属于 $V_1, V_2$ 的所有公共向量的集合，称为 $V_1$ 与 $V_2$ 的交，记作 $V_1 \bigcap V_2$</p>
+</li>
+<li><p>定理：如果 $V_1, V_2$ 是 V 的两个子空间，则 $V_1 \bigcap V_2$ 仍为 V 的子空间</p>
+</li>
+<li><p>定理：设 $V_1$ 与 $V_2$ 是 V 的两个子空间，则 $dim V_1 + dim V_2 = dim(V_1 + V_2) + dim_(V_1 \bigcap V_2)$</p>
+</li>
+<li><p>定义：设 $V_1$ 与 $V_2$ 是 V 的两个子空间，如果 $V_1 + V_2$ 中每个向量 $\alpha$ 的分解式 $\alpha = \alpha_1 + \alpha_2, \alpha_1 \in V_1, \alpha_2 \in V_2$ 唯一，则称 $V_1 + V_2$ 为 $V_1$ 与 $V_2$ 的直和，记作 $V_1 \bigoplus V_2$</p>
+</li>
+<li><p>定理：设 $V_1$ 与 $V_2$ 是 V 的两个子空间，若 $W = V_1 + V_2$，则下述提法等价：</p>
+</li>
+<li><ul>
+<li>(1)$W = V_1 + V_2$ 是直和</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)如果 $0 = \alpha_1 + \alpha_2, \alpha_1 \in V_1, \alpha_2 \in V_2$，那么 $\alpha_1 = \alpha_2 = 0$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$V_1 \bigcap V_2 = {0}$</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)如果 $\alpha_1, \alpha_2, …, \alpha_s$ 是 $V_1$ 的基，$\beta_1, \beta_2, …, \beta_t$ 是 $V_2$ 的基，那么 $\alpha_1, \alpha_2, …, \alpha_s, \beta_1, \beta_2, …, \beta_t$ 是 W 的基</li>
+</ul>
+</li>
+<li><ul>
+<li>(5)$dim W = dim V_1 + dim V_2$</li>
+</ul>
+</li>
+<li><p>定义：设 $V_1, V_2, …, V_s$ 是 V 的子空间，若 $W = V_1 + V_2 + … + V_s$，则下述提法等价：</p>
+</li>
+<li><ul>
+<li>(1)$W = V_1 + V_2 + … + V_s$ 是直和</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)如果 $0 = \alpha_1 + \alpha_2 + … + \alpha_s, \alpha_i \in V_i(i = 1, 2, …, s)$，那么 $\alpha_1 = \alpha_2 = … = \alpha_s = 0$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$V_i \bigcap \sum_{j \not= i} V_j = \{ 0 \}, (i = 1, 2, …, s)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)如果 $e_1^{(i)}, e_2^{(i)}, …, e_{k_i}^{(i)}(i = 1, 2, …, s)$ 是 $V_i$ 的基，那么它们合在一起构成 W 的基</li>
+</ul>
+</li>
+<li><ul>
+<li>(5)$dim W = \sum_{i=1}^s dim V_i$</li>
+</ul>
+</li>
+</ul>
+<h3 id="线性空间的同态与同构"><a href="#线性空间的同态与同构" class="headerlink" title="线性空间的同态与同构"></a>线性空间的同态与同构</h3><ul>
+<li>定义：设 V 与 U 是同一数域 K 上的两个线性空间，$\sigma$ 为 V 到 U 的映射，若对任意 $\alpha, \beta \in V, k \in K$，有</li>
+<li><ul>
+<li>(1)$\sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\sigma(k \alpha) = k \sigma(\alpha)$</li>
+</ul>
+</li>
+<li><ul>
+<li>则称 $\sigma$ 为 V 到 U 的同态映射(线性映射)</li>
+</ul>
+</li>
+<li><ul>
+<li>若 $\sigma$ 还是 1-1映上的映射(单射)，则称 $\sigma$ 为 V 到 U 的同构映射. 此时称为 V 与 U 同构，记作 $V \cong U$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>映射 $\sigma : V \rightarrow U$ 对 V 的不同元有不同的象，即当 $\alpha \not= \beta$ 时可推得 $\sigma(\alpha) \not= \sigma(\beta)$，那么称 $\sigma$ 为 1-1 映射(单射)<br>映射 $\sigma : V \rightarrow U$ 对每个 $\beta \in U$ 至少是一个 $\alpha \in V$ 的象，那么称 $\sigma$ 为映上映射(满射)<br>既是1-1映射，又是映上映射的映射称为双射</p>
+</blockquote>
+<p>同态映射的性质：</p>
+<ul>
+<li>(1)如果 $\alpha = 0 \in V$，则 $\sigma(\alpha) = 0$；如果 $\alpha \in V$，则 $\sigma(-\alpha) = - \sigma(\alpha)$. </li>
+<li>(2)同态映射把线性相关的元变为线性相关的元</li>
+<li>(3)V 中所有元的象的集合称为 $\sigma$ 的象(image)，记作 $I_m(\sigma)$，即 $I_m(\sigma) = \{ \sigma(\alpha)|\alpha \in V \}$ 是 U 的子空间，称为 $\sigma$ 的<strong>象子空间</strong></li>
+<li>(4)U 中零元的所有象源的集合称为 $\sigma$ 的<strong>核(kernel)</strong>，记作 $Ker(\sigma)$，即 $Ker(\sigma) = \{ \alpha \in V | \sigma(\alpha) = 0 \}$ 是 V 的子空间，称为 $\sigma$ 的<strong>核子空间</strong></li>
+<li>(5)$\sigma$ 是同构映射的充要条件是 $I_m(\sigma) = U, Ker(\sigma) = {0}$</li>
+<li>(6)同构映射把线性无关的元变为线性无关的元</li>
+<li>(7)同构映射的逆映射是同构映射</li>
+<li>(8)同构映射的乘积是同构映射</li>
+</ul>
+<blockquote>
+<p>$\sigma, \tau$ 分别是 V到 U 与 U 到 W 的映射，若对任意 $\alpha \in V$，有 $\tau \sigma(\alpha) = \tau(\sigma(\alpha))$，则称 $\tau \sigma$为 $\tau$ 与 $\sigma$ 的乘积<br>$\sigma$ 是 V 到 V 的映射，若对任意 $\alpha \in V$，有 $\sigma(\alpha) = \alpha$，则称 $\sigma$ 为 V 上的恒等映射，记作 $I_V$，也记作 $I$<br>$\sigma$ 是 V 到 U 的映射，若存在 U 到 V 的映射 $\tau$，使 $\tau \sigma = I_V, \sigma \tau = I_U$，则称 $\tau$ 为 $\sigma$ 的逆映射，$\sigma$ 的逆映射是唯一的，记作 $\sigma^{-1}$<br>$\sigma$ 是 V 到 U 的映射，若对任意 $\alpha \in V$，有 $\sigma(\alpha) = 0$，则称 $\sigma$ 为 V 到 U 的零映射，记作 $0$，即 $0(\alpha) = 0$</p>
+</blockquote>
+<ul>
+<li><p>定理：设 V 与 U 是同一数域 K 上的两个n维线性空间，则 $V \cong U$</p>
+</li>
+<li><p>定理：设 V 与 U 是同一数域 K 上的两个有限维线性空间，如果 $V \cong U$，则 $dim V = dim U$</p>
+</li>
+</ul>
+<h3 id="线性空间的线性变换"><a href="#线性空间的线性变换" class="headerlink" title="线性空间的线性变换"></a>线性空间的线性变换</h3><ul>
+<li>定义：设 V 是数域 K 上的线性空间，如果 $\sigma : V \rightarrow V$ 具有下列性质：</li>
+<li><ul>
+<li>(1)对任何的 $\alpha, \beta \in V, \sigma(\alpha + \beta) = \sigma(\alpha) + \sigma(\beta)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)对任何的 $k \in K, \alpha \in V, \sigma(k \alpha) = k \sigma(\alpha)$</li>
+</ul>
+</li>
+<li><ul>
+<li>则称 $\sigma$ 是一个线性变换</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>线性变换是线性空间到自身的同态映射<br>$\sigma : V \rightarrow V$，若对任何 $\alpha \in V, \sigma(\alpha) = 0$，则 $\sigma$ 是 V 的一个线性变换，称为<strong>零变换</strong>，记作 $0$<br>$\sigma : V \rightarrow V$，若对任何 $\alpha \in V, \sigma(\alpha) = \alpha$，则 $\sigma$ 是 V 的一个线性变换，称为<strong>恒等变换</strong>，记作 $I$</p>
+</blockquote>
+<p>线性变换是一种特殊的同态映射，具有所有同态映射所具有的性质:</p>
+<ul>
+<li>(1)$\sigma(0) = 0, \sigma(- \alpha) = -\sigma(\alpha)$</li>
+<li>(2)$\sigma$ 把线性相关元变为线性相关元，但线性无关元经 $\sigma$ 作用未必其象线性无关，如零变换</li>
+<li><p>(3)$I_m(\sigma)$ (象空间)与 $Ker(\sigma)$ (零空间)都是 V 的子空间，$I_m(\sigma)$ 的维数称为 $\sigma$ 的秩，记作 $rank(\sigma)$，$Ker(\sigma)$ 的维数称为 $\sigma$ 的零度，记作 $nullity(\sigma)$</p>
+</li>
+<li><p>定理：设 $\sigma : V \rightarrow V$ 是线性的，$dim V = n$，则 $rank(\sigma) + nullity(\sigma) = n$</p>
+</li>
+<li><p>定义：设 $\sigma, \tau \in A(V)$(A(V)表示V上所有线性变换的集合)，由 $(\sigma + \tau)(\alpha) = \sigma(\alpha) + \tau(\alpha), \alpha \in V$ 所决定的变换 $\sigma + \tau$ 称为 $\sigma$ 与 $\tau$ 的和；由$(k \sigma)(\alpha) = k \sigma(\alpha), k \in K$ 所决定的变换 $k \sigma$ 称为 $k$ 与 $\sigma$ 的数乘</p>
+</li>
+<li><p>定理：A(V) 对于上述定义的加法和数量乘法构成数域 K 上的一个线性空间</p>
+</li>
+<li><p>定义：设 $\sigma, \tau \in A(v)$，那么由 $(\sigma \tau)(\alpha) = \sigma(\tau \alpha), \alpha in V$ 所决定的变换称为 $\sigma$ 与 $\tau$ 的乘积</p>
+</li>
+<li><p>定理：A(V) 是数域 K 上的一个结合代数</p>
+</li>
+</ul>
+<blockquote>
+<p>设 A 是数域 k 上的线性空间，若在 A 中定义了乘法运算，并且对任何的 $\alpha, \beta, \gamma \in A, k \in K$，以下性质成立：(1)$\alpha(\beta + \gamma) = \alpha \beta + \alpha \gamma$; (2)$(\beta + \gamma)\alpha = \beta \alpha + \gamma \alpha$; (3)$k(\beta \gamma) = (k \beta)\gamma = \beta (k \gamma)$. 则称 A 是 K 上的一个代数，又若 $(\alpha \beta)\gamma = \alpha(\beta \gamma)$，则称 A 是 K 上的一个结合代数</p>
+</blockquote>
+<ul>
+<li>定义：设 $\sigma \in A(V)$，如果存在 $\tau \in A(V)$，使 $\sigma \tau = \tau \sigma = I$，则称 $\sigma$ 是可逆的，$\tau$ 称为 $\sigma$ 的逆变换</li>
+</ul>
+<blockquote>
+<p>可逆变换 $\sigma$ 的逆变换是唯一的<br>如果 $\sigma$ 与 $\tau$ 都是可逆的线性变换，则 $\sigma \tau$ 可逆，且 $(\sigma \tau)^{-1} = \sigma^{-1} \tau^{-1}$<br>线性变换 $\sigma$ 可逆的充要条件是 $\sigma$ 是 1-1 而且映上的</p>
+<p>V是有限维时，$\sigma$ 可逆的充要条件是 $\sigma$ 是 1-1 的映射<br>V 的 1-1 映射常称为是非奇异的，因而在有限维线性空间中，可逆与非奇异是一致的</p>
+</blockquote>
+<ul>
+<li><p>定义：设 W 与 U 是n维线性空间V的两个子空间，且 $V = W \bigoplus U$，即V中每个向量 X 都可以唯一地分解成下列形式 $X = Y + Z, Y \in W, Y \in W, Z \in U$. 若映射 $\sigma : V \rightarrow W$ 定义为 $\sigma(x) = Y$，则称 $\sigma$ 是 V 到 W 的<strong>投影变换</strong></p>
+</li>
+<li><p>定理：若 $\sigma$ 是 V 到 W 的投影变换，则 $\sigma$ 是线性的，且 $\sigma^2 = \sigma$</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，且$\sigma^2 = \sigma$，则有</p>
+</li>
+<li><ul>
+<li>(1)对任何 $X \in I_m(\sigma)$，有 $\sigma(X) = X$</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$V = I_m(\sigma) \bigoplus Ker(\sigma)$</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)$\sigma$ 是 V 到 $I_m(\sigma)$ 的投影变换</li>
+</ul>
+</li>
+</ul>
+<h3 id="线性变换的矩阵表示"><a href="#线性变换的矩阵表示" class="headerlink" title="线性变换的矩阵表示"></a>线性变换的矩阵表示</h3><blockquote>
+<p>设 $\sigma$ 是数域 K 上n维线性空间 V 的一个线性变换，$\alpha_1, \alpha_2, …, \alpha_n$ 是V的基，$\sigma(\alpha_1), \sigma(\alpha_2), …, \sigma(\alpha_n) \in V$ 都是 $\alpha_1, \alpha_2, …, \alpha_n$ 的线性组合，即有<br>$ \begin{matrix}<br>\sigma(\alpha_1) = a_{11}\alpha_1 + a_{21}\alpha_2 + … + a_{n1}\alpha_n \\<br>\sigma(\alpha_2) = a_{12}\alpha_1 + a_{22}\alpha_2 + … + a_{n2}\alpha_n \\<br>……       \\<br>\sigma(\alpha_n) = a_{1n}\alpha_1 + a_{2n}\alpha_2 + … + a_{nn}\alpha_n \end{matrix}$</p>
+</blockquote>
+<ul>
+<li><p>引理：设 V 是数域 K 上的线性空间，$\alpha_1, \alpha_2, …, \alpha_n$ 是 V 的基，$\beta_1, \beta_2, …, \beta_n$ 是 V 中任意个向量，则存在唯一的线性变换 $\sigma : V \rightarrow V$，使 $\sigma(\alpha_1) = \beta_1, \sigma(\alpha_2) = \beta_2, …, \sigma(\alpha_n) = \beta_n$</p>
+</li>
+<li><p>定理：数域 K 上的n维线性空间 V 的线性变换 $\sigma$ 与 K 上n阶矩阵A之间可以建立一一对应关系，并且关系如下所示：</p>
+</li>
+<li><ul>
+<li>$\sigma(\alpha_1, \alpha_2, …, \alpha_n) = (\sigma(\alpha_1), \sigma(\alpha_2), …, \sigma(\alpha_n)) = (\alpha_1, \alpha_2, …, \alpha_n)A$</li>
+</ul>
+</li>
+<li><ul>
+<li>其中 <script type="math/tex; mode=display">A = 
+\left[ \begin{matrix} 
+a_{11} & a_{12} & ... & a_{1n} \\ 
+a_{21} & a_{22} & ... & a_{2n} \\
+.      & .      &     & .      \\
+.      & .      &     & .      \\
+.      & .      &     & .      \\
+a_{n1} & a_{n2} & ... & a_{nn}
+\end{matrix}
+\right]</script></li>
+</ul>
+</li>
+<li><p>定理：设 A(V) 和 $K^{n<em>n}$ 是数域 K 上的两个线性空间，则 $A(V) \cong K^{n</em>n}$</p>
+</li>
+<li><p>定理：设 A(V) 和 $K^{n<em>n}$ 是数域 K 上的两个结合代数，则 $A(V) \cong K^{n</em>n}$</p>
+</li>
+<li><p>推论：设数域 K 上n维线性空间 V 的一个线性变换 $\sigma$ 对于给定基的矩阵是A，那么 $\sigma$ 可逆的充要条件是A可逆，而且 $\sigma^{-1}$ 对于这个基的矩阵恰为 $A^{-1}$</p>
+</li>
+<li><p>推论：设 $\alpha_1, \alpha_2, …, \alpha_n; \beta_1, \beta_2, …, \beta_n$ 是线性空间 V 的任意两组基底，则存在唯一的可逆的线性变换 $\sigma$，使 $\sigma(\alpha_1, \alpha_2, …, \alpha_n) = (\beta_1, \beta_2, …, \beta_n)$</p>
+</li>
+<li><p>推论：线性空间 V 的一个线性变换 $\sigma$ 是可逆的充要条件是，$\sigma$ 把 V 的一组基变为另一组基</p>
+</li>
+<li><p>定义：设 A、B 是数域 K 上两个n阶矩阵，如果在 K 上存在一个可逆矩阵P，使 $B = P^{-1}AP$，则说 A 与 B相似，记作 $A \sim B$</p>
+</li>
+</ul>
+<p>相似关系的基本性质：</p>
+<ul>
+<li>(1)自反性：$A \sim A$；对任意的 A 显然有 $A = E^{-1}AE$</li>
+<li>(2)对称性：若 $A \sim B$，则 $B \sim A$; 由 $A \sim B$ 得 $B = P^{-1}AP$，由此有 $Q = P^{-1}$，使 $A = Q^{-1}BQ$</li>
+<li>(3)传递性：如果 $A \sim B, B \sim C$，则 $A \sim C$; 由 $A \sim B, B \sim C$，得 $B = P^{-1}AP, C = Q^{-1}BQ$，由此有 $R = PQ$，使 $C = R^{-1}AR$</li>
+<li><p>(4)若 $A \sim B$，$f(x) \in K[x]$，则 $f(A) \sim f(B)$ (K[x]表示数域K上的多项式空间)</p>
+</li>
+<li><p>定理：线性变换在不同基下的矩阵是相似的. 反之，如果两个矩阵相似，那么它们便可以看作同一个线性变换在不同基下的矩阵，即两个矩阵相似的充要条件是它们表示同一个线性变换</p>
+</li>
+</ul>
+<h3 id="特征向量与对角化"><a href="#特征向量与对角化" class="headerlink" title="特征向量与对角化"></a>特征向量与对角化</h3><ul>
+<li>定义：设 $\sigma$ 是数域 K 上线性空间 V 的线性变换，对于 $\lambda \in K$，若存在一非零向量 $\alpha$，使 $\sigma(\alpha) = \lambda \alpha$，则称 $\lambda$ 是 $\sigma$ 的一个<strong>特征根</strong>或<strong>特征值</strong>，$\alpha$ 称为 $\sigma$ 的属于特征根 $\lambda$ 的一个<strong>特征向量</strong></li>
+</ul>
+<blockquote>
+<p>特征向量不被特征根所唯一决定：$\sigma(k\alpha) = k\sigma(\alpha) = k(\lambda \alpha) = \lambda(k \alpha) (k \not= 0)$<br>特征根被特征向量唯一决定</p>
+<p><strong>特征子空间</strong>：$V_{\lambda} = \{ \alpha | \sigma(\alpha) = \lambda \alpha, \alpha \in V \}$</p>
+<p>线性变换 $\sigma$ 对数域 K 上线性空间 V 的一组基 $\alpha_1, \alpha_2, …, \alpha_n$ 的矩阵为 $A = (a_{ij})_{n*n}$.<br>$\lambda$ 是 $\sigma$ 的特征根，$\sigma$ 的属于 $\lambda$ 的特征向量 $\alpha$ 在这组基下的坐标是 $x_1, x_2, …, x_n$，即 $\alpha = x_1 \alpha_1 + x_2 \alpha_2 + … x_n \alpha_n$<br>$\sigma(\alpha)$ 在这组基下的坐标为 <script type="math/tex">A \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right]</script><br>$\lambda \alpha$ 在这组基下的坐标为 <script type="math/tex">\lambda \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right]</script><br>由 $\sigma(\alpha) = \lambda \alpha$，故有 <script type="math/tex">A \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right] = \lambda \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right]</script> 或 <script type="math/tex">(\lambda E - A)X = 0</script> 其中 <script type="math/tex">X = \left[ \begin{matrix} x1 \\ x2 \\ . \\ . \\ . \\ x_n \end{matrix} \right]</script><br>由于 $\alpha \not= 0$，即 $x_1, x_2, …, x_n$ 不全为零，故齐次线性方程组有非零解，因而系数行列式 $$det(\lambda E - A) =<br>\left| \begin{matrix}<br>\lambda - \alpha_{11} &amp; -\alpha_{12} &amp; … &amp; -\alpha_{1n} \\<br>-\alpha_{21} &amp; \lambda - \alpha_{22} &amp; … &amp; -\alpha_{2n} \\<br>.            &amp; .                     &amp;     &amp; .            \\<br>.            &amp; .                     &amp;     &amp; .            \\<br>.            &amp; .                     &amp;     &amp; .            \\<br>-\alpha_{n1} &amp; \alpha_{n2} &amp; … &amp; \lambda - \alpha_{nn}<br>\end{matrix}<br>\right|</p>
+<p>$$</p>
+<p>矩阵A的<strong>特征多项式</strong>：$det(\lambda E - A)$，记作 $\Delta_A(\lambda)$</p>
+</blockquote>
+<ul>
+<li><p>定理：设 $A \sim B$，则 $\Delta_A(\lambda) = \Delta_B(\lambda)$，从而有相同的特征根</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，则 $\sigma$ 的特征根的几何重数(特征子空间 $V_{\lambda}$的维数)小于或者等于它的代数重数(特征根 $\lambda$ 的重数)</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，则 $\sigma$ 的分别属于不同特征根 $\lambda_1, \lambda_2, …, \lambda_m$ 的特征向量 $\alpha_1, \alpha_2, …, \alpha_m$ 线性无关</p>
+</li>
+<li><p>定理：设 $\lambda_1, \lambda_2, …, \lambda_k$ 是n维线性空间 V 的线性变换 $\sigma$ 的不同的特征根，$\alpha_{i1}, \alpha_{i2}, …, \alpha_{ir_i}(i = 1, 2, …, k)$ 是属于 $\lambda_i$ 的线性无关的特征向量，则 $\alpha_{11}, …, \alpha_{1r_1}, …, \alpha_{k1}, …, \alpha_{kr_k}$ 线性无关</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，则 $\sigma$ 的特征根的几何重数等于它的代数重数的充要条件是，$\sigma$ 有n个线性无关的特征向量</p>
+</li>
+<li><p>定理：设 $\sigma$ 是n维线性空间 V 的线性变换，则存在一组基，使 $\sigma$ 对这基的矩阵为对角形的充分条件是，$\sigma$ 有n个线性无关的特征向量</p>
+</li>
+<li><p>推论：如果n维线性空间 V 的线性变换 $\sigma$ 在数域 K 中有n个不同的特征根，则必存在一组基，使 $\sigma$ 对这基的矩阵是对角形</p>
+</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/高等代数与解析几何/" rel="tag"># 高等代数与解析几何</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/27/linear_algebra&analytic_geometry/向量空间/" rel="next" title="向量空间">
+                <i class="fa fa-chevron-left"></i> 向量空间
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/29/linear_algebra&analytic_geometry/矩阵的若尔当标准形/" rel="prev" title="矩阵的若尔当标准形">
+                矩阵的若尔当标准形 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性空间"><span class="nav-number">1.</span> <span class="nav-text">线性空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子空间"><span class="nav-number">2.</span> <span class="nav-text">子空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性空间的同态与同构"><span class="nav-number">3.</span> <span class="nav-text">线性空间的同态与同构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性空间的线性变换"><span class="nav-number">4.</span> <span class="nav-text">线性空间的线性变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性变换的矩阵表示"><span class="nav-number">5.</span> <span class="nav-text">线性变换的矩阵表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征向量与对角化"><span class="nav-number">6.</span> <span class="nav-text">特征向量与对角化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">7.</span> <span class="nav-text">引用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+</body>
+</html>

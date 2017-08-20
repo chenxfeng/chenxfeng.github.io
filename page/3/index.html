@@ -237,6 +237,138 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/17/Cplusplus_thinking/在簇中分配对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/17/Cplusplus_thinking/在簇中分配对象/" itemprop="url">
+                  在簇中分配对象
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T23:00:00+08:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>C++程序通常要为一整组对象分配内存，随后将其同时释放</p>
+<ul>
+<li>定义一个包含一整组对象的集合的类</li>
+<li>让一个集合包含不相关的类的对象的一个好方法：多重继承</li>
+</ul>
+<p>问题：交互式或长时间运行的程序中常有一堆各式各样的C++对象需要一块释放</p>
+<h3 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h3><p><strong>使用类来表示概念</strong>：需要一个类表示“一些要一起释放的对象”</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Cluster &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/17/Cplusplus_thinking/在簇中分配对象/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/17/mathematical_logic/不同的命题逻辑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -911,127 +1043,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/12/转载/虚函数表(Virtual Table)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/12/转载/虚函数表(Virtual Table)/" itemprop="url">
-                  虚函数表(Virtual Table)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
-                2017-07-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <hr>
-<h2 id="转：http-www-cnblogs-com-yc-sunniwell-archive-2010-07-12-1775637-html"><a href="#转：http-www-cnblogs-com-yc-sunniwell-archive-2010-07-12-1775637-html" class="headerlink" title="转：http://www.cnblogs.com/yc_sunniwell/archive/2010/07/12/1775637.html"></a>转：<a href="http://www.cnblogs.com/yc_sunniwell/archive/2010/07/12/1775637.html" target="_blank" rel="external">http://www.cnblogs.com/yc_sunniwell/archive/2010/07/12/1775637.html</a></h2>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/12/转载/野指针/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1277,7 +1288,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/08/Cplusplus_thinking/模板之函数配接器/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/12/转载/虚函数表(Virtual Table)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -1299,8 +1310,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/07/08/Cplusplus_thinking/模板之函数配接器/" itemprop="url">
-                  模板之函数配接器
+                <a class="post-title-link" href="/2017/07/12/转载/虚函数表(Virtual Table)/" itemprop="url">
+                  虚函数表(Virtual Table)
                 </a>
               
             
@@ -1316,8 +1327,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-08T23:00:00+08:00">
-                2017-07-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
+                2017-07-12
               </time>
             
 
@@ -1353,29 +1364,10 @@
 
       
         
-          <p>标准库提供用于简化使用函数对象的繁杂的过程的类和函数</p>
-<h3 id="为什么是函数对象"><a href="#为什么是函数对象" class="headerlink" title="为什么是函数对象"></a>为什么是函数对象</h3><ul>
-<li><p>可以把一个函数和一个值捆绑到单个实体中</p>
-</li>
-<li><ul>
-<li>如果把值n放到具有一个文件作用域(file scope)的变量中也可以使用函数</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> n;</div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">add_n</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> x + n;</div><div class="line">&#125;</div><div class="line"></div><div class="line">transform(a, a+<span class="number">100</span>, a, add_n);</div></pre></td></tr></table></figure>
-<ul>
-<li><ul>
-<li>不方便</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/08/Cplusplus_thinking/模板之函数配接器/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <hr>
+<h2 id="转：http-www-cnblogs-com-yc-sunniwell-archive-2010-07-12-1775637-html"><a href="#转：http-www-cnblogs-com-yc-sunniwell-archive-2010-07-12-1775637-html" class="headerlink" title="转：http://www.cnblogs.com/yc_sunniwell/archive/2010/07/12/1775637.html"></a>转：<a href="http://www.cnblogs.com/yc_sunniwell/archive/2010/07/12/1775637.html" target="_blank" rel="external">http://www.cnblogs.com/yc_sunniwell/archive/2010/07/12/1775637.html</a></h2>
+          
         
       
     </div>
@@ -1585,7 +1577,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">79</span>
+                <span class="site-state-item-count">80</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

@@ -104,7 +104,7 @@ Arithmetic Computations
 <meta property="og:image" content="https://chenfeng.github.io/\img\fft.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\polynomial_divide.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\polynomial_evaluation.png">
-<meta property="og:updated_time" content="2017-08-22T05:20:00.015Z">
+<meta property="og:updated_time" content="2017-08-22T05:25:02.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数值计算中的并行算法">
 <meta name="twitter:description" content="(并行与分布式计算七)
@@ -211,7 +211,7 @@ Arithmetic Computations
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -288,7 +288,7 @@ Arithmetic Computations
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-18T00:00:00+08:00">
                 2017-04-18
@@ -336,7 +336,8 @@ Arithmetic Computations
 <a id="more"></a>
 <p>$ y_1 = a_0x_0 + a_1 $<br>$ y_2 = y_1x_0 + a_2 $<br>$ . $<br>$ . $<br>$ . $<br>$ p(x_0) = y_n = y_{n-1}x_0 + a_n $</p>
 <p>即如下一阶递推式:<br>$ y_0 = a_0 $<br>$ y_i = y_ix_0 + a_i, 1 \leq i \leq n $</p>
-<h3 id="三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix"><a href="#三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix" class="headerlink" title="三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)"></a>三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)</h3><ul>
+<h3 id="三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix"><a href="#三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix" class="headerlink" title="三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)"></a>三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)</h3><!-- 矩阵中各位置不能留空(否则渲染会有问题) -->
+<ul>
 <li>n*n 非奇异(nonsingular)三对角线矩阵A<br>$$ A =<br>\left[<br>\begin{matrix}<br> b_1 &amp; c_1 &amp; .   &amp;  .  &amp; .  &amp; . \\<br> a_2 &amp; b_2 &amp; c_2 &amp;  .  &amp; .  &amp; . \\<br>  .  &amp; a_3 &amp; b_3 &amp; c_3 &amp; .  &amp; . \\<br>  .  &amp; .   &amp; .   &amp;  .  &amp; .  &amp; . \\<br>  .  &amp; .   &amp; .   &amp;  .  &amp; .  &amp; . \\<br>  .  &amp; .   &amp; .   &amp;  a_{n-1} &amp; b_{n-1} &amp; c_{n-1}\\<br>  .  &amp; .   &amp; .   &amp;  .       &amp; a_n     &amp; b_n<br>\end{matrix}<br>\right]<br>$$</li>
 <li>A的LDU分解: 单位下三角矩阵L, 对角矩阵D和单位上三角矩阵U; A = LDU</li>
 <li><p>易证三个矩阵形式如下<br>$$ L =<br>\left[<br>\begin{matrix}<br> 1   &amp;     &amp;     &amp;     &amp;     &amp; \\<br> l_2 &amp; 1   &amp;     &amp;     &amp;     &amp; \\</p>
@@ -771,10 +772,10 @@ Arithmetic Computations
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -795,7 +796,7 @@ Arithmetic Computations
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -808,7 +809,7 @@ Arithmetic Computations
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -874,7 +875,7 @@ Arithmetic Computations
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

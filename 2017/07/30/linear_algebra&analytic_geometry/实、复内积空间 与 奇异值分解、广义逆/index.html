@@ -217,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -294,7 +294,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-30T11:00:00+08:00">
                 2017-07-30
@@ -387,7 +387,7 @@
 <p>两个非零向量正交的充要条件是它们之间的夹角 $\theta = \frac{\pi}{2}$<br>规定零向量与任意向量正交</p>
 </blockquote>
 <ul>
-<li><p>定义：设 $\alpha_1, \alpha_2, …, \alpha_n$ 是n维实内积空间 V 的基，若它们都是单位向量，而又两两正交，即 <script type="math/tex">(\alpha_i, \alpha_j) = \delta_{ij} = \begin{cases} 0, i \not= j \\ 1, i = j \end{cases}</script> 则称 $\alpha_1, \alpha_2, …, \alpha_n$ 是 V 的标准正交基</p>
+<li><p>定义：设 $\alpha_1, \alpha_2, …, \alpha_n$ 是n维实内积空间 V 的基，若它们都是单位向量，而又两两正交，即 $$(\alpha_i, \alpha_j) = \delta_{ij} = \begin{cases} 0, i \not= j \ 1, i = j \end{cases}$$ 则称 $\alpha_1, \alpha_2, …, \alpha_n$ 是 V 的标准正交基</p>
 </li>
 <li><p>例如：n维实内积空间 $R^n$ 中的自然基 $e_1 = (1, 0, …, 0), e_2 = (0, 1, …, 0), …, e_n = (0, 0, …, 1)$ 就是一组标准正交基</p>
 </li>
@@ -434,7 +434,7 @@
 <p>子空间 W 的正交补用 $W^{\perp}$ 表示</p>
 </blockquote>
 <ul>
-<li>推论：$W^{\perp}$ 是所有与 W 正交的向量组成的，即 $W^{\perp} = \{x \in V | x \perp W\}$</li>
+<li>推论：$W^{\perp}$ 是所有与 W 正交的向量组成的，即 $W^{\perp} = {x \in V | x \perp W}$</li>
 </ul>
 <h3 id="实内积空间的线性变换"><a href="#实内积空间的线性变换" class="headerlink" title="实内积空间的线性变换"></a>实内积空间的线性变换</h3><ul>
 <li><p>引理：设 $\psi$ 是n维实内积空间 V 到实数域 R 的一个同态映射，则 V 中存在一个唯一向量 $\beta$，使对任意 $\alpha \in V$，有 $\psi(\alpha) = (\alpha, \beta)$</p>
@@ -515,7 +515,7 @@
 <li>(3)$\sigma$ 对任意一组标准正交基 $e_1, e_2, …, e_n$ 的矩阵是实反对称矩阵</li>
 </ul>
 </li>
-<li><p>定义：设 W 是n维实内积空间 V 的子空间，因而 $V = W \bigoplus W^{\perp}$，即 V 中每个向量 X 都可唯一分解成以下形式：<script type="math/tex">X = Y + Z(Y \in W, Z \in W^{\perp})</script> 若映射 $\sigma : V \rightarrow W$ 定义为 $\sigma(X) = Y$，则称 $\sigma$ 是 V 到 W 的一个正交投影变换. Y 称为向量 X 在子空间 W 上的正交投影或内射影，而 |Z| 称为向量 X 到子空间 W 的距离</p>
+<li><p>定义：设 W 是n维实内积空间 V 的子空间，因而 $V = W \bigoplus W^{\perp}$，即 V 中每个向量 X 都可唯一分解成以下形式：$$X = Y + Z(Y \in W, Z \in W^{\perp})$$ 若映射 $\sigma : V \rightarrow W$ 定义为 $\sigma(X) = Y$，则称 $\sigma$ 是 V 到 W 的一个正交投影变换. Y 称为向量 X 在子空间 W 上的正交投影或内射影，而 |Z| 称为向量 X 到子空间 W 的距离</p>
 </li>
 </ul>
 <blockquote>
@@ -572,7 +572,7 @@
 <li>(4)$(\sum\limits_{i=1}^m k_i \alpha_i, \sum\limits_{j=1}^n l_j \beta_j) = \sum\limits_{i=1}^m \sum\limits_{j=1}^n k_i \overline{l_j}(\alpha_i, \beta_j)$</li>
 </ul>
 <blockquote>
-<p>非负实数 $\sqrt{(\alpha, \alpha)}$ 称为向量 $\alpha$ 的长度，记作 $|\alpha|$<br>柯西-彭雅可夫斯基不等式仍然成立：对任意向量 $\alpha$ 和 $\beta$，$(\alpha, \beta)(\beta, \alpha) \leq (\alpha, \alpha)(\beta, \beta)$<br>非零向量 $\alpha$ 与 $\beta$ 的夹角 $\theta$ 规定为 <script type="math/tex">\cos^2\theta = \frac{(\alpha, \beta)(\beta, \alpha)}{(\alpha, \alpha)(\beta, \beta)}</script><br>非零向量 $\alpha$ 与 $\beta$，如果 $(\alpha, \beta) = 0$，那么称 $\alpha$ 与 $\beta$ 正交(可与实内积空间一样定义标准正交基)</p>
+<p>非负实数 $\sqrt{(\alpha, \alpha)}$ 称为向量 $\alpha$ 的长度，记作 $|\alpha|$<br>柯西-彭雅可夫斯基不等式仍然成立：对任意向量 $\alpha$ 和 $\beta$，$(\alpha, \beta)(\beta, \alpha) \leq (\alpha, \alpha)(\beta, \beta)$<br>非零向量 $\alpha$ 与 $\beta$ 的夹角 $\theta$ 规定为 $$\cos^2\theta = \frac{(\alpha, \beta)(\beta, \alpha)}{(\alpha, \alpha)(\beta, \beta)}$$<br>非零向量 $\alpha$ 与 $\beta$，如果 $(\alpha, \beta) = 0$，那么称 $\alpha$ 与 $\beta$ 正交(可与实内积空间一样定义标准正交基)</p>
 <p>矩阵 $Q_{n<em>n}$，若 $Q^HQ = E$，则称 Q 为<strong>酉阵</strong><br>若 $U = U_{m</em>n}$，且 $U^HU = E$，则称 U 是具有标准正交列的矩阵</p>
 <p>复内积空间中有类似的<strong>共轭变换</strong>、<strong>埃尔米特变换</strong>和<strong>酉变换</strong>对应实内积空间的共轭变换、对称变换和正交变换，线性变换 $\sigma$ 在标准正交基下的矩阵A，$\sigma$对应变换在此基下的矩阵分别为共轭转置矩阵、埃尔米特矩阵和酉阵</p>
 </blockquote>
@@ -622,17 +622,17 @@
 <p>A 与 B 酉等价，即存在两个酉阵 S 和 T，使 B = SAT</p>
 </blockquote>
 <ul>
-<li>定理(奇异值分解定理)：设 $A \in C^{m<em>n}, rank(A) = r$，若 A 的正奇异值按降序排列为 $\mu_1 \geq \mu_2 \geq … \geq \mu_r &gt; 0$，则存在m阶酉阵U和n阶酉阵V，使 $U^HAV = \begin{matrix} \Delta &amp; 0 \\ 0 &amp; 0 \end{matrix} = D \in C^{m</em>n}$，其中 $\Delta = diag(\mu_1, \mu_2, …, \mu_r)$</li>
+<li>定理(奇异值分解定理)：设 $A \in C^{m<em>n}, rank(A) = r$，若 A 的正奇异值按降序排列为 $\mu_1 \geq \mu_2 \geq … \geq \mu_r &gt; 0$，则存在m阶酉阵U和n阶酉阵V，使 $U^HAV = \begin{matrix} \Delta &amp; 0 \ 0 &amp; 0 \end{matrix} = D \in C^{m</em>n}$，其中 $\Delta = diag(\mu_1, \mu_2, …, \mu_r)$</li>
 </ul>
 <blockquote>
 <p>$A = UDV^H$ 时称这个分解为 A 的奇异值分解</p>
 </blockquote>
 <ul>
-<li><p>定理：设 $A \in R^{m*n}, rank(A) = r$，若 A 的正奇异值按降序排列为 $\mu_1 \geq \mu_2 \geq … \geq \mu_r &gt; 0$，则存在m阶正交矩阵P和n阶正交矩阵Q，使 $P^TAQ = \begin{matrix} \Delta &amp; 0 \\ 0 &amp; 0 \end{matrix}$，其中 $\Delta = diag(\mu_1, \mu_2, …, \mu_r)$</p>
+<li><p>定理：设 $A \in R^{m*n}, rank(A) = r$，若 A 的正奇异值按降序排列为 $\mu_1 \geq \mu_2 \geq … \geq \mu_r &gt; 0$，则存在m阶正交矩阵P和n阶正交矩阵Q，使 $P^TAQ = \begin{matrix} \Delta &amp; 0 \ 0 &amp; 0 \end{matrix}$，其中 $\Delta = diag(\mu_1, \mu_2, …, \mu_r)$</p>
 </li>
 <li><p>定义：设 $A \in C^{m*n}$，若存在矩阵 X，使得 $AXA = A, XAX = X, AX = (AX)^H, XA = (XA)^H$(Penrose方程)，则称 X 是 A 的广义逆矩阵</p>
 </li>
-<li><p>定理：设 $A \in C^{m*n}, rank(A) = r$，则 A 的广义逆矩阵存在并且唯一，当 $A = U \begin{matrix} \Delta &amp; 0 \\ 0 &amp; 0 \end{matrix} V^H$ 为 A 的奇异值分解时，A 的广义逆矩阵 $A^+$ 为 <script type="math/tex">A^+ = V \begin{matrix} \Delta^{-1} & 0 \\ 0 & 0 \end{matrix} U</script></p>
+<li><p>定理：设 $A \in C^{m*n}, rank(A) = r$，则 A 的广义逆矩阵存在并且唯一，当 $A = U \begin{matrix} \Delta &amp; 0 \ 0 &amp; 0 \end{matrix} V^H$ 为 A 的奇异值分解时，A 的广义逆矩阵 $A^+$ 为 $$A^+ = V \begin{matrix} \Delta^{-1} &amp; 0 \ 0 &amp; 0 \end{matrix} U$$</p>
 </li>
 </ul>
 <p>$A^+$ 具有以下性质：</p>
@@ -758,10 +758,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -782,7 +782,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -795,7 +795,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -861,7 +861,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

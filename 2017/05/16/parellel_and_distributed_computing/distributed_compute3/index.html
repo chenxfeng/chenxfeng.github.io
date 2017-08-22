@@ -266,7 +266,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -343,7 +343,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-16T00:00:00+08:00">
                 2017-05-16
@@ -426,8 +426,8 @@
 <p><strong>Prim算法(P算法)</strong></p>
 <ul>
 <li>将图的端点集合V分成A和V-A两部分</li>
-<li>从图中任选一个端点$v_i$，令$A=\{v_i\}$</li>
-<li>从A和V-A的连线中找出最短(权最小)边$e_{ij}=(v_i, v_j)$，令$A=A \bigcup \{v_j\}$，并从V-A中去掉$v_j$</li>
+<li>从图中任选一个端点$v_i$，令$A={v_i}$</li>
+<li>从A和V-A的连线中找出最短(权最小)边$e_{ij}=(v_i, v_j)$，令$A=A \bigcup {v_j}$，并从V-A中去掉$v_j$</li>
 <li>重复上述过程，直至所有端点都在A中</li>
 </ul>
 <p><strong>Kruskal算法(K算法)</strong></p>
@@ -441,8 +441,8 @@
 <li>S1:对E中各边的权排序，设$w_1 \leq w_2 \leq … \leq w_m, w_i=w(e_i)$</li>
 <li>S2:初始化：$w \leftarrow 0,T \leftarrow \phi, k \leftarrow 1,t \leftarrow 0$</li>
 <li>S3:若t=n-1则转S6，否则转S4</li>
-<li>S4:若$T \bigcup \{e_k\}$有圈则$k \leftarrow k+1$转S4，否则转S5</li>
-<li>S5: $T \leftarrow T \bigcup \{e_k\}, w \leftarrow w+w_k, t \leftarrow t+1, k \leftarrow k+1$,转S3</li>
+<li>S4:若$T \bigcup {e_k}$有圈则$k \leftarrow k+1$转S4，否则转S5</li>
+<li>S5: $T \leftarrow T \bigcup {e_k}, w \leftarrow w+w_k, t \leftarrow t+1, k \leftarrow k+1$,转S3</li>
 <li>S6:输出T及w，结束。</li>
 <li>T为最小树，w为T的权。</li>
 </ul>
@@ -456,7 +456,7 @@
 </ul>
 <p><strong>有向图，单商品流问题(网络中只需要安排的只有一种商品或业务)</strong></p>
 <ul>
-<li><p>有向图G = {V, E}, $c_{ij}$为边容量，$f_{ij}$为边流量，$\{f_{ij}\}$为一组流，F为源宿之间$\{f_{ij}\}$的总流量</p>
+<li><p>有向图G = {V, E}, $c_{ij}$为边容量，$f_{ij}$为边流量，${f_{ij}}$为一组流，F为源宿之间${f_{ij}}$的总流量</p>
 </li>
 <li><p>流满足两个条件：</p>
 </li>
@@ -475,12 +475,8 @@
 </ul>
 </li>
 </ul>
-<script type="math/tex; mode=display">
-\sum_{(i,j)\in E} f_{ij} = \sum_{(j, i)\in E} f_{ji} =\begin{cases}
-F&\text{$v_i$ 为源端}\\
--F&\text{$v_i$ 为宿端}\\
-0& \text{其他}
-\end{cases}</script><p><strong>可行流的条件</strong></p>
+<p>$$<br>\sum_{(i,j)\in E} f_{ij} = \sum_{(j, i)\in E} f_{ji} =\begin{cases}<br>F&amp;\text{$v_i$ 为源端}\\<br>-F&amp;\text{$v_i$ 为宿端}\\<br>0&amp; \text{其他}<br>\end{cases}<br>$$</p>
+<p><strong>可行流的条件</strong></p>
 <ul>
 <li>具有m条(有向)边、n个端的图共有2m+n-1个限制条件，包括</li>
 <li><ul>
@@ -513,7 +509,7 @@ F&\text{$v_i$ 为源端}\\
 </ul>
 </li>
 <li><ul>
-<li>网络拓扑已定，$c_{ij}$已知，单位流量通过边$(v_i, v_j)$所需的代价$\alpha_{ij}$(代价系数)已知，给定流量F，寻求总代价中最小的可行流$\{f_{ij}\}$，其中总费用定义为：$\phi = \sum \alpha_{ij}*f_{ij}$</li>
+<li>网络拓扑已定，$c_{ij}$已知，单位流量通过边$(v_i, v_j)$所需的代价$\alpha_{ij}$(代价系数)已知，给定流量F，寻求总代价中最小的可行流${f_{ij}}$，其中总费用定义为：$\phi = \sum \alpha_{ij}*f_{ij}$</li>
 </ul>
 </li>
 </ul>
@@ -531,7 +527,7 @@ F&\text{$v_i$ 为源端}\\
 </li>
 <li><p>割量：前向边容量和 $c(X, \overline X) = \sum_{v_i \in X, v_j \in \overline X} c_{ij}$</p>
 </li>
-<li>对可行流$\{f_{ij}\}$</li>
+<li>对可行流${f_{ij}}$</li>
 <li><ul>
 <li>$f(X, \overline X)$表示前向边的流量$\sum f_{ij}$</li>
 </ul>
@@ -572,9 +568,8 @@ F&\text{$v_i$ 为源端}\\
 </li>
 <li><p>在可增流路上增流不影响连续性条件也不影响其它边上的流量，同时可以使从源端到宿端的流量增大</p>
 </li>
-<li><p>在可增流路上所有正向边的流量均可增加不致于破坏流量的有限性，所有反向边上均可减流(相当于正向增流)不致于破坏非负性。整体的增流量应为这些正向边上能增流(或反向边上能减流)的最小值，即可增量为</p>
-<script type="math/tex; mode=display">
-\delta = min[min_{e_{ij} \in P}(c_{ij} - f_{ij}), min_{e_ji} \in P(f_{ji})]</script></li>
+<li><p>在可增流路上所有正向边的流量均可增加不致于破坏流量的有限性，所有反向边上均可减流(相当于正向增流)不致于破坏非负性。整体的增流量应为这些正向边上能增流(或反向边上能减流)的最小值，即可增量为<br>$$<br>\delta = min[min_{e_{ij} \in P}(c_{ij} - f_{ij}), min_{e_ji} \in P(f_{ji})]<br>$$</p>
+</li>
 <li><p>在可增流路上各边均增加$\delta$(对于反向边即为减流$\delta$)，不会破坏流量的非负性、有限性，并不影响连续性条件，从而得到一个新的可行流，并使源宿端间的流量增加</p>
 </li>
 </ul>
@@ -727,10 +722,10 @@ F&\text{$v_i$ 为源端}\\
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -751,7 +746,7 @@ F&\text{$v_i$ 为源端}\\
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -764,7 +759,7 @@ F&\text{$v_i$ 为源端}\\
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -830,7 +825,7 @@ F&\text{$v_i$ 为源端}\\
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

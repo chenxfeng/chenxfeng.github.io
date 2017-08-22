@@ -196,7 +196,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -273,7 +273,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-06T00:00:00+08:00">
                 2017-07-06
@@ -328,7 +328,7 @@
 <li>T是输入迭代器，只能这样实现</li>
 <li><p>缺陷: 总是需要查找数据结构中的所有元素，即使要查找的值就在尾部</p>
 </li>
-<li><p>采用双向迭代器: 可以使用—操作符</p>
+<li><p>采用双向迭代器: 可以使用–操作符</p>
 </li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> X&gt;</div><div class="line"><span class="function">T <span class="title">rfind</span><span class="params">(T start, T beyond, <span class="keyword">const</span> X&amp; x)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (start != beyond) &#123;</div><div class="line">        T p = beyond;</div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            <span class="keyword">if</span> (*--p == x) <span class="keyword">return</span> p;</div><div class="line">        &#125; <span class="keyword">while</span> (p != start)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> beyond;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -504,10 +504,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -528,7 +528,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -541,7 +541,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -607,7 +607,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

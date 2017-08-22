@@ -211,7 +211,7 @@ Arithmetic Computations
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -288,7 +288,7 @@ Arithmetic Computations
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-18T00:00:00+08:00">
                 2017-04-18
@@ -331,58 +331,38 @@ Arithmetic Computations
 <h2 id="线性递推式-linear-recurrences"><a href="#线性递推式-linear-recurrences" class="headerlink" title="线性递推式(linear recurrences)"></a>线性递推式(linear recurrences)</h2><p>m阶线性递推式(linear recurrece of order m):<br>$y_i$ 由 $ y_{i-1}, y_{i-2}, …, y_{i-m} $ 的线性组合生成</p>
 <h3 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h3><p>A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a_1x^{n-1 + … + a_{n-1}x} + a_n $的系数数组，给定点$x_0$计算$p(x_0)$</p>
 <ul>
-<li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<script type="math/tex; mode=display">p(x_0) = (...((a_0x_0 +a_1)x_0 + a_2)x_0 + ... + a_{n-1})x_0 + a_n</script></li>
+<li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<br>$$ p(x_0) = (…((a_0x_0 +a_1)x_0 + a_2)x_0 + … + a_{n-1})x_0 + a_n $$</li>
 </ul>
 <a id="more"></a>
 <p>$ y_1 = a_0x_0 + a_1 $<br>$ y_2 = y_1x_0 + a_2 $<br>$ . $<br>$ . $<br>$ . $<br>$ p(x_0) = y_n = y_{n-1}x_0 + a_n $</p>
 <p>即如下一阶递推式:<br>$ y_0 = a_0 $<br>$ y_i = y_ix_0 + a_i, 1 \leq i \leq n $</p>
 <h3 id="三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix"><a href="#三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix" class="headerlink" title="三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)"></a>三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)</h3><ul>
-<li>n*n 非奇异(nonsingular)三对角线矩阵A<script type="math/tex; mode=display">A = 
-\left[
-\begin{matrix}
- b_1 & c_1 &     &     &    & \\
- a_2 & b_2 & c_2 &     &    & \\
-     & a_3 & b_3 & c_3 &    & \\
-     & .   & .   &  .  &    & \\
-     &     & .   &  .  & .  & \\
-     &     &     &  a_{n-1} & b_{n-1} & c_{n-1}\\
-     &     &     &          & a_n     & b_n
-\end{matrix}
-\right]</script></li>
+<li>n*n 非奇异(nonsingular)三对角线矩阵A<br>$$ A =<br>\left[<br>\begin{matrix}<br> b_1 &amp; c_1 &amp;     &amp;     &amp;    &amp; \\<br> a_2 &amp; b_2 &amp; c_2 &amp;     &amp;    &amp; \\<pre><code>&amp; a_3 &amp; b_3 &amp; c_3 &amp;    &amp; \\
+&amp; .   &amp; .   &amp;  .  &amp;    &amp; \\
+&amp;     &amp; .   &amp;  .  &amp; .  &amp; \\
+&amp;     &amp;     &amp;  a_{n-1} &amp; b_{n-1} &amp; c_{n-1}\\
+&amp;     &amp;     &amp;          &amp; a_n     &amp; b_n
+</code></pre>\end{matrix}<br>\right]<br>$$</li>
 <li>A的LDU分解: 单位下三角矩阵L, 对角矩阵D和单位上三角矩阵U; A = LDU</li>
-<li><p>易证三个矩阵形式如下</p>
-<script type="math/tex; mode=display">L = 
-\left[
-\begin{matrix}
- 1   &     &     &     &     & \\
- l_2 & 1   &     &     &     & \\
-     & l_3 & 1   &     &     & \\
-     &     & .   &  .  &     & \\
-     &     &     &  .  & .   & \\
-     &     &     &     & .   & . \\
-     &     &     &     & l_n & 1 
-\end{matrix}
-\right]</script><script type="math/tex; mode=display">U = 
-\left[
-\begin{matrix}
- 1   & u_1 &     &     &     & \\
-     & 1   & u_2 &     &     & \\
-     &     & 1   & u_3 &     & \\
-     &     &     &  .  & .   & \\
-     &     &     &     & .   & u_{n-1} \\
-     &     &     &     &     & 1 
-\end{matrix}
-\right]</script><script type="math/tex; mode=display">D = 
-\left[
-\begin{matrix}
- d_1 &     &     &     &     & \\
-     & d_2 &     &     &     & \\
-     &     & .   &     &     & \\
-     &     &     &  .  &     & \\
-     &     &     &     & .   & \\
-     &     &     &     &     & d_n 
-\end{matrix}
-\right]</script><p>其中<br>$ d_1 = b_1 $<br>$ d_j = b_j - a_jc_{j-1}/d_{j-1}, 2 \leq j \leq n $<br>$ l_j = a_j/d_{j-1}, 2 \leq j \leq n $<br>$ u_j = c_j/d_j, 1 \leq j \leq n - 1 $</p>
+<li><p>易证三个矩阵形式如下<br>$$ L =<br>\left[<br>\begin{matrix}<br> 1   &amp;     &amp;     &amp;     &amp;     &amp; \\<br> l_2 &amp; 1   &amp;     &amp;     &amp;     &amp; \\</p>
+<pre><code>&amp; l_3 &amp; 1   &amp;     &amp;     &amp; \\
+&amp;     &amp; .   &amp;  .  &amp;     &amp; \\
+&amp;     &amp;     &amp;  .  &amp; .   &amp; \\
+&amp;     &amp;     &amp;     &amp; .   &amp; . \\
+&amp;     &amp;     &amp;     &amp; l_n &amp; 1 
+</code></pre><p>\end{matrix}<br>\right]<br>$$<br>$$ U =<br>\left[<br>\begin{matrix}<br> 1   &amp; u_1 &amp;     &amp;     &amp;     &amp; \\</p>
+<pre><code>&amp; 1   &amp; u_2 &amp;     &amp;     &amp; \\
+&amp;     &amp; 1   &amp; u_3 &amp;     &amp; \\
+&amp;     &amp;     &amp;  .  &amp; .   &amp; \\
+&amp;     &amp;     &amp;     &amp; .   &amp; u_{n-1} \\
+&amp;     &amp;     &amp;     &amp;     &amp; 1 
+</code></pre><p>\end{matrix}<br>\right]<br>$$<br>$$ D =<br>\left[<br>\begin{matrix}<br> d_1 &amp;     &amp;     &amp;     &amp;     &amp; \\</p>
+<pre><code>&amp; d_2 &amp;     &amp;     &amp;     &amp; \\
+&amp;     &amp; .   &amp;     &amp;     &amp; \\
+&amp;     &amp;     &amp;  .  &amp;     &amp; \\
+&amp;     &amp;     &amp;     &amp; .   &amp; \\
+&amp;     &amp;     &amp;     &amp;     &amp; d_n 
+</code></pre><p>\end{matrix}<br>\right]<br>$$<br>其中<br>$ d_1 = b_1 $<br>$ d_j = b_j - a_jc_{j-1}/d_{j-1}, 2 \leq j \leq n $<br>$ l_j = a_j/d_{j-1}, 2 \leq j \leq n $<br>$ u_j = c_j/d_j, 1 \leq j \leq n - 1 $</p>
 </li>
 <li><p>$l_j$和$u_j$的值可以有$d_j$快速得到</p>
 </li>
@@ -392,19 +372,12 @@ Arithmetic Computations
 </ul>
 <h3 id="带状三角线性系统-Banded-Triangular-Linear-Systems"><a href="#带状三角线性系统-Banded-Triangular-Linear-Systems" class="headerlink" title="带状三角线性系统(Banded Triangular Linear Systems)"></a>带状三角线性系统(Banded Triangular Linear Systems)</h3><p>n*n 下三角矩阵A, 其中所有非零元在主对角线或者其下的m-1对角线上(m &lt; n)</p>
 <ul>
-<li><p>e.g. (m = 3):</p>
-<script type="math/tex; mode=display">A = 
-\left[
-\begin{matrix}
- a_{11} & 0 & 0  & 0 & ... & ... & 0 \\
- a_{21} & a_{22} & 0 & 0  & ... & ... & 0 \\
- a_{31} & a_{32} & a_{33} & 0   & . & . & . \\
-  0  & a_{42} & a_{43} & a_{44} &   &   &  \\
-     &     & .   &  .  & .  & . & . \\
-     &     &     &  .  & .  & . & 0\\
-     &     &     &     & a_{n,n-2}  & a_{n, n-1} & a_{nn}
-\end{matrix}
-\right]</script></li>
+<li><p>e.g. (m = 3):<br>$$ A =<br>\left[<br>\begin{matrix}<br> a_{11} &amp; 0 &amp; 0  &amp; 0 &amp; … &amp; … &amp; 0 \\<br> a_{21} &amp; a_{22} &amp; 0 &amp; 0  &amp; … &amp; … &amp; 0 \\<br> a_{31} &amp; a_{32} &amp; a_{33} &amp; 0   &amp; . &amp; . &amp; . \\<br>  0  &amp; a_{42} &amp; a_{43} &amp; a_{44} &amp;   &amp;   &amp;  \\</p>
+<pre><code>&amp;     &amp; .   &amp;  .  &amp; .  &amp; . &amp; . \\
+&amp;     &amp;     &amp;  .  &amp; .  &amp; . &amp; 0\\
+&amp;     &amp;     &amp;     &amp; a_{n,n-2}  &amp; a_{n, n-1} &amp; a_{nn}
+</code></pre><p>\end{matrix}<br>\right]<br>$$</p>
+</li>
 <li><p>线性系统<strong>$ Ax = b $</strong>的解可以表示为:<br>$ x_1 = \frac{b_1}{a_{11}} $<br>$ x_i = -(\sum_{j=i-m+1}^{i-1}\frac{a_{ij}}{a_{i1}}x_j) - \frac{b_i}{a_{i1}}, 2 \leq i \leq n $</p>
 </li>
 <li><p>该解是一个m-1阶线性递推式</p>
@@ -453,17 +426,8 @@ Arithmetic Computations
 <li><p>再用标准前向替换法(standard forward substitution algorithm)可以求解</p>
 </li>
 </ul>
-<h3 id="单位下三角矩阵及其线性方程"><a href="#单位下三角矩阵及其线性方程" class="headerlink" title="单位下三角矩阵及其线性方程"></a>单位下三角矩阵及其线性方程</h3><p>线性方程组$Ax = b$, 其中$x$和$b是n维向量$, A是n*n 单位下三角矩阵:</p>
-<script type="math/tex; mode=display">A = 
- \left[
- \begin{matrix}
-   1 & 0 & 0 & ... & 0 \\
-   a_{21} & 1 & 0 & ...  & 0 \\
-   a_{31} & a_{32} & 1 & ... & 0 \\
-    .  & . & . & . & . \\
-   a_{n1} & a_{n2} & ... &  a_{n,n-1}  & 1
-  \end{matrix}
-  \right]</script><ul>
+<h3 id="单位下三角矩阵及其线性方程"><a href="#单位下三角矩阵及其线性方程" class="headerlink" title="单位下三角矩阵及其线性方程"></a>单位下三角矩阵及其线性方程</h3><p>线性方程组$Ax = b$, 其中$x$和$b是n维向量$, A是n*n 单位下三角矩阵:<br>$$ A =<br> \left[<br> \begin{matrix}<br>   1 &amp; 0 &amp; 0 &amp; … &amp; 0 \\<br>   a_{21} &amp; 1 &amp; 0 &amp; …  &amp; 0 \\<br>   a_{31} &amp; a_{32} &amp; 1 &amp; … &amp; 0 \\<br>    .  &amp; . &amp; . &amp; . &amp; . \\<br>   a_{n1} &amp; a_{n2} &amp; … &amp;  a_{n,n-1}  &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<ul>
 <li><p>对任意矩阵，通过将每行元素除以$a_{ii}(a_{ii} \not= 1, 1 \leq i \leq n)$可得到以上形式的矩阵</p>
 </li>
 <li><p>简单方法: $x_i = b_i - \sum_{j=1}^{i-1}a_{ij}x_j$; 需要O(n^2)的计算量, 但无法求得并行算法</p>
@@ -471,23 +435,11 @@ Arithmetic Computations
 </ul>
 <h3 id="快速矩阵求逆并行算法"><a href="#快速矩阵求逆并行算法" class="headerlink" title="快速矩阵求逆并行算法"></a>快速矩阵求逆并行算法</h3><p>用分治策略求出矩阵$A$的逆$A^{-1}$，则$x = A^{-1}b$能在$O(logn)$时间内用$O(n^2)$计算量求得</p>
 <ul>
-<li>矩阵分块: 将矩阵$A$分成(n/2) * (n/2)的块(不妨设n是2的幂)<script type="math/tex; mode=display">A = 
-\left[
-\begin{matrix}
- A_1 & 0  \\
- A_2 & A_3  
-\end{matrix}
-\right]</script></li>
+<li>矩阵分块: 将矩阵$A$分成(n/2) * (n/2)的块(不妨设n是2的幂)<br>$$ A =<br>\left[<br>\begin{matrix}<br> A_1 &amp; 0  \\<br> A_2 &amp; A_3<br>\end{matrix}<br>\right]<br>$$</li>
 <li><p>$A_1$和$A_3$是非奇异下三角矩阵</p>
 <blockquote>
-<p>非奇异矩阵: 行列式不为零(存在逆矩阵)</p>
-<script type="math/tex; mode=display">A^{-1} = 
-\left[
-\begin{matrix}
- A_1^{-1} & 0  \\
- -A_3^{-1}A_2A_1^{-1} & A_3^{-1}  
-\end{matrix}
-\right]</script></blockquote>
+<p>非奇异矩阵: 行列式不为零(存在逆矩阵)<br>$$ A^{-1} =<br>\left[<br>\begin{matrix}<br> A_1^{-1} &amp; 0  \\<br> -A_3^{-1}A_2A_1^{-1} &amp; A_3^{-1}<br>\end{matrix}<br>\right]<br>$$</p>
+</blockquote>
 </li>
 <li><p>n*n 三角线性方程组可以在$O(log^2n)$时间复杂度，O(M(n))的计算量内求解</p>
 </li>
@@ -496,18 +448,8 @@ Arithmetic Computations
 <li><p>$W(n) = 2W(n/2) + 2M(n/2)$: 假设$M(n) \geq 4M(n/2)$可得$W(n) \leq M(n)$</p>
 </li>
 </ul>
-<h3 id="带状三角形线性方程组"><a href="#带状三角形线性方程组" class="headerlink" title="带状三角形线性方程组"></a>带状三角形线性方程组</h3><p>e.g.(n = 6, m = 3)</p>
-<script type="math/tex; mode=display">A = 
- \left[
- \begin{matrix}
-   a_{11} & 0 & 0 & 0 & 0 & 0  \\
-   a_{21} & a_{22} & 0 & 0 & 0 & 0 \\
-   a_{31} & a_{32} & a_{33} & 0 & 0 & 0 \\
-   0 & a_{42} & a_{43} & a_{44} & 0 & 0 \\
-   0 & 0 & a_{53} & a_{54} & a_{55} & 0 \\
-   0 & 0 & 0 & a_{64} & a_{65} & a_{66}
-  \end{matrix}
-  \right]</script><ul>
+<h3 id="带状三角形线性方程组"><a href="#带状三角形线性方程组" class="headerlink" title="带状三角形线性方程组"></a>带状三角形线性方程组</h3><p>e.g.(n = 6, m = 3)<br>$$ A =<br> \left[<br> \begin{matrix}<br>   a_{11} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0  \\<br>   a_{21} &amp; a_{22} &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\<br>   a_{31} &amp; a_{32} &amp; a_{33} &amp; 0 &amp; 0 &amp; 0 \\<br>   0 &amp; a_{42} &amp; a_{43} &amp; a_{44} &amp; 0 &amp; 0 \\<br>   0 &amp; 0 &amp; a_{53} &amp; a_{54} &amp; a_{55} &amp; 0 \\<br>   0 &amp; 0 &amp; 0 &amp; a_{64} &amp; a_{65} &amp; a_{66}<br>  \end{matrix}<br>  \right]<br>$$</p>
+<ul>
 <li><p>不失一般性假设主对角线元等于1，$Ax = b$的解可以表示为<br>$ x_1 = b_1 $<br>$ x_i = (-\sum_{j=i-m+1}^{i-1}a_{ij}x_j) + b_i, 2 \leq i \leq n $</p>
 </li>
 <li><p>不妨设m能整除n，将A分成m*m 的块$A_{i,j}, 1 \leq i,j \leq n/m$; $A_{i,i}$是下三角矩阵，$A_{i,i-1}$是上三角矩阵<br>e.g.:</p>
@@ -515,27 +457,10 @@ Arithmetic Computations
 <p><img src="\img\matrix_block.png" alt="matrix_block.png"></p>
 </blockquote>
 </li>
-<li><p>设D为如下子矩阵:</p>
-<script type="math/tex; mode=display">D = 
-\left[
-\begin{matrix}
-A_{1,1} & & & \\
-& A_{2,2} & & \\
-&  & . & \\
- & & & A_{\frac{n}{m},\frac{n}{m}}
-\end{matrix}
-\right]</script></li>
-<li><p>使$A^{<em>} = D^{-1}A$, 使$d = D^{-1}b$; $Ax = b$的解同$D_{-1}Ax = D^{-1}b$, 即$A^{</em>}x = b$, $A^{*}$如下:</p>
-<script type="math/tex; mode=display">A = 
-\left[
-\begin{matrix}
-I_m & & & & \\
-A_{2,1}^{*} & I_m & & & \\
-& A_{3,2}^{*} & I_m & & \\
-&  & . & . & \\
- & & & A_{\frac{n}{m},\frac{n}{m}-1}^{*} & I_m
-\end{matrix}
-\right]</script></li>
+<li><p>设D为如下子矩阵:<br>$$ D =<br>\left[<br>\begin{matrix}<br>A_{1,1} &amp; &amp; &amp; \\<br>&amp; A_{2,2} &amp; &amp; \\<br>&amp;  &amp; . &amp; \\<br> &amp; &amp; &amp; A_{\frac{n}{m},\frac{n}{m}}<br>\end{matrix}<br>\right]<br>$$</p>
+</li>
+<li><p>使$A^{<em>} = D^{-1}A$, 使$d = D^{-1}b$; $Ax = b$的解同$D_{-1}Ax = D^{-1}b$, 即$A^{</em>}x = b$, $A^{<em>}$如下:<br>$$ A =<br>\left[<br>\begin{matrix}<br>I_m &amp; &amp; &amp; &amp; \\<br>A_{2,1}^{</em>} &amp; I_m &amp; &amp; &amp; \\<br>&amp; A_{3,2}^{<em>} &amp; I_m &amp; &amp; \\<br>&amp;  &amp; . &amp; . &amp; \\<br> &amp; &amp; &amp; A_{\frac{n}{m},\frac{n}{m}-1}^{</em>} &amp; I_m<br>\end{matrix}<br>\right]<br>$$</p>
+</li>
 <li><p>$A_{i,i-1}^{<em>} = A_{i,i}^{-1}A_{i,i-1}, 2 \leq i \leq n/m$; $A^{</em>}$的计算需要对(n/m)-1个独立的m<em>m矩阵求逆得到${A_{i,i}^{-1}}_{i=2}^{n/m}$，再通过(n/m)-1个独立的m</em>m矩阵相乘得到${A_{i,i}^{-1}A_{i,i-1}}_{i=2}^{n/m}$</p>
 </li>
 <li><p>运用对下三角矩阵求逆的并行算法，可以在$O(log^2m)$时间内用$O((n/m)M(m))$计算量求出$A_{i,i}^{-1}, 1 \leq i \leq n/m$; (n/m)-1矩阵乘法与$d = D_{-1}b$的计算显然在这个上界之内</p>
@@ -631,18 +556,7 @@ A_{2,1}^{*} & I_m & & & \\
 </ul>
 <h2 id="Toeplitz矩阵-托普利茨矩阵"><a href="#Toeplitz矩阵-托普利茨矩阵" class="headerlink" title="Toeplitz矩阵(托普利茨矩阵)"></a>Toeplitz矩阵(托普利茨矩阵)</h2><p>Toeplitz矩阵: n*n矩阵T满足$T(k,l) = T(k-1,l-1)$, for $2 \leq l,k \leq n$</p>
 <ul>
-<li>矩阵T同一对角线上的所有元素相等; 因此这类矩阵又出现在第一行和第一列的2n-1个元素唯一确定<script type="math/tex; mode=display">T = 
-\left[
-\begin{matrix}
-t_{n-1} & t_{n-2} & ... & & t_2 & t_1 & t_0 \\
-t_n & t_{n-1} & t_{n-2} & ... & & t_2 & t_1 \\
-t_{n+1} & t_n & t_{n-1} & t_{n-2} & ... & & t_2 \\
-. & & & . & . & . & . \\
-. & & & & . & . & . \\
-t_{2n-3} & t_{2n-4} & ... & & & t_{n-1} & t_{n-2} \\
-t_{2n-2} & t_{2n-3} & ... & & t_{n+1} & t_n & t_{n-1}
-\end{matrix}
-\right]</script></li>
+<li>矩阵T同一对角线上的所有元素相等; 因此这类矩阵又出现在第一行和第一列的2n-1个元素唯一确定<br>$$ T =<br>\left[<br>\begin{matrix}<br>t_{n-1} &amp; t_{n-2} &amp; … &amp; &amp; t_2 &amp; t_1 &amp; t_0 \\<br>t_n &amp; t_{n-1} &amp; t_{n-2} &amp; … &amp; &amp; t_2 &amp; t_1 \\<br>t_{n+1} &amp; t_n &amp; t_{n-1} &amp; t_{n-2} &amp; … &amp; &amp; t_2 \\<br>. &amp; &amp; &amp; . &amp; . &amp; . &amp; . \\<br>. &amp; &amp; &amp; &amp; . &amp; . &amp; . \\<br>t_{2n-3} &amp; t_{2n-4} &amp; … &amp; &amp; &amp; t_{n-1} &amp; t_{n-2} \\<br>t_{2n-2} &amp; t_{2n-3} &amp; … &amp; &amp; t_{n+1} &amp; t_n &amp; t_{n-1}<br>\end{matrix}<br>\right]<br>$$</li>
 <li>$t = [t_0, t_1, …, t_{2n-2}]^{T}$确定了托普利茨矩阵T</li>
 </ul>
 <h3 id="Toeplitz矩阵乘以向量"><a href="#Toeplitz矩阵乘以向量" class="headerlink" title="Toeplitz矩阵乘以向量"></a>Toeplitz矩阵乘以向量</h3><ul>
@@ -663,24 +577,12 @@ t_{2n-2} & t_{2n-3} & ... & & t_{n+1} & t_n & t_{n-1}
 <ul>
 <li>T(n) = O(logn); W(n) = O(nlogn)</li>
 </ul>
-<h3 id="求下三角Toeplitz矩阵的逆矩阵"><a href="#求下三角Toeplitz矩阵的逆矩阵" class="headerlink" title="求下三角Toeplitz矩阵的逆矩阵"></a>求下三角Toeplitz矩阵的逆矩阵</h3><p>-下三角托普利茨矩阵T分成n/2 * n/2的块:</p>
-<script type="math/tex; mode=display">T = 
- \left[
- \begin{matrix}
- T_1 & 0 \\
- T_2 & T_1
-  \end{matrix}
-  \right]</script><ul>
+<h3 id="求下三角Toeplitz矩阵的逆矩阵"><a href="#求下三角Toeplitz矩阵的逆矩阵" class="headerlink" title="求下三角Toeplitz矩阵的逆矩阵"></a>求下三角Toeplitz矩阵的逆矩阵</h3><p>-下三角托普利茨矩阵T分成n/2 * n/2的块:<br>$$ T =<br> \left[<br> \begin{matrix}<br> T_1 &amp; 0 \\<br> T_2 &amp; T_1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<ul>
 <li><p>不妨设n是2的幂</p>
 </li>
-<li><p>矩阵T的逆$T^{-1}$如下: </p>
-<script type="math/tex; mode=display">T^{-1} = 
-\left[
-\begin{matrix}
-T_1^{-1} & 0 \\
--T_1^{-1}T_2T_1^{-1} & T_1^{-1}
-\end{matrix}
-\right]</script></li>
+<li><p>矩阵T的逆$T^{-1}$如下:<br>$$ T^{-1} =<br>\left[<br>\begin{matrix}<br>T_1^{-1} &amp; 0 \\<br>-T_1^{-1}T_2T_1^{-1} &amp; T_1^{-1}<br>\end{matrix}<br>\right]<br>$$</p>
+</li>
 <li><p>$T^{-1}$也是一个下三角托普利茨矩阵，由第一列元素唯一确定; 计算$T^{-1}$的算法: </p>
 </li>
 </ul>
@@ -756,7 +658,7 @@ T_1^{-1} & 0 \\
 <li>$ T(n) = O(log^3n) $; $ W(n) = O(nlog^2n) $</li>
 </ul>
 <h3 id="多项式插值的分治算法"><a href="#多项式插值的分治算法" class="headerlink" title="多项式插值的分治算法"></a>多项式插值的分治算法</h3><ul>
-<li><p>集合$ \{ \beta_j = p(\alpha) \}_{j=0}^{n-1} $</p>
+<li><p>集合$ { \beta_j = p(\alpha) }_{j=0}^{n-1} $</p>
 </li>
 <li><p>拉格朗日插值公式(Lagrange interpolation formula):<br>$ p(x) = \sum_{j=0}^{n-1}\beta_j \frac{\prod_{l=0,l \not= j}^{n-1}(x - \alpha_j)}{\prod_{l=0,l \not= j}^{n-1}(\alpha_j-\alpha_l)} $</p>
 </li>
@@ -874,10 +776,10 @@ T_1^{-1} & 0 \\
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -898,7 +800,7 @@ T_1^{-1} & 0 \\
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -911,7 +813,7 @@ T_1^{-1} & 0 \\
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -977,7 +879,7 @@ T_1^{-1} & 0 \\
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

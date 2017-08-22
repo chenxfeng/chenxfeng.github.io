@@ -370,6 +370,138 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" itemprop="url">
+                  搜索、归并与排序的并行算法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">
+                2017-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>(并行与分布式计算三<rev2>)</p>
+<h2 id="并行搜索的基本思想"><a href="#并行搜索的基本思想" class="headerlink" title="并行搜索的基本思想"></a>并行搜索的基本思想</h2><p>在升序数组中采用与二分搜索类似的p+1分搜索: </p>
+<ul>
+<li>使用递归按比例缩小搜索范围的办法</li>
+<li>二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较</li>
+<li>上述的每层p次比较可以用p个处理器同时进行</li>
+</ul>
+<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -458,138 +590,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/#more" rel="contents">
-              Weiterlesen &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" itemprop="url">
-                  搜索、归并与排序的并行算法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">
-                2017-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>(并行与分布式计算三<rev2>)</p>
-<h2 id="并行搜索的基本思想"><a href="#并行搜索的基本思想" class="headerlink" title="并行搜索的基本思想"></a>并行搜索的基本思想</h2><p>在升序数组中采用与二分搜索类似的p+1分搜索: </p>
-<ul>
-<li>使用递归按比例缩小搜索范围的办法</li>
-<li>二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较</li>
-<li>上述的每层p次比较可以用p个处理器同时进行</li>
-</ul>
-<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/#more" rel="contents">
               Weiterlesen &raquo;
             </a>
           </div>
@@ -902,133 +902,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/" itemprop="url">
-                  并行计算基础知识及基本并行算法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T00:00:00+08:00">
-                2017-02-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>(并行与分布式计算一)</p>
-<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="设计分布式并行算法基本流程"><a href="#设计分布式并行算法基本流程" class="headerlink" title="设计分布式并行算法基本流程"></a>设计分布式并行算法基本流程</h3><p>1.1发现计算问题的<strong>内在并行性</strong></p>
-<p>1.2设计<strong>与硬件无关</strong>的并行算法</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/#more" rel="contents">
-              Weiterlesen &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/02/28/computer_network/computer_network_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1113,6 +986,133 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/28/computer_network/computer_network_1/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/" itemprop="url">
+                  并行计算基础知识及基本并行算法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T00:00:00+08:00">
+                2017-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>(并行与分布式计算一)</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="设计分布式并行算法基本流程"><a href="#设计分布式并行算法基本流程" class="headerlink" title="设计分布式并行算法基本流程"></a>设计分布式并行算法基本流程</h3><p>1.1发现计算问题的<strong>内在并行性</strong></p>
+<p>1.2设计<strong>与硬件无关</strong>的并行算法</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/#more" rel="contents">
               Weiterlesen &raquo;
             </a>
           </div>
@@ -1424,7 +1424,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/经济学基础知识/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/现代经济中的市场和政府/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -1446,8 +1446,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/21/economics/经济学基础知识/" itemprop="url">
-                  经济学基础知识
+                <a class="post-title-link" href="/2017/01/21/economics/现代经济中的市场和政府/" itemprop="url">
+                  现代经济中的市场和政府
                 </a>
               
             
@@ -1500,16 +1500,12 @@
 
       
         
-          <p>研究一个社会如何利用<strong>稀缺</strong>资源生产有价值的物品和劳务并将它们在不同人中间进行分配。</p>
-<ul>
-<li>物品和资源是稀缺的</li>
-<li>社会必须有效地加以利用</li>
+          <h3 id="什么是市场"><a href="#什么是市场" class="headerlink" title="什么是市场"></a>什么是市场</h3><ul>
+<li>市场(market)是买者和卖者相互作用并共同决定商品和劳务的价格和交易数量的机制</li>
 </ul>
-<p>稀缺(sarcity)：相对于需求，物品总是有限的</p>
-<p>效率(efficiency)：最有效地使用社会资源以满足人类的愿望和需要</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/21/economics/经济学基础知识/#more" rel="contents">
+            <a class="btn" href="/2017/01/21/economics/现代经济中的市场和政府/#more" rel="contents">
               Weiterlesen &raquo;
             </a>
           </div>

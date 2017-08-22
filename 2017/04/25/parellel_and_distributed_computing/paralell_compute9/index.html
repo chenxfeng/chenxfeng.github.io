@@ -92,11 +92,11 @@
 随机算法的分析基于概率论(Probability Theory)基本事实
 伯努利随机试验: 
 
-$P_r\{X \geq m\} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$
+$Pr{X \geq m} = \sum{j=m}^n (_j^n)p^jq^{n-j}$
 
 切尔诺夫界/不等式(Chernoff bounds): 
 
-$P_r\{ X">
+$P_r{ X \leq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="随机并行算法(Randomized Algorithm)">
 <meta property="og:url" content="https://chenfeng.github.io/2017/04/25/parellel_and_distributed_computing/paralell_compute9/index.html">
@@ -106,11 +106,11 @@ $P_r\{ X">
 随机算法的分析基于概率论(Probability Theory)基本事实
 伯努利随机试验: 
 
-$P_r\{X \geq m\} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$
+$Pr{X \geq m} = \sum{j=m}^n (_j^n)p^jq^{n-j}$
 
 切尔诺夫界/不等式(Chernoff bounds): 
 
-$P_r\{ X">
+$P_r{ X \leq">
 <meta property="og:updated_time" content="2017-05-01T01:12:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="随机并行算法(Randomized Algorithm)">
@@ -119,11 +119,11 @@ $P_r\{ X">
 随机算法的分析基于概率论(Probability Theory)基本事实
 伯努利随机试验: 
 
-$P_r\{X \geq m\} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$
+$Pr{X \geq m} = \sum{j=m}^n (_j^n)p^jq^{n-j}$
 
 切尔诺夫界/不等式(Chernoff bounds): 
 
-$P_r\{ X">
+$P_r{ X \leq">
 
 
 
@@ -343,12 +343,12 @@ $P_r\{ X">
 <p>随机算法的分析基于概率论(Probability Theory)基本事实</p>
 <p>伯努利随机试验: </p>
 <ul>
-<li>$P_r\{X \geq m\} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$</li>
+<li>$P<em>r{X \geq m} = \sum</em>{j=m}^n (_j^n)p^jq^{n-j}$</li>
 </ul>
 <p>切尔诺夫界/不等式(Chernoff bounds): </p>
 <ul>
-<li>$P_r\{ X \leq (1 - \epsilon)pn \} \leq e^{-\epsilon^2np/2}$</li>
-<li>$P_r\{ X \geq (1 + \epsilon)pn \} \leq e^{-\epsilon^2np/3}$</li>
+<li>$P_r{ X \leq (1 - \epsilon)pn } \leq e^{-\epsilon^2np/2}$</li>
+<li>$P_r{ X \geq (1 + \epsilon)pn } \leq e^{-\epsilon^2np/3}$</li>
 </ul>
 <a id="more"></a>
 <p>PRAM模型需要加入一些特征</p>
@@ -413,8 +413,8 @@ $P_r\{ X">
 <p>定理9.2: 任意平面图G = (V, E)都能在线性串行时间内建立一个分数阶独立集X</p>
 <ul>
 <li>令 $V_d$ 为G的一个阶不大于d的顶点子集(d &gt;= 6)</li>
-<li>令$V_h = V - V_d$ ，则 $\sum_{v \in V_h}deg(v) \geq (d + 1)|V_h|$</li>
-<li>$(d + 1)|V_h| \leq \sum_{v \in V}deg(v) \leq 6|V| - 12$</li>
+<li>令$V_h = V - V<em>d$ ，则 $\sum</em>{v \in V_h}deg(v) \geq (d + 1)|V_h|$</li>
+<li>$(d + 1)|V<em>h| \leq \sum</em>{v \in V}deg(v) \leq 6|V| - 12$</li>
 <li>$|V_h| \leq (6|V| - 12)/(d + 1)$</li>
 <li><p>$|v_d| = |V| - |V_h| \geq (d - 5)|V|/(d + 1)$</p>
 </li>
@@ -437,7 +437,7 @@ $P_r\{ X">
 <li>在独立试验中的平均被选率：n/8</li>
 <li><p>最终被选的包括独立试验的和非独立试验的</p>
 </li>
-<li><p>$ P_r\{|X| \leq \alpha n\} \leq e^{-\beta n} $ (由Chernoff bounds得)</p>
+<li><p>$ P_r{|X| \leq \alpha n} \leq e^{-\beta n} $ (由Chernoff bounds得)</p>
 </li>
 <li>其中$ 0 &lt; \alpha &lt; 1/8 $, $ \beta = (1 - 8\alpha)^2/16 $</li>
 </ul>
@@ -454,7 +454,7 @@ $P_r\{ X">
 <li>独立试验中的平均成功点数至少为： $|V_d|/36 * 1/27$</li>
 <li><p>最终被选的包括独立试验的和非独立试验的</p>
 </li>
-<li><p>$ P_r \{|X| \leq \alpha n \} \leq e^{-\beta n} $</p>
+<li><p>$ P_r {|X| \leq \alpha n } \leq e^{-\beta n} $</p>
 </li>
 <li>$\alpha$ 和 $\beta$为常量</li>
 </ul>
@@ -491,7 +491,7 @@ $P_r\{ X">
 </li>
 <li><p>问题转化成确定B中元素是否和P相同</p>
 </li>
-<li><p>令 $\mathcal{F} = \{ f_p \}_{p \in S}$为函数集合，其中 $f_p$ 将长度为m的字符串映射到值域D中</p>
+<li><p>令 $\mathcal{F} = { f<em>p }</em>{p \in S}$为函数集合，其中 $f_p$ 将长度为m的字符串映射到值域D中</p>
 </li>
 <li>$\mathcal{F}$ 必须满足以下三个特性：</li>
 <li><ul>
@@ -514,8 +514,8 @@ $P_r\{ X">
 <li>将{0, 1}映射到 整数环Z上的2*2矩阵</li>
 <li>(满足性质2但不满足1和3)</li>
 </ul>
-<p>$$ f(0) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 0 \\<br>   1 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
-<p>$$ f(1) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 1 \\<br>   0 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<p>$$ f(0) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 0 \<br>   1 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<p>$$ f(1) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 1 \<br>   0 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
 <ul>
 <li>对字符串XY，f(XY)=f(X)f(Y)(Z上的矩阵乘法)</li>
 <li>指纹是一一对应的</li>
@@ -533,13 +533,13 @@ $P_r\{ X">
 </ul>
 </li>
 <li><ul>
-<li>f(X) = $<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \\<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 0 \\<br>1 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \\<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \\<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$ = $<br>\left[<br>\begin{matrix}<br>2 &amp; 5 \\<br>1 &amp; 3<br>\end{matrix}<br>\right]<br>$</li>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 0 \<br>1 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$ = $<br>\left[<br>\begin{matrix}<br>2 &amp; 5 \<br>1 &amp; 3<br>\end{matrix}<br>\right]<br>$</li>
 </ul>
 </li>
 </ul>
 <p><strong>指纹的增长速度</strong>(不满足性质1)</p>
 <ul>
-<li><p>X长度为m，则f(X)的每个元是不大于 $F_{m+1}$ 的整数，其中 $F_{m+1}$ 是第(m + 1)个斐波那契数($ F_1 = F_2 = 1, F_{m + 1} = F_m + F_{m - 1} $)</p>
+<li><p>X长度为m，则f(X)的每个元是不大于 $F<em>{m+1}$ 的整数，其中 $F</em>{m+1}$ 是第(m + 1)个斐波那契数($ F_1 = F<em>2 = 1, F</em>{m + 1} = F<em>m + F</em>{m - 1} $)</p>
 </li>
 <li><p>f(X)的元会大至 $F_{m + 1} \approx \frac{\phi^{m+1}}{\sqrt{5}}$</p>
 </li>
@@ -557,7 +557,7 @@ $P_r\{ X">
 </ul>
 </li>
 <li><ul>
-<li>f(X) = $<br>\left[<br>\begin{matrix}<br>206 &amp; 575 \\<br>115 &amp; 321<br>\end{matrix}<br>\right]<br>$</li>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>206 &amp; 575 \<br>115 &amp; 321<br>\end{matrix}<br>\right]<br>$</li>
 </ul>
 </li>
 <li><ul>
@@ -565,7 +565,7 @@ $P_r\{ X">
 </ul>
 </li>
 <li><ul>
-<li>f(X) = $<br>\left[<br>\begin{matrix}<br>3 &amp; 1 \\<br>3 &amp; 6<br>\end{matrix}<br>\right]<br>$</li>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>3 &amp; 1 \<br>3 &amp; 6<br>\end{matrix}<br>\right]<br>$</li>
 </ul>
 </li>
 <li><p>引理9.4: 对任意整数 $m \geq 17$ , 有 $ \frac{m}{\ln m} \leq \pi(m) \leq 1.2551\frac{m}{\ln m} $</p>
@@ -574,7 +574,7 @@ $P_r\{ X">
 </li>
 </ul>
 <h3 id="随机化匹配产生错误的概率"><a href="#随机化匹配产生错误的概率" class="headerlink" title="随机化匹配产生错误的概率"></a>随机化匹配产生错误的概率</h3><ul>
-<li>$f_p$为从函数集合 $\mathcal{F} = \{f_p\}$ 中随机选取的函数，其中p是范围[1, 2, …, M]内的素数</li>
+<li>$f_p$为从函数集合 $\mathcal{F} = {f_p}$ 中随机选取的函数，其中p是范围[1, 2, …, M]内的素数</li>
 <li><p>任意两个长度为m的不同字符串产生错误匹配的概率<strong>不大于</strong> $\frac{\pi(\lfloor2.776m\rfloor)}{\pi(M)}$, $m \geq 11$</p>
 </li>
 <li><p>推论9.1: 选取的素数在$[1, 2, …, m^k]$范围内，则两个长度为m的字符串产生错误匹配的概率不大于 $\frac{3.48k}{m^{k-1}}$, k &gt; 1</p>

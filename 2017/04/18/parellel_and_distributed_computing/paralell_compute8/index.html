@@ -89,16 +89,16 @@
 
 <meta name="description" content="(并行与分布式计算七)
 Arithmetic Computations
-线性递推式(linear recurrences)m阶线性递推式(linear recurrece of order m):$yi$ 由 $ y{i-1}, y{i-2}, …, y{i-m} $ 的线性组合生成
-多项式求值A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a1x^">
+线性递推式(linear recurrences)m阶线性递推式(linear recurrece of order m):$y_i$ 由 $ y_{i-1}, y_{i-2}, …, y_{i-m} $ 的线性组合生成
+多项式求值A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n +">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数值计算中的并行算法">
 <meta property="og:url" content="https://chenfeng.github.io/2017/04/18/parellel_and_distributed_computing/paralell_compute8/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
 <meta property="og:description" content="(并行与分布式计算七)
 Arithmetic Computations
-线性递推式(linear recurrences)m阶线性递推式(linear recurrece of order m):$yi$ 由 $ y{i-1}, y{i-2}, …, y{i-m} $ 的线性组合生成
-多项式求值A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a1x^">
+线性递推式(linear recurrences)m阶线性递推式(linear recurrece of order m):$y_i$ 由 $ y_{i-1}, y_{i-2}, …, y_{i-m} $ 的线性组合生成
+多项式求值A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n +">
 <meta property="og:image" content="https://chenfeng.github.io/\img\matrix_block.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\eg_DFT.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\fft.png">
@@ -109,8 +109,8 @@ Arithmetic Computations
 <meta name="twitter:title" content="数值计算中的并行算法">
 <meta name="twitter:description" content="(并行与分布式计算七)
 Arithmetic Computations
-线性递推式(linear recurrences)m阶线性递推式(linear recurrece of order m):$yi$ 由 $ y{i-1}, y{i-2}, …, y{i-m} $ 的线性组合生成
-多项式求值A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a1x^">
+线性递推式(linear recurrences)m阶线性递推式(linear recurrece of order m):$y_i$ 由 $ y_{i-1}, y_{i-2}, …, y_{i-m} $ 的线性组合生成
+多项式求值A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n +">
 <meta name="twitter:image" content="https://chenfeng.github.io/\img\matrix_block.png">
 
 
@@ -211,7 +211,7 @@ Arithmetic Computations
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -288,7 +288,7 @@ Arithmetic Computations
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-18T00:00:00+08:00">
                 2017-04-18
@@ -328,68 +328,68 @@ Arithmetic Computations
       
         <p>(并行与分布式计算七)</p>
 <p><em>Arithmetic Computations</em></p>
-<h2 id="线性递推式-linear-recurrences"><a href="#线性递推式-linear-recurrences" class="headerlink" title="线性递推式(linear recurrences)"></a>线性递推式(linear recurrences)</h2><p>m阶线性递推式(linear recurrece of order m):<br>$y<em>i$ 由 $ y</em>{i-1}, y<em>{i-2}, …, y</em>{i-m} $ 的线性组合生成</p>
-<h3 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h3><p>A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a<em>1x^{n-1 + … + a</em>{n-1}x} + a_n $的系数数组，给定点$x_0$计算$p(x_0)$</p>
+<h2 id="线性递推式-linear-recurrences"><a href="#线性递推式-linear-recurrences" class="headerlink" title="线性递推式(linear recurrences)"></a>线性递推式(linear recurrences)</h2><p>m阶线性递推式(linear recurrece of order m):<br>$y_i$ 由 $ y_{i-1}, y_{i-2}, …, y_{i-m} $ 的线性组合生成</p>
+<h3 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h3><p>A = ($ a_0, a_1, …, a_n $)是多项式$ p(x) = a_0x^n + a_1x^{n-1 + … + a_{n-1}x} + a_n $的系数数组，给定点$x_0$计算$p(x_0)$</p>
 <ul>
-<li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<br>$$ p(x_0) = (…((a_0x_0 +a_1)x_0 + a_2)x<em>0 + … + a</em>{n-1})x_0 + a_n $$</li>
+<li>Horner’s algorithm(多项式求值的经典算法: 使用n次乘法和n次加法)<br>$$ p(x_0) = (…((a_0x_0 +a_1)x_0 + a_2)x_0 + … + a_{n-1})x_0 + a_n $$</li>
 </ul>
 <a id="more"></a>
-<p>$ y_1 = a_0x_0 + a_1 $<br>$ y_2 = y_1x_0 + a_2 $<br>$ . $<br>$ . $<br>$ . $<br>$ p(x_0) = y<em>n = y</em>{n-1}x_0 + a_n $</p>
+<p>$ y_1 = a_0x_0 + a_1 $<br>$ y_2 = y_1x_0 + a_2 $<br>$ . $<br>$ . $<br>$ . $<br>$ p(x_0) = y_n = y_{n-1}x_0 + a_n $</p>
 <p>即如下一阶递推式:<br>$ y_0 = a_0 $<br>$ y_i = y_ix_0 + a_i, 1 \leq i \leq n $</p>
 <h3 id="三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix"><a href="#三对角线矩阵的LDU分解-LDU-Factorization-of-a-Tridiagonal-Matrix" class="headerlink" title="三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)"></a>三对角线矩阵的LDU分解(LDU Factorization of a Tridiagonal Matrix)</h3><!-- 矩阵中各位置不能留空(否则渲染会有问题) -->
 <ul>
-<li>n*n 非奇异(nonsingular)三对角线矩阵A<br>$$ A =<br>\left[<br>\begin{matrix}<br> b_1 &amp; c_1 &amp; .   &amp;  .  &amp; .  &amp; . \<br> a_2 &amp; b_2 &amp; c_2 &amp;  .  &amp; .  &amp; . \<br>  .  &amp; a_3 &amp; b_3 &amp; c<em>3 &amp; .  &amp; . \<br>  .  &amp; .   &amp; .   &amp;  .  &amp; .  &amp; . \<br>  .  &amp; .   &amp; .   &amp;  .  &amp; .  &amp; . \<br>  .  &amp; .   &amp; .   &amp;  a</em>{n-1} &amp; b<em>{n-1} &amp; c</em>{n-1}\<br>  .  &amp; .   &amp; .   &amp;  .       &amp; a_n     &amp; b_n<br>\end{matrix}<br>\right]<br>$$</li>
+<li>n*n 非奇异(nonsingular)三对角线矩阵A<br>$$ A =<br>\left[<br>\begin{matrix}<br> b_1 &amp; c_1 &amp; .   &amp;  .  &amp; .  &amp; . \\<br> a_2 &amp; b_2 &amp; c_2 &amp;  .  &amp; .  &amp; . \\<br>  .  &amp; a_3 &amp; b_3 &amp; c_3 &amp; .  &amp; . \\<br>  .  &amp; .   &amp; .   &amp;  .  &amp; .  &amp; . \\<br>  .  &amp; .   &amp; .   &amp;  .  &amp; .  &amp; . \\<br>  .  &amp; .   &amp; .   &amp;  a_{n-1} &amp; b_{n-1} &amp; c_{n-1}\\<br>  .  &amp; .   &amp; .   &amp;  .       &amp; a_n     &amp; b_n<br>\end{matrix}<br>\right]<br>$$</li>
 <li>A的LDU分解: 单位下三角矩阵L, 对角矩阵D和单位上三角矩阵U; A = LDU</li>
-<li><p>易证三个矩阵形式如下<br>$$ L =<br>\left[<br>\begin{matrix}<br> 1   &amp;     &amp;     &amp;     &amp;     &amp; \<br> l_2 &amp; 1   &amp;     &amp;     &amp;     &amp; \</p>
+<li><p>易证三个矩阵形式如下<br>$$ L =<br>\left[<br>\begin{matrix}<br> 1   &amp;     &amp;     &amp;     &amp;     &amp; \\<br> l_2 &amp; 1   &amp;     &amp;     &amp;     &amp; \\</p>
 <pre><code>&amp; l_3 &amp; 1   &amp;     &amp;     &amp; \\
 &amp;     &amp; .   &amp;  .  &amp;     &amp; \\
 &amp;     &amp;     &amp;  .  &amp; .   &amp; \\
 &amp;     &amp;     &amp;     &amp; .   &amp; . \\
 &amp;     &amp;     &amp;     &amp; l_n &amp; 1 
-</code></pre><p>\end{matrix}<br>\right]<br>$$<br>$$ U =<br>\left[<br>\begin{matrix}<br> 1   &amp; u_1 &amp;     &amp;     &amp;     &amp; \</p>
+</code></pre><p>\end{matrix}<br>\right]<br>$$<br>$$ U =<br>\left[<br>\begin{matrix}<br> 1   &amp; u_1 &amp;     &amp;     &amp;     &amp; \\</p>
 <pre><code>&amp; 1   &amp; u_2 &amp;     &amp;     &amp; \\
 &amp;     &amp; 1   &amp; u_3 &amp;     &amp; \\
 &amp;     &amp;     &amp;  .  &amp; .   &amp; \\
 &amp;     &amp;     &amp;     &amp; .   &amp; u_{n-1} \\
 &amp;     &amp;     &amp;     &amp;     &amp; 1 
-</code></pre><p>\end{matrix}<br>\right]<br>$$<br>$$ D =<br>\left[<br>\begin{matrix}<br> d_1 &amp;     &amp;     &amp;     &amp;     &amp; \</p>
+</code></pre><p>\end{matrix}<br>\right]<br>$$<br>$$ D =<br>\left[<br>\begin{matrix}<br> d_1 &amp;     &amp;     &amp;     &amp;     &amp; \\</p>
 <pre><code>&amp; d_2 &amp;     &amp;     &amp;     &amp; \\
 &amp;     &amp; .   &amp;     &amp;     &amp; \\
 &amp;     &amp;     &amp;  .  &amp;     &amp; \\
 &amp;     &amp;     &amp;     &amp; .   &amp; \\
 &amp;     &amp;     &amp;     &amp;     &amp; d_n 
-</code></pre><p>\end{matrix}<br>\right]<br>$$<br>其中<br>$ d_1 = b_1 $<br>$ d_j = b_j - a<em>jc</em>{j-1}/d_{j-1}, 2 \leq j \leq n $<br>$ l_j = a<em>j/d</em>{j-1}, 2 \leq j \leq n $<br>$ u_j = c_j/d_j, 1 \leq j \leq n - 1 $</p>
+</code></pre><p>\end{matrix}<br>\right]<br>$$<br>其中<br>$ d_1 = b_1 $<br>$ d_j = b_j - a_jc_{j-1}/d_{j-1}, 2 \leq j \leq n $<br>$ l_j = a_j/d_{j-1}, 2 \leq j \leq n $<br>$ u_j = c_j/d_j, 1 \leq j \leq n - 1 $</p>
 </li>
 <li><p>$l_j$和$u_j$的值可以有$d_j$快速得到</p>
 </li>
-<li>使$d_j = w<em>j/w</em>{j-1}, w_0 = 1, w_1 = b_1$</li>
-<li>$w_j$可由下列二阶递推式计算:<br>$w_0 = 1$<br>$w_1 = b_1$<br>$w_j = b<em>jw</em>{j-1} - (a<em>jc</em>{j-1})w_{j-2}, 2 \leq j \leq n$</li>
+<li>使$d_j = w_j/w_{j-1}, w_0 = 1, w_1 = b_1$</li>
+<li>$w_j$可由下列二阶递推式计算:<br>$w_0 = 1$<br>$w_1 = b_1$<br>$w_j = b_jw_{j-1} - (a_jc_{j-1})w_{j-2}, 2 \leq j \leq n$</li>
 <li>三对角线矩阵A的LDU分解转化成求解二阶线性递推式</li>
 </ul>
 <h3 id="带状三角线性系统-Banded-Triangular-Linear-Systems"><a href="#带状三角线性系统-Banded-Triangular-Linear-Systems" class="headerlink" title="带状三角线性系统(Banded Triangular Linear Systems)"></a>带状三角线性系统(Banded Triangular Linear Systems)</h3><p>n*n 下三角矩阵A, 其中所有非零元在主对角线或者其下的m-1对角线上(m &lt; n)</p>
 <ul>
-<li><p>e.g. (m = 3):<br>$$ A =<br>\left[<br>\begin{matrix}<br> a<em>{11} &amp; 0 &amp; 0  &amp; 0 &amp; … &amp; … &amp; 0 \<br> a</em>{21} &amp; a<em>{22} &amp; 0 &amp; 0  &amp; … &amp; … &amp; 0 \<br> a</em>{31} &amp; a<em>{32} &amp; a</em>{33} &amp; 0   &amp; . &amp; . &amp; . \<br>  0  &amp; a<em>{42} &amp; a</em>{43} &amp; a_{44} &amp;   &amp;   &amp;  \</p>
+<li><p>e.g. (m = 3):<br>$$ A =<br>\left[<br>\begin{matrix}<br> a_{11} &amp; 0 &amp; 0  &amp; 0 &amp; … &amp; … &amp; 0 \\<br> a_{21} &amp; a_{22} &amp; 0 &amp; 0  &amp; … &amp; … &amp; 0 \\<br> a_{31} &amp; a_{32} &amp; a_{33} &amp; 0   &amp; . &amp; . &amp; . \\<br>  0  &amp; a_{42} &amp; a_{43} &amp; a_{44} &amp;   &amp;   &amp;  \\</p>
 <pre><code>&amp;     &amp; .   &amp;  .  &amp; .  &amp; . &amp; . \\
 &amp;     &amp;     &amp;  .  &amp; .  &amp; . &amp; 0\\
 &amp;     &amp;     &amp;     &amp; a_{n,n-2}  &amp; a_{n, n-1} &amp; a_{nn}
 </code></pre><p>\end{matrix}<br>\right]<br>$$</p>
 </li>
-<li><p>线性系统<strong>$ Ax = b $</strong>的解可以表示为:<br>$ x_1 = \frac{b<em>1}{a</em>{11}} $<br>$ x<em>i = -(\sum</em>{j=i-m+1}^{i-1}\frac{a<em>{ij}}{a</em>{i1}}x_j) - \frac{b<em>i}{a</em>{i1}}, 2 \leq i \leq n $</p>
+<li><p>线性系统<strong>$ Ax = b $</strong>的解可以表示为:<br>$ x_1 = \frac{b_1}{a_{11}} $<br>$ x_i = -(\sum_{j=i-m+1}^{i-1}\frac{a_{ij}}{a_{i1}}x_j) - \frac{b_i}{a_{i1}}, 2 \leq i \leq n $</p>
 </li>
 <li><p>该解是一个m-1阶线性递推式</p>
 </li>
 </ul>
-<h3 id="一阶线性递推式-first-order-linear-recurrences"><a href="#一阶线性递推式-first-order-linear-recurrences" class="headerlink" title="一阶线性递推式(first-order linear recurrences)"></a>一阶线性递推式(first-order linear recurrences)</h3><p>$ y_1 = b_1 $<br>$ y_i = a<em>iy</em>{i-1} + b_i, 2 \leq i \leq n $</p>
+<h3 id="一阶线性递推式-first-order-linear-recurrences"><a href="#一阶线性递推式-first-order-linear-recurrences" class="headerlink" title="一阶线性递推式(first-order linear recurrences)"></a>一阶线性递推式(first-order linear recurrences)</h3><p>$ y_1 = b_1 $<br>$ y_i = a_iy_{i-1} + b_i, 2 \leq i \leq n $</p>
 <p>基本思想：</p>
 <ul>
 <li>类似于前缀和的计算(若对所有i有$a_i = 1$，则为前缀和计算)</li>
 <li><p>用平衡树方法</p>
 </li>
-<li><p>不妨设$n = 2^k$，i($2\leq i \leq n$)为偶数，则$y_i = a<em>i(a</em>{i-1}y<em>{i-2} + b</em>{i-1}) + b_i$，即$y_i = a<em>ia</em>{i-1}y_{i-2} + a<em>ib</em>{i-1} + b_i$</p>
+<li><p>不妨设$n = 2^k$，i($2\leq i \leq n$)为偶数，则$y_i = a_i(a_{i-1}y_{i-2} + b_{i-1}) + b_i$，即$y_i = a_ia_{i-1}y_{i-2} + a_ib_{i-1} + b_i$</p>
 </li>
 <li><p>这是对偶数下标i的一阶线性递推式(size: n/2)</p>
 </li>
-<li><p>使$a<em>i^{‘} = a</em>{2i}a_{2i-1}$和$b<em>i^{‘} = a</em>{2i}b<em>{2i-1} + b</em>{2i}$, $1 \leq i \leq \frac{n}{2}$, 同时使$z<em>i = y</em>{2i}$, 则得到下列递推式:<br>$ z_1 = b_1^{‘} $<br>$ z_i = a<em>i^{‘}z</em>{i-1} + b_i^{‘}, 2 \leq i \leq n/2 $</p>
+<li><p>使$a_i^{‘} = a_{2i}a_{2i-1}$和$b_i^{‘} = a_{2i}b_{2i-1} + b_{2i}$, $1 \leq i \leq \frac{n}{2}$, 同时使$z_i = y_{2i}$, 则得到下列递推式:<br>$ z_1 = b_1^{‘} $<br>$ z_i = a_i^{‘}z_{i-1} + b_i^{‘}, 2 \leq i \leq n/2 $</p>
 </li>
 </ul>
 <p>Algorithm 8.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(First-Order linear Recurrence)</div><div class="line">Input: Two arrays B = (b_1, b_2, ..., b_n) and A = (a_1 = 0, a_2, ..., a_n) representing the first-order linear recurrence y_1 = b_1 and y_i = a_iy_&#123;i-1&#125; + b_i, (2 &lt;= i &lt;= n); n is assumed to be a power of 2.</div><div class="line">Output: The values of all the y_i terms.</div><div class="line">begin</div><div class="line">1. if n = 1 then &#123;set y_1 := b_1, exit&#125;</div><div class="line">2. for 1 &lt;= i &lt;= n/2 pardo</div><div class="line">    Set a_i^&#123;&apos;&#125; := a_&#123;2i&#125;a_&#123;2i-1&#125;</div><div class="line">    Set b_i^&#123;&apos;&#125; := a_&#123;2i&#125;b_&#123;2i-1&#125; + b_&#123;2i&#125;</div><div class="line">3. Recursively, solve the first-order linear recurrence defined by z_1 = b_1^&#123;&apos;&#125; and z_i = a_i^&#123;&apos;&#125;z_&#123;i-1&#125; + b_i^&#123;&apos;&#125;, where 2 &lt;= i &lt;= n/2.</div><div class="line">4. for 1 &lt;= i &lt;= n pardo</div><div class="line">    i even    : Set y_i := z_&#123;i/2&#125;</div><div class="line">    i = 1     : Set y_1 := b_1</div><div class="line">    i odd &gt; 1 : Set y_i = a_iz_&#123;(i-1)/2&#125; + b_i</div><div class="line">end</div></pre></td></tr></table></figure></p>
@@ -401,11 +401,11 @@ Arithmetic Computations
 </li>
 </ul>
 <h3 id="高维-一阶-线性递推式-first-order-higher-demensional-linear-recurrences"><a href="#高维-一阶-线性递推式-first-order-higher-demensional-linear-recurrences" class="headerlink" title="高维(一阶)线性递推式((first-order)higher-demensional linear recurrences)"></a>高维(一阶)线性递推式((first-order)higher-demensional linear recurrences)</h3><ul>
-<li><p>m维向量$b_i(1 \leq i \leq n)$, m<em>m矩阵$A_i(2 \leq i \leq n)$, 递推式如下:<br><strong>$ y_1 = b_1 $</strong><br><em>*$ y_i = A<em>iy</em>{i-1} + b_i $</em></em>, $2 \leq i \leq n$</p>
+<li><p>m维向量$b_i(1 \leq i \leq n)$, m<em>m矩阵$A_i(2 \leq i \leq n)$, 递推式如下:<br><strong>$ y_1 = b_1 $</strong><br><em>*$ y_i = A_iy_{i-1} + b_i $</em></em>, $2 \leq i \leq n$</p>
 </li>
-<li><p>将问题规约为通过计算$A<em>i^{‘} = A</em>{2i}A_{2i-1}$和$b<em>i^{‘} = A</em>{2i}b<em>{2i-1} + b</em>{2i}, 1 \leq i \leq n/2$求解$y_2, y_4, …, y_n$</p>
+<li><p>将问题规约为通过计算$A_i^{‘} = A_{2i}A_{2i-1}$和$b_i^{‘} = A_{2i}b_{2i-1} + b_{2i}, 1 \leq i \leq n/2$求解$y_2, y_4, …, y_n$</p>
 </li>
-<li><p>$y_2i = A<em>i^{‘}y</em>{2(i-1)} + b_i^{‘}$; 偶数下标y值得出后容易通过定义算得奇数下标y值</p>
+<li><p>$y_2i = A_i^{‘}y_{2(i-1)} + b_i^{‘}$; 偶数下标y值得出后容易通过定义算得奇数下标y值</p>
 </li>
 <li><p>将Algorithm8.1中相应元素换为矩阵和向量即可</p>
 </li>
@@ -422,19 +422,19 @@ Arithmetic Computations
 <li><p>再用标准前向替换法(standard forward substitution algorithm)可以求解</p>
 </li>
 </ul>
-<h3 id="单位下三角矩阵及其线性方程"><a href="#单位下三角矩阵及其线性方程" class="headerlink" title="单位下三角矩阵及其线性方程"></a>单位下三角矩阵及其线性方程</h3><p>线性方程组$Ax = b$, 其中$x$和$b是n维向量$, A是n*n 单位下三角矩阵:<br>$$ A =<br> \left[<br> \begin{matrix}<br>   1 &amp; 0 &amp; 0 &amp; … &amp; 0 \<br>   a<em>{21} &amp; 1 &amp; 0 &amp; …  &amp; 0 \<br>   a</em>{31} &amp; a<em>{32} &amp; 1 &amp; … &amp; 0 \<br>    .  &amp; . &amp; . &amp; . &amp; . \<br>   a</em>{n1} &amp; a<em>{n2} &amp; … &amp;  a</em>{n,n-1}  &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<h3 id="单位下三角矩阵及其线性方程"><a href="#单位下三角矩阵及其线性方程" class="headerlink" title="单位下三角矩阵及其线性方程"></a>单位下三角矩阵及其线性方程</h3><p>线性方程组$Ax = b$, 其中$x$和$b是n维向量$, A是n*n 单位下三角矩阵:<br>$$ A =<br> \left[<br> \begin{matrix}<br>   1 &amp; 0 &amp; 0 &amp; … &amp; 0 \\<br>   a_{21} &amp; 1 &amp; 0 &amp; …  &amp; 0 \\<br>   a_{31} &amp; a_{32} &amp; 1 &amp; … &amp; 0 \\<br>    .  &amp; . &amp; . &amp; . &amp; . \\<br>   a_{n1} &amp; a_{n2} &amp; … &amp;  a_{n,n-1}  &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
 <ul>
-<li><p>对任意矩阵，通过将每行元素除以$a<em>{ii}(a</em>{ii} \not= 1, 1 \leq i \leq n)$可得到以上形式的矩阵</p>
+<li><p>对任意矩阵，通过将每行元素除以$a_{ii}(a_{ii} \not= 1, 1 \leq i \leq n)$可得到以上形式的矩阵</p>
 </li>
-<li><p>简单方法: $x_i = b<em>i - \sum</em>{j=1}^{i-1}a_{ij}x_j$; 需要O(n^2)的计算量, 但无法求得并行算法</p>
+<li><p>简单方法: $x_i = b_i - \sum_{j=1}^{i-1}a_{ij}x_j$; 需要O(n^2)的计算量, 但无法求得并行算法</p>
 </li>
 </ul>
 <h3 id="快速矩阵求逆并行算法"><a href="#快速矩阵求逆并行算法" class="headerlink" title="快速矩阵求逆并行算法"></a>快速矩阵求逆并行算法</h3><p>用分治策略求出矩阵$A$的逆$A^{-1}$，则$x = A^{-1}b$能在$O(logn)$时间内用$O(n^2)$计算量求得</p>
 <ul>
-<li>矩阵分块: 将矩阵$A$分成(n/2) * (n/2)的块(不妨设n是2的幂)<br>$$ A =<br>\left[<br>\begin{matrix}<br> A_1 &amp; 0  \<br> A_2 &amp; A_3<br>\end{matrix}<br>\right]<br>$$</li>
+<li>矩阵分块: 将矩阵$A$分成(n/2) * (n/2)的块(不妨设n是2的幂)<br>$$ A =<br>\left[<br>\begin{matrix}<br> A_1 &amp; 0  \\<br> A_2 &amp; A_3<br>\end{matrix}<br>\right]<br>$$</li>
 <li><p>$A_1$和$A_3$是非奇异下三角矩阵</p>
 <blockquote>
-<p>非奇异矩阵: 行列式不为零(存在逆矩阵)<br>$$ A^{-1} =<br>\left[<br>\begin{matrix}<br> A_1^{-1} &amp; 0  \<br> -A_3^{-1}A_2A_1^{-1} &amp; A_3^{-1}<br>\end{matrix}<br>\right]<br>$$</p>
+<p>非奇异矩阵: 行列式不为零(存在逆矩阵)<br>$$ A^{-1} =<br>\left[<br>\begin{matrix}<br> A_1^{-1} &amp; 0  \\<br> -A_3^{-1}A_2A_1^{-1} &amp; A_3^{-1}<br>\end{matrix}<br>\right]<br>$$</p>
 </blockquote>
 </li>
 <li><p>n*n 三角线性方程组可以在$O(log^2n)$时间复杂度，O(M(n))的计算量内求解</p>
@@ -444,24 +444,24 @@ Arithmetic Computations
 <li><p>$W(n) = 2W(n/2) + 2M(n/2)$: 假设$M(n) \geq 4M(n/2)$可得$W(n) \leq M(n)$</p>
 </li>
 </ul>
-<h3 id="带状三角形线性方程组"><a href="#带状三角形线性方程组" class="headerlink" title="带状三角形线性方程组"></a>带状三角形线性方程组</h3><p>e.g.(n = 6, m = 3)<br>$$ A =<br> \left[<br> \begin{matrix}<br>   a<em>{11} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0  \<br>   a</em>{21} &amp; a<em>{22} &amp; 0 &amp; 0 &amp; 0 &amp; 0 \<br>   a</em>{31} &amp; a<em>{32} &amp; a</em>{33} &amp; 0 &amp; 0 &amp; 0 \<br>   0 &amp; a<em>{42} &amp; a</em>{43} &amp; a<em>{44} &amp; 0 &amp; 0 \<br>   0 &amp; 0 &amp; a</em>{53} &amp; a<em>{54} &amp; a</em>{55} &amp; 0 \<br>   0 &amp; 0 &amp; 0 &amp; a<em>{64} &amp; a</em>{65} &amp; a_{66}<br>  \end{matrix}<br>  \right]<br>$$</p>
+<h3 id="带状三角形线性方程组"><a href="#带状三角形线性方程组" class="headerlink" title="带状三角形线性方程组"></a>带状三角形线性方程组</h3><p>e.g.(n = 6, m = 3)<br>$$ A =<br> \left[<br> \begin{matrix}<br>   a_{11} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0  \\<br>   a_{21} &amp; a_{22} &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\<br>   a_{31} &amp; a_{32} &amp; a_{33} &amp; 0 &amp; 0 &amp; 0 \\<br>   0 &amp; a_{42} &amp; a_{43} &amp; a_{44} &amp; 0 &amp; 0 \\<br>   0 &amp; 0 &amp; a_{53} &amp; a_{54} &amp; a_{55} &amp; 0 \\<br>   0 &amp; 0 &amp; 0 &amp; a_{64} &amp; a_{65} &amp; a_{66}<br>  \end{matrix}<br>  \right]<br>$$</p>
 <ul>
-<li><p>不失一般性假设主对角线元等于1，$Ax = b$的解可以表示为<br>$ x_1 = b_1 $<br>$ x<em>i = (-\sum</em>{j=i-m+1}^{i-1}a_{ij}x_j) + b_i, 2 \leq i \leq n $</p>
+<li><p>不失一般性假设主对角线元等于1，$Ax = b$的解可以表示为<br>$ x_1 = b_1 $<br>$ x_i = (-\sum_{j=i-m+1}^{i-1}a_{ij}x_j) + b_i, 2 \leq i \leq n $</p>
 </li>
-<li><p>不妨设m能整除n，将A分成m*m 的块$A<em>{i,j}, 1 \leq i,j \leq n/m$; $A</em>{i,i}$是下三角矩阵，$A_{i,i-1}$是上三角矩阵<br>e.g.:</p>
+<li><p>不妨设m能整除n，将A分成m*m 的块$A_{i,j}, 1 \leq i,j \leq n/m$; $A_{i,i}$是下三角矩阵，$A_{i,i-1}$是上三角矩阵<br>e.g.:</p>
 <blockquote>
 <p><img src="\img\matrix_block.png" alt="matrix_block.png"></p>
 </blockquote>
 </li>
-<li><p>设D为如下子矩阵:<br>$$ D =<br>\left[<br>\begin{matrix}<br>A<em>{1,1} &amp; &amp; &amp; \<br>&amp; A</em>{2,2} &amp; &amp; \<br>&amp;  &amp; . &amp; \<br> &amp; &amp; &amp; A_{\frac{n}{m},\frac{n}{m}}<br>\end{matrix}<br>\right]<br>$$</p>
+<li><p>设D为如下子矩阵:<br>$$ D =<br>\left[<br>\begin{matrix}<br>A_{1,1} &amp; &amp; &amp; \\<br>&amp; A_{2,2} &amp; &amp; \\<br>&amp;  &amp; . &amp; \\<br> &amp; &amp; &amp; A_{\frac{n}{m},\frac{n}{m}}<br>\end{matrix}<br>\right]<br>$$</p>
 </li>
-<li><p>使$A^{<em>} = D^{-1}A$, 使$d = D^{-1}b$; $Ax = b$的解同$D_{-1}Ax = D^{-1}b$, 即$A^{</em>}x = b$, $A^{<em>}$如下:<br>$$ A =<br>\left[<br>\begin{matrix}<br>I<em>m &amp; &amp; &amp; &amp; \<br>A</em>{2,1}^{</em>} &amp; I<em>m &amp; &amp; &amp; \<br>&amp; A</em>{3,2}^{<em>} &amp; I<em>m &amp; &amp; \<br>&amp;  &amp; . &amp; . &amp; \<br> &amp; &amp; &amp; A</em>{\frac{n}{m},\frac{n}{m}-1}^{</em>} &amp; I_m<br>\end{matrix}<br>\right]<br>$$</p>
+<li><p>使$A^{<em>} = D^{-1}A$, 使$d = D^{-1}b$; $Ax = b$的解同$D_{-1}Ax = D^{-1}b$, 即$A^{</em>}x = b$, $A^{<em>}$如下:<br>$$ A =<br>\left[<br>\begin{matrix}<br>I_m &amp; &amp; &amp; &amp; \\<br>A_{2,1}^{</em>} &amp; I_m &amp; &amp; &amp; \\<br>&amp; A_{3,2}^{<em>} &amp; I_m &amp; &amp; \\<br>&amp;  &amp; . &amp; . &amp; \\<br> &amp; &amp; &amp; A_{\frac{n}{m},\frac{n}{m}-1}^{</em>} &amp; I_m<br>\end{matrix}<br>\right]<br>$$</p>
 </li>
-<li><p>$A<em>{i,i-1}^{*} = A</em>{i,i}^{-1}A<em>{i,i-1}, 2 \leq i \leq n/m$; $A^{<em>}$的计算需要对(n/m)-1个独立的m</em>m矩阵求逆得到${A</em>{i,i}^{-1}}<em>{i=2}^{n/m}$，再通过(n/m)-1个独立的m*m矩阵相乘得到${A</em>{i,i}^{-1}A<em>{i,i-1}}</em>{i=2}^{n/m}$</p>
+<li><p>$A_{i,i-1}^{<em>} = A_{i,i}^{-1}A_{i,i-1}, 2 \leq i \leq n/m$; $A^{</em>}$的计算需要对(n/m)-1个独立的m<em>m矩阵求逆得到${A_{i,i}^{-1}}_{i=2}^{n/m}$，再通过(n/m)-1个独立的m</em>m矩阵相乘得到${A_{i,i}^{-1}A_{i,i-1}}_{i=2}^{n/m}$</p>
 </li>
-<li><p>运用对下三角矩阵求逆的并行算法，可以在$O(log^2m)$时间内用$O((n/m)M(m))$计算量求出$A<em>{i,i}^{-1}, 1 \leq i \leq n/m$; (n/m)-1矩阵乘法与$d = D</em>{-1}b$的计算显然在这个上界之内</p>
+<li><p>运用对下三角矩阵求逆的并行算法，可以在$O(log^2m)$时间内用$O((n/m)M(m))$计算量求出$A_{i,i}^{-1}, 1 \leq i \leq n/m$; (n/m)-1矩阵乘法与$d = D_{-1}b$的计算显然在这个上界之内</p>
 </li>
-<li><p>将x和d分成m维子向量$x = (x_1, x<em>2, …, x</em>{n/m})$和$d = (d_1, d<em>2, …, d</em>{n/m})$, $A<em>x = d$的解可表示为<br>$x_1 = d_1$<br>$x<em>i = -A</em>{i,i-1}^{</em>}x_{i-1} + d_i, 2 \leq i \leq n/m$</p>
+<li><p>将x和d分成m维子向量$x = (x_1, x_2, …, x_{n/m})$和$d = (d_1, d_2, …, d_{n/m})$, $A<em>x = d$的解可表示为<br>$x_1 = d_1$<br>$x_i = -A_{i,i-1}^{</em>}x_{i-1} + d_i, 2 \leq i \leq n/m$</p>
 </li>
 <li><p>$x_i$的计算可以在O(log(n/m)logm)的时间复杂度内，用O((n/m)M(m))的计算量</p>
 </li>
@@ -475,7 +475,7 @@ Arithmetic Computations
 </li>
 <li><p>使n*n矩阵$W_n(j,k) = \omega^{jk}, 0 \leq j,k \leq n-1$, n维列向量$x$的DFT定义为列向量$y = W_nx$</p>
 </li>
-<li><p>$y<em>j = \sum</em>{k=0}^{n-1}\omega^{jk}x_k, 0 \leq j \leq n-1$</p>
+<li><p>$y_j = \sum_{k=0}^{n-1}\omega^{jk}x_k, 0 \leq j \leq n-1$</p>
 </li>
 </ul>
 <p>e.g.</p>
@@ -486,19 +486,19 @@ Arithmetic Computations
 <ul>
 <li><p>使j为偶数: $j = 2l, 0 \leq l \leq \frac{n}{2} - 1$</p>
 </li>
-<li><p>$y<em>j = y</em>{2l} = \sum_{k=0}^{n-1}\omega^{2lk}x<em>k$, 故有<br>$ y</em>{2l} = x_0 + \omega^{2l}x_1 + \omega^{4l}x<em>2 + … + \omega^{2l(\frac{n}{2}-1)}x</em>{\frac{n}{2}-1} + x<em>{\frac{n}{2}} + \omega^{2l}x</em>{\frac{n}{2}+1} + \omega^{4l}x<em>{\frac{n}{2}+2} + … + \omega^{2l(\frac{n}{2}-1)}x</em>{n-1} $</p>
+<li><p>$y_j = y_{2l} = \sum_{k=0}^{n-1}\omega^{2lk}x_k$, 故有<br>$ y_{2l} = x_0 + \omega^{2l}x_1 + \omega^{4l}x_2 + … + \omega^{2l(\frac{n}{2}-1)}x_{\frac{n}{2}-1} + x_{\frac{n}{2}} + \omega^{2l}x_{\frac{n}{2}+1} + \omega^{4l}x_{\frac{n}{2}+2} + … + \omega^{2l(\frac{n}{2}-1)}x_{n-1} $</p>
 </li>
-<li><p>$ y_{2l} = (x<em>0 + x</em>{\frac{n}{2}}) + \omega^{2l}(x<em>1 + x</em>{\frac{n}{2}+1}) + \omega^{4l}(x<em>2 + x</em>{\frac{n}{2}+2}) + … + \omega^{2l(\frac{n}{2}-1)}(x<em>{\frac{n}{2}-1} + x</em>{n-1}) $</p>
+<li><p>$ y_{2l} = (x_0 + x_{\frac{n}{2}}) + \omega^{2l}(x_1 + x_{\frac{n}{2}+1}) + \omega^{4l}(x_2 + x_{\frac{n}{2}+2}) + … + \omega^{2l(\frac{n}{2}-1)}(x_{\frac{n}{2}-1} + x_{n-1}) $</p>
 </li>
 <li><p>显然$\omega^2 = e^{i\frac{2\pi}{\frac{n}{2}}}$, 故$\omega^2$是第(n/2)本原单位根</p>
 </li>
-<li><p>$z^{(1)} = [y_0, y<em>2, …, y</em>{n-2}]^{T}$是向量$[x<em>0 + x</em>{\frac{n}{2}}, x<em>1 + x</em>{\frac{n}{2}+1}, …, x<em>{\frac{n}{2}-1} + x</em>{n-1}]^{T}$的离散傅氏变换</p>
+<li><p>$z^{(1)} = [y_0, y_2, …, y_{n-2}]^{T}$是向量$[x_0 + x_{\frac{n}{2}}, x_1 + x_{\frac{n}{2}+1}, …, x_{\frac{n}{2}-1} + x_{n-1}]^{T}$的离散傅氏变换</p>
 </li>
-<li><p>如果j为奇数: $j = 2l + 1$, 类似地有<br>$ y_{2l+1} = (x<em>0 + \omega^{\frac{n}{2}})x</em>{\frac{n}{2}} + \omega^{2l}(\omega x<em>1 + \omega^{\frac{n}{2}+1}x</em>{\frac{n}{2}+1}) + … + \omega^{2l(\frac{n}{2}-1)}(\omega^{\frac{n}{2}-1}x<em>{\frac{n}{2}-1} + \omega^{n-1}x</em>{n-1}) $</p>
+<li><p>如果j为奇数: $j = 2l + 1$, 类似地有<br>$ y_{2l+1} = (x_0 + \omega^{\frac{n}{2}})x_{\frac{n}{2}} + \omega^{2l}(\omega x_1 + \omega^{\frac{n}{2}+1}x_{\frac{n}{2}+1}) + … + \omega^{2l(\frac{n}{2}-1)}(\omega^{\frac{n}{2}-1}x_{\frac{n}{2}-1} + \omega^{n-1}x_{n-1}) $</p>
 </li>
-<li><p>$\omega^{\frac{n}{2}} = e^{i\pi} = -1$, 故<br>$ y_{2l+1} = (x<em>0 - x</em>{\frac{n}{2}}) + \omega^{2l}\omega (x<em>1 - x</em>{\frac{n}{2}+1}) + \omega^{4l}\omega^2(x<em>2 - x</em>{\frac{n}{2}+2}) + … + \omega^{2l(\frac{n}{2}-1)}\omega^{\frac{n}{2}-1}(x<em>{\frac{n}{2}-1} - x</em>{n-1}) $</p>
+<li><p>$\omega^{\frac{n}{2}} = e^{i\pi} = -1$, 故<br>$ y_{2l+1} = (x_0 - x_{\frac{n}{2}}) + \omega^{2l}\omega (x_1 - x_{\frac{n}{2}+1}) + \omega^{4l}\omega^2(x_2 - x_{\frac{n}{2}+2}) + … + \omega^{2l(\frac{n}{2}-1)}\omega^{\frac{n}{2}-1}(x_{\frac{n}{2}-1} - x_{n-1}) $</p>
 </li>
-<li><p>$z^{(2)} = [y_1, y<em>3, …, y</em>{n-1}]^{T}$是向量$[x<em>0 - x</em>{\frac{n}{2}}, \omega (x<em>1 - x</em>{\frac{n}{2}+1}), …, \omega^{\frac{n}{2}-1}(x<em>{\frac{n}{2}-1} - x</em>{n-1})]^{T}$的离散傅氏变换</p>
+<li><p>$z^{(2)} = [y_1, y_3, …, y_{n-1}]^{T}$是向量$[x_0 - x_{\frac{n}{2}}, \omega (x_1 - x_{\frac{n}{2}+1}), …, \omega^{\frac{n}{2}-1}(x_{\frac{n}{2}-1} - x_{n-1})]^{T}$的离散傅氏变换</p>
 </li>
 </ul>
 <blockquote>
@@ -516,13 +516,13 @@ Arithmetic Computations
 <li><p>类似地，T = O(logn), W = O(n logn)</p>
 </li>
 </ul>
-<h2 id="多项式乘法和卷积"><a href="#多项式乘法和卷积" class="headerlink" title="多项式乘法和卷积"></a>多项式乘法和卷积</h2><p>多项式$p(x) = \sum_{k=0}^{n-1}a_kx^k$可由系数列表唯一表示$(a_0, a<em>1, …, a</em>{n-1})$; 给定点$x_i$, $y_i = p(x_j)$值唯一</p>
+<h2 id="多项式乘法和卷积"><a href="#多项式乘法和卷积" class="headerlink" title="多项式乘法和卷积"></a>多项式乘法和卷积</h2><p>多项式$p(x) = \sum_{k=0}^{n-1}a_kx^k$可由系数列表唯一表示$(a_0, a_1, …, a_{n-1})$; 给定点$x_i$, $y_i = p(x_j)$值唯一</p>
 <h3 id="多项式乘法"><a href="#多项式乘法" class="headerlink" title="多项式乘法"></a>多项式乘法</h3><ul>
-<li>两个多项式<br>$ p(x) = \sum_{k=0}^{n-1}a<em>kx^k $,<br>$ q(x) = \sum</em>{k=0}^{m-1}b<em>kx^k $,<br>其积为<br>$ r(x) = p(x)q(x) = \sum</em>{k=0}^{n+m-2}c_kx^k $,<br>使得<br>$ c<em>k = \sum</em>{j=0}^{k}a<em>jb</em>{k-j} $ (下标越界的a、b值为0)</li>
+<li>两个多项式<br>$ p(x) = \sum_{k=0}^{n-1}a_kx^k $,<br>$ q(x) = \sum_{k=0}^{m-1}b_kx^k $,<br>其积为<br>$ r(x) = p(x)q(x) = \sum_{k=0}^{n+m-2}c_kx^k $,<br>使得<br>$ c_k = \sum_{j=0}^{k}a_jb_{k-j} $ (下标越界的a、b值为0)</li>
 </ul>
 <p><strong>Polynomial multiplication using the FFT algorithm</strong></p>
 <ul>
-<li><p>设l为2的幂且使得$n+m-2 &lt; l \leq 2(n+m-2)$; $a = [a<em>0, …, a</em>{l-1}]^{T}, a_j = 0$ for j &gt; n-1, $b = [b<em>0, …, b</em>{l-1}]^{T}, b_k = 0$ for k &gt; m-1</p>
+<li><p>设l为2的幂且使得$n+m-2 &lt; l \leq 2(n+m-2)$; $a = [a_0, …, a_{l-1}]^{T}, a_j = 0$ for j &gt; n-1, $b = [b_0, …, b_{l-1}]^{T}, b_k = 0$ for k &gt; m-1</p>
 </li>
 <li><p>计算系数列表${c_k}$的算法如下(<em> 多项式乘法的并行算法</em>): </p>
 </li>
@@ -532,7 +532,7 @@ Arithmetic Computations
 </li>
 <li><p>计算 $u_j = y_jz_j$ , for $0 \leq j \leq l-1$。显然 $u_j = p(\omega^j)q(\omega^j) = r(\omega^j)$, 故能得到多项式$r(x)$在l个相异单位根的值</p>
 </li>
-<li><p>计算向量$u = [u_0, u<em>1, …, u</em>{l-1}]^{T}$的傅里叶逆变换。向量前n+m-1个元和乘积$r(x)$的系数相同。</p>
+<li><p>计算向量$u = [u_0, u_1, …, u_{l-1}]^{T}$的傅里叶逆变换。向量前n+m-1个元和乘积$r(x)$的系数相同。</p>
 </li>
 </ol>
 <ul>
@@ -540,10 +540,10 @@ Arithmetic Computations
 </ul>
 <h3 id="用快速傅里叶变换算法计算卷积-Convolution"><a href="#用快速傅里叶变换算法计算卷积-Convolution" class="headerlink" title="用快速傅里叶变换算法计算卷积(Convolution)"></a>用快速傅里叶变换算法计算卷积(Convolution)</h3><p>向量$a$和$b$的卷积，可以表示为$ a\bigotimes b $</p>
 <ul>
-<li>$a = [a<em>0, …, a</em>{n-1}]^{T}$; $b = [b<em>0, …, b</em>{m-1}]^{T}$</li>
-<li><p>$a \bigotimes b$定义为向量$c = [c<em>0, …, c</em>{m+n-1}]^{T}$, 使得$c<em>k = \sum</em>{j=0}^ka<em>jb</em>{k-j}$, 其中$a_j = 0, j &gt; n-1$, $b_j = 0, j &gt; m-1$</p>
+<li>$a = [a_0, …, a_{n-1}]^{T}$; $b = [b_0, …, b_{m-1}]^{T}$</li>
+<li><p>$a \bigotimes b$定义为向量$c = [c_0, …, c_{m+n-1}]^{T}$, 使得$c_k = \sum_{j=0}^ka_jb_{k-j}$, 其中$a_j = 0, j &gt; n-1$, $b_j = 0, j &gt; m-1$</p>
 </li>
-<li><p>除$c<em>{n+m-1}$(总是为0)外，两个向量$a$和$b$的卷积和多项式$p(x) = \sum</em>{j=0}^{n-1}a<em>jx^j$和$q(x) = \sum</em>{j=0}^{m-1}b_jx^j$的乘积的系数相同</p>
+<li><p>除$c_{n+m-1}$(总是为0)外，两个向量$a$和$b$的卷积和多项式$p(x) = \sum_{j=0}^{n-1}a_jx^j$和$q(x) = \sum_{j=0}^{m-1}b_jx^j$的乘积的系数相同</p>
 </li>
 </ul>
 <p>计算n维向量x和m维向量y的卷积的并行算法的复杂度: </p>
@@ -552,32 +552,32 @@ Arithmetic Computations
 </ul>
 <h2 id="Toeplitz矩阵-托普利茨矩阵"><a href="#Toeplitz矩阵-托普利茨矩阵" class="headerlink" title="Toeplitz矩阵(托普利茨矩阵)"></a>Toeplitz矩阵(托普利茨矩阵)</h2><p>Toeplitz矩阵: n*n矩阵T满足$T(k,l) = T(k-1,l-1)$, for $2 \leq l,k \leq n$</p>
 <ul>
-<li>矩阵T同一对角线上的所有元素相等; 因此这类矩阵又出现在第一行和第一列的2n-1个元素唯一确定<br>$$ T =<br>\left[<br>\begin{matrix}<br>t<em>{n-1} &amp; t</em>{n-2} &amp; … &amp; &amp; t_2 &amp; t_1 &amp; t_0 \<br>t<em>n &amp; t</em>{n-1} &amp; t_{n-2} &amp; … &amp; &amp; t_2 &amp; t<em>1 \<br>t</em>{n+1} &amp; t<em>n &amp; t</em>{n-1} &amp; t_{n-2} &amp; … &amp; &amp; t<em>2 \<br>. &amp; &amp; &amp; . &amp; . &amp; . &amp; . \<br>. &amp; &amp; &amp; &amp; . &amp; . &amp; . \<br>t</em>{2n-3} &amp; t<em>{2n-4} &amp; … &amp; &amp; &amp; t</em>{n-1} &amp; t<em>{n-2} \<br>t</em>{2n-2} &amp; t<em>{2n-3} &amp; … &amp; &amp; t</em>{n+1} &amp; t<em>n &amp; t</em>{n-1}<br>\end{matrix}<br>\right]<br>$$</li>
-<li>$t = [t_0, t<em>1, …, t</em>{2n-2}]^{T}$确定了托普利茨矩阵T</li>
+<li>矩阵T同一对角线上的所有元素相等; 因此这类矩阵又出现在第一行和第一列的2n-1个元素唯一确定<br>$$ T =<br>\left[<br>\begin{matrix}<br>t_{n-1} &amp; t_{n-2} &amp; … &amp; &amp; t_2 &amp; t_1 &amp; t_0 \\<br>t_n &amp; t_{n-1} &amp; t_{n-2} &amp; … &amp; &amp; t_2 &amp; t_1 \\<br>t_{n+1} &amp; t_n &amp; t_{n-1} &amp; t_{n-2} &amp; … &amp; &amp; t_2 \\<br>. &amp; &amp; &amp; . &amp; . &amp; . &amp; . \\<br>. &amp; &amp; &amp; &amp; . &amp; . &amp; . \\<br>t_{2n-3} &amp; t_{2n-4} &amp; … &amp; &amp; &amp; t_{n-1} &amp; t_{n-2} \\<br>t_{2n-2} &amp; t_{2n-3} &amp; … &amp; &amp; t_{n+1} &amp; t_n &amp; t_{n-1}<br>\end{matrix}<br>\right]<br>$$</li>
+<li>$t = [t_0, t_1, …, t_{2n-2}]^{T}$确定了托普利茨矩阵T</li>
 </ul>
 <h3 id="Toeplitz矩阵乘以向量"><a href="#Toeplitz矩阵乘以向量" class="headerlink" title="Toeplitz矩阵乘以向量"></a>Toeplitz矩阵乘以向量</h3><ul>
-<li><p>向量$a = [a_0, a<em>1, …, a</em>{n-1}]^{T}$, $d = Ta$, 其中T是n*n托普利茨矩阵 $t = [t_0, t<em>1, …, t</em>{2n-2}]^{T}$</p>
+<li><p>向量$a = [a_0, a_1, …, a_{n-1}]^{T}$, $d = Ta$, 其中T是n*n托普利茨矩阵 $t = [t_0, t_1, …, t_{2n-2}]^{T}$</p>
 </li>
 <li><p>计算d的一般算法需要O(logn)的时间和O(n^2)的计算量</p>
 </li>
-<li><p>易证$d<em>l = \sum</em>{j=0}^{n-1}a<em>jt</em>{n+l-j-1}, 0 \leq l \leq n-1$</p>
+<li><p>易证$d_l = \sum_{j=0}^{n-1}a_jt_{n+l-j-1}, 0 \leq l \leq n-1$</p>
 </li>
-<li><p>考察向量 $a$ 和 $t$ 的卷积c, $c<em>k = \sum</em>{j=0}^ka<em>jt</em>{k-j}$, 将k=n+l-1代入得$c<em>{n+l-1} = \sum</em>{j=0}^{n+l-1}a<em>jt</em>{n+l-j-1} = \sum_{j=0}^{n-1}a<em>jt</em>{n+l-j-1}$($j &gt; n-1 时 a_j = 0$)</p>
+<li><p>考察向量 $a$ 和 $t$ 的卷积c, $c_k = \sum_{j=0}^ka_jt_{k-j}$, 将k=n+l-1代入得$c_{n+l-1} = \sum_{j=0}^{n+l-1}a_jt_{n+l-j-1} = \sum_{j=0}^{n-1}a_jt_{n+l-j-1}$($j &gt; n-1 时 a_j = 0$)</p>
 </li>
-<li><p>$d<em>l = c</em>{n+l-1}, 0 \leq l \leq n-1$</p>
+<li><p>$d_l = c_{n+l-1}, 0 \leq l \leq n-1$</p>
 </li>
-<li><p>乘积Ta可通过计算$a \bigotimes t$, 令$d<em>l = c</em>{n+l-1}(0 \leq l \leq n-1)$得到</p>
+<li><p>乘积Ta可通过计算$a \bigotimes t$, 令$d_l = c_{n+l-1}(0 \leq l \leq n-1)$得到</p>
 </li>
 </ul>
-<p>Toeplitz矩阵乘以向量的并行算法:<br>$c = a \bigotimes t$得到的c向量的元素$(c_{n-1}, c<em>n, …, c</em>{2n-2})$</p>
+<p>Toeplitz矩阵乘以向量的并行算法:<br>$c = a \bigotimes t$得到的c向量的元素$(c_{n-1}, c_n, …, c_{2n-2})$</p>
 <ul>
 <li>T(n) = O(logn); W(n) = O(nlogn)</li>
 </ul>
-<h3 id="求下三角Toeplitz矩阵的逆矩阵"><a href="#求下三角Toeplitz矩阵的逆矩阵" class="headerlink" title="求下三角Toeplitz矩阵的逆矩阵"></a>求下三角Toeplitz矩阵的逆矩阵</h3><p>-下三角托普利茨矩阵T分成n/2 * n/2的块:<br>$$ T =<br> \left[<br> \begin{matrix}<br> T_1 &amp; 0 \<br> T_2 &amp; T_1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<h3 id="求下三角Toeplitz矩阵的逆矩阵"><a href="#求下三角Toeplitz矩阵的逆矩阵" class="headerlink" title="求下三角Toeplitz矩阵的逆矩阵"></a>求下三角Toeplitz矩阵的逆矩阵</h3><p>-下三角托普利茨矩阵T分成n/2 * n/2的块:<br>$$ T =<br> \left[<br> \begin{matrix}<br> T_1 &amp; 0 \\<br> T_2 &amp; T_1<br>  \end{matrix}<br>  \right]<br>$$</p>
 <ul>
 <li><p>不妨设n是2的幂</p>
 </li>
-<li><p>矩阵T的逆$T^{-1}$如下:<br>$$ T^{-1} =<br>\left[<br>\begin{matrix}<br>T_1^{-1} &amp; 0 \<br>-T_1^{-1}T_2T_1^{-1} &amp; T_1^{-1}<br>\end{matrix}<br>\right]<br>$$</p>
+<li><p>矩阵T的逆$T^{-1}$如下:<br>$$ T^{-1} =<br>\left[<br>\begin{matrix}<br>T_1^{-1} &amp; 0 \\<br>-T_1^{-1}T_2T_1^{-1} &amp; T_1^{-1}<br>\end{matrix}<br>\right]<br>$$</p>
 </li>
 <li><p>$T^{-1}$也是一个下三角托普利茨矩阵，由第一列元素唯一确定; 计算$T^{-1}$的算法: </p>
 </li>
@@ -595,7 +595,7 @@ Arithmetic Computations
 </ul>
 <p>Toeplitz矩阵求逆算法的并行复杂度: $T(n) = O(log^2n)$; $W(n) = O(nlogn)$</p>
 <h3 id="应用Toeplitz矩阵实现多项式的除法"><a href="#应用Toeplitz矩阵实现多项式的除法" class="headerlink" title="应用Toeplitz矩阵实现多项式的除法"></a>应用Toeplitz矩阵实现多项式的除法</h3><ul>
-<li>两个多项式<br>$ s(x) = \sum_{j=0}^{n-1}s<em>jx^j $<br>和<br>$ t(x) = \sum</em>{j=0}^{m-1}t_jx^j $,<br>存在唯一的两个多项式, 商$q(x)$和余数$r(x)$<br>使得<br>$ s(x) = t(x)q(x) + r(x) $<br>且$r(x)$的阶(degree)小于$t(x)$的阶(余数的最高次小于除数的最高次)</li>
+<li>两个多项式<br>$ s(x) = \sum_{j=0}^{n-1}s_jx^j $<br>和<br>$ t(x) = \sum_{j=0}^{m-1}t_jx^j $,<br>存在唯一的两个多项式, 商$q(x)$和余数$r(x)$<br>使得<br>$ s(x) = t(x)q(x) + r(x) $<br>且$r(x)$的阶(degree)小于$t(x)$的阶(余数的最高次小于除数的最高次)</li>
 </ul>
 <p>引理8.2: $t(x)$和$s(x)$是两个阶分别为n-1和m-1的多项式(n&gt;m)。</p>
 <ul>
@@ -609,10 +609,10 @@ Arithmetic Computations
 </ul>
 <p>计算多项式的商: </p>
 <ul>
-<li>设$q(x) = \sum_{j=0}^{n-m}q<em>jx^j$是两个多项式$s(x) = \sum</em>{j=0}^{n-1}s<em>jx^j$和$t(x) = \sum</em>{j=0}^{m-1}t_jx^j$的商。</li>
-<li><p>不失一般性假设$t<em>{m-1}s</em>{n-1} \not= 0$, $t(x)q(x)$可表示为$\sum_{k=0}^{n-1}a_kx^k$, 其中$a<em>k = \sum</em>{j=0}^kt<em>jq</em>{k-j}$</p>
+<li>设$q(x) = \sum_{j=0}^{n-m}q_jx^j$是两个多项式$s(x) = \sum_{j=0}^{n-1}s_jx^j$和$t(x) = \sum_{j=0}^{m-1}t_jx^j$的商。</li>
+<li><p>不失一般性假设$t_{m-1}s_{n-1} \not= 0$, $t(x)q(x)$可表示为$\sum_{k=0}^{n-1}a_kx^k$, 其中$a_k = \sum_{j=0}^kt_jq_{k-j}$</p>
 </li>
-<li><p>设r(x)为$s(x)$除以$t(x)$的余数，给定$r(x)$的阶小于m-1; 则$\sum_{k=m-1}^{n-1}s<em>kx^k = \sum</em>{k=m-1}^{n-1}a_kx^k$, 故$s_k = a_k, m-1 \leq k \leq n-1$ , 从而$s<em>k = \sum</em>{j=0}^kt<em>jq</em>{k-j}, m-1 \leq k \leq n-1$</p>
+<li><p>设r(x)为$s(x)$除以$t(x)$的余数，给定$r(x)$的阶小于m-1; 则$\sum_{k=m-1}^{n-1}s_kx^k = \sum_{k=m-1}^{n-1}a_kx^k$, 故$s_k = a_k, m-1 \leq k \leq n-1$ , 从而$s_k = \sum_{j=0}^kt_jq_{k-j}, m-1 \leq k \leq n-1$</p>
 </li>
 <li><p>由$t_j = 0, j \geq m$和$q_j = 0, j \geq n-m+1$可得: </p>
 </li>
@@ -635,7 +635,7 @@ Arithmetic Computations
 <h3 id="多项式求值的分治算法"><a href="#多项式求值的分治算法" class="headerlink" title="多项式求值的分治算法"></a>多项式求值的分治算法</h3><ul>
 <li><p>令$q_l = x - \alpha_l, 0 \leq l \leq n-1$</p>
 </li>
-<li><p>$Q<em>1(x) = \prod</em>{i=0}^{\frac{n}{2}-1}q_l(x)$<br>$Q<em>2(x) = \prod</em>{l=\frac{n}{2}}^{n-1}q_l(x)$</p>
+<li><p>$Q_1(x) = \prod_{i=0}^{\frac{n}{2}-1}q_l(x)$<br>$Q_2(x) = \prod_{l=\frac{n}{2}}^{n-1}q_l(x)$</p>
 </li>
 <li><p>设定n为2的幂，$Q_1(x)$和$Q_2(x)$是阶为$\frac{n}{2}$的多项式</p>
 </li>
@@ -654,15 +654,15 @@ Arithmetic Computations
 <li>$ T(n) = O(log^3n) $; $ W(n) = O(nlog^2n) $</li>
 </ul>
 <h3 id="多项式插值的分治算法"><a href="#多项式插值的分治算法" class="headerlink" title="多项式插值的分治算法"></a>多项式插值的分治算法</h3><ul>
-<li><p>集合$ { \beta<em>j = p(\alpha) }</em>{j=0}^{n-1} $</p>
+<li><p>集合$ \{ \beta_j = p(\alpha) \}_{j=0}^{n-1} $</p>
 </li>
-<li><p>拉格朗日插值公式(Lagrange interpolation formula):<br>$ p(x) = \sum_{j=0}^{n-1}\beta<em>j \frac{\prod</em>{l=0,l \not= j}^{n-1}(x - \alpha<em>j)}{\prod</em>{l=0,l \not= j}^{n-1}(\alpha_j-\alpha_l)} $</p>
+<li><p>拉格朗日插值公式(Lagrange interpolation formula):<br>$ p(x) = \sum_{j=0}^{n-1}\beta_j \frac{\prod_{l=0,l \not= j}^{n-1}(x - \alpha_j)}{\prod_{l=0,l \not= j}^{n-1}(\alpha_j-\alpha_l)} $</p>
 </li>
-<li><p>$q_l(x) = x - \alpha<em>l$; $Q(x) = \prod</em>{i=0}^{n-1}q_l(x)$; $Q^{‘}(\alpha<em>j) = \prod</em>{l=0,l \not= j}^{n-1}(\alpha_j) - \alpha_l$</p>
+<li><p>$q_l(x) = x - \alpha_l$; $Q(x) = \prod_{i=0}^{n-1}q_l(x)$; $Q^{‘}(\alpha_j) = \prod_{l=0,l \not= j}^{n-1}(\alpha_j) - \alpha_l$</p>
 </li>
-<li><p>$\gamma_j = Q^{‘}(\alpha_j), 0 \leq j \leq n-1$, $c_j = \beta_j/\gamma<em>j, 0 \leq j \leq n-1$; $p(x) = Q(x)\sum</em>{j=0}^{n-1}\frac{c_j}{x - \alpha_j}$</p>
+<li><p>$\gamma_j = Q^{‘}(\alpha_j), 0 \leq j \leq n-1$, $c_j = \beta_j/\gamma_j, 0 \leq j \leq n-1$; $p(x) = Q(x)\sum_{j=0}^{n-1}\frac{c_j}{x - \alpha_j}$</p>
 </li>
-<li><p>$\sum_{j=0}^{n-1}\frac{c_j}{x-\alpha<em>j}$可用平衡树方法求得<br>$ \frac{p(x)}{Q(x)} = \frac{p</em>{k-1,0}(x)}{Q<em>{k-1,0}(x)} + \frac{p</em>{k-1,1}(x)}{Q<em>{k-1,1}(x)} = \frac{p</em>{k-1,0}(x)Q<em>{k-1,1}(x) + p</em>{k-1,1}(x)Q_{k-1,0}(x)}{Q(x)} $</p>
+<li><p>$\sum_{j=0}^{n-1}\frac{c_j}{x-\alpha_j}$可用平衡树方法求得<br>$ \frac{p(x)}{Q(x)} = \frac{p_{k-1,0}(x)}{Q_{k-1,0}(x)} + \frac{p_{k-1,1}(x)}{Q_{k-1,1}(x)} = \frac{p_{k-1,0}(x)Q_{k-1,1}(x) + p_{k-1,1}(x)Q_{k-1,0}(x)}{Q(x)} $</p>
 </li>
 </ul>
 <p>Algorithm 8.4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(Polynomial Interpolation)</div><div class="line">Input: A set of pairs of numbers (a_j, b_j), where 0 &lt;= j &lt;= n, the a_j&apos;s are distinct, and n = 2^k for some integer k.</div><div class="line">Output: The coefficients of the (n-1)st-degree polynomial p(x) such that p(a_j) = b_j, for all 0 &lt;= j &lt;= n-1.</div><div class="line">begin</div><div class="line">1. for 0 &lt;= j &lt;= n-1 pardo</div><div class="line">    Set Q_&#123;0,j&#125;(x) := x - a_j</div><div class="line">2. for h = 1 to logn do</div><div class="line">    for 0 &lt;= j &lt;= (n/2^h)-1 pardo</div><div class="line">        Set Q_&#123;h,j&#125;(x) := Q_&#123;h-1,2j&#125;(x) * Q_&#123;h-1,2j+1&#125;(x)</div><div class="line">3. Compute Q_&#123;k,0&#125;(x), and user Algorithm 8.3 to compute y_j = Q&apos;_&#123;k,0&#125;(a_j), for all 0 &lt;= j &lt;= n-1</div><div class="line">4. for 0 &lt;= j &lt;= n-1 pardo</div><div class="line">    Set p_&#123;0,j&#125;(x) := b_j/y_j</div><div class="line">5. for h = 1 to logn do </div><div class="line">    for 0 &lt;= j &lt;= (n/2^h)-1 pardo</div><div class="line">        Set p_&#123;h,j&#125;(x) := p_&#123;h-1,2j&#125;(x)Q_&#123;h-1,2j+1&#125;(x) + p_&#123;h-1,2j+1&#125;(x)Q_&#123;h-1,2j&#125;(x)</div><div class="line">6. Set p(x) := p_&#123;k,0&#125;(x)</div></pre></td></tr></table></figure></p>
@@ -772,10 +772,10 @@ Arithmetic Computations
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -796,7 +796,7 @@ Arithmetic Computations
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -809,7 +809,7 @@ Arithmetic Computations
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -875,7 +875,7 @@ Arithmetic Computations
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

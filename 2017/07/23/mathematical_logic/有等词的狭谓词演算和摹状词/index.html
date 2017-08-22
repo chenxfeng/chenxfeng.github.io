@@ -304,7 +304,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -381,7 +381,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T16:44:44+08:00">
                 2017-07-23
@@ -469,13 +469,13 @@
 <li>至少有若干个体：用等词、存在量词及合取表示</li>
 </ol>
 <ul>
-<li>至少有n个体可表示为 $(\exists x_1)(\exists x_2)…(\exists x_n)(x_1 \not= x_2 \bigwedge … \bigwedge x_1 \not=x<em>n \bigwedge … \bigwedge x</em>{n-1} \not= x_n)$</li>
+<li>至少有n个体可表示为 $(\exists x_1)(\exists x_2)…(\exists x_n)(x_1 \not= x_2 \bigwedge … \bigwedge x_1 \not=x_n \bigwedge … \bigwedge x_{n-1} \not= x_n)$</li>
 </ul>
 <ol>
 <li>至多有若干个体：用等词、全称量词及析取表示</li>
 </ol>
 <ul>
-<li>至多有n个体可表示为 $(x_1)(x<em>2)…(x</em>{n+1})(x_1 = x_2) \bigvee … \bigvee x<em>1 = x</em>{n+1} \bigvee … \bigvee x<em>n = x</em>{n+1}$</li>
+<li>至多有n个体可表示为 $(x_1)(x_2)…(x_{n+1})(x_1 = x_2) \bigvee … \bigvee x_1 = x_{n+1} \bigvee … \bigvee x_n = x_{n+1}$</li>
 <li><ul>
 <li>任给n+1个必有2个相等，就是至多有n个</li>
 </ul>
@@ -497,7 +497,7 @@
 <li>至多有n个体是F</li>
 </ol>
 <ul>
-<li>至多有n个F：$(x<em>1)…(x</em>{n+1})(F(x<em>1) \bigwedge … \bigwedge F(x</em>{n+1}) \rightarrow x_1 = x_2 \bigwedge … \bigvee x<em>1 = x</em>{n+1} \bigvee … \bigvee x<em>n = x</em>{n+1})$ </li>
+<li>至多有n个F：$(x_1)…(x_{n+1})(F(x_1) \bigwedge … \bigwedge F(x_{n+1}) \rightarrow x_1 = x_2 \bigwedge … \bigvee x_1 = x_{n+1} \bigvee … \bigvee x_n = x_{n+1})$ </li>
 </ul>
 <ol>
 <li>恰好有n个体是F</li>
@@ -509,13 +509,13 @@
 <ul>
 <li>至少有n个F</li>
 </ul>
-<p>$(\exists _{n}x)F(x) = \begin{cases} (\exists x_1)F(x_1),  \ \ \text{当n=1} \ (\exists x_1)…(\exists x_n)(F(x_1) \bigwedge … \bigwedge F(x_n) \rightarrow x_1 \not=x_2 \bigwedge … \bigwedge x_1 \not= x<em>n \bigwedge … \bigwedge x</em>{n-1} \not= x_n) \ \ \text{当n &gt; 1}\end{cases}$</p>
+<p>$(\exists _{n}x)F(x) = \begin{cases} (\exists x_1)F(x_1),    \text{当n=1} \ (\exists x_1)…(\exists x_n)(F(x_1) \bigwedge … \bigwedge F(x_n) \rightarrow x_1 \not=x_2 \bigwedge … \bigwedge x_1 \not= x_n \bigwedge … \bigwedge x_{n-1} \not= x_n)   \text{当n &gt; 1}\end{cases}$</p>
 <ul>
 <li>至多有n个F</li>
 </ul>
-<p>$(_{n+1}x)F(x) = \begin{cases} (x_1)F(x_1),  \ \ \text{当n=1} \ (x<em>1)…(x</em>{n+1})(F(x<em>1) \bigvee … \bigvee F(x</em>{n+1}) \rightarrow x_1 = x_2 \bigvee … \bigvee x<em>1 = x</em>{n+1} \bigvee … \bigvee x<em>{n} = x</em>{n+1}) \ \ \text{当n &gt; 1}\end{cases}$</p>
+<p>$(_{n+1}x)F(x) = \begin{cases} (x_1)F(x_1),    \text{当n=1} \ (x_1)…(x_{n+1})(F(x_1) \bigvee … \bigvee F(x_{n+1}) \rightarrow x_1 = x_2 \bigvee … \bigvee x_1 = x_{n+1} \bigvee … \bigvee x_{n} = x_{n+1})   \text{当n &gt; 1}\end{cases}$</p>
 <ul>
-<li>恰好有n个F可表示为 $(\exists <em>n x)F(x) \bigwedge (</em>{n+1}x)F(x)$</li>
+<li>恰好有n个F可表示为 $(\exists _n x)F(x) \bigwedge (_{n+1}x)F(x)$</li>
 </ul>
 <h3 id="摹状词"><a href="#摹状词" class="headerlink" title="摹状词"></a>摹状词</h3><ul>
 <li>思维中反映某一特定事物的概念叫做单独概念：专名词和摹状词</li>
@@ -657,7 +657,7 @@
 <li>简单明确却有缺点</li>
 <li>对于一含有摹状词的公式 $H(_{\iota}xF(x))$，不能却区别下列两种情况：</li>
 <li><ul>
-<li>甲：$<em>{\iota}xF(x)$ 存在但不是H，因而 $H(</em>{\iota}xF(x))$ 为假</li>
+<li>甲：$_{\iota}xF(x)$ 存在但不是H，因而 $H(_{\iota}xF(x))$ 为假</li>
 </ul>
 </li>
 <li><ul>
@@ -809,10 +809,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -833,7 +833,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -846,7 +846,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -912,7 +912,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

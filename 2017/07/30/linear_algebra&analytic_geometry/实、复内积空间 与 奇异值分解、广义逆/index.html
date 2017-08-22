@@ -217,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -294,7 +294,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-30T11:00:00+08:00">
                 2017-07-30
@@ -367,7 +367,7 @@
 <li>(1)$(\alpha, k \beta) = k(\alpha, \beta)$</li>
 <li>(2)$(\alpha, \beta + \gamma) = (\alpha, \beta) + (\alpha, \gamma)$</li>
 <li>(3)$(\alpha, 0) = (0, \beta) = 0$</li>
-<li><p>(4)$(\sum\limits_{i=1}^m k_i\alpha<em>i, \sum\limits</em>{i=1}^n l_j\beta<em>j) = \sum\limits</em>{i=1}^m\sum\limits_{j=1}^n k_i l_j(\alpha_i, \beta_j)$</p>
+<li><p>(4)$(\sum\limits_{i=1}^m k_i\alpha_i, \sum\limits_{i=1}^n l_j\beta_j) = \sum\limits_{i=1}^m\sum\limits_{j=1}^n k_i l_j(\alpha_i, \beta_j)$</p>
 </li>
 <li><p>定义：设 $\alpha$ 是实内积空间的一个向量，则称非负实数 $\sqrt{(\alpha, \alpha)}$ 是向量 $\alpha$ 的长度，记作 $|\alpha| = \sqrt{(\alpha, \alpha)}$</p>
 </li>
@@ -387,13 +387,13 @@
 <p>两个非零向量正交的充要条件是它们之间的夹角 $\theta = \frac{\pi}{2}$<br>规定零向量与任意向量正交</p>
 </blockquote>
 <ul>
-<li><p>定义：设 $\alpha_1, \alpha_2, …, \alpha_n$ 是n维实内积空间 V 的基，若它们都是单位向量，而又两两正交，即 $$(\alpha_i, \alpha<em>j) = \delta</em>{ij} = \begin{cases} 0, i \not= j \ 1, i = j \end{cases}$$ 则称 $\alpha_1, \alpha_2, …, \alpha_n$ 是 V 的标准正交基</p>
+<li><p>定义：设 $\alpha_1, \alpha_2, …, \alpha_n$ 是n维实内积空间 V 的基，若它们都是单位向量，而又两两正交，即 $$(\alpha_i, \alpha_j) = \delta_{ij} = \begin{cases} 0, i \not= j \ 1, i = j \end{cases}$$ 则称 $\alpha_1, \alpha_2, …, \alpha_n$ 是 V 的标准正交基</p>
 </li>
 <li><p>例如：n维实内积空间 $R^n$ 中的自然基 $e_1 = (1, 0, …, 0), e_2 = (0, 1, …, 0), …, e_n = (0, 0, …, 1)$ 就是一组标准正交基</p>
 </li>
 <li><p>定理：设 $\alpha_1, \alpha_2, …, \alpha_m$ 是实内积空间 V 中两两正交的非零向量，且 $|\alpha_i| = 1(i = 1, 2, …, m)$，则 $\alpha_1, \alpha_2, …, \alpha_m$ 线性无关，而且对于 V 中任意向量 $\alpha$，向量 $\beta = \alpha - (\alpha, \alpha_1)\alpha_1 - (\alpha, \alpha_2)\alpha_2 - … - (\alpha, \alpha_m)\alpha_m$ 正交于每一个 $\alpha_i(i = 1, 2, …, m)$</p>
 </li>
-<li><p>定理：设 $\alpha_1, \alpha_2, …, \alpha_n$ 是n维实内积空间 V 的任意基，则必存在 V 的标准正交基 $\gamma_1, \gamma_2, …, \gamma_n$，使 $\alpha_1, \alpha_2, …, \alpha_n$ 到 $\gamma_1, \gamma_2, …, \gamma_n$ 的过渡矩阵是三角形矩阵，即 $\gamma<em>i = a</em>{i1}\alpha<em>1 + a</em>{i2}\alpha<em>2 + … + a</em>{ii}\alpha_i(i = 1, 2, …, n)$</p>
+<li><p>定理：设 $\alpha_1, \alpha_2, …, \alpha_n$ 是n维实内积空间 V 的任意基，则必存在 V 的标准正交基 $\gamma_1, \gamma_2, …, \gamma_n$，使 $\alpha_1, \alpha_2, …, \alpha_n$ 到 $\gamma_1, \gamma_2, …, \gamma_n$ 的过渡矩阵是三角形矩阵，即 $\gamma_i = a_{i1}\alpha_1 + a_{i2}\alpha_2 + … + a_{ii}\alpha_i(i = 1, 2, …, n)$</p>
 </li>
 <li><p>定理：设 $e_1, e_2, …, e_n$ 是实内积空间 V 的一组标准正交基，而且 $(f_1, f_2, …, f_n) = (e_1, e_2, …, e_n)Q$，则 $f_1, f_2, …, f_n$ 是 V 的标准正交基的充要条件是，Q具有性质 $Q^TQ = E$</p>
 </li>
@@ -434,7 +434,7 @@
 <p>子空间 W 的正交补用 $W^{\perp}$ 表示</p>
 </blockquote>
 <ul>
-<li>推论：$W^{\perp}$ 是所有与 W 正交的向量组成的，即 $W^{\perp} = {x \in V | x \perp W}$</li>
+<li>推论：$W^{\perp}$ 是所有与 W 正交的向量组成的，即 $W^{\perp} = \{x \in V | x \perp W\}$</li>
 </ul>
 <h3 id="实内积空间的线性变换"><a href="#实内积空间的线性变换" class="headerlink" title="实内积空间的线性变换"></a>实内积空间的线性变换</h3><ul>
 <li><p>引理：设 $\psi$ 是n维实内积空间 V 到实数域 R 的一个同态映射，则 V 中存在一个唯一向量 $\beta$，使对任意 $\alpha \in V$，有 $\psi(\alpha) = (\alpha, \beta)$</p>
@@ -569,11 +569,11 @@
 <li>(1)$(\alpha, k \beta) = \overline{k}(\alpha, \beta)$</li>
 <li>(2)$(\alpha, \beta + \gamma) = (\alpha, \beta) + (\alpha, \gamma)$</li>
 <li>(3)$(\alpha, 0) = (0, \beta) = 0$</li>
-<li>(4)$(\sum\limits_{i=1}^m k_i \alpha<em>i, \sum\limits</em>{j=1}^n l_j \beta<em>j) = \sum\limits</em>{i=1}^m \sum\limits_{j=1}^n k_i \overline{l_j}(\alpha_i, \beta_j)$</li>
+<li>(4)$(\sum\limits_{i=1}^m k_i \alpha_i, \sum\limits_{j=1}^n l_j \beta_j) = \sum\limits_{i=1}^m \sum\limits_{j=1}^n k_i \overline{l_j}(\alpha_i, \beta_j)$</li>
 </ul>
 <blockquote>
 <p>非负实数 $\sqrt{(\alpha, \alpha)}$ 称为向量 $\alpha$ 的长度，记作 $|\alpha|$<br>柯西-彭雅可夫斯基不等式仍然成立：对任意向量 $\alpha$ 和 $\beta$，$(\alpha, \beta)(\beta, \alpha) \leq (\alpha, \alpha)(\beta, \beta)$<br>非零向量 $\alpha$ 与 $\beta$ 的夹角 $\theta$ 规定为 $$\cos^2\theta = \frac{(\alpha, \beta)(\beta, \alpha)}{(\alpha, \alpha)(\beta, \beta)}$$<br>非零向量 $\alpha$ 与 $\beta$，如果 $(\alpha, \beta) = 0$，那么称 $\alpha$ 与 $\beta$ 正交(可与实内积空间一样定义标准正交基)</p>
-<p>矩阵 $Q<em>{n<em>n}$，若 $Q^HQ = E$，则称 Q 为<em>*酉阵</em></em><br>若 $U = U</em>{m*n}$，且 $U^HU = E$，则称 U 是具有标准正交列的矩阵</p>
+<p>矩阵 $Q_{n<em>n}$，若 $Q^HQ = E$，则称 Q 为<strong>酉阵</strong><br>若 $U = U_{m</em>n}$，且 $U^HU = E$，则称 U 是具有标准正交列的矩阵</p>
 <p>复内积空间中有类似的<strong>共轭变换</strong>、<strong>埃尔米特变换</strong>和<strong>酉变换</strong>对应实内积空间的共轭变换、对称变换和正交变换，线性变换 $\sigma$ 在标准正交基下的矩阵A，$\sigma$对应变换在此基下的矩阵分别为共轭转置矩阵、埃尔米特矩阵和酉阵</p>
 </blockquote>
 <ul>
@@ -609,7 +609,7 @@
 <h3 id="矩阵的奇异值分解与广义逆"><a href="#矩阵的奇异值分解与广义逆" class="headerlink" title="矩阵的奇异值分解与广义逆"></a>矩阵的奇异值分解与广义逆</h3><ul>
 <li><p>定理：设 $A \in C^{m*n}$，$rank(A) = r$，则 $AA^H$ 与 $A^HA$ 各有r个正的特征值，而且对应相等</p>
 </li>
-<li><p>定义：设 $A \in C^{m<em>n}$，$rank(A) = r$，$A^HA$ 的特征值是 $\lambda_1 \geq \lambda_2 \geq … \geq \lambda<em>r &gt; \lambda</em>{r+1} = … = \lambda_n = 0$，则称 $\mu_i = \sqrt{\lambda_i}(i = 1, 2, …, n)$ 是 A 的<strong>奇异值</strong>，其中 $\mu_1, …, \mu_r$ 称为 A 的<em>*正奇异值</em></em></p>
+<li><p>定义：设 $A \in C^{m<em>n}$，$rank(A) = r$，$A^HA$ 的特征值是 $\lambda_1 \geq \lambda_2 \geq … \geq \lambda_r &gt; \lambda_{r+1} = … = \lambda_n = 0$，则称 $\mu_i = \sqrt{\lambda_i}(i = 1, 2, …, n)$ 是 A 的<strong>奇异值</strong>，其中 $\mu_1, …, \mu_r$ 称为 A 的<em>*正奇异值</em></em></p>
 </li>
 </ul>
 <blockquote>
@@ -758,10 +758,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -782,7 +782,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -795,7 +795,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -861,7 +861,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

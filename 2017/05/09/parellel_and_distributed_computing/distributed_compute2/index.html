@@ -286,7 +286,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -363,7 +363,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-09T00:00:00+08:00">
                 2017-05-09
@@ -1154,19 +1154,19 @@
 </ul>
 </li>
 <li><ul>
-<li>$Q_n＝K<em>2 x Q</em>{n-1}$, 这里：$K_2$是具有两个节点的完全图；x是两个图的笛卡尔乘积。</li>
+<li>$Q_n＝K_2 x Q_{n-1}$, 这里：$K_2$是具有两个节点的完全图；x是两个图的笛卡尔乘积。</li>
 </ul>
 </li>
 <li><ul>
-<li>Qn中的一个节点的地址可以表示为$ u = u<em>n u</em>{n-1}…u_1(u_i＝0/1, 1&lt;=i&lt;=n) $</li>
+<li>Qn中的一个节点的地址可以表示为$ u = u_n u_{n-1}…u_1(u_i＝0/1, 1&lt;=i&lt;=n) $</li>
 </ul>
 </li>
 </ul>
 <p><em>海明距离</em></p>
 <ul>
-<li><p>两个节点$u=u_n u{n-1}…u_1$和$w=w_n w{n-1}…w<em>1$间最短路径长度就是u和w间的海明距离，表示为H(u,w)。<br>$$ H(u, w) = \sum</em>{i=1}^{n}h(u_i, w_i),<br>h(u_i,w_i)=\begin{cases}<br>1&amp;\text{if $u_i \not= w_i$},\<br>0&amp;\text{if $u_i = w_i$}.<br>\end{cases}<br>$$</p>
+<li><p>两个节点$u=u_n u{n-1}…u_1$和$w=w_n w{n-1}…w_1$间最短路径长度就是u和w间的海明距离，表示为H(u,w)。<br>$$ H(u, w) = \sum_{i=1}^{n}h(u_i, w_i),<br>h(u_i,w_i)=\begin{cases}<br>1&amp;\text{if $u_i \not= w_i$},\\<br>0&amp;\text{if $u_i = w_i$}.<br>\end{cases}<br>$$</p>
 </li>
-<li><p>u和w间的异或操作$u \oplus w＝r<em>n r</em>{n-1}… r_1$定义为：</p>
+<li><p>u和w间的异或操作$u \oplus w＝r_n r_{n-1}… r_1$定义为：</p>
 </li>
 <li><ul>
 <li>如果$u_i＝w_i$，则$r_i＝0$</li>
@@ -1339,7 +1339,7 @@
 <li><p>若使用双向链接，则只需一个哈密尔顿路径(而不是哈密尔顿回路)即可。</p>
 </li>
 <li>哈密尔顿路径为系统中的所有节点定义了一个顺序。</li>
-<li><p>在整个顺序中，每个节点(x,y)都被赋予一个数字r：<br>$$<br>r(x, y)=\begin{cases}<br>yn+x&amp;\text{if y is even}\<br>yn+n-x-1&amp;\text{if y is odd}<br>\end{cases}<br>$$</p>
+<li><p>在整个顺序中，每个节点(x,y)都被赋予一个数字r：<br>$$<br>r(x, y)=\begin{cases}<br>yn+x&amp;\text{if y is even}\\<br>yn+n-x-1&amp;\text{if y is odd}<br>\end{cases}<br>$$</p>
 </li>
 <li><p>例如，一个4X4的网格上每个节点具有的r值如图所示：</p>
 </li>
@@ -1398,7 +1398,7 @@
 </ul>
 </li>
 <li><ul>
-<li>否则，选择一个满足下式的v的邻居u：$r(u) = max{r(w): r(w) &lt; r(d),$ w is a neighbor of v$}$</li>
+<li>否则，选择一个满足下式的v的邻居u：$r(u) = max\{r(w): r(w) &lt; r(d),$ w is a neighbor of v$\}$</li>
 </ul>
 </li>
 </ul>
@@ -1571,10 +1571,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -1595,7 +1595,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -1608,7 +1608,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -1674,7 +1674,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

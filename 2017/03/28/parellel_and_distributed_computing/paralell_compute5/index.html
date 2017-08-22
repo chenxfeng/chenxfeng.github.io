@@ -223,7 +223,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -300,7 +300,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">
                 2017-03-28
@@ -396,12 +396,12 @@
 </ul>
 <p>最上层$\sqrt(m)$段，对段的右端点在长度为n的A中搜索，求交叉序(能用$\sqrt(n)$个处理器)</p>
 <ol>
-<li>$T = O(log<em>{\sqrt(n)+1}(n+1)) = O(log</em>{\sqrt(n)}n) = O(2) = O(1)$</li>
+<li>$T = O(log_{\sqrt(n)+1}(n+1)) = O(log_{\sqrt(n)}n) = O(2) = O(1)$</li>
 <li>处理器个数$\sqrt m\sqrt n \leqslant \frac{m+n}{2}$</li>
 </ol>
 <p>第二层设B中第i段的右端点切到的A的段的长度为n，B分成$m^{\frac{1}{4}}n^{\frac{1}{4}}$段。第i段用$\sqrt{n_{|\frac{i-1}{\sqrt{m}}|+1}}$个处理器</p>
 <ul>
-<li>总处理器数 = $\sum<em>{i=1}^{m^{\frac{3}{4}}}\sqrt{n</em>{|\frac{i-1}{\sqrt{m}}|+1}} = \sum_{j=1}^{\sqrt{m}}m^{\frac{1}{4}}\sqrt{n<em>j} \leqslant \sum</em>{j=1}^{\sqrt{m}}\frac{\sqrt{m}+n<em>j}{2} = (\sum</em>{j=1}^{\sqrt{m}}\sqrt{m} + \sum_{j=1}^{\sqrt{m}}n_j)/2 = (m+n)/2$</li>
+<li>总处理器数 = $\sum_{i=1}^{m^{\frac{3}{4}}}\sqrt{n_{|\frac{i-1}{\sqrt{m}}|+1}} = \sum_{j=1}^{\sqrt{m}}m^{\frac{1}{4}}\sqrt{n_j} \leqslant \sum_{j=1}^{\sqrt{m}}\frac{\sqrt{m}+n_j}{2} = (\sum_{j=1}^{\sqrt{m}}\sqrt{m} + \sum_{j=1}^{\sqrt{m}}n_j)/2 = (m+n)/2$</li>
 </ul>
 <p>第三层处理器个数 = $\sum_{j=1}^{m^{\frac{3}{4}}}m^{\frac{1}{8}}\sqrt{n_j^{(1)}} \leqslant  = (\sum m^{\frac{1}{4}} + n_j^{(1)})/2 = (m+n)/2$</p>
 <ul>
@@ -544,10 +544,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -568,7 +568,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -581,7 +581,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -647,7 +647,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

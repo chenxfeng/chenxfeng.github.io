@@ -202,7 +202,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -279,7 +279,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-03T00:00:00+08:00">
                 2017-06-03
@@ -331,7 +331,7 @@
 </ul>
 </li>
 <li><ul>
-<li>其状态转移方程便是： $F[i,v]=max{F[i−1,v],F[i−1,v−C_i] + W_i}$</li>
+<li>其状态转移方程便是： $F[i,v]=max\{F[i−1,v],F[i−1,v−C_i] + W_i\}$</li>
 </ul>
 </li>
 <li><p>将前i件物品放入容量为v的背包中”这个子问题, 若只考虑第i件物品的策略（放或不放），那么就可以转化为一个只和前i−1件物品相关的问题</p>
@@ -372,7 +372,7 @@
 </li>
 <li><p>按照解01背包时的思路，令F[i,v]表示前i种物品恰放入一个容量为v的背包的最大权值</p>
 </li>
-<li>$F[i,v] = max{F[i−1, v−kC_i] + kW_i|0≤kC_i≤v}$</li>
+<li>$F[i,v] = max\{F[i−1, v−kC_i] + kW_i|0≤kC_i≤v}$</li>
 <li>有O(VN)个状态需要求解，求解每个状态的时间已经不是常数了，求解状态F[i,v]的时间是O(<br>v C_i)，总的复杂度可以认为是O(NV ΣV/C_i)，比较大</li>
 </ul>
 <p><strong>一个简单有效的优化</strong></p>
@@ -407,7 +407,7 @@
 <li><p>基本算法</p>
 </li>
 <li>对于第i种物品有Mi+1种策略：取0件，取1件……取Mi件。令F[i,v]表示前i种物品恰放入一个容量为v的背包的最大价值，则有状态转移方程：</li>
-<li>$F[i, v] = max{F[i−1, v−k<em>C_i]+k</em>W_i|0≤k≤M_i}$</li>
+<li>$F[i, v] = max\{F[i−1, v−k<em>C_i]+k</em>W_i|0≤k≤M_i\}$</li>
 <li>复杂度是O(VΣM_i)</li>
 </ul>
 <p><strong>转化为01背包问题</strong></p>
@@ -449,7 +449,7 @@
 <li><p>算法</p>
 </li>
 <li>费用加了一维，只需状态也加一维。设F[i,v,u]表示前i件物品付出两种代价分别为v和u时可获得的最大价值。状态转移方程就是：</li>
-<li><p>$F[i,v,u] = max{F[i−1,v,u], F[i−1,v−C_i,u−D_i] + Wi}$</p>
+<li><p>$F[i,v,u] = max\{F[i−1,v,u], F[i−1,v−C_i,u−D_i] + Wi\}$</p>
 </li>
 <li><p>优化空间复杂度的方法，可以只使用二维的数组：当每件物品只可以取一次时变量v和u采用逆序的循环，当物品有如完全背包问题时采用顺序的循环，当物品有如多重背包问题时拆分物品</p>
 </li>
@@ -473,7 +473,7 @@
 </li>
 <li>每组物品有若干种策略：是选择本组的某一件，还是一件都不选</li>
 <li>设F[k,v]表示前k组物品花费费用v能取得的最大权值，则有：</li>
-<li>$F[k,v] = max{F[k−1,v], F[k−1, v−C_i] + W_i|item \ i \in group \ k}$</li>
+<li>$F[k,v] = max\{F[k−1,v], F[k−1, v−C_i] + W_i|item  i \in group  k}$</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for k=1 to K </div><div class="line">  for v=V to 0 </div><div class="line">    for item i in group k </div><div class="line">      F[v] = max&#123;F[v], F[v−C_i] + W_i&#125;</div></pre></td></tr></table></figure>
 <ul>
@@ -531,7 +531,7 @@
 <li><p>对于一个给定的费用v，只需枚举将这个费用如何分配给两个泛化物品</p>
 </li>
 <li>对于0…V中的每一个整数v，可以求得费用v分配到h和l中的最大价值f(v)。也即</li>
-<li><p>$f(v) = max{h(k)+l(v−k)|0≤k≤v}$</p>
+<li><p>$f(v) = max\{h(k)+l(v−k)|0≤k≤v\}$</p>
 </li>
 <li><p>这里的f是一个由泛化物品h和l决定的定义域为0…V的函数，也就是说，f是一个由泛化物品h和l决定的泛化物品</p>
 </li>
@@ -649,10 +649,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -673,7 +673,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/">
                 <span class="site-state-item-count">80</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -686,7 +686,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">11</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -752,7 +752,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

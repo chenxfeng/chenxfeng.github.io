@@ -414,7 +414,7 @@
 </ul>
 </li>
 <li><ul>
-<li>(3)$V_i \bigcap \sum_{j \not= i} V_j = \{ 0 \}, (i = 1, 2, …, s)$</li>
+<li>(3)$V_i \bigcap \sum_{j \not= i} V_j = { 0 }, (i = 1, 2, …, s)$</li>
 </ul>
 </li>
 <li><ul>
@@ -452,8 +452,8 @@
 <ul>
 <li>(1)如果 $\alpha = 0 \in V$，则 $\sigma(\alpha) = 0$；如果 $\alpha \in V$，则 $\sigma(-\alpha) = - \sigma(\alpha)$. </li>
 <li>(2)同态映射把线性相关的元变为线性相关的元</li>
-<li>(3)V 中所有元的象的集合称为 $\sigma$ 的象(image)，记作 $I_m(\sigma)$，即 $I_m(\sigma) = \{ \sigma(\alpha)|\alpha \in V \}$ 是 U 的子空间，称为 $\sigma$ 的<strong>象子空间</strong></li>
-<li>(4)U 中零元的所有象源的集合称为 $\sigma$ 的<strong>核(kernel)</strong>，记作 $Ker(\sigma)$，即 $Ker(\sigma) = \{ \alpha \in V | \sigma(\alpha) = 0 \}$ 是 V 的子空间，称为 $\sigma$ 的<strong>核子空间</strong></li>
+<li>(3)V 中所有元的象的集合称为 $\sigma$ 的象(image)，记作 $I_m(\sigma)$，即 $I_m(\sigma) = { \sigma(\alpha)|\alpha \in V }$ 是 U 的子空间，称为 $\sigma$ 的<strong>象子空间</strong></li>
+<li>(4)U 中零元的所有象源的集合称为 $\sigma$ 的<strong>核(kernel)</strong>，记作 $Ker(\sigma)$，即 $Ker(\sigma) = { \alpha \in V | \sigma(\alpha) = 0 }$ 是 V 的子空间，称为 $\sigma$ 的<strong>核子空间</strong></li>
 <li>(5)$\sigma$ 是同构映射的充要条件是 $I_m(\sigma) = U, Ker(\sigma) = {0}$</li>
 <li>(6)同构映射把线性无关的元变为线性无关的元</li>
 <li>(7)同构映射的逆映射是同构映射</li>
@@ -577,7 +577,7 @@
 </ul>
 <blockquote>
 <p>特征向量不被特征根所唯一决定：$\sigma(k\alpha) = k\sigma(\alpha) = k(\lambda \alpha) = \lambda(k \alpha) (k \not= 0)$<br>特征根被特征向量唯一决定</p>
-<p><strong>特征子空间</strong>：$V_{\lambda} = \{ \alpha | \sigma(\alpha) = \lambda \alpha, \alpha \in V \}$</p>
+<p><strong>特征子空间</strong>：$V_{\lambda} = { \alpha | \sigma(\alpha) = \lambda \alpha, \alpha \in V }$</p>
 <p>线性变换 $\sigma$ 对数域 K 上线性空间 V 的一组基 $\alpha_1, \alpha_2, …, \alpha_n$ 的矩阵为 $A = (a_{ij})_{n*n}$.<br>$\lambda$ 是 $\sigma$ 的特征根，$\sigma$ 的属于 $\lambda$ 的特征向量 $\alpha$ 在这组基下的坐标是 $x_1, x_2, …, x_n$，即 $\alpha = x_1 \alpha_1 + x_2 \alpha_2 + … x_n \alpha_n$<br>$\sigma(\alpha)$ 在这组基下的坐标为 $$A \left[ \begin{matrix} x1 \ x2 \ . \ . \ . \ x_n \end{matrix} \right]$$<br>$\lambda \alpha$ 在这组基下的坐标为 $$\lambda \left[ \begin{matrix} x1 \ x2 \ . \ . \ . \ x_n \end{matrix} \right]$$<br>由 $\sigma(\alpha) = \lambda \alpha$，故有 $$A \left[ \begin{matrix} x1 \ x2 \ . \ . \ . \ x_n \end{matrix} \right] = \lambda \left[ \begin{matrix} x1 \ x2 \ . \ . \ . \ x_n \end{matrix} \right]$$ 或 $$(\lambda E - A)X = 0$$ 其中 $$X = \left[ \begin{matrix} x1 \ x2 \ . \ . \ . \ x_n \end{matrix} \right]$$<br>由于 $\alpha \not= 0$，即 $x_1, x_2, …, x_n$ 不全为零，故齐次线性方程组有非零解，因而系数行列式 $$det(\lambda E - A) =<br>\left| \begin{matrix}<br>\lambda - \alpha_{11} &amp; -\alpha_{12} &amp; … &amp; -\alpha_{1n} \\<br>-\alpha_{21} &amp; \lambda - \alpha_{22} &amp; … &amp; -\alpha_{2n} \\<br>.            &amp; .                     &amp;     &amp; .            \\<br>.            &amp; .                     &amp;     &amp; .            \\<br>.            &amp; .                     &amp;     &amp; .            \\<br>-\alpha_{n1} &amp; \alpha_{n2} &amp; … &amp; \lambda - \alpha_{nn}<br>\end{matrix}<br>\right|<br>$$</p>
 <p>矩阵A的<strong>特征多项式</strong>：$det(\lambda E - A)$，记作 $\Delta_A(\lambda)$</p>
 </blockquote>

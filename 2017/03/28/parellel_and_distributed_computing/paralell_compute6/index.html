@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,6 +10,13 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
@@ -68,7 +75,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="并行计算," />
@@ -80,7 +87,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
 
 
 
@@ -133,8 +140,10 @@ plane-s">
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
+    tabs: true,
     motion: true,
     duoshuo: {
       userId: '0',
@@ -158,11 +167,7 @@ plane-s">
 
 
 
-  <title> 平面几何的并行算法 | chenxfeng's blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
+  <title>平面几何的并行算法 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -172,11 +177,9 @@ plane-s">
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -224,17 +227,7 @@ plane-s">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            Accueil
           </a>
         </li>
       
@@ -266,7 +259,11 @@ plane-s">
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -284,14 +281,7 @@ plane-s">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                平面几何的并行算法
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">平面几何的并行算法</h1>
         
 
         <div class="post-meta">
@@ -301,7 +291,7 @@ plane-s">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">
                 2017-03-28
@@ -332,7 +322,9 @@ plane-s">
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -500,27 +492,15 @@ plane-s">
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -532,7 +512,7 @@ plane-s">
       
 
       
-        
+      
       
 
       
@@ -560,6 +540,10 @@ plane-s">
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -593,6 +577,7 @@ plane-s">
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
@@ -600,10 +585,10 @@ plane-s">
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Ensemble
           </li>
         </ul>
       
@@ -622,9 +607,11 @@ plane-s">
 
           
             <div class="site-state-item site-state-posts">
-              <a href="/">
+            
+              <a href="/archives">
+            
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -699,22 +686,25 @@ plane-s">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
-</div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -752,6 +742,12 @@ plane-s">
 
 
 
+
+
+
+
+
+
   
   <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
 
@@ -774,25 +770,25 @@ plane-s">
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
 
 
 
   
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -839,10 +835,6 @@ plane-s">
 
 
 
-  
-
-
-
 
 
 
@@ -851,6 +843,10 @@ plane-s">
 
 
 
+
+  
+
+  
 
   
 

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,6 +10,13 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
@@ -68,7 +75,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -80,7 +87,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
 
 
 
@@ -101,8 +108,10 @@
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
+    tabs: true,
     motion: true,
     duoshuo: {
       userId: '0',
@@ -126,11 +135,7 @@
 
 
 
-  <title> chenxfeng's blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
+  <title>chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -140,11 +145,9 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -194,17 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            Accueil
           </a>
         </li>
       
@@ -236,7 +229,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/04/18/parellel_and_distributed_computing/paralell_compute8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -255,16 +252,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/04/18/parellel_and_distributed_computing/paralell_compute8/" itemprop="url">
-                  数值计算中的并行算法
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/04/18/parellel_and_distributed_computing/paralell_compute8/" itemprop="url">数值计算中的并行算法</a></h1>
         
 
         <div class="post-meta">
@@ -274,7 +263,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-18T00:00:00+08:00">
                 2017-04-18
@@ -305,7 +294,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -323,25 +314,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/18/parellel_and_distributed_computing/paralell_compute8/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -355,6 +343,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -367,7 +359,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/04/11/parellel_and_distributed_computing/paralell_compute7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -386,16 +382,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/04/11/parellel_and_distributed_computing/paralell_compute7/" itemprop="url">
-                  字符串匹配的并行算法
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/04/11/parellel_and_distributed_computing/paralell_compute7/" itemprop="url">字符串匹配的并行算法</a></h1>
         
 
         <div class="post-meta">
@@ -405,7 +393,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-11T00:00:00+08:00">
                 2017-04-11
@@ -436,7 +424,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -456,25 +446,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/11/parellel_and_distributed_computing/paralell_compute7/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -488,6 +475,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -500,7 +491,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -519,16 +514,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/" itemprop="url">
-                  平面几何的并行算法
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/" itemprop="url">平面几何的并行算法</a></h1>
         
 
         <div class="post-meta">
@@ -538,7 +525,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">
                 2017-03-28
@@ -569,7 +556,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -589,25 +578,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -621,6 +607,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -633,7 +623,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -652,16 +646,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" itemprop="url">
-                  搜索、归并与排序的并行算法
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" itemprop="url">搜索、归并与排序的并行算法</a></h1>
         
 
         <div class="post-meta">
@@ -671,7 +657,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">
                 2017-03-28
@@ -702,7 +688,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -721,25 +709,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -753,6 +738,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -765,7 +754,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/21/parellel_and_distributed_computing/paralell_compute4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -784,16 +777,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/" itemprop="url">
-                  图的并行算法
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/" itemprop="url">图的并行算法</a></h1>
         
 
         <div class="post-meta">
@@ -803,7 +788,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-21T00:00:00+08:00">
                 2017-03-21
@@ -834,7 +819,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -855,25 +842,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -887,6 +871,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -899,7 +887,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/14/parellel_and_distributed_computing/paralell_compute3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -918,16 +910,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/" itemprop="url">
-                  列表和树
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/" itemprop="url">列表和树</a></h1>
         
 
         <div class="post-meta">
@@ -937,7 +921,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T00:00:00+08:00">
                 2017-03-14
@@ -968,7 +952,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -988,25 +974,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/03/14/parellel_and_distributed_computing/paralell_compute3/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1020,6 +1003,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1032,7 +1019,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1051,16 +1042,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/" itemprop="url">
-                  并行计算基础知识及基本并行算法
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/" itemprop="url">并行计算基础知识及基本并行算法</a></h1>
         
 
         <div class="post-meta">
@@ -1070,7 +1053,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T00:00:00+08:00">
                 2017-02-28
@@ -1101,7 +1084,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1115,25 +1100,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1147,6 +1129,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1159,7 +1145,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/02/28/computer_network/computer_network_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1178,16 +1168,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/02/28/computer_network/computer_network_1/" itemprop="url">
-                  计算机网络和因特网
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/02/28/computer_network/computer_network_1/" itemprop="url">计算机网络和因特网</a></h1>
         
 
         <div class="post-meta">
@@ -1197,7 +1179,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T00:00:00+08:00">
                 2017-02-28
@@ -1228,7 +1210,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1244,25 +1228,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/28/computer_network/computer_network_1/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1276,6 +1257,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1288,7 +1273,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/22/Cplusplus_thinking/模板（三）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1307,16 +1296,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/01/22/Cplusplus_thinking/模板（三）/" itemprop="url">
-                  模板之迭代器
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/01/22/Cplusplus_thinking/模板（三）/" itemprop="url">模板之迭代器</a></h1>
         
 
         <div class="post-meta">
@@ -1326,7 +1307,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-22T00:00:00+08:00">
                 2017-01-22
@@ -1357,7 +1338,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1378,25 +1361,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/22/Cplusplus_thinking/模板（三）/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1410,6 +1390,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1422,7 +1406,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/经济学基础知识/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1441,16 +1429,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/01/21/economics/经济学基础知识/" itemprop="url">
-                  经济学基础知识
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/01/21/economics/经济学基础知识/" itemprop="url">经济学基础知识</a></h1>
         
 
         <div class="post-meta">
@@ -1460,7 +1440,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
                 2017-01-21
@@ -1491,7 +1471,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1509,25 +1491,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/21/economics/经济学基础知识/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1541,6 +1520,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1573,6 +1556,7 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
@@ -1593,9 +1577,11 @@
 
           
             <div class="site-state-item site-state-posts">
-              <a href="/">
+            
+              <a href="/archives">
+            
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1654,22 +1640,25 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
-</div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -1707,6 +1696,12 @@
 
 
 
+
+
+
+
+
+
   
   <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
 
@@ -1729,21 +1724,25 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
 
 
 
   
-  
-
   
 
   
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1790,10 +1789,6 @@
 
 
 
-  
-
-
-
 
 
 
@@ -1802,6 +1797,10 @@
 
 
 
+
+  
+
+  
 
   
 

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,6 +10,13 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
@@ -68,7 +75,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="数理逻辑," />
@@ -80,7 +87,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
 
 
 
@@ -114,8 +121,10 @@
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
+    tabs: true,
     motion: true,
     duoshuo: {
       userId: '0',
@@ -139,11 +148,7 @@
 
 
 
-  <title> 狭谓词逻辑的形式结构 普遍有效性和可满足性 | chenxfeng's blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
+  <title>狭谓词逻辑的形式结构 普遍有效性和可满足性 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -153,11 +158,9 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -205,17 +208,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            Accueil
           </a>
         </li>
       
@@ -247,7 +240,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/19/mathematical_logic/狭谓词逻辑的形式结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -265,14 +262,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                狭谓词逻辑的形式结构 普遍有效性和可满足性
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">狭谓词逻辑的形式结构 普遍有效性和可满足性</h1>
         
 
         <div class="post-meta">
@@ -282,7 +272,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T22:00:00+08:00">
                 2017-07-19
@@ -313,7 +303,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -991,27 +983,15 @@
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1023,7 +1003,7 @@
       
 
       
-        
+      
       
 
       
@@ -1040,8 +1020,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/20/转载/Linux命令行挂载Win系统的磁盘/" rel="prev" title="Linux命令行挂载Win系统的磁盘(转)">
-                Linux命令行挂载Win系统的磁盘(转) <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/20/Cplusplus_thinking/应用器、操纵器和函数对象/" rel="prev" title="应用器、操纵器和函数对象">
+                应用器、操纵器和函数对象 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1051,6 +1031,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1084,6 +1068,7 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
@@ -1091,10 +1076,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Ensemble
           </li>
         </ul>
       
@@ -1113,9 +1098,11 @@
 
           
             <div class="site-state-item site-state-posts">
-              <a href="/">
+            
+              <a href="/archives">
+            
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1190,22 +1177,25 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
-</div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -1243,6 +1233,12 @@
 
 
 
+
+
+
+
+
+
   
   <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
 
@@ -1265,25 +1261,25 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
 
 
 
   
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1330,10 +1326,6 @@
 
 
 
-  
-
-
-
 
 
 
@@ -1342,6 +1334,10 @@
 
 
 
+
+  
+
+  
 
   
 

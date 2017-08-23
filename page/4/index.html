@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,6 +10,13 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
@@ -68,7 +75,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -80,7 +87,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
 
 
 
@@ -101,8 +108,10 @@
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
+    tabs: true,
     motion: true,
     duoshuo: {
       userId: '0',
@@ -126,11 +135,7 @@
 
 
 
-  <title> chenxfeng's blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
+  <title>chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -140,11 +145,9 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -194,17 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/index.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
+            Accueil
           </a>
         </li>
       
@@ -236,135 +229,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/08/mathematical_logic/命题逻辑的形式结构和规律特征/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/08/mathematical_logic/命题逻辑的形式结构和规律特征/" itemprop="url">
-                  命题逻辑的形式结构和规律特征
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-08T23:00:00+08:00">
-                2017-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>命题逻辑:<br>在研究考察逻辑形式时把一个命题只分析到其中所含的命题成分为止<br>不把简单命题再分析为非命题成分的结合<br>不把谓词和量词等等非命题成分分析出来</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">如果p，那么q</div><div class="line">p</div><div class="line">所以q</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/08/mathematical_logic/命题逻辑的形式结构和规律特征/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/08/Cplusplus_thinking/模板之函数配接器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -383,16 +252,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/08/Cplusplus_thinking/模板之函数配接器/" itemprop="url">
-                  模板之函数配接器
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/08/Cplusplus_thinking/模板之函数配接器/" itemprop="url">模板之函数配接器</a></h1>
         
 
         <div class="post-meta">
@@ -402,7 +263,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-08T23:00:00+08:00">
                 2017-07-08
@@ -433,7 +294,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -460,25 +323,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/08/Cplusplus_thinking/模板之函数配接器/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -492,6 +352,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -504,7 +368,138 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/08/mathematical_logic/命题逻辑的形式结构和规律特征/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/08/mathematical_logic/命题逻辑的形式结构和规律特征/" itemprop="url">命题逻辑的形式结构和规律特征</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-08T23:00:00+08:00">
+                2017-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>命题逻辑:<br>在研究考察逻辑形式时把一个命题只分析到其中所含的命题成分为止<br>不把简单命题再分析为非命题成分的结合<br>不把谓词和量词等等非命题成分分析出来</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">如果p，那么q</div><div class="line">p</div><div class="line">所以q</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/08/mathematical_logic/命题逻辑的形式结构和规律特征/#more" rel="contents">
+              Lire la suite &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/07/Cplusplus_thinking/模板之函数对象/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -523,16 +518,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/07/Cplusplus_thinking/模板之函数对象/" itemprop="url">
-                  模板之函数对象
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/07/Cplusplus_thinking/模板之函数对象/" itemprop="url">模板之函数对象</a></h1>
         
 
         <div class="post-meta">
@@ -542,7 +529,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-07T23:00:00+08:00">
                 2017-07-07
@@ -573,7 +560,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -595,25 +584,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/07/Cplusplus_thinking/模板之函数对象/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -627,6 +613,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -639,7 +629,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/06/Cplusplus_thinking/模板之迭代器配接器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -658,16 +652,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/06/Cplusplus_thinking/模板之迭代器配接器/" itemprop="url">
-                  模板之迭代器配接器
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/06/Cplusplus_thinking/模板之迭代器配接器/" itemprop="url">模板之迭代器配接器</a></h1>
         
 
         <div class="post-meta">
@@ -677,7 +663,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-06T00:00:00+08:00">
                 2017-07-06
@@ -708,7 +694,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -720,25 +708,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/06/Cplusplus_thinking/模板之迭代器配接器/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -752,6 +737,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -764,139 +753,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/05/Cplusplus_thinking/模板之使用泛型迭代器/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/05/Cplusplus_thinking/模板之使用泛型迭代器/" itemprop="url">
-                  模板之泛型迭代器的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li>一个小程序，使用不同类型迭代器做不同的事</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 复制顺序的数据结构</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> In, <span class="keyword">class</span> Out&gt;</div><div class="line"><span class="function">Out <span class="title">copy</span><span class="params">(In start, In end, Out dest)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != end)</div><div class="line">        *dest++ = *start++;</div><div class="line">    <span class="keyword">return</span> dest;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>调用例子</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">char</span>* hello = <span class="string">"Hello "</span>;</div><div class="line">    <span class="keyword">char</span>* world = <span class="string">"world"</span>;</div><div class="line">    <span class="keyword">char</span> message[<span class="number">15</span>];</div><div class="line">    <span class="keyword">char</span>* p = message;</div><div class="line"></div><div class="line">    p = copy(hello, hello + <span class="number">6</span>, p);</div><div class="line">    p = copy(world, world + <span class="number">5</span>, p);</div><div class="line">    *p = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">    <span class="built_in">cout</span> &lt;&lt; message &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/05/Cplusplus_thinking/模板之使用泛型迭代器/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/05/Cplusplus_thinking/模板之泛型迭代器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -915,16 +776,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/05/Cplusplus_thinking/模板之泛型迭代器/" itemprop="url">
-                  模板之泛型迭代器
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/05/Cplusplus_thinking/模板之泛型迭代器/" itemprop="url">模板之泛型迭代器</a></h1>
         
 
         <div class="post-meta">
@@ -934,7 +787,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
                 2017-07-05
@@ -965,7 +818,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1000,25 +855,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/05/Cplusplus_thinking/模板之泛型迭代器/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1032,6 +884,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1044,7 +900,142 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/05/Cplusplus_thinking/模板之使用泛型迭代器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/Cplusplus_thinking/模板之使用泛型迭代器/" itemprop="url">模板之泛型迭代器的使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ul>
+<li>一个小程序，使用不同类型迭代器做不同的事</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 复制顺序的数据结构</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> In, <span class="keyword">class</span> Out&gt;</div><div class="line"><span class="function">Out <span class="title">copy</span><span class="params">(In start, In end, Out dest)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != end)</div><div class="line">        *dest++ = *start++;</div><div class="line">    <span class="keyword">return</span> dest;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>调用例子</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">char</span>* hello = <span class="string">"Hello "</span>;</div><div class="line">    <span class="keyword">char</span>* world = <span class="string">"world"</span>;</div><div class="line">    <span class="keyword">char</span> message[<span class="number">15</span>];</div><div class="line">    <span class="keyword">char</span>* p = message;</div><div class="line"></div><div class="line">    p = copy(hello, hello + <span class="number">6</span>, p);</div><div class="line">    p = copy(world, world + <span class="number">5</span>, p);</div><div class="line">    *p = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">    <span class="built_in">cout</span> &lt;&lt; message &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/05/Cplusplus_thinking/模板之使用泛型迭代器/#more" rel="contents">
+              Lire la suite &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/04/Cplusplus_thinking/模板之抽象接口/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1063,16 +1054,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/04/Cplusplus_thinking/模板之抽象接口/" itemprop="url">
-                  模板之抽象接口
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/04/Cplusplus_thinking/模板之抽象接口/" itemprop="url">模板之抽象接口</a></h1>
         
 
         <div class="post-meta">
@@ -1082,7 +1065,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-04T00:00:00+08:00">
                 2017-07-04
@@ -1113,7 +1096,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1131,25 +1116,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/04/Cplusplus_thinking/模板之抽象接口/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1163,6 +1145,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1175,135 +1161,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/04/Cplusplus_thinking/模板之序列/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/04/Cplusplus_thinking/模板之序列/" itemprop="url">
-                  模板之序列
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-04T00:00:00+08:00">
-                2017-07-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>容器类应该包含对象，而迭代器类的对象标识容器中的位置</p>
-</blockquote>
-<p>Seq类: 精简指令集容器类，模仿纯Lisp中的列表(list)</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/04/Cplusplus_thinking/模板之序列/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/04/Cplusplus_thinking/模板和泛型算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1322,16 +1184,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/04/Cplusplus_thinking/模板和泛型算法/" itemprop="url">
-                  模板之抽象接口
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/04/Cplusplus_thinking/模板和泛型算法/" itemprop="url">模板之抽象接口</a></h1>
         
 
         <div class="post-meta">
@@ -1341,7 +1195,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-04T00:00:00+08:00">
                 2017-07-04
@@ -1372,7 +1226,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1394,25 +1250,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/04/Cplusplus_thinking/模板和泛型算法/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1426,6 +1279,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1438,7 +1295,138 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/04/Cplusplus_thinking/模板之序列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/04/Cplusplus_thinking/模板之序列/" itemprop="url">模板之序列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-04T00:00:00+08:00">
+                2017-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>容器类应该包含对象，而迭代器类的对象标识容器中的位置</p>
+</blockquote>
+<p>Seq类: 精简指令集容器类，模仿纯Lisp中的列表(list)</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/04/Cplusplus_thinking/模板之序列/#more" rel="contents">
+              Lire la suite &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/01/computer_network/computer_network_9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1457,16 +1445,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2017/07/01/computer_network/computer_network_9/" itemprop="url">
-                  网络管理(Network Management)
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/01/computer_network/computer_network_9/" itemprop="url">网络管理(Network Management)</a></h1>
         
 
         <div class="post-meta">
@@ -1476,7 +1456,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-01T00:00:00+08:00">
                 2017-07-01
@@ -1507,7 +1487,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1521,25 +1503,22 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/01/computer_network/computer_network_9/#more" rel="contents">
-              Read more &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1553,6 +1532,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1585,6 +1568,7 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
@@ -1605,9 +1589,11 @@
 
           
             <div class="site-state-item site-state-posts">
-              <a href="/">
+            
+              <a href="/archives">
+            
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1666,22 +1652,25 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
-</div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -1719,6 +1708,12 @@
 
 
 
+
+
+
+
+
+
   
   <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
 
@@ -1741,21 +1736,25 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
 
 
 
   
-  
-
   
 
   
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1802,10 +1801,6 @@
 
 
 
-  
-
-
-
 
 
 
@@ -1814,6 +1809,10 @@
 
 
 
+
+  
+
+  
 
   
 

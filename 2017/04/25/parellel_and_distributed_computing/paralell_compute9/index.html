@@ -99,11 +99,11 @@
 随机算法的分析基于概率论(Probability Theory)基本事实
 伯努利随机试验: 
 
-$P_r{X \geq m} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$
+$P_r\{X \geq m\} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$
 
 切尔诺夫界/不等式(Chernoff bounds): 
 
-$P_r{ X \l">
+$P_r\{ X">
 <meta property="og:type" content="article">
 <meta property="og:title" content="随机并行算法(Randomized Algorithm)">
 <meta property="og:url" content="https://chenfeng.github.io/2017/04/25/parellel_and_distributed_computing/paralell_compute9/index.html">
@@ -113,11 +113,11 @@ $P_r{ X \l">
 随机算法的分析基于概率论(Probability Theory)基本事实
 伯努利随机试验: 
 
-$P_r{X \geq m} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$
+$P_r\{X \geq m\} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$
 
 切尔诺夫界/不等式(Chernoff bounds): 
 
-$P_r{ X \l">
+$P_r\{ X">
 <meta property="og:updated_time" content="2017-05-01T01:12:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="随机并行算法(Randomized Algorithm)">
@@ -126,11 +126,11 @@ $P_r{ X \l">
 随机算法的分析基于概率论(Probability Theory)基本事实
 伯努利随机试验: 
 
-$P_r{X \geq m} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$
+$P_r\{X \geq m\} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$
 
 切尔诺夫界/不等式(Chernoff bounds): 
 
-$P_r{ X \l">
+$P_r\{ X">
 
 
 
@@ -226,7 +226,7 @@ $P_r{ X \l">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -290,7 +290,7 @@ $P_r{ X \l">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-25T00:00:00+08:00">
                 2017-04-25
@@ -335,12 +335,12 @@ $P_r{ X \l">
 <p>随机算法的分析基于概率论(Probability Theory)基本事实</p>
 <p>伯努利随机试验: </p>
 <ul>
-<li>$P_r{X \geq m} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$</li>
+<li>$P_r\{X \geq m\} = \sum_{j=m}^n (_j^n)p^jq^{n-j}$</li>
 </ul>
 <p>切尔诺夫界/不等式(Chernoff bounds): </p>
 <ul>
-<li>$P_r{ X \leq (1 - \epsilon)pn } \leq e^{-\epsilon^2np/2}$</li>
-<li>$P_r{ X \geq (1 + \epsilon)pn } \leq e^{-\epsilon^2np/3}$</li>
+<li>$P_r\{ X \leq (1 - \epsilon)pn \} \leq e^{-\epsilon^2np/2}$</li>
+<li>$P_r\{ X \geq (1 + \epsilon)pn \} \leq e^{-\epsilon^2np/3}$</li>
 </ul>
 <a id="more"></a>
 <p>PRAM模型需要加入一些特征</p>
@@ -429,7 +429,7 @@ $P_r{ X \l">
 <li>在独立试验中的平均被选率：n/8</li>
 <li><p>最终被选的包括独立试验的和非独立试验的</p>
 </li>
-<li><p>$ P_r{|X| \leq \alpha n} \leq e^{-\beta n} $ (由Chernoff bounds得)</p>
+<li><p>$ P_r\{|X| \leq \alpha n\} \leq e^{-\beta n} $ (由Chernoff bounds得)</p>
 </li>
 <li>其中$ 0 &lt; \alpha &lt; 1/8 $, $ \beta = (1 - 8\alpha)^2/16 $</li>
 </ul>
@@ -446,7 +446,7 @@ $P_r{ X \l">
 <li>独立试验中的平均成功点数至少为： $|V_d|/36 * 1/27$</li>
 <li><p>最终被选的包括独立试验的和非独立试验的</p>
 </li>
-<li><p>$ P_r {|X| \leq \alpha n } \leq e^{-\beta n} $</p>
+<li><p>$ P_r \{|X| \leq \alpha n \} \leq e^{-\beta n} $</p>
 </li>
 <li>$\alpha$ 和 $\beta$为常量</li>
 </ul>
@@ -483,7 +483,7 @@ $P_r{ X \l">
 </li>
 <li><p>问题转化成确定B中元素是否和P相同</p>
 </li>
-<li><p>令 $\mathcal{F} = { f_p }_{p \in S}$为函数集合，其中 $f_p$ 将长度为m的字符串映射到值域D中</p>
+<li><p>令 $\mathcal{F} = \{ f_p \}_{p \in S}$为函数集合，其中 $f_p$ 将长度为m的字符串映射到值域D中</p>
 </li>
 <li>$\mathcal{F}$ 必须满足以下三个特性：</li>
 <li><ul>
@@ -566,7 +566,7 @@ $P_r{ X \l">
 </li>
 </ul>
 <h3 id="随机化匹配产生错误的概率"><a href="#随机化匹配产生错误的概率" class="headerlink" title="随机化匹配产生错误的概率"></a>随机化匹配产生错误的概率</h3><ul>
-<li>$f_p$为从函数集合 $\mathcal{F} = {f_p}$ 中随机选取的函数，其中p是范围[1, 2, …, M]内的素数</li>
+<li>$f_p$为从函数集合 $\mathcal{F} = \{f_p\}$ 中随机选取的函数，其中p是范围[1, 2, …, M]内的素数</li>
 <li><p>任意两个长度为m的不同字符串产生错误匹配的概率<strong>不大于</strong> $\frac{\pi(\lfloor2.776m\rfloor)}{\pi(M)}$, $m \geq 11$</p>
 </li>
 <li><p>推论9.1: 选取的素数在$[1, 2, …, m^k]$范围内，则两个长度为m的字符串产生错误匹配的概率不大于 $\frac{3.48k}{m^{k-1}}$, k &gt; 1</p>
@@ -683,10 +683,10 @@ $P_r{ X \l">
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -709,7 +709,7 @@ $P_r{ X \l">
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -722,7 +722,7 @@ $P_r{ X \l">
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -789,7 +789,7 @@ $P_r{ X \l">
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 

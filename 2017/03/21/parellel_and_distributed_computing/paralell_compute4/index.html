@@ -471,15 +471,15 @@
 </li>
 </ul>
 <h3 id="最小生成树串行算法"><a href="#最小生成树串行算法" class="headerlink" title="最小生成树串行算法"></a>最小生成树串行算法</h3><p>输入：一个加权连通图，其中顶点集合为V，边集合为E</p>
-<p>初始化：$V<em>{new} = {x}$，其中x为集合V中的任一节点(起始点)，$E</em>{new}= {}$,为空</p>
+<p>初始化：$V_{new} = {x}$，其中x为集合V中的任一节点(起始点)，$E_{new}= {}$,为空</p>
 <p>重复下列操作，直到$V_{new} = V$:</p>
 <ul>
-<li><p>在集合E中选取权值最小的边<u, v="">，其中u为集合$V<em>{new}$中的元素，而v不在$V</em>{new}$集合当中，并且$v∈V$(如果存在有多条满足前述条件即具有相同权值的边，则可任意选取其中之一)</u,></p>
+<li><p>在集合E中选取权值最小的边<u, v="">，其中u为集合$V_{new}$中的元素，而v不在$V_{new}$集合当中，并且$v∈V$(如果存在有多条满足前述条件即具有相同权值的边，则可任意选取其中之一)</u,></p>
 </li>
-<li><p>将v加入集合$V<em>{new}$中，将<u, v="">边加入集合$E</u,></em>{new}$中</p>
+<li><p>将v加入集合$V_{new}$中，将<u, v="">边加入集合$E_{new}$中</u,></p>
 </li>
 </ul>
-<p>输出：使用集合$V<em>{new}$和$E</em>{new}$来描述所得到的最小生成树</p>
+<p>输出：使用集合$V_{new}$和$E_{new}$来描述所得到的最小生成树</p>
 <ul>
 <li><p>Prim’s algorithm</p>
 </li>
@@ -545,8 +545,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/" rel="prev" title="平面几何的并行算法">
-                平面几何的并行算法 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" rel="prev" title="搜索、归并与排序的并行算法">
+                搜索、归并与排序的并行算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

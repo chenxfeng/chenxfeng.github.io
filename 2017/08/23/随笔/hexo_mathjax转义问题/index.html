@@ -100,7 +100,7 @@
 <meta property="og:url" content="https://chenfeng.github.io/2017/08/23/随笔/hexo_mathjax转义问题/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
 <meta property="og:description" content="使用hexo搭建在github上的博客，编写复杂的数学公式可以用mathjax引擎">
-<meta property="og:updated_time" content="2017-08-23T04:54:39.524Z">
+<meta property="og:updated_time" content="2017-08-23T05:37:17.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo博客搭建之数学公式">
 <meta name="twitter:description" content="使用hexo搭建在github上的博客，编写复杂的数学公式可以用mathjax引擎">
@@ -336,7 +336,7 @@
 <ul>
 <li>在node_modules\marked\lib\marked.js中</li>
 <li>将 <code>em: /^\b_((?:[^_]|__)+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</code></li>
-<li>修改成 <code>em:/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</code></li>
+<li>修改成 <code>em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</code></li>
 </ul>
 <h3 id="其他解决方案"><a href="#其他解决方案" class="headerlink" title="其他解决方案"></a>其他解决方案</h3><h4 id="代码块保护"><a href="#代码块保护" class="headerlink" title="代码块保护"></a>代码块保护</h4><ul>
 <li>将公式放入代码块中，即用符号<code>\</code>包围起来；会被markdwon加上标签<code>&lt;code&gt;&lt;/code&gt;</code></li>
@@ -372,6 +372,9 @@
 </ul>
 </li>
 </ul>
+<blockquote>
+<p><strong>hexo-renderer-pandoc 未能正常工作，原因未明</strong></p>
+</blockquote>
 <hr>
 <h3 id="其他-插入数学公式的-方法"><a href="#其他-插入数学公式的-方法" class="headerlink" title="其他(插入数学公式的)方法"></a>其他(插入数学公式的)方法</h3><blockquote>
 <p>①使用google chart服务器<br>公式为latex语法，图片格式，复杂latex公式可能无法解析<br><code>&lt;img src=&quot;http://chart.googleapis.com/chart?cht=tx&amp;chl= 在此插入Latex公式&quot; style=&quot;border:none;&quot;&gt;</code><br>②使用forkosh服务器<br><code>&lt;img src=&quot;http://www.forkosh.com/mathtex.cgi? 在此处插入Latex公式&quot;&gt;</code><br><a href="http://blog.csdn.net/xiahouzuoxin/article/details/26478179" target="_blank" rel="external">参考：http://blog.csdn.net/xiahouzuoxin/article/details/26478179</a></p>

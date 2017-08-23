@@ -395,10 +395,10 @@ plane-s">
 <h3 id="上凸包计算-快速并行算法"><a href="#上凸包计算-快速并行算法" class="headerlink" title="上凸包计算(快速并行算法)"></a>上凸包计算(快速并行算法)</h3><p>假设输入点集已经按x坐标排好序</p>
 <ul>
 <li>分：把输入点集分成左、右点数基本均等的两组，T=O(1), W=O(n)</li>
-<li>治：在左、右两组中分别用分治法来计算上凸包，假设$T=T<em>{n/2}, W=2W</em>{n/2}$</li>
+<li>治：在左、右两组中分别用分治法来计算上凸包，假设$T=T_{n/2}, W=2W_{n/2}$</li>
 <li>合：把左、右两组的上凸包合在一起，T=O(1), W=O(n)</li>
 </ul>
-<p>总体并行复杂度：$T<em>n=T</em>{n/2}+O(1)=O(log n), W<em>n=2W</em>{n/2}+O(n)=O(n log n)</p>
+<p>总体并行复杂度：$T_n=T_{n/2}+O(1)=O(log n), W_n=2W_{n/2}+O(n)=O(n log n)</p>
 <h2 id="凸集求交-Intersections-of-Convex-Sets"><a href="#凸集求交-Intersections-of-Convex-Sets" class="headerlink" title="凸集求交(Intersections of Convex Sets)"></a>凸集求交(Intersections of Convex Sets)</h2><p>intersection of half-planes(半平面的交)</p>
 <p>每条直线方程L: y=ax+b都把二维平面分成两个半空间: $H^+(L)$和$H^-(L)$，分别对应y&gt;=ax+b和y&lt;=ax+b</p>
 <p>多条直线，每条选一个半空间，这些半空间的交可以看作凸集的交</p>
@@ -519,8 +519,8 @@ plane-s">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/" rel="next" title="图的并行算法">
-                <i class="fa fa-chevron-left"></i> 图的并行算法
+              <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" rel="next" title="搜索、归并与排序的并行算法">
+                <i class="fa fa-chevron-left"></i> 搜索、归并与排序的并行算法
               </a>
             
           </div>
@@ -529,8 +529,8 @@ plane-s">
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" rel="prev" title="搜索、归并与排序的并行算法">
-                搜索、归并与排序的并行算法 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/11/parellel_and_distributed_computing/paralell_compute7/" rel="prev" title="字符串匹配的并行算法">
+                字符串匹配的并行算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

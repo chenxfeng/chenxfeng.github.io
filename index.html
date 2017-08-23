@@ -823,7 +823,7 @@
       
         
           <h3 id="lambda-矩阵"><a href="#lambda-矩阵" class="headerlink" title="$\lambda$-矩阵"></a>$\lambda$-矩阵</h3><blockquote>
-<p>元素是 $\lambda$ 的多项式的矩阵称为 $\lambda$-矩阵，记作 $A(\lambda) = (a<em>{ij}(\lambda))</em>{m*n}$；常数矩阵是其特殊形式</p>
+<p>元素是 $\lambda$ 的多项式的矩阵称为 $\lambda$-矩阵，记作 $A(\lambda) = (a_{ij}(\lambda))_{m*n}$；常数矩阵是其特殊形式</p>
 </blockquote>
 <ul>
 <li><p>定义：若 $\lambda$-矩阵 $A(\lambda)$ 中不恒等于零的子式的最大阶数是r，则称 $A(\lambda)$ 的秩是r，记作 $rankA(\lambda) = r$</p>
@@ -1390,7 +1390,7 @@
       
         
           <h3 id="矩阵运算"><a href="#矩阵运算" class="headerlink" title="矩阵运算"></a>矩阵运算</h3><ul>
-<li><p>定义：若 $A = (a<em>{ij}) \in C^{m*n}$，则矩阵 $\overline A = ( \overline a</em>{ij})<em>{m*n}$，其中 $\overline a</em>{ij}$ 是 a 的共轭复数，称为 A 的<strong>共轭矩阵</strong>；若 $A^{<em>} = (a_{ji}^{</em>}) = \overline A^{T}$，即 $a<em>{ji}^{*} = \overline a</em>{ij}(i = 1, 2, …, m; j = 1, 2, …, n)$，则矩阵 $A^{<em>}$ 称为 A 的<em>*共轭转置矩阵</em></em>，有时记作 $A^{H}$</p>
+<li><p>定义：若 $A = (a_{ij}) \in C^{m<em>n}$，则矩阵 $\overline A = ( \overline a_{ij})_{m</em>n}$，其中 $\overline a_{ij}$ 是 a 的共轭复数，称为 A 的<strong>共轭矩阵</strong>；若 $A^{<em>} = (a_{ji}^{</em>}) = \overline A^{T}$，即 $a_{ji}^{<em>} = \overline a_{ij}(i = 1, 2, …, m; j = 1, 2, …, n)$，则矩阵 $A^{</em>}$ 称为 A 的<strong>共轭转置矩阵</strong>，有时记作 $A^{H}$</p>
 </li>
 <li><p>定义：设 $A = R^{n<em>n}$，如果 $A = A^{T}$，则 A 叫<strong>实对称矩阵</strong>，设 $B \in C^{n</em>n}$，如果 $B = B^{H}$，则 B 称为<strong>埃尔米特(Hermite)矩阵</strong></p>
 </li>
@@ -1521,7 +1521,7 @@
           <h3 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h3><ul>
 <li>定义：数域K中mn个数 $a_{ij}, (i = 1, 2, …, m; j = 1, 2, …, n)$排成的数表</li>
 </ul>
-<p>$$ A =<br>\left[<br>  \begin{matrix}<br>    a<em>{11} &amp; a</em>{12} &amp; … &amp; a<em>{1n} \<br>    a</em>{21} &amp; a<em>{22} &amp; … &amp; a</em>{2n} \<br>    .      &amp; .      &amp;     &amp; .      \<br>    .      &amp; .      &amp;     &amp; .      \<br>    .      &amp; .      &amp;     &amp; .      \<br>    a<em>{m1} &amp; a</em>{m2} &amp; … &amp; a<em>{mn}<br>  \end{matrix}<br>\right]<br>$$<br>称为K上的 m*n 矩阵；也为 $A = (a</em>{ij})<em>{m * n}$ 或 $A = A</em>{m * n}$. $a<em>{ij}$ 称为A的第i行第j列元素；一般用大写字母表示矩阵，小写字母表示矩阵中的元素，横的有序数组 $(a</em>{i1}, a<em>{i2}, …, a</em>{in})$ 称为A的第i行，纵的有序数组 $\left[<br>\begin{matrix}<br>a<em>{1j} \<br>. \<br>. \<br>. \<br>a</em>{mj}<br>\end{matrix}<br>\right]$ 称为A的第j列. K上所有 m<em>n矩阵的全体记为 $K^{m</em>n}$ 或 $M_{m, n}(K)$</p>
+<p>$$ A =<br>\left[<br>  \begin{matrix}<br>    a_{11} &amp; a_{12} &amp; … &amp; a_{1n} \\<br>    a_{21} &amp; a_{22} &amp; … &amp; a_{2n} \\<br>    .      &amp; .      &amp;     &amp; .      \\<br>    .      &amp; .      &amp;     &amp; .      \\<br>    .      &amp; .      &amp;     &amp; .      \\<br>    a_{m1} &amp; a_{m2} &amp; … &amp; a_{mn}<br>  \end{matrix}<br>\right]<br>$$<br>称为K上的 m*n 矩阵；也为 $A = (a_{ij})_{m * n}$ 或 $A = A_{m * n}$. $a_{ij}$ 称为A的第i行第j列元素；一般用大写字母表示矩阵，小写字母表示矩阵中的元素，横的有序数组 $(a_{i1}, a_{i2}, …, a_{in})$ 称为A的第i行，纵的有序数组 $\left[<br>\begin{matrix}<br>a_{1j} \\<br>. \\<br>. \\<br>. \\<br>a_{mj}<br>\end{matrix}<br>\right]$ 称为A的第j列. K上所有 m<em>n矩阵的全体记为 $K^{m</em>n}$ 或 $M_{m, n}(K)$</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/25/linear_algebra&analytic_geometry/克拉默(Cramer)规则/#more" rel="contents">

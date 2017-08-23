@@ -1350,7 +1350,7 @@ data centers for scaling">
 <li>$d_{min}$ = min client download rate</li>
 <li>min client download time: $F/d_{min}$</li>
 </ul>
-<p>time to distribute F to N clients using client-server approach(increases linearly in N):<br>$D_{c-s}$ &gt; max{$NF/u<em>s, F/d</em>{min}$}</p>
+<p>time to distribute F to N clients using client-server approach(increases linearly in N):<br>$D_{c-s}$ &gt; max{$NF/u_s, F/d_{min}$}</p>
 <p><em>P2P</em>: </p>
 <p>server transmission: must upload at least one copy</p>
 <ul>
@@ -1360,7 +1360,7 @@ data centers for scaling">
 <ul>
 <li>min client download time: $F/d_{min}$</li>
 </ul>
-<p>time to  distribute F to N clients using P2P approach(increases linearly in N, but so does this, as each peer brings service capacity):<br>$D_{P2P}$ &gt; max{$F/u<em>s, F/d</em>{min}, NF/(u_s + \sum u_i)$}</p>
+<p>time to  distribute F to N clients using P2P approach(increases linearly in N, but so does this, as each peer brings service capacity):<br>$D_{P2P}$ &gt; max{$F/u_s, F/d_{min}, NF/(u_s + \sum u_i)$}</p>
 <blockquote>
 <p><img src="\img\file_distribution_eg.jpg" alt="file_distribution_eg.jpg"></p>
 </blockquote>

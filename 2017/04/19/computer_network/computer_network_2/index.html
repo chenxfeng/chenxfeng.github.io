@@ -1,0 +1,3094 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="computer network," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="应用层协议原理 principles of network applications网络应用体系结构(application architecture):
+客户-服务器体系结构(client-server architecture)
+
+server: 
+
+always-on host
+permanent IP address
+data centers for scaling">
+<meta property="og:type" content="article">
+<meta property="og:title" content="应用层 Application Layer">
+<meta property="og:url" content="https://chenfeng.github.io/2017/04/19/computer_network/computer_network_2/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="应用层协议原理 principles of network applications网络应用体系结构(application architecture):
+客户-服务器体系结构(client-server architecture)
+
+server: 
+
+always-on host
+permanent IP address
+data centers for scaling">
+<meta property="og:image" content="https://chenfeng.github.io/img/socket.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/telnet.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/NVT.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/FTP_Creating_data_connection.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/ftp_transfer.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/ftp_transfer.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/Non_persistent_HTTP_response_time.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/HTTP_request_message.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/HTTP_request_message_general_format.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/HTTP_response_message.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/Trying_out_HTTP_client_side.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/cookie.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/ConditionalGET.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/SMTPinteraction.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\dns.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\root_dns.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TLD.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\generic_domain.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\country_domain.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\inverse_domain.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\zones_domains.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\authoritative_server_con.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\iterated_query.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\recursive_query.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DNS_messages.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DNS_message.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DNS_message_flag.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\file_distribution.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\file_distribution_eg.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\napster_architecture.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\napster_publish.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\napster_search.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\trackerProtocol.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\block.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\decetralized_flooding1.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\decetralized_flooding2.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\decetralized_flooding3.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHT.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHTbasic_idea1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHTbasic_idea2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHTbasic_idea3.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHTbasic_idea4.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHTbasic_idea5.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_1.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_2.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_3.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_4.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_5.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_insert1.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_insert2.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_insert3.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_insert4.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_retrieve1.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_retrieve2.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_join1.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_join2.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CAN_2d_space_join3.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\chord_storage.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\chord_search.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\chord_search1.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\chord_searching1.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\chord_searching2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHT_chord_join1.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHT_chord_join2.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHT_chord_join3.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHT_chord_join4.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DHT_chord_routing.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\netflix.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\Dos.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\DDoS.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\redirectionOverlay.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\modulo.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CHash.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\HRW.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\socket1.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\socket2.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\socket3.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\locket4.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\server_client_socket.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\socket_interaction_tcp.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\accept_call.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\socket_read_wirite.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\udpSocket.png">
+<meta property="og:updated_time" content="2017-04-22T13:08:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="应用层 Application Layer">
+<meta name="twitter:description" content="应用层协议原理 principles of network applications网络应用体系结构(application architecture):
+客户-服务器体系结构(client-server architecture)
+
+server: 
+
+always-on host
+permanent IP address
+data centers for scaling">
+<meta name="twitter:image" content="https://chenfeng.github.io/img/socket.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/04/19/computer_network/computer_network_2/"/>
+
+
+
+
+
+  <title>应用层 Application Layer | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/04/19/computer_network/computer_network_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">应用层 Application Layer</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-19T00:00:00+08:00">
+                2017-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="应用层协议原理-principles-of-network-applications"><a href="#应用层协议原理-principles-of-network-applications" class="headerlink" title="应用层协议原理 principles of network applications"></a>应用层协议原理 principles of network applications</h2><h3 id="网络应用体系结构-application-architecture"><a href="#网络应用体系结构-application-architecture" class="headerlink" title="网络应用体系结构(application architecture):"></a>网络应用体系结构(application architecture):</h3><ol>
+<li>客户-服务器体系结构(client-server architecture)</li>
+</ol>
+<p>server: </p>
+<ul>
+<li>always-on host</li>
+<li>permanent IP address</li>
+<li>data centers for scaling</li>
+</ul>
+<a id="more"></a>
+<p>clients:</p>
+<ul>
+<li>communicate with server</li>
+<li>may be intermittently connected</li>
+<li>may have dynamic IP addresses</li>
+<li>do not communicate directly with each other</li>
+</ul>
+<ol>
+<li>P2P体系结构(P2P architecture): peer-to-peer</li>
+</ol>
+<!-- more -->
+<ul>
+<li><p>no always-on server</p>
+</li>
+<li><p>arbitrary end systems directly communicate</p>
+</li>
+<li><p>peers request service from other peers, provide service in return to other peers:</p>
+<blockquote>
+<p>self scalability – new peers bring new service capacity, as well as new service demands</p>
+</blockquote>
+</li>
+</ul>
+<p>自扩展性(self-scalability)</p>
+<ul>
+<li>peers are intermittently connected and change IP addresses:<br>complex management</li>
+</ul>
+<h3 id="进程-process-通信"><a href="#进程-process-通信" class="headerlink" title="进程(process)通信"></a>进程(process)通信</h3><p>process: program running within a host</p>
+<ul>
+<li>within same host, two processes communicate using <strong>inter-process communication</strong>(defined by OS)</li>
+<li>processes in different hosts communicate by exchanging messages</li>
+</ul>
+<p>客户和服务器进程:<br>在一对进程之间的通信会话场景中，发起通信(即在该会话中开始时发起与其他进程的联系)的进程被标识为客户，在会话开始时等待联系的进程是服务器</p>
+<p>client process: process that initiates communication</p>
+<p>server process: process that waits to be contacted</p>
+<p>aside: applications with P2P architectures have client processes &amp; server processes</p>
+<p>进程与计算机网络之间的接口：应用程序编程接口(Application Programming Interface, API)</p>
+<p>套接字(socket)</p>
+<ul>
+<li><p>process sends/receives messages to/from its socket</p>
+</li>
+<li><p>socket analogous to door:</p>
+</li>
+</ul>
+<ol>
+<li>sending process shoves message out door</li>
+<li>sending process relies on transport infrastructure on other side of door to deliver message to socket at receiving process</li>
+</ol>
+<blockquote>
+<p><img src="/img/socket.png" alt="socket.png"></p>
+</blockquote>
+<p>应用程序开发者对运输层的控制仅限于</p>
+<ol>
+<li>选择运输层协议</li>
+<li>设定运输层参数如最大缓存和最大报文段长度等</li>
+</ol>
+<p>进程寻址：</p>
+<ol>
+<li>主机地址：IP地址(IP address)</li>
+<li>目的主机宏接受进程的标识符：端口号(port number)</li>
+</ol>
+<ul>
+<li>to receive messages, process must have <strong>identifier</strong></li>
+<li><p>host device has unique 32-bit IP address</p>
+</li>
+<li><p>Q: does IP address of host on which process runs suffice for identifying the process?</p>
+</li>
+<li><p>A: no, many processes can be running on same host</p>
+</li>
+<li><p>identifier includes both <strong>IP address</strong> and <strong>port numbers</strong> associated with process on host.</p>
+</li>
+</ul>
+<p>example port numbers:</p>
+<ul>
+<li>HTTP server: 80</li>
+<li>mail server: 25</li>
+</ul>
+<h3 id="应用程序可用运输服务"><a href="#应用程序可用运输服务" class="headerlink" title="应用程序可用运输服务"></a>应用程序可用运输服务</h3><ol>
+<li>可靠数据传输(reliable data transfer)</li>
+</ol>
+<ul>
+<li>容忍丢失的应用(loss-tolerant application)</li>
+</ul>
+<ol>
+<li>吞吐量</li>
+</ol>
+<ul>
+<li>带宽敏感的应用(bandwidth-sensitive application)</li>
+<li>弹性应用(elastic application)</li>
+</ul>
+<ol>
+<li><p>定时</p>
+</li>
+<li><p>安全性</p>
+</li>
+<li><p>data integrity</p>
+</li>
+</ol>
+<ul>
+<li>some apps (e.g., file transfer, web transactions) require 100% reliable data transfer </li>
+<li>other apps (e.g., audio) can tolerate some loss</li>
+</ul>
+<ol>
+<li>throughput</li>
+</ol>
+<ul>
+<li>some apps (e.g., multimedia) require minimum amount of throughput to be “effective”</li>
+<li>other apps (“elastic apps”) make use of whatever throughput they get</li>
+</ul>
+<ol>
+<li>timing</li>
+</ol>
+<ul>
+<li>some apps (e.g., Internet telephony, interactive games) require low delay to be “effective”</li>
+</ul>
+<ol>
+<li>security</li>
+</ol>
+<ul>
+<li>encryption, data integrity</li>
+</ul>
+<h3 id="因特网提供的运输服务"><a href="#因特网提供的运输服务" class="headerlink" title="因特网提供的运输服务"></a>因特网提供的运输服务</h3><p>QoS: Quantity of Service</p>
+<ol>
+<li>TCP服务：面向连接服务和可靠数据传输</li>
+</ol>
+<p>TCP service:</p>
+<ul>
+<li><p>reliable transport between sending and receiving process</p>
+</li>
+<li><p>flow control: sender won’t overwhelm receiver </p>
+</li>
+<li><p>congestion control: throttle sender when network overloaded</p>
+</li>
+<li><p>does not provide: timing, minimum throughput guarantee, security</p>
+</li>
+<li><p>connection-oriented: setup required between client and server processes</p>
+</li>
+</ul>
+<ol>
+<li>UDP服务：不提供不必要服务的轻量级运输协议，无连接的</li>
+</ol>
+<p>UDP service:</p>
+<ul>
+<li><p>unreliable data transfer between sending and receiving process</p>
+</li>
+<li><p>does not provide: reliability, flow control, congestion control, timing, throughput guarantee, security, or connection setup,</p>
+</li>
+</ul>
+<p>安全套接字层(Secure Sockets Layer, SSL): TCP的加强版本，增加安全性服务</p>
+<p>TCP &amp; UDP:</p>
+<ul>
+<li>no encryption</li>
+<li>cleartext passwds sent into socket traverse Internet  in cleartext</li>
+</ul>
+<p>SSL:</p>
+<ul>
+<li>provides encrypted TCP connection</li>
+<li>data integrity</li>
+<li>end-point authentication</li>
+</ul>
+<p>SSL is at app layer</p>
+<ul>
+<li>apps use SSL libraries, that “talk” to TCP</li>
+</ul>
+<p>SSL socket API</p>
+<ul>
+<li>cleartext passwords sent into socket traverse Internet  encrypted</li>
+</ul>
+<h3 id="应用层协议-application-layer-protocol"><a href="#应用层协议-application-layer-protocol" class="headerlink" title="应用层协议(application-layer protocol)"></a>应用层协议(application-layer protocol)</h3><ol>
+<li>交换的报文类型</li>
+<li>报文类型的语法</li>
+<li>字段的语义</li>
+<li><p>进程何时及如何发送报文，对报文响应的规则</p>
+</li>
+<li><p>types of messages exchanged, </p>
+</li>
+</ol>
+<ul>
+<li>e.g., request, response</li>
+</ul>
+<ol>
+<li>message syntax:</li>
+</ol>
+<ul>
+<li>what fields in messages &amp; how fields are delineated</li>
+</ul>
+<ol>
+<li>message semantics </li>
+</ol>
+<ul>
+<li>meaning of information in fields</li>
+</ul>
+<ol>
+<li>exchange rules for when and how processes send &amp; respond to messages</li>
+</ol>
+<p>open protocols:</p>
+<ul>
+<li>defined in RFCs</li>
+<li>allows for interoperability</li>
+<li>e.g., HTTP, SMTP</li>
+</ul>
+<p>proprietary protocols:</p>
+<ul>
+<li>e.g., Skype</li>
+</ul>
+<h3 id="Telnet"><a href="#Telnet" class="headerlink" title="Telnet"></a>Telnet</h3><blockquote>
+<p><img src="/img/telnet.png" alt="telnet.png"></p>
+</blockquote>
+<p>TELNET Protocol Offers three basic services:</p>
+<ol>
+<li>Defines network virtual terminal (NVT)</li>
+</ol>
+<ul>
+<li><p>Basic terminal operations</p>
+</li>
+<li><p>standard interface</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="/img/NVT.png" alt="NVT.png"></p>
+</blockquote>
+<ol>
+<li><p>Allows client and server negotiate options</p>
+</li>
+<li><p>Treats both ends symmetrically</p>
+</li>
+</ol>
+<ul>
+<li>No force on client; it can be arbitrary program</li>
+</ul>
+<p>Network Virtual Terminal:</p>
+<ul>
+<li><p>Different OS’s, different keys : Ctrl-c &lt;–&gt; ESC</p>
+</li>
+<li><p>different End of line : CR, LF, CR-LF<br></p>
+</li>
+<li>TELNET defines standard</li>
+</ul>
+<ol>
+<li>7 bit US ASCII</li>
+<li>their interpretation of control(e.g., CR-13,LF-10)</li>
+<li>End of line is CR-LF</li>
+<li>Some 8 bit octets for control functions</li>
+</ol>
+<h3 id="RLOGIN-REMOTE-LOGIN"><a href="#RLOGIN-REMOTE-LOGIN" class="headerlink" title="RLOGIN(REMOTE LOGIN)"></a>RLOGIN(REMOTE LOGIN)</h3><p>rlogin – understands Unix environment better</p>
+<ul>
+<li>Passes some terminal parameters automatically</li>
+<li><p>Trusted machines do not require password</p>
+</li>
+<li><p>The Rlogin process uses the TCP port 513</p>
+</li>
+</ul>
+<h3 id="文件传输协议-FTP"><a href="#文件传输协议-FTP" class="headerlink" title="文件传输协议: FTP"></a>文件传输协议: FTP</h3><p>FTP使用两个TCP连接传输文件</p>
+<blockquote>
+<p><img src="/img/FTP_Creating_data_connection.png" alt="FTP_Creating_data_connection.png"></p>
+</blockquote>
+<ol>
+<li>控制连接(control connection)</li>
+</ol>
+<p>两主机之间传递控制信息：用户标识、口令、改变远程目录和’put’/‘get’等</p>
+<p>带外传送(out-of-band)</p>
+<ol>
+<li>数据连接(data connection)</li>
+</ol>
+<p>FTP命令和回答：7比特ASCII格式在控制连接上传送，每个命令跟回车换行符(区分命令)</p>
+<p>每个命令4个大写字母ASCII字符，部分具有可选参数 e.g. USER username、PASS password、LIST、RETR filename、STOR filename 等</p>
+<p>回答是一个3位数字，后跟可选信息<br>e.g. 230 User login, OK、331 Uername OK, Password require、125 Data connection already open; transfer starting、425 Can’t open data connection、452 Error writing file 等</p>
+<blockquote>
+<p><img src="/img/ftp_transfer.png" alt="ftp_transfer.png"></p>
+</blockquote>
+<h3 id="TFTP-Trivial-File-Transfer-Protocol"><a href="#TFTP-Trivial-File-Transfer-Protocol" class="headerlink" title="TFTP(Trivial File Transfer Protocol)"></a>TFTP(Trivial File Transfer Protocol)</h3><p>TFTP is intended for application with simple needs: </p>
+<ul>
+<li><p>Simple file transfer w/o authentication</p>
+</li>
+<li><p>Software is much smaller than FTP</p>
+</li>
+<li><p>Small size of software is important<br>e.g., in ROM for booting diskless workstations</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="/img/ftp_transfer.png" alt="ftp_transfer.png"></p>
+</blockquote>
+<p>Uses UDP instead of TCP</p>
+<ul>
+<li>Less reliable</li>
+<li>Using timeout and retransmission</li>
+</ul>
+<p>TFTP Reliability:</p>
+<ul>
+<li>Minimal error handling</li>
+<li>Most errors result in termination</li>
+</ul>
+<h2 id="Web和HTTP"><a href="#Web和HTTP" class="headerlink" title="Web和HTTP"></a>Web和HTTP</h2><ul>
+<li>web page consists of objects</li>
+<li>object can be HTML file, JPEG image, Java applet, audio file,…</li>
+<li>web page consists of base HTML-file which includes several referenced objects</li>
+<li>each object is addressable by a URL</li>
+</ul>
+<p>web的应用层协议：超文本传输协议(HyperText Transfer Protocol, HTTP)</p>
+<p>HTTP: hypertext transfer protocol – Web’s application layer protocol</p>
+<p>client/server model</p>
+<ul>
+<li>client: browser that requests, receives, (using HTTP protocol) and “displays” Web objects </li>
+<li>server: Web server sends (using HTTP protocol) objects in response to requests</li>
+</ul>
+<p>uses TCP:</p>
+<ul>
+<li>client initiates TCP connection (creates socket) to server,  port 80</li>
+<li>server accepts TCP connection from client</li>
+<li>HTTP messages (application-layer protocol messages) exchanged between browser (HTTP client) and Web server (HTTP server)</li>
+<li>TCP connection closed</li>
+</ul>
+<p>无状态协议(stateless protocol)</p>
+<p>HTTP is “stateless”:<br>server maintains no information about past client requests</p>
+<p>protocols that maintain “state” are complex!</p>
+<ul>
+<li>past history (state) must be maintained</li>
+<li>if server/client crashes, their views of “state” may be inconsistent, must be reconciled</li>
+</ul>
+<p>非持续连接(non-persistent connection): 每一个请求/响应对是经一个单独的TCP连接发送，如HTTP1.0</p>
+<p>non-persistent HTTP:</p>
+<ul>
+<li>at most one object sent over TCP connection, connection then closed</li>
+<li>downloading multiple objects required multiple connections</li>
+</ul>
+<p>suppose user enters URL: www.someSchool.edu/someDepartment/home.index (contains text, references to 10 jpeg images)</p>
+<p>1a. HTTP client initiates TCP connection to HTTP server (process) at www.someSchool.edu on port 80</p>
+<p>1b. HTTP server at host www.someSchool.edu waiting for TCP connection at port 80.  “accepts” connection, notifying client</p>
+<ol>
+<li><p>HTTP client sends HTTP request message (containing URL) into TCP connection socket. Message indicates that client wants object someDepartment/home.index</p>
+</li>
+<li><p>HTTP server receives request message, forms response message containing requested object, and sends message into its socket</p>
+</li>
+<li><p>HTTP server closes TCP connection. </p>
+</li>
+<li><p>HTTP client receives response message containing html file, displays html.  Parsing html file, finds 10 referenced jpeg  objects</p>
+</li>
+<li><p>Steps 1-5 repeated for each of 10 jpeg objects</p>
+</li>
+</ol>
+<p>持续连接(persistent connection): 所有的请求及其响应经相同的TCP连接发送，如HTTP1.1</p>
+<p>persistent HTTP:</p>
+<ul>
+<li>multiple objects can be sent over single TCP connection between client, server</li>
+</ul>
+<h3 id="response-time"><a href="#response-time" class="headerlink" title="response time"></a>response time</h3><p>往返时间(Round-Trip Time, RTT): 一个短分组从客户到服务器然后在返回客户的时间</p>
+<p>RTT (definition): time for a small packet to travel from client to server and back</p>
+<blockquote>
+<p><img src="/img/Non_persistent_HTTP_response_time.png" alt="Non_persistent_HTTP_response_time.png"></p>
+</blockquote>
+<p>HTTP response time:</p>
+<ul>
+<li>one RTT to initiate TCP connection</li>
+<li>one RTT for HTTP request and first few bytes of HTTP response to return</li>
+<li>file transmission time</li>
+<li>non-persistent HTTP response time = 2RTT+ file transmission  time</li>
+</ul>
+<p>non-persistent HTTP issues:</p>
+<ul>
+<li>requires 2 RTTs per object</li>
+<li>OS overhead for each TCP connection</li>
+<li>browsers often open parallel TCP connections to fetch referenced objects</li>
+</ul>
+<p>persistent HTTP:</p>
+<ul>
+<li>server leaves connection open after sending response</li>
+<li>subsequent HTTP messages between same client/server sent over open connection</li>
+<li>client sends requests as soon as it encounters a referenced object</li>
+<li>as little as one RTT for all the referenced objects</li>
+</ul>
+<h3 id="HTTP报文格式"><a href="#HTTP报文格式" class="headerlink" title="HTTP报文格式"></a>HTTP报文格式</h3><p>two types of HTTP messages: <strong>request</strong>, <strong>response</strong></p>
+<p>HTTP request message:</p>
+<ul>
+<li>ASCII (human-readable format)</li>
+</ul>
+<p>请求报文</p>
+<ul>
+<li>请求行(request line): 方法字段、URL字段、HTTP版本字段</li>
+<li>首部行(header line)(多个)</li>
+<li>实体体(entity body)(POST方法才使用实体体)</li>
+</ul>
+<blockquote>
+<p><img src="/img/HTTP_request_message.png" alt="HTTP_request_message.png"></p>
+<p><img src="/img/HTTP_request_message_general_format.png" alt="HTTP_request_message_general_format.png"></p>
+</blockquote>
+<p>POST method:</p>
+<ul>
+<li>web page often includes form input</li>
+<li>input is uploaded to server in entity body</li>
+</ul>
+<p>URL method:</p>
+<ul>
+<li>uses GET method</li>
+<li>input is uploaded in URL field of request line: <em>www.somesite.com/animalsearch?monkeys&amp;banana</em></li>
+</ul>
+<p>HTTP/1.0: GET / POST / HEAD(asks server to leave requested object out of response)</p>
+<p>HTTP/1.1:</p>
+<ul>
+<li>GET, POST, HEAD</li>
+<li>PUT(uploads file in entity body to path specified in URL field)</li>
+<li>DELETE(deletes file specified in the URL field)</li>
+</ul>
+<p>响应报文</p>
+<ul>
+<li>初始状态行(status line): 协议版本字段、状态码、相应状态信息</li>
+<li>首部行(多个)</li>
+<li>实体体(entity body)</li>
+</ul>
+<blockquote>
+<p><img src="/img/HTTP_response_message.png" alt="HTTP_response_message.png"></p>
+</blockquote>
+<p>status code appears in 1st line in server-to-client response message.</p>
+<p>some sample codes:</p>
+<ul>
+<li><strong>200 OK</strong>(request succeeded, requested object later in this msg)</li>
+<li><strong>301 Moved Permanently</strong>(requested object moved, new location specified later in this msg (Location:))</li>
+<li><strong>400 Bad Request</strong>(request msg not understood by server)</li>
+<li><strong>404 Not Found</strong>(requested document not found on this server)</li>
+<li><strong>505 HTTP Version Not Supported</strong></li>
+</ul>
+<p>Trying out HTTP (client side) for yourself:</p>
+<blockquote>
+<p><img src="/img/Trying_out_HTTP_client_side.png" alt="Trying_out_HTTP_client_side.png"></p>
+</blockquote>
+<h3 id="用户和服务器的交互-cookie"><a href="#用户和服务器的交互-cookie" class="headerlink" title="用户和服务器的交互: cookie"></a>用户和服务器的交互: cookie</h3><p>cookie技术有四个组件:</p>
+<ol>
+<li>在HTTP响应报文中的一个cookie首部行</li>
+<li>在HTTP请求报文中的一个cookie首部行</li>
+<li>在用户端系统中保留有一个cookie文件，由浏览器进行管理</li>
+<li>位于Web站点的一个后端数据库</li>
+</ol>
+<p>many Web sites use cookies<br><strong>four components</strong>: </p>
+<blockquote>
+<p>1) cookie header line of HTTP response message<br>2) cookie header line in next HTTP request message<br>3) cookie file kept on user’s host, managed by user’s browser<br>4) back-end database at Web site</p>
+</blockquote>
+<p>example:</p>
+<ul>
+<li>Susan always access Internet from PC</li>
+<li>visits specific e-commerce site for first time</li>
+<li>when initial HTTP requests arrives at site, site creates: <blockquote>
+<ul>
+<li>unique ID</li>
+<li>entry in backend database for ID</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p><img src="/img/cookie.png" alt="cookie.png"></p>
+</blockquote>
+<p>what cookies can be used for:</p>
+<ul>
+<li>authorization</li>
+<li>shopping carts</li>
+<li>recommendations</li>
+<li>user session state (Web e-mail)</li>
+</ul>
+<p>how to keep “state”:</p>
+<ul>
+<li>protocol endpoints: maintain state at sender/receiver over multiple transactions</li>
+<li>cookies: http messages carry state</li>
+</ul>
+<p>cookies and privacy:</p>
+<ul>
+<li>cookies permit sites to learn a lot about you</li>
+<li>you may supply name and e-mail to sites</li>
+</ul>
+<h3 id="Web缓存"><a href="#Web缓存" class="headerlink" title="Web缓存"></a>Web缓存</h3><p>Web缓存器(web cache)/代理服务器(proxy server): 代表初始Web服务器满足HTTP请求的网络实体</p>
+<p>Web缓存器可以大大减少对客户请求的响应时间，特别是当客户与初始服务器之间的瓶颈带宽远低于客户与Web缓存器之间的瓶颈带宽时。</p>
+<p>Web缓存器能够大大减少一个机构的接入链路到因特网的通信量。</p>
+<p>goal: satisfy client request without involving origin server</p>
+<p>user sets browser: Web accesses via cache</p>
+<p>browser sends all HTTP requests to cache</p>
+<ul>
+<li>object in cache: cache returns object </li>
+<li>else cache requests object from origin server, then returns object to client</li>
+</ul>
+<p>cache acts as both client and server</p>
+<ul>
+<li>server for original requesting client</li>
+<li>client to origin server</li>
+</ul>
+<p>typically cache is installed by ISP (university, company, residential ISP)</p>
+<p>why Web caching: </p>
+<ul>
+<li>reduce response time for client request</li>
+<li>reduce traffic on an institution’s access link</li>
+<li>Internet dense with caches: enables “poor” content providers to effectively deliver content (so too does P2P file sharing)</li>
+</ul>
+<p>example:</p>
+<p>assumptions:</p>
+<ul>
+<li>avg object size: 100K bits</li>
+<li>avg request rate from browsers to origin servers:15/sec</li>
+<li>avg data rate to browsers: 1.50 Mbps</li>
+<li>RTT from institutional router to any origin server: 2 sec</li>
+<li>access link rate: 1.54 Mbps</li>
+</ul>
+<p>consequences:</p>
+<ul>
+<li>LAN utilization: 0.15%</li>
+<li>access link utilization = 99%</li>
+<li>total delay = Internet delay + access delay + LAN delay<br>   =  2 sec + minutes + usecs</li>
+</ul>
+<p>example: fatter access link</p>
+<ul>
+<li>raise access link rate to 154 Mbps</li>
+<li>access link utilization will change to 0.99%</li>
+<li>total delay will be 2sec and msecs and usecs</li>
+</ul>
+<p>example: install local cache</p>
+<p>Calculating access link utilization, delay with cache:</p>
+<ul>
+<li>suppose cache hit rate is 0.4; 40% requests satisfied at cache, 60% requests satisfied at origin </li>
+<li>access link utilization: 60% of requests use access link </li>
+<li><p>data rate to browsers over access link = 0.6*1.50 Mbps = .9 Mbps; utilization = 0.9/1.54 = .58</p>
+</li>
+<li><p>total delay = 0.6 <em> (delay from origin servers) + 0.4 </em> (delay when satisfied at cache) = 0.6 (2.01) + 0.4 (~msecs) = ~ 1.2 secs less than with 154 Mbps link (and cheaper too!)</p>
+</li>
+</ul>
+<p>内容分发网络(Content Distribution Network, CDN): 地理上分散的Web缓存器</p>
+<h3 id="条件GET方法"><a href="#条件GET方法" class="headerlink" title="条件GET方法"></a>条件GET方法</h3><p>conditional GET方法: HTTP协议允许缓存器证实它的对象是最新的的一种机制</p>
+<p>请求报文使用GET方法，并且请求报文中包含一个”If-Modified-Since:”首部行</p>
+<p>Goal: don’t send object if cache has up-to-date cached version</p>
+<ul>
+<li>no object transmission delay</li>
+<li>lower link utilization</li>
+</ul>
+<p>cache: specify date of cached copy in HTTP request</p>
+<blockquote>
+<p><em>If-modified-since: <date></date></em></p>
+</blockquote>
+<p>server: response contains no object if cached copy is up-to-date: </p>
+<blockquote>
+<p><em>HTTP/1.0 304 Not Modified</em></p>
+<p><img src="/img/ConditionalGET.png" alt="ConditionalGET.png"></p>
+</blockquote>
+<h2 id="因特网中的电子邮件-Electronic-mail"><a href="#因特网中的电子邮件-Electronic-mail" class="headerlink" title="因特网中的电子邮件(Electronic mail)"></a>因特网中的电子邮件(Electronic mail)</h2><p>3个主要组成部分: 用户代理(user agent)、邮件服务器(mail server)、简单邮件传输协议(Simple Mail Transfer Protocol, SMTP)</p>
+<p>邮箱(mailbox)</p>
+<p>User Agent</p>
+<ul>
+<li>a.k.a. “mail reader”</li>
+<li>composing, editing, reading mail messages; e.g., Outlook, Thunderbird, iPhone mail client</li>
+<li>outgoing, incoming messages stored on server</li>
+</ul>
+<p>mail servers:</p>
+<ul>
+<li>mailbox contains incoming messages for user</li>
+<li>message queue of outgoing (to be sent) mail messages</li>
+<li>SMTP protocol between mail servers to send email messages<blockquote>
+<ol>
+<li>client: sending mail server</li>
+<li>“server”: receiving mail server</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h3 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h3><p>限制所有邮件报文的体部分职能采用7比特ASCII码表示</p>
+<p>HTTP是一个拉协议(pull protocol): 某些人在Web服务器上装载信息，用户使用HTTP从该服务器拉取这些信息</p>
+<p>SMTP是一个推协议(push protocol): 发送邮件服务器把文件推向接受邮件服务器</p>
+<p>SMTP [RFC 2821]:</p>
+<ul>
+<li><p>uses TCP to reliably transfer email message from client to server, port 25</p>
+</li>
+<li><p>direct transfer: sending server to receiving server</p>
+</li>
+<li><p>three phases of transfer</p>
+</li>
+</ul>
+<ol>
+<li>handshaking (greeting)</li>
+<li>transfer of messages</li>
+<li>closure</li>
+</ol>
+<ul>
+<li>command/response interaction (like HTTP)</li>
+</ul>
+<ol>
+<li>commands: ASCII text</li>
+<li>response: status code and phrase</li>
+</ol>
+<ul>
+<li>messages must be in 7-bit ASCII</li>
+</ul>
+<blockquote>
+<p><img src="/img/SMTPinteraction.png" alt="SMTPinteraction.png"></p>
+</blockquote>
+<ul>
+<li>SMTP uses persistent connections</li>
+<li>SMTP requires message (header &amp; body) to be in 7-bit ASCII</li>
+<li>SMTP server uses CRLF.CRLF to determine end of message</li>
+</ul>
+<p>comparison with HTTP:</p>
+<ul>
+<li>HTTP: pull vs SMTP: push</li>
+<li>both have ASCII command/response interaction, status codes</li>
+<li>HTTP: each object encapsulated in its own response message vs SMTP: multiple objects sent in multipart message</li>
+</ul>
+<h3 id="邮件报文格式-Mail-message-format-和MIME"><a href="#邮件报文格式-Mail-message-format-和MIME" class="headerlink" title="邮件报文格式(Mail message format)和MIME"></a>邮件报文格式(Mail message format)和MIME</h3><p>From: 首部行、To: 首部行、Subject: 首部行</p>
+<p>SMTP: protocol for exchanging email messages</p>
+<p>RFC 822: standard for text message format:</p>
+<blockquote>
+<p>header lines, e.g.,</p>
+<ul>
+<li>To:</li>
+<li>From:</li>
+<li>Subject:</li>
+<li>different from SMTP MAIL FROM, RCPT TO: commands!<br>Body: the “message” </li>
+<li>ASCII characters only</li>
+</ul>
+</blockquote>
+<h3 id="邮件访问协议"><a href="#邮件访问协议" class="headerlink" title="邮件访问协议"></a>邮件访问协议</h3><p>不能使用SMTP取回报文，取报文是一个拉操作而SMTP协议是一个推协议</p>
+<p>SMTP: delivery/storage to receiver’s server</p>
+<p>mail access protocol: retrieval from server</p>
+<ul>
+<li>POP: Post Office Protocol [RFC 1939]: authorization, download </li>
+<li>IMAP: Internet Mail Access Protocol [RFC 1730]: more features, including manipulation of stored messages on server</li>
+<li>HTTP: gmail, Hotmail, Yahoo! Mail, etc.</li>
+</ul>
+<p>第三版邮局协议(Post Office Protocol-Version 3, POP3)</p>
+<p>三个阶段: </p>
+<ol>
+<li><p>特许(authorization): 用户代理以明文形式发送用户名和口令以鉴别用户</p>
+</li>
+<li><p>事务处理: 用户代理取回报文，对报文做删除标记，取消报文删除标记，获取邮件的统计信息</p>
+</li>
+<li><p>更新: 客户发出quit命令退出POP3会话；邮件服务器删除被标记为删除的报文</p>
+</li>
+</ol>
+<p>邮件服务器回答: +OK正常 -ERR错误</p>
+<p>authorization phase<br>client commands: </p>
+<ul>
+<li>user: declare username</li>
+<li>pass: password<br>server responses</li>
+<li>+OK</li>
+<li>-ERR<br>transaction phase, client:</li>
+<li>list: list message numbers</li>
+<li>retr: retrieve message by number</li>
+<li>dele: delete</li>
+<li>quit</li>
+</ul>
+<p>more about POP3: </p>
+<ul>
+<li>POP3 “download-and-keep”: copies of messages on different clients</li>
+<li>POP3 is stateless across sessions</li>
+</ul>
+<p>因特网邮件访问协议(Internet Mail Access Protocol, IMAP)</p>
+<ul>
+<li>keeps all messages in one place: at server</li>
+<li>allows user to organize messages in folders</li>
+<li>keeps user state across sessions: names of folders and mappings between message IDs and folder name</li>
+</ul>
+<h2 id="DNS-因特网的目录服务"><a href="#DNS-因特网的目录服务" class="headerlink" title="DNS: 因特网的目录服务"></a>DNS: 因特网的目录服务</h2><p>主机使用IP地址(IP address)进行标识</p>
+<p>域名系统(Domain Name System, DNS)将主机名解析为IP地址</p>
+<p>Internet hosts, routers:</p>
+<ul>
+<li>IP address (32 bit) - used for addressing datagrams</li>
+<li>“name”, e.g., www.yahoo.com - used by humans</li>
+</ul>
+<blockquote>
+<p>Q: how to map between IP address and name, and vice versa ?</p>
+<p>Domain Name System:</p>
+<ol>
+<li><strong>distributed database</strong> implemented in hierarchy of many <strong>name servers</strong></li>
+<li><strong>application-layer protocol</strong>: hosts, name servers communicate to resolve names (address/name translation)</li>
+</ol>
+<ul>
+<li>note: core Internet function, implemented as application-layer protocol</li>
+<li>complexity at network’s “edge</li>
+</ul>
+</blockquote>
+<ol>
+<li><p>DNS是一个由分层的DNS服务器(DNS Server)实现的分布式数据库</p>
+</li>
+<li><p>DNS是一个使得主机能够查询分布式数据库应用层协议，运行在UDP之上，使用53号端口</p>
+</li>
+</ol>
+<ul>
+<li><p>主机别名(host aliasing): 通常规范主机名(canonical hostname)较为复杂</p>
+</li>
+<li><p>邮件服务器别名(mail server aliasing)</p>
+</li>
+<li><p>负载分配(load distribution): 冗余的服务器(e.g. Web服务器)</p>
+</li>
+</ul>
+<p>DNS services: </p>
+<ul>
+<li>hostname to IP address translation</li>
+<li>host aliasing(canonical, alias names)</li>
+<li>mail server aliasing</li>
+<li>load distribution(replicated Web servers: many IP addresses correspond to one name)</li>
+</ul>
+<p>单一DNS服务器(集中式设计)的问题(why not centralize DNS?): </p>
+<ol>
+<li><p>单点故障(a single point of failure): DNS服务器崩溃会导致整个互联网瘫痪</p>
+</li>
+<li><p>通信容量(traffic volume): DNS查询体量极其大</p>
+</li>
+<li><p>远距离集中式数据库(distant centralized database)</p>
+</li>
+<li><p>维护(maintenance)</p>
+</li>
+</ol>
+<h3 id="分布式设计方案-分布式层次数据库"><a href="#分布式设计方案-分布式层次数据库" class="headerlink" title="分布式设计方案(分布式层次数据库)"></a><strong>分布式设计方案</strong>(分布式层次数据库)</h3><h1 id="根DNS服务器-13个"><a href="#根DNS服务器-13个" class="headerlink" title="根DNS服务器(13个)"></a>根DNS服务器(13个)</h1><h2 id="顶级域DNS服务器-一般域名-国家顶级域名-反向域名"><a href="#顶级域DNS服务器-一般域名-国家顶级域名-反向域名" class="headerlink" title="顶级域DNS服务器(一般域名 国家顶级域名 反向域名)"></a>顶级域DNS服务器(一般域名 国家顶级域名 反向域名)</h2><h3 id="权威DNS服务器"><a href="#权威DNS服务器" class="headerlink" title="权威DNS服务器"></a>权威DNS服务器</h3><blockquote>
+<p><img src="\img\dns.jpg" alt="dns.jpg"></p>
+<p><img src="\img\root_dns.jpg" alt="root_dns.jpg"></p>
+</blockquote>
+<p>top-level domain (TLD) servers:</p>
+<ul>
+<li>responsible for com, org, net, edu, aero, jobs, museums, and all top-level country domains, e.g.: uk, fr, ca, jp</li>
+<li>Network Solutions maintains servers for .com TLD</li>
+<li>Educause for .edu TLD</li>
+</ul>
+<p>Top-Level Domain(TLD): </p>
+<blockquote>
+<p><img src="\img\TLD.png" alt="TLD.png"></p>
+<p><img src="\img\generic_domain.png" alt="generic_domain.png"></p>
+<p>Generic domains:<br>.COM – commercial organizations<br>.EDU – educational institutions<br>.GOV – federal government institutions<br>.MIL – United States military<br>.NET – major network support centers<br>.ORG – other organizations<br>.INT – international organizations</p>
+</blockquote>
+<p>New Top Level Domains:<br>| TLD        | Spd/Unspd | Purpose  |<br>| ——–   | :——:  |  :—-:  |<br>| .aero      |  spd      | Air-transport industry |<br>| .biz       |  Unspd    | Businesses   |<br>| .coop      |  spd      | Cooperatives |<br>| .info      |  Unspd    | Unrestricted use |<br>| .museum    |  spd      | Museums      |<br>| .name      |  Unspd    | For registration by individuals |<br>| .pro       |  Unspd    | Accountants, lawyers, physicians, and other professionals |</p>
+<p>Country Domains: </p>
+<blockquote>
+<p><img src="\img\country_domain.png" alt="country_domain.png"></p>
+</blockquote>
+<p>Inverse domain:</p>
+<blockquote>
+<p><img src="\img\inverse_domain.png" alt="inverse_domain.png"></p>
+</blockquote>
+<p>authoritative DNS servers: </p>
+<ul>
+<li>organization’s own DNS server(s), providing authoritative hostname to IP mappings for organization’s named hosts </li>
+<li>can be maintained by organization or service provider</li>
+</ul>
+<p>Zones and domains: </p>
+<blockquote>
+<p><img src="\img\zones_domains.png" alt="zones_domains.png"></p>
+</blockquote>
+<p>Zone</p>
+<ul>
+<li>A primary server loads all information from the disk file; </li>
+<li>the secondary server loads all information from the primary server. </li>
+<li>When the primary downloads information from the secondary, it is called zone transfer.</li>
+</ul>
+<p>Authoritative Server Configuration(example): </p>
+<blockquote>
+<p><img src="\img\authoritative_server_con.jpg" alt="authoritative_server_con.jpg"></p>
+</blockquote>
+<p>本地DNS服务器(local DNS server): 严格上不属于DNS层次结构，但很重要</p>
+<ol>
+<li>does not strictly belong to hierarchy</li>
+<li>each ISP (residential ISP, company, university) has one(also called “default name server”)</li>
+<li>when host makes DNS query, query is sent to its local DNS server</li>
+</ol>
+<ul>
+<li>has local cache of recent name-to-address translation pairs (but may be out of date!)</li>
+<li>acts as proxy, forwards query into hierarchy</li>
+</ul>
+<p>Name Resolution: </p>
+<ul>
+<li>Resolvers use UDP (single name) or TCP (whole group of names)</li>
+<li>Knowing the address of the root server is sufficient</li>
+<li>Resolvers use recursive query.</li>
+<li>Servers use iterative query.</li>
+</ul>
+<p>e.g.: client wants IP for www.amazon.com; 1st approximation:</p>
+<ol>
+<li>client queries root server to find com DNS server</li>
+<li>client queries .com DNS server to get amazon.com DNS server</li>
+<li>client queries amazon.com DNS server to get IP address for www.amazon.com</li>
+</ol>
+<p>contacted by local name server that can not resolve name</p>
+<p>root name server:</p>
+<ul>
+<li>contacts authoritative name server if name mapping not known</li>
+<li>gets mapping</li>
+<li>returns mapping to local name server</li>
+</ul>
+<p>迭代查询(iterative query): 查询结果返回给请求者</p>
+<ul>
+<li>contacted server replies with name of server to contact</li>
+<li>“I don’t know this name, but ask this server”</li>
+</ul>
+<p>host at cis.poly.edu wants IP address for gaia.cs.umass.edu: </p>
+<blockquote>
+<p><img src="\img\iterated_query.jpg" alt="iterated_query.jpg"></p>
+</blockquote>
+<p>递归查询(recusive query): 转发查询请求</p>
+<ul>
+<li>puts burden of name resolution on contacted name server</li>
+<li>heavy load at upper levels of hierarchy?</li>
+</ul>
+<blockquote>
+<p><img src="\img\recursive_query.jpg" alt="recursive_query.jpg"></p>
+</blockquote>
+<p>DNS Optimization: </p>
+<blockquote>
+<p>Spatial Locality: Local computers referenced more often than remote<br>Temporal Locality: Same set of domains referenced repeatedly -&gt; Caching<br>Caching: each entry has a time to live (TTL)<br>Replication: Multiple servers. Multiple roots. Ask the geographically closest server.</p>
+</blockquote>
+<p>DNS缓存(DNS caching): </p>
+<blockquote>
+<p>改善时延性能并减少在因特网上到处传输的DNS报文数量</p>
+</blockquote>
+<p>once (any) name server learns mapping, it caches mapping</p>
+<ul>
+<li>cache entries timeout (disappear) after some time (TTL)</li>
+<li>TLD servers typically cached in local name servers, thus root name servers not often visited</li>
+</ul>
+<p>cached entries may be out-of-date (best effort name-to-address translation!)</p>
+<ul>
+<li>if name host changes IP address, may not be known Internet-wide until all TTLs expire</li>
+</ul>
+<p>update/notify mechanisms proposed IETF standard, RFC 2136</p>
+<p>DNS: distributed database storing resource records (RR, 提供主机名到IP地址的映射)</p>
+<p>RR format: (name, type, value, ttl)</p>
+<p>type=A</p>
+<ul>
+<li>name is hostname</li>
+<li>value is IP address</li>
+</ul>
+<p>type=NS</p>
+<ul>
+<li>name is domain (e.g., foo.com)</li>
+<li>value is hostname of authoritative name server for this domain</li>
+</ul>
+<p>type=CNAME</p>
+<ul>
+<li>name is alias name for some “canonical” (the real) name</li>
+<li>www.ibm.com is really servereast.backup2.ibm.com</li>
+<li>value is canonical name</li>
+</ul>
+<p>type=MX</p>
+<ul>
+<li>value is name of mailserver associated with name</li>
+</ul>
+<p>Resource Record Types:<br>| Type  | Meaning   |<br>| —-  | :——-: |<br>| A     | Host Address   |<br>| CNAME | Canonical Name (alias) |<br>| HINFO | CPU and O/S    |<br>| MINFO | Mailbox Info   |<br>| MX    | Mail Exchanger |<br>| NS    | Authoritative name server for a domain |<br>| PTR   | Pointer to a domain name (link) |<br>| RP    | Responsible person |<br>| SOA   | Start of zone authority (Which part of naming hierarchy implemented) |<br>| TXT   | Arbitrary Text |</p>
+<p>Inserting records into DNS: </p>
+<ul>
+<li><p>example: new startup “Network Utopia”</p>
+</li>
+<li><p>register name networkutopia.com at DNS registrar (e.g., Network Solutions)</p>
+</li>
+</ul>
+<ol>
+<li>provide names, IP addresses of authoritative name server (primary and secondary)</li>
+<li>register inserts two RRs into .com TLD server: (networkutopia.com, NS, dns1.networkutopia.com) (dns1.networkutopia.com, A, 212.212.212.1)</li>
+</ol>
+<ul>
+<li>create authoritative server type A record for www.networkuptopia.com; type MX record for networkutopia.com</li>
+</ul>
+<p>DNS报文: DNS查询和回答报文(query and reply both with same message format<br>)</p>
+<blockquote>
+<p><img src="\img\DNS_messages.jpg" alt="DNS_messages.jpg"></p>
+</blockquote>
+<p><strong>message header</strong>:</p>
+<p>dentification: 16 bit # for query, reply to query uses same #</p>
+<p>flags:</p>
+<ul>
+<li>query or reply</li>
+<li>recursion desired </li>
+<li>recursion available</li>
+<li>reply is authoritative</li>
+</ul>
+<blockquote>
+<p><img src="\img\DNS_message.jpg" alt="DNS_message.jpg"></p>
+<p><img src="\img\DNS_message_flag.jpg" alt="DNS_message_flag.jpg"></p>
+</blockquote>
+<p>Domain names stored as series of labels</p>
+<ul>
+<li>1 octet length (n) (top two bits of length are 00)</li>
+<li>n octet label</li>
+<li>Zero length marks end of name</li>
+</ul>
+<h3 id="Attacking-DNS"><a href="#Attacking-DNS" class="headerlink" title="Attacking DNS"></a>Attacking DNS</h3><p><strong>DDoS attacks</strong></p>
+<p>bombard root servers with traffic</p>
+<ul>
+<li>not successful to date</li>
+<li>traffic filtering</li>
+<li>local DNS servers cache IPs of TLD servers, allowing root server bypass</li>
+</ul>
+<p>bombard TLD servers</p>
+<ul>
+<li>potentially more dangerous</li>
+</ul>
+<p><strong>redirect attacks</strong></p>
+<p>man-in-middle</p>
+<ul>
+<li>Intercept queries</li>
+</ul>
+<p>DNS poisoning</p>
+<ul>
+<li>Send bogus relies to DNS server, which caches</li>
+</ul>
+<p><strong>exploit DNS for DDoS</strong></p>
+<p>send queries with spoofed source address: target IP</p>
+<p>requires amplification</p>
+<h2 id="P2P应用"><a href="#P2P应用" class="headerlink" title="P2P应用"></a>P2P应用</h2><p>Objectives of P2P: </p>
+<ul>
+<li>Share the resources (storage and bandwidth) of individual clients </li>
+<li>to improve scalability/ robustness</li>
+<li>Bypass DNS to find clients with resources! examples: instant messaging, skype</li>
+</ul>
+<h3 id="Pure-P2P-architecture"><a href="#Pure-P2P-architecture" class="headerlink" title="Pure P2P architecture"></a>Pure P2P architecture</h3><ul>
+<li>no always-on server</li>
+<li>arbitrary end systems directly communicate</li>
+<li>peers are intermittently connected and change IP addresses</li>
+<li>40-70% of total traffic in many networks</li>
+</ul>
+<p>P2P Examples: </p>
+<ul>
+<li>File Sharing: BitTorrent, LimeWire</li>
+<li>Streaming: PPLive, PPStream, Zatto, …</li>
+<li>Research systems</li>
+<li>Collaborative computing:</li>
+<li>SETI@Home project</li>
+<li>Human genome mapping</li>
+<li>Intel NetBatch: 10,000 computers in 25 worldwide sites for simulations</li>
+</ul>
+<p>File distribution: client-server vs P2P:<br>how much time to distribute file (size F) from one server to N  peers</p>
+<p>peer upload/download capacity is limited resource</p>
+<p><em>client-server</em>: </p>
+<blockquote>
+<p><img src="\img\file_distribution.jpg" alt="file_distribution.jpg"></p>
+</blockquote>
+<p>server transmission: must sequentially send (upload) N file copies:</p>
+<ul>
+<li>time to send one copy: $F/u_s$ </li>
+<li>time to send N copies: $NF/u_s$</li>
+</ul>
+<p>client: each client must download file copy</p>
+<ul>
+<li>$d_{min}$ = min client download rate</li>
+<li>min client download time: $F/d_{min}$</li>
+</ul>
+<p>time to distribute F to N clients using client-server approach(increases linearly in N):<br>$D_{c-s}$ &gt; max{$NF/u<em>s, F/d</em>{min}$}</p>
+<p><em>P2P</em>: </p>
+<p>server transmission: must upload at least one copy</p>
+<ul>
+<li>time to send one copy: $F/u_s$</li>
+</ul>
+<p>client: each client must download file copy</p>
+<ul>
+<li>min client download time: $F/d_{min}$</li>
+</ul>
+<p>time to  distribute F to N clients using P2P approach(increases linearly in N, but so does this, as each peer brings service capacity):<br>$D_{P2P}$ &gt; max{$F/u<em>s, F/d</em>{min}, NF/(u_s + \sum u_i)$}</p>
+<blockquote>
+<p><img src="\img\file_distribution_eg.jpg" alt="file_distribution_eg.jpg"></p>
+</blockquote>
+<h3 id="Napster-Centralized-Database"><a href="#Napster-Centralized-Database" class="headerlink" title="Napster(Centralized Database)"></a>Napster(Centralized Database)</h3><p>Program for sharing music over the Internet</p>
+<p>Application-level, client-server protocol over TCP</p>
+<p>A centralized index system that maps files (songs) to machines that are alive and with files</p>
+<p>Steps:</p>
+<ol>
+<li>Connect to Napster server</li>
+<li>Upload your list of files (push) to server</li>
+<li>Give server keywords to search the full list</li>
+<li>Select “best” of hosts with answers</li>
+</ol>
+<p>Napster Architecture</p>
+<blockquote>
+<p><img src="\img\napster_architecture.png" alt="napster_architecture.png"></p>
+</blockquote>
+<p>Napster Publish</p>
+<blockquote>
+<p><img src="\img\napster_publish.jpg" alt="napster_publish.jpg"></p>
+</blockquote>
+<p>Napster Search</p>
+<blockquote>
+<p><img src="\img\napster_search.jpg" alt="napster_search.jpg"></p>
+</blockquote>
+<p>Summary of features: a hybrid design</p>
+<ul>
+<li>control: client-server (aka special DNS) for files</li>
+<li>data: peer to peer</li>
+</ul>
+<p>Advantages: simplicity, easy to implement sophisticated search engines on top of the index system</p>
+<p>Disadvantages: </p>
+<ol>
+<li>application specific (compared with DNS) </li>
+<li>lack of robustness, scalability: central search server single point of bottleneck/failure</li>
+<li>easy to sue !</li>
+</ol>
+<h3 id="BitTorrent"><a href="#BitTorrent" class="headerlink" title="BitTorrent"></a>BitTorrent</h3><ul>
+<li>A P2P file sharing protocol</li>
+<li>Created by Bram Cohen in 2004</li>
+<li><p>A peer can download pieces concurrently from multiple locations </p>
+</li>
+<li><p>A global central index server is replaced by one tracker per file (called a swarm), reduces centralization; but needs other means to locate trackers</p>
+</li>
+<li><p>The bandwidth scalability management technique is more interesting</p>
+</li>
+</ul>
+<p>torrent(洪流): 参与一个特定文件分发的所有对等方(peer)的集合</p>
+<p>追踪器(tracer)</p>
+<p>Metadata File Structure: Meta info contains information necessary to contact the tracker and describes the files in the torrent</p>
+<ul>
+<li>announce URL of tracker</li>
+<li>file name</li>
+<li>file length</li>
+<li>piece length (typically 256KB)</li>
+<li>SHA-1 hashes of pieces for verification</li>
+<li>also creation date, comment, creator, …</li>
+</ul>
+<p><em>Tracker Protocol</em>: </p>
+<blockquote>
+<p><img src="\img\trackerProtocol.jpg" alt="trackerProtocol.jpg"></p>
+</blockquote>
+<p>Communicates with clients via HTTP/HTTPS</p>
+<p>Client GET request</p>
+<ul>
+<li>info_hash: uniquely identifies the file</li>
+<li>peer_id: chosen by and uniquely identifies the client</li>
+<li>client IP and port</li>
+<li>numwant: how many peers to return (defaults to 50)</li>
+<li>stats: e.g., bytes uploaded, downloaded</li>
+</ul>
+<p>Tracker GET response</p>
+<ul>
+<li>interval: how often to contact the tracker</li>
+<li>list of peers, containing peer id, IP and port</li>
+<li>stats</li>
+</ul>
+<p>Robustness: A swarming protocol</p>
+<ul>
+<li>Peers exchange info about other peers in the system</li>
+<li>Peers exchange piece availability and request blocks from peers</li>
+</ul>
+<p>块(chunk)</p>
+<blockquote>
+<p><img src="\img\block.jpg" alt="block.jpg"></p>
+</blockquote>
+<p><em>Peer Protocol</em>: </p>
+<p><strong>Over TCP</strong></p>
+<ul>
+<li><p>Unchoke: indicate if A allows B to download</p>
+</li>
+<li><p>Interest/request: indicate which block to send from B to A </p>
+</li>
+</ul>
+<p>incentive</p>
+<ul>
+<li>Periodically (typically every 10 seconds) calculate data-receiving rates from all peers</li>
+<li>Upload to (unchoke) the fastest</li>
+<li><ul>
+<li>constant number (4) of unchoking slots</li>
+</ul>
+</li>
+<li><ul>
+<li>partition upload bw equally among unchoked</li>
+</ul>
+</li>
+<li>commonly referred to as “tit-for-tat” strategy(一报还一报)</li>
+</ul>
+<p>Optimistic Unchoking</p>
+<ul>
+<li>Periodically select a peer at random and upload to it</li>
+<li><ul>
+<li>typically every 3 unchoking rounds (30 seconds)</li>
+</ul>
+</li>
+<li>Multi-purpose mechanism</li>
+<li><ul>
+<li>allow bootstrapping of new clients</li>
+</ul>
+</li>
+<li><ul>
+<li>continuously look for the fastest peers (exploitation vs exploration)</li>
+</ul>
+</li>
+</ul>
+<p>Block Availability</p>
+<ul>
+<li>Request (local) rarest first(最稀缺优先)</li>
+<li><ul>
+<li>achieves the fastest replication of rare pieces</li>
+</ul>
+</li>
+<li><ul>
+<li>obtain something of value</li>
+</ul>
+</li>
+</ul>
+<p>Revisions</p>
+<ul>
+<li>When downloading starts (first 4 pieces): choose at random and request them from the peers</li>
+<li><ul>
+<li>get pieces as quickly as possible</li>
+</ul>
+</li>
+<li><ul>
+<li>obtain something to offer to others</li>
+</ul>
+</li>
+<li>Endgame mode</li>
+<li><ul>
+<li>defense against the “last-block problem”: cannot finish because missing a few last pieces</li>
+</ul>
+</li>
+<li><ul>
+<li>send requests for missing sub-pieces to all peers in our peer list</li>
+</ul>
+</li>
+<li><ul>
+<li>send cancel messages upon receipt of a sub-piece</li>
+</ul>
+</li>
+</ul>
+<p>Summary</p>
+<ul>
+<li>Very widely used</li>
+<li><ul>
+<li>mainline: written in Python</li>
+</ul>
+</li>
+<li><ul>
+<li>Azureus and μTorrent: the most popular</li>
+</ul>
+</li>
+<li><ul>
+<li>Other popular clients: ABC, BitComet, BitLord, BitTornado, Opera browser</li>
+</ul>
+</li>
+<li><p>Many explorations, e.g.,</p>
+</li>
+<li><ul>
+<li>BitThief </li>
+</ul>
+</li>
+<li><ul>
+<li>BitTyrant</li>
+</ul>
+</li>
+<li><p>Better understanding is needed</p>
+</li>
+</ul>
+<h3 id="Gnutella"><a href="#Gnutella" class="headerlink" title="Gnutella"></a>Gnutella</h3><p>文件共享网络</p>
+<p>Decentralized Flooding: Gnutella</p>
+<ul>
+<li>On startup, client contacts other servents (server + client) in network </li>
+<li>to form interconnection/peering relationships</li>
+<li>servent interconnection used to forward control (queries, hits, etc)</li>
+</ul>
+<p>How to find a resource record: decentralized flooding</p>
+<ul>
+<li>send requests to neighbors</li>
+<li>neighbors recursively forward the requests</li>
+</ul>
+<blockquote>
+<p><img src="\img\decetralized_flooding1.jpg" alt="decetralized_flooding1.jpg"></p>
+<p><img src="\img\decetralized_flooding2.jpg" alt="decetralized_flooding2.jpg"><br>Each node forwards the query to its neighbors other than the onewho forwards it the query</p>
+<p><img src="\img\decetralized_flooding3.jpg" alt="decetralized_flooding3.jpg"><br>Each node should keep track of forwarded queries to avoid loop:</p>
+<ul>
+<li>nodes keep state (which will time out—soft state)</li>
+<li>carry the state in the query, i.e. carry a list of visited nodes </li>
+</ul>
+</blockquote>
+<p>Basic message header: Unique ID, TTL, Hops</p>
+<p>Message types: </p>
+<ul>
+<li>Ping : probes network for other servents</li>
+<li><p>Pong : response to ping, contains IP addr, # of files, etc.</p>
+</li>
+<li><p>Query : search criteria + speed requirement of servent</p>
+</li>
+<li><p>QueryHit : successful response to Query, contains addr + port to transfer from, speed of servent, etc.</p>
+</li>
+<li><p>Ping, Queries are flooded</p>
+</li>
+<li>QueryHit, Pong: reverse path of previous message</li>
+</ul>
+<p>Advantages: totally decentralized, highly robust</p>
+<p>Disadvantages:</p>
+<ol>
+<li><p>not scalable; the entire network can be swamped with flood requests: especially hard on slow clients; at some point broadcast traffic on Gnutella exceeded 56 kbps</p>
+</li>
+<li><p>to alleviate this problem, each request has a TTL to limit the scope<br>each query has an initial TTL, and each node forwarding it reduces it by one; if TTL reaches 0, the query is dropped (consequence?)</p>
+</li>
+</ol>
+<p><strong>Flooding: FastTrack (aka Kazaa)</strong></p>
+<p>Modifies the Gnutella protocol into two-level hierarchy</p>
+<ul>
+<li>Supernodes</li>
+<li><ul>
+<li>Nodes that have better connection to Internet</li>
+</ul>
+</li>
+<li><ul>
+<li>Act as temporary indexing servers for other nodes</li>
+</ul>
+</li>
+<li><ul>
+<li>Help improve the stability of the network<br>Standard nodes</li>
+</ul>
+</li>
+<li>Connect to supernodes and report list of files<br>Search</li>
+<li>Broadcast (Gnutella-style) search across supernodes<br>Disadvantages<br>Kept a centralized registration -&gt; prone to law suits</li>
+</ul>
+<h3 id="分布式散列表-Distributed-Hash-Table-DHT"><a href="#分布式散列表-Distributed-Hash-Table-DHT" class="headerlink" title="分布式散列表(Distributed Hash Table, DHT)"></a><strong>分布式散列表(Distributed Hash Table, DHT)</strong></h3><p>DHT Overview</p>
+<p>Abstraction: a distributed “hash-table” (DHT) data structure</p>
+<ul>
+<li>put(key, value) and get(key) -&gt; value</li>
+<li>DHT imposes no structure/meaning on keys</li>
+<li>one can build complex data structures using DHT</li>
+</ul>
+<blockquote>
+<p><img src="\img\DHT.jpg" alt="DHT.jpg"></p>
+</blockquote>
+<p>Implementation: </p>
+<ul>
+<li>nodes in system form an interconnection network: ring, zone, tree, hypercube, butterfly network, …</li>
+</ul>
+<p>DHT Applications</p>
+<ul>
+<li>File sharing and backup [CFS, Ivy, OceanStore, PAST, Pastiche …]</li>
+<li>Web cache and replica [Squirrel, Croquet Media Player]</li>
+<li>Censor-resistant stores [Eternity]</li>
+<li>DB query and indexing [PIER, Place Lab, VPN Index]</li>
+<li>Event notification [Scribe]</li>
+<li>Naming systems [ChordDNS, Twine, INS, HIP]</li>
+<li>Communication primitives  [I3, …]</li>
+<li>Host mobility [DTN Tetherless Architecture]</li>
+</ul>
+<blockquote>
+<p><img src="\img\DHTbasic_idea1.png" alt="DHTbasic_idea1.png"></p>
+<p><img src="\img\DHTbasic_idea2.png" alt="DHTbasic_idea2.png"></p>
+<p><img src="\img\DHTbasic_idea3.png" alt="DHTbasic_idea3.png"></p>
+<p><img src="\img\DHTbasic_idea4.png" alt="DHTbasic_idea4.png"></p>
+<p><img src="\img\DHTbasic_idea5.png" alt="DHTbasic_idea5.png"></p>
+</blockquote>
+<p>Key Issues in Understanding a DHT Design: </p>
+<ul>
+<li><p>How does the design map keys to internal representation (typically a metric space)?</p>
+</li>
+<li><p>Which space is a node responsible?</p>
+</li>
+<li><p>How are the nodes linked?</p>
+</li>
+</ul>
+<p><em>e.g. …</em></p>
+<h3 id="Content-Addressable-Network-CAN"><a href="#Content-Addressable-Network-CAN" class="headerlink" title="Content Addressable Network(CAN)"></a>Content Addressable Network(CAN)</h3><p>Abstraction</p>
+<ul>
+<li>map a key to a “point” in a <strong>multi-dimensional Cartesian space</strong></li>
+<li>a node “owns” a zone in the overall space</li>
+<li>route from one “point” to another</li>
+</ul>
+<p>CAN Example: Two Dimensional Space</p>
+<ul>
+<li><p>Space divided among nodes</p>
+</li>
+<li><p>Each node covers either a square or a rectangular area of ratios 1:2 or 2:1</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\CAN_2d_space_1.jpg" alt="CAN_2d_space_1.jpg"></p>
+<p><img src="\img\CAN_2d_space_2.jpg" alt="CAN_2d_space_2.jpg"></p>
+<p><img src="\img\CAN_2d_space_3.jpg" alt="CAN_2d_space_3.jpg"></p>
+<p><img src="\img\CAN_2d_space_4.jpg" alt="CAN_2d_space_4.jpg"></p>
+<p><img src="\img\CAN_2d_space_5.jpg" alt="CAN_2d_space_5.jpg"></p>
+</blockquote>
+<p>CAN Insert Example:<br>node I::insert(K,V)</p>
+<blockquote>
+<p><img src="\img\CAN_2d_space_insert1.jpg" alt="CAN_2d_space_insert1.jpg"></p>
+</blockquote>
+<p>(1) a = hx(K)<br>    b = hy(K)</p>
+<blockquote>
+<p><img src="\img\CAN_2d_space_insert2.jpg" alt="CAN_2d_space_insert2.jpg"></p>
+</blockquote>
+<p>(2) route(K,V) -&gt; (a,b)</p>
+<blockquote>
+<p><img src="\img\CAN_2d_space_insert3.jpg" alt="CAN_2d_space_insert3.jpg"></p>
+</blockquote>
+<p>Routing:</p>
+<ul>
+<li>A node maintains state only for its immediate neighboring nodes</li>
+<li>Forward to neighbor which is closest to the target point</li>
+<li><ul>
+<li><strong>a type of greedy, local routing scheme</strong><blockquote>
+<p><img src="\img\CAN_2d_space_insert4.jpg" alt="CAN_2d_space_insert4.jpg"></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>(3) (K,V) is stored at (a,b)</p>
+<p>CAN Retrieve Example:<br>node J::retrieve(K)</p>
+<blockquote>
+<p><img src="\img\CAN_2d_space_retrieve1.jpg" alt="CAN_2d_space_retrieve1.jpg"></p>
+</blockquote>
+<p>(1) a = hx(K)<br>    b = hy(K)</p>
+<p>(2) route “retrieve(K)” to (a,b)</p>
+<blockquote>
+<p><img src="\img\CAN_2d_space_retrieve2.jpg" alt="CAN_2d_space_retrieve2.jpg"></p>
+</blockquote>
+<p>CAN Insert: Join</p>
+<blockquote>
+<p><img src="\img\CAN_2d_space_join1.jpg" alt="CAN_2d_space_join1.jpg"></p>
+<p><img src="\img\CAN_2d_space_join2.jpg" alt="CAN_2d_space_join2.jpg"></p>
+<p><img src="\img\CAN_2d_space_join3.jpg" alt="CAN_2d_space_join3.jpg"></p>
+</blockquote>
+<p>CAN Evaluations</p>
+<ul>
+<li><p>Guarantee to find an item if in the network</p>
+</li>
+<li><p>Load balancing</p>
+</li>
+<li><ul>
+<li>hashing achieves some load balancing</li>
+</ul>
+</li>
+<li><ul>
+<li>overloaded node replicates popular entries at neighbors</li>
+</ul>
+</li>
+<li><p>Scalability</p>
+</li>
+<li><ul>
+<li>for a uniform (regularly) partitioned space with <strong>n</strong> nodes and <strong>d</strong> dimensions</li>
+</ul>
+</li>
+<li><ul>
+<li>storage: </li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>per node, number of neighbors is <strong>2d</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><strong>a fixed d</strong> can scale the network without increasing per-node state </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>routing</li>
+<li><ul>
+<li>average routing path is $(dn^{1/d})/3$ hops (due to Manhattan distance routing, expected hops in each dimension is dimension length * 1/3)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Chord-search-by-routing-consistent-hashing"><a href="#Chord-search-by-routing-consistent-hashing" class="headerlink" title="Chord: search by routing/consistent hashing"></a>Chord: search by routing/consistent hashing</h3><ul>
+<li><p>Space is a ring</p>
+</li>
+<li><p>Consistent hashing: m bit identifier space for both keys and nodes</p>
+</li>
+<li><ul>
+<li>key identifier = SHA-1(key), where SHA-1() is a popular hash function: </li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Key=“Matrix3” -&gt; ID=60</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>node identifier = SHA-1(IP address)</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>IP=“198.10.10.1” -&gt; ID=123</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Chord: Storage using a Ring</p>
+<ul>
+<li>A key is stored at its successor: node with next higher or equal ID<blockquote>
+<p><img src="\img\chord_storage.jpg" alt="chord_storage.jpg"></p>
+</blockquote>
+</li>
+</ul>
+<p>how to Search(One Extreme)</p>
+<ul>
+<li>Every node knows of every other node</li>
+<li><ul>
+<li>Routing tables are large O(N)</li>
+</ul>
+</li>
+<li><ul>
+<li>Lookups are fast O(1)<blockquote>
+<p><img src="\img\chord_search.png" alt="chord_search.png"></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>how to Search(the Other Extreme)</p>
+<ul>
+<li>Every node knows its successor in the ring</li>
+<li><ul>
+<li>Routing tables are small O(1)</li>
+</ul>
+</li>
+<li><ul>
+<li>Lookups are slow O(N)<blockquote>
+<p><img src="\img\chord_search1.jpg" alt="chord_search1.jpg"></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>Chord Solution: “finger tables”</p>
+<ul>
+<li>Node K knows the node that is maintaining K + 2i, </li>
+<li><ul>
+<li>increase distance exponentially</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\chord_searching1.jpg" alt="chord_searching1.jpg"></p>
+</blockquote>
+<p>Joining the Ring</p>
+<ul>
+<li>use a contact node to obtain info</li>
+<li>transfer keys from successor node to new node</li>
+<li>updating fingers of existing nodes</li>
+</ul>
+<blockquote>
+<p><img src="\img\chord_searching2.png" alt="chord_searching2.png"></p>
+</blockquote>
+<p>DHT: Chord Node Join</p>
+<ul>
+<li>Assume an identifier space [0..8]</li>
+<li><p>Node n1 joins</p>
+<blockquote>
+<p><img src="\img\DHT_chord_join1.jpg" alt="DHT_chord_join1.jpg"></p>
+</blockquote>
+</li>
+<li><p>Node n2 joins</p>
+<blockquote>
+<p><img src="\img\DHT_chord_join2.jpg" alt="DHT_chord_join2.jpg"></p>
+</blockquote>
+</li>
+<li><p>Node n6 joins </p>
+<blockquote>
+<p><img src="\img\DHT_chord_join3.jpg" alt="DHT_chord_join3.jpg"></p>
+</blockquote>
+</li>
+<li><p>Node n0 joined</p>
+<blockquote>
+<p><img src="\img\DHT_chord_join4.jpg" alt="DHT_chord_join4.jpg"></p>
+</blockquote>
+</li>
+</ul>
+<p>DHT: Chord Insert Items</p>
+<ul>
+<li>Nodes: n1, n2, n0, n6</li>
+<li>Items: f7, f1</li>
+</ul>
+<p>Upon receiving a query for item id, a node:</p>
+<ul>
+<li>checks whether stores the item locally</li>
+<li>if not, forwards the query to the largest node in its successor table that does not exceed id</li>
+</ul>
+<blockquote>
+<p><img src="\img\DHT_chord_routing.jpg" alt="DHT_chord_routing.jpg"></p>
+</blockquote>
+<p><strong>Chord/CAN Summary</strong></p>
+<ul>
+<li>Each node “owns” some portion of the key-space</li>
+<li><ul>
+<li>in CAN, it is a multi-dimensional “zone”</li>
+</ul>
+</li>
+<li><ul>
+<li>in Chord, it is the key-id-space between two nodes in 1-D ring</li>
+</ul>
+</li>
+<li>Files and nodes are assigned random locations in key-space</li>
+<li><ul>
+<li>provides some load balancing</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>probabilistically equal division of keys to nodes</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Routing/search is local (distributed) and greedy</li>
+<li><ul>
+<li>node X does not know of a path to a key Z</li>
+</ul>
+</li>
+<li><ul>
+<li>but if it appears that node Y is the closest to Z among all of the nodes known to X</li>
+</ul>
+</li>
+<li><ul>
+<li>so route to Y</li>
+</ul>
+</li>
+</ul>
+<h2 id="video-streaming-and-content-distribution-networks-CDNs-流式视频和内容分发网络"><a href="#video-streaming-and-content-distribution-networks-CDNs-流式视频和内容分发网络" class="headerlink" title="video streaming and content distribution networks (CDNs)(流式视频和内容分发网络)"></a>video streaming and content distribution networks (CDNs)(流式视频和内容分发网络)</h2><p>Multimedia: video</p>
+<ul>
+<li>video: sequence of images displayed at constant rate</li>
+<li><ul>
+<li>e.g., 24 images/sec</li>
+</ul>
+</li>
+<li>digital image: array of pixels</li>
+<li><ul>
+<li>each pixel represented by bits</li>
+</ul>
+</li>
+<li>coding: use redundancy <strong>within</strong> and <strong>between</strong> images to decrease # bits used to encode image</li>
+<li><ul>
+<li>spatial (within image)</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>spatial coding example: instead of sending N values of same color, send only two values: color value and number of repeated values (N)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>temporal (from one image to next)</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>temporal coding example: instead of sending complete frame at i+1, send only differences from frame i</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CBR: (constant bit rate): video encoding rate fixed</p>
+</li>
+<li>VBR: (variable bit rate): video encoding rate changes as amount of spatial, temporal coding changes </li>
+<li>examples:</li>
+</ul>
+<ol>
+<li>MPEG 1 (CD-ROM) 1.5 Mbps</li>
+<li>MPEG2 (DVD) 3-6 Mbps</li>
+<li>MPEG4 (often used in Internet, &lt; 1 Mbps)</li>
+</ol>
+<p>Streaming stored video(流式存储视频)</p>
+<ul>
+<li>simple scenario: video server(stored video) -&gt; Internet -&gt; client</li>
+<li>challenge: heterogeneity</li>
+<li><ul>
+<li>different users have different capabilities (e.g., wired versus mobile; bandwidth rich versus bandwidth poor)</li>
+</ul>
+</li>
+</ul>
+<p>Streaming multimedia: DASH(Dynamic Adaptive Streaming over HTTP)</p>
+<p>server:</p>
+<ul>
+<li>divides video file into multiple chunks</li>
+<li>each chunk stored, encoded at different rates </li>
+<li><strong>manifest file</strong>(文件清单): provides URLs for different chunks</li>
+</ul>
+<p>client:</p>
+<ul>
+<li>periodically measures server-to-client bandwidth</li>
+<li>consulting manifest, requests one chunk at a time </li>
+<li>chooses maximum coding rate sustainable given current bandwidth</li>
+<li>can choose different coding rates at different points in time (depending on available bandwidth at time)</li>
+</ul>
+<p>“intelligence” at client: client determines</p>
+<ul>
+<li>when to request chunk (so that buffer starvation, or overflow does not occur)</li>
+<li>what encoding rate to request (higher quality when more bandwidth available) </li>
+<li>where to request chunk (can request from URL server that is “close” to client or has high available bandwidth) </li>
+</ul>
+<h3 id="Content-distribution-networks-CDN-内容分发网络"><a href="#Content-distribution-networks-CDN-内容分发网络" class="headerlink" title="Content distribution networks(CDN, 内容分发网络)"></a>Content distribution networks(CDN, 内容分发网络)</h3><p><em>video traffic: major consumer of Internet bandwidth</em></p>
+<p>challenge: how to stream content (selected from millions of videos) to hundreds of thousands of simultaneous users?</p>
+<p>option 1: single, large “mega-server”</p>
+<ul>
+<li>single point of failure</li>
+<li>point of network congestion</li>
+<li>long path to distant clients</li>
+<li>multiple copies of video sent over outgoing link</li>
+</ul>
+<blockquote>
+<p>quite simply: this solution doesn’t scale</p>
+</blockquote>
+<p>option 2: store/serve multiple copies of videos at multiple geographically distributed sites (CDN)</p>
+<ul>
+<li>enter deep: push CDN servers deep into many access networks </li>
+<li><ul>
+<li>close to users</li>
+</ul>
+</li>
+<li><ul>
+<li>used by Akamai, 1700 locations</li>
+</ul>
+</li>
+<li>bring home: smaller number (10’s) of larger clusters in POPs near (but not within) access networks</li>
+<li><ul>
+<li>used by Limelight</li>
+</ul>
+</li>
+</ul>
+<p><strong>CDN: stores copies of content at CDN nodes</strong></p>
+<ul>
+<li>e.g. Netflix stores copies of MadMen</li>
+</ul>
+<p>subscriber requests content from CDN</p>
+<ul>
+<li>directed to nearby copy, retrieves content</li>
+<li>may choose different copy if network path congested</li>
+</ul>
+<p>OTT(over the top) challenges: coping with a congested Internet</p>
+<ul>
+<li>from which CDN node to retrieve content?</li>
+<li>viewer behavior in presence of congestion?</li>
+<li>what content to place in which CDN node?</li>
+</ul>
+<blockquote>
+<p><img src="\img\netflix.jpg" alt="netflix.jpg"></p>
+</blockquote>
+<p>Caching</p>
+<ul>
+<li>explicit(明确的)</li>
+<li>transparent (hijacking connections)<br>Replication</li>
+<li>server farms(服务器群)</li>
+<li>geographically dispersed(分散)(CDN)</li>
+</ul>
+<p>Traditional: Performance</p>
+<ul>
+<li>move content closer to the clients</li>
+<li>avoid server bottlenecks<br>New: DDoS Protection</li>
+<li>dissipate attack over massive resources</li>
+<li>multiplicatively raise level of resources needed to attack</li>
+</ul>
+<p>Denial of Service Attacks (DoS)</p>
+<blockquote>
+<p><img src="\img\Dos.jpg" alt="Dos.jpg"></p>
+</blockquote>
+<p>Distributed DoS (DDoS)</p>
+<blockquote>
+<p><img src="\img\DDoS.jpg" alt="DDoS.jpg"></p>
+</blockquote>
+<p>Redirection Overlay</p>
+<blockquote>
+<p><img src="\img\redirectionOverlay.jpg" alt="redirectionOverlay.jpg"></p>
+</blockquote>
+<p>Techniques<br>DNS</p>
+<ul>
+<li>one name maps onto many addresses</li>
+<li>works for both servers and reverse proxies<br>HTTP</li>
+<li>requires an extra round trip<br>Router</li>
+<li>one address, select a server (reverse proxy)</li>
+<li>content-based routing (near client)<br>URL Rewriting</li>
+<li>embedded links</li>
+</ul>
+<h3 id="Ridirection"><a href="#Ridirection" class="headerlink" title="Ridirection"></a>Ridirection</h3><p>Hashing Schemes: Modulo</p>
+<ul>
+<li>Easy to compute</li>
+<li>Evenly distributed</li>
+<li>Good for fixed number of servers</li>
+<li><strong>Many mapping changes after a single server change</strong></li>
+</ul>
+<blockquote>
+<p><img src="\img\modulo.jpg" alt="modulo.jpg"></p>
+</blockquote>
+<p>Consistent Hashing (CHash)</p>
+<ul>
+<li>Hash server, then URL</li>
+<li>Closest match</li>
+<li>Only local mapping changes after adding or removing servers </li>
+<li>Used by State-of-the-art CDNs</li>
+</ul>
+<blockquote>
+<p><img src="\img\CHash.jpg" alt="CHash.jpg"></p>
+</blockquote>
+<p>Highest Random Weight (HRW)</p>
+<ul>
+<li>Hash(url, svrAddr)</li>
+<li>Deterministic order of access set of servers</li>
+<li>Different order for different URLs</li>
+<li>Load evenly distributed after server changes</li>
+</ul>
+<blockquote>
+<p><img src="\img\HRW.jpg" alt="HRW.jpg"></p>
+</blockquote>
+<p>Redirection Strategies</p>
+<ul>
+<li>Random (Rand)</li>
+<li><ul>
+<li>Requests randomly sent to cooperating servers</li>
+</ul>
+</li>
+<li><ul>
+<li>Baseline case, no pathological behavior</li>
+</ul>
+</li>
+<li><p>Replicated Consistent Hashing (R-CHash)</p>
+</li>
+<li><ul>
+<li>Each URL hashed to a fixed # of server replicas</li>
+</ul>
+</li>
+<li><ul>
+<li>For each request, randomly select one replica</li>
+</ul>
+</li>
+<li><p>Replicated Highest Random Weight (R-HRW)</p>
+</li>
+<li><ul>
+<li>Similar to R-CHash, but use HRW hashing</li>
+</ul>
+</li>
+<li><ul>
+<li>Less likely two URLs have same set of replicas</li>
+</ul>
+</li>
+<li><p>Coarse(粗略) Dynamic Replication (CDR)</p>
+</li>
+<li><ul>
+<li>Using HRW hashing to generate ordered server list</li>
+</ul>
+</li>
+<li><ul>
+<li>Walk through server list to find a lightly loaded one</li>
+</ul>
+</li>
+<li><ul>
+<li><h1 id="of-replicas-for-each-URL-dynamically-adjusted"><a href="#of-replicas-for-each-URL-dynamically-adjusted" class="headerlink" title="of replicas for each URL dynamically adjusted"></a>of replicas for each URL dynamically adjusted</h1></li>
+</ul>
+</li>
+<li><ul>
+<li>Coarse grained server load information</li>
+</ul>
+</li>
+<li><p>Fine Dynamic Replication (FDR) </p>
+</li>
+<li><ul>
+<li>Bookkeeping min # of replicas of URL (popularity)</li>
+</ul>
+</li>
+<li><ul>
+<li>Let more popular URL use more replicas</li>
+</ul>
+</li>
+<li><ul>
+<li>Keep less popular URL from extra replication</li>
+</ul>
+</li>
+</ul>
+<h3 id="Replication"><a href="#Replication" class="headerlink" title="Replication"></a>Replication</h3><p>Why Replicate?</p>
+<ul>
+<li>Performance</li>
+<li><ul>
+<li>keep copy close to remote users</li>
+</ul>
+</li>
+<li><ul>
+<li>caching is a special case</li>
+</ul>
+</li>
+<li><p>Survive Failures</p>
+</li>
+<li><ul>
+<li>availability: provide service during temporary failure</li>
+</ul>
+</li>
+<li><ul>
+<li>fault tolerance: provide service despite catastrophic failure</li>
+</ul>
+</li>
+</ul>
+<p><strong>Fault Models </strong></p>
+<ul>
+<li>Crashed</li>
+<li><ul>
+<li>failed device doesn’t do anything (i.e., fails silently)</li>
+</ul>
+</li>
+<li>Fail-Stop</li>
+<li><ul>
+<li>failed device tells you that it has failed</li>
+</ul>
+</li>
+<li>Byzantine(拜占庭将军问题,Byzantine Generals Problem)</li>
+<li><ul>
+<li>failed device can do anything</li>
+</ul>
+</li>
+<li><ul>
+<li>adversary</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>playing a game against an evil opponent</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>opponent knows what you’re doing and tries to fool you</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>usually some limit on opponent’s actions (e.g. at most k failures)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>拜占庭将军问题 (Byzantine Generals Problem)，是由莱斯利兰伯特提出的点对点通信中的基本问题。 在分布式计算上，不同的计算机透过讯息交换，尝试达成共识；但有时候，系统上协调计算机 (Coordinator / Commander) 或成员计算机 (Member / Lieutanent) 可能因系统错误并交换错的讯息，导致影响最终的系统一致性。拜占庭将军问题就根据错误计算机的数量，寻找可能的解决办法 (但无法找到一个绝对的答案，只可以用来验证一个机制的有效程度)。</p>
+</blockquote>
+<p>Synchrony</p>
+<ul>
+<li>Assumptions concerning boundedness of component execution or network transmissions</li>
+<li>Synchronous</li>
+<li><ul>
+<li>always performs function in a finite &amp; known time bound</li>
+</ul>
+</li>
+<li>Asynchronous</li>
+<li><ul>
+<li>no such bound</li>
+</ul>
+</li>
+<li>Famous Result: A group of processes cannot agree on a value in an asynchronous system given a single crash failure</li>
+</ul>
+<p>Network Partitions</p>
+<ul>
+<li><p>Can’t tell the difference between a crashed process and a process that’s inaccessible due to a network failure.</p>
+</li>
+<li><p>Network Partition: network failure that cuts processes into two or more groups</p>
+</li>
+<li><ul>
+<li>full communication within each group</li>
+</ul>
+</li>
+<li><ul>
+<li>no communication between groups</li>
+</ul>
+</li>
+<li><ul>
+<li>danger: each group thinks everyone else is dead</li>
+</ul>
+</li>
+</ul>
+<p><strong>Mirroring</strong></p>
+<ul>
+<li>Goal: service up to K failures</li>
+<li>Approach: keep K+1 copies of everything</li>
+<li>Clients do operations on “primary” copy </li>
+<li>Primary makes sure other copies do operations too</li>
+<li>Advantage: simple</li>
+<li>Disadvantages:</li>
+<li><ul>
+<li>do every operation K times</li>
+</ul>
+</li>
+<li><ul>
+<li>use K times more storage than necessary</li>
+</ul>
+</li>
+</ul>
+<p>Mirroring Details</p>
+<ul>
+<li><p>Optimization: contact one replica to read</p>
+</li>
+<li><p>What if a replica fails?</p>
+</li>
+<li><ul>
+<li>get up-to-date data from primary after recovering</li>
+</ul>
+</li>
+<li><p>What if primary fails?</p>
+</li>
+<li><ul>
+<li>elect a new primary</li>
+</ul>
+</li>
+</ul>
+<p>Election Problem</p>
+<ul>
+<li><p>When algorithm terminates, all non-failed processes agree on which replica is the primary</p>
+</li>
+<li><p>Algorithm works despite arbitrary failures and recoveries during the election</p>
+</li>
+<li><p>If there are no more failures and recoveries, the algorithm must eventually terminate</p>
+</li>
+</ul>
+<p>Bully Algorithm</p>
+<ul>
+<li>Use fixed “pecking order” among processes</li>
+<li><ul>
+<li>e.g., use network addresses</li>
+</ul>
+</li>
+<li><p>Idea: choose the “biggest” non-failed machine as primary</p>
+</li>
+<li><p>Correctness proof is difficult</p>
+</li>
+</ul>
+<p>Bully Algorithm Details</p>
+<ul>
+<li>Process starts an election whenever it recovers or whenever primary has failed</li>
+<li><ul>
+<li>how to know primary has failed?(一段时间无响应)</li>
+</ul>
+</li>
+<li><p>To start an election, send election messages to all machines bigger than yourself</p>
+</li>
+<li><ul>
+<li>if somebody responds with an ACK, give up</li>
+</ul>
+</li>
+<li><ul>
+<li>if nobody ACKs, declare yourself the primary</li>
+</ul>
+</li>
+<li><p>On receiving election message, reply with ACK and start an election yourself (unless in progress)</p>
+</li>
+</ul>
+<p><strong>Quorums</strong></p>
+<ul>
+<li>Quorum(法人): a set of server machines</li>
+<li>Define what constitutes a “read quorum” and a “write quorum”</li>
+<li>To write</li>
+<li><ul>
+<li>acquire locks on all members of some write quorum</li>
+</ul>
+</li>
+<li><ul>
+<li>do writes on all locked servers</li>
+</ul>
+</li>
+<li><ul>
+<li>release locks</li>
+</ul>
+</li>
+<li><p>To read: similar, but use read quorum</p>
+</li>
+<li><p>Correctness requirements</p>
+</li>
+<li><ul>
+<li>any two write quorums must share a member</li>
+</ul>
+</li>
+<li><ul>
+<li>any read quorum and any write quorum must share a member (read quorums need not overlap(覆盖))</li>
+</ul>
+</li>
+<li><p>Locking ensures that</p>
+</li>
+<li><ul>
+<li>at most one write happening at a time</li>
+</ul>
+</li>
+<li><ul>
+<li>never have a write and a read happening at the same time</li>
+</ul>
+</li>
+</ul>
+<p>Defining Quorums</p>
+<ul>
+<li><p>Many alternatives</p>
+</li>
+<li><p>Example</p>
+</li>
+<li><ul>
+<li>write quorum must contain all replicas</li>
+</ul>
+</li>
+<li><ul>
+<li>read quorum may contain any one replica</li>
+</ul>
+</li>
+<li>Consequence</li>
+<li><ul>
+<li>writes are slow, reads are fast</li>
+</ul>
+</li>
+<li><ul>
+<li>can write only if all replicas are available</li>
+</ul>
+</li>
+<li><ul>
+<li>can read if any one replica is available</li>
+</ul>
+</li>
+<li><p>Example: Majority Quorum</p>
+</li>
+<li><ul>
+<li>write quorum: any set with more than half the replicas</li>
+</ul>
+</li>
+<li><ul>
+<li>read quorum: any set with more than half the replicas</li>
+</ul>
+</li>
+<li>Consequences</li>
+<li><ul>
+<li>modest(适度) performance for read and write</li>
+</ul>
+</li>
+<li><ul>
+<li>can proceed(进行) as long as more than half the replicas are available</li>
+</ul>
+</li>
+</ul>
+<p>Quorums &amp; Version Numbers</p>
+<ul>
+<li>Write operation writes only a subset of the servers</li>
+<li><ul>
+<li>some servers are out-of-date</li>
+</ul>
+</li>
+<li><p>Remedy(纠正方法)</p>
+</li>
+<li><ul>
+<li>put version number stamp on each item in each replica</li>
+</ul>
+</li>
+<li><ul>
+<li>when acquiring locks, get current version number from each replica</li>
+</ul>
+</li>
+<li><ul>
+<li>quorum overlap rules ensure that one member of your quorum has the latest version</li>
+</ul>
+</li>
+<li><ul>
+<li>When reading, get the data from the latest version number in your quorum</li>
+</ul>
+</li>
+<li><ul>
+<li>When writing, set version number of all replicas you wrote equal to 1 + (max version number in your quorum beforehand)</li>
+</ul>
+</li>
+<li><ul>
+<li>Guarantees correctness even if no recovery action is taken when replica recovers from a crash</li>
+</ul>
+</li>
+</ul>
+<p>Quorums and Partitions</p>
+<ul>
+<li>One group has a write quorum (and thus usually a read quorum); </li>
+<li><ul>
+<li>that group can do anything</li>
+</ul>
+</li>
+<li><ul>
+<li>other groups are frozen</li>
+</ul>
+</li>
+<li>No group has a write quorum, but some groups have a read quorum</li>
+<li><ul>
+<li>some groups can read</li>
+</ul>
+</li>
+<li><ul>
+<li>no groups can write</li>
+</ul>
+</li>
+<li>No group contains any quorum</li>
+<li><ul>
+<li>everyone is frozen</li>
+</ul>
+</li>
+</ul>
+<h2 id="socket-programming-with-UDP-and-TCP"><a href="#socket-programming-with-UDP-and-TCP" class="headerlink" title="socket programming with UDP and TCP"></a>socket programming with UDP and TCP</h2><h3 id="What-is-“socket”"><a href="#What-is-“socket”" class="headerlink" title="What is “socket”"></a>What is “socket”</h3><ul>
+<li><p>A socket is a virtual connection between two applications</p>
+</li>
+<li><p>Using a socket, two processes can communicate with each other</p>
+</li>
+<li><p>The socket is the major communication tool for Internet applications</p>
+</li>
+<li><p>A socket is bi-directional (full-duplex) transmission </p>
+</li>
+<li><p>A socket can be created dynamically</p>
+</li>
+</ul>
+<p>Socket as <strong>a virtual connection</strong> between two processes</p>
+<blockquote>
+<p><img src="\img\socket1.jpg" alt="socket1.jpg"></p>
+</blockquote>
+<p>Socket as <strong>a client/server model</strong></p>
+<blockquote>
+<p><img src="\img\socket2.jpg" alt="socket2.jpg"></p>
+</blockquote>
+<p>Port: a logical connecting point at the transport-layer protocol.</p>
+<blockquote>
+<p><img src="\img\socket3.jpg" alt="socket3.jpg"></p>
+<p><img src="\img\locket4.jpg" alt="locket4.jpg"></p>
+</blockquote>
+<h3 id="Socket-programming"><a href="#Socket-programming" class="headerlink" title="Socket programming"></a>Socket programming</h3><p>Two socket types for two transport services:</p>
+<ul>
+<li>UDP: unreliable datagram</li>
+<li>TCP: reliable, byte stream-oriented </li>
+</ul>
+<p>Application Example:</p>
+<ol>
+<li>client reads a line of characters (data) from its keyboard and sends data to server</li>
+<li>server receives the data and converts characters to uppercase</li>
+<li>server sends modified data to client</li>
+<li>client receives modified data and displays line on its screen</li>
+</ol>
+<p><strong>Socket programming with TCP</strong></p>
+<ul>
+<li>client must contact server</li>
+<li><ul>
+<li>server process must first be running</li>
+</ul>
+</li>
+<li><ul>
+<li>server must have created socket (door) that welcomes client’s contact</li>
+</ul>
+</li>
+<li><p>client contacts server by:</p>
+</li>
+<li><ul>
+<li>Creating TCP socket, specifying IP address, port number of server process</li>
+</ul>
+</li>
+<li><ul>
+<li>when client creates socket: client TCP establishes connection to server TCP</li>
+</ul>
+</li>
+<li><ul>
+<li>when contacted by client, server TCP creates new socket for server process to communicate with that particular client</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>allows server to talk with multiple clients</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>source port numbers used to distinguish clients </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>application viewpoint:<br><em>TCP provides reliable, in-order, byte-stream transfer (“pipe”) between client and server</em></p>
+<p>Client/Server Process Organization</p>
+<blockquote>
+<p><img src="\img\server_client_socket.jpg" alt="server_client_socket.jpg"></p>
+<p><img src="\img\socket_interaction_tcp.jpg" alt="socket_interaction_tcp.jpg"></p>
+</blockquote>
+<p><strong>Unix Socket Programming Technical Details</strong></p>
+<blockquote>
+<p>Unix TCP server<br>(1) create socket:<br>        socket_id = socket (AF_INET, SOCK_STREM, DEFAULT_PROTOCOL);<br>(2) bind socket:<br>        bind (socket_id, server_addr, server_len);<br>(3) listen to socket:<br>        listen (socket_id, number_of_connection);<br>(4) accept a connection:<br>        accept (socket_id,  &amp;client_addr, &amp;client_len);<br>(5) read (receive) data:<br>       read (socket_id, buffer, buffer_len);<br>(6) write (send) data:<br>       write (socket_id, buffer, buffer_len);<br>(7) close socket:<br>      close(socket_id);</p>
+<p>Unix TCP client<br>(1) create socket:  same as server<br>       socket_id = socket (AF_INET, SOCK_STREM, DEFAULT_PROTOCOL);<br>(2) connect socket:<br>       connect (socket_id, serverINETaddress, server_len);<br>(3) write (send) data:<br>       write (socket_id, buffer, buffer_len);<br>(4) read (receive) data:<br>       read (socket_id, buffer, buffer_len);<br>(5) close socket: same as server<br>       close(socket_id);</p>
+</blockquote>
+<p>Step 1: socket(…) call</p>
+<blockquote>
+<p>It declares a socket to be used.<br>Prepare data structure to manage socket<br>OS is responsible for this</p>
+</blockquote>
+<p>Step 2: bind(…) call</p>
+<blockquote>
+<p>It connects a process to a specific port<br>Port = A logical connecting point at a host for two communicating processes using socket<br>Port Numbers:<br>0~1023: System Reserved<br>Port 21: FTP<br>Port 23: telnet<br>Port 80: HTTP<br>1024 and above: available to users</p>
+</blockquote>
+<p>Step 3: listen(…) call</p>
+<blockquote>
+<p>listen() system call: prepare memory buffer for incoming connections<br>listen (socket_id, <strong>number_of_connection</strong>) -&gt; We need to specify how many connection requests should be held in the buffer when SERVER is busy (can’t accept a request).</p>
+</blockquote>
+<p>Step 4 - Part 1: accept(…) call</p>
+<blockquote>
+<p>The server process accepts a request from a client<br>accept() function is a blocking function</p>
+</blockquote>
+<p>Step 4 - Part 2: accept(…) call</p>
+<blockquote>
+<p>The accept(_) call returns another port number and establish another connection<br><img src="\img\accept_call.jpg" alt="accept_call.jpg"></p>
+</blockquote>
+<p>Step 5: read( ) and write( ) call</p>
+<blockquote>
+<p>The server and client communicate using the second socket</p>
+<p><img src="\img\socket_read_wirite.jpg" alt="socket_read_wirite.jpg"></p>
+</blockquote>
+<p>Step 6: close ( ) call</p>
+<blockquote>
+<p>Close the second socket and leave the first socket for next client</p>
+</blockquote>
+<p>Step 7: Go back to accept(…) call</p>
+<blockquote>
+<p>The server process goes back to the accept call</p>
+</blockquote>
+<p><strong>Winsock Programming Technical Details</strong></p>
+<ul>
+<li>Initialize Winsock</li>
+</ul>
+<p>Step 1: Define your socket<br>Step 2: Initialize your socket<br>Step 3: Start using it</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span> <span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">     <span class="comment">/* The following two lines needed for Window's socket */</span></div><div class="line">     <span class="comment">// Winsock version 2.2</span></div><div class="line">     WORD wVersionRequested = MAKEWORD(<span class="number">2</span>,<span class="number">2</span>);  <span class="comment">/* Stuff for WSA functions   */</span></div><div class="line">     WSADATA wsaData;                         <span class="comment">/* Stuff for WSA functions   */</span></div><div class="line">    <span class="comment">/* This stuff initializes winsock*/</span></div><div class="line">    WSAStartup(wVersionRequested, &amp;wsaData);</div><div class="line"></div><div class="line">    <span class="comment">/* Create a socket */</span></div><div class="line">    My_SocketID = socket (   …..   );</div></pre></td></tr></table></figure>
+<p>socket ( ) function : Returns socket ID on success</p>
+<blockquote>
+<p>unsigned int socket_id = socket (AF_INET, SOCK_STREAM, 0);</p>
+</blockquote>
+<p>bind ( ) function : Return code (&lt; 0 if error)</p>
+<blockquote>
+<p>int status = bind (socket_id, (struct sockaddr_in *) my_addr, sizeof(my_addr));</p>
+<ul>
+<li>The sockaddr_in structure to specify port # and IP address of this machine (server machine)</li>
+</ul>
+</blockquote>
+<ul>
+<li>The “sock_addr” structure<br>Step 1: You instantiate the structure<br>Step 2: Fill up the components</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> sockaddr_in   my_addr; <span class="comment">/* My (client) Internet address */</span></div><div class="line"></div><div class="line"><span class="comment">/* Set My(client's) IP Address ---------------------------------------- */</span></div><div class="line">my_addr.sin_family      = AF_INET;         <span class="comment">/* Address Family To Be Used */</span>  </div><div class="line">my_addr.sin_port          = htons (MY_PORT_NUM);     <span class="comment">/* Port number to use */</span> </div><div class="line">my_addr.sin_addr.s_addr = htonl (INADDR_ANY);      <span class="comment">/* My IP address */</span></div></pre></td></tr></table></figure>
+<p>listen ( ) function : Return code (&lt; 0 if error)</p>
+<blockquote>
+<p>int status = listen (socket_id, 3);</p>
+<ul>
+<li>The size of the connection request buffer(3)</li>
+</ul>
+</blockquote>
+<p>accept ( ) function : duplicated socket ID  (&lt; 0 if error)</p>
+<blockquote>
+<p>unsingned int child_sock = accept (socket_id, (struct sockaddr_in *) client_addr, sizeof (client_addr);</p>
+</blockquote>
+<p>recv ( ) function : On success, the number of bytes received; Return code (&lt; 0 if error)</p>
+<blockquote>
+<p>int status = recv (child_sock, in_buffer, MAX_BUFFER_SIZE, 0);</p>
+<ul>
+<li>The input (receive) buffer as a character string</li>
+<li>Example: char in_buffer [MAX_BUFFER]</li>
+</ul>
+</blockquote>
+<p>send ( ) function : On success, the number of bytes actually sent; Return code (&lt; 0 if error)</p>
+<blockquote>
+<p>int status = send (child_sock, out_buffer, MAX_BUFFER_SIZE, 0);</p>
+</blockquote>
+<p>closesocket ( ) function : Return code (&lt; 0 if error)</p>
+<blockquote>
+<p>int status = closesocket (child_sock);</p>
+</blockquote>
+<ul>
+<li>Clear winsock<br>After you call “closesocket” function but before your program is terminated</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* This stuff cleans-up winsock */</span></div><div class="line">WSACleanup( );</div></pre></td></tr></table></figure>
+<p><strong>How to specify your destination in socket?</strong></p>
+<ul>
+<li>Each destination for a socket connection is determined by &lt; IP address + Port# &gt;</li>
+</ul>
+<p>sockaddr_in structure is used to define your destination</p>
+<ul>
+<li>The sockaddr_in structure is defined in C/C++ struct</li>
+<li>The sockaddr_in structure is defined in windows.h header file</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> sockaddr_in &#123;</div><div class="line">    u_char  sin_len;                <span class="comment">/* Length of this structure */</span></div><div class="line">    u_char  sin_family;           <span class="comment">/* Network protocol used*/</span></div><div class="line">    u_short sin_port;               <span class="comment">/* Port number */</span></div><div class="line">    <span class="keyword">struct</span>  in_addr sin_addr;   <span class="comment">/* Pointer to an IP address */</span></div><div class="line">    <span class="keyword">char</span>    sin_zero[<span class="number">8</span>];            <span class="comment">/* Extra information */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> in_addr &#123;</div><div class="line">        u_long  s_addr;         <span class="comment">/* Actual IP address */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>How can I set the IP address and the port number of my destination?</p>
+<ul>
+<li>STEP #1: Instantiate a sockaddr_in structure:</li>
+<li>STEP #2: Set your destination IP address:</li>
+<li><ul>
+<li>Case 1: by “32-bit IP address”: server_address.sin_addr.s_addr = inet_addr(“146.163.147.59”);</li>
+</ul>
+</li>
+<li><ul>
+<li>Case 2: by a host name: server_address.sin_addr.s_addr = inet_aton(“cougar.siue.edu”);</li>
+</ul>
+</li>
+<li><ul>
+<li>Case 3: by a system-defined parameter: server_address.sin_addr.s_addr = htonl(INADDR_ANY);</li>
+</ul>
+</li>
+<li>STEP #3: Set your destination port number: server_address.sin_port = htons(80);</li>
+</ul>
+<p><strong>Python Programming Technical Details</strong></p>
+<p>Python TCPClient:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> * <span class="comment">#include Python’s socket library</span></div><div class="line">serverName = ’servername’</div><div class="line">serverPort = <span class="number">12000</span></div><div class="line">clientSocket = socket(AF_INET, SOCK_STREAM) create TCP socket <span class="keyword">for</span> server, remote port <span class="number">12000</span></div><div class="line">clientSocket.connect((serverName,serverPort))</div><div class="line">sentence = raw_input(‘Input lowercase sentence:’)</div><div class="line">clientSocket.send(sentence.encode()) <span class="comment"># No need to attach server name, port </span></div><div class="line">modifiedSentence = clientSocket.recv(<span class="number">1024</span>)</div><div class="line"><span class="keyword">print</span> (‘From Server:’, modifiedSentence.decode())</div><div class="line">clientSocket.close()</div></pre></td></tr></table></figure></p>
+<p>Python TCPServer:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">from</span> socket <span class="keyword">import</span> *</div><div class="line">serverPort = <span class="number">12000</span></div><div class="line">serverSocket = socket(AF_INET,SOCK_STREAM) <span class="comment"># create TCP welcoming socket</span></div><div class="line">serverSocket.bind((‘’,serverPort))</div><div class="line">serverSocket.listen(<span class="number">1</span>) <span class="comment"># server begins listening for  incoming TCP requests</span></div><div class="line"><span class="keyword">print</span> ‘The server <span class="keyword">is</span> ready to receive’</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>: <span class="comment"># loop forever</span></div><div class="line">    <span class="comment"># server waits on accept() for incoming requests, new socket created on return</span></div><div class="line">    connectionSocket, addr = serverSocket.accept()</div><div class="line"></div><div class="line">    <span class="comment"># read bytes from socket (but not address as in UDP)</span></div><div class="line">    sentence = connectionSocket.recv(<span class="number">1024</span>).decode()</div><div class="line">    capitalizedSentence = sentence.upper()</div><div class="line">    connectionSocket.send(capitalizedSentence.encode())</div><div class="line">    </div><div class="line">    <span class="comment"># close connection to this client (but not welcoming socket)</span></div><div class="line">    connectionSocket.close()</div></pre></td></tr></table></figure></p>
+<p><strong>Socket programming with UDP</strong></p>
+<ul>
+<li>UDP: no “connection” between client &amp; server</li>
+<li><ul>
+<li>no handshaking before sending data</li>
+</ul>
+</li>
+<li><ul>
+<li>sender explicitly attaches IP destination address and port # to each packet</li>
+</ul>
+</li>
+<li><ul>
+<li>receiver extracts sender IP address and port# from received packet</li>
+</ul>
+</li>
+<li>UDP: transmitted data may be lost or received out-of-order</li>
+</ul>
+<ul>
+<li>Application viewpoint: UDP provides unreliable transfer of groups of bytes (“datagrams”) between client and server</li>
+</ul>
+<p>Client/server socket interaction: UDP</p>
+<blockquote>
+<p><img src="\img\udpSocket.png" alt="udpSocket.png"></p>
+</blockquote>
+<p>Python UDPClient<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</div><div class="line">serverName = ‘hostname’</div><div class="line">serverPort = <span class="number">12000</span></div><div class="line"><span class="comment"># create UDP socket for server</span></div><div class="line">clientSocket = socket(AF_INET, SOCK_DGRAM)</div><div class="line"><span class="comment"># get user keyboard input</span></div><div class="line">message = raw_input(’Input lowercase sentence:’)</div><div class="line"><span class="comment"># Attach server name, port to message; send into socket</span></div><div class="line">clientSocket.sendto(message.encode(), (serverName, serverPort))</div><div class="line"><span class="comment"># read reply characters from socket into string</span></div><div class="line">modifiedMessage, serverAddress = clientSocket.recvfrom(<span class="number">2048</span>)</div><div class="line"><span class="comment"># print out received string and close socket</span></div><div class="line"><span class="keyword">print</span> modifiedMessage.decode()</div><div class="line">clientSocket.close()</div></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</div><div class="line">serverPort = <span class="number">12000</span></div><div class="line"><span class="comment"># create UDP socket</span></div><div class="line">serverSocket = socket(AF_INET, SOCK_DGRAM)</div><div class="line"><span class="comment"># bind socket to local port number 12000</span></div><div class="line">serverSocket.bind((<span class="string">''</span>, serverPort))</div><div class="line"><span class="keyword">print</span> (“The server <span class="keyword">is</span> ready to receive”)</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>: <span class="comment"># loop forever</span></div><div class="line">    <span class="comment"># Read from UDP socket into message, getting client’s address (client IP and port)</span></div><div class="line">    message, clientAddress = serverSocket.recvfrom(<span class="number">2048</span>)</div><div class="line">    modifiedMessage = message.decode().upper()</div><div class="line">    <span class="comment"># send upper case string back to this client</span></div><div class="line">    serverSocket.sendto(modifiedMessage.encode(), clientAddress)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/computer-network/" rel="tag"># computer network</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/18/parellel_and_distributed_computing/paralell_compute8/" rel="next" title="数值计算中的并行算法">
+                <i class="fa fa-chevron-left"></i> 数值计算中的并行算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/parellel_and_distributed_computing/paralell_compute9/" rel="prev" title="随机并行算法(Randomized Algorithm)">
+                随机并行算法(Randomized Algorithm) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#应用层协议原理-principles-of-network-applications"><span class="nav-number">1.</span> <span class="nav-text">应用层协议原理 principles of network applications</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络应用体系结构-application-architecture"><span class="nav-number">1.1.</span> <span class="nav-text">网络应用体系结构(application architecture):</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程-process-通信"><span class="nav-number">1.2.</span> <span class="nav-text">进程(process)通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用程序可用运输服务"><span class="nav-number">1.3.</span> <span class="nav-text">应用程序可用运输服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#因特网提供的运输服务"><span class="nav-number">1.4.</span> <span class="nav-text">因特网提供的运输服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用层协议-application-layer-protocol"><span class="nav-number">1.5.</span> <span class="nav-text">应用层协议(application-layer protocol)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Telnet"><span class="nav-number">1.6.</span> <span class="nav-text">Telnet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RLOGIN-REMOTE-LOGIN"><span class="nav-number">1.7.</span> <span class="nav-text">RLOGIN(REMOTE LOGIN)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件传输协议-FTP"><span class="nav-number">1.8.</span> <span class="nav-text">文件传输协议: FTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TFTP-Trivial-File-Transfer-Protocol"><span class="nav-number">1.9.</span> <span class="nav-text">TFTP(Trivial File Transfer Protocol)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web和HTTP"><span class="nav-number">2.</span> <span class="nav-text">Web和HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#response-time"><span class="nav-number">2.1.</span> <span class="nav-text">response time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP报文格式"><span class="nav-number">2.2.</span> <span class="nav-text">HTTP报文格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户和服务器的交互-cookie"><span class="nav-number">2.3.</span> <span class="nav-text">用户和服务器的交互: cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web缓存"><span class="nav-number">2.4.</span> <span class="nav-text">Web缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件GET方法"><span class="nav-number">2.5.</span> <span class="nav-text">条件GET方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#因特网中的电子邮件-Electronic-mail"><span class="nav-number">3.</span> <span class="nav-text">因特网中的电子邮件(Electronic mail)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SMTP"><span class="nav-number">3.1.</span> <span class="nav-text">SMTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮件报文格式-Mail-message-format-和MIME"><span class="nav-number">3.2.</span> <span class="nav-text">邮件报文格式(Mail message format)和MIME</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮件访问协议"><span class="nav-number">3.3.</span> <span class="nav-text">邮件访问协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS-因特网的目录服务"><span class="nav-number">4.</span> <span class="nav-text">DNS: 因特网的目录服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式设计方案-分布式层次数据库"><span class="nav-number">4.1.</span> <span class="nav-text">分布式设计方案(分布式层次数据库)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#根DNS服务器-13个"><span class="nav-number"></span> <span class="nav-text">根DNS服务器(13个)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#顶级域DNS服务器-一般域名-国家顶级域名-反向域名"><span class="nav-number">1.</span> <span class="nav-text">顶级域DNS服务器(一般域名 国家顶级域名 反向域名)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#权威DNS服务器"><span class="nav-number">1.1.</span> <span class="nav-text">权威DNS服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Attacking-DNS"><span class="nav-number">1.2.</span> <span class="nav-text">Attacking DNS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P2P应用"><span class="nav-number">2.</span> <span class="nav-text">P2P应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pure-P2P-architecture"><span class="nav-number">2.1.</span> <span class="nav-text">Pure P2P architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Napster-Centralized-Database"><span class="nav-number">2.2.</span> <span class="nav-text">Napster(Centralized Database)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BitTorrent"><span class="nav-number">2.3.</span> <span class="nav-text">BitTorrent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gnutella"><span class="nav-number">2.4.</span> <span class="nav-text">Gnutella</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式散列表-Distributed-Hash-Table-DHT"><span class="nav-number">2.5.</span> <span class="nav-text">分布式散列表(Distributed Hash Table, DHT)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-Addressable-Network-CAN"><span class="nav-number">2.6.</span> <span class="nav-text">Content Addressable Network(CAN)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chord-search-by-routing-consistent-hashing"><span class="nav-number">2.7.</span> <span class="nav-text">Chord: search by routing/consistent hashing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#video-streaming-and-content-distribution-networks-CDNs-流式视频和内容分发网络"><span class="nav-number">3.</span> <span class="nav-text">video streaming and content distribution networks (CDNs)(流式视频和内容分发网络)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-distribution-networks-CDN-内容分发网络"><span class="nav-number">3.1.</span> <span class="nav-text">Content distribution networks(CDN, 内容分发网络)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ridirection"><span class="nav-number">3.2.</span> <span class="nav-text">Ridirection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#of-replicas-for-each-URL-dynamically-adjusted"><span class="nav-number"></span> <span class="nav-text">of replicas for each URL dynamically adjusted</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Replication"><span class="nav-number">0.1.</span> <span class="nav-text">Replication</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#socket-programming-with-UDP-and-TCP"><span class="nav-number">1.</span> <span class="nav-text">socket programming with UDP and TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-“socket”"><span class="nav-number">1.1.</span> <span class="nav-text">What is “socket”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket-programming"><span class="nav-number">1.2.</span> <span class="nav-text">Socket programming</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

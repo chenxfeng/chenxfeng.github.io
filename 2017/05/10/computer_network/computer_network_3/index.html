@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="computer network," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Transport services(运输层服务)Transport services and proto
+provide logical communication(逻辑通信) between app processes running on different hosts
+
+transport protocols run in end systems 
+
+
+send side: breaks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="传输层(Transport Layer)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/05/10/computer_network/computer_network_3/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="Transport services(运输层服务)Transport services and proto
+provide logical communication(逻辑通信) between app processes running on different hosts
+
+transport protocols run in end systems 
+
+
+send side: breaks">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_UDP_segment_format.PNG">
+<meta property="og:image" content="https://chenfeng.github.io/\img\UDP_segment_format.PNG">
+<meta property="og:image" content="https://chenfeng.github.io/\img\UDP_check.PNG">
+<meta property="og:image" content="https://chenfeng.github.io/\img\UDP_pseudo_header.PNG">
+<meta property="og:image" content="https://chenfeng.github.io/\img\UDP_checkSum_calcute.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\reliable_data_transfer.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt1.0.PNG">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt2.0.PNG">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt2.1.PNG">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt2.2.PNG">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt3.0_sender.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt3.0_no_loss.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt3.0_packet_loss.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt3.0_ack_loss.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt3.0_premature_timeout_delayed_ack.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\rdt3.0_stop_and_wait.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\pipeline_increasd_utilization.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\goback_N.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\GBN_sender_FSM.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\GBN_receiver_FSM.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\GBN_in_action.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\selective_repeat_windows.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\selective_repeat_in_sction.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\selective_repeat_dilemma.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_segment_structure.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_seq_ack_number.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_telnet.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_sender.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_retransmission_scenarios.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_retransmission_scenarios1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_fast_retransmit.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_flow_control.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_flow_control_recvBuffer.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_connection_management.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_connection_management1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_connection_management_3_way_handshake.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_connection_management_3_way_handshake_FSM.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_connection_management_closing.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_principle_congestion.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_principle_congestion1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_principle_congestion2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_principle_congestion3.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_principle_congestion4.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_principle_congestion5.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_principle_congestion6.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_principle_congestion7.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_principle_congestion8.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_congestion_aimd.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_congestion_cwnd.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_congestion_switching.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_congestion_FSM.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TCP_congestion_fair.png">
+<meta property="og:updated_time" content="2017-05-19T16:03:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="传输层(Transport Layer)">
+<meta name="twitter:description" content="Transport services(运输层服务)Transport services and proto
+provide logical communication(逻辑通信) between app processes running on different hosts
+
+transport protocols run in end systems 
+
+
+send side: breaks">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\TCP_UDP_segment_format.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/05/10/computer_network/computer_network_3/"/>
+
+
+
+
+
+  <title>传输层(Transport Layer) | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/05/10/computer_network/computer_network_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">传输层(Transport Layer)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-10T00:00:00+08:00">
+                2017-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Transport-services-运输层服务"><a href="#Transport-services-运输层服务" class="headerlink" title="Transport services(运输层服务)"></a>Transport services(运输层服务)</h2><h3 id="Transport-services-and-proto"><a href="#Transport-services-and-proto" class="headerlink" title="Transport services and proto"></a>Transport services and proto</h3><ul>
+<li><p>provide <strong>logical communication</strong>(逻辑通信) between app processes running on different hosts</p>
+</li>
+<li><p>transport protocols run in end systems </p>
+</li>
+<li><ul>
+<li>send side: breaks app messages into <strong>segments</strong>, passes to network layer</li>
+</ul>
+</li>
+<li><ul>
+<li>rcv side: reassembles segments(报文段) into messages, passes to app layer</li>
+</ul>
+</li>
+<li><p>more than one transport protocol available to apps</p>
+</li>
+<li><ul>
+<li>Internet: TCP and UDP</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="Transport-vs-network-layer-运输层和网络层的关系"><a href="#Transport-vs-network-layer-运输层和网络层的关系" class="headerlink" title="Transport vs. network layer(运输层和网络层的关系)"></a>Transport vs. network layer(运输层和网络层的关系)</h3><ul>
+<li><p>network layer: logical communication between hosts</p>
+</li>
+<li><p>transport layer: logical communication between processes </p>
+</li>
+<li><ul>
+<li>relies on, enhances, network layer services</li>
+</ul>
+</li>
+</ul>
+<p>e.g.:<br>12 kids in Ann’s house sending letters to 12 kids in Bill’s house</p>
+<ul>
+<li>hosts = houses</li>
+<li>processes = kids</li>
+<li>app messages = letters in envelopes</li>
+<li>transport protocol = Ann and Bill who demux to in-house siblings</li>
+<li>network-layer protocol = postal service</li>
+</ul>
+<h3 id="Internet-transport-layer-protocols-因特网传运输层"><a href="#Internet-transport-layer-protocols-因特网传运输层" class="headerlink" title="Internet transport-layer protocols(因特网传运输层)"></a>Internet transport-layer protocols(因特网传运输层)</h3><ul>
+<li>reliable, in-order delivery (TCP)</li>
+<li><ul>
+<li>congestion control </li>
+</ul>
+</li>
+<li><ul>
+<li>flow control</li>
+</ul>
+</li>
+<li><ul>
+<li>connection setup</li>
+</ul>
+</li>
+<li><p>unreliable, unordered delivery: UDP</p>
+</li>
+<li><ul>
+<li>no-frills extension of “best-effort” IP(尽力而为)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><em>services not available</em>: </li>
+</ul>
+<ul>
+<li>delay guarantees</li>
+<li>bandwidth guarantees</li>
+</ul>
+<h2 id="multiplexing-and-demultiplexing-多路复用与多路分解"><a href="#multiplexing-and-demultiplexing-多路复用与多路分解" class="headerlink" title="multiplexing and demultiplexing(多路复用与多路分解)"></a>multiplexing and demultiplexing(多路复用与多路分解)</h2><p>multiplexing at sender: handle data from multiple sockets, add transport header (later used for demultiplexing)</p>
+<p>demultiplexing at receiver: use header info to deliver received segments to correct socket</p>
+<h3 id="How-demultiplexing-works"><a href="#How-demultiplexing-works" class="headerlink" title="How demultiplexing works"></a>How demultiplexing works</h3><p>host receives IP datagrams</p>
+<ul>
+<li>each datagram has source IP address, destination IP address</li>
+<li>each datagram carries one transport-layer segment</li>
+<li>each segment has source, destination port number</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_UDP_segment_format.PNG" alt="TCP_UDP_segment_format.PNG"></p>
+</blockquote>
+<p>host uses <strong>IP addresses &amp; port numbers</strong> to direct segment to appropriate socket</p>
+<h3 id="Connectionless-demultiplexing-无连接的多路分解"><a href="#Connectionless-demultiplexing-无连接的多路分解" class="headerlink" title="Connectionless demultiplexing(无连接的多路分解)"></a><em>Connectionless demultiplexing</em>(无连接的多路分解)</h3><ul>
+<li><p>created socket has host-local port #:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DatagramSocket mySocket1 = new DatagramSocket(12534);</div></pre></td></tr></table></figure>
+</li>
+<li><p>when creating datagram to send into UDP socket, must specify</p>
+</li>
+<li><ul>
+<li>destination IP address</li>
+</ul>
+</li>
+<li><ul>
+<li>destination port #</li>
+</ul>
+</li>
+<li><p>when host receives UDP segment:</p>
+</li>
+<li><ul>
+<li>checks destination port # in segment</li>
+</ul>
+</li>
+<li><ul>
+<li>directs UDP segment to socket with that port #</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>IP datagrams with <strong>same dest. port #</strong>, but different source IP addresses and/or source port numbers will be directed to <strong>same socket</strong> at dest</p>
+</blockquote>
+<h3 id="Connection-oriented-demux-面向连接的多路分解"><a href="#Connection-oriented-demux-面向连接的多路分解" class="headerlink" title="Connection-oriented demux(面向连接的多路分解)"></a><em>Connection-oriented demux</em>(面向连接的多路分解)</h3><p>TCP socket identified by 4-tuple: </p>
+<ul>
+<li>source IP address</li>
+<li>source port number</li>
+<li>dest IP address</li>
+<li>dest port number</li>
+</ul>
+<p>demux: receiver uses all four values to direct segment to appropriate socket</p>
+<p>server host may support many simultaneous TCP sockets:</p>
+<ul>
+<li><p>each socket identified by its own 4-tuple</p>
+</li>
+<li><p>web servers have different sockets for each connecting client</p>
+</li>
+<li><ul>
+<li>non-persistent HTTP will have different socket for each request</li>
+</ul>
+</li>
+</ul>
+<h2 id="connectionless-transport-UDP-无连接运输-UDP"><a href="#connectionless-transport-UDP-无连接运输-UDP" class="headerlink" title="connectionless transport: UDP(无连接运输: UDP)"></a>connectionless transport: UDP(无连接运输: UDP)</h2><h3 id="UDP-User-Datagram-Protocol-RFC-768"><a href="#UDP-User-Datagram-Protocol-RFC-768" class="headerlink" title="UDP: User Datagram Protocol [RFC 768]"></a>UDP: User Datagram Protocol [RFC 768]</h3><ul>
+<li>关于何时、发送什么数据的应用层控制更为精细</li>
+<li>无需连接建立</li>
+<li>无连接状态</li>
+<li><p>分组首部开销小</p>
+</li>
+<li><p>“no frills,” “bare bones” Internet transport protocol</p>
+</li>
+<li>“best effort” service, UDP segments may be:</li>
+<li><ul>
+<li>lost</li>
+</ul>
+</li>
+<li><ul>
+<li>delivered out-of-order to app</li>
+</ul>
+</li>
+<li><p>connectionless: </p>
+</li>
+<li><ul>
+<li>no handshaking between UDP sender, receiver</li>
+</ul>
+</li>
+<li><ul>
+<li>each UDP segment handled independently of others</li>
+</ul>
+</li>
+<li><p>UDP use:</p>
+</li>
+<li><ul>
+<li>streaming multimedia apps (loss tolerant, rate sensitive)</li>
+</ul>
+</li>
+<li><ul>
+<li>DNS</li>
+</ul>
+</li>
+<li><ul>
+<li>SNMP</li>
+</ul>
+</li>
+<li><p>reliable transfer over UDP: </p>
+</li>
+<li><ul>
+<li>add reliability at application layer</li>
+</ul>
+</li>
+<li><ul>
+<li>application-specific error recovery</li>
+</ul>
+</li>
+</ul>
+<h3 id="UDP-segment-header-UDP报文段首部"><a href="#UDP-segment-header-UDP报文段首部" class="headerlink" title="UDP: segment header(UDP报文段首部)"></a>UDP: segment header(UDP报文段首部)</h3><blockquote>
+<p><img src="\img\UDP_segment_format.PNG" alt="UDP_segment_format.PNG"></p>
+</blockquote>
+<p>length: in bytes of UDP segment, including header</p>
+<ul>
+<li>why is there a UDP</li>
+<li><ul>
+<li>no connection establishment (which can add delay)</li>
+</ul>
+</li>
+<li><ul>
+<li>simple: no connection state at sender, receiver</li>
+</ul>
+</li>
+<li><ul>
+<li>small header size</li>
+</ul>
+</li>
+<li><ul>
+<li>no congestion control: UDP can blast away as fast as desired</li>
+</ul>
+</li>
+</ul>
+<p><strong>UDP checksum</strong>(UDP检验和)</p>
+<ul>
+<li><p>端到端原则(end-end principle)</p>
+</li>
+<li><p>Goal: detect “errors” (e.g., flipped bits) in transmitted segment</p>
+</li>
+<li><p>sender:</p>
+</li>
+<li><ul>
+<li>treat segment contents, including header fields, as sequence of 16-bit integers</li>
+</ul>
+</li>
+<li><ul>
+<li>checksum: addition (one’s complement sum) of segment contents</li>
+</ul>
+</li>
+<li><ul>
+<li>sender puts checksum value into UDP checksum field</li>
+</ul>
+</li>
+<li><p>receiver:</p>
+</li>
+<li><ul>
+<li>compute checksum of received segment</li>
+</ul>
+</li>
+<li><ul>
+<li>check if computed checksum equals checksum field value:</li>
+</ul>
+</li>
+<li><ul>
+<li>NO - error detected</li>
+</ul>
+</li>
+<li><ul>
+<li>YES - no error detected. But maybe errors nonetheless? More later ….</li>
+</ul>
+</li>
+</ul>
+<p>e.g.: add two 16-bit integers</p>
+<blockquote>
+<p><img src="\img\UDP_check.PNG" alt="UDP_check.PNG"></p>
+</blockquote>
+<p>Note: when adding numbers, a carryout from the most significant bit needs to be added to the result</p>
+<p><strong>UDP Pseudo-Header</strong>(UDP伪首部)</p>
+<blockquote>
+<p><img src="\img\UDP_pseudo_header.PNG" alt="UDP_pseudo_header.PNG"></p>
+</blockquote>
+<ul>
+<li>Protocol – 17 (UDP)</li>
+</ul>
+<p>e.g. Checksum calculation of a simple UDP user datagram</p>
+<blockquote>
+<p><img src="\img\UDP_checkSum_calcute.png" alt="UDP_checkSum_calcute.png"></p>
+</blockquote>
+<ul>
+<li>All 0s : Pending to 16bits</li>
+</ul>
+<h2 id="principles-of-reliable-data-transfer-可靠数据传输原理"><a href="#principles-of-reliable-data-transfer-可靠数据传输原理" class="headerlink" title="principles of reliable data transfer(可靠数据传输原理)"></a>principles of reliable data transfer(可靠数据传输原理)</h2><blockquote>
+<p>important in application, transport, link layers<br>: top-10 list of important networking topics</p>
+</blockquote>
+<ul>
+<li><p>characteristics of unreliable channel will determine complexity of reliable data transfer protocol (rdt)</p>
+</li>
+<li><p><strong>rdt: reliable data transfer</strong></p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\reliable_data_transfer.png" alt="reliable_data_transfer.png"></p>
+</blockquote>
+<ul>
+<li><p>rdt_send(): called from above, (e.g., by app.). Passed data to deliver to receiver upper layer</p>
+</li>
+<li><p>udt_send(): called by rdt, to transfer packet over unreliable channel to receiver</p>
+</li>
+<li><p>rdt_rcv(): called when packet arrives on rcv-side of channel</p>
+</li>
+<li><p>deliver_data(): called by rdt to deliver data to upper</p>
+</li>
+</ul>
+<h3 id="rdt1-0-reliable-transfer-over-a-reliable-channel-经完全可靠信道的可靠数据传输"><a href="#rdt1-0-reliable-transfer-over-a-reliable-channel-经完全可靠信道的可靠数据传输" class="headerlink" title="rdt1.0: reliable transfer over a reliable channel(经完全可靠信道的可靠数据传输)"></a>rdt1.0: reliable transfer over a reliable channel(经完全可靠信道的可靠数据传输)</h3><ul>
+<li><p>incrementally develop sender, receiver sides of reliable data transfer protocol (rdt)</p>
+</li>
+<li><p>consider only unidirectional data transfer</p>
+</li>
+<li><ul>
+<li>but control info will flow on both directions!</li>
+</ul>
+</li>
+<li><p>use finite state machines (FSM)  to specify sender, receiver</p>
+</li>
+<li><p>underlying channel perfectly reliable</p>
+</li>
+<li><ul>
+<li>no bit errors</li>
+</ul>
+</li>
+<li><ul>
+<li>no loss of packets</li>
+</ul>
+</li>
+<li><p>separate FSMs for sender, receiver:</p>
+</li>
+<li><ul>
+<li>sender sends data into underlying channel</li>
+</ul>
+</li>
+<li><ul>
+<li>receiver reads data from underlying channel</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\rdt1.0.PNG" alt="rdt1.0.PNG"></p>
+</blockquote>
+<h3 id="rdt2-0-channel-with-bit-errors-经具有比特差错信道的可靠数据传输"><a href="#rdt2-0-channel-with-bit-errors-经具有比特差错信道的可靠数据传输" class="headerlink" title="rdt2.0: channel with bit errors(经具有比特差错信道的可靠数据传输)"></a>rdt2.0: channel with bit errors(经具有比特差错信道的可靠数据传输)</h3><ul>
+<li>underlying channel may flip bits in packet</li>
+<li><ul>
+<li>checksum to detect bit errors</li>
+</ul>
+</li>
+<li><p>the question: how to recover from errors:</p>
+</li>
+<li><ul>
+<li>acknowledgements(ACKs, 肯定确认): receiver explicitly tells sender that pkt received OK</li>
+</ul>
+</li>
+<li><ul>
+<li>negative acknowledgements(NAKs, 否定确认): receiver explicitly tells sender that pkt had errors</li>
+</ul>
+</li>
+<li><ul>
+<li>sender retransmits(重传) pkt on receipt of NAK</li>
+</ul>
+</li>
+<li><p><strong>自动重传请求协议(Automatic Repeat reQuest, ARQ)</strong></p>
+</li>
+<li><p>new mechanisms in rdt2.0 (beyond rdt1.0):</p>
+</li>
+<li><ul>
+<li>error detection(差错检测)</li>
+</ul>
+</li>
+<li><ul>
+<li>receiver feedback(接收方反馈): control msgs (ACK,NAK) rcvr-&gt;sender</li>
+</ul>
+</li>
+<li><p><em>停等(stop-and-wait)协议</em></p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\rdt2.0.PNG" alt="rdt2.0.PNG"></p>
+</blockquote>
+<p><em>rdt2.0 has a fatal flaw</em></p>
+<ul>
+<li>what happens if ACK/NAK corrupted</li>
+<li><ul>
+<li>sender doesn’t know what happened at receiver</li>
+</ul>
+</li>
+<li><ul>
+<li>can’t just retransmit: possible duplicate</li>
+</ul>
+</li>
+<li><p>冗余分组(duplicate packet)</p>
+</li>
+<li><p>handling duplicates: </p>
+</li>
+<li><ul>
+<li>sender retransmits current pkt if ACK/NAK corrupted</li>
+</ul>
+</li>
+<li><ul>
+<li>sender adds <strong>sequence number</strong> to each pkt</li>
+</ul>
+</li>
+<li><ul>
+<li>receiver discards (doesn’t deliver up) duplicate pkt</li>
+</ul>
+</li>
+<li><p>sender sends one packet, then waits for receiver response</p>
+</li>
+</ul>
+<h3 id="rdt2-1-sender-handles-garbled-含糊不清的-ACK-NAKs"><a href="#rdt2-1-sender-handles-garbled-含糊不清的-ACK-NAKs" class="headerlink" title="rdt2.1: sender, handles garbled(含糊不清的) ACK/NAKs"></a>rdt2.1: sender, handles garbled(含糊不清的) ACK/NAKs</h3><blockquote>
+<p><img src="\img\rdt2.1.PNG" alt="rdt2.1.PNG"></p>
+</blockquote>
+<ul>
+<li>sender:</li>
+<li><ul>
+<li>seq # added to pkt</li>
+</ul>
+</li>
+<li><ul>
+<li>two seq. #’s (0,1) will suffice. </li>
+</ul>
+</li>
+<li><ul>
+<li>must check if received ACK/NAK corrupted </li>
+</ul>
+</li>
+<li><ul>
+<li>twice as many states</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>state must “remember” whether “expected” pkt should have seq # of 0 or 1 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>receiver:</p>
+</li>
+<li><ul>
+<li>must check if received packet is duplicate</li>
+</ul>
+</li>
+<li><ul>
+<li>state indicates whether 0 or 1 is expected pkt seq #</li>
+</ul>
+</li>
+<li><ul>
+<li>note: receiver can not know if its last ACK/NAK received OK at sender</li>
+</ul>
+</li>
+</ul>
+<h3 id="rdt2-2-a-NAK-free-protocol"><a href="#rdt2-2-a-NAK-free-protocol" class="headerlink" title="rdt2.2: a NAK-free protocol"></a>rdt2.2: a NAK-free protocol</h3><ul>
+<li>same functionality as rdt2.1, using ACKs only</li>
+<li>instead of NAK, receiver sends ACK for last pkt received OK</li>
+<li><ul>
+<li>receiver must explicitly include seq # of pkt being ACKed </li>
+</ul>
+</li>
+<li>duplicate ACK at sender results in same action as NAK: retransmit current pkt</li>
+</ul>
+<blockquote>
+<p><img src="\img\rdt2.2.PNG" alt="rdt2.2.PNG"></p>
+</blockquote>
+<h3 id="rdt3-0-channels-with-errors-and-loss-经具有比特差错的丢包信道的可靠数据传输"><a href="#rdt3-0-channels-with-errors-and-loss-经具有比特差错的丢包信道的可靠数据传输" class="headerlink" title="rdt3.0: channels with errors and loss(经具有比特差错的丢包信道的可靠数据传输)"></a>rdt3.0: channels with errors and loss(经具有比特差错的丢包信道的可靠数据传输)</h3><p>new assumption: underlying channel can also lose packets (data, ACKs)</p>
+<ul>
+<li>checksum, seq. #, ACKs, retransmissions will be of help … but not enough</li>
+</ul>
+<p>approach: sender waits “reasonable” amount of time for ACK </p>
+<ul>
+<li>retransmits if no ACK received in this time</li>
+<li>if pkt (or ACK) just delayed (not lost):</li>
+<li>retransmission will be  duplicate, but seq. #’s already handles this</li>
+<li>receiver must specify seq # of pkt being ACKed</li>
+<li>requires countdown timer</li>
+</ul>
+<blockquote>
+<p><img src="\img\rdt3.0_sender.png" alt="rdt3.0_sender.png"></p>
+</blockquote>
+<p><strong>rdt3.0 in action</strong></p>
+<blockquote>
+<p><img src="\img\rdt3.0_no_loss.png" alt="rdt3.0_no_loss.png"></p>
+<p><img src="\img\rdt3.0_packet_loss.png" alt="rdt3.0_packet_loss.png"></p>
+<p><img src="\img\rdt3.0_ack_loss.png" alt="rdt3.0_ack_loss.png"></p>
+<p><img src="\img\rdt3.0_premature_timeout_delayed_ack.png" alt="rdt3.0_premature_timeout_delayed_ack.png"></p>
+</blockquote>
+<p><strong>Performance of rdt3.0</strong></p>
+<p><em>rdt3.0: stop-and-wait operation</em>(停等)</p>
+<blockquote>
+<p><img src="\img\rdt3.0_stop_and_wait.png" alt="rdt3.0_stop_and_wait.png"></p>
+</blockquote>
+<ul>
+<li>rdt3.0 is correct, but performance stinks</li>
+<li>e.g.: 1 Gbps link, 15 ms prop. delay, 8000 bit packet:</li>
+<li>$D_{trans} = \frac{L}{R} = \frac{8000bits}{10^9bits/sec} = 8microsecs$</li>
+<li><p>RTT = 30ms</p>
+</li>
+<li><p>used ratio</p>
+</li>
+<li>$ U_{sender} = \frac{L/R}{RTT + L/R} = \frac{0.008}{30.008} = 0.00027 $</li>
+<li>33kB/sec thruput over 1 Gbps link</li>
+<li>network protocol limits use of physical resources</li>
+</ul>
+<h3 id="Pipelined-protocols-流水线可靠数据传输协议"><a href="#Pipelined-protocols-流水线可靠数据传输协议" class="headerlink" title="Pipelined protocols(流水线可靠数据传输协议)"></a>Pipelined protocols(流水线可靠数据传输协议)</h3><ul>
+<li>pipelining: sender allows multiple, “in-flight”, yet-to-be-acknowledged pkts</li>
+<li><ul>
+<li>range of sequence numbers must be increased</li>
+</ul>
+</li>
+<li><ul>
+<li>buffering at sender and/or receiver</li>
+</ul>
+</li>
+<li><p>two generic forms of pipelined protocols: <strong>go-Back-N</strong>, <strong>selective repeat</strong></p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\pipeline_increasd_utilization.png" alt="pipeline_increasd_utilization.png"></p>
+</blockquote>
+<ul>
+<li>3-packet pipelining increases utilization(利用率) by a factor of 3</li>
+<li><p>$ U_{sender} = \frac{3L/R}{RTT + L/R} = \frac{0.024}{30.008} = 0.00081 $</p>
+</li>
+<li><p>Go-back-N(GBN, 回退N步):</p>
+</li>
+<li><ul>
+<li>sender can have up to N unacked packets in pipeline</li>
+</ul>
+</li>
+<li><ul>
+<li>receiver only sends <strong>cumulative ack</strong></li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>doesn’t ack packet if there’s a gap</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>sender has timer for oldest unacked packet</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>when timer expires, retransmit all unacked packets</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Selective Repeat(SR, 选择重传):</p>
+</li>
+<li><ul>
+<li>sender can have up to N unack’ed packets in pipeline</li>
+</ul>
+</li>
+<li><ul>
+<li>receiver sends <strong>individual ack</strong> for each packet</li>
+</ul>
+</li>
+<li><ul>
+<li>sender maintains timer for each unacked packet</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>when timer expires, retransmit only that unacked packet</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Go-Back-N"><a href="#Go-Back-N" class="headerlink" title="Go-Back-N"></a>Go-Back-N</h3><p><em>Sender</em></p>
+<ul>
+<li>k-bit seq # in pkt header</li>
+<li>“window” of up to N, consecutive unack’ed pkts allowed</li>
+<li>ACK(n): ACKs all pkts up to, including seq # n - “cumulative ACK”</li>
+<li><ul>
+<li>may receive duplicate ACKs (see receiver)</li>
+</ul>
+</li>
+<li>timer for oldest in-flight pkt</li>
+<li>timeout(n): retransmit packet n and all higher seq # pkts in window</li>
+</ul>
+<blockquote>
+<p><img src="\img\goback_N.png" alt="goback_N.png"></p>
+</blockquote>
+<ul>
+<li>窗口长度N</li>
+<li>滑动窗口协议(sliding-window protocol)</li>
+</ul>
+<p><em>sender extended FSM</em></p>
+<blockquote>
+<p><img src="\img\GBN_sender_FSM.png" alt="GBN_sender_FSM.png"></p>
+</blockquote>
+<p><em>receiver extended FSM</em></p>
+<blockquote>
+<p><img src="\img\GBN_receiver_FSM.png" alt="GBN_receiver_FSM.png"></p>
+</blockquote>
+<ul>
+<li>ACK-only: always send ACK for correctly-received pkt with <strong>highest in-order</strong> seq #</li>
+<li><ul>
+<li>may generate duplicate ACKs</li>
+</ul>
+</li>
+<li><ul>
+<li>need only remember expectedseqnum</li>
+</ul>
+</li>
+<li>out-of-order pkt: </li>
+<li><ul>
+<li>discard (don’t buffer): <strong>no receiver buffering</strong></li>
+</ul>
+</li>
+<li><ul>
+<li>re-ACK pkt with highest in-order seq #</li>
+</ul>
+</li>
+</ul>
+<p><strong>GBN in action</strong></p>
+<blockquote>
+<p><img src="\img\GBN_in_action.png" alt="GBN_in_action.png"></p>
+</blockquote>
+<ul>
+<li>累积确认(cumulative acknowledgment)</li>
+</ul>
+<h3 id="Selective-repeat"><a href="#Selective-repeat" class="headerlink" title="Selective repeat"></a>Selective repeat</h3><ul>
+<li>receiver individually acknowledges all correctly received pkts</li>
+<li><ul>
+<li>buffers pkts, as needed, for eventual in-order delivery to upper layer</li>
+</ul>
+</li>
+<li>sender only resends pkts for which ACK not received</li>
+<li><ul>
+<li>sender timer for each unACKed pkt</li>
+</ul>
+</li>
+<li>sender window</li>
+<li><ul>
+<li>N consecutive seq #’s</li>
+</ul>
+</li>
+<li><ul>
+<li>limits seq #s of sent, unACKed pkts</li>
+</ul>
+</li>
+</ul>
+<p>sender, receiver windows:</p>
+<blockquote>
+<p><img src="\img\selective_repeat_windows.png" alt="selective_repeat_windows.png"></p>
+</blockquote>
+<ul>
+<li>sender</li>
+<li><ul>
+<li>data from above:</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>if next available seq # in window, send pkt</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>timeout(n):</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>resend pkt n, restart timer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>ACK(n) in [sendbase,sendbase+N]:</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>mark pkt n as received</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>if n smallest unACKed pkt, advance window base to next unACKed seq # </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>receiver</p>
+</li>
+<li><ul>
+<li>pkt n in [rcvbase, rcvbase+N-1]</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>send ACK(n)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>out-of-order: buffer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>in-order: deliver (also deliver buffered, in-order pkts), advance window to next not-yet-received pkt</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>pkt n in [rcvbase-N,rcvbase-1]</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>ACK(n)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>otherwise: ignore </li>
+</ul>
+</li>
+</ul>
+<p><strong>Selective repeat in action</strong></p>
+<blockquote>
+<p><img src="\img\selective_repeat_in_sction.png" alt="selective_repeat_in_sction.png"></p>
+</blockquote>
+<p><em>Selective repeat: dilemma</em></p>
+<ul>
+<li>example: </li>
+<li>seq #’s: 0, 1, 2, 3</li>
+<li>window size=3</li>
+</ul>
+<blockquote>
+<p><img src="\img\selective_repeat_dilemma.png" alt="selective_repeat_dilemma.png"></p>
+</blockquote>
+<ul>
+<li><p>receiver sees no difference in two scenarios, duplicate data accepted as new in (b)</p>
+</li>
+<li><p>Q: what relationship between seq # size and window size to avoid problem in (b)?</p>
+</li>
+<li><p>SR协议中窗口长度必须小于或等于序号空间大小的一半</p>
+</li>
+</ul>
+<h2 id="connection-oriented-transport-TCP-面向连接的传输-TCP"><a href="#connection-oriented-transport-TCP-面向连接的传输-TCP" class="headerlink" title="connection-oriented transport: TCP(面向连接的传输: TCP)"></a>connection-oriented transport: TCP(面向连接的传输: TCP)</h2><ul>
+<li>point-to-point: one sender, one receiver </li>
+<li>reliable, in-order byte steam: no “message boundaries”</li>
+<li>pipelined: TCP congestion and flow control set window size</li>
+<li>full duplex data:</li>
+<li><ul>
+<li>bi-directional data flow in same connection</li>
+</ul>
+</li>
+<li><ul>
+<li>MSS: maximum segment size</li>
+</ul>
+</li>
+<li>connection-oriented: handshaking (exchange of control msgs) inits sender, receiver state before data exchange</li>
+<li><p>flow controlled: sender will not overwhelm receiver</p>
+</li>
+<li><p>流(stream): 没有报文边界的概念</p>
+</li>
+<li><p>最大报文段长度(MSS, Maximum Segment Size)</p>
+</li>
+<li><p>最大链路层帧长度(MTU, Maximum Transmission Unit, 最大传输单元)</p>
+</li>
+</ul>
+<h3 id="TCP-segment-structure-TCP报文段结构"><a href="#TCP-segment-structure-TCP报文段结构" class="headerlink" title="TCP segment structure(TCP报文段结构)"></a>TCP segment structure(TCP报文段结构)</h3><blockquote>
+<p><img src="\img\TCP_segment_structure.png" alt="TCP_segment_structure.png"></p>
+</blockquote>
+<ul>
+<li>sequence numbers(序号字段): byte stream “number” of first byte in segment’s data</li>
+<li>acknowledgements(确认号字段):</li>
+<li><ul>
+<li>seq # of next byte expected from other side</li>
+</ul>
+</li>
+<li><ul>
+<li>cumulative ACK</li>
+</ul>
+</li>
+<li>Q: how receiver handles out-of-order segments</li>
+<li><p>A: TCP spec doesn’t say, - up to implementor</p>
+</li>
+<li><p>接收窗口字段(receive window): 用于流量控制，指示接收方愿意接受的字节数量</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_seq_ack_number.png" alt="TCP_seq_ack_number.png"></p>
+<p><img src="\img\TCP_telnet.png" alt="TCP_telnet.png"></p>
+</blockquote>
+<ul>
+<li>Q: how to set TCP timeout value?</li>
+<li>longer than RTT but RTT varies</li>
+<li>too short: premature timeout, unnecessary retransmissions</li>
+<li><p>too long: slow reaction to segment loss</p>
+</li>
+<li><p>Q: how to estimate RTT(估计往返时间)?</p>
+</li>
+<li>SampleRTT: measured time from segment transmission until ACK receipt</li>
+<li><ul>
+<li>ignore retransmissions</li>
+</ul>
+</li>
+<li>SampleRTT will vary, want estimated RTT “smoother”</li>
+<li><ul>
+<li>average several recent measurements, not just current SampleRTT</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>$ EstimatedRTT = (1- \alpha)<em>EstimatedRTT + \alpha</em>SampleRTT $ *</li>
+</ul>
+<ul>
+<li>exponential weighted moving average(EWMA, 指数加权移动平均)</li>
+<li>influence of past sample decreases exponentially fast</li>
+<li>typical value: $\alpha = 0.125$</li>
+</ul>
+<ul>
+<li>timeout interval: EstimatedRTT plus “safety margin” </li>
+<li><p>large variation in EstimatedRTT -&gt; larger safety margin</p>
+</li>
+<li><p>estimate SampleRTT deviation from EstimatedRTT:<br>$$<br>DevRTT = (1-\beta)<em>DevRTT +\beta</em> |SampleRTT-EstimatedRTT|<br>(typically, \beta = 0.25)<br>$$</p>
+</li>
+</ul>
+<p>TimeoutInterval = EstimatedRTT(estimated RTT) + 4*DevRTT(“safety margin”)</p>
+<h3 id="TCP-reliable-data-transfer-可靠数据传输"><a href="#TCP-reliable-data-transfer-可靠数据传输" class="headerlink" title="TCP reliable data transfer(可靠数据传输)"></a>TCP reliable data transfer(可靠数据传输)</h3><ul>
+<li>TCP creates rdt service on top of IP’s unreliable service</li>
+<li><ul>
+<li>pipelined segments</li>
+</ul>
+</li>
+<li><ul>
+<li>cumulative acks</li>
+</ul>
+</li>
+<li><ul>
+<li>single retransmission timer</li>
+</ul>
+</li>
+<li>retransmissions triggered by:</li>
+<li><ul>
+<li>timeout events</li>
+</ul>
+</li>
+<li><ul>
+<li>duplicate acks</li>
+</ul>
+</li>
+<li><p>let’s initially consider simplified TCP sender:</p>
+</li>
+<li>ignore duplicate acks</li>
+<li>ignore flow control, congestion control</li>
+</ul>
+<p><em>TCP sender events:</em></p>
+<ul>
+<li>data received from app:</li>
+<li><ul>
+<li>create segment with seq #</li>
+</ul>
+</li>
+<li><ul>
+<li>seq # is byte-stream number of first data byte in segment</li>
+</ul>
+</li>
+<li><ul>
+<li>start timer if not already running </li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>think of timer as for oldest unacked segment</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>expiration interval: TimeOutInterval </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>timeout:</p>
+</li>
+<li><ul>
+<li>retransmit segment that caused timeout</li>
+</ul>
+</li>
+<li><ul>
+<li>restart timer</li>
+</ul>
+</li>
+<li>ack received: if ack acknowledges previously unacked segments</li>
+<li><ul>
+<li>update what is known to be ACKed</li>
+</ul>
+</li>
+<li><ul>
+<li>start timer if there are  still unacked segments</li>
+</ul>
+</li>
+</ul>
+<p><em>TCP sender (simplified)</em></p>
+<blockquote>
+<p><img src="\img\TCP_sender.png" alt="TCP_sender.png"></p>
+</blockquote>
+<p>retransmission scenarios:</p>
+<blockquote>
+<p><img src="\img\TCP_retransmission_scenarios.png" alt="TCP_retransmission_scenarios.png"></p>
+<p><img src="\img\TCP_retransmission_scenarios1.png" alt="TCP_retransmission_scenarios1.png"></p>
+</blockquote>
+<p><em>TCP ACK generation [RFC 1122, RFC 2581]</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">event at receiver</th>
+<th style="text-align:center">TCP receiver action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">arrival of in-order segment with expected seq #. All data up to expected seq # already ACKed</td>
+<td style="text-align:center">delayed ACK. Wait up to 500ms for next segment. If no next segment, send ACK</td>
+</tr>
+<tr>
+<td style="text-align:center">arrival of in-order segment with expected seq #. One other segment has ACK pending</td>
+<td style="text-align:center">immediately send single cumulative ACK, ACKing both in-order segments</td>
+</tr>
+<tr>
+<td style="text-align:center">arrival of out-of-order segment higher-than-expect seq #. Gap detected</td>
+<td style="text-align:center">immediately send duplicate ACK, indicating seq. # of next expected byte</td>
+</tr>
+<tr>
+<td style="text-align:center">arrival of segment that partially or completely fills gap</td>
+<td style="text-align:center">immediate send ACK, provided that segment starts at lower end of gap</td>
+</tr>
+</tbody>
+</table>
+<p><em>TCP fast retransmit</em>(快速重传)</p>
+<ul>
+<li>time-out period often relatively long: long delay before resending lost packet</li>
+<li>detect lost segments via duplicate ACKs.</li>
+<li><ul>
+<li>sender often sends many segments back-to-back</li>
+</ul>
+</li>
+<li><ul>
+<li>if segment is lost, there will likely be many duplicate ACKs.</li>
+</ul>
+</li>
+<li><p>if sender receives 3 dupl ACKs for same data(“triple duplicate ACKs”), resend unacked segment with smallest seq #</p>
+</li>
+<li>likely that unacked segment lost, so don’t wait for timeout</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_fast_retransmit.png" alt="TCP_fast_retransmit.png"></p>
+</blockquote>
+<h3 id="TCP-flow-control-TCP流量控制"><a href="#TCP-flow-control-TCP流量控制" class="headerlink" title="TCP flow control(TCP流量控制)"></a>TCP flow control(TCP流量控制)</h3><blockquote>
+<p>receiver controls sender, so sender won’t overflow receiver’s buffer by transmitting too much, too fast</p>
+<p><img src="\img\TCP_flow_control.png" alt="TCP_flow_control.png"></p>
+</blockquote>
+<ul>
+<li>receiver “advertises” free buffer space by including rwnd value in TCP header of receiver-to-sender segments</li>
+<li><ul>
+<li>RcvBuffer size set via socket options (typical default is 4096 bytes)</li>
+</ul>
+</li>
+<li><ul>
+<li>many operating systems autoadjust RcvBuffer</li>
+</ul>
+</li>
+<li>sender limits amount of unacked (“in-flight”) data to receiver’s rwnd value </li>
+<li>guarantees receive buffer will not overflow</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_flow_control_recvBuffer.png" alt="TCP_flow_control_recvBuffer.png"></p>
+</blockquote>
+<h3 id="Connection-Management-TCP连接管理"><a href="#Connection-Management-TCP连接管理" class="headerlink" title="Connection Management(TCP连接管理)"></a>Connection Management(TCP连接管理)</h3><ul>
+<li>before exchanging data, sender/receiver “handshake”:</li>
+<li><ul>
+<li>agree to establish connection (each knowing the other willing to establish connection)</li>
+</ul>
+</li>
+<li><ul>
+<li>agree on connection parameters</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_connection_management.png" alt="TCP_connection_management.png"></p>
+</blockquote>
+<ul>
+<li>Q: will 2-way handshake always work in network?</li>
+<li>variable delays</li>
+<li>retransmitted messages (e.g. req_conn(x)) due to message loss</li>
+<li>message reordering</li>
+<li>can’t “see” other side</li>
+</ul>
+<p>2-way handshake failure scenarios:</p>
+<blockquote>
+<p><img src="\img\TCP_connection_management1.png" alt="TCP_connection_management1.png"></p>
+</blockquote>
+<p><em>TCP 3-way handshake</em>(三次握手)</p>
+<blockquote>
+<p><img src="\img\TCP_connection_management_3_way_handshake.png" alt="TCP_connection_management_3_way_handshake.png"></p>
+</blockquote>
+<p><em>TCP 3-way handshake: FSM</em></p>
+<blockquote>
+<p><img src="\img\TCP_connection_management_3_way_handshake_FSM.png" alt="TCP_connection_management_3_way_handshake_FSM.png"></p>
+</blockquote>
+<p><em>TCP: closing a connection</em>(四次挥手)</p>
+<ul>
+<li>client, server each close their side of connection</li>
+<li><ul>
+<li>send TCP segment with FIN bit = 1</li>
+</ul>
+</li>
+<li>respond to received FIN with ACK</li>
+<li><ul>
+<li>on receiving FIN, ACK can be combined with own FIN</li>
+</ul>
+</li>
+<li>simultaneous FIN exchanges can be handled</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_connection_management_closing.png" alt="TCP_connection_management_closing.png"></p>
+</blockquote>
+<h2 id="Principles-of-congestion-control-拥塞控制原理"><a href="#Principles-of-congestion-control-拥塞控制原理" class="headerlink" title="Principles of congestion control(拥塞控制原理)"></a>Principles of congestion control(拥塞控制原理)</h2><ul>
+<li>congestion:</li>
+<li>informally: “too many sources sending too much data too fast for network to handle”</li>
+<li>different from flow control!</li>
+<li>manifestations:</li>
+<li><ul>
+<li>lost packets (buffer overflow at routers)</li>
+</ul>
+</li>
+<li><ul>
+<li>long delays (queueing in router buffers)</li>
+</ul>
+</li>
+<li>a top-10 problem</li>
+</ul>
+<p>Causes/costs of congestion: scenario</p>
+<ul>
+<li>two senders, two receivers</li>
+<li>one router, infinite buffers </li>
+<li>output link capacity: R</li>
+<li>no retransmission</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_principle_congestion.png" alt="TCP_principle_congestion.png"></p>
+<p><img src="\img\TCP_principle_congestion1.png" alt="TCP_principle_congestion1.png"></p>
+</blockquote>
+<ul>
+<li>one router, finite buffers </li>
+<li>sender retransmission of timed-out packet</li>
+<li><ul>
+<li>application-layer input = application-layer output: $\lambda<em>{in} = \lambda</em>{out}$</li>
+</ul>
+</li>
+<li><ul>
+<li>transport-layer input includes retransmissions: $\lambda<em>{in}^{‘} \geq \lambda</em>{in}$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_principle_congestion2.png" alt="TCP_principle_congestion2.png"></p>
+</blockquote>
+<ul>
+<li>idealization: perfect knowledge</li>
+<li><ul>
+<li>sender sends only when router buffers available </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_principle_congestion3.png" alt="TCP_principle_congestion3.png"></p>
+</blockquote>
+<ul>
+<li>Idealization: known loss packets can be lost, dropped at router due to full buffers</li>
+<li><ul>
+<li>sender only resends if packet known to be lost</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_principle_congestion4.png" alt="TCP_principle_congestion4.png"></p>
+</blockquote>
+<ul>
+<li>Realistic: duplicates </li>
+<li><ul>
+<li>packets can be lost, dropped at router due  to full buffers</li>
+</ul>
+</li>
+<li><ul>
+<li>sender times out prematurely, sending two copies, both of which are delivered</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_principle_congestion5.png" alt="TCP_principle_congestion5.png"></p>
+<p><img src="\img\TCP_principle_congestion6.png" alt="TCP_principle_congestion6.png"></p>
+</blockquote>
+<ul>
+<li>“costs” of congestion: </li>
+<li><ul>
+<li>more work (retrans) for given “goodput”</li>
+</ul>
+</li>
+<li><ul>
+<li>unneeded retransmissions: link carries multiple copies of pkt</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>decreasing goodput</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>four senders</p>
+</li>
+<li>multihop paths</li>
+<li><p>timeout/retransmit</p>
+</li>
+<li><p>Q: what happens as $\lambda<em>{in}$ and $\lambda</em>{in}^{’}$ increase ?</p>
+</li>
+<li>A: as red $\lambda_{in}^{’}$ increases, all arriving blue pkts at upper queue are dropped, blue throughput $\to$ 0</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_principle_congestion7.png" alt="TCP_principle_congestion7.png"></p>
+<p><img src="\img\TCP_principle_congestion8.png" alt="TCP_principle_congestion8.png"></p>
+</blockquote>
+<ul>
+<li>another “cost” of congestion: </li>
+<li><ul>
+<li>when packet dropped, any upstream transmission capacity used for that packet was wasted(上游路由器用于转发该分组而使用的传输容量最终被浪费掉了)</li>
+</ul>
+</li>
+</ul>
+<h2 id="TCP-congestion-control-additive-increase-multiplicative-decrease-AIMD-加性增，乘性减"><a href="#TCP-congestion-control-additive-increase-multiplicative-decrease-AIMD-加性增，乘性减" class="headerlink" title="TCP congestion control: additive increase multiplicative decrease(AIMD, 加性增，乘性减)"></a>TCP congestion control: additive increase multiplicative decrease(AIMD, 加性增，乘性减)</h2><ul>
+<li>approach: sender increases transmission rate (window size), probing for usable bandwidth, until loss occurs</li>
+<li><ul>
+<li>additive increase: increase  cwnd by 1 MSS every RTT until loss detected</li>
+</ul>
+</li>
+<li><ul>
+<li>multiplicative decrease: cut cwnd in half after loss</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_congestion_aimd.png" alt="TCP_congestion_aimd.png"></p>
+<p><img src="\img\TCP_congestion_cwnd.png" alt="TCP_congestion_cwnd.png"></p>
+</blockquote>
+<ul>
+<li><p>sender limits transmission: $ LastByteSend - LastByteAcked \leq cwnd $</p>
+</li>
+<li><p>cwnd(拥塞窗口长度) is dynamic, function of perceived network congestion</p>
+</li>
+<li><p>TCP sending rate: </p>
+</li>
+<li><ul>
+<li>roughly: send cwnd bytes, wait RTT for ACKS, then send more bytes</li>
+</ul>
+</li>
+<li><ul>
+<li>$ rate \approx \frac{cwnd}{RTT} bytes/sec $</li>
+</ul>
+</li>
+</ul>
+<p><strong>TCP Slow Start</strong>(慢启动)</p>
+<ul>
+<li>when connection begins, increase rate exponentially until first loss event:</li>
+<li><ul>
+<li>initially cwnd = 1 MSS</li>
+</ul>
+</li>
+<li><ul>
+<li>double cwnd every RTT</li>
+</ul>
+</li>
+<li><ul>
+<li>done by incrementing cwnd for every ACK received</li>
+</ul>
+</li>
+<li>summary: initial rate is slow but ramps up exponentially fast</li>
+</ul>
+<p><em>detecting, reacting to loss</em></p>
+<ul>
+<li>loss indicated by timeout:</li>
+<li><ul>
+<li>cwnd set to 1 MSS; </li>
+</ul>
+</li>
+<li><ul>
+<li>window then grows exponentially (as in slow start) to threshold, then grows linearly(进入拥塞避免状态)</li>
+</ul>
+</li>
+<li><p>loss indicated by 3 duplicate ACKs: TCP RENO(进入快速恢复状态)</p>
+</li>
+<li><ul>
+<li>dup ACKs indicate network capable of delivering some segments </li>
+</ul>
+</li>
+<li><ul>
+<li>cwnd is cut in half window then grows linearly</li>
+</ul>
+</li>
+<li><p>TCP Tahoe always sets cwnd to 1 (timeout or 3 duplicate acks)(进入慢启动状态)</p>
+</li>
+</ul>
+<p><strong>switching from slow start to CA(Congestion Avoid)</strong></p>
+<blockquote>
+<p><img src="\img\TCP_congestion_switching.png" alt="TCP_congestion_switching.png"></p>
+</blockquote>
+<ul>
+<li>Q: when should the exponential increase switch to linear? </li>
+<li><p>A: when cwnd gets to 1/2 of its value before timeout.</p>
+</li>
+<li><p>Implementation:</p>
+</li>
+<li><ul>
+<li>variable ssthresh </li>
+</ul>
+</li>
+<li><ul>
+<li>on loss event, ssthresh is set to 1/2 of cwnd just before loss event</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_congestion_FSM.png" alt="TCP_congestion_FSM.png"></p>
+</blockquote>
+<h3 id="TCP-throughput-TCP吞吐量"><a href="#TCP-throughput-TCP吞吐量" class="headerlink" title="TCP throughput(TCP吞吐量)"></a>TCP throughput(TCP吞吐量)</h3><ul>
+<li>avg. TCP thruput as function of window size, RTT?</li>
+<li><ul>
+<li>ignore slow start, assume always data to send</li>
+</ul>
+</li>
+<li><p>W: window size (measured in bytes) where loss occurs</p>
+</li>
+<li><ul>
+<li>avg. window size (# in-flight bytes) is 3/4 W</li>
+</ul>
+</li>
+<li><ul>
+<li>avg. thruput is 3/4W per RTT</li>
+</ul>
+</li>
+<li><ul>
+<li>$ avg TCP throughput = \frac{3}{4} \frac{W}{RTT} bytes/sec $</li>
+</ul>
+</li>
+</ul>
+<h3 id="TCP-Futures-TCP-over-“long-fat-pipes”-经高带宽路径的TCP"><a href="#TCP-Futures-TCP-over-“long-fat-pipes”-经高带宽路径的TCP" class="headerlink" title="TCP Futures: TCP over “long, fat pipes”(经高带宽路径的TCP)"></a>TCP Futures: TCP over “long, fat pipes”(经高带宽路径的TCP)</h3><ul>
+<li>example: 1500 byte segments, 100ms RTT, want 10 Gbps throughput</li>
+<li>requires W = 83,333 in-flight segments</li>
+<li>throughput in terms of segment loss probability, L [Mathis 1997]: </li>
+<li>$ TCP thoughput = \frac{1.22*MSS}{RTT\sqrt{L}} $</li>
+<li>to achieve 10 Gbps throughput, need a loss rate of L = 2·10-10 – <strong>a very small loss rate</strong></li>
+<li>new versions of TCP for high-speed</li>
+</ul>
+<h3 id="TCP-Fairness-TCP公平性"><a href="#TCP-Fairness-TCP公平性" class="headerlink" title="TCP Fairness(TCP公平性)"></a>TCP Fairness(TCP公平性)</h3><ul>
+<li><p>fairness goal: if K TCP sessions share same bottleneck link of bandwidth R, each should have average rate of R/K</p>
+</li>
+<li><p>Why is TCP fair</p>
+</li>
+<li>two competing sessions:</li>
+<li><ul>
+<li>additive increase gives slope of 1, as throughout increases</li>
+</ul>
+</li>
+<li><ul>
+<li>multiplicative decrease decreases throughput proportionally </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\TCP_congestion_fair.png" alt="TCP_congestion_fair.png"></p>
+</blockquote>
+<p><em>Fairness and UDP</em></p>
+<ul>
+<li>multimedia apps often do not use TCP</li>
+<li><ul>
+<li>do not want rate throttled by congestion control</li>
+</ul>
+</li>
+<li>instead use UDP:</li>
+<li><ul>
+<li>send audio/video at constant rate, tolerate packet loss</li>
+</ul>
+</li>
+</ul>
+<p><em>Fairness, parallel TCP connections</em></p>
+<ul>
+<li>application can open multiple parallel connections between two hosts</li>
+<li>web browsers do this </li>
+<li>e.g., link of rate R with 9 existing connections:</li>
+<li><ul>
+<li>new app asks for 1 TCP, gets rate R/10</li>
+</ul>
+</li>
+<li><ul>
+<li>new app asks for 11 TCPs, gets R/2 </li>
+</ul>
+</li>
+</ul>
+<h3 id="Explicit-Congestion-Notification-ECN"><a href="#Explicit-Congestion-Notification-ECN" class="headerlink" title="Explicit Congestion Notification (ECN)"></a>Explicit Congestion Notification (ECN)</h3><ul>
+<li>network-assisted congestion control:</li>
+<li><ul>
+<li>two bits in IP header (ToS field) marked by network router to indicate congestion</li>
+</ul>
+</li>
+<li><ul>
+<li>congestion indication carried to receiving host</li>
+</ul>
+</li>
+<li><ul>
+<li>receiver (seeing congestion indication in IP datagram), sets ECE bit on receiver-to-sender ACK segment to notify sender of congestion</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/computer-network/" rel="tag"># computer network</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/09/parellel_and_distributed_computing/distributed_compute2/" rel="next" title="分布式路由算法">
+                <i class="fa fa-chevron-left"></i> 分布式路由算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/15/economics/economic_growth/" rel="prev" title="经济增长">
+                经济增长 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transport-services-运输层服务"><span class="nav-number">1.</span> <span class="nav-text">Transport services(运输层服务)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Transport-services-and-proto"><span class="nav-number">1.1.</span> <span class="nav-text">Transport services and proto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transport-vs-network-layer-运输层和网络层的关系"><span class="nav-number">1.2.</span> <span class="nav-text">Transport vs. network layer(运输层和网络层的关系)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Internet-transport-layer-protocols-因特网传运输层"><span class="nav-number">1.3.</span> <span class="nav-text">Internet transport-layer protocols(因特网传运输层)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multiplexing-and-demultiplexing-多路复用与多路分解"><span class="nav-number">2.</span> <span class="nav-text">multiplexing and demultiplexing(多路复用与多路分解)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-demultiplexing-works"><span class="nav-number">2.1.</span> <span class="nav-text">How demultiplexing works</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Connectionless-demultiplexing-无连接的多路分解"><span class="nav-number">2.2.</span> <span class="nav-text">Connectionless demultiplexing(无连接的多路分解)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Connection-oriented-demux-面向连接的多路分解"><span class="nav-number">2.3.</span> <span class="nav-text">Connection-oriented demux(面向连接的多路分解)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connectionless-transport-UDP-无连接运输-UDP"><span class="nav-number">3.</span> <span class="nav-text">connectionless transport: UDP(无连接运输: UDP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP-User-Datagram-Protocol-RFC-768"><span class="nav-number">3.1.</span> <span class="nav-text">UDP: User Datagram Protocol [RFC 768]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP-segment-header-UDP报文段首部"><span class="nav-number">3.2.</span> <span class="nav-text">UDP: segment header(UDP报文段首部)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#principles-of-reliable-data-transfer-可靠数据传输原理"><span class="nav-number">4.</span> <span class="nav-text">principles of reliable data transfer(可靠数据传输原理)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rdt1-0-reliable-transfer-over-a-reliable-channel-经完全可靠信道的可靠数据传输"><span class="nav-number">4.1.</span> <span class="nav-text">rdt1.0: reliable transfer over a reliable channel(经完全可靠信道的可靠数据传输)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdt2-0-channel-with-bit-errors-经具有比特差错信道的可靠数据传输"><span class="nav-number">4.2.</span> <span class="nav-text">rdt2.0: channel with bit errors(经具有比特差错信道的可靠数据传输)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdt2-1-sender-handles-garbled-含糊不清的-ACK-NAKs"><span class="nav-number">4.3.</span> <span class="nav-text">rdt2.1: sender, handles garbled(含糊不清的) ACK/NAKs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdt2-2-a-NAK-free-protocol"><span class="nav-number">4.4.</span> <span class="nav-text">rdt2.2: a NAK-free protocol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdt3-0-channels-with-errors-and-loss-经具有比特差错的丢包信道的可靠数据传输"><span class="nav-number">4.5.</span> <span class="nav-text">rdt3.0: channels with errors and loss(经具有比特差错的丢包信道的可靠数据传输)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pipelined-protocols-流水线可靠数据传输协议"><span class="nav-number">4.6.</span> <span class="nav-text">Pipelined protocols(流水线可靠数据传输协议)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go-Back-N"><span class="nav-number">4.7.</span> <span class="nav-text">Go-Back-N</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selective-repeat"><span class="nav-number">4.8.</span> <span class="nav-text">Selective repeat</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connection-oriented-transport-TCP-面向连接的传输-TCP"><span class="nav-number">5.</span> <span class="nav-text">connection-oriented transport: TCP(面向连接的传输: TCP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-segment-structure-TCP报文段结构"><span class="nav-number">5.1.</span> <span class="nav-text">TCP segment structure(TCP报文段结构)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-reliable-data-transfer-可靠数据传输"><span class="nav-number">5.2.</span> <span class="nav-text">TCP reliable data transfer(可靠数据传输)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-flow-control-TCP流量控制"><span class="nav-number">5.3.</span> <span class="nav-text">TCP flow control(TCP流量控制)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Connection-Management-TCP连接管理"><span class="nav-number">5.4.</span> <span class="nav-text">Connection Management(TCP连接管理)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Principles-of-congestion-control-拥塞控制原理"><span class="nav-number">6.</span> <span class="nav-text">Principles of congestion control(拥塞控制原理)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-congestion-control-additive-increase-multiplicative-decrease-AIMD-加性增，乘性减"><span class="nav-number">7.</span> <span class="nav-text">TCP congestion control: additive increase multiplicative decrease(AIMD, 加性增，乘性减)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-throughput-TCP吞吐量"><span class="nav-number">7.1.</span> <span class="nav-text">TCP throughput(TCP吞吐量)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Futures-TCP-over-“long-fat-pipes”-经高带宽路径的TCP"><span class="nav-number">7.2.</span> <span class="nav-text">TCP Futures: TCP over “long, fat pipes”(经高带宽路径的TCP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Fairness-TCP公平性"><span class="nav-number">7.3.</span> <span class="nav-text">TCP Fairness(TCP公平性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Explicit-Congestion-Notification-ECN"><span class="nav-number">7.4.</span> <span class="nav-text">Explicit Congestion Notification (ECN)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

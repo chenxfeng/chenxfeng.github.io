@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="computer network," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Background
+number of wireless (mobile) phone subscribers now exceeds number of wired phone subscribers (5-to-1)!
+
+number of wireless Internet-connected devices equals number of wireline Internet-conne">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无线网络和移动网络(Wireless and Mobile Networks)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/06/28/computer_network/computer_network_6/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="Background
+number of wireless (mobile) phone subscribers now exceeds number of wired phone subscribers (5-to-1)!
+
+number of wireless Internet-connected devices equals number of wireline Internet-conne">
+<meta property="og:image" content="https://chenfeng.github.io/\img\wwireless_dataRate.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\wireless_taxonomy.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\SNR_BER.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\hidden_terminal.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\signal_attenuation.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CDMA_encode_decode.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CDMA_twoSender_interference.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\BSS.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802.11_passive_scanning.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802.11_active_scanning.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802.11_CSMA_CA.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\Collision_Avoidance_RTS-CTS_exchange.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802.11_frame_format.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802.11_frame_addressing.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802.11_frame_format2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802.11_rate_adaptation.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802.15.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\cellular_network.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\2G_network_architecture.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\3G_network_architecture.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\3G_network_architecture2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\3G_versus4GLTE_network_architecture.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\4G.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\LTE_major_components.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\LTE_ratio_tunneling.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\LTE_QoS.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobility.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobility_vocabulary1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobility_vocabulary2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobility_registration.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobility_via_indirect_routing.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobility_via_direct_routing.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobility_accommodating.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobileIP_indirect_routing.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobileIP_agent_discovery.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobileIP_registration.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\GSM_indirect_routing_to_mobile.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img]GSM_handoff.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mobility_cellular_versus_mobileIP.png">
+<meta property="og:updated_time" content="2017-07-01T14:03:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="无线网络和移动网络(Wireless and Mobile Networks)">
+<meta name="twitter:description" content="Background
+number of wireless (mobile) phone subscribers now exceeds number of wired phone subscribers (5-to-1)!
+
+number of wireless Internet-connected devices equals number of wireline Internet-conne">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\wwireless_dataRate.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/06/28/computer_network/computer_network_6/"/>
+
+
+
+
+
+  <title>无线网络和移动网络(Wireless and Mobile Networks) | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/06/28/computer_network/computer_network_6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">无线网络和移动网络(Wireless and Mobile Networks)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><ul>
+<li><p>number of wireless (mobile) phone subscribers now exceeds number of wired phone subscribers (5-to-1)!</p>
+</li>
+<li><p>number of wireless Internet-connected devices equals number of wireline Internet-connected devices</p>
+</li>
+<li><ul>
+<li>laptops, Internet-enabled phones promise anytime untethered Internet access</li>
+</ul>
+</li>
+<li><p>two important (but different) challenges</p>
+</li>
+<li><ul>
+<li>wireless: communication over wireless link</li>
+</ul>
+</li>
+<li><ul>
+<li>mobility: handling the mobile user who changes point of attachment to network</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="Elements-of-a-wireless-network"><a href="#Elements-of-a-wireless-network" class="headerlink" title="Elements of a wireless network"></a>Elements of a wireless network</h3><ul>
+<li>wireless hosts</li>
+<li><ul>
+<li>laptop, smartphone</li>
+</ul>
+</li>
+<li><ul>
+<li>run applications</li>
+</ul>
+</li>
+<li><ul>
+<li>may be stationary (non-mobile) or mobile: wireless does not always mean mobility</li>
+</ul>
+</li>
+<li><p>base station(基站)</p>
+</li>
+<li><ul>
+<li>typically connected to wired network</li>
+</ul>
+</li>
+<li><ul>
+<li>relay - responsible for sending packets between wired network and wireless host(s) in its “area”</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>e.g., cell towers,  802.11 access points </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>wireless link</p>
+</li>
+<li><ul>
+<li>typically used to connect mobile(s) to base station</li>
+</ul>
+</li>
+<li><ul>
+<li>also used as backbone link </li>
+</ul>
+</li>
+<li><ul>
+<li>multiple access protocol coordinates link access </li>
+</ul>
+</li>
+<li><ul>
+<li>various data rates, transmission distance</li>
+</ul>
+</li>
+<li><p>Characteristics of selected wireless links</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\wwireless_dataRate.png" alt="wwireless_dataRate.png"></p>
+</blockquote>
+<ul>
+<li>infrastructure mode</li>
+<li><ul>
+<li>base station connects mobiles into wired network</li>
+</ul>
+</li>
+<li><ul>
+<li>handoff: mobile changes base station providing connection into wired network</li>
+</ul>
+</li>
+<li><p>ad hoc mode</p>
+</li>
+<li><ul>
+<li>no base stations</li>
+</ul>
+</li>
+<li><ul>
+<li>nodes can only transmit to other nodes within link coverage</li>
+</ul>
+</li>
+<li><ul>
+<li>nodes organize themselves into a network: route among themselves</li>
+</ul>
+</li>
+<li><p>Wireless network taxonomy(无线网络分类)</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\wireless_taxonomy.png" alt="wireless_taxonomy.png"></p>
+</blockquote>
+<h2 id="Wireless-links-characteristics"><a href="#Wireless-links-characteristics" class="headerlink" title="Wireless links, characteristics"></a>Wireless links, characteristics</h2><h3 id="Wireless-Link-Characteristics"><a href="#Wireless-Link-Characteristics" class="headerlink" title="Wireless Link Characteristics"></a>Wireless Link Characteristics</h3><ul>
+<li>important differences from wired link make communication across (even a point to point) wireless link much more “difficult”: </li>
+<li><ul>
+<li>decreased signal strength: radio signal attenuates as it propagates through matter (path loss)</li>
+</ul>
+</li>
+<li><ul>
+<li>interference from other sources: standardized wireless network frequencies (e.g., 2.4 GHz) shared by other devices (e.g., phone); devices (motors) interfere as well</li>
+</ul>
+</li>
+<li><ul>
+<li>multipath propagation: radio signal reflects off objects ground, arriving ad destination at slightly different times</li>
+</ul>
+</li>
+<li><p>SNR: signal-to-noise ratio</p>
+</li>
+<li><ul>
+<li>larger SNR – easier to extract signal from noise (a “good thing”)</li>
+</ul>
+</li>
+<li><p>SNR versus BER tradeoffs</p>
+</li>
+<li><ul>
+<li><em>given physical layer</em>: increase power -&gt; increase SNR-&gt;decrease BER</li>
+</ul>
+</li>
+<li><ul>
+<li><em>given SNR</em>: choose physical layer that meets BER requirement, giving highest thruput</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>SNR may change with mobility: dynamically adapt physical layer (modulation technique, rate) </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\SNR_BER.png" alt="SNR_BER.png"></p>
+</blockquote>
+<h3 id="Wireless-network-characteristics"><a href="#Wireless-network-characteristics" class="headerlink" title="Wireless network characteristics"></a>Wireless network characteristics</h3><p>Multiple wireless senders and receivers create additional problems (beyond multiple access):</p>
+<blockquote>
+<p><img src="\img\hidden_terminal.png" alt="hidden_terminal.png"></p>
+</blockquote>
+<ul>
+<li><strong>Hidden terminal problem</strong></li>
+<li><ul>
+<li>B, A hear each other</li>
+</ul>
+</li>
+<li><ul>
+<li>B, C hear each other</li>
+</ul>
+</li>
+<li><ul>
+<li>A, C can not hear each other means A, C unaware of their interference at B</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\signal_attenuation.png" alt="signal_attenuation.png"></p>
+</blockquote>
+<ul>
+<li><strong>Signal attenuation</strong>:</li>
+<li><ul>
+<li>B, A hear each other</li>
+</ul>
+</li>
+<li><ul>
+<li>B, C hear each other</li>
+</ul>
+</li>
+<li><ul>
+<li>A, C can not hear each other interfering at B</li>
+</ul>
+</li>
+</ul>
+<h3 id="Code-Division-Multiple-Access-CDMA"><a href="#Code-Division-Multiple-Access-CDMA" class="headerlink" title="Code Division Multiple Access (CDMA)"></a>Code Division Multiple Access (CDMA)</h3><ul>
+<li>unique “code” assigned to each user; i.e., code set partitioning</li>
+<li><ul>
+<li>all users share same frequency, but each user has own “chipping” sequence (i.e., code) to encode data</li>
+</ul>
+</li>
+<li><ul>
+<li>allows multiple users to “coexist” and transmit simultaneously with minimal interference (if codes are “orthogonal”)</li>
+</ul>
+</li>
+<li><strong>encoded signal</strong> = (original data) X (chipping sequence)</li>
+<li><p><strong>decoding</strong>: inner-product of encoded signal and chipping sequence</p>
+</li>
+<li><p>CDMA encode/decode:</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\CDMA_encode_decode.png" alt="CDMA_encode_decode.png"></p>
+</blockquote>
+<ul>
+<li>two-sender interference:</li>
+</ul>
+<blockquote>
+<p><img src="\img\CDMA_twoSender_interference.png" alt="CDMA_twoSender_interference.png"></p>
+</blockquote>
+<h2 id="IEEE-802-11-wireless-LANs-“Wi-Fi”"><a href="#IEEE-802-11-wireless-LANs-“Wi-Fi”" class="headerlink" title="IEEE 802.11 wireless LANs (“Wi-Fi”)"></a>IEEE 802.11 wireless LANs (“Wi-Fi”)</h2><ul>
+<li>802.11b</li>
+<li><ul>
+<li>2.4-5 GHz unlicensed spectrum</li>
+</ul>
+</li>
+<li><ul>
+<li>up to 11 Mbps</li>
+</ul>
+</li>
+<li><ul>
+<li>direct sequence spread spectrum (DSSS) in physical layer</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>all hosts use same chipping code</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>802.11a </p>
+</li>
+<li><ul>
+<li>5-6 GHz range</li>
+</ul>
+</li>
+<li><ul>
+<li>up to 54 Mbps</li>
+</ul>
+</li>
+<li><p>802.11g </p>
+</li>
+<li><ul>
+<li>2.4-5 GHz range</li>
+</ul>
+</li>
+<li><ul>
+<li>up to 54 Mbps</li>
+</ul>
+</li>
+<li><p>802.11n: multiple antennae</p>
+</li>
+<li><ul>
+<li>2.4-5 GHz range</li>
+</ul>
+</li>
+<li><ul>
+<li>up to 200 Mbps</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>all use CSMA/CA for multiple access<br>all have base-station and ad-hoc network versions</p>
+</blockquote>
+<h3 id="802-11-LAN-architecture"><a href="#802-11-LAN-architecture" class="headerlink" title="802.11 LAN architecture"></a>802.11 LAN architecture</h3><ul>
+<li>wireless host communicates with base station</li>
+<li><ul>
+<li><strong>base station = access point (AP)</strong></li>
+</ul>
+</li>
+<li><p><strong>Basic Service Set (BSS)</strong> (aka “cell”) in infrastructure mode contains:</p>
+</li>
+<li><ul>
+<li>wireless hosts</li>
+</ul>
+</li>
+<li><ul>
+<li>access point (AP): base station</li>
+</ul>
+</li>
+<li><ul>
+<li>ad hoc mode: hosts only</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\BSS.png" alt="BSS.png"></p>
+</blockquote>
+<h3 id="802-11-Channels-association"><a href="#802-11-Channels-association" class="headerlink" title="802.11: Channels, association"></a>802.11: Channels, association</h3><ul>
+<li>802.11b: 2.4GHz-2.485GHz spectrum divided into 11 channels at different frequencies</li>
+<li><ul>
+<li>AP admin chooses frequency for AP</li>
+</ul>
+</li>
+<li><ul>
+<li>interference possible: channel can be same as that chosen by neighboring AP!</li>
+</ul>
+</li>
+<li><p>host: must associate with an AP</p>
+</li>
+<li><ul>
+<li>scans channels, listening for beacon frames containing AP’s name (SSID) and MAC address</li>
+</ul>
+</li>
+<li><ul>
+<li>selects AP to associate with</li>
+</ul>
+</li>
+<li><ul>
+<li>may perform authentication [Chapter 8]</li>
+</ul>
+</li>
+<li><ul>
+<li>will typically run DHCP to get IP address in AP’s subnet</li>
+</ul>
+</li>
+</ul>
+<h3 id="802-11-passive-active-scanning"><a href="#802-11-passive-active-scanning" class="headerlink" title="802.11: passive/active scanning"></a>802.11: passive/active scanning</h3><ul>
+<li><strong>passive scanning</strong>: </li>
+<li><ul>
+<li>(1)beacon frames sent from APs</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)association Request frame sent: H1 to selected AP </li>
+</ul>
+</li>
+<li><ul>
+<li>(3)association Response frame sent from  selected AP to H1</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\802.11_passive_scanning.png" alt="802.11_passive_scanning.png"></p>
+</blockquote>
+<ul>
+<li><strong>active scanning</strong>: </li>
+<li><ul>
+<li>(1)Probe Request frame broadcast from H1</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)Probe Response frames sent from APs</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)Association Request frame sent: H1 to selected AP </li>
+</ul>
+</li>
+<li><ul>
+<li>(4)Association Response frame sent from selected AP to H1</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\802.11_active_scanning.png" alt="802.11_active_scanning.png"></p>
+</blockquote>
+<h3 id="IEEE-802-11-multiple-access"><a href="#IEEE-802-11-multiple-access" class="headerlink" title="IEEE 802.11: multiple access"></a>IEEE 802.11: multiple access</h3><ul>
+<li>avoid collisions: 2+ nodes transmitting at same time</li>
+<li>802.11: CSMA - sense before transmitting</li>
+<li><ul>
+<li>don’t collide with ongoing transmission by other node</li>
+</ul>
+</li>
+<li>802.11: no collision detection!</li>
+<li><ul>
+<li>difficult to receive (sense collisions) when transmitting due to weak received signals (fading)</li>
+</ul>
+</li>
+<li><ul>
+<li>can’t sense all collisions in any case: hidden terminal, fading</li>
+</ul>
+</li>
+<li><ul>
+<li>goal: <strong>avoid collisions</strong>: CSMA/C(ollision)A(voidance)</li>
+</ul>
+</li>
+</ul>
+<h3 id="IEEE-802-11-MAC-Protocol-CSMA-CA"><a href="#IEEE-802-11-MAC-Protocol-CSMA-CA" class="headerlink" title="IEEE 802.11 MAC Protocol: CSMA/CA"></a>IEEE 802.11 MAC Protocol: CSMA/CA</h3><ul>
+<li><strong>802.11 sender</strong></li>
+<li><ul>
+<li>(1) <em>if sense channel idle</em> for <strong>DIFS</strong> <em>then</em> transmit entire frame (no CD)</li>
+</ul>
+</li>
+<li><ul>
+<li>(2) <em>if sense channel busy</em> then </li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>start random backoff time</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>timer counts down while channel idle</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>transmit when timer expires</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>if no ACK, increase random backoff interval, repeat 2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>802.11 receiver</strong></p>
+</li>
+<li><ul>
+<li><em>if frame received OK</em></li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>return ACK after <strong>SIFS</strong> (ACK needed due to hidden terminal problem) </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\802.11_CSMA_CA.png" alt="802.11_CSMA_CA.png"></p>
+</blockquote>
+<p><strong>Avoiding collisions</strong></p>
+<p>idea: allow sender to “reserve” channel rather than random access of data frames: avoid collisions of long data frames</p>
+<ul>
+<li>sender first transmits small request-to-send (RTS) packets to BS using CSMA</li>
+<li><ul>
+<li>RTSs may still collide with each other (but they’re short)</li>
+</ul>
+</li>
+<li>BS broadcasts clear-to-send CTS in response to RTS</li>
+<li>CTS heard by all nodes</li>
+<li><ul>
+<li>sender transmits data frame</li>
+</ul>
+</li>
+<li><ul>
+<li>other stations defer transmissions</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>avoid data frame collisions completely using small reservation packets!</p>
+</blockquote>
+<p>Collision Avoidance: RTS-CTS exchange:</p>
+<blockquote>
+<p><img src="\img\Collision_Avoidance_RTS-CTS_exchange.png" alt="Collision_Avoidance_RTS-CTS_exchange.png"></p>
+</blockquote>
+<h3 id="802-11-frame-addressing"><a href="#802-11-frame-addressing" class="headerlink" title="802.11 frame: addressing"></a>802.11 frame: addressing</h3><blockquote>
+<p><img src="\img\802.11_frame_format.png" alt="802.11_frame_format.png"></p>
+<p><img src="\img\802.11_frame_addressing.png" alt="802.11_frame_addressing.png"></p>
+<p><img src="\img\802.11_frame_format2.png" alt="802.11_frame_format2.png"></p>
+</blockquote>
+<h3 id="802-11-mobility-within-same-subnet"><a href="#802-11-mobility-within-same-subnet" class="headerlink" title="802.11: mobility within same subnet"></a>802.11: mobility within same subnet</h3><ul>
+<li>H1 remains in same IP subnet: IP address can remain same</li>
+<li>switch: which AP is associated with H1?</li>
+<li><ul>
+<li>self-learning (Ch. 5): switch will see frame from H1 and “remember” which switch port can be used to reach H1</li>
+</ul>
+</li>
+</ul>
+<h3 id="802-11-advanced-capabilities"><a href="#802-11-advanced-capabilities" class="headerlink" title="802.11: advanced capabilities"></a>802.11: advanced capabilities</h3><ul>
+<li><strong>Rate adaptation</strong></li>
+<li><ul>
+<li>base station, mobile dynamically change transmission rate (physical layer modulation technique) as mobile moves, SNR varies</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>SNR decreases, BER increase as node moves away from base station</li>
+<li>When BER becomes too high, switch to lower transmission rate but with lower BER</li>
+</ol>
+<blockquote>
+<p><img src="\img\802.11_rate_adaptation.png" alt="802.11_rate_adaptation.png"></p>
+</blockquote>
+<h3 id="802-15-personal-area-network"><a href="#802-15-personal-area-network" class="headerlink" title="802.15: personal area network"></a>802.15: personal area network</h3><ul>
+<li>less than 10 m diameter</li>
+<li>replacement for cables (mouse, keyboard, headphones)</li>
+<li>ad hoc: no infrastructure</li>
+<li>master/slaves:</li>
+<li><ul>
+<li>slaves request permission to send (to master)</li>
+</ul>
+</li>
+<li><ul>
+<li>master grants requests</li>
+</ul>
+</li>
+<li>802.15: evolved from Bluetooth specification</li>
+<li><ul>
+<li>2.4-2.5 GHz radio band</li>
+</ul>
+</li>
+<li><ul>
+<li>up to 721 kbps</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\802.15.png" alt="802.15.png"></p>
+</blockquote>
+<h2 id="Cellular-Internet-access"><a href="#Cellular-Internet-access" class="headerlink" title="Cellular Internet access"></a>Cellular Internet access</h2><h3 id="Components-of-cellular-network-architecture"><a href="#Components-of-cellular-network-architecture" class="headerlink" title="Components of cellular network architecture"></a>Components of cellular network architecture</h3><ul>
+<li>cell</li>
+<li><ul>
+<li>covers geographical region</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>base station (BS)</strong> analogous to 802.11 AP</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>mobile users</strong> attach to network through BS</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>air-interface</strong>: physical and link layer protocol between mobile and BS</li>
+</ul>
+</li>
+<li><p>MSC</p>
+</li>
+<li><ul>
+<li>connects cells to wired tel. net.</li>
+</ul>
+</li>
+<li><ul>
+<li>manages call setup (more later!)</li>
+</ul>
+</li>
+<li><ul>
+<li>handles mobility (more later!)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\cellular_network.png" alt="cellular_network.png"></p>
+</blockquote>
+<h3 id="Cellular-networks-the-first-hop"><a href="#Cellular-networks-the-first-hop" class="headerlink" title="Cellular networks: the first hop"></a>Cellular networks: the first hop</h3><ul>
+<li>Two techniques for sharing mobile-to-BS radio spectrum</li>
+<li><ul>
+<li>combined FDMA/TDMA: divide spectrum in frequency channels, divide each channel into time slots</li>
+</ul>
+</li>
+<li><ul>
+<li>CDMA: code division multiple access</li>
+</ul>
+</li>
+</ul>
+<p>2G (voice) network architecture : </p>
+<blockquote>
+<p><img src="\img\2G_network_architecture.png" alt="2G_network_architecture.png"></p>
+</blockquote>
+<p>3G (voice+data) network architecture : </p>
+<ul>
+<li><strong>Key insight</strong>: new cellular data network operates in parallel (except at edge) with existing cellular voice network</li>
+<li><ul>
+<li>voice network unchanged in core</li>
+</ul>
+</li>
+<li><ul>
+<li>data network operates in parallel</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\3G_network_architecture.png" alt="3G_network_architecture.png"></p>
+<p><img src="\img\3G_network_architecture2.png" alt="3G_network_architecture2.png"></p>
+</blockquote>
+<p>3G versus 4G LTE network architecture : </p>
+<blockquote>
+<p><img src="\img\3G_versus4GLTE_network_architecture.png" alt="3G_versus4GLTE_network_architecture.png"></p>
+</blockquote>
+<h3 id="4G-differences-from-3G"><a href="#4G-differences-from-3G" class="headerlink" title="4G: differences from 3G"></a>4G: differences from 3G</h3><ul>
+<li>all IP core: IP packets tunneled (through core IP network) from base station to gateway</li>
+<li>no separation between voice and data – all traffic carried over IP core to gateway</li>
+</ul>
+<blockquote>
+<p><img src="\img\4G.png" alt="4G.png"></p>
+</blockquote>
+<ul>
+<li>Functional split of major LTE components</li>
+</ul>
+<blockquote>
+<p><img src="\img\LTE_major_components.png" alt="LTE_major_components.png"></p>
+</blockquote>
+<ul>
+<li>Radio+Tunneling:  UE – eNodeB – PGW</li>
+</ul>
+<blockquote>
+<p><img src="\img\LTE_ratio_tunneling.png" alt="LTE_ratio_tunneling.png"></p>
+</blockquote>
+<h3 id="Quality-of-Service-in-LTE"><a href="#Quality-of-Service-in-LTE" class="headerlink" title="Quality of Service in LTE"></a>Quality of Service in LTE</h3><ul>
+<li>QoS from eNodeB to SGW: min and max guaranteed bit rate</li>
+<li>QoS in radio access network: one of 12 QCI values</li>
+</ul>
+<blockquote>
+<p><img src="\img\LTE_QoS.png" alt="LTE_QoS.png"></p>
+</blockquote>
+<h2 id="Principles-addressing-and-routing-to-mobile-users"><a href="#Principles-addressing-and-routing-to-mobile-users" class="headerlink" title="Principles: addressing and routing to mobile users"></a>Principles: addressing and routing to mobile users</h2><ul>
+<li>What is mobility?</li>
+<li>spectrum of mobility, from the network perspective:</li>
+</ul>
+<blockquote>
+<p><img src="\img\mobility.png" alt="mobility.png"></p>
+</blockquote>
+<h3 id="Mobility-vocabulary"><a href="#Mobility-vocabulary" class="headerlink" title="Mobility: vocabulary"></a>Mobility: vocabulary</h3><blockquote>
+<p><img src="\img\mobility_vocabulary1.png" alt="mobility_vocabulary1.png"></p>
+</blockquote>
+<p>home network : 归属地网络</p>
+<p>home agent : 归属代理</p>
+<p>permanent address : 永久地址</p>
+<blockquote>
+<p><img src="\img\mobility_vocabulary2.png" alt="mobility_vocabulary2.png"></p>
+</blockquote>
+<p>foreign agent : 外部代理</p>
+<p>visited network : 被访网络</p>
+<p>correspondent : 通信者</p>
+<p>care-of address(COA) : 转交地址</p>
+<h3 id="Mobility-approaches"><a href="#Mobility-approaches" class="headerlink" title="Mobility: approaches"></a>Mobility: approaches</h3><ul>
+<li><strong>let routing handle it</strong>: routers advertise permanent address of mobile-nodes-in-residence via usual routing table exchange.</li>
+<li><ul>
+<li>routing tables indicate where each mobile located</li>
+</ul>
+</li>
+<li><ul>
+<li>no changes to end-systems</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>not scalable to millions of mobiles</p>
+</blockquote>
+<ul>
+<li><strong>let end-systems handle it: </strong></li>
+<li><ul>
+<li><strong>indirect routing</strong>: communication from correspondent to mobile goes through home agent, then forwarded to remote</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>direct routing</strong>: correspondent gets foreign address of mobile, sends directly to mobile</li>
+</ul>
+</li>
+</ul>
+<h3 id="Mobility-registration"><a href="#Mobility-registration" class="headerlink" title="Mobility: registration"></a>Mobility: registration</h3><blockquote>
+<p><img src="\img\mobility_registration.png" alt="mobility_registration.png"></p>
+</blockquote>
+<ul>
+<li>end result:</li>
+<li><ul>
+<li>foreign agent knows about mobile</li>
+</ul>
+</li>
+<li><ul>
+<li>home agent knows location of mobile</li>
+</ul>
+</li>
+</ul>
+<p><strong>Mobility via indirect routing</strong> : </p>
+<blockquote>
+<p><img src="\img\mobility_via_indirect_routing.png" alt="mobility_via_indirect_routing.png"></p>
+</blockquote>
+<p><strong>Indirect Routing: comments</strong></p>
+<ul>
+<li>mobile uses two addresses:</li>
+<li><ul>
+<li><em>permanent address</em>: used by correspondent (hence mobile location is transparent to correspondent)</li>
+</ul>
+</li>
+<li><ul>
+<li><em>care-of-address</em>: used by home agent to forward datagrams to mobile</li>
+</ul>
+</li>
+<li>foreign agent functions may be done by mobile itself</li>
+<li><em>triangle routing</em>: correspondent-home-network-mobile</li>
+<li><ul>
+<li>inefficient when correspondent, mobile are in same network</li>
+</ul>
+</li>
+</ul>
+<p><strong>Indirect routing: moving between networks</strong></p>
+<ul>
+<li>suppose mobile user moves to another network</li>
+<li><ul>
+<li>registers with new foreign agent</li>
+</ul>
+</li>
+<li><ul>
+<li>new foreign agent registers with home agent</li>
+</ul>
+</li>
+<li><ul>
+<li>home agent update care-of-address for mobile</li>
+</ul>
+</li>
+<li><ul>
+<li>packets continue to be forwarded to mobile (but with new care-of-address)</li>
+</ul>
+</li>
+<li>mobility, changing foreign networks transparent: on going connections can be maintained!</li>
+</ul>
+<p><strong>Mobility via direct routing</strong> : </p>
+<blockquote>
+<p><img src="\img\mobility_via_direct_routing.png" alt="mobility_via_direct_routing.png"></p>
+</blockquote>
+<p><strong>direct routing: comments</strong></p>
+<ul>
+<li>overcome triangle routing problem</li>
+<li>non-transparent to correspondent: correspondent must get care-of-address from home agent</li>
+<li><ul>
+<li>what if mobile changes visited network?</li>
+</ul>
+</li>
+</ul>
+<p><strong>Accommodating mobility with direct routing</strong></p>
+<ul>
+<li>anchor foreign agent: FA in first visited network</li>
+<li>data always routed first to anchor FA</li>
+<li>when mobile moves: new FA arranges to have data forwarded from old FA (chaining)</li>
+</ul>
+<blockquote>
+<p><img src="\img\mobility_accommodating.png" alt="mobility_accommodating.png"></p>
+</blockquote>
+<h2 id="Mobile-IP"><a href="#Mobile-IP" class="headerlink" title="Mobile IP"></a>Mobile IP</h2><ul>
+<li>RFC 3344</li>
+<li>has many features we’ve seen: </li>
+<li><ul>
+<li>home agents, foreign agents, foreign-agent registration, care-of-addresses, encapsulation (packet-within-a-packet)</li>
+</ul>
+</li>
+<li>three components to standard:</li>
+<li><ul>
+<li>indirect routing of datagrams</li>
+</ul>
+</li>
+<li><ul>
+<li>agent discovery</li>
+</ul>
+</li>
+<li><ul>
+<li>registration with home agent</li>
+</ul>
+</li>
+</ul>
+<p><strong>indirect routing</strong> : </p>
+<blockquote>
+<p><img src="\img\mobileIP_indirect_routing.png" alt="mobileIP_indirect_routing.png"></p>
+</blockquote>
+<p><strong>agent discovery</strong> : </p>
+<ul>
+<li><strong>agent advertisement</strong>: foreign/home agents advertise service by broadcasting ICMP messages (typefield = 9)</li>
+</ul>
+<blockquote>
+<p><img src="\img\mobileIP_agent_discovery.png" alt="mobileIP_agent_discovery.png"></p>
+</blockquote>
+<p><strong>registration</strong> example : </p>
+<blockquote>
+<p><img src="\img\mobileIP_registration.png" alt="mobileIP_registration.png"></p>
+</blockquote>
+<h2 id="Handling-mobility-in-cellular-networks"><a href="#Handling-mobility-in-cellular-networks" class="headerlink" title="Handling mobility in cellular networks"></a>Handling mobility in cellular networks</h2><ul>
+<li><strong>home network</strong>: network of cellular provider you subscribe to (e.g., Sprint PCS, Verizon)</li>
+<li><ul>
+<li><strong>home location register (HLR)</strong>: database in home network containing permanent cell phone #, profile information (services, preferences, billing), information about current location (could be in another network)</li>
+</ul>
+</li>
+<li><strong>visited network</strong>: network in which mobile currently resides</li>
+<li><ul>
+<li><strong>visitor location register (VLR)</strong>: database with entry for each user currently in network</li>
+</ul>
+</li>
+<li><ul>
+<li>could be home network</li>
+</ul>
+</li>
+</ul>
+<h3 id="GSM-indirect-routing-to-mobile"><a href="#GSM-indirect-routing-to-mobile" class="headerlink" title="GSM: indirect routing to mobile"></a>GSM: indirect routing to mobile</h3><blockquote>
+<p><img src="\img\GSM_indirect_routing_to_mobile.png" alt="GSM_indirect_routing_to_mobile.png"></p>
+</blockquote>
+<h3 id="GSM-handoff-with-common-MSC"><a href="#GSM-handoff-with-common-MSC" class="headerlink" title="GSM: handoff with common MSC"></a>GSM: handoff with common MSC</h3><ul>
+<li><strong>handoff goal</strong>: route call via new base station (without interruption)</li>
+<li>reasons for handoff:</li>
+<li><ul>
+<li>stronger signal to/from new BSS (continuing connectivity, less battery drain)</li>
+</ul>
+</li>
+<li><ul>
+<li>load balance: free up channel in current BSS</li>
+</ul>
+</li>
+<li><ul>
+<li>GSM doesn’t mandate why to perform handoff (policy), only how (mechanism)</li>
+</ul>
+</li>
+<li>handoff initiated by old BSS</li>
+</ul>
+<blockquote>
+<p><img src="\img]GSM_handoff.png" alt="GSM_handoff.png"></p>
+</blockquote>
+<ul>
+<li><ol>
+<li>old BSS informs MSC of impending handoff, provides list of 1+ new BSSs </li>
+</ol>
+</li>
+<li><ol>
+<li>MSC sets up path (allocates resources) to new BSS</li>
+</ol>
+</li>
+<li><ol>
+<li>new BSS allocates radio channel for use by mobile</li>
+</ol>
+</li>
+<li><ol>
+<li>new BSS signals MSC, old BSS: ready </li>
+</ol>
+</li>
+<li><ol>
+<li>old BSS tells mobile: perform handoff to new BSS</li>
+</ol>
+</li>
+<li><ol>
+<li>mobile, new BSS signal to activate new channel</li>
+</ol>
+</li>
+<li><ol>
+<li>mobile signals via new BSS to MSC: handoff complete.  MSC reroutes call</li>
+</ol>
+</li>
+<li><ol>
+<li>MSC-old-BSS resources released</li>
+</ol>
+</li>
+</ul>
+<h3 id="GSM-handoff-between-MSCs"><a href="#GSM-handoff-between-MSCs" class="headerlink" title="GSM: handoff between MSCs"></a>GSM: handoff between MSCs</h3><ul>
+<li>anchor MSC: first MSC visited during call</li>
+<li><ul>
+<li>call remains routed through anchor MSC</li>
+</ul>
+</li>
+<li>new MSCs add on to end of MSC chain as mobile moves to new MSC</li>
+<li>optional path minimization step to shorten multi-MSC chain</li>
+</ul>
+<h3 id="Handling-Mobility-in-LTE"><a href="#Handling-Mobility-in-LTE" class="headerlink" title="Handling Mobility in LTE"></a>Handling Mobility in LTE</h3><ul>
+<li>Paging: idle UE may move from cell to cell: network does not know where the idle UE is resident</li>
+<li><ul>
+<li>paging message from MME broadcast by all eNodeB to locate UE</li>
+</ul>
+</li>
+<li><p>handoff: similar to 3G:</p>
+</li>
+<li><ul>
+<li>preparation phase</li>
+</ul>
+</li>
+<li><ul>
+<li>execution phase</li>
+</ul>
+</li>
+<li><ul>
+<li>completion phase</li>
+</ul>
+</li>
+</ul>
+<h3 id="Mobility-cellular-versus-Mobile-IP"><a href="#Mobility-cellular-versus-Mobile-IP" class="headerlink" title="Mobility: cellular versus Mobile IP"></a>Mobility: cellular versus Mobile IP</h3><blockquote>
+<p><img src="\img\mobility_cellular_versus_mobileIP.png" alt="mobility_cellular_versus_mobileIP.png"></p>
+</blockquote>
+<h2 id="Wireless-mobility-impact-on-higher-layer-protocols"><a href="#Wireless-mobility-impact-on-higher-layer-protocols" class="headerlink" title="Wireless, mobility: impact on higher layer protocols"></a>Wireless, mobility: impact on higher layer protocols</h2><ul>
+<li>logically, impact should be minimal …</li>
+<li><ul>
+<li>best effort service model remains unchanged </li>
+</ul>
+</li>
+<li><ul>
+<li>TCP and UDP can (and do) run over wireless, mobile</li>
+</ul>
+</li>
+<li>… but performance-wise:</li>
+<li><ul>
+<li>packet loss/delay due to bit-errors (discarded packets, delays for link-layer retransmissions), and handoff</li>
+</ul>
+</li>
+<li><ul>
+<li>TCP interprets loss as congestion, will decrease congestion window un-necessarily</li>
+</ul>
+</li>
+<li><ul>
+<li>delay impairments for real-time traffic</li>
+</ul>
+</li>
+<li><ul>
+<li>limited bandwidth of wireless links</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/computer-network/" rel="tag"># computer network</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/13/parellel_and_distributed_computing/distributed_compute6/" rel="next" title="分布式系统的容错技术(下)">
+                <i class="fa fa-chevron-left"></i> 分布式系统的容错技术(下)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/29/computer_network/computer_network_7/" rel="prev" title="多媒体网络(Multimedia Networking)">
+                多媒体网络(Multimedia Networking) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Background"><span class="nav-number">1.</span> <span class="nav-text">Background</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Elements-of-a-wireless-network"><span class="nav-number">1.1.</span> <span class="nav-text">Elements of a wireless network</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wireless-links-characteristics"><span class="nav-number">2.</span> <span class="nav-text">Wireless links, characteristics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Wireless-Link-Characteristics"><span class="nav-number">2.1.</span> <span class="nav-text">Wireless Link Characteristics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wireless-network-characteristics"><span class="nav-number">2.2.</span> <span class="nav-text">Wireless network characteristics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-Division-Multiple-Access-CDMA"><span class="nav-number">2.3.</span> <span class="nav-text">Code Division Multiple Access (CDMA)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IEEE-802-11-wireless-LANs-“Wi-Fi”"><span class="nav-number">3.</span> <span class="nav-text">IEEE 802.11 wireless LANs (“Wi-Fi”)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#802-11-LAN-architecture"><span class="nav-number">3.1.</span> <span class="nav-text">802.11 LAN architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#802-11-Channels-association"><span class="nav-number">3.2.</span> <span class="nav-text">802.11: Channels, association</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#802-11-passive-active-scanning"><span class="nav-number">3.3.</span> <span class="nav-text">802.11: passive/active scanning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IEEE-802-11-multiple-access"><span class="nav-number">3.4.</span> <span class="nav-text">IEEE 802.11: multiple access</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IEEE-802-11-MAC-Protocol-CSMA-CA"><span class="nav-number">3.5.</span> <span class="nav-text">IEEE 802.11 MAC Protocol: CSMA/CA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#802-11-frame-addressing"><span class="nav-number">3.6.</span> <span class="nav-text">802.11 frame: addressing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#802-11-mobility-within-same-subnet"><span class="nav-number">3.7.</span> <span class="nav-text">802.11: mobility within same subnet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#802-11-advanced-capabilities"><span class="nav-number">3.8.</span> <span class="nav-text">802.11: advanced capabilities</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#802-15-personal-area-network"><span class="nav-number">3.9.</span> <span class="nav-text">802.15: personal area network</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cellular-Internet-access"><span class="nav-number">4.</span> <span class="nav-text">Cellular Internet access</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Components-of-cellular-network-architecture"><span class="nav-number">4.1.</span> <span class="nav-text">Components of cellular network architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cellular-networks-the-first-hop"><span class="nav-number">4.2.</span> <span class="nav-text">Cellular networks: the first hop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4G-differences-from-3G"><span class="nav-number">4.3.</span> <span class="nav-text">4G: differences from 3G</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Quality-of-Service-in-LTE"><span class="nav-number">4.4.</span> <span class="nav-text">Quality of Service in LTE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Principles-addressing-and-routing-to-mobile-users"><span class="nav-number">5.</span> <span class="nav-text">Principles: addressing and routing to mobile users</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mobility-vocabulary"><span class="nav-number">5.1.</span> <span class="nav-text">Mobility: vocabulary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mobility-approaches"><span class="nav-number">5.2.</span> <span class="nav-text">Mobility: approaches</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mobility-registration"><span class="nav-number">5.3.</span> <span class="nav-text">Mobility: registration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mobile-IP"><span class="nav-number">6.</span> <span class="nav-text">Mobile IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handling-mobility-in-cellular-networks"><span class="nav-number">7.</span> <span class="nav-text">Handling mobility in cellular networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GSM-indirect-routing-to-mobile"><span class="nav-number">7.1.</span> <span class="nav-text">GSM: indirect routing to mobile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GSM-handoff-with-common-MSC"><span class="nav-number">7.2.</span> <span class="nav-text">GSM: handoff with common MSC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GSM-handoff-between-MSCs"><span class="nav-number">7.3.</span> <span class="nav-text">GSM: handoff between MSCs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Handling-Mobility-in-LTE"><span class="nav-number">7.4.</span> <span class="nav-text">Handling Mobility in LTE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mobility-cellular-versus-Mobile-IP"><span class="nav-number">7.5.</span> <span class="nav-text">Mobility: cellular versus Mobile IP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wireless-mobility-impact-on-higher-layer-protocols"><span class="nav-number">8.</span> <span class="nav-text">Wireless, mobility: impact on higher layer protocols</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

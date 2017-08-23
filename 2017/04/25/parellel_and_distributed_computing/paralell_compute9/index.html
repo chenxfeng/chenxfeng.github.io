@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="并行计算," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="(并行与分布式计算八)
+随机并行算法简介随机算法：使用了随机数生成器(random-number generator)的算法
+随机算法的分析基于概率论(Probability Theory)基本事实
+伯努利随机试验: 
+
+$Pr{X \geq m} = \sum{j=m}^n (_j^n)p^jq^{n-j}$
+
+切尔诺夫界/不等式(Chernoff bounds): 
+
+$P_r{ X \leq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随机并行算法(Randomized Algorithm)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/04/25/parellel_and_distributed_computing/paralell_compute9/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="(并行与分布式计算八)
+随机并行算法简介随机算法：使用了随机数生成器(random-number generator)的算法
+随机算法的分析基于概率论(Probability Theory)基本事实
+伯努利随机试验: 
+
+$Pr{X \geq m} = \sum{j=m}^n (_j^n)p^jq^{n-j}$
+
+切尔诺夫界/不等式(Chernoff bounds): 
+
+$P_r{ X \leq">
+<meta property="og:updated_time" content="2017-05-01T01:12:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="随机并行算法(Randomized Algorithm)">
+<meta name="twitter:description" content="(并行与分布式计算八)
+随机并行算法简介随机算法：使用了随机数生成器(random-number generator)的算法
+随机算法的分析基于概率论(Probability Theory)基本事实
+伯努利随机试验: 
+
+$Pr{X \geq m} = \sum{j=m}^n (_j^n)p^jq^{n-j}$
+
+切尔诺夫界/不等式(Chernoff bounds): 
+
+$P_r{ X \leq">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/04/25/parellel_and_distributed_computing/paralell_compute9/"/>
+
+
+
+
+
+  <title>随机并行算法(Randomized Algorithm) | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/04/25/parellel_and_distributed_computing/paralell_compute9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">随机并行算法(Randomized Algorithm)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-25T00:00:00+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>(并行与分布式计算八)</p>
+<h2 id="随机并行算法简介"><a href="#随机并行算法简介" class="headerlink" title="随机并行算法简介"></a>随机并行算法简介</h2><p>随机算法：使用了随机数生成器(random-number generator)的算法</p>
+<p>随机算法的分析基于概率论(Probability Theory)基本事实</p>
+<p>伯努利随机试验: </p>
+<ul>
+<li>$P<em>r{X \geq m} = \sum</em>{j=m}^n (_j^n)p^jq^{n-j}$</li>
+</ul>
+<p>切尔诺夫界/不等式(Chernoff bounds): </p>
+<ul>
+<li>$P_r{ X \leq (1 - \epsilon)pn } \leq e^{-\epsilon^2np/2}$</li>
+<li>$P_r{ X \geq (1 + \epsilon)pn } \leq e^{-\epsilon^2np/3}$</li>
+</ul>
+<a id="more"></a>
+<p>PRAM模型需要加入一些特征</p>
+<ul>
+<li>主要为每个处理器能够在一步时间内产生有限范围内的随机数</li>
+<li>设正整数范围为[1, 2, …, M], 限制产生的随机数长度为O(logn)bits，其中n是输入的长度</li>
+<li>这样的随机数能够在一个内存位置中出现，因此可用O(1)步完成</li>
+<li>k个处理器产生k的独立的随机数</li>
+<li><em>randomized PRAM</em></li>
+</ul>
+<p>high-likelihood bounds(高可能性边界):</p>
+<ul>
+<li>一个随机并行算法需要的资源上界 $f(n)$:  对于任意的输入n，该算法使用的资源数量有 $1 - n^{-c}$的概率最多为 $\alpha f(n)$, 其中 $\alpha$ 和c是正的常数</li>
+<li>$O(f(n))$</li>
+</ul>
+<p>两种类型的随机算法: </p>
+<ul>
+<li>Las Vegas(拉斯维加斯)算法</li>
+<li><ul>
+<li>总是产生正确的解</li>
+</ul>
+</li>
+<li><ul>
+<li>性能用期望资源使用数或使用资源的上界的概率衡量</li>
+</ul>
+</li>
+<li>Monte Carlo(蒙特卡洛)算法</li>
+<li><ul>
+<li>允许存在误差，但保持在足够小的概率</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>优点：简单、易实现、易并行、性能往往比较好</p>
+</li>
+<li><p>缺点：性能也随机，快慢不总是一样</p>
+</li>
+</ul>
+<h2 id="在图中找分数阶的独立集-Fractional-Independent-Set"><a href="#在图中找分数阶的独立集-Fractional-Independent-Set" class="headerlink" title="在图中找分数阶的独立集(Fractional Independent Set)"></a>在图中找分数阶的独立集(Fractional Independent Set)</h2><p>可平面图G = (V, E): 可映射到平面上且边不相交</p>
+<p>aim: to identify a large independent set of G consisting excusively of low-degree vertices</p>
+<ul>
+<li>图G的顶点集合为V，找出集合 $X \subseteq V$ ，使得</li>
+</ul>
+<ol>
+<li><p>X中每一顶点v的度小于等于某个常量d</p>
+</li>
+<li><p>集合X是独立的，即X中任意两个定点不相邻(没有边连接)</p>
+</li>
+<li><p>集合X满足 $|X| \geq c|V|$(对某个正常数c)</p>
+</li>
+</ol>
+<ul>
+<li>X即为图G的一个分数阶的独立集</li>
+</ul>
+<p>给定图G=(V,E)，定义其分数阶的独立集X满足下面三个条件：</p>
+<ul>
+<li>低度性：存在常数d，使X是顶点度数小于d的顶点组成的V子集</li>
+<li>独立性：X中的任意两点都在G中不相邻</li>
+<li>分数阶：存在正的常数c，使|X|不小于c|V|</li>
+</ul>
+<p>引理9.1: 平面图G = (V, E), |V| &gt; 2, 则 $|E| \leq 3|V| - 6$</p>
+<p>定理9.2: 任意平面图G = (V, E)都能在线性串行时间内建立一个分数阶独立集X</p>
+<ul>
+<li>令 $V_d$ 为G的一个阶不大于d的顶点子集(d &gt;= 6)</li>
+<li>令$V_h = V - V<em>d$ ，则 $\sum</em>{v \in V_h}deg(v) \geq (d + 1)|V_h|$</li>
+<li>$(d + 1)|V<em>h| \leq \sum</em>{v \in V}deg(v) \leq 6|V| - 12$</li>
+<li>$|V_h| \leq (6|V| - 12)/(d + 1)$</li>
+<li><p>$|v_d| = |V| - |V_h| \geq (d - 5)|V|/(d + 1)$</p>
+</li>
+<li><p>构造分数阶独立集X：</p>
+</li>
+<li>从 $V_d$ 中选择任意的顶点v，除去所有v在 $V_d$ 中邻接的顶点</li>
+<li>再选 $V_d$ 的另外一个顶点重复以上步骤</li>
+<li>重复直到遍历 $V_d$ 中所有顶点</li>
+<li>$|X| \geq |V_d|/(d + 1) \geq (d - 5)|V|/(d + 1)^2$，是|V|的函数</li>
+</ul>
+<h3 id="有向环-directed-cycles"><a href="#有向环-directed-cycles" class="headerlink" title="有向环(directed cycles)"></a>有向环(directed cycles)</h3><p>求有向环G = (V, E)上的分数阶独立集</p>
+<p>Algorithm 9.1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(Randomized Symmetry Breaking)</div><div class="line">Input: A directed cycle G = (V, E) whose arcs are specified by an array S of length n.</div><div class="line">Output: The set of vertices X = &#123;v \in V | label(v) = 1&#125;, which forms a fractional independent set with high probability.</div><div class="line">begin</div><div class="line">  for all v \in V pardo</div><div class="line">    1. Assign label(v) = 1 or 0 randomly with equal probability.</div><div class="line">    2. if (label(v) = 1 and label(S(v)) = 1) then set label(v) := 0</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>T(n) = O(1), W = O(n)</li>
+<li><p>复杂度分析</p>
+</li>
+<li><p>独立的伯努利随机试验：n/2（两点距离&gt;1即可）</p>
+</li>
+<li>顶点被选（最终label为1）的概率：1/4</li>
+<li>在独立试验中的平均被选率：n/8</li>
+<li><p>最终被选的包括独立试验的和非独立试验的</p>
+</li>
+<li><p>$ P_r{|X| \leq \alpha n} \leq e^{-\beta n} $ (由Chernoff bounds得)</p>
+</li>
+<li>其中$ 0 &lt; \alpha &lt; 1/8 $, $ \beta = (1 - 8\alpha)^2/16 $</li>
+</ul>
+<h3 id="可平面图-planar-graphs"><a href="#可平面图-planar-graphs" class="headerlink" title="可平面图(planar graphs)"></a>可平面图(planar graphs)</h3><p>求任意可平面图G = (V, E)上的分数阶独立集</p>
+<p>Algorithm 9.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">(Fractional Independent Set)</div><div class="line">Input: A planar graph G = (V, E) represented by its edge lists. The edges on the list of a vertex v are ordered counterclockwise as they appear around the vertex v in a planar embedding of G. </div><div class="line">Output: A labeled set of low-degree vertices forming a large independent set with high probability. </div><div class="line">begin</div><div class="line">  1. for each vertex v in V pardo</div><div class="line">    if (deg(v) &lt;= 6) then set lowdeg(v) := 1</div><div class="line">                     else set lowdeg(v) := 0</div><div class="line">  2. for each vertex v in V pardo</div><div class="line">    if (lowdeg(v) = 1) then Randomly assign label(v) := 0 or 1 with equal probability</div><div class="line">  3. for each vertex v in V pardo</div><div class="line">    if (label(v) = 1) then</div><div class="line">      if (label(u) = 1 for some u on the list of v) then set label(v) := 0</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>T(n) = O(1), W = O(n)</li>
+<li><p>复杂度分析</p>
+</li>
+<li><p>参数d取为6</p>
+</li>
+<li>独立的伯努利随机试验：$|V_d|/36$（两点距离&gt;2即可）</li>
+<li>成功率：1/27</li>
+<li>独立试验中的平均成功点数至少为： $|V_d|/36 * 1/27$</li>
+<li><p>最终被选的包括独立试验的和非独立试验的</p>
+</li>
+<li><p>$ P_r {|X| \leq \alpha n } \leq e^{-\beta n} $</p>
+</li>
+<li>$\alpha$ 和 $\beta$为常量</li>
+</ul>
+<h2 id="字符串匹配的随机并行算法"><a href="#字符串匹配的随机并行算法" class="headerlink" title="字符串匹配的随机并行算法"></a>字符串匹配的随机并行算法</h2><p>基本策略类似于hashing</p>
+<ul>
+<li>hash函数将集合U映射到一个整数范围之内([1, 2, …, r])</li>
+<li>u -&gt; h(u)</li>
+<li>将长度为m的字符串映射为O(logm)比特的整数(fiingerprint)：两个不同的字符创映射到同一个整数的概率极其低(前提是hash函数选得好)</li>
+</ul>
+<p>关键思想：</p>
+<ul>
+<li>指纹(Fingerprints): 把字符串匹配问题转换为固定几个整数的比较问题</li>
+<li>随机选质数，作为除数对指纹的整数求余，使余数的长度上界能固定</li>
+<li>用比较余数来代替比较指纹整数</li>
+<li>最终算法达到右面三个要求: </li>
+<li><ul>
+<li>property 9.1: 对任意字符串 $X \in B$, $f_p(X)$ 由O(logm)比特组成，对每个$p \in S$</li>
+</ul>
+</li>
+<li><ul>
+<li>property 9.2: 随机选择 $\mathcal{F}$ 中的一个$f_p$，将两个不同的字符串X和Y映射到D中同一元素的概率非常小</li>
+</ul>
+</li>
+<li><ul>
+<li>property 9.3: 对每个$p \in S$, $f_p(X)$很容易并行地计算，对所有B中的字符串</li>
+</ul>
+</li>
+</ul>
+<h3 id="指纹函数"><a href="#指纹函数" class="headerlink" title="指纹函数"></a>指纹函数</h3><ul>
+<li>文本字符串T长度为n，模式字符串P长度为m，$m \leq n$</li>
+<li><p>确定P在T中出现的所有位置</p>
+</li>
+<li><p>令集合B为T的所有长度为m的子字符串的集合，起始位置i($ 1 \leq i \leq n-m+1 $)</p>
+</li>
+<li><p>问题转化成确定B中元素是否和P相同</p>
+</li>
+<li><p>令 $\mathcal{F} = { f<em>p }</em>{p \in S}$为函数集合，其中 $f_p$ 将长度为m的字符串映射到值域D中</p>
+</li>
+<li>$\mathcal{F}$ 必须满足以下三个特性：</li>
+<li><ul>
+<li>1.对任意字符串 $X \in B$, $f_p(X)$ 由O(logm)比特组成，对每个$p \in S$</li>
+</ul>
+</li>
+<li><ul>
+<li>2.随机选择 $\mathcal{F}$ 中的一个$f_p$，将两个不同的字符串X和Y映射到D中同一元素的概率非常小</li>
+</ul>
+</li>
+<li><ul>
+<li>3.对每个$p \in S$, $f_p(X)$很容易并行地计算，对所有B中的字符串</li>
+</ul>
+</li>
+</ul>
+<p>$f_p(X)$称为字符串X的指纹(fingerprint)</p>
+<p><strong>满足以上性质的指纹函数</strong></p>
+<ul>
+<li>由{0, 1}组成的字符串</li>
+<li>将{0, 1}映射到 整数环Z上的2*2矩阵</li>
+<li>(满足性质2但不满足1和3)</li>
+</ul>
+<p>$$ f(0) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 0 \<br>   1 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<p>$$ f(1) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 1 \<br>   0 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<ul>
+<li>对字符串XY，f(XY)=f(X)f(Y)(Z上的矩阵乘法)</li>
+<li>指纹是一一对应的</li>
+<li>通过比较行内元素的大小，可以知道最后是0还是1（0是左大右小，1是左小右大）</li>
+<li><p>而矩阵f(0)和f(1)的逆是已知的，可以右乘最后一位的逆矩阵来从指纹中删除最后一位，从而可以依次知道倒数第1、2、3、…位</p>
+</li>
+<li><p>e.g.</p>
+</li>
+<li><ul>
+<li>X = 1011</li>
+</ul>
+</li>
+<li><ul>
+<li>f(X) = f(1)f(0)f(1)f(1)</li>
+</ul>
+</li>
+<li><ul>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 0 \<br>1 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$ = $<br>\left[<br>\begin{matrix}<br>2 &amp; 5 \<br>1 &amp; 3<br>\end{matrix}<br>\right]<br>$</li>
+</ul>
+</li>
+</ul>
+<p><strong>指纹的增长速度</strong>(不满足性质1)</p>
+<ul>
+<li><p>X长度为m，则f(X)的每个元是不大于 $F<em>{m+1}$ 的整数，其中 $F</em>{m+1}$ 是第(m + 1)个斐波那契数($ F_1 = F<em>2 = 1, F</em>{m + 1} = F<em>m + F</em>{m - 1} $)</p>
+</li>
+<li><p>f(X)的元会大至 $F_{m + 1} \approx \frac{\phi^{m+1}}{\sqrt{5}}$</p>
+</li>
+<li>$ \phi = \frac{1 + \sqrt{5}}{2} \approx 1.618… $</li>
+</ul>
+<p><em>解决指纹增长过快的问题</em></p>
+<ul>
+<li>令p为[1, 2, …, M]内的素数，令 $Z_p$ 为模p的整数环</li>
+<li><p>定义 $f_p(X) = f(X)$ module p</p>
+</li>
+<li><p>e.g</p>
+</li>
+<li><ul>
+<li>X = (1011)^4, 长度为16</li>
+</ul>
+</li>
+<li><ul>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>206 &amp; 575 \<br>115 &amp; 321<br>\end{matrix}<br>\right]<br>$</li>
+</ul>
+</li>
+<li><ul>
+<li>给定素数p = 7</li>
+</ul>
+</li>
+<li><ul>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>3 &amp; 1 \<br>3 &amp; 6<br>\end{matrix}<br>\right]<br>$</li>
+</ul>
+</li>
+<li><p>引理9.4: 对任意整数 $m \geq 17$ , 有 $ \frac{m}{\ln m} \leq \pi(m) \leq 1.2551\frac{m}{\ln m} $</p>
+</li>
+<li><p>引理9.5: 给定正数 $u \leq 2^m$, u的不等质因数的数量为 $\pi(m)$, 当 $m \geq 29$ 时</p>
+</li>
+</ul>
+<h3 id="随机化匹配产生错误的概率"><a href="#随机化匹配产生错误的概率" class="headerlink" title="随机化匹配产生错误的概率"></a>随机化匹配产生错误的概率</h3><ul>
+<li>$f_p$为从函数集合 $\mathcal{F} = {f_p}$ 中随机选取的函数，其中p是范围[1, 2, …, M]内的素数</li>
+<li><p>任意两个长度为m的不同字符串产生错误匹配的概率<strong>不大于</strong> $\frac{\pi(\lfloor2.776m\rfloor)}{\pi(M)}$, $m \geq 11$</p>
+</li>
+<li><p>推论9.1: 选取的素数在$[1, 2, …, m^k]$范围内，则两个长度为m的字符串产生错误匹配的概率不大于 $\frac{3.48k}{m^{k-1}}$, k &gt; 1</p>
+</li>
+<li>$\pi(\lceil2.776m\rceil) \leq 1.2551 \frac{2.776m}{\ln(2.776m)} \approx \frac{3.48m}{\ln(2.776m)}$</li>
+<li><p>$\pi(m^k) \geq \frac{m^k}{\ln m^k} = \frac{m^k}{k\ln m}$</p>
+</li>
+<li><p>随机选取的指纹函数 $f_p \in \mathcal{F}$, p为[1, 2, …, M]中的素数，t对字符串产生错误匹配的概率上界为 $\frac{\pi(\lceil2.776mt\rceil)}{\pi(M)}$, $mt \geq 11$</p>
+</li>
+<li><p>推论9.2: 任意一个正整数常量k，$M = mt^k$, t对长度为m字符串产生错误匹配的概率为 $O(\frac{1}{t^{k-1}})$</p>
+</li>
+</ul>
+<p>Algorithm 9.4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(Monte Carlo String Matching)</div><div class="line">Input: Two arrays T(1:n) and P(1:m) representing the text and the pattern strings, respectively, and an integer M.</div><div class="line">Output: The array MATCH indicating all the positions where the pattern occurs in the text.</div><div class="line">begin</div><div class="line">  1. for 1 &lt;= i &lt;= n-m+1 pardo</div><div class="line">       Set MATCH(i) := 0</div><div class="line">  2. choose a random prime in the range [1, 2, ..., M], and compute f_p(P)</div><div class="line">  3. for 1 &lt;= i &lt;= n-m+1 pardo</div><div class="line">       Set L_l := f_p(T(i : i+m-1))</div><div class="line">  4. for 1 &lt;= i &lt;= n-m+1 pardo</div><div class="line">       if (L_l = f_p(P)) then Set MATCH(i) := 1</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>T(n) = O(logn), W(n) = O(n)</li>
+</ul>
+<h2 id="快速排序的随机并行算法"><a href="#快速排序的随机并行算法" class="headerlink" title="快速排序的随机并行算法"></a>快速排序的随机并行算法</h2><p>Algorithm 9.5<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(Randomized Quicksort)</div><div class="line">Input: An array A containing the n elements to be sorted.</div><div class="line">Output: The Array A in sorted order.</div><div class="line">begin</div><div class="line">  1. if n &lt;= 30 then sort A using any sorting algorithm and exit.</div><div class="line">  2. Select a random element S(A) of A.</div><div class="line">  3. for 1 &lt;= i &lt;= n pardo</div><div class="line">       A(i) &lt; S(A): Set mark(i) := 1</div><div class="line">       A(i) &gt; S(A): Set mark(i) := 0</div><div class="line">  4. Compact the elements of A marked 1 at the beginning of A, followed by S(A), which is followed by the elements marked 0. Set k equal to the position of the element S(A).</div><div class="line">  5. Recursively sort the subarrays A(1:k-1) and A(k+1:n).</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>$T(n) = O(log^2 n)$; $W(n) = O(nlogn)$</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/并行计算/" rel="tag"># 并行计算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/19/computer_network/computer_network_2/" rel="next" title="应用层 Application Layer">
+                <i class="fa fa-chevron-left"></i> 应用层 Application Layer
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/02/parellel_and_distributed_computing/distributed_compute1/" rel="prev" title="分布式计算的概念和模型">
+                分布式计算的概念和模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#随机并行算法简介"><span class="nav-number">1.</span> <span class="nav-text">随机并行算法简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在图中找分数阶的独立集-Fractional-Independent-Set"><span class="nav-number">2.</span> <span class="nav-text">在图中找分数阶的独立集(Fractional Independent Set)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有向环-directed-cycles"><span class="nav-number">2.1.</span> <span class="nav-text">有向环(directed cycles)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可平面图-planar-graphs"><span class="nav-number">2.2.</span> <span class="nav-text">可平面图(planar graphs)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串匹配的随机并行算法"><span class="nav-number">3.</span> <span class="nav-text">字符串匹配的随机并行算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指纹函数"><span class="nav-number">3.1.</span> <span class="nav-text">指纹函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机化匹配产生错误的概率"><span class="nav-number">3.2.</span> <span class="nav-text">随机化匹配产生错误的概率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序的随机并行算法"><span class="nav-number">4.</span> <span class="nav-text">快速排序的随机并行算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

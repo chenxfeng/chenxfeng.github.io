@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="微观经济学," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="需求表
+在其他条件相同时，一种物品的价格越高，人们愿意购买的数量就越少；而市场价格越低，人们愿意购买的数量就越多
+
+价格与需求之间的关系可以用一张需求表(demand schedule)或一条需求曲线(demand curve)表示
+
+
+
+需求曲线：数量和价格呈反比关系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="供给与需求的基本原理">
+<meta property="og:url" content="https://chenfeng.github.io/2017/01/21/economics/供给与需求的基本原理/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="需求表
+在其他条件相同时，一种物品的价格越高，人们愿意购买的数量就越少；而市场价格越低，人们愿意购买的数量就越多
+
+价格与需求之间的关系可以用一张需求表(demand schedule)或一条需求曲线(demand curve)表示
+
+
+
+需求曲线：数量和价格呈反比关系">
+<meta property="og:updated_time" content="2017-03-25T03:52:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="供给与需求的基本原理">
+<meta name="twitter:description" content="需求表
+在其他条件相同时，一种物品的价格越高，人们愿意购买的数量就越少；而市场价格越低，人们愿意购买的数量就越多
+
+价格与需求之间的关系可以用一张需求表(demand schedule)或一条需求曲线(demand curve)表示
+
+
+
+需求曲线：数量和价格呈反比关系">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/01/21/economics/供给与需求的基本原理/"/>
+
+
+
+
+
+  <title>供给与需求的基本原理 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/供给与需求的基本原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">供给与需求的基本原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
+                2017-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="需求表"><a href="#需求表" class="headerlink" title="需求表"></a>需求表</h3><ul>
+<li><p>在其他条件相同时，一种物品的价格越高，人们愿意购买的数量就越少；而市场价格越低，人们愿意购买的数量就越多</p>
+</li>
+<li><p>价格与需求之间的关系可以用一张需求表(demand schedule)或一条需求曲线(demand curve)表示</p>
+</li>
+</ul>
+<ul>
+<li>需求曲线：数量和价格呈反比关系</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><p>需求向下倾斜规律(law of downward-sloping demand): 当一种商品的价格上升时(同时其他条件保持不变)，购买者便会趋向于购买更少的数量；当价格下降、其他条件保持不变时，需求量会增加</p>
+</li>
+<li><p>替代效应(substitution effect): 当一种物品的价格上升时，人们会用其他类似的物品替代它</p>
+</li>
+<li><p>收入效应(income effect): 当价格上升时，人们会发现自己比以前穷了一些</p>
+</li>
+</ul>
+<ul>
+<li><p>市场需求</p>
+</li>
+<li><p>市场需求曲线是将在每一价格水平下所有个人的需求量加总而得到的</p>
+</li>
+<li><p>市场需求曲线符合需求向下倾斜规律</p>
+</li>
+<li><p>需求曲线背后的因素</p>
+</li>
+<li><p>消费者的平均收入是需求的重要决定因素。个人收入上升，即使价格不变，人们也会倾向于购买更多数量的几乎任何物品。</p>
+</li>
+<li><p>市场规模(用人口衡量)影响市场需求曲线</p>
+</li>
+<li><p>相关物品的价格及其可获得性会影响对该物品的需求，尤其是替代品之间存在着重要的联系</p>
+</li>
+<li><p>爱好或偏好的主观因素。代表文化、历史因素，反映心理、生理需要或人为造成的需要或者传统、宗教的因素</p>
+</li>
+<li><p>其他特殊的因素</p>
+</li>
+</ul>
+<ul>
+<li><p>需求的移动：除物品价格以外的其他因素(非价格变量)发生了变化</p>
+</li>
+<li><p>需求变动：商品价格之外的因素变化引起购买数量发生变化</p>
+</li>
+<li><p>需求增加，需求曲线向右移动，每一价格水平人们会购买更多物品</p>
+</li>
+<li><p>需求减少，需求曲线向左移动，每一价格水平人们会购买更少物品</p>
+</li>
+</ul>
+<h3 id="供给表"><a href="#供给表" class="headerlink" title="供给表"></a>供给表</h3><ul>
+<li><p>一种商品的供给表(supply schedule)或供给曲线(supply curve)体现在其它条件下，该商品的市场价格与生产者愿意生产和销售的数量之间的关系</p>
+</li>
+<li><p>应当保持不变的条件包括生产成本、相关物品的价格和政府政策</p>
+</li>
+</ul>
+<ul>
+<li><p>供给曲线</p>
+</li>
+<li><p>供给曲线向上倾斜的重要原因之一是边际收益递减规律：每一个新增加的劳动(要素)所增添的数量是递减的</p>
+</li>
+</ul>
+<ul>
+<li><p>供给曲线背后的因素</p>
+</li>
+<li><p>一个关键因素是生产成本</p>
+</li>
+<li><p>生产成本主要取决于投入品(劳动、能源或机器等)价格和技术进步(降低生产同量产出<br>所需的投入品数量的变化)(从应用科学突破到现有技术的更新与挖潜、生产流程的重新组织)</p>
+</li>
+<li><p>供给受相关物品价格的影响</p>
+</li>
+<li><p>一种替代品的价格上升，另一种替代品的供给就会下降</p>
+</li>
+<li><p>政府政策会对供给曲线产生重大影响</p>
+</li>
+<li><p>特殊因素(气候条件之类)也会影响供给曲线</p>
+</li>
+</ul>
+<ul>
+<li><p>供给的移动：价格之外的其他因素发生变动而引起供给数量发生变动</p>
+</li>
+<li><p>在市场的每一价格水平，当供给的数量都增加(或减少)时，供给增加(或减少)</p>
+</li>
+</ul>
+<h3 id="供给和需求的平衡"><a href="#供给和需求的平衡" class="headerlink" title="供给和需求的平衡"></a>供给和需求的平衡</h3><ul>
+<li><p>市场均衡(market equilibrium)：供给和需求的力量相互作用，产生均衡的价格和均衡<br>的数量。</p>
+</li>
+<li><p>在该点买者所愿意购买的数量正好等于卖者所愿意出售的数量。</p>
+</li>
+<li><p>当供求力量平衡时，只要其他条件保持不变，价格就没有理由继续波动</p>
+</li>
+<li><p>市场出清价格(market-clearing price)：需求量与供给量相等的价格水平(均衡价格)</p>
+</li>
+</ul>
+<ul>
+<li><p>供给曲线与需求曲线的均衡</p>
+</li>
+<li><p>均衡价格与均衡数量发生在愿意供给的数量等于愿意购买的数量的水平上</p>
+</li>
+<li><p>在竞争市场上，均衡发生在供给曲线与需求曲线的交点</p>
+</li>
+<li><p>在均衡价格水平上，市场上不存在短缺或过剩</p>
+</li>
+</ul>
+<ul>
+<li><p>供给或需求的移动对均衡的影响</p>
+</li>
+<li><p>当影响需求或供给的诸因素发生变化时就会导致需求或供给发生变动，并引起市场上的均衡价格和均衡数量也发生变动</p>
+</li>
+</ul>
+<ul>
+<li>解释价格和数量的变动：供给变化或需求变化；需求变化或沿着需求曲线移动</li>
+</ul>
+<ul>
+<li>供给、需求和移民：移民对于当地劳工市场影响微弱;人口流动性强，新移民流向最可能找到工作的城市，迁入城市对劳工需求已经上升;移民迁入，当地居民迁出，劳动总供给实际上没变动</li>
+</ul>
+<ul>
+<li><p>通过价格进行分配</p>
+</li>
+<li><p>用钱包进行配给(rationing by the purse)：市场通过供求的相互作用决定所有投入<br>和产出的均衡价格和均衡数量，将社会的稀缺品配置或配给到各种用途中</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微观经济学/" rel="tag"># 微观经济学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/21/economics/宏观经济学鸟瞰/" rel="next" title="宏观经济学鸟瞰">
+                <i class="fa fa-chevron-left"></i> 宏观经济学鸟瞰
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/21/economics/现代经济中的市场和政府/" rel="prev" title="现代经济中的市场和政府">
+                现代经济中的市场和政府 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求表"><span class="nav-number">1.</span> <span class="nav-text">需求表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#供给表"><span class="nav-number">2.</span> <span class="nav-text">供给表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#供给和需求的平衡"><span class="nav-number">3.</span> <span class="nav-text">供给和需求的平衡</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

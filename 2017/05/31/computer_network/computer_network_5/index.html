@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="computer network," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="introduction, servicesLink layer: introductionterminology:
+
+hosts and routers: nodes
+communication channels that connect adjacent nodes along communication path: links
+
+wired links
+
+
+
+wireless links">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据链路层和局域网(The Link Layer and LANs)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/05/31/computer_network/computer_network_5/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="introduction, servicesLink layer: introductionterminology:
+
+hosts and routers: nodes
+communication channels that connect adjacent nodes along communication path: links
+
+wired links
+
+
+
+wireless links">
+<meta property="og:image" content="https://chenfeng.github.io/\img\linkLayer_implement.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\adaptor_communicating.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\error_detection.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\parity_checking.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\parity_checking_2d.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\cyclic_redundancy_check.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\cyclic_redundancy_check_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\TDMA.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\FDMA.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\slotted_ALOHA.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\pure_ALOHA.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CSMA_collision.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\CSMA_collision_detection.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\taking_turn.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\token_passing.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\cable_access_network.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\cable_access_network1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\MAC_address.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ARP.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\routing_to_another_LAN.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\routing_to_another_LAN2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\routing_to_another_LAN3.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\routing_to_another_LAN4.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ethernet_physocal_topology.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\ethernet_frame_structure.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802_3_ethernet_stardard.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\switch_self_learning.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\switch_table.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\switch_forwarding_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\switch_forwarding_eg2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\switch_interconnecting.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\port_based_VLAN.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\port_based_VLAN2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\forwarding_between_vlans.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\vlan_spanning_multiple_switches.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\802_1Q_vlan_frame_format.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\MLPS.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\MPLS_path.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\MLPS_forwarding_table.png">
+<meta property="og:updated_time" content="2017-06-04T11:59:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据链路层和局域网(The Link Layer and LANs)">
+<meta name="twitter:description" content="introduction, servicesLink layer: introductionterminology:
+
+hosts and routers: nodes
+communication channels that connect adjacent nodes along communication path: links
+
+wired links
+
+
+
+wireless links">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\linkLayer_implement.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/05/31/computer_network/computer_network_5/"/>
+
+
+
+
+
+  <title>数据链路层和局域网(The Link Layer and LANs) | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/05/31/computer_network/computer_network_5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据链路层和局域网(The Link Layer and LANs)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-31T00:00:00+08:00">
+                2017-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="introduction-services"><a href="#introduction-services" class="headerlink" title="introduction, services"></a>introduction, services</h2><h3 id="Link-layer-introduction"><a href="#Link-layer-introduction" class="headerlink" title="Link layer: introduction"></a>Link layer: introduction</h3><p>terminology:</p>
+<ul>
+<li>hosts and routers: <strong>nodes</strong></li>
+<li>communication channels that connect adjacent nodes along communication path: <strong>links</strong></li>
+<li><ul>
+<li>wired links</li>
+</ul>
+</li>
+<li><ul>
+<li>wireless links</li>
+</ul>
+</li>
+<li><ul>
+<li>LANs</li>
+</ul>
+</li>
+<li>layer-2 packet: <strong>frame</strong>([链路层]帧), encapsulates datagram</li>
+</ul>
+<a id="more"></a>
+<blockquote>
+<p>data-link layer has responsibility of transferring datagram from one node to <strong>physically adjacent</strong> node over a link</p>
+</blockquote>
+<p><strong>Link layer: context</strong></p>
+<p>datagram transferred by different link protocols over different links:</p>
+<ul>
+<li>e.g., Ethernet on first link, frame relay on intermediate links, 802.11 on last link</li>
+</ul>
+<p>each link protocol provides different services</p>
+<ul>
+<li>e.g., may or may not provide rdt over link</li>
+</ul>
+<p>transportation analogy:</p>
+<ul>
+<li>trip from Princeton to Lausanne</li>
+<li><ul>
+<li>limo: Princeton to JFK</li>
+</ul>
+</li>
+<li><ul>
+<li>plane: JFK to Geneva</li>
+</ul>
+</li>
+<li><ul>
+<li>train: Geneva to Lausanne</li>
+</ul>
+</li>
+<li>tourist = <em>datagram</em></li>
+<li>transport segment = <em>communication link</em></li>
+<li>transportation mode = <em>link layer protocol</em></li>
+<li>travel agent = <em>routing algorithm</em></li>
+</ul>
+<h3 id="Link-layer-services"><a href="#Link-layer-services" class="headerlink" title="Link layer services"></a>Link layer services</h3><ul>
+<li><strong>framing, link access</strong>: </li>
+<li><ul>
+<li>encapsulate datagram into frame, adding header, trailer</li>
+</ul>
+</li>
+<li><ul>
+<li>channel access if shared medium</li>
+</ul>
+</li>
+<li><ul>
+<li>“MAC” addresses used in frame headers to identify source, destination  </li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>different from IP address!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>reliable delivery between adjacent nodes</strong></li>
+<li><ul>
+<li>we learned how to do this already (chapter 3)</li>
+</ul>
+</li>
+<li><ul>
+<li>seldom used on low bit-error link (fiber, some twisted pair)</li>
+</ul>
+</li>
+<li><ul>
+<li>wireless links: high error rates</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Q: why both link-level and end-end reliability?</p>
+</blockquote>
+<ul>
+<li><strong>flow control</strong>: pacing between adjacent sending and receiving nodes</li>
+<li><strong>error detection</strong>: </li>
+<li><ul>
+<li>errors caused by signal attenuation, noise. </li>
+</ul>
+</li>
+<li><ul>
+<li>receiver detects presence of errors: </li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>signals sender for retransmission or drops frame </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>error correction</strong>: </li>
+<li><ul>
+<li>receiver identifies and <strong>corrects</strong> bit error(s) without resorting to retransmission</li>
+</ul>
+</li>
+<li><strong>half-duplex and full-duplex</strong></li>
+<li><ul>
+<li>with half duplex, nodes at both ends of link can transmit, but not at same time</li>
+</ul>
+</li>
+</ul>
+<h3 id="Where-is-the-link-layer-implemented"><a href="#Where-is-the-link-layer-implemented" class="headerlink" title="Where is the link layer implemented"></a>Where is the link layer implemented</h3><ul>
+<li>in each and every host</li>
+<li>link layer implemented in “adaptor” (aka <strong>network interface card</strong> NIC) or on a chip</li>
+<li><ul>
+<li>Ethernet card, 802.11 card; Ethernet chipset</li>
+</ul>
+</li>
+<li><ul>
+<li>implements link, physical layer</li>
+</ul>
+</li>
+<li>attaches into host’s system buses</li>
+<li>combination of hardware, software, firmware</li>
+</ul>
+<blockquote>
+<p><img src="\img\linkLayer_implement.png" alt="linkLayer_implement.png"></p>
+</blockquote>
+<p><strong>Adaptors communicating</strong></p>
+<blockquote>
+<p><img src="\img\adaptor_communicating.png" alt="adaptor_communicating.png"></p>
+</blockquote>
+<ul>
+<li>sending side:</li>
+<li><ul>
+<li>encapsulates datagram in frame</li>
+</ul>
+</li>
+<li><ul>
+<li>adds error checking bits, rdt, flow control, etc.</li>
+</ul>
+</li>
+<li><p>receiving side</p>
+</li>
+<li><ul>
+<li>looks for errors, rdt, flow control, etc.</li>
+</ul>
+</li>
+<li><ul>
+<li>extracts datagram, passes to upper layer at receiving side</li>
+</ul>
+</li>
+</ul>
+<h2 id="error-detection-correction"><a href="#error-detection-correction" class="headerlink" title="error detection, correction"></a>error detection, correction</h2><h3 id="Error-detection"><a href="#Error-detection" class="headerlink" title="Error detection"></a>Error detection</h3><blockquote>
+<p>EDC = Error Detection and Correction bits (redundancy)<br>D   = Data protected by error checking, may include header fields</p>
+</blockquote>
+<ul>
+<li>Error detection not 100% reliable!</li>
+<li><ul>
+<li>protocol may miss some errors, but rarely</li>
+</ul>
+</li>
+<li><ul>
+<li>larger EDC field yields better detection and correction</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\error_detection.png" alt="error_detection.png"></p>
+</blockquote>
+<h3 id="Parity-checking"><a href="#Parity-checking" class="headerlink" title="Parity checking"></a>Parity checking</h3><p><strong>single bit parity</strong>: detect single bit errors</p>
+<blockquote>
+<p><img src="\img\parity_checking.png" alt="parity_checking.png"></p>
+</blockquote>
+<p><strong>two-dimensional bit parity</strong>: detect and correct single bit errors</p>
+<blockquote>
+<p><img src="\img\parity_checking_2d.png" alt="parity_checking_2d.png"></p>
+</blockquote>
+<h3 id="Cyclic-redundancy-check"><a href="#Cyclic-redundancy-check" class="headerlink" title="Cyclic redundancy check"></a>Cyclic redundancy check</h3><ul>
+<li>more powerful error-detection coding</li>
+<li>view data bits, <strong>D</strong>, as a binary number</li>
+<li>choose r+1 bit pattern (generator), <strong>G</strong> </li>
+<li>goal: choose r CRC bits, R, such that</li>
+<li><ul>
+<li><d,r> exactly divisible by G (modulo 2) </d,r></li>
+</ul>
+</li>
+<li><ul>
+<li>receiver knows G, divides <d,r> by G.  If non-zero remainder: error detected!</d,r></li>
+</ul>
+</li>
+<li><ul>
+<li>can detect all burst errors less than r+1 bits</li>
+</ul>
+</li>
+<li>widely used in practice (Ethernet, 802.11 WiFi, ATM)</li>
+</ul>
+<blockquote>
+<p><img src="\img\cyclic_redundancy_check.png" alt="cyclic_redundancy_check.png"></p>
+</blockquote>
+<ul>
+<li>CRC example</li>
+<li>want: D.2r XOR R = nG</li>
+<li>equivalently: D.2r = nG XOR R</li>
+<li>equivalently: if we divide D.2r by G, want remainder R to satisfy:</li>
+<li><ul>
+<li>$R = remainder[\frac{D.2^r}{G}]$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\cyclic_redundancy_check_eg.png" alt="cyclic_redundancy_check_eg.png"></p>
+</blockquote>
+<h2 id="multiple-access-protocols"><a href="#multiple-access-protocols" class="headerlink" title="multiple access protocols"></a>multiple access protocols</h2><p>two types of “links”:</p>
+<ul>
+<li>point-to-point</li>
+<li><ul>
+<li>PPP for dial-up access</li>
+</ul>
+</li>
+<li><ul>
+<li>point-to-point link between Ethernet switch, host</li>
+</ul>
+</li>
+<li><strong>broadcast (shared wire or medium)</strong></li>
+<li><ul>
+<li>old-fashioned Ethernet</li>
+</ul>
+</li>
+<li><ul>
+<li>upstream HFC</li>
+</ul>
+</li>
+<li><ul>
+<li>802.11 wireless LAN</li>
+</ul>
+</li>
+</ul>
+<h3 id="Multiple-access-protocols"><a href="#Multiple-access-protocols" class="headerlink" title="Multiple access protocols"></a>Multiple access protocols</h3><ul>
+<li>single shared broadcast channel </li>
+<li>two or more simultaneous transmissions by nodes: interference </li>
+<li><ul>
+<li><strong>collision</strong> if node receives two or more signals at the same time</li>
+</ul>
+</li>
+</ul>
+<p><strong>multiple access protocol</strong></p>
+<ul>
+<li>distributed algorithm that determines how nodes share channel, i.e., determine when node can transmit</li>
+<li>communication about channel sharing must use channel itself! </li>
+<li><ul>
+<li>no out-of-band channel for coordination</li>
+</ul>
+</li>
+</ul>
+<p><strong>An ideal multiple access protocol</strong></p>
+<ul>
+<li>given: broadcast channel of rate R bps</li>
+<li>desiderata:</li>
+<li><ul>
+<li><ol>
+<li>when one node wants to transmit, it can send at rate R.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>when M nodes want to transmit, each can send at average rate R/M</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>fully decentralized:</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>no special node to coordinate transmissions</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>no synchronization of clocks, slots</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>simple</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="MAC-protocols"><a href="#MAC-protocols" class="headerlink" title="MAC protocols"></a>MAC protocols</h3><p><strong>taxonomy(分类)</strong></p>
+<p>three broad classes:</p>
+<ul>
+<li><strong>channel partitioning</strong></li>
+<li><ul>
+<li>divide channel into smaller “pieces” (time slots, frequency, code)</li>
+</ul>
+</li>
+<li><ul>
+<li>allocate piece to node for exclusive use</li>
+</ul>
+</li>
+<li><strong>random access</strong></li>
+<li><ul>
+<li>channel not divided, allow collisions</li>
+</ul>
+</li>
+<li><ul>
+<li>“recover” from collisions</li>
+</ul>
+</li>
+<li><strong>“taking turns”</strong></li>
+<li><ul>
+<li>nodes take turns, but nodes with more to send can take longer turns</li>
+</ul>
+</li>
+</ul>
+<p><strong>Channel partitioning MAC protocols</strong></p>
+<p><strong>TDMA: time division multiple access</strong></p>
+<ul>
+<li>access to channel in “rounds” </li>
+<li>each station gets fixed length slot (length = packet transmission time) in each round </li>
+<li>unused slots go idle </li>
+<li>example: 6-station LAN, 1,3,4 have packets to send, slots 2,5,6 idle </li>
+</ul>
+<blockquote>
+<p><img src="\img\TDMA.png" alt="TDMA.png"></p>
+</blockquote>
+<p><strong>FDMA: frequency division multiple access</strong></p>
+<ul>
+<li>channel spectrum divided into frequency bands</li>
+<li>each station assigned fixed frequency band</li>
+<li>unused transmission time in frequency bands go idle </li>
+<li>example: 6-station LAN, 1,3,4 have packet to send, frequency bands 2,5,6 idle </li>
+</ul>
+<blockquote>
+<p><img src="\img\FDMA.png" alt="FDMA.png"></p>
+</blockquote>
+<p><strong>Random access protocols</strong></p>
+<ul>
+<li>when node has packet to send</li>
+<li><ul>
+<li>transmit at full channel data rate R.</li>
+</ul>
+</li>
+<li><ul>
+<li>no a priori coordination among nodes</li>
+</ul>
+</li>
+<li>two or more transmitting nodes ➜ “collision”,</li>
+<li><em>random access MAC protocol</em> specifies: </li>
+<li><ul>
+<li>how to detect collisions</li>
+</ul>
+</li>
+<li><ul>
+<li>how to recover from collisions (e.g., via delayed retransmissions)</li>
+</ul>
+</li>
+<li>examples of random access MAC protocols:</li>
+<li><ul>
+<li>slotted ALOHA</li>
+</ul>
+</li>
+<li><ul>
+<li>ALOHA</li>
+</ul>
+</li>
+<li><ul>
+<li>CSMA, CSMA/CD, CSMA/CA</li>
+</ul>
+</li>
+</ul>
+<p><strong>Slotted ALOHA</strong></p>
+<p>assumptions:</p>
+<ul>
+<li>all frames same size</li>
+<li>time divided into equal size slots (time to transmit 1 frame)</li>
+<li>nodes start to transmit only slot beginning </li>
+<li>nodes are synchronized</li>
+<li>if 2 or more nodes transmit in slot, all nodes detect collision</li>
+</ul>
+<p>operation:</p>
+<ul>
+<li>when node obtains fresh frame, transmits in next slot</li>
+<li><ul>
+<li>if no collision: node can send new frame in next slot</li>
+</ul>
+</li>
+<li><ul>
+<li>if collision: node retransmits frame in each subsequent slot with prob. p until success</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\slotted_ALOHA.png" alt="slotted_ALOHA.png"></p>
+</blockquote>
+<ul>
+<li>Pros:</li>
+<li>single active node can continuously transmit at full rate of channel</li>
+<li>highly decentralized: only slots in nodes need to be in sync</li>
+<li><p>simple</p>
+</li>
+<li><p>Cons:</p>
+</li>
+<li>collisions, wasting slots</li>
+<li>idle slots</li>
+<li>nodes may be able to detect collision in less than time to transmit packet</li>
+<li>clock synchronization</li>
+</ul>
+<p><strong>efficiency</strong>: long-run fraction of successful slots (many nodes, all with many frames to send)</p>
+<ul>
+<li>suppose: N nodes with many frames to send, each transmits in slot with probability p</li>
+<li>prob that given node has success in a slot  = p(1-p)N-1</li>
+<li><p>prob that any node has a success = Np(1-p)N-1</p>
+</li>
+<li><p>max efficiency: find p* that maximizes Np(1-p)N-1</p>
+</li>
+<li>for many nodes, take limit of Np<em>(1-p</em>)^{N-1} as N goes to infinity, gives:</li>
+<li><ul>
+<li>max efficiency = 1/e = .37</li>
+</ul>
+</li>
+<li><ul>
+<li>at best: channel used for useful transmissions 37% of time</li>
+</ul>
+</li>
+</ul>
+<p><strong>Pure (unslotted) ALOHA</strong></p>
+<ul>
+<li>unslotted Aloha: simpler, no synchronization</li>
+<li>when frame first arrives</li>
+<li><ul>
+<li>transmit immediately </li>
+</ul>
+</li>
+<li>collision probability increases:</li>
+<li><ul>
+<li>frame sent at t0 collides with other frames sent in [t0-1,t0+1]</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\pure_ALOHA.png" alt="pure_ALOHA.png"></p>
+</blockquote>
+<p>Pure ALOHA efficiency</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">P(success by given node) = P(node transmits) .</div><div class="line">                                              P(no other node transmits in [t0-1,t0] .</div><div class="line">                                              P(no other node transmits in [t0,t0+1]</div><div class="line">                         = p . (1-p)^&#123;N-1&#125; . (1-p)^&#123;N-1&#125;  </div><div class="line">                         = p . (1-p)^&#123;2(N-1)&#125;</div><div class="line">                    … choosing optimum p and then letting n -&gt; \infinite</div><div class="line">                         = 1/(2e) = .18</div></pre></td></tr></table></figure>
+<ul>
+<li><em>even worse than slotted Aloha</em></li>
+</ul>
+<p><strong>CSMA collisions</strong></p>
+<ul>
+<li>collisions can still occur: propagation delay means  two nodes may not hear each other’s transmission</li>
+<li>collision: entire packet transmission time wasted</li>
+<li>distance &amp; propagation delay play role in determining collision probability</li>
+</ul>
+<blockquote>
+<p><img src="\img\CSMA_collision.png" alt="CSMA_collision.png"></p>
+</blockquote>
+<p><strong>CSMA/CD (collision detection)</strong></p>
+<ul>
+<li>CSMA/CD: carrier sensing, deferral as in CSMA</li>
+<li>collisions detected within short time</li>
+<li>colliding transmissions aborted, reducing channel wastage </li>
+</ul>
+<blockquote>
+<p><img src="\img\CSMA_collision_detection.png" alt="CSMA_collision_detection.png"></p>
+</blockquote>
+<p>Ethernet CSMA/CD algorithm: </p>
+<ol>
+<li><p>NIC receives datagram from network layer, creates frame</p>
+</li>
+<li><p>If NIC senses channel idle, starts frame transmission. If NIC senses channel busy, waits until channel idle, then transmits.</p>
+</li>
+<li><p>If NIC transmits entire frame without detecting another transmission, NIC is done with frame !</p>
+</li>
+<li><p>If NIC detects another transmission while transmitting, aborts and sends jam signal</p>
+</li>
+<li><p>After aborting, NIC enters <strong>binary (exponential) backoff</strong>: </p>
+</li>
+</ol>
+<ul>
+<li>after mth collision, NIC chooses K at random from {0,1,2, …, 2^m-1}. NIC waits K·512 bit times, returns to Step 2</li>
+<li>longer backoff interval with more collisions</li>
+</ul>
+<p>CSMA/CD efficiency: </p>
+<ul>
+<li>$t_{prop}$ = max prop delay between 2 nodes in LAN</li>
+<li>$t_{trans}$ = time to transmit max-size frame</li>
+<li>$efficiency = \frac{1}{1 + 5t<em>{prop}/t</em>{trans}}$</li>
+<li>efficiency goes to 1 </li>
+<li><ul>
+<li>as $t_{prop}$ goes to 0</li>
+</ul>
+</li>
+<li><ul>
+<li>as $t_{trans}$ goes to infinity</li>
+</ul>
+</li>
+<li>better performance than ALOHA: and simple, cheap, decentralized</li>
+</ul>
+<p><strong>“Taking turns” MAC protocols</strong></p>
+<ul>
+<li>channel partitioning MAC protocols:</li>
+<li><ul>
+<li>share channel efficiently and fairly at high load</li>
+</ul>
+</li>
+<li><ul>
+<li>inefficient at low load: delay in channel access, 1/N bandwidth allocated even if only 1 active node! </li>
+</ul>
+</li>
+<li>random access MAC protocols</li>
+<li><ul>
+<li>efficient at low load: single node can fully utilize channel</li>
+</ul>
+</li>
+<li><ul>
+<li>high load: collision overhead</li>
+</ul>
+</li>
+<li>“taking turns” protocols</li>
+<li><ul>
+<li>look for best of both worlds!</li>
+</ul>
+</li>
+<li><p>polling(轮询): </p>
+</li>
+<li><ul>
+<li>master node “invites” slave nodes to transmit in turn</li>
+</ul>
+</li>
+<li><ul>
+<li>typically used with “dumb” slave devices</li>
+</ul>
+</li>
+<li>concerns:</li>
+<li><ul>
+<li>polling overhead </li>
+</ul>
+</li>
+<li><ul>
+<li>latency</li>
+</ul>
+</li>
+<li><ul>
+<li>single point of failure (master)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\taking_turn.png" alt="taking_turn.png"></p>
+</blockquote>
+<ul>
+<li>token(令牌) passing:</li>
+<li><ul>
+<li>control <strong>token</strong> passed from one node to next sequentially.</li>
+</ul>
+</li>
+<li><ul>
+<li>token message</li>
+</ul>
+</li>
+<li><ul>
+<li>concerns:</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>token overhead </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>latency</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>single point of failure (token)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\token_passing.png" alt="token_passing.png"></p>
+</blockquote>
+<h3 id="Cable-access-network"><a href="#Cable-access-network" class="headerlink" title="Cable access network"></a>Cable access network</h3><ul>
+<li>multiple 40Mbps downstream (broadcast) channels</li>
+<li><ul>
+<li>single CMTS transmits into channels</li>
+</ul>
+</li>
+<li>multiple 30 Mbps upstream channels</li>
+<li><ul>
+<li>multiple access: all users contend for certain upstream channel time slots (others assigned)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\cable_access_network.png" alt="cable_access_network.png"></p>
+</blockquote>
+<ul>
+<li>DOCSIS: data over cable service interface spec </li>
+<li><ul>
+<li>FDM over upstream, downstream frequency channels</li>
+</ul>
+</li>
+<li><ul>
+<li>TDM upstream: some slots assigned, some have contention</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>downstream MAP frame: assigns upstream slots</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>request for upstream slots (and data) transmitted random access (binary backoff) in selected slots</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\cable_access_network1.png" alt="cable_access_network1.png"></p>
+</blockquote>
+<p><strong> Summary of MAC protocols</strong></p>
+<ul>
+<li><strong>channel partitioning</strong>, by time, frequency or code</li>
+<li><ul>
+<li>Time Division, Frequency Division</li>
+</ul>
+</li>
+<li><strong>random access</strong>(dynamic), </li>
+<li><ul>
+<li>ALOHA, S-ALOHA, CSMA, CSMA/CD</li>
+</ul>
+</li>
+<li><ul>
+<li>carrier sensing: easy in some technologies (wire), hard in others (wireless)</li>
+</ul>
+</li>
+<li><ul>
+<li>CSMA/CD used in Ethernet</li>
+</ul>
+</li>
+<li><ul>
+<li>CSMA/CA used in 802.11</li>
+</ul>
+</li>
+<li>taking turns</li>
+<li><ul>
+<li>polling from central site, token passing</li>
+</ul>
+</li>
+<li><ul>
+<li>Bluetooth, FDDI,  token ring </li>
+</ul>
+</li>
+</ul>
+<h2 id="LANs"><a href="#LANs" class="headerlink" title="LANs"></a>LANs</h2><h3 id="MAC-addresses"><a href="#MAC-addresses" class="headerlink" title="MAC addresses"></a>MAC addresses</h3><p>32-bit IP address: </p>
+<ul>
+<li>network-layer address for interface</li>
+<li>used for layer 3 (network layer) forwarding</li>
+</ul>
+<p>MAC (or LAN or physical or Ethernet) address: </p>
+<ul>
+<li>function: <em>used ‘locally” to get frame from one interface to another physically-connected interface (same network, in IP-addressing sense)</em></li>
+<li>48 bit MAC address (for most LANs) burned in NIC ROM, also sometimes software settable</li>
+<li><ul>
+<li>e.g.: 1A-2F-BB-76-09-AD</li>
+</ul>
+</li>
+<li><ul>
+<li>hexadecimal (base 16) notation(each “numeral” represents 4 bits)</li>
+</ul>
+</li>
+<li><p>each adapter on LAN has unique LAN address</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\MAC_address.png" alt="MAC_address.png"></p>
+</blockquote>
+<ul>
+<li>MAC address allocation administered by IEEE</li>
+<li><p>manufacturer buys portion of MAC address space (to assure uniqueness)</p>
+</li>
+<li><p>analogy:</p>
+</li>
+<li><ul>
+<li>MAC address: like Social Security Number</li>
+</ul>
+</li>
+<li><ul>
+<li>IP address: like postal address</li>
+</ul>
+</li>
+<li>MAC flat address  ➜ portability </li>
+<li><ul>
+<li>can move LAN card from one LAN to another</li>
+</ul>
+</li>
+<li>IP hierarchical address not portable</li>
+<li><ul>
+<li>address depends on IP subnet to which node is attached</li>
+</ul>
+</li>
+</ul>
+<h3 id="ARP-address-resolution-protocol"><a href="#ARP-address-resolution-protocol" class="headerlink" title="ARP: address resolution protocol"></a>ARP: address resolution protocol</h3><p>Question: how to determine interface’s MAC address, knowing its IP address?</p>
+<ul>
+<li>ARP table: each IP node (host, router) on LAN has table</li>
+<li><ul>
+<li>IP/MAC address mappings for some LAN nodes:</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>&lt; IP address; MAC address; TTL&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>TTL (Time To Live): time after which address mapping will be forgotten (typically 20 min)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\ARP.png" alt="ARP.png"></p>
+</blockquote>
+<p><strong>ARP protocol: same LAN</strong></p>
+<ul>
+<li>A wants to send datagram to B</li>
+<li><ul>
+<li>B’s MAC address not in A’s ARP table.</li>
+</ul>
+</li>
+<li>A <strong>broadcasts</strong> ARP query packet, containing B’s IP address </li>
+<li><ul>
+<li>destination MAC address = FF-FF-FF-FF-FF-FF</li>
+</ul>
+</li>
+<li><ul>
+<li>all nodes on LAN receive ARP query </li>
+</ul>
+</li>
+<li>B receives ARP packet, replies to A with its (B’s) MAC address</li>
+<li><ul>
+<li>frame sent to A’s MAC address (<strong>unicast</strong>)</li>
+</ul>
+</li>
+<li>A caches (saves) IP-to-MAC address pair in its ARP table until information becomes old (times out) </li>
+<li><ul>
+<li>soft state: information that times out (goes away) unless refreshed</li>
+</ul>
+</li>
+<li>ARP is “plug-and-play”(即插即用):</li>
+<li><ul>
+<li>nodes create their ARP tables without intervention from net administrator</li>
+</ul>
+</li>
+</ul>
+<p><strong>Addressing: routing to another LAN</strong></p>
+<p>walkthrough: <strong>send datagram from A to B via R</strong></p>
+<ul>
+<li>focus on addressing – at IP (datagram) and MAC layer (frame)</li>
+<li>assume A knows B’s IP address</li>
+<li>assume A knows IP address of first hop router, R (how?)</li>
+<li>assume A knows R’s MAC address (how?)</li>
+</ul>
+<blockquote>
+<p><img src="\img\routing_to_another_LAN.png" alt="routing_to_another_LAN.png"></p>
+</blockquote>
+<ul>
+<li>A creates IP datagram with IP source A, destination B </li>
+<li>A creates link-layer frame with R’s MAC address as destination address, frame contains A-to-B IP datagram</li>
+</ul>
+<blockquote>
+<p><img src="\img\routing_to_another_LAN2.png" alt="routing_to_another_LAN2.png"></p>
+</blockquote>
+<ul>
+<li>frame sent from A to R</li>
+<li>frame received at R, datagram removed, passed up to IP</li>
+</ul>
+<blockquote>
+<p><img src="\img\routing_to_another_LAN3.png" alt="routing_to_another_LAN3.png"></p>
+</blockquote>
+<ul>
+<li>R forwards datagram with IP source A, destination B </li>
+<li>R creates link-layer frame with B’s MAC address as destination address, frame contains A-to-B IP datagram</li>
+</ul>
+<blockquote>
+<p><img src="\img\routing_to_another_LAN4.png" alt="routing_to_another_LAN4.png"></p>
+</blockquote>
+<h3 id="Ethernet"><a href="#Ethernet" class="headerlink" title="Ethernet"></a>Ethernet</h3><ul>
+<li>“dominant” wired LAN technology: </li>
+<li>single chip, multiple speeds (e.g., Broadcom  BCM5761)</li>
+<li>first widely used LAN technology</li>
+<li>simpler, cheap</li>
+<li>kept up with speed race: 10 Mbps – 10 Gbps </li>
+</ul>
+<p><strong>Ethernet: physical topology</strong></p>
+<ul>
+<li>bus: popular through mid 90s</li>
+<li><ul>
+<li>all nodes in same collision domain (can collide with each other)</li>
+</ul>
+</li>
+<li>star: prevails today</li>
+<li><ul>
+<li>active switch in center</li>
+</ul>
+</li>
+<li><ul>
+<li>each “spoke” runs a (separate) Ethernet protocol (nodes do not collide with each other)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\ethernet_physocal_topology.png" alt="ethernet_physocal_topology.png"></p>
+</blockquote>
+<p><strong>Ethernet frame structure</strong></p>
+<ul>
+<li>sending adapter encapsulates IP datagram (or other network layer protocol packet) in Ethernet frame</li>
+</ul>
+<blockquote>
+<p><img src="\img\ethernet_frame_structure.png" alt="ethernet_frame_structure.png"></p>
+</blockquote>
+<ul>
+<li>preamble: </li>
+<li><ul>
+<li>7 bytes with pattern 10101010 followed by one byte with pattern 10101011</li>
+</ul>
+</li>
+<li><ul>
+<li>used to synchronize receiver, sender clock rates</li>
+</ul>
+</li>
+<li><p>addresses: 6 byte source, destination MAC addresses</p>
+</li>
+<li><ul>
+<li>if adapter receives frame with matching destination address, or with broadcast address (e.g. ARP packet), it passes data in frame to network layer protocol</li>
+</ul>
+</li>
+<li><ul>
+<li>otherwise, adapter discards frame</li>
+</ul>
+</li>
+<li>type: indicates higher layer protocol (mostly IP but others possible, e.g., Novell IPX, AppleTalk)</li>
+<li>CRC: cyclic redundancy check at receiver</li>
+<li><ul>
+<li>error detected: frame is dropped</li>
+</ul>
+</li>
+</ul>
+<p><strong>Ethernet: unreliable, connectionless</strong></p>
+<ul>
+<li><em>connectionless</em>: no handshaking between sending and receiving NICs </li>
+<li><em>unreliable</em>: receiving NIC doesn’t send acks or nacks to sending NIC</li>
+<li><ul>
+<li>data in dropped frames recovered only if initial sender uses higher layer rdt (e.g., TCP), otherwise dropped data lost</li>
+</ul>
+</li>
+<li>Ethernet’s MAC protocol: unslotted <strong>CSMA/CD with binary backoff</strong></li>
+</ul>
+<p><strong>802.3 Ethernet standards: link &amp; physical layers</strong></p>
+<ul>
+<li>many different Ethernet standards</li>
+<li><ul>
+<li>common MAC protocol and frame format</li>
+</ul>
+</li>
+<li><ul>
+<li>different speeds: 2 Mbps, 10 Mbps, 100 Mbps, 1Gbps, 10 Gbps, 40 Gbps</li>
+</ul>
+</li>
+<li><ul>
+<li>different physical layer media: fiber, cable</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\802_3_ethernet_stardard.png" alt="802_3_ethernet_stardard.png"></p>
+</blockquote>
+<h3 id="Ethernet-switch"><a href="#Ethernet-switch" class="headerlink" title="Ethernet switch"></a>Ethernet switch</h3><ul>
+<li>link-layer device: takes an active role</li>
+<li><ul>
+<li>store, forward Ethernet frames</li>
+</ul>
+</li>
+<li><ul>
+<li>examine incoming frame’s MAC address, <strong>selectively</strong> forward  frame to one-or-more outgoing links when frame is to be forwarded on segment, uses CSMA/CD to access segment</li>
+</ul>
+</li>
+<li><strong>transparent</strong></li>
+<li><ul>
+<li>hosts are unaware of presence of switches</li>
+</ul>
+</li>
+<li>plug-and-play, self-learning</li>
+<li><ul>
+<li>switches do not need to be configured</li>
+</ul>
+</li>
+</ul>
+<p><strong>Switch: multiple simultaneous transmissions</strong></p>
+<ul>
+<li>hosts have dedicated, direct connection to switch</li>
+<li>switches buffer packets</li>
+<li>Ethernet protocol used on each incoming link, but no collisions; full duplex</li>
+<li><ul>
+<li>each link is its own collision domain</li>
+</ul>
+</li>
+<li><strong>switching</strong>: A-to-A’ and B-to-B’ can transmit simultaneously, without collisions </li>
+</ul>
+<p><strong>Switch forwarding table</strong></p>
+<p>Q: how does switch know A’ reachable via interface 4, B’ reachable via interface 5?</p>
+<ul>
+<li>A: each switch has a <strong>switch table</strong>, each entry:</li>
+<li><ul>
+<li>(MAC address of host, interface to reach host, time stamp)</li>
+</ul>
+</li>
+<li><ul>
+<li>looks like a routing table</li>
+</ul>
+</li>
+</ul>
+<p><strong>Switch: self-learning</strong></p>
+<p>Q: how are entries created, maintained in switch table? something like a routing protocol?</p>
+<ul>
+<li>switch <strong>learns</strong> which hosts can be reached through which interfaces</li>
+<li><ul>
+<li>when frame received, switch “learns”  location of sender: incoming LAN segment</li>
+</ul>
+</li>
+<li><ul>
+<li>records sender/location pair in switch table</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\switch_self_learning.png" alt="switch_self_learning.png"></p>
+<p><img src="\img\switch_table.png" alt="switch_table.png"></p>
+</blockquote>
+<p><strong>Switch: frame filtering/forwarding</strong></p>
+<p>when  frame received at switch:</p>
+<ol>
+<li><p>record incoming link, MAC address of sending host</p>
+</li>
+<li><p>index switch table using MAC destination address</p>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">if entry found for destination then &#123;</div><div class="line">    if destination on segment from which frame arrived then </div><div class="line">        drop frame</div><div class="line">    else </div><div class="line">        forward frame on interface indicated by entry</div><div class="line">    &#125;   </div><div class="line">else </div><div class="line">    flood  /* forward on all interfaces except arriving interface */</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>example:</p>
+<ul>
+<li>frame destination, A’, location unknown: flood</li>
+<li>destination A location known: selectively send on just one link</li>
+</ul>
+<blockquote>
+<p><img src="\img\switch_forwarding_eg.png" alt="switch_forwarding_eg.png"></p>
+<p><img src="\img\switch_forwarding_eg2.png" alt="switch_forwarding_eg2.png"></p>
+</blockquote>
+<p><strong>Interconnecting switches</strong></p>
+<p>self-learning switches can be connected together:</p>
+<blockquote>
+<p><img src="\img\switch_interconnecting.png" alt="switch_interconnecting.png"></p>
+</blockquote>
+<p>Q: sending from A to G - how does S1 know to forward frame destined to G via S4 and S3?</p>
+<ul>
+<li>A: self learning! (works exactly the same as in single-switch case!)</li>
+</ul>
+<p>Self-learning multi-switch example:</p>
+<ul>
+<li>Suppose C sends frame to I, I responds to C</li>
+</ul>
+<p>Q: show switch tables and packet forwarding in S1, S2, S3, S4 </p>
+<ul>
+<li>?</li>
+</ul>
+<p><strong>Switches vs. routers</strong></p>
+<ul>
+<li>both are store-and-forward: </li>
+<li><ul>
+<li>routers: network-layer devices (examine network-layer headers)</li>
+</ul>
+</li>
+<li><ul>
+<li>switches: link-layer devices (examine link-layer headers)</li>
+</ul>
+</li>
+<li><p>both have forwarding tables:</p>
+</li>
+<li><ul>
+<li>routers: compute tables using routing algorithms, IP addresses</li>
+</ul>
+</li>
+<li><ul>
+<li>switches: learn forwarding table using flooding, learning, MAC addresses </li>
+</ul>
+</li>
+</ul>
+<p><strong>VLANs: motivation</strong></p>
+<ul>
+<li>consider:</li>
+<li>CS user moves office to EE, but wants connect to CS switch?</li>
+<li>single broadcast domain:</li>
+<li><ul>
+<li>all layer-2 broadcast traffic (ARP, DHCP, unknown location of destination MAC address) must cross entire LAN </li>
+</ul>
+</li>
+<li><ul>
+<li>security/privacy, efficiency issues</li>
+</ul>
+</li>
+</ul>
+<p><strong>Virtual Local Area Network</strong>: switch(es) supporting VLAN capabilities can be configured to define multiple virtual LANS over single physical LAN infrastructure.</p>
+<p><strong>port-based VLAN</strong>: switch ports grouped (by switch management software) so that <em>single physical</em> switch operates as <em>multiple</em> virtual switches</p>
+<blockquote>
+<p><img src="\img\port_based_VLAN.png" alt="port_based_VLAN.png"></p>
+<p><img src="\img\port_based_VLAN2.png" alt="port_based_VLAN2.png"></p>
+</blockquote>
+<ul>
+<li><strong>traffic isolation</strong>: frames to/from ports 1-8 can only reach ports 1-8</li>
+<li><ul>
+<li>can also define VLAN based on MAC addresses of endpoints, rather than switch port</li>
+</ul>
+</li>
+<li><p><strong>dynamic membership</strong>: ports can be dynamically assigned among VLANs</p>
+</li>
+<li><p><strong>forwarding between VLANS</strong>: done via routing (just as with separate switches)</p>
+</li>
+<li><ul>
+<li>in practice vendors sell combined switches plus routers</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\forwarding_between_vlans.png" alt="forwarding_between_vlans.png"></p>
+</blockquote>
+<p><strong>VLANS spanning multiple switches</strong></p>
+<ul>
+<li><strong>trunk port</strong>: carries frames between VLANS defined over multiple physical switches</li>
+<li><ul>
+<li>frames forwarded within VLAN between switches can’t be vanilla 802.1 frames (must carry VLAN ID info)</li>
+</ul>
+</li>
+<li><ul>
+<li>802.1q protocol adds/removed additional header fields for frames forwarded between trunk ports</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\vlan_spanning_multiple_switches.png" alt="vlan_spanning_multiple_switches.png"></p>
+</blockquote>
+<p><strong>802.1Q VLAN frame format</strong></p>
+<blockquote>
+<p><img src="\img\802_1Q_vlan_frame_format.png" alt="802_1Q_vlan_frame_format.png"></p>
+</blockquote>
+<h2 id="link-virtualization-MPLS"><a href="#link-virtualization-MPLS" class="headerlink" title="link virtualization: MPLS"></a>link virtualization: MPLS</h2><p>Multiprotocol label switching (MPLS): </p>
+<ul>
+<li>initial goal: high-speed IP forwarding using fixed length label (instead of IP address) </li>
+<li><ul>
+<li>fast lookup using fixed length identifier (rather than shortest prefix matching)</li>
+</ul>
+</li>
+<li><ul>
+<li>borrowing ideas from Virtual Circuit (VC) approach</li>
+</ul>
+</li>
+<li><ul>
+<li>but IP datagram still keeps IP address!</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\MLPS.png" alt="MLPS.png"></p>
+</blockquote>
+<p><strong>MPLS capable routers</strong></p>
+<ul>
+<li>a.k.a. label-switched router</li>
+<li>forward packets to outgoing interface based only on label value (don’t inspect IP address)</li>
+<li><ul>
+<li>MPLS forwarding table distinct from IP forwarding tables</li>
+</ul>
+</li>
+</ul>
+<p><strong>MPLS versus IP paths</strong></p>
+<ul>
+<li>IP routing: path to destination determined by destination address alone</li>
+<li>MPLS routing: path to destination can be based on source and destination address</li>
+<li><ul>
+<li>fast reroute: precompute backup routes in case of link failure</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\MPLS_path.png" alt="MPLS_path.png"></p>
+</blockquote>
+<p>MPLS signaling: </p>
+<ul>
+<li><p>modify OSPF, IS-IS link-state flooding protocols to carry info used by MPLS routing, e.g., link bandwidth, amount of “reserved” link bandwidth</p>
+</li>
+<li><p>entry MPLS router uses RSVP-TE signaling protocol to set up MPLS forwarding at downstream routers</p>
+</li>
+</ul>
+<p>MPLS forwarding tables:</p>
+<blockquote>
+<p><img src="\img\MLPS_forwarding_table.png" alt="MLPS_forwarding_table.png"></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/computer-network/" rel="tag"># computer network</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/29/economics/good_market/" rel="next" title="商品市场">
+                <i class="fa fa-chevron-left"></i> 商品市场
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/03/algoDesign/dp/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction-services"><span class="nav-number">1.</span> <span class="nav-text">introduction, services</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Link-layer-introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Link layer: introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Link-layer-services"><span class="nav-number">1.2.</span> <span class="nav-text">Link layer services</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Where-is-the-link-layer-implemented"><span class="nav-number">1.3.</span> <span class="nav-text">Where is the link layer implemented</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#error-detection-correction"><span class="nav-number">2.</span> <span class="nav-text">error detection, correction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Error-detection"><span class="nav-number">2.1.</span> <span class="nav-text">Error detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parity-checking"><span class="nav-number">2.2.</span> <span class="nav-text">Parity checking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cyclic-redundancy-check"><span class="nav-number">2.3.</span> <span class="nav-text">Cyclic redundancy check</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multiple-access-protocols"><span class="nav-number">3.</span> <span class="nav-text">multiple access protocols</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiple-access-protocols"><span class="nav-number">3.1.</span> <span class="nav-text">Multiple access protocols</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAC-protocols"><span class="nav-number">3.2.</span> <span class="nav-text">MAC protocols</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cable-access-network"><span class="nav-number">3.3.</span> <span class="nav-text">Cable access network</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LANs"><span class="nav-number">4.</span> <span class="nav-text">LANs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MAC-addresses"><span class="nav-number">4.1.</span> <span class="nav-text">MAC addresses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP-address-resolution-protocol"><span class="nav-number">4.2.</span> <span class="nav-text">ARP: address resolution protocol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ethernet"><span class="nav-number">4.3.</span> <span class="nav-text">Ethernet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ethernet-switch"><span class="nav-number">4.4.</span> <span class="nav-text">Ethernet switch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link-virtualization-MPLS"><span class="nav-number">5.</span> <span class="nav-text">link virtualization: MPLS</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

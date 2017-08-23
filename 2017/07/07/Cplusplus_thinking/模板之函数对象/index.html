@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="STL提供函数对象(function obeject)
+
+提供一种方法，将要调用的函数与准备传递给这个函数的隐式参数捆绑起来
+
+
+函数对象表示一种操作，通过组合函数对象可以得到复杂的操作
+
+运行时处理大量的循环和条件语句、调用函数的程序块的组合对效率不利">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模板之函数对象">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/07/Cplusplus_thinking/模板之函数对象/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="STL提供函数对象(function obeject)
+
+提供一种方法，将要调用的函数与准备传递给这个函数的隐式参数捆绑起来
+
+
+函数对象表示一种操作，通过组合函数对象可以得到复杂的操作
+
+运行时处理大量的循环和条件语句、调用函数的程序块的组合对效率不利">
+<meta property="og:updated_time" content="2017-07-11T07:15:09.347Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模板之函数对象">
+<meta name="twitter:description" content="STL提供函数对象(function obeject)
+
+提供一种方法，将要调用的函数与准备传递给这个函数的隐式参数捆绑起来
+
+
+函数对象表示一种操作，通过组合函数对象可以得到复杂的操作
+
+运行时处理大量的循环和条件语句、调用函数的程序块的组合对效率不利">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/07/Cplusplus_thinking/模板之函数对象/"/>
+
+
+
+
+
+  <title>模板之函数对象 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/07/Cplusplus_thinking/模板之函数对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">模板之函数对象</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-07T23:00:00+08:00">
+                2017-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>STL提供函数对象(function obeject)</li>
+<li><ul>
+<li>提供一种方法，将要调用的函数与准备传递给这个函数的隐式参数捆绑起来</li>
+</ul>
+</li>
+<li><p>函数对象表示一种操作，通过组合函数对象可以得到复杂的操作</p>
+</li>
+<li><p>运行时处理大量的循环和条件语句、调用函数的程序块的组合对效率不利</p>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h3><ul>
+<li>标准库包含一个find_if的函数，以一对迭代器和一个判断式(predicate, 生成布尔值的函数)为参数</li>
+<li><ul>
+<li>返回迭代器限定的范围内第一个使判断式得到真值的迭代器的值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">greater1000</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> n &gt; <span class="number">1000</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>find_if(v.begin(), v.end(), greater1000)</code>返回指向v中第一个大于1000的元素的指针</p>
+<blockquote>
+<p>函数对象和函数对象配接器使得可以不必真正定义一个函数</p>
+</blockquote>
+<ul>
+<li>考虑模板类greater: 充当判断式，接受两个参数，判断第一个参数是否大于第二个</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">greater1000</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    greater&lt;<span class="keyword">int</span>&gt; gt;</div><div class="line">    <span class="keyword">return</span> gt(n, <span class="number">1000</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>标准库一个函数配接器: bind2nd</li>
+<li><ul>
+<li>函数对象f有两个参数，一个值v</li>
+</ul>
+</li>
+<li><ul>
+<li>bind2nd创建一个新的函数对象g，g(x)具有和f(x, v)相同的值</li>
+</ul>
+</li>
+<li><p><code>bind2nd(gt, 1000)</code></p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">greater1000</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    greater&lt;<span class="keyword">int</span>&gt; gt;</div><div class="line">    <span class="keyword">return</span> (bind2nd(gt, <span class="number">1000</span>))(n);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>用匿名对象greater<int>()取代局部变量gt</int></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">greater1000</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> (bind2nd(greater&lt;<span class="keyword">int</span>&gt;(), <span class="number">1000</span>))(n);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>表达式<code>bind2nd(greater&lt;int&gt;(), 1000)</code>等价于<code>greater1000(n)</code></li>
+<li><ul>
+<li><code>find_if(v.begin(), v.end(), bind2nd(greater&lt;int&gt;(), x))</code></li>
+</ul>
+</li>
+<li><p>原来的greater1000不通用</p>
+</li>
+<li>函数对象配接器解决问题</li>
+<li><ul>
+<li>把信息从使用函数对象的部分通过程序的另一部分(该部分对要传递的信息(如find_if函数体)一无所知)传递到到第三部分中(如与bind2nd有关的判断表达式)</li>
+</ul>
+</li>
+<li><ul>
+<li>在第三部分中信息被取出来</li>
+</ul>
+</li>
+</ul>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><blockquote>
+<p>某些编程语言中函数是第一级值(first-class value)<br>可以将函数作为参数传递，作为值返回，当作表达式的组件使用</p>
+</blockquote>
+<ul>
+<li>C++不属于这类语言</li>
+<li><ul>
+<li>函数作为参数时实际上是<strong>函数指针</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">void apply(void f(int), int* p, int n) &#123;</div><div class="line">    for (int i = 0; i &lt; n; ++i)</div><div class="line">        f(p[i]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>任何试图声明函数类型的变量都被转换成指向函数的指针声明</li>
+<li>所有对函数指针的调用都等价于对这个指针所指向函数的调用</li>
+<li>事实上等价于</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">void apply(void (*fp)(int), int* p, int n) &#123;</div><div class="line">    for (int i = 0; i &lt; n; ++i)</div><div class="line">        (*fp)(p[i]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>函数和函数指针的差异</li>
+<li><ul>
+<li>不可能通过操纵函数指针创建指针所指向的对象</li>
+</ul>
+</li>
+<li><ul>
+<li>C++的总存储空间在程序执行前就固定了</li>
+</ul>
+</li>
+<li><p>无法在程序开始运行后创建新函数</p>
+</li>
+<li><p>如何写一个C++函数把两个函数组合起来生成第三个函数</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">g</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>int (*h)(int) = compose(f, g)</code></li>
+<li><p>对任意整数n，h(n)将会等于f(g(n))</p>
+</li>
+<li><p>C++没有提供直接实现的方法</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 无效的代码</span></div><div class="line"><span class="keyword">int</span> (*compose(<span class="keyword">int</span> f(<span class="keyword">int</span>), <span class="keyword">int</span> g(<span class="keyword">int</span>)))(<span class="keyword">int</span> x) &#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">result</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> f(g(n));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>C++不支持嵌套函数</li>
+<li><ul>
+<li>result需要在块作用域内访问f和g</li>
+</ul>
+</li>
+<li><ul>
+<li>也不能简单地使result全局化: f和g在result中没有定义</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 这段代码也无效</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">result</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> f(g(n));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> (*compose(<span class="keyword">int</span> f(<span class="keyword">int</span>), <span class="keyword">int</span> g(<span class="keyword">int</span>)))(<span class="keyword">int</span> x) &#123;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>假设C++允许嵌套函数，仍然没用</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 无效的代码</span></div><div class="line"><span class="keyword">int</span> (*compose(<span class="keyword">int</span> f(<span class="keyword">int</span>), <span class="keyword">int</span> g(<span class="keyword">int</span>)))(<span class="keyword">int</span> x) &#123;</div><div class="line">    <span class="keyword">int</span> (*fp)(<span class="keyword">int</span>) = f;</div><div class="line">    <span class="keyword">int</span> (*gp)(<span class="keyword">int</span>) = g;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">result</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> fp(gp(n));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>将f和g的地址复制到两个局部变量中</li>
+<li>返回指向result的指针</li>
+<li>fp和gp是局部变量，compose返回就无效</li>
+<li>返回的result试图调用，导致程序运行崩溃</li>
+</ul>
+<blockquote>
+<p>编写compose函数需要常规的基于堆栈的实现外还需要某种自动内存管理<br>把函数当作第一级值处理的语言通常也支持垃圾回收机制</p>
+</blockquote>
+<h3 id="函数对象"><a href="#函数对象" class="headerlink" title="函数对象"></a>函数对象</h3><ul>
+<li><p>如果compose不能返回一个函数，可以返回一个行为和函数类似的类对象</p>
+</li>
+<li><p>函数对象</p>
+</li>
+<li><ul>
+<li>包含operator()成员函数的类</li>
+</ul>
+</li>
+<li><ul>
+<li>可以把类对象当作函数使用</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> F &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    F f;</div><div class="line">    <span class="keyword">int</span> n = f(<span class="number">42</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>通过这种技巧可以组合函数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Intcomp &#123;</div><div class="line">puclic:</div><div class="line">    Intcomp(<span class="keyword">int</span> (*f0)(<span class="keyword">int</span>), <span class="keyword">int</span> (*g0)(<span class="keyword">int</span>)): fp(f0), gp(g0) &#123; &#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="keyword">int</span> n)</span> <span class="keyword">const</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> (*fp)((*gp)(n));</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> (*fp)(<span class="keyword">int</span>);</div><div class="line">    <span class="keyword">int</span> (*gp)(<span class="keyword">int</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>k可以用Intcomp组合已有的函数f和g</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">g</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="function">Intcomp <span class="title">fg</span><span class="params">(f, g)</span></span>;</div><div class="line">    fg(<span class="number">42</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>从原理上解决组合问题</li>
+<li>只能组合函数，不能组合函数对象</li>
+</ul>
+<h3 id="函数对象模板"><a href="#函数对象模板" class="headerlink" title="函数对象模板"></a>函数对象模板</h3><ul>
+<li>即可组合函数又可组合函数对象</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> F, <span class="keyword">class</span> G, <span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line"><span class="keyword">class</span> Comp &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Comp(F f0, G g0): f(f0), g(g0) &#123; &#125;</div><div class="line">    <span class="function">Y <span class="title">operator</span><span class="params">()</span><span class="params">(X x)</span> <span class="keyword">const</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> f(g(x));</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    F f;</div><div class="line">    G g;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>将类型为F的函数(函数对象)与另一个类型为G的函数(函数对象)组合起来</li>
+<li>得到参数类型为X，结果类型为Y的对象</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    Comp&lt;<span class="keyword">int</span> (*)(<span class="keyword">int</span>), <span class="keyword">int</span> (*)(<span class="keyword">int</span>), <span class="keyword">int</span>, <span class="keyword">int</span>&gt; fg(f, g);</div><div class="line">    fg(<span class="number">42</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>若组合函数fg和f</li>
+<li><ul>
+<li><code>Comp&lt;Comp&lt;int (*)(int), int (*)(int), int, int&gt;, int (*)(int), int, int&gt; fgf(fg, f</code></li>
+</ul>
+</li>
+<li><ul>
+<li>非常复杂</li>
+</ul>
+</li>
+</ul>
+<h3 id="隐藏中间类型"><a href="#隐藏中间类型" class="headerlink" title="隐藏中间类型"></a>隐藏中间类型</h3><ul>
+<li>类型隐含在组合函数的参数的类型中</li>
+<li><code>Composition&lt;int, int&gt; fg(f, g);</code></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line"><span class="keyword">class</span> Composition &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">// ...</span></div><div class="line">    <span class="function">Y <span class="title">operator</span><span class="params">()</span> <span class="params">(X)</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>构造函数必须能够接受函数和函数对象的任何组合(包括它自身)</li>
+<li><ul>
+<li>构造函数必须是一个模板</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line"><span class="keyword">class</span> Composition &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">class</span> F, <span class="keyword">class</span> G&gt;</div><div class="line">    Composition(F, G);</div><div class="line">    <span class="function">Y <span class="title">operator</span><span class="params">()</span><span class="params">(X)</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>类型F和G不属于类Composition的类型，在这里不是模板参数</li>
+</ul>
+<h3 id="一种类型包罗万象"><a href="#一种类型包罗万象" class="headerlink" title="一种类型包罗万象"></a>一种类型包罗万象</h3><ul>
+<li>重写Comp使Comp<f, g,="" x,="" y="">继承自某个不依赖于F或者G的其他类Comp_base<x, y=""></x,></f,></li>
+<li><p>在类Composition中可以保存指向Comp_base<x, y="">的指针</x,></p>
+</li>
+<li><p>Comp_base<x, y="">接受X参数并返回Y结果的任意函数对象</x,></p>
+</li>
+<li>提供虚函数operator(): 纯虚函数</li>
+<li>需要虚析构函数</li>
+<li>复制Comp类型对象的纯虚函数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line"><span class="keyword">class</span> Comp_base &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> Y <span class="title">operator</span><span class="params">()</span><span class="params">(X)</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> Comp_base* <span class="title">clone</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="keyword">virtual</span> ~Comp_base() &#123; &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>用Comp_base作基类重写Comp: </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> F, <span class="keyword">class</span> G, <span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line"><span class="keyword">class</span> Comp : <span class="keyword">public</span> Comp_base&lt;X, Y&gt; &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Comp(F f0, G g0): f(f0), g(g0) &#123; &#125;</div><div class="line"></div><div class="line">    <span class="function">Y <span class="title">operator</span><span class="params">()</span> <span class="params">(X x)</span> <span class="keyword">const</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> f(g(x));</div><div class="line">    &#125;</div><div class="line">    Comp_base&lt;X, Y&gt;* clone() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Comp(*<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    F f;</div><div class="line">    G g;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>令Composition包含一个指向Comp_base的指针</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line"><span class="keyword">class</span> Composition &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">class</span> F, <span class="keyword">class</span> G&gt;</div><div class="line">    Composition(F, G);</div><div class="line">    <span class="function">Y <span class="title">operator</span><span class="params">()</span> <span class="params">(X)</span> <span class="keyword">const</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Comp_base&lt;X, Y&gt;* p;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>复制对象时对指针类型的处理: 复制底层对象</li>
+<li>显式复制构造函数和析构函数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line"><span class="keyword">class</span> Composition &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">class</span> F, <span class="keyword">class</span> G&gt;</div><div class="line">    Composition(F, G);</div><div class="line">    Composition(<span class="keyword">const</span> Composition&amp;);</div><div class="line">    Composition&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Composition&amp;);</div><div class="line">    ~Composition();</div><div class="line">    <span class="function">Y <span class="title">operator</span><span class="params">()</span><span class="params">(X)</span> <span class="keyword">const</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Comp_base&lt;X, Y&gt;* p;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ul>
+<li>构造函数用一个指向Comp<f, g,="" x,="" y="">的指针初始化类型为Comp_base<x, y="">的成员p</x,></f,></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">class</span> F, <span class="keyword">class</span> G&gt;</div><div class="line">    Composition&lt;X, Y&gt;::Composition(F f, G g): p(<span class="keyword">new</span> Comp&lt;F, G, X, Y&gt;(f, g)) &#123; &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>析构函数只删除p所指向的对象</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line">Composition&lt;X, Y&gt;::~Composition() &#123;</div><div class="line">    <span class="keyword">delete</span> p;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>拷贝构造函数和赋值操作符使用基类Comp_base中的纯虚函数clone</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line">Composition::Composition(<span class="keyword">const</span> Composition&amp; c): p(c.p-&gt;clone()) &#123; &#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line">Composition&amp; Composition::<span class="keyword">operator</span>=(<span class="keyword">const</span> Composition&amp; c) &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;c) &#123;</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">        p = c.p-&gt;clone();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>operator()覆盖基类Comp_base中的纯虚函数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> X, <span class="keyword">class</span> Y&gt;</div><div class="line">Y Composition::<span class="keyword">operator</span>() (X x) <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">return</span> (*p)(x);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>可以这样调用</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">g</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">h</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    Composition&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; fg(f, g);</div><div class="line">    Composition&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; fgh(fg, h);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li><p>绕过一个看似简单的语言局限所需要的大量工作</p>
+</li>
+<li><ul>
+<li>扩展语言以使之允许函数组合不像看上去那么简单</li>
+</ul>
+</li>
+<li><p>标准函数库函数transform: 对序列中的每个元素都运用函数或者函数对象，获得新序列</p>
+</li>
+<li><ul>
+<li><code>transform(a, a+100, a, f);</code></li>
+</ul>
+</li>
+<li>使序列的每一个元素都加上一个整数n</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class Add_an_integer &#123;</div><div class="line">public:</div><div class="line">    Add_an_integer(int n0): n(n0) &#123; &#125;</div><div class="line">    int operator() (int x) const &#123;</div><div class="line">        return x+n;</div><div class="line">    &#125;</div><div class="line">private:</div><div class="line">    int n;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li><p><code>transform(a, a+100, a, Add_an_integer(n));</code></p>
+</li>
+<li><p>函数配接器使得可以在联合的过程中定义类似Add_an_integer的类，而不必编写类的定义</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/06/Cplusplus_thinking/模板之迭代器配接器/" rel="next" title="模板之迭代器配接器">
+                <i class="fa fa-chevron-left"></i> 模板之迭代器配接器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/08/Cplusplus_thinking/模板之函数配接器/" rel="prev" title="模板之函数配接器">
+                模板之函数配接器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个例子"><span class="nav-number">1.</span> <span class="nav-text">一个例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数指针"><span class="nav-number">2.</span> <span class="nav-text">函数指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数对象"><span class="nav-number">3.</span> <span class="nav-text">函数对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数对象模板"><span class="nav-number">4.</span> <span class="nav-text">函数对象模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏中间类型"><span class="nav-number">5.</span> <span class="nav-text">隐藏中间类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一种类型包罗万象"><span class="nav-number">6.</span> <span class="nav-text">一种类型包罗万象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">7.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">8.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

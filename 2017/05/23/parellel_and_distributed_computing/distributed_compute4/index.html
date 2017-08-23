@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="分布式计算," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="(并行与分布式计算十二)
+分布式系统中的资源管理管理方式
+
+全集中管理方式：所有资源都由一个节点管理；
+集中分布管理方式：一个资源由一个节点管理；
+全分布管理方式：一个资源由多个节点共同管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="同步与互斥">
+<meta property="og:url" content="https://chenfeng.github.io/2017/05/23/parellel_and_distributed_computing/distributed_compute4/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="(并行与分布式计算十二)
+分布式系统中的资源管理管理方式
+
+全集中管理方式：所有资源都由一个节点管理；
+集中分布管理方式：一个资源由一个节点管理；
+全分布管理方式：一个资源由多个节点共同管理。">
+<meta property="og:image" content="https://chenfeng.github.io/\img\resource_manage.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\resource_manage2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\resource_manage3.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\resource_manage_consistency.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\resource_manage_equlity.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\resource_manage_nodeNum.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\resource_manage_controlSpace.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize_berkeley.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize_requestDrive.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize_distributedClock.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize_logicalClock.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize_logicalClock_scalar.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize_logicalClock_vector.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize_globalState.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize_Chandy_Lamport.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\synchronize_Chandy_Lamport_result.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mutual_exclusion.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mutual_exclusion_Lamport.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mutual_exclusion_RicartAgrawala.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\token_ring.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mutual_exclusion_election.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\mutual_exclusion_election1.png">
+<meta property="og:updated_time" content="2017-05-26T09:28:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="同步与互斥">
+<meta name="twitter:description" content="(并行与分布式计算十二)
+分布式系统中的资源管理管理方式
+
+全集中管理方式：所有资源都由一个节点管理；
+集中分布管理方式：一个资源由一个节点管理；
+全分布管理方式：一个资源由多个节点共同管理。">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\resource_manage.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/05/23/parellel_and_distributed_computing/distributed_compute4/"/>
+
+
+
+
+
+  <title>同步与互斥 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/05/23/parellel_and_distributed_computing/distributed_compute4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">同步与互斥</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-23T00:00:00+08:00">
+                2017-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>(并行与分布式计算十二)</p>
+<h2 id="分布式系统中的资源管理"><a href="#分布式系统中的资源管理" class="headerlink" title="分布式系统中的资源管理"></a>分布式系统中的资源管理</h2><p><strong>管理方式</strong></p>
+<ul>
+<li>全集中管理方式：所有资源都由一个节点管理；</li>
+<li>集中分布管理方式：一个资源由一个节点管理；</li>
+<li>全分布管理方式：一个资源由多个节点共同管理。</li>
+</ul>
+<a id="more"></a>
+<blockquote>
+<p><img src="\img\resource_manage.png" alt="resource_manage.png"></p>
+</blockquote>
+<p><strong>控制空间</strong></p>
+<ul>
+<li>说明资源管理分散程度的参数：</li>
+<li><ul>
+<li>参加资源的多重管理的节点数；</li>
+</ul>
+</li>
+<li><ul>
+<li>被多个节点管理的资源数。</li>
+</ul>
+</li>
+</ul>
+<p>按参加多重管理的节点数排序 ：</p>
+<blockquote>
+<p><img src="\img\resource_manage2.png" alt="resource_manage2.png"></p>
+<p><img src="\img\resource_manage3.png" alt="resource_manage3.png"></p>
+</blockquote>
+<p><strong>控制方式</strong></p>
+<ul>
+<li><p>多个节点参加对同一资源进行控制的方式：</p>
+</li>
+<li><ul>
+<li>顺序方式：按某种顺序，先由一个节点控制一段时间，之后再由另一个节点控制一段时间。 </li>
+</ul>
+</li>
+<li><ul>
+<li>分工方式：由不同的节点并发或顺序地控制同一资源执行不同的活动。</li>
+</ul>
+</li>
+<li><ul>
+<li>民主方式：所有节点共同协商一致对同一资源执行每个管理活动。 </li>
+</ul>
+</li>
+</ul>
+<p><strong>多重管理形式的分散性的参数</strong></p>
+<ul>
+<li>一致性是指由所有节点共同完成的对同一个资源管理的活动数目</li>
+</ul>
+<blockquote>
+<p><img src="\img\resource_manage_consistency.png" alt="resource_manage_consistency.png"></p>
+</blockquote>
+<ul>
+<li>均等性是各节点对同一资源进行某一控制活动时被分配的管理权限和责任的平等程度</li>
+</ul>
+<blockquote>
+<p><img src="\img\resource_manage_equlity.png" alt="resource_manage_equlity.png"></p>
+</blockquote>
+<ul>
+<li>参加每个活动的节点数目</li>
+</ul>
+<blockquote>
+<p><img src="\img\resource_manage_nodeNum.png" alt="resource_manage_nodeNum.png"></p>
+</blockquote>
+<p><strong>单个资源的控制空间</strong></p>
+<blockquote>
+<p><img src="\img\resource_manage_controlSpace.png" alt="resource_manage_controlSpace.png"></p>
+</blockquote>
+<p><strong>五维控制空间</strong></p>
+<p>可以将单个资源控制空间和集体资源控制空间合并成一个五维空间, 方法是加上资源个数、控制程度</p>
+<ul>
+<li><p>资源个数</p>
+</li>
+<li><p>控制程度</p>
+</li>
+<li><p>由所有节点共同完成的对同一个资源管理的活动数目(一致性)</p>
+</li>
+<li><p>各节点对同一资源进行某一控制活动时被分配的管理权限和责任的平等程度(均等性)</p>
+</li>
+<li><p>参加每个活动的节点数目</p>
+</li>
+</ul>
+<h2 id="资源分配原则"><a href="#资源分配原则" class="headerlink" title="资源分配原则"></a>资源分配原则</h2><p><strong>计算机与网络系统的四种体系结构</strong></p>
+<ol>
+<li><p>主机/终端 Host / Terminal</p>
+</li>
+<li><p>工作站/文件服务器 Workstation / File Server</p>
+</li>
+<li><p>客户机/服务器 Client / Server</p>
+</li>
+<li><p>对等计算 Peer-to-Peer</p>
+</li>
+</ol>
+<p><em>全集中管理方式</em></p>
+<ul>
+<li>资源申请者总是向惟一的节点提出</li>
+<li>节点按一定顺序处理每个申请</li>
+<li>如果资源已经被分配则申请者等待</li>
+<li>只要不发生死锁和占用资源者无限期占用资源的情况，任何申请者必定能在有限时间内获得资源</li>
+</ul>
+<p><strong>分布管理方式</strong></p>
+<p><em>集中分布方式</em></p>
+<ul>
+<li>申请者先向一个节点提出申请，如果暂时不能获得资源就转向另一个节点申请</li>
+<li>可能发生“饿死”现象</li>
+<li>也有可能发生死锁</li>
+</ul>
+<p><em>全分布方式</em></p>
+<ul>
+<li>申请者向任一节点提出申请，节点共同协商分配资源</li>
+</ul>
+<h2 id="同步机构"><a href="#同步机构" class="headerlink" title="同步机构"></a>同步机构</h2><p>同步点: 同步点是为了达到进程间同步而设立的执行控制点</p>
+<ul>
+<li><p>特征：到达这些控制点时，一个进程在另一个进程执行完某一活动前不能继续执行</p>
+</li>
+<li><p>目的：让分解并分布到各个节点的任务能够在节点的协同合作下正确地解决任务间的数据依赖问题；否则的话，没有控制的超前或落后会导致数据的不一致和计算的错误</p>
+</li>
+</ul>
+<p><em>两类共享资源</em></p>
+<ul>
+<li><p>一类是各进程可以同时访问的，如中央处理机(允许多个进程交叠使用一个处理机)、只读文件和不允许修改的存放子程序和数据的主存区域等</p>
+</li>
+<li><p>另一类是不允许多个进程同时访问的，每次只允许一个进程使用，如大多数外部设备(如打印机)、可写的文件以及主存中可修改的区域等。同步机构在互斥控制中的作用是对活动的执行进行排序</p>
+</li>
+</ul>
+<p><em>一致状态</em></p>
+<ul>
+<li><p>一个计算系统应该在所有时间内满足一定的外部规定或约束</p>
+</li>
+<li><p>如果一个计算系统确实在所有时间内满足了一定的外部规定或约束，这时我们称系统状态是一致的</p>
+</li>
+<li><p>同步机构的目的就是给进程提供某种手段，使系统保持一致状态。</p>
+</li>
+</ul>
+<p><em>三种分布式计算方式</em></p>
+<ul>
+<li>完全复制的计算：任何操作所激发的每个活动必须由所有的消费者共同处理，要求所有的活动均应完成</li>
+<li>完全分割的计算：一个操作所激发的不同活动由不同的消费者分别独自处理</li>
+<li>分割和部分复制的计算：一个操作所激发的活动中，某些是由不同的消费者独自处理的，某些操作是由一些消费者共同处理。它兼有前面两种计算形式的特点</li>
+</ul>
+<p><em>同步机构在不同计算方式中的目的</em></p>
+<ul>
+<li>完全复制的计算：同步机构的目的是保证消费者处理活动的次序必须相同</li>
+<li>完全分割的计算：同步机构的目的是保证所有相互干扰的活动成为有序的，使得该操作保持原子性(要么完成操作，要么干脆不发生)</li>
+<li>分割和部分复制的计算：同步机构的目的兼有保证次序和保证操作的原子性。对于不同的计算方式，同步机构的目的也是不完全相同的。</li>
+</ul>
+<p><strong>评价同步机构的标准</strong></p>
+<ol>
+<li><p>响应时间和吞吐量。各种机构应尽量利用系统的并行性质，以提高吞吐量和缩短响应时间。</p>
+</li>
+<li><p>恢复能力。同步机构应能使系统从故障中恢复过来。 </p>
+</li>
+<li><p>开销。指使用同步机构的代价，包括额外增加的报文长度、数量和对它们的处理时间，以及用于存放同步信息所需的额外存储空间。 </p>
+</li>
+<li><p>公平性。操作发生冲突时，同步机构应能避免生产者饿死，各生产者具有平等的权利。</p>
+</li>
+<li><p>可扩充性。系统扩充新的处理机时同步机构应不影响其正常运行。</p>
+</li>
+<li><p>连接方式。使用某些同步机构要求生产者在逻辑上全部互连，这样所产生的开销可能很大；有些同步机构只要求一个生产者知道其邻居的情况，开销也较少。</p>
+</li>
+<li><p>初始化。使用同步机构要求系统应容易进行初始化，知道进程何时可以进行生产和消费活动。 </p>
+</li>
+<li><p>排序方法。当生产者对一序列操作进行某种指定排序时，必须交换报文，各种同步机构实现效率可能大不相同。</p>
+</li>
+</ol>
+<h3 id="同步实体"><a href="#同步实体" class="headerlink" title="同步实体"></a>同步实体</h3><p>物理时钟、事件计数器、逻辑时钟、循环令牌和顺序器、进程、其它</p>
+<p><strong>集中式和分布式同步机构</strong></p>
+<ul>
+<li><p>在集中式同步机构中，每个生产者每次发动一个操作时均要访问该同步实体。集中式同步实体有一个为所有必须相互同步的进程都知道的名字，任何时候这些进程的任何一个均可访问这一同步实体。执行每个功能如进程调度、数据访问控制等均要经过集中的同步实体进行控制 。</p>
+</li>
+<li><p>分布式同步机构不存在一个集中的同步实体，执行各种功能时是分散控制的。</p>
+</li>
+</ul>
+<p><em>集中式同步机构和分布式同步机构的优缺点</em></p>
+<ul>
+<li><p>集中式同步机构最大的缺点是不可靠，一旦出故障就可能造成全局不工作；另外在性能方面也大大下降，因为集中会产生一个瓶颈。但实现简单。 </p>
+</li>
+<li><p>分布式同步机构在可靠性和性能方面优于集中式同步机构，也有很多种，主要有多重物理时钟、多重逻辑时钟、循环令牌等。但实现复杂。</p>
+</li>
+</ul>
+<h3 id="同步机构：物理时钟"><a href="#同步机构：物理时钟" class="headerlink" title="同步机构：物理时钟"></a>同步机构：物理时钟</h3><ul>
+<li><p>物理时钟需要从UTC(Universal Tim Coordinator)获得当前时间。UTC提供当前国际标准时间，有两个著名站点WWV和GEOS。</p>
+</li>
+<li><p>物理时钟的同步过程：</p>
+</li>
+<li><ul>
+<li>A通过网络向B发送请求；</li>
+</ul>
+</li>
+<li><ul>
+<li>B读取本地时钟值；</li>
+</ul>
+</li>
+<li><ul>
+<li>B的时钟值通过网络传递给A；</li>
+</ul>
+</li>
+<li><ul>
+<li>按照网络所需的传输延迟对B的时钟值进行校正；</li>
+</ul>
+</li>
+<li><ul>
+<li>比较A的时钟值和B的时钟值。</li>
+</ul>
+</li>
+<li><p>物理时钟的同步方式：集中式、分布式。</p>
+</li>
+</ul>
+<p><em>集中式物理时钟</em></p>
+<p>集中式物理时钟的实现方式：基于广播的方式、请求驱动的方式。</p>
+<ul>
+<li>在<em>基于广播</em>的集中式物理时钟的实现方案中，集中的时钟服务员节点定期地向系统中的各个成员广播当前的时间。</li>
+<li>在<em>请求驱动</em>的集中式物理时钟的实现方案中，顾客节点向时间服务员节点发送请求，并根据时间服务员节点发回的时间来校正自己的物理时钟。</li>
+</ul>
+<p><em>基于广播</em>的方式1：</p>
+<ul>
+<li>原理：顾客只是简单地将本地时间同所接收到的时间进行对比，当然这种对比考虑到了通常的网络传输延迟，然后校正自己的本地时钟。</li>
+<li>时间校正方法：</li>
+<li><ul>
+<li>如果顾客的时钟值大于时钟服务员节点的时钟值，顾客将自己的时钟调慢，<strong>使之逐渐接近</strong>准确的时间。时钟值不能往回调，因为映像到此时钟的事件已经产生。 </li>
+</ul>
+</li>
+<li><ul>
+<li>如果顾客的时钟值落后于时钟服务员节点的时钟值，则顾客将时钟值向前拨，同时将时钟适当地调快。</li>
+</ul>
+</li>
+</ul>
+<p>基于广播的方式1时间校正方法:</p>
+<blockquote>
+<p><img src="\img\synchronize.png" alt="synchronize.png"></p>
+</blockquote>
+<p><em>基于广播</em>的方式2（Berkeley算法）：</p>
+<ul>
+<li>顾客收到广播时间之后向集中的时间服务员节点发送它本地的当前时间值；</li>
+<li>每个顾客到时间服务员节点有不同的平均延迟，这些延迟时间预先存放在时间节点处。时间服务员节点根据这些延迟对不同顾客传送来的当地时间进行校正； </li>
+<li>任何校正过的时间如果同时间服务员节点上的时间差值超过了对应节点到时间节点的延迟时间常量，那么这个时间将不被列入考虑之列。因为这个时间可能是由于系统故障导致的，被认为是不准确的。</li>
+<li>剩余被校正的时间值连同时间服务员节点上的时间值一起进行平均，这个平均值作为当前时间。 </li>
+<li>时间服务员节点为每个顾客计算误差，然后将每个误差发送给对应的顾客。 </li>
+<li>每个顾客校正自己的时钟。同前一个处理方式一样，时钟是不能往回拨的，但是可以按误差值将自己的时钟慢下来。</li>
+</ul>
+<p>基于广播的方式2（Berkeley算法）：</p>
+<blockquote>
+<p><img src="\img\synchronize_berkeley.png" alt="synchronize_berkeley.png"></p>
+</blockquote>
+<p><em>请求驱动</em>方式：</p>
+<ul>
+<li>顾客向时间节点发送请求，要求获得当前时间；</li>
+<li>时间节点返回当前时间值；</li>
+<li>顾客计算本地的时间值和节点返回的时间值之间的差值，这个差值用于时钟值的校正；它的实现不仅考虑了网络延迟，还包含了报文的响应和服务时间；</li>
+<li>如果校正值大于预先规定好的门限值，则被认为是不准确的，这可能是由于网络故障引起的，不准确的值被丢弃；</li>
+<li>如果节点返回的时间值被认为是准确的，则对本地时钟进行校正，同样地，本地时钟不能往回拨，只能使本地时钟慢下来。</li>
+</ul>
+<p>请求驱动方式：</p>
+<blockquote>
+<p><img src="\img\synchronize_requestDrive.png" alt="synchronize_requestDrive.png"></p>
+</blockquote>
+<p><em>分布式物理时钟</em></p>
+<ul>
+<li>每个节点计算机以预先定义好的时间间隔定期地广播它的当前时间。</li>
+<li>由于时钟存在漂移，假定广播报文并不是很准确地在同一时刻发出。</li>
+<li>一旦一个节点广播了它的当前时间，就立即启动一个定时器，在定时期内接收其它节点的报文，每个报文标明了当地的当前时间，然后分别按对应的网络延迟对其它节点的时间值进行校正。</li>
+</ul>
+<p>分布式物理时钟时间校正方式：</p>
+<ol>
+<li><p>计算所有节点的平均值，把这个值作为当前时间。这种方法可能会产生不准确的结果，因为某些报文由于重发超出了通常的网络延迟。</p>
+</li>
+<li><p>设定一个容错门限延迟，这个门限为单次发送的最大网络延迟，任何超过这个门限延迟的值被认为是错误的并被丢弃。其他未被丢弃的值进行平均，平均值作为当前时间。</p>
+</li>
+<li><p>丢弃m个最大的时间值和m个最小的时间值，这些值被认为是不准确的。剩下的进行平均，平均值作为当前时间。</p>
+</li>
+</ol>
+<blockquote>
+<p><img src="\img\synchronize_distributedClock.png" alt="synchronize_distributedClock.png"></p>
+</blockquote>
+<h3 id="同步机构：逻辑时钟"><a href="#同步机构：逻辑时钟" class="headerlink" title="同步机构：逻辑时钟"></a>同步机构：逻辑时钟</h3><p>逻辑时钟可以给分布计算系统中的事件一个唯一的排序。逻辑时钟的本质是基于Lamport定义的<strong>因果优先关系</strong>:</p>
+<ul>
+<li>如果a和b均是同一进程中的两个事件，并且a在b之前出现，则a→b； </li>
+<li>若a代表“一个进程发送一个报文（消息）”这个事件，b代表“另一个进程接收这个报文”这个事件，则a→b；</li>
+<li>如果a→b，且b→c，则a→c。 </li>
+</ul>
+<p>两个不同的事件a和b，如果a→b，或b→a，则事件a和b是因果关联的。如果a→b和b→a均不成立，则称事件a和b是并发的。 </p>
+<p>因果优先关系的时空图：水平方向代表空间，垂直方向代表时间，圆点代表事件，竖线代表进程，进程之间带箭头的线代表报文（消息）</p>
+<blockquote>
+<p><img src="\img\synchronize_logicalClock.png" alt="synchronize_logicalClock.png"></p>
+</blockquote>
+<ul>
+<li>设Ci代表进程i的逻辑时钟，该逻辑时钟就是一个函数，它给进程i中的事件a分配一个正整数值$C_i(a)$。</li>
+<li>时钟条件： 对任何事件a和b，如果a→b，则C(a)&lt;C(b)。但相反的结论不能成立。</li>
+<li><ul>
+<li>若a和b是同一进程$P_i$中的两个时间，并且a→b，则$C_i(a) &lt; C_i(b)$；</li>
+</ul>
+</li>
+<li><ul>
+<li>若a代表“一个Pi进程发送一个报文”这个事件，b代表“另一个进程$P_j$接收这个报文”这个事件，$C_i(a)&lt;C_j(b)$。</li>
+</ul>
+</li>
+<li><p>每个进程Pi有一个逻辑时钟$LC_i$，$LC_i$被初始化为init(init≥0)并且它是一个非减的整数序列。进程$P_i$发送的每个报文m都被标上$LC_i$的当前值和进程的标号i，从而形成一个三元组$(m,LC_i,i)$。任何一个逻辑时钟$LC_i$基于以下两条规则更新它的逻辑时钟值： </p>
+</li>
+<li><ul>
+<li>当发生一个事件(一个外部发送或内部事件)之前，我们更新$LC_i： LC_i:=LC_i+d  (d&gt;0)$ </li>
+</ul>
+</li>
+<li><ul>
+<li>当收到一个带时间戳的报文$(m,LC_j,j)$时，我们更新$LC_i： LC_i:=max(LC_i,LC_j)+d (d&gt;0)$</li>
+</ul>
+</li>
+</ul>
+<p>标量逻辑时钟</p>
+<blockquote>
+<p><img src="\img\synchronize_logicalClock_scalar.png" alt="synchronize_logicalClock_scalar.png"></p>
+</blockquote>
+<p>向量逻辑时钟</p>
+<blockquote>
+<p><img src="\img\synchronize_logicalClock_vector.png" alt="synchronize_logicalClock_vector.png"></p>
+</blockquote>
+<p>因果优先关系：a→b &lt;-&gt; $LC_i &lt; LC_j$</p>
+<p>并发关系： a‖b &lt;-&gt; $LC_i‖LC_j$</p>
+<h3 id="同步机构：全局状态"><a href="#同步机构：全局状态" class="headerlink" title="同步机构：全局状态"></a>同步机构：全局状态</h3><p>定义：分布式系统的全局状态是其各组成部件的本地状态的集合，包括各个处理器状态和所有通信信道状态</p>
+<p>分类：</p>
+<ul>
+<li>处理器状态：寄存器状态、堆栈状态、本地内存状态等，依赖于分布式应用的本地语义</li>
+<li>通信信道状态：由信道中传输的消息集合给出</li>
+</ul>
+<blockquote>
+<p>见分布式计算的概念和模型</p>
+</blockquote>
+<p><strong>全局状态的获取（快照算法）</strong>：</p>
+<ul>
+<li><p>假如启动算法的进程为P，那么它首先记录自己的局部状态，然后它沿着它的输出通道发送一个标志(marker)，指示接收者应该参与记录一个全局状态的工作。</p>
+</li>
+<li><p>当接收者Q通过它的输入通道C收到一个标志，它将依据不同条件执行以下不同操作： </p>
+</li>
+<li><ul>
+<li>如果Q还没有记录自己的局部状态，它首先记录自己的局部状态，并记录通道C的状态为空报文序列，然后也沿着它自己的输出通道发送一个标志。 </li>
+</ul>
+</li>
+<li><ul>
+<li>如果Q已经记录了自己的局部状态，通过通道C收到的标志用来指示Q应该记录通道的状态。通道的状态是Q记录它的局部状态以来到收到这个标志前所收到的报文系列。</li>
+</ul>
+</li>
+<li><p>如果一个进程已经沿它的每个输入通道接收到一个标志，并对每个标志进行了处理，就称它已经完成了它的那部分算法。</p>
+</li>
+<li><p>一个进程的局部状态，连同它的所有输入通道的状态将被发送到这个快照的发起进程。</p>
+</li>
+</ul>
+<p>P1启动了快照算法，它同时执行三个动作：</p>
+<ul>
+<li>(a)记录局部状态；</li>
+<li>(b)发送一个标志到C12和C13；</li>
+<li>(c)设置一个计数器对来自输入通道C21和C31的报文进行计数</li>
+</ul>
+<blockquote>
+<p><img src="\img\synchronize_globalState.png" alt="synchronize_globalState.png"></p>
+</blockquote>
+<p>一旦进程P2从通道C12接收到标志，它也执行三个动作：</p>
+<ul>
+<li>(a)记录其局部状态并记录通道C12的状态为空；</li>
+<li>(b)发送一个标志到通道C21和C23；</li>
+<li>(c)设置一个计数器对来自输入通道C32的报文进行计数。</li>
+</ul>
+<p>类似地，进程P3也执行三个动作。</p>
+<p>我们假定从进程P1来的标志比从进程P3来的标志早到达进程P2。</p>
+<p>一旦从进程P3来的标志到达进程P2，P2就记录通道C32的状态为自设置计数器以来沿着这个通道接收到的报文的序列。于是进程P2完成了自己的那部分算法，因为它已经从每个输入通道接收到一个标志并已经记录了自己的局部状态。</p>
+<p>类似地，进程P3在接收到从P1和P2发来的标志后，属于它的那部分算法终止。进程P1在接收到从P2和P3发来的标志后，属于它的那部分算法终止。</p>
+<blockquote>
+<p><img src="\img\synchronize_Chandy_Lamport.png" alt="synchronize_Chandy_Lamport.png"></p>
+<p><img src="\img\synchronize_Chandy_Lamport_result.png" alt="synchronize_Chandy_Lamport_result.png"></p>
+</blockquote>
+<h2 id="互斥算法"><a href="#互斥算法" class="headerlink" title="互斥算法"></a>互斥算法</h2><p>衡量互斥算法性能的参数： </p>
+<ul>
+<li>完成一次互斥操作所需的报文数目；</li>
+<li>同步延迟，即从一个进程离开临界区之后到下一个进程进入临界区之前的时间间隔；</li>
+<li>响应时间，即从一个进程发出请求到该进程离开该临界区之间的时间间隔。</li>
+</ul>
+<p><strong>互斥算法：集中式方法</strong></p>
+<blockquote>
+<p><img src="\img\mutual_exclusion.png" alt="mutual_exclusion.png"></p>
+</blockquote>
+<p><strong>Lamport时间戳互斥算法</strong></p>
+<p>Lamport时间戳互斥算法由以下5条规则组成 ：</p>
+<ul>
+<li>一个进程Pi如果为了申请资源，它向其它各个进程发送具有时间戳Tm:Pi的申请资源的报文，并把此报文也放到自己的申请队列中； </li>
+<li>一个进程Pj如果收到具有时间戳Tm:Pi的申请资源的报文，它把此报文放到自己的申请队列中，并将向Pi发送一个带有时间戳的承认报文。如果Pj正在临界区或正在发送自己的申请报文，则此承认报文要等到Pj从临界区中退出之后或Pj发送完自己的申请报文之后再发送，否则立即发送； </li>
+<li>一个进程Pi如果想释放资源，它先从自己的申请队列中删除对应的Tm:Pi申请报文，并向所有其他进程发送具有时间戳的Pi释放资源的报文；</li>
+<li>一个进程Pj如果收到Pi释放资源的报文，它从自己的申请队列中删除Tm:Pi申请报文； </li>
+<li>当满足下述两个条件时，申请资源的进程Pi获得资源： </li>
+<li><ul>
+<li>Pi的申请队列中有Tm:Pi申请报文，并且根据时间戳它排在所有其它进程发来的申请报文前面； </li>
+</ul>
+</li>
+<li><ul>
+<li>Pi收到所有其它进程的承认报文，其上面的时间戳值大于Tm。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\mutual_exclusion_Lamport.png" alt="mutual_exclusion_Lamport.png"></p>
+</blockquote>
+<p><strong>Ricart-Agrawala互斥算法</strong></p>
+<ul>
+<li>一个进程申请资源时向所有其他进程发出申请报文；</li>
+<li>其它进程收到申请报文后若不在临界区并且自己未申请进入临界区，或者自己虽然发出了申请报文，但自己的报文排在收到的申请报文之后，则回答表示同意；</li>
+<li>申请资源的进程仅在收到所有进程的回答报文后才进入临界区使用资源；</li>
+<li>一个进程使用完资源后，它向所有未给回答的其它申请发送回答报文。</li>
+</ul>
+<blockquote>
+<p><img src="\img\mutual_exclusion_RicartAgrawala.png" alt="mutual_exclusion_RicartAgrawala.png"></p>
+</blockquote>
+<p><strong>Maekawa互斥算法</strong></p>
+<p>请求子集：在Maekawa互斥算法中，一个进程P在发出申请报文后，不用得到所有其他进程的回答，而只须得到一个进程子集S中的所有进程的回答即可进入临界区。称S是P的请求子集。假设Ri和Rj分别是进程Pi和Pj的请求子集，要求$R_i \bigcap R_j \not= NULL$。</p>
+<ul>
+<li>当进程Pi请求进入临界区时，它只向Ri中的进程发送请求报文。</li>
+<li>当进程Pj收到一个请求报文时，如果它自上一次临界区释放后还没有发出过回答报文给任何进程，且自己的请求队列中无任何请求，它就给该请求报文一个回答。否则，请求报文被放入请求队列中。</li>
+<li>进程Pi只有收到Ri中的所有进程的回答后，才能进入临界区。</li>
+<li>在释放临界区时，进程Pi只给Ri中的所有进程发送释放报文。</li>
+</ul>
+<p>考虑一个七个进程的例子，每个进程的请求子集如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">R1：&#123;P1，P3，P4&#125;；</div><div class="line">R2：&#123;P2，P4，P5&#125;； </div><div class="line">R3：&#123;P3，P5，P6&#125;； </div><div class="line">R4：&#123;P4，P6，P7&#125;；</div><div class="line">R5：&#123;P5，P7，P1&#125;；</div><div class="line">R6：&#123;P6，P1，P2&#125;；</div><div class="line">R7：&#123;P7，P2，P3&#125;。</div></pre></td></tr></table></figure></p>
+<p>Maekawa算法的两个极端情况：</p>
+<ul>
+<li>(1) 退化为集中式互斥算法。$P_c(c \in {1, 2, …, n})$作为协调者，对所有进程Pi，有：<br>Ri：{$P_c$}，1≤i≤n</li>
+<li>(2) 完全分布式的互斥算法。对所有进程Pi，有：<br>Ri：{P1，P2，…，Pn}，1≤i≤n</li>
+</ul>
+<p><strong>简单令牌环互斥算法</strong></p>
+<ul>
+<li>在有n个进程的系统中，将这n个进程组成一个首尾相连的逻辑环。每个进程在环中有一个指定的位置，位置可以按网络地址进行排列，当然也可以采用任何其他可行的方式排列，但每个进程必须知道在环中哪个进程是它后面的进程。 </li>
+<li>一个进程拥有令牌时就可以进入临界区，令牌可在所有的进程间传递。 </li>
+<li>如果得到令牌的进程不打算进入临界区，它只是简单地将令牌传送给它后面的进程。</li>
+</ul>
+<blockquote>
+<p><img src="\img\token_ring.png" alt="token_ring.png"></p>
+</blockquote>
+<p>问题：</p>
+<ul>
+<li>如果令牌丢失，需要重新产生一个令牌，但检测令牌是否丢失是比较困难的。 </li>
+<li>另外一个问题是进程的崩溃，但进程的崩溃比较容易检测。 </li>
+<li>这个算法在高负载的情况下工作得很好。然而，它在轻负载的情况下工作得很差，出现很多不必要的报文传递。</li>
+</ul>
+<p><strong>Ricart-Agrawala令牌环互斥算法</strong></p>
+<ol>
+<li><p>初始时，令牌被赋予给任何一个进程。 </p>
+</li>
+<li><p>请求进入临界区的进程Pj不知道哪个进程拥有令牌，所以它向所有其它进程发送一个带时间戳的请求报文，请求得到令牌。每个进程有一个请求队列记录有所有进程的请求，令牌中记录有每个进程最后一个持有令牌的时间。 </p>
+</li>
+<li><p>如果当前拥有令牌的进程Pi不再需要令牌，它就按照i+1，i+2，…，n，1，2，…，i-1的顺序寻找第一个符合条件的进程Pj，并将令牌传递给进程Pj。</p>
+</li>
+</ol>
+<ul>
+<li>说明：虽然该算法不是按照每个请求的时间顺序来满足的，但是，由于令牌是按一个方向绕环传递的，所以不会有饿死现象发生。</li>
+</ul>
+<p><strong>基于时间戳的令牌互斥算法</strong></p>
+<p>每个进程保持一张进程状态表，记录它所知的进程状态，进程状态包括该进程是否为请求进程，以及得到该状态的时间。令牌是一个特殊的报文，该报文中包含了发送该令牌的进程的进程状态表。</p>
+<ol>
+<li><p>初始化时，每个进程的状态表中各个进程均为非请求状态，时钟值为0，并任意指定一个进程为令牌的持有者。 </p>
+</li>
+<li><p>请求时，一个进程请求进入临界区时，如果它持有令牌，它不发送任何请求报文，将自己的进程状态表中相应于自己一栏的状态改为请求态，并记录该状态的时钟值，直接进入临界区。如果它不持有令牌，则它向所有其它进程发送带有时间戳的请求报文。发出请求报文后，将自己的进程状态表中相应于自己一栏的状态改为请求态，并记录该状态的时钟值。</p>
+</li>
+<li><p>收到请求时，当进程A收到进程B的请求报文时，A将B的请求报文中的时间戳同A的进程状态表中B的时间值进行比较。若B的请求报文中的时间戳大于A的进程状态表中B的时间值，则A修改自己的进程状态表。将A的进程状态表中对应于B的一栏改为请求状态，并记录此状态的时间。 </p>
+</li>
+<li><p>退出临界区时，进程A退出临界区后，将自己的进程状态表中关于自己的一栏改为非请求状态，时钟值加1，并将该时钟值作为该状态的时间。然后检查其进程状态表中是否记录有某个进程处于请求状态，若有，则从处于请求状态的进程中选取一个请求最早的进程B(具有最小的时间戳)，将令牌传送给它，并在令牌中附上A的进程状态表。</p>
+</li>
+<li><p>收到令牌时，收到令牌的进程把随令牌传来的进程状态表和自己的进程状态表进行比较。若随令牌传来的进程状态表中某进程的时间戳大于自己的进程状态表中相应进程的时间戳，则将自己的进程状态表中相应进程的状态和时间戳该成随令牌传来的进程状态表中相应的状态和时间戳。</p>
+</li>
+</ol>
+<ul>
+<li>说明：同Ricart-Agrawala令牌环互斥算法相比，具有更强的公平性，因为它是基于请求的先后顺序来满足的，而Ricart-Agrawala令牌环互斥算法是基于进程的逻辑环结构来满足的。</li>
+</ul>
+<p><strong>Bully选举算法</strong></p>
+<p>从进程集中选出一个进程执行特别的任务。大部分选举算法是基于全局优先级的，就是说给每个进程预先分配一个优先级，选举算法选择一个具有最高优先级的进程作为协调者。</p>
+<ol>
+<li><p>P发送选举报文到所有优先级比它高的进程。</p>
+</li>
+<li><p>如果在一定时间内收不到任何响应报文，P赢得选举成为协调者。它向所有比它的优先级低的进程发送通知报文，宣布自己是协调者。</p>
+</li>
+<li><p>如果收到一个优先级比它高的进程的回答，P的选举工作结束。同时启动一个计时器，等待接收谁是协调者的通知报文，如果在规定时间内得不到通知报文，则它重新启动选举算法。 </p>
+</li>
+<li><p>任何时候，一个进程可能从比它的优先级低的进程那儿接收到一个选举报文，它就给发送者回答一个响应报文，同时启动如上所述的相同的选举算法，如果选举算法已经启动，就不必重新启动。</p>
+</li>
+</ol>
+<blockquote>
+<p><img src="\img\mutual_exclusion_election.png" alt="mutual_exclusion_election.png"></p>
+<p><img src="\img\mutual_exclusion_election1.png" alt="mutual_exclusion_election1.png"></p>
+</blockquote>
+<p><strong>环选举算法</strong></p>
+<ol>
+<li><p>在环选举算法中，所有进程以任意的顺序排列在一个单向环上，每个进程知道环上的排列情况，任何进程在环上有一个后继进程。 </p>
+</li>
+<li><p>任何一个进程发现协调者失效时，它创建一个选举报文，将自己的进程号加入该报文中作为一个候选协调者，并把该选举报文传递到它的后继进程。 </p>
+</li>
+<li><p>收到该选举报文的后继进程，也将自己的进程号加入到该选举报文中作为一个候选协调者。如果发送者发现其后继者失效，它会将选举报文传送给后继者在环中的下一个进程，或沿环的方向可以寻找到的下一个运行的进程。</p>
+</li>
+<li><p>如果一个进程接收到自己所创建的选举报文，它将该报文的类型由选举报文改为协调者报文。 </p>
+</li>
+<li><p>这个协调者报文再绕环一周，这个报文用于通知每个进程协调者是谁，组成新环的成员有那些。如果进程号大的进程具有高的优先级，那么具有最大进程号的进程就是协调者；</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分布式计算/" rel="tag"># 分布式计算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/16/parellel_and_distributed_computing/distributed_compute3/" rel="next" title="面向网络拓扑的通信优化">
+                <i class="fa fa-chevron-left"></i> 面向网络拓扑的通信优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/24/computer_network/computer_network_4/" rel="prev" title="网络层(Network Layer)">
+                网络层(Network Layer) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式系统中的资源管理"><span class="nav-number">1.</span> <span class="nav-text">分布式系统中的资源管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源分配原则"><span class="nav-number">2.</span> <span class="nav-text">资源分配原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步机构"><span class="nav-number">3.</span> <span class="nav-text">同步机构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#同步实体"><span class="nav-number">3.1.</span> <span class="nav-text">同步实体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步机构：物理时钟"><span class="nav-number">3.2.</span> <span class="nav-text">同步机构：物理时钟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步机构：逻辑时钟"><span class="nav-number">3.3.</span> <span class="nav-text">同步机构：逻辑时钟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步机构：全局状态"><span class="nav-number">3.4.</span> <span class="nav-text">同步机构：全局状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互斥算法"><span class="nav-number">4.</span> <span class="nav-text">互斥算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

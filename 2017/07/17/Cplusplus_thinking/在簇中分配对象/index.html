@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="C++程序通常要为一整组对象分配内存，随后将其同时释放
+
+定义一个包含一整组对象的集合的类
+让一个集合包含不相关的类的对象的一个好方法：多重继承
+
+问题：交互式或长时间运行的程序中常有一堆各式各样的C++对象需要一块释放
+设计方案使用类来表示概念：需要一个类表示“一些要一起释放的对象”
+123class Cluster &amp;#123;    // ...&amp;#125;;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在簇中分配对象">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/17/Cplusplus_thinking/在簇中分配对象/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="C++程序通常要为一整组对象分配内存，随后将其同时释放
+
+定义一个包含一整组对象的集合的类
+让一个集合包含不相关的类的对象的一个好方法：多重继承
+
+问题：交互式或长时间运行的程序中常有一堆各式各样的C++对象需要一块释放
+设计方案使用类来表示概念：需要一个类表示“一些要一起释放的对象”
+123class Cluster &amp;#123;    // ...&amp;#125;;">
+<meta property="og:updated_time" content="2017-07-19T13:15:37.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在簇中分配对象">
+<meta name="twitter:description" content="C++程序通常要为一整组对象分配内存，随后将其同时释放
+
+定义一个包含一整组对象的集合的类
+让一个集合包含不相关的类的对象的一个好方法：多重继承
+
+问题：交互式或长时间运行的程序中常有一堆各式各样的C++对象需要一块释放
+设计方案使用类来表示概念：需要一个类表示“一些要一起释放的对象”
+123class Cluster &amp;#123;    // ...&amp;#125;;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/17/Cplusplus_thinking/在簇中分配对象/"/>
+
+
+
+
+
+  <title>在簇中分配对象 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/17/Cplusplus_thinking/在簇中分配对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在簇中分配对象</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T23:00:00+08:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>C++程序通常要为一整组对象分配内存，随后将其同时释放</p>
+<ul>
+<li>定义一个包含一整组对象的集合的类</li>
+<li>让一个集合包含不相关的类的对象的一个好方法：多重继承</li>
+</ul>
+<p>问题：交互式或长时间运行的程序中常有一堆各式各样的C++对象需要一块释放</p>
+<h3 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h3><p><strong>使用类来表示概念</strong>：需要一个类表示“一些要一起释放的对象”</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Cluster &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<ul>
+<li><p>Cluster类的对象c必须明显包含将在某个适当的时候被释放的其他对象</p>
+</li>
+<li><p>必须有一种方法分配一个对象到某个特定的Cluster里</p>
+</li>
+<li><p><code>T* tp = new(c) T;</code></p>
+</li>
+<li><p>类型T必须有一个成员</p>
+</li>
+<li><ul>
+<li><code>void* T::operator new(size_t, Cluster&amp;);</code></li>
+</ul>
+</li>
+<li><ul>
+<li>对类型T的调整限制了Cluster的用途</li>
+</ul>
+</li>
+<li><p>要能将任何自定义类的对象放入簇中</p>
+</li>
+<li><ul>
+<li>避免修改已经存在了的T的定义</li>
+</ul>
+</li>
+<li><p>使用继承和一个间接层(indirection)</p>
+</li>
+<li><ul>
+<li>使用多重继承：由基类ClusterItem派生出的类的对象可以分配在簇中</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> ClusterItem &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>, Cluster&amp;)</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>有些C++实现限定只要有operator new成员函数就必须保证有一个只有一个参数的类型的operator new：保证该类的对象可以用普通的new表达式分配</li>
+<li><ul>
+<li>不希望这样做：将普通的operator new私有化</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> ClusterItem &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>, Cluster&amp;)</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>)</span></span>;</div><div class="line">    ClusterItem(<span class="keyword">const</span> ClusterItem&amp;);</div><div class="line">    ClusterItem&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> ClusterItem&amp;);</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>缺省构造函数</li>
+<li>虚析构函数</li>
+<li>ClusterItem对象的销毁仅伴随Cluster对象的销毁</li>
+<li><ul>
+<li>不公有化ClusterItem的析构函数</li>
+</ul>
+</li>
+<li><ul>
+<li>Cluster作为一个友元</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> ClusterItem &#123;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Cluster;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>, Cluster&amp;)</span></span>;</div><div class="line">    ClusterItem();</div><div class="line"></div><div class="line"><span class="keyword">protected</span>:</div><div class="line">    <span class="keyword">virtual</span> ~ClusterItem() &#123; &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>)</span></span>;</div><div class="line">    ClusterItem(<span class="keyword">const</span> ClusterItem&amp;);</div><div class="line">    ClusterItem&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> ClusterItem&amp;);</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>Cluster类需要构造函数、析构函数</li>
+<li><ul>
+<li>将ClusterItem作为友元</li>
+</ul>
+</li>
+<li><ul>
+<li>限定Cluster对象的复制操作：不考虑该操作的含义</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Cluster &#123;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> ClusterItem;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Cluster();</div><div class="line">    ~Cluster();</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Cluster(<span class="keyword">const</span> Cluster&amp;);</div><div class="line">    Cluster&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Cluster&amp;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ul>
+<li>写一个容器</li>
+<li><ul>
+<li>Cluster中保存一个ClusterItem的链表</li>
+</ul>
+</li>
+<li><ul>
+<li>会按与创建是相反的顺序删除ClusterItem：局部变量分配的镜像(回收策略)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Cluster &#123;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> ClusterItem;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    ClusterItem* head;</div><div class="line">    Cluster();</div><div class="line">    ~Cluster();</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Cluster(<span class="keyword">const</span> Cluster&amp;);</div><div class="line">    Cluster&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Cluster&amp;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">class</span> ClusterItem &#123;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Cluster;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>, Cluster&amp;)</span></span>;</div><div class="line">    ClusterItem();</div><div class="line"></div><div class="line"><span class="keyword">protected</span>:</div><div class="line">    <span class="keyword">virtual</span> ~ClusterItem() &#123; &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    ClusterItem* next;</div><div class="line">    <span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>)</span></span>;</div><div class="line">    ClusterItem(<span class="keyword">const</span> ClusterItem&amp;);</div><div class="line">    ClusterItem&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> ClusterItem&amp;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Cluster::Cluster(): head(<span class="number">0</span>) &#123; &#125;</div><div class="line"></div><div class="line">Cluster::~Cluster() &#123;</div><div class="line">    <span class="keyword">while</span> (head) &#123;</div><div class="line">        ClusterItem* next = head-&gt;next;</div><div class="line">        <span class="keyword">delete</span> head;</div><div class="line">        head = next;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>类ClusterItem中的虚析构函数可以删除用户任何从ClusterItem派生出来的类的对象</p>
+</li>
+<li><p>使用 <code>new(c) T;</code> 分配某个继承自类ClusterItem的类T的对象时，会把适当的Cluster作为成员ClusterItem::operator new的参数</p>
+</li>
+<li><ul>
+<li>唯一判断Cluster是否有效的时机</li>
+</ul>
+</li>
+<li><p>operator new的任务是分配裸内存(raw memory)而不是处理已经构造好的对象</p>
+</li>
+<li><ul>
+<li>将ClusterItem链接到Cluster链中的工作应该由ClusterItem的构造函数完成</li>
+</ul>
+</li>
+<li><p>operator new要在构造函数能看到的地方保存Cluster</p>
+</li>
+<li><ul>
+<li>(源文件范围内可见的)静态变量 <code>static Cluster* cp;</code></li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>只在成员函数定义的文件中有效，不必担心名字问题</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span>* ClusterItem::<span class="function"><span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span> n, Cluster&amp; c)</span> </span>&#123;</div><div class="line">    cp = &amp;c;</div><div class="line">    <span class="keyword">return</span> ::<span class="keyword">operator</span> <span class="keyword">new</span>(n);</div><div class="line">&#125;</div><div class="line"></div><div class="line">CluterItem::ClusterItem() &#123;</div><div class="line">    assert(cp != <span class="number">0</span>);</div><div class="line">    next = cp-&gt;head;</div><div class="line">    cp-&gt;head = <span class="keyword">this</span>;</div><div class="line">    cp = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>定义声明了的缺省的operator new，即使不使用(一些C++实现的要求)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span>* ClusterItem::<span class="function"><span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>)</span> </span>&#123;</div><div class="line">    <span class="built_in">abort</span>();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="加入继承"><a href="#加入继承" class="headerlink" title="加入继承"></a>加入继承</h3><ul>
+<li>使用这些类的方法是从ClusterItem派生新类</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> MyClass : <span class="keyword">public</span> ClusterItem &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    Cluster c;</div><div class="line"></div><div class="line">    MyClass* p = <span class="keyword">new</span>(c) MyClass;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>两个问题</li>
+<li><ul>
+<li>对某些未定义的类进行簇式分配</li>
+</ul>
+</li>
+<li><ul>
+<li>ClusterItem的析构函数私有，不能声明任何ClusterItem派生类局部变量</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> MyClass &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">class</span> MyClusteredClass: <span class="keyword">public</span> MyClass, <span class="keyword">public</span> ClusterItem &#123; &#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    Cluster c;</div><div class="line"></div><div class="line">    MyClass* p = <span class="keyword">new</span>(c) MyClusteredClass;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>new表达式分配一个类型为MyClusteredClass的对象</li>
+<li><ul>
+<li>将该对象的地址转换成类型MyClass*的</li>
+</ul>
+</li>
+<li><ul>
+<li>只要不试图删除这个指针，可像任何其他MyClass指针一样使用</li>
+</ul>
+</li>
+<li><p>MyClusteredClass需再定义缺省构造函数等</p>
+</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>问题解决的关键在于实现之前正确阐明问题</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/17/mathematical_logic/不同的命题逻辑/" rel="next" title="不同的命题逻辑">
+                <i class="fa fa-chevron-left"></i> 不同的命题逻辑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/19/mathematical_logic/狭谓词逻辑的形式结构/" rel="prev" title="狭谓词逻辑的形式结构 普遍有效性和可满足性">
+                狭谓词逻辑的形式结构 普遍有效性和可满足性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计方案"><span class="nav-number">1.</span> <span class="nav-text">设计方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加入继承"><span class="nav-number">3.</span> <span class="nav-text">加入继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">4.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

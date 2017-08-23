@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="高等代数与解析几何," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="n维向量空间 $K^n$
+$K^n$ 表示 K 上所有n维向量的集合：向量空间
+
+定义：设 W 是 $K^n$ 的一个非空子集，如果对任何 $\alpha, \beta \in W, k \in K$，有 $\alpha + \beta \in W, k \alpha \in W$，则称 W 是 $K^n$ 的子空间
+
+
+
+零向量形成 $K^n$ 的一个子空间，记作 {0}，和 $K^n$ 都称为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="向量空间">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/27/linear_algebra&analytic_geometry/向量空间/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="n维向量空间 $K^n$
+$K^n$ 表示 K 上所有n维向量的集合：向量空间
+
+定义：设 W 是 $K^n$ 的一个非空子集，如果对任何 $\alpha, \beta \in W, k \in K$，有 $\alpha + \beta \in W, k \alpha \in W$，则称 W 是 $K^n$ 的子空间
+
+
+
+零向量形成 $K^n$ 的一个子空间，记作 {0}，和 $K^n$ 都称为">
+<meta property="og:updated_time" content="2017-08-10T23:29:49.372Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="向量空间">
+<meta name="twitter:description" content="n维向量空间 $K^n$
+$K^n$ 表示 K 上所有n维向量的集合：向量空间
+
+定义：设 W 是 $K^n$ 的一个非空子集，如果对任何 $\alpha, \beta \in W, k \in K$，有 $\alpha + \beta \in W, k \alpha \in W$，则称 W 是 $K^n$ 的子空间
+
+
+
+零向量形成 $K^n$ 的一个子空间，记作 {0}，和 $K^n$ 都称为">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/27/linear_algebra&analytic_geometry/向量空间/"/>
+
+
+
+
+
+  <title>向量空间 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/27/linear_algebra&analytic_geometry/向量空间/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">向量空间</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-27T11:00:00+08:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="n维向量空间-K-n"><a href="#n维向量空间-K-n" class="headerlink" title="n维向量空间 $K^n$"></a>n维向量空间 $K^n$</h3><ul>
+<li><p>$K^n$ 表示 K 上所有n维向量的集合：向量空间</p>
+</li>
+<li><p>定义：设 W 是 $K^n$ 的一个非空子集，如果对任何 $\alpha, \beta \in W, k \in K$，有 $\alpha + \beta \in W, k \alpha \in W$，则称 W 是 $K^n$ 的子空间</p>
+</li>
+</ul>
+<blockquote>
+<p>零向量形成 $K^n$ 的一个子空间，记作 {0}，和 $K^n$ 都称为 $K^n$ 的平凡子空间</p>
+</blockquote>
+<ul>
+<li>设 $\alpha_1, \alpha_2, …, \alpha_m \in K^n$，则 $\alpha = k_1 \alpha_1 + k_2 \alpha_2 + … + k_m \alpha_m$ 称为 $\alpha_1, \alpha_2, …, \alpha_m$ 的线性组合(线性表示)</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li>定义：设 $\alpha_1, \alpha_2, …, \alpha_m \in K^n$，若存在一组不全为零的数 $k_1, k_2, …, k_m \in K$，使 $k_1 \alpha_1 + k_2 \alpha_2 + … + k_m \alpha_m = 0$，则称 $\alpha_1, \alpha_2, …, \alpha_m$ 线性相关. 若这样的数不存在，或者说只有当 $k_1 = k_2 = … = k_m = 0$ 时，上式才成立，则称 $\alpha_1, \alpha_2, …, \alpha_m$ 线性无关</li>
+</ul>
+<p>向量的线性关系的基本性质：</p>
+<ul>
+<li><p>(1)在向量组 $\alpha_1, \alpha_2, …, \alpha_n$ 中，若 $\alpha_1, \alpha_2, …, \alpha_m(m &lt; n)$ 线性相关，则 $\alpha_1, \alpha_2, …, \alpha_m, …, \alpha_n$ 也线性相关</p>
+</li>
+<li><p>(2)若 $\alpha_1, \alpha_2, …, \alpha_m$ 线性无关，而 $\alpha_1, \alpha_2, …, \alpha_m, \alpha$ 线性相关，则 $\alpha$ 是 $\alpha_1, \alpha_2, …, \alpha_m$ 的线性组合</p>
+</li>
+<li><p>(3)若 $\alpha$ 是 $\alpha_1, \alpha_2, …, \alpha_n$ 的线性组合，则这种表示法唯一的充要条件是 $\alpha_1, \alpha_2, …, \alpha_n$ 线性无关</p>
+</li>
+<li><p>(4)m(m &gt; 1)个n维向量线性相关的充要条件是，其中某一向量是其余向量的线性组合</p>
+</li>
+<li><p>定义：若向量组 $\alpha_1, \alpha_2, …, \alpha_r$ 中每一向量都是 $\beta_1, \beta_2, …, \beta_s$ 的线性组合，则称 $\alpha_1, \alpha_2, …, \alpha_r$ 是 $\beta_1, \beta_2, …, \beta_s$ 的线性组合或线性表示. 若两个向量互为线性组合，则它们等价</p>
+</li>
+</ul>
+<blockquote>
+<p>矩阵的行初等变换把一个向量组变为与其等价的一个向量组<br>向量组间的等价关系满足自反性、对称性与传递性</p>
+</blockquote>
+<ul>
+<li><p>定义：设 $\alpha_1, \alpha_2, …, \alpha_r$ 与 $\beta_1, \beta_2, …, \beta_s$ 是两个向量组，若 (1)$\alpha_1, \alpha_2, …, \alpha_r$ 可用 $\beta_1, \beta_2, …, \beta_s$，且(2)r &gt; s，则 $\alpha_1, \alpha_2, …, \alpha_r$ 线性相关</p>
+</li>
+<li><p>推论：$K^n$ 中任意n+1个n维向量线性相关</p>
+</li>
+<li><p>推论：设 $\alpha_1, \alpha_2, …, \alpha_r$ 与 $\beta_1, \beta_2, …, \beta_s$ 线性无关且等价，则 r = s</p>
+</li>
+<li><p>定义：设 $\alpha_{i<em>1}, \alpha</em>{i<em>2}, …, \alpha</em>{i_r}$ 是 $\alpha_1, \alpha_2, …, \alpha_m$ 的一部分向量. 若</p>
+</li>
+<li><ul>
+<li>(1)$\alpha_{i<em>1}, \alpha</em>{i<em>2}, …, \alpha</em>{i_r}$ 线性无关；</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)$\alpha_1, \alpha_2, …, \alpha<em>m$ 中每一向量都是 $\alpha</em>{i<em>1}, \alpha</em>{i<em>2}, …, \alpha</em>{i<em>r}$ 的线性组合，则称 $\alpha</em>{i<em>1}, \alpha</em>{i<em>2}, …, \alpha</em>{i_r}$ 是 $\alpha_1, \alpha_2, …, \alpha_m$的一个极大无关组</li>
+</ul>
+</li>
+<li><p>定义：一个向量组的极大无关组所包含的向量的个数称为这向量组的秩</p>
+</li>
+<li><p>推论：设 $\alpha_1, \alpha_2, …, \alpha_m$ 与 $\beta_1, \beta_2, …, \beta_n$ 是两个向量组，若它们等价，则其秩相等</p>
+</li>
+</ul>
+<h3 id="基底、维数与坐标"><a href="#基底、维数与坐标" class="headerlink" title="基底、维数与坐标"></a>基底、维数与坐标</h3><ul>
+<li>定义：设 W 是 $K^n$ 的一个子空间，如果 $\alpha_1, \alpha_2, …, \alpha_m \in W$ 线性无关，且任意向量 $\alpha \in W$ 是 $\alpha_1, \alpha_2, …, \alpha_m$ 的线性组合，即 $\alpha = k_1 \alpha_1 + k_2 \alpha_2 + … + k_m \alpha_m$，则称 $\alpha_1, \alpha_2, …, \alpha_m$ 是 W 的一组基底. 基底所含向量的个数 m 称为 W 的维数，记作 dimW = m. $k_1, k_2, …, k_m$ 称为 $\alpha$ 在基 $\alpha_1, \alpha_2, …, \alpha<em>m$ 下的坐标，记作 $[\alpha]</em>{\alpha_i} = (k_1, k_2, …, k_m)$</li>
+</ul>
+<blockquote>
+<p>$e_1, e_2, …, e_n$ 是 $K^n$ 的一组基底，称为 $K^n$ 的自然基底，$K^n$ 的维数是n，且任意向量 $\alpha = (\alpha_1, \alpha_2, …, \alpha_n)$对于这组基的坐标是 $\alpha_1, \alpha_2, …, \alpha_n$</p>
+<p>$dim W \leq dim K^n$，规定零空间的维数是0</p>
+</blockquote>
+<ul>
+<li><p>定理：在向量空间 $K^n$ 中，任意n个线性无关的向量构成它的基底</p>
+</li>
+<li><p>定理：如果 $\alpha_1, \alpha_2, …, \alpha_r$ 线性无关，($r \leq n$)，那么在 $K^n$ 中可以选取 n-r 个向量，使 $\alpha_1, \alpha_2, …, \alpha<em>r, \alpha</em>{r+1}, …, \alpha_n$ 为 $K^n$ 的一组基底</p>
+</li>
+<li><p>定理：(1)两个向量组 $\alpha_1, \alpha_2, …, \alpha_r$ 与 $\beta_1, \beta_2, …, \beta_s$ 等价的充要条件是 $L(\alpha_1, \alpha_2, …, \alpha_r) = L(\beta_1, \beta_2, …, \beta_s)$</p>
+</li>
+<li><ul>
+<li>(2)$L(\alpha_1, \alpha_2, …, \alpha_r)$ 的维数等于 $\alpha_1, \alpha_2, …, \alpha_r$ 的秩</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>$L(\alpha_1, \alpha_2, …, \alpha<em>m) = { \sum</em>{i=1}^{m} k_i \alpha_i | k_i \in K }$</p>
+</blockquote>
+<ul>
+<li>定理：设 $\alpha_1, \alpha_2, …, \alpha_n$ 与 $\beta_1, \beta_2, …, \beta_n$ 是向量空间 $K^n$ 的两组基，而且<br>$$<br>\begin{matrix}<br>\beta<em>1 = a</em>{11} \alpha<em>1 + a</em>{21} \alpha<em>2 + … + a</em>{n1} \alpha_n \<br>\beta<em>2 = a</em>{12} \alpha<em>1 + a</em>{22} \alpha<em>2 + … + a</em>{n2} \alpha_n \<br>……   \<br>\beta<em>1 = a</em>{1n} \alpha<em>1 + a</em>{2n} \alpha<em>2 + … + a</em>{nn} \alpha_n<br>\end{matrix}<br>$$<br>即(基底的变换公式) $$(\beta_1, \beta_2, …, \beta_n) = (\alpha_1, \alpha_2, …, \alpha<em>n)A $$<br>其中<br>$$ A (过渡矩阵) = \left[ \begin{matrix}<br>a</em>{11} &amp; a<em>{12} &amp; … &amp; a</em>{1n} \<br>a<em>{21} &amp; a</em>{22} &amp; … &amp; a<em>{2n} \<br>.      &amp; .      &amp;     &amp; .      \<br>.      &amp; .      &amp;     &amp; .      \<br>.      &amp; .      &amp;     &amp; .      \<br>a</em>{n1} &amp; a<em>{n2} &amp; … &amp; a</em>{nn}<br>\end{matrix} \right]<br>$$<br>如果 $[\alpha]_{\alpha_i} = (x_1, x_2, …, x<em>n), [\alpha]</em>{\beta_i} = (y_1, y_2, …, y<em>n)$，那么(向量的坐标变换公式) $[\alpha]</em>{\beta<em>i} = [\alpha]</em>{\alpha_i}(A^T)^{-1}$ </li>
+</ul>
+<h3 id="矩阵的秩"><a href="#矩阵的秩" class="headerlink" title="矩阵的秩"></a>矩阵的秩</h3><ul>
+<li><p>定义：设 $A \in K^{m*n}$，则A的行空间的维数和列空间的维数，分别称为A的行秩和列秩</p>
+</li>
+<li><p>定理：设 $A = (a<em>{ij})</em>{m*n}$，则A的行秩等于A的列秩</p>
+</li>
+<li><p>定理：矩阵A的行秩或列秩称为A的秩，记作 rank(A) 或 r(A)</p>
+</li>
+</ul>
+<blockquote>
+<p>$A \cong B$ 时，rank(A) = rank(B).<br>矩阵A的标准形是唯一的；任意矩阵A乘以可逆矩阵后其秩不变</p>
+</blockquote>
+<ul>
+<li>定理：设 $A = (a<em>{ij})</em>{m*n}$，则 rank(A) = r 的充要条件是A中有一个r阶子式不为零，而所有高于r阶的子式全为零</li>
+</ul>
+<blockquote>
+<p>rank(A) = rank($A^T$)</p>
+</blockquote>
+<ul>
+<li>定理：设 $A = (a<em>{ij})</em>{m<em>l}, B = (b<em>{ij})</em>{l</em>n}$，则 $rank(AB) \leq min{ rank(A), rank(B) }$</li>
+</ul>
+<h3 id="线性方程组"><a href="#线性方程组" class="headerlink" title="线性方程组"></a>线性方程组</h3><ul>
+<li><p>定理：设 $A \in K^{m*n}$，则 Ax = b 有解的充要条件是 $b \in R(A)$</p>
+</li>
+<li><p>定理：设 $A \in K^{m*n}$，则 Ax = b 有解的充要条件是 rank(A) = rank(A, b)</p>
+</li>
+<li><p>定理：设 $A \in K^{m*n}$，rank(A) = rank(A, b)，则 AX = b 有唯一解的充要条件是 rank(A) = n</p>
+</li>
+<li><p>定理：设 $A = (a<em>{ij})</em>{m*n}, rank(A) = r &lt; n$，则 dim N(A) = n-r</p>
+</li>
+<li><p>定理：AX = b 的一个已知解与其对应齐次线性方程组 AX = 0 的任意解之和，等于 AX = b 的全部解</p>
+</li>
+</ul>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《高等代数与解析几何》，王心介，科学出版社</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/高等代数与解析几何/" rel="tag"># 高等代数与解析几何</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/26/linear_algebra&analytic_geometry/向量的内积、外积与混合积/" rel="next" title="向量的内积、外积与混合积以及平面、直线">
+                <i class="fa fa-chevron-left"></i> 向量的内积、外积与混合积以及平面、直线
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/28/linear_algebra&analytic_geometry/线性空间与线性变换/" rel="prev" title="线性空间与线性变换、特征值">
+                线性空间与线性变换、特征值 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">81</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#n维向量空间-K-n"><span class="nav-number">1.</span> <span class="nav-text">n维向量空间 $K^n$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基底、维数与坐标"><span class="nav-number">2.</span> <span class="nav-text">基底、维数与坐标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵的秩"><span class="nav-number">3.</span> <span class="nav-text">矩阵的秩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性方程组"><span class="nav-number">4.</span> <span class="nav-text">线性方程组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">5.</span> <span class="nav-text">引用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

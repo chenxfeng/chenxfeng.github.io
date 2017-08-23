@@ -1185,8 +1185,10 @@ send side: breaks">
 <li>timeout interval: EstimatedRTT plus “safety margin” </li>
 <li><p>large variation in EstimatedRTT -&gt; larger safety margin</p>
 </li>
-<li><p>estimate SampleRTT deviation from EstimatedRTT:<br>$$<br>DevRTT = (1-\beta)<em>DevRTT +\beta</em> |SampleRTT-EstimatedRTT|<br>(typically, \beta = 0.25)<br>$$</p>
-</li>
+<li><p>estimate SampleRTT deviation from EstimatedRTT: </p>
+<script type="math/tex; mode=display">
+DevRTT = (1-\beta)*DevRTT +\beta* |SampleRTT-EstimatedRTT|
+(typically, \beta = 0.25)</script></li>
 </ul>
 <p>TimeoutInterval = EstimatedRTT(estimated RTT) + 4*DevRTT(“safety margin”)</p>
 <h3 id="TCP-reliable-data-transfer-可靠数据传输"><a href="#TCP-reliable-data-transfer-可靠数据传输" class="headerlink" title="TCP reliable data transfer(可靠数据传输)"></a>TCP reliable data transfer(可靠数据传输)</h3><ul>
@@ -1276,6 +1278,7 @@ send side: breaks">
 <p><img src="\img\TCP_retransmission_scenarios1.png" alt="TCP_retransmission_scenarios1.png"></p>
 </blockquote>
 <p><em>TCP ACK generation [RFC 1122, RFC 2581]</em></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1302,6 +1305,7 @@ send side: breaks">
 </tr>
 </tbody>
 </table>
+</div>
 <p><em>TCP fast retransmit</em>(快速重传)</p>
 <ul>
 <li>time-out period often relatively long: long delay before resending lost packet</li>
@@ -1421,11 +1425,11 @@ send side: breaks">
 <li>one router, finite buffers </li>
 <li>sender retransmission of timed-out packet</li>
 <li><ul>
-<li>application-layer input = application-layer output: $\lambda_{in} = \lambda_{out}$</li>
+<li>application-layer input = application-layer output: $\lambda<em>{in} = \lambda</em>{out}$</li>
 </ul>
 </li>
 <li><ul>
-<li>transport-layer input includes retransmissions: $\lambda_{in}^{‘} \geq \lambda_{in}$</li>
+<li>transport-layer input includes retransmissions: $\lambda<em>{in}^{‘} \geq \lambda</em>{in}$</li>
 </ul>
 </li>
 </ul>
@@ -1489,7 +1493,7 @@ send side: breaks">
 <li>multihop paths</li>
 <li><p>timeout/retransmit</p>
 </li>
-<li><p>Q: what happens as $\lambda_{in}$ and $\lambda_{in}^{’}$ increase ?</p>
+<li><p>Q: what happens as $\lambda<em>{in}$ and $\lambda</em>{in}^{’}$ increase ?</p>
 </li>
 <li>A: as red $\lambda_{in}^{’}$ increases, all arriving blue pkts at upper queue are dropped, blue throughput $\to$ 0</li>
 </ul>

@@ -418,8 +418,8 @@
 <p><strong>Prim算法(P算法)</strong></p>
 <ul>
 <li>将图的端点集合V分成A和V-A两部分</li>
-<li>从图中任选一个端点$v_i$，令$A=\{v_i\}$</li>
-<li>从A和V-A的连线中找出最短(权最小)边$e_{ij}=(v_i, v_j)$，令$A=A \bigcup \{v_j\}$，并从V-A中去掉$v_j$</li>
+<li>从图中任选一个端点$v_i$，令$A={v_i}$</li>
+<li>从A和V-A的连线中找出最短(权最小)边$e_{ij}=(v_i, v_j)$，令$A=A \bigcup {v_j}$，并从V-A中去掉$v_j$</li>
 <li>重复上述过程，直至所有端点都在A中</li>
 </ul>
 <p><strong>Kruskal算法(K算法)</strong></p>
@@ -433,8 +433,8 @@
 <li>S1:对E中各边的权排序，设$w_1 \leq w_2 \leq … \leq w_m, w_i=w(e_i)$</li>
 <li>S2:初始化：$w \leftarrow 0,T \leftarrow \phi, k \leftarrow 1,t \leftarrow 0$</li>
 <li>S3:若t=n-1则转S6，否则转S4</li>
-<li>S4:若$T \bigcup \{e_k\}$有圈则$k \leftarrow k+1$转S4，否则转S5</li>
-<li>S5: $T \leftarrow T \bigcup \{e_k\}, w \leftarrow w+w_k, t \leftarrow t+1, k \leftarrow k+1$,转S3</li>
+<li>S4:若$T \bigcup {e_k}$有圈则$k \leftarrow k+1$转S4，否则转S5</li>
+<li>S5: $T \leftarrow T \bigcup {e_k}, w \leftarrow w+w_k, t \leftarrow t+1, k \leftarrow k+1$,转S3</li>
 <li>S6:输出T及w，结束。</li>
 <li>T为最小树，w为T的权。</li>
 </ul>
@@ -448,13 +448,13 @@
 </ul>
 <p><strong>有向图，单商品流问题(网络中只需要安排的只有一种商品或业务)</strong></p>
 <ul>
-<li><p>有向图G = {V, E}, $c_{ij}$为边容量，$f_{ij}$为边流量，$\{f_{ij}\}$为一组流，F为源宿之间$\{f_{ij}\}$的总流量</p>
+<li><p>有向图G = {V, E}, $c<em>{ij}$为边容量，$f</em>{ij}$为边流量，${f<em>{ij}}$为一组流，F为源宿之间${f</em>{ij}}$的总流量</p>
 </li>
 <li><p>流满足两个条件：</p>
 </li>
 <li><ul>
 <li><ol>
-<li>非负、有界(对任意边): $0 \leq f_{i,j} \leq c_{i,j}$</li>
+<li>非负、有界(对任意边): $0 \leq f<em>{i,j} \leq c</em>{i,j}$</li>
 </ol>
 </li>
 </ul>
@@ -467,8 +467,12 @@
 </ul>
 </li>
 </ul>
-<p>$$<br>\sum_{(i,j)\in E} f_{ij} = \sum_{(j, i)\in E} f_{ji} =\begin{cases}<br>F&amp;\text{$v_i$ 为源端}\\<br>-F&amp;\text{$v_i$ 为宿端}\\<br>0&amp; \text{其他}<br>\end{cases}<br>$$</p>
-<p><strong>可行流的条件</strong></p>
+<script type="math/tex; mode=display">
+\sum_{(i,j)\in E} f_{ij} = \sum_{(j, i)\in E} f_{ji} =\begin{cases}
+F&\text{$v_i$ 为源端}\\
+-F&\text{$v_i$ 为宿端}\\
+0& \text{其他}
+\end{cases}</script><p><strong>可行流的条件</strong></p>
 <ul>
 <li>具有m条(有向)边、n个端的图共有2m+n-1个限制条件，包括</li>
 <li><ul>
@@ -497,11 +501,11 @@
 </ul>
 </li>
 <li><ul>
-<li>最小费用流问题：如果边$e_{i,j}$的单位流费用为$d_{i,j}$，流f的费用为$C = \sum_{(i,j)\in E}d_{i,j}f_{i,j}$，在确定流的源和宿的情况下求一个可行流f使C最小</li>
+<li>最小费用流问题：如果边$e<em>{i,j}$的单位流费用为$d</em>{i,j}$，流f的费用为$C = \sum<em>{(i,j)\in E}d</em>{i,j}f_{i,j}$，在确定流的源和宿的情况下求一个可行流f使C最小</li>
 </ul>
 </li>
 <li><ul>
-<li>网络拓扑已定，$c_{ij}$已知，单位流量通过边$(v_i, v_j)$所需的代价$\alpha_{ij}$(代价系数)已知，给定流量F，寻求总代价中最小的可行流$\{f_{ij}\}$，其中总费用定义为：$\phi = \sum \alpha_{ij}*f_{ij}$</li>
+<li>网络拓扑已定，$c<em>{ij}$已知，单位流量通过边$(v_i, v_j)$所需的代价$\alpha</em>{ij}$(代价系数)已知，给定流量F，寻求总代价中最小的可行流${f<em>{ij}}$，其中总费用定义为：$\phi = \sum \alpha</em>{ij}*f_{ij}$</li>
 </ul>
 </li>
 </ul>
@@ -517,9 +521,9 @@
 <li>反向边：与割方向相反的边</li>
 </ul>
 </li>
-<li><p>割量：前向边容量和 $c(X, \overline X) = \sum_{v_i \in X, v_j \in \overline X} c_{ij}$</p>
+<li><p>割量：前向边容量和 $c(X, \overline X) = \sum<em>{v_i \in X, v_j \in \overline X} c</em>{ij}$</p>
 </li>
-<li>对可行流$\{f_{ij}\}$</li>
+<li>对可行流${f_{ij}}$</li>
 <li><ul>
 <li>$f(X, \overline X)$表示前向边的流量$\sum f_{ij}$</li>
 </ul>
@@ -551,7 +555,7 @@
 <ul>
 <li>可增流路径：</li>
 <li><ul>
-<li>前向边均不饱和($f_{ij} &lt; c_{ij}$)</li>
+<li>前向边均不饱和($f<em>{ij} &lt; c</em>{ij}$)</li>
 </ul>
 </li>
 <li><ul>
@@ -560,8 +564,9 @@
 </li>
 <li><p>在可增流路上增流不影响连续性条件也不影响其它边上的流量，同时可以使从源端到宿端的流量增大</p>
 </li>
-<li><p>在可增流路上所有正向边的流量均可增加不致于破坏流量的有限性，所有反向边上均可减流(相当于正向增流)不致于破坏非负性。整体的增流量应为这些正向边上能增流(或反向边上能减流)的最小值，即可增量为<br>$$<br>\delta = min[min_{e_{ij} \in P}(c_{ij} - f_{ij}), min_{e_ji} \in P(f_{ji})]<br>$$</p>
-</li>
+<li><p>在可增流路上所有正向边的流量均可增加不致于破坏流量的有限性，所有反向边上均可减流(相当于正向增流)不致于破坏非负性。整体的增流量应为这些正向边上能增流(或反向边上能减流)的最小值，即可增量为</p>
+<script type="math/tex; mode=display">
+\delta = min[min_{e_{ij} \in P}(c_{ij} - f_{ij}), min_{e_ji} \in P(f_{ji})]</script></li>
 <li><p>在可增流路上各边均增加$\delta$(对于反向边即为减流$\delta$)，不会破坏流量的非负性、有限性，并不影响连续性条件，从而得到一个新的可行流，并使源宿端间的流量增加</p>
 </li>
 </ul>

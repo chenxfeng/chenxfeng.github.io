@@ -683,24 +683,24 @@ each sample quantized, i.e., rounded">
 <p><img src="\img\VoIP_adaptive_playout_delay.png" alt="VoIP_adaptive_playout_delay.png"></p>
 </blockquote>
 <ul>
-<li><p>also useful to estimate average deviation of delay, vi:<br>$$v_i = (1 - \beta)v_{i-1} + \beta|r_i – t_i – d_i|$$</p>
-</li>
+<li><p>also useful to estimate average deviation of delay, vi: </p>
+<script type="math/tex; mode=display">v_i = (1 - \beta)v_{i-1} + \beta|r_i – t_i – d_i|</script></li>
 <li><p>estimates $d_i$, $v_i$ calculated for every received packet, but used only at start of talk spurt</p>
 </li>
-<li><p>for first packet in talk spurt, playout time is:<br>$$playout - time_i = t_i + d_i + Kv_i$$</p>
-</li>
+<li><p>for first packet in talk spurt, playout time is:</p>
+<script type="math/tex; mode=display">playout - time_i = t_i + d_i + Kv_i</script></li>
 <li><p>remaining packets in talkspurt are played out periodically</p>
 </li>
 <li><p>Q: How does receiver determine whether packet is first in a talkspurt?</p>
 </li>
 <li>if no loss, receiver looks at successive timestamps</li>
 <li><ul>
-<li>difference of successive stamps &gt; 20 msec –&gt;talk spurt begins.</li>
+<li>difference of successive stamps &gt; 20 msec —&gt;talk spurt begins.</li>
 </ul>
 </li>
 <li>with loss possible, receiver must look at both time stamps and sequence numbers</li>
 <li><ul>
-<li>difference of successive stamps &gt; 20 msec and sequence numbers without gaps –&gt; talk spurt begins.</li>
+<li>difference of successive stamps &gt; 20 msec and sequence numbers without gaps —&gt; talk spurt begins.</li>
 </ul>
 </li>
 </ul>

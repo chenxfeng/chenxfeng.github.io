@@ -323,7 +323,31 @@
 <li>调用例子</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">char</span>* hello = <span class="string">"Hello "</span>;</div><div class="line">    <span class="keyword">char</span>* world = <span class="string">"world"</span>;</div><div class="line">    <span class="keyword">char</span> message[<span class="number">15</span>];</div><div class="line">    <span class="keyword">char</span>* p = message;</div><div class="line"></div><div class="line">    p = copy(hello, hello + <span class="number">6</span>, p);</div><div class="line">    p = copy(world, world + <span class="number">5</span>, p);</div><div class="line">    *p = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">    <span class="built_in">cout</span> &lt;&lt; message &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<a id="more"></a>C++<br><br>### 迭代器类型<br><br>- 模板参数类型In和Out分别作为输入迭代器和输出迭代器<br>- 支持相等(==/!=)比较和++自增操作符(前置/后置)<br>- 作为函数的参数被传递、返回、保存在数据结构中等<br><br>- 区别在于各自如何访问迭代器所代表的数据<br>- - 通过一元操作符<em>支持间接引用<br>- - 输入迭代器只需要能读取一个值<br>- - 输出迭代器只需要能够赋值<br>- - ``</em>out = <em>in<code>必须按照预想工作，</code></em>in = *out``则不必<br><br>- 输出迭代器表示定位时都必须给迭代器赋一个值，且只能赋一次<br><br>- 输入迭代器增加到超过某个特定的输入值，那么这个值将再也不能被访问<br><br>### 虚拟序列<br><br>- 创建一个用来读取相同常量值序列的输入迭代器<br><br>- 设置数组的元素为某个特定值(把x的元素都设成0):<br><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> x[<span class="number">100</span>];</div><div class="line"><span class="function">Constant_iterator <span class="title">c</span><span class="params">(<span class="number">0</span>)</span></span>;</div><div class="line"></div><div class="line">copy(c, c + <span class="number">100</span>, x);</div></pre></td></tr></table></figure>
+<a id="more"></a>C++
+
+### 迭代器类型
+
+- 模板参数类型In和Out分别作为输入迭代器和输出迭代器
+- 支持相等(==/!=)比较和++自增操作符(前置/后置)
+- 作为函数的参数被传递、返回、保存在数据结构中等
+
+- 区别在于各自如何访问迭代器所代表的数据
+- - 通过一元操作符*支持间接引用
+- - 输入迭代器只需要能读取一个值
+- - 输出迭代器只需要能够赋值
+- - ``*out = *in``必须按照预想工作，``*in = *out``则不必
+
+- 输出迭代器表示定位时都必须给迭代器赋一个值，且只能赋一次
+
+- 输入迭代器增加到超过某个特定的输入值，那么这个值将再也不能被访问
+
+### 虚拟序列
+
+- 创建一个用来读取相同常量值序列的输入迭代器
+
+- 设置数组的元素为某个特定值(把x的元素都设成0):
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> x[<span class="number">100</span>];</div><div class="line"><span class="function">Constant_iterator <span class="title">c</span><span class="params">(<span class="number">0</span>)</span></span>;</div><div class="line"></div><div class="line">copy(c, c + <span class="number">100</span>, x);</div></pre></td></tr></table></figure>
 <ul>
 <li>c的行为类似指向一个无界“数组”的“指针”</li>
 </ul>
@@ -461,8 +485,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/c_plus_plus_thinking/模板之泛型迭代器/" rel="next" title="模板之泛型迭代器">
-                <i class="fa fa-chevron-left"></i> 模板之泛型迭代器
+              <a href="/2017/07/04/c_plus_plus_thinking/模板之序列/" rel="next" title="模板之序列">
+                <i class="fa fa-chevron-left"></i> 模板之序列
               </a>
             
           </div>
@@ -471,8 +495,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/06/c_plus_plus_thinking/模板之迭代器配接器/" rel="prev" title="模板之迭代器配接器">
-                模板之迭代器配接器 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/05/c_plus_plus_thinking/模板之泛型迭代器/" rel="prev" title="模板之泛型迭代器">
+                模板之泛型迭代器 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

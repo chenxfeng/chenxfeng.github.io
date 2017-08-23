@@ -309,12 +309,12 @@
 <h3 id="HOW-TO-DO"><a href="#HOW-TO-DO" class="headerlink" title="HOW_TO_DO"></a>HOW_TO_DO</h3><p>可手动在markdown文本中添加MathJax引擎：<code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;</code></p>
 <ul>
 <li>公式语法 : <a href="http://www.360doc.com/content/14/0930/23/9482_413578190.shtml" target="_blank" rel="external">Latex</a></li>
-<li>行间公式 : <code>$$公式$$</code></li>
-<li>行内公式 : <code>$公式$</code> or <code>\\(公式\\)</code> (<code>\</code>符号在markdown中为转义字符故须使用<code>\\</code>符号)</li>
+<li>行间公式 : $$$公式$$$</li>
+<li>行内公式 : <script type="math/tex">公式</script> or <code>\\(公式\\)</code> (<code>\</code>符号在markdown中为转义字符故须使用<code>\\</code>符号)</li>
 </ul>
 <p>也可使用<a href="https://github.com/hexojs/hexo-math" target="_blank" rel="external">hexo-math插件</a></p>
 <blockquote>
-<p>自动部署MathJax，可安装<a href="http://catx.me/2014/03/09/hexo-mathjax-plugin/" target="_blank" rel="external">自动部署的hexo插件</a><br>命令(已安装node.js、npm和hexo)：<br> npm install hexo-math –save<br> hexo math install<br><a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">参考：http://blog.csdn.net/emptyset110/article/details/50123231</a></p>
+<p>自动部署MathJax，可安装<a href="http://catx.me/2014/03/09/hexo-mathjax-plugin/" target="_blank" rel="external">自动部署的hexo插件</a><br>命令(已安装node.js、npm和hexo)：<br> npm install hexo-math —save<br> hexo math install<br><a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">参考：http://blog.csdn.net/emptyset110/article/details/50123231</a></p>
 </blockquote>
 <h3 id="PROBLEM"><a href="#PROBLEM" class="headerlink" title="PROBLEM"></a>PROBLEM</h3><p>实际使用中，由于markdown中的特殊符号与latex中的符号有冲突，hexo默认的markdown引擎渲染方式会造成一些转义问题：</p>
 <ul>
@@ -364,11 +364,11 @@
 <li><p>卸载原有引擎，安装新markdown引擎：</p>
 </li>
 <li><ul>
-<li>npm uninstall hexo-renderer-marked –save</li>
+<li>npm uninstall hexo-renderer-marked —save</li>
 </ul>
 </li>
 <li><ul>
-<li>npm install hexo-renderer-pandoc –save</li>
+<li>npm install hexo-renderer-pandoc —save</li>
 </ul>
 </li>
 </ul>

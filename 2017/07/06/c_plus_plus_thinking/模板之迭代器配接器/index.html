@@ -320,7 +320,7 @@
 <li>T是输入迭代器，只能这样实现</li>
 <li><p>缺陷: 总是需要查找数据结构中的所有元素，即使要查找的值就在尾部</p>
 </li>
-<li><p>采用双向迭代器: 可以使用–操作符</p>
+<li><p>采用双向迭代器: 可以使用—操作符</p>
 </li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> X&gt;</div><div class="line"><span class="function">T <span class="title">rfind</span><span class="params">(T start, T beyond, <span class="keyword">const</span> X&amp; x)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (start != beyond) &#123;</div><div class="line">        T p = beyond;</div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            <span class="keyword">if</span> (*--p == x) <span class="keyword">return</span> p;</div><div class="line">        &#125; <span class="keyword">while</span> (p != start)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> beyond;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -423,8 +423,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/c_plus_plus_thinking/模板之使用泛型迭代器/" rel="next" title="模板之泛型迭代器的使用">
-                <i class="fa fa-chevron-left"></i> 模板之泛型迭代器的使用
+              <a href="/2017/07/05/c_plus_plus_thinking/模板之泛型迭代器/" rel="next" title="模板之泛型迭代器">
+                <i class="fa fa-chevron-left"></i> 模板之泛型迭代器
               </a>
             
           </div>

@@ -270,7 +270,7 @@ send side: breaks">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -334,7 +334,7 @@ send side: breaks">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-10T00:00:00+08:00">
                 2017-05-10
@@ -1185,10 +1185,8 @@ send side: breaks">
 <li>timeout interval: EstimatedRTT plus “safety margin” </li>
 <li><p>large variation in EstimatedRTT -&gt; larger safety margin</p>
 </li>
-<li><p>estimate SampleRTT deviation from EstimatedRTT: </p>
-<script type="math/tex; mode=display">
-DevRTT = (1-\beta)*DevRTT +\beta* |SampleRTT-EstimatedRTT|
-(typically, \beta = 0.25)</script></li>
+<li><p>estimate SampleRTT deviation from EstimatedRTT:<br>$$<br>DevRTT = (1-\beta)<em>DevRTT +\beta</em> |SampleRTT-EstimatedRTT|<br>(typically, \beta = 0.25)<br>$$</p>
+</li>
 </ul>
 <p>TimeoutInterval = EstimatedRTT(estimated RTT) + 4*DevRTT(“safety margin”)</p>
 <h3 id="TCP-reliable-data-transfer-可靠数据传输"><a href="#TCP-reliable-data-transfer-可靠数据传输" class="headerlink" title="TCP reliable data transfer(可靠数据传输)"></a>TCP reliable data transfer(可靠数据传输)</h3><ul>
@@ -1278,7 +1276,6 @@ DevRTT = (1-\beta)*DevRTT +\beta* |SampleRTT-EstimatedRTT|
 <p><img src="\img\TCP_retransmission_scenarios1.png" alt="TCP_retransmission_scenarios1.png"></p>
 </blockquote>
 <p><em>TCP ACK generation [RFC 1122, RFC 2581]</em></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1305,7 +1302,6 @@ DevRTT = (1-\beta)*DevRTT +\beta* |SampleRTT-EstimatedRTT|
 </tr>
 </tbody>
 </table>
-</div>
 <p><em>TCP fast retransmit</em>(快速重传)</p>
 <ul>
 <li>time-out period often relatively long: long delay before resending lost packet</li>
@@ -1787,10 +1783,10 @@ DevRTT = (1-\beta)*DevRTT +\beta* |SampleRTT-EstimatedRTT|
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -1813,7 +1809,7 @@ DevRTT = (1-\beta)*DevRTT +\beta* |SampleRTT-EstimatedRTT|
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1826,7 +1822,7 @@ DevRTT = (1-\beta)*DevRTT +\beta* |SampleRTT-EstimatedRTT|
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -1893,11 +1889,11 @@ DevRTT = (1-\beta)*DevRTT +\beta* |SampleRTT-EstimatedRTT|
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

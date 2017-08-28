@@ -226,7 +226,7 @@ $P_r{ X \leq">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -290,7 +290,7 @@ $P_r{ X \leq">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-25T00:00:00+08:00">
                 2017-04-25
@@ -405,7 +405,7 @@ $P_r{ X \leq">
 <p>定理9.2: 任意平面图G = (V, E)都能在线性串行时间内建立一个分数阶独立集X</p>
 <ul>
 <li>令 $V_d$ 为G的一个阶不大于d的顶点子集(d &gt;= 6)</li>
-<li>令$V<em>h = V - V_d$ ，则 $\sum</em>{v \in V_h}deg(v) \geq (d + 1)|V_h|$</li>
+<li>令$V_h = V - V<em>d$ ，则 $\sum</em>{v \in V_h}deg(v) \geq (d + 1)|V_h|$</li>
 <li>$(d + 1)|V<em>h| \leq \sum</em>{v \in V}deg(v) \leq 6|V| - 12$</li>
 <li>$|V_h| \leq (6|V| - 12)/(d + 1)$</li>
 <li><p>$|v_d| = |V| - |V_h| \geq (d - 5)|V|/(d + 1)$</p>
@@ -506,19 +506,9 @@ $P_r{ X \leq">
 <li>将{0, 1}映射到 整数环Z上的2*2矩阵</li>
 <li>(满足性质2但不满足1和3)</li>
 </ul>
-<script type="math/tex; mode=display">f(0) = 
- \left[
- \begin{matrix}
-   1 & 0 \\
-   1 & 1
-  \end{matrix}
-  \right]</script><script type="math/tex; mode=display">f(1) = 
- \left[
- \begin{matrix}
-   1 & 1 \\
-   0 & 1
-  \end{matrix}
-  \right]</script><ul>
+<p>$$ f(0) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 0 \<br>   1 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<p>$$ f(1) =<br> \left[<br> \begin{matrix}<br>   1 &amp; 1 \<br>   0 &amp; 1<br>  \end{matrix}<br>  \right]<br>$$</p>
+<ul>
 <li>对字符串XY，f(XY)=f(X)f(Y)(Z上的矩阵乘法)</li>
 <li>指纹是一一对应的</li>
 <li>通过比较行内元素的大小，可以知道最后是0还是1（0是左大右小，1是左小右大）</li>
@@ -535,19 +525,13 @@ $P_r{ X \leq">
 </ul>
 </li>
 <li><ul>
-<li>f(X) = $<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<script type="math/tex; mode=display">
-\left[
-\begin{matrix}
-1 & 0 \\
-1 & 1
-\end{matrix}
-\right]</script>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$ = $<br>\left[<br>\begin{matrix}<br>2 &amp; 5 \<br>1 &amp; 3<br>\end{matrix}<br>\right]<br>$</li>
+<li>f(X) = $<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 0 \<br>1 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$$<br>\left[<br>\begin{matrix}<br>1 &amp; 1 \<br>0 &amp; 1<br>\end{matrix}<br>\right]<br>$ = $<br>\left[<br>\begin{matrix}<br>2 &amp; 5 \<br>1 &amp; 3<br>\end{matrix}<br>\right]<br>$</li>
 </ul>
 </li>
 </ul>
 <p><strong>指纹的增长速度</strong>(不满足性质1)</p>
 <ul>
-<li><p>X长度为m，则f(X)的每个元是不大于 $F<em>{m+1}$ 的整数，其中 $F</em>{m+1}$ 是第(m + 1)个斐波那契数($ F<em>1 = F_2 = 1, F</em>{m + 1} = F<em>m + F</em>{m - 1} $)</p>
+<li><p>X长度为m，则f(X)的每个元是不大于 $F<em>{m+1}$ 的整数，其中 $F</em>{m+1}$ 是第(m + 1)个斐波那契数($ F_1 = F<em>2 = 1, F</em>{m + 1} = F<em>m + F</em>{m - 1} $)</p>
 </li>
 <li><p>f(X)的元会大至 $F_{m + 1} \approx \frac{\phi^{m+1}}{\sqrt{5}}$</p>
 </li>
@@ -699,10 +683,10 @@ $P_r{ X \leq">
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -725,7 +709,7 @@ $P_r{ X \leq">
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -738,7 +722,7 @@ $P_r{ X \leq">
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -805,11 +789,11 @@ $P_r{ X \leq">
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

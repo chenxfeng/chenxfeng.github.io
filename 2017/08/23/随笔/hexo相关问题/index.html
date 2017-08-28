@@ -100,7 +100,7 @@
 <meta property="og:url" content="https://chenfeng.github.io/2017/08/23/随笔/hexo相关问题/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
 <meta property="og:description" content="使用hexo搭建在github上的博客，编写复杂的数学公式可以用mathjax引擎">
-<meta property="og:updated_time" content="2017-08-23T05:39:17.925Z">
+<meta property="og:updated_time" content="2017-08-28T06:18:07.928Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数学公式">
 <meta name="twitter:description" content="使用hexo搭建在github上的博客，编写复杂的数学公式可以用mathjax引擎">
@@ -199,7 +199,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -263,7 +263,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-23T00:00:00+08:00">
                 2017-08-23
@@ -309,12 +309,12 @@
 <h3 id="HOW-TO-DO"><a href="#HOW-TO-DO" class="headerlink" title="HOW_TO_DO"></a>HOW_TO_DO</h3><p>可手动在markdown文本中添加MathJax引擎：<code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;</code></p>
 <ul>
 <li>公式语法 : <a href="http://www.360doc.com/content/14/0930/23/9482_413578190.shtml" target="_blank" rel="external">Latex</a></li>
-<li>行间公式 : $$$公式$$$</li>
-<li>行内公式 : <script type="math/tex">公式</script> or <code>\\(公式\\)</code> (<code>\</code>符号在markdown中为转义字符故须使用<code>\\</code>符号)</li>
+<li>行间公式 : <code>$$公式$$</code></li>
+<li>行内公式 : <code>$公式$</code> or <code>\\(公式\\)</code> (<code>\</code>符号在markdown中为转义字符故须使用<code>\\</code>符号)</li>
 </ul>
 <p>也可使用<a href="https://github.com/hexojs/hexo-math" target="_blank" rel="external">hexo-math插件</a></p>
 <blockquote>
-<p>自动部署MathJax，可安装<a href="http://catx.me/2014/03/09/hexo-mathjax-plugin/" target="_blank" rel="external">自动部署的hexo插件</a><br>命令(已安装node.js、npm和hexo)：<br> npm install hexo-math —save<br> hexo math install<br><a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">参考：http://blog.csdn.net/emptyset110/article/details/50123231</a></p>
+<p>自动部署MathJax，可安装<a href="http://catx.me/2014/03/09/hexo-mathjax-plugin/" target="_blank" rel="external">自动部署的hexo插件</a><br>命令(已安装node.js、npm和hexo)：<br> npm install hexo-math –save<br> hexo math install<br><a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">参考：http://blog.csdn.net/emptyset110/article/details/50123231</a></p>
 </blockquote>
 <h3 id="PROBLEM"><a href="#PROBLEM" class="headerlink" title="PROBLEM"></a>PROBLEM</h3><p>实际使用中，由于markdown中的特殊符号与latex中的符号有冲突，hexo默认的markdown引擎渲染方式会造成一些转义问题：</p>
 <ul>
@@ -356,7 +356,8 @@
 </ul>
 </li>
 </ul>
-<h4 id="更换hexo的markdown引擎"><a href="#更换hexo的markdown引擎" class="headerlink" title="更换hexo的markdown引擎"></a>更换hexo的markdown引擎</h4><ul>
+<h4 id="更换hexo的markdown引擎"><a href="#更换hexo的markdown引擎" class="headerlink" title="更换hexo的markdown引擎"></a>更换hexo的markdown引擎</h4><p>从根本上解决冲突的方法。</p>
+<ul>
 <li><p><a href="https://github.com/wzpan/hexo-renderer-pandoc" target="_blank" rel="external">hexo-renderer-pandoc</a></p>
 </li>
 <li><p><a href="https://github.com/sun11/hexo-renderer-kramed" target="_blank" rel="external">hexo-renderer-kramed</a></p>
@@ -364,16 +365,16 @@
 <li><p>卸载原有引擎，安装新markdown引擎：</p>
 </li>
 <li><ul>
-<li>npm uninstall hexo-renderer-marked —save</li>
+<li>npm uninstall hexo-renderer-marked –save</li>
 </ul>
 </li>
 <li><ul>
-<li>npm install hexo-renderer-pandoc —save</li>
+<li>npm install hexo-renderer-pandoc –save</li>
 </ul>
 </li>
 </ul>
 <blockquote>
-<p><strong>hexo-renderer-pandoc 未能正常工作，原因未明</strong></p>
+<p><strong>hexo-renderer-pandoc 未能正常工作，原因未明</strong><br><strong>hexo-renderer-kramed 使用中，也无法正常渲染latex公式…</strong></p>
 </blockquote>
 <hr>
 <h3 id="其他-插入数学公式的-方法"><a href="#其他-插入数学公式的-方法" class="headerlink" title="其他(插入数学公式的)方法"></a>其他(插入数学公式的)方法</h3><blockquote>
@@ -471,10 +472,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -497,7 +498,7 @@
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -510,7 +511,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -577,11 +578,11 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

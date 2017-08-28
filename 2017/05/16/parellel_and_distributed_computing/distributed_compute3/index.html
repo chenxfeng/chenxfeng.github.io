@@ -269,7 +269,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -333,7 +333,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-16T00:00:00+08:00">
                 2017-05-16
@@ -467,12 +467,8 @@
 </ul>
 </li>
 </ul>
-<script type="math/tex; mode=display">
-\sum_{(i,j)\in E} f_{ij} = \sum_{(j, i)\in E} f_{ji} =\begin{cases}
-F&\text{$v_i$ 为源端}\\
--F&\text{$v_i$ 为宿端}\\
-0& \text{其他}
-\end{cases}</script><p><strong>可行流的条件</strong></p>
+<p>$$<br>\sum<em>{(i,j)\in E} f</em>{ij} = \sum<em>{(j, i)\in E} f</em>{ji} =\begin{cases}<br>F&amp;\text{$v_i$ 为源端}\<br>-F&amp;\text{$v_i$ 为宿端}\<br>0&amp; \text{其他}<br>\end{cases}<br>$$</p>
+<p><strong>可行流的条件</strong></p>
 <ul>
 <li>具有m条(有向)边、n个端的图共有2m+n-1个限制条件，包括</li>
 <li><ul>
@@ -505,7 +501,7 @@ F&\text{$v_i$ 为源端}\\
 </ul>
 </li>
 <li><ul>
-<li>网络拓扑已定，$c<em>{ij}$已知，单位流量通过边$(v_i, v_j)$所需的代价$\alpha</em>{ij}$(代价系数)已知，给定流量F，寻求总代价中最小的可行流${f<em>{ij}}$，其中总费用定义为：$\phi = \sum \alpha</em>{ij}*f_{ij}$</li>
+<li>网络拓扑已定，$c_{ij}$已知，单位流量通过边$(v_i, v<em>j)$所需的代价$\alpha</em>{ij}$(代价系数)已知，给定流量F，寻求总代价中最小的可行流${f<em>{ij}}$，其中总费用定义为：$\phi = \sum \alpha</em>{ij}*f_{ij}$</li>
 </ul>
 </li>
 </ul>
@@ -521,7 +517,7 @@ F&\text{$v_i$ 为源端}\\
 <li>反向边：与割方向相反的边</li>
 </ul>
 </li>
-<li><p>割量：前向边容量和 $c(X, \overline X) = \sum<em>{v_i \in X, v_j \in \overline X} c</em>{ij}$</p>
+<li><p>割量：前向边容量和 $c(X, \overline X) = \sum_{v_i \in X, v<em>j \in \overline X} c</em>{ij}$</p>
 </li>
 <li>对可行流${f_{ij}}$</li>
 <li><ul>
@@ -564,9 +560,8 @@ F&\text{$v_i$ 为源端}\\
 </li>
 <li><p>在可增流路上增流不影响连续性条件也不影响其它边上的流量，同时可以使从源端到宿端的流量增大</p>
 </li>
-<li><p>在可增流路上所有正向边的流量均可增加不致于破坏流量的有限性，所有反向边上均可减流(相当于正向增流)不致于破坏非负性。整体的增流量应为这些正向边上能增流(或反向边上能减流)的最小值，即可增量为</p>
-<script type="math/tex; mode=display">
-\delta = min[min_{e_{ij} \in P}(c_{ij} - f_{ij}), min_{e_ji} \in P(f_{ji})]</script></li>
+<li><p>在可增流路上所有正向边的流量均可增加不致于破坏流量的有限性，所有反向边上均可减流(相当于正向增流)不致于破坏非负性。整体的增流量应为这些正向边上能增流(或反向边上能减流)的最小值，即可增量为<br>$$<br>\delta = min[min<em>{e</em>{ij} \in P}(c<em>{ij} - f</em>{ij}), min_{e<em>ji} \in P(f</em>{ji})]<br>$$</p>
+</li>
 <li><p>在可增流路上各边均增加$\delta$(对于反向边即为减流$\delta$)，不会破坏流量的非负性、有限性，并不影响连续性条件，从而得到一个新的可行流，并使源宿端间的流量增加</p>
 </li>
 </ul>
@@ -712,10 +707,10 @@ F&\text{$v_i$ 为源端}\\
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -738,7 +733,7 @@ F&\text{$v_i$ 为源端}\\
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -751,7 +746,7 @@ F&\text{$v_i$ 为源端}\\
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -818,11 +813,11 @@ F&\text{$v_i$ 为源端}\\
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

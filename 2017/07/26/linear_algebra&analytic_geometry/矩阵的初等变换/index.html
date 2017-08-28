@@ -204,7 +204,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -268,7 +268,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-26T10:22:00+08:00">
                 2017-07-26
@@ -317,19 +317,13 @@
 <a id="more"></a>
 <ul>
 <li><ul>
-<li>例如：<br>实对称矩阵<script type="math/tex; mode=display">
-\left[ \begin{matrix} 3 & 0 & 5 \\ 0 & 1 & -1 \\ 5 & -1 & 0 \end{matrix} \right]</script>埃米尔特矩阵<script type="math/tex; mode=display">
-\left[ \begin{matrix} a & a + di \\ a - di & b \end{matrix}
-\right]</script></li>
+<li>例如：<br>实对称矩阵<br>$$<br>\left[ \begin{matrix} 3 &amp; 0 &amp; 5 \ 0 &amp; 1 &amp; -1 \ 5 &amp; -1 &amp; 0 \end{matrix} \right]<br>$$<br>埃米尔特矩阵<br>$$<br>\left[ \begin{matrix} a &amp; a + di \ a - di &amp; b \end{matrix}<br>\right]<br>$$</li>
 </ul>
 </li>
 <li><p>定义：设 $A = R^{n<em>n}$，如果 $A^{T} = -A$，则 A 称<strong>实反对称矩阵</strong>；设 $B \in C^{n</em>n}$，如果 $B^{H} = -B$，则 B 称为<strong>反埃米尔特矩阵</strong></p>
 </li>
 <li><ul>
-<li>例如：<br>实反对称矩阵<script type="math/tex; mode=display">
-\left[ \begin{matrix} 0 & 3 & 2 \\ -3 & 0 & 1 \\ -2 & -1 & 0 \end{matrix} \right]</script>反埃米尔特矩阵<script type="math/tex; mode=display">
-\left[ \begin{matrix} 3i & 5 + 4i \\ -5 + 4i & -7i \end{matrix}
-\right]</script></li>
+<li>例如：<br>实反对称矩阵<br>$$<br>\left[ \begin{matrix} 0 &amp; 3 &amp; 2 \ -3 &amp; 0 &amp; 1 \ -2 &amp; -1 &amp; 0 \end{matrix} \right]<br>$$<br>反埃米尔特矩阵<br>$$<br>\left[ \begin{matrix} 3i &amp; 5 + 4i \ -5 + 4i &amp; -7i \end{matrix}<br>\right]<br>$$</li>
 </ul>
 </li>
 </ul>
@@ -340,10 +334,7 @@
 <p>A、B互为逆矩阵</p>
 </blockquote>
 <ul>
-<li><p>定义：设 $A<em>{ij}$ 是 $A = (a</em>{ij})<em>{n*n}$ 中元素 $a</em>{ij}$ 的代数余子式，则 <script type="math/tex">adjA = 
-\left[ \begin{matrix} A_{11} & A_{21} & ... & A_{n1} \\ A_{12} & A_{22} & ... & A_{n2} \\ . & . & . \\ . & . & . \\ . & . & . \\ A_{1n} & A_{2n} & ... & A_{nn}
-\end{matrix}
-\right]</script><br>称 A 的<strong>伴随矩阵</strong></p>
+<li><p>定义：设 $A<em>{ij}$ 是 $A = (a</em>{ij})<em>{n*n}$ 中元素 $a</em>{ij}$ 的代数余子式，则 $$adjA =<br>\left[ \begin{matrix} A<em>{11} &amp; A</em>{21} &amp; … &amp; A<em>{n1} \ A</em>{12} &amp; A<em>{22} &amp; … &amp; A</em>{n2} \ . &amp; . &amp; . \ . &amp; . &amp; . \ . &amp; . &amp; . \ A<em>{1n} &amp; A</em>{2n} &amp; … &amp; A_{nn}<br>\end{matrix}<br>\right]<br>$$<br>称 A 的<strong>伴随矩阵</strong></p>
 </li>
 <li><ul>
 <li>$A(adjA) = (adjA)A = |A|E$</li>
@@ -392,7 +383,7 @@
 <p>行等价具有性质：<br>自反性：A和自身行等价<br>对称性：若A和B等价，则B与A行等价<br>传递性：若A与B行等价，B与C行等价，则A与C行等价</p>
 </blockquote>
 <ul>
-<li><p>定义：对于矩阵 $A = (a<em>{ij})$，如果它的每一行的第一个非零元前面的零的个数逐行增加，直到剩下全部都是零的行(如果有零的话)，即 $a</em>{1j<em>1} \not= 0, a</em>{2j<em>2} \not= 0, …, a</em>{rj<em>r} \not= 0, i_1 &lt; j_2 &lt; … &lt; j_r, a</em>{ij} = 0, i \geq r, j &lt; j_i与i &gt; r$，则称A是<strong>梯形阵</strong>(阶梯型矩阵)</p>
+<li><p>定义：对于矩阵 $A = (a<em>{ij})$，如果它的每一行的第一个非零元前面的零的个数逐行增加，直到剩下全部都是零的行(如果有零的话)，即 $a</em>{1j<em>1} \not= 0, a</em>{2j<em>2} \not= 0, …, a</em>{rj_r} \not= 0, i_1 &lt; j_2 &lt; … &lt; j<em>r, a</em>{ij} = 0, i \geq r, j &lt; j_i与i &gt; r$，则称A是<strong>梯形阵</strong>(阶梯型矩阵)</p>
 </li>
 <li><p>定理：任意矩阵A行等价与一个梯形阵</p>
 </li>
@@ -402,23 +393,7 @@
 <li>矩阵间的等价关系具有自反性、对称性和传递性</li>
 </ul>
 </li>
-<li><p>定理：任意矩阵A等价于以下对角形矩阵</p>
-<script type="math/tex; mode=display">
-\left[ \begin{matrix} 
-1 & & & & & & & & & & & \\
-& 1 & & & & & & & & & & \\
-& & . & & & & & & & & & \\
-& & & . & & & & & & & & \\
-& & & & . & & & & & & & \\
-& & & & & 1 & & & & & & \\
-& & & & & & 0 & & & & & \\
-& & & & & & & 0 & & & & \\
-& & & & & & & & . & & & \\
-& & & & & & & & & . & & \\
-& & & & & & & & & & . & \\
-& & & & & & & & & & & . 
-\end{matrix}
-\right]</script><p>此矩阵称为A的标准形</p>
+<li><p>定理：任意矩阵A等价于以下对角形矩阵<br>$$<br>\left[ \begin{matrix}<br>1 &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; 1 &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; . &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; . &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; . &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; 1 &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; 0 &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; 0 &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; . &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; . &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; . &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; .<br>\end{matrix}<br>\right]<br>$$<br>此矩阵称为A的标准形</p>
 </li>
 <li><p>定义：对单位矩阵E进行一次初等变换得到的矩阵，称初等矩阵</p>
 </li>
@@ -565,10 +540,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -591,7 +566,7 @@
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -604,7 +579,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -671,11 +646,11 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

@@ -197,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -263,7 +263,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T22:00:00+08:00">
                 2017-07-19
@@ -312,7 +312,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/19/mathematical_logic/狭谓词逻辑的形式结构/#more" rel="contents">
-              Weiterlesen &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -391,7 +391,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T23:00:00+08:00">
                 2017-07-17
@@ -438,12 +438,13 @@
 <li>让一个集合包含不相关的类的对象的一个好方法：多重继承</li>
 </ul>
 <p>问题：交互式或长时间运行的程序中常有一堆各式各样的C++对象需要一块释放</p>
-<h3 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h3><p><strong>使用类来表示概念</strong>：需要一个类表示“一些要一起释放的对象”</p>
+<h3 id="设计方案">设计方案</h3>
+<p><strong>使用类来表示概念</strong>：需要一个类表示“一些要一起释放的对象”</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Cluster &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/17/c_plus_plus_thinking/在簇中分配对象/#more" rel="contents">
-              Weiterlesen &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -522,7 +523,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T10:00:00+08:00">
                 2017-07-17
@@ -564,27 +565,24 @@
       
         
           <blockquote>
-<p>前述命题逻辑(古典命题逻辑)存在以下特征：<br>每一变项和公式<strong>至少</strong>在二值(真或假)中取其一<br>每一变项和公式<strong>至多</strong>在二值(真或假)中取其一<br>公式的值完全取决于其中变项的值</p>
+<p>前述命题逻辑(古典命题逻辑)存在以下特征： 每一变项和公式<strong>至少</strong>在二值(真或假)中取其一 每一变项和公式<strong>至多</strong>在二值(真或假)中取其一 公式的值完全取决于其中变项的值</p>
 </blockquote>
 <ul>
 <li>非古典命题逻辑，如：</li>
 <li><ul>
 <li><em>多值逻辑</em></li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><em>模态逻辑</em></li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><em>构造性逻辑</em></li>
-</ul>
-</li>
+</ul></li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/17/mathematical_logic/不同的命题逻辑/#more" rel="contents">
-              Weiterlesen &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -663,7 +661,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-16T23:00:00+08:00">
                 2017-07-16
@@ -708,11 +706,12 @@
 <ul>
 <li>Trace类怎样提供有关函数执行和类操作的调试信息</li>
 </ul>
-<h3 id="设计一个跟踪类"><a href="#设计一个跟踪类" class="headerlink" title="设计一个跟踪类"></a>设计一个跟踪类</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Trace &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Trace() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello\n"</span>; &#125;</div><div class="line">    ~Trace() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Goodbye\n"</span>; &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="设计一个跟踪类">设计一个跟踪类</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Trace &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Trace() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello\n"</span>; &#125;</div><div class="line">    ~Trace() &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Goodbye\n"</span>; &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/16/c_plus_plus_thinking/自己跟踪自己的类/#more" rel="contents">
-              Weiterlesen &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -791,7 +790,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-16T13:00:00+08:00">
                 2017-07-16
@@ -846,7 +845,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/16/mathematical_logic/命题逻辑表达式的重要性质/#more" rel="contents">
-              Weiterlesen &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -925,7 +924,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-15T17:00:00+08:00">
                 2017-07-15
@@ -984,7 +983,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/15/c_plus_plus_thinking/库/#more" rel="contents">
-              Weiterlesen &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1063,7 +1062,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-14T16:00:00+08:00">
                 2017-07-14
@@ -1112,133 +1111,10 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/07/14/mathematical_logic/命题演算/#more" rel="contents">
-              Weiterlesen &raquo;
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/12/转载/black_red_tree/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/12/转载/black_red_tree/" itemprop="url">black_red_tree</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
-                2017-07-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <hr>
-<h2 id="转：http-www-cnblogs-com-daoluanxiaozi-p-3340382-html"><a href="#转：http-www-cnblogs-com-daoluanxiaozi-p-3340382-html" class="headerlink" title="转：http://www.cnblogs.com/daoluanxiaozi/p/3340382.html"></a>转：<a href="http://www.cnblogs.com/daoluanxiaozi/p/3340382.html" target="_blank" rel="external">http://www.cnblogs.com/daoluanxiaozi/p/3340382.html</a></h2><h2 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h2><blockquote>
-<p>性质1 节点是红色或黑色<br>性质2 根是黑色<br>性质3 所有叶子都是黑色（叶子是NIL节点）<br>性质4 每个红色节点的两个子节点都是黑色 (从每个叶子到根的所有路径上不能有两个连续的红色节点)<br>性质5 从任一节点到其每个叶子的所有简单路径 都包含相同数目的黑色节点</p>
-</blockquote>
-
-          
         
       
     </div>
@@ -1314,7 +1190,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
                 2017-07-12
@@ -1434,7 +1310,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
                 2017-07-12
@@ -1478,6 +1354,129 @@
           
             <hr>
 <h2 id="转：http-www-cnblogs-comyc-sunniwellarchive201006281766854-html"><a href="#转：http-www-cnblogs-comyc-sunniwellarchive201006281766854-html" class="headerlink" title="转：http://www.cnblogs.comyc_sunniwellarchive201006281766854.html"></a>转：<a href="http://www.cnblogs.comyc_sunniwellarchive201006281766854.html" target="_blank" rel="external">http://www.cnblogs.comyc_sunniwellarchive201006281766854.html</a></h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/12/转载/black_red_tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/12/转载/black_red_tree/" itemprop="url">black_red_tree</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-12T00:00:00+08:00">
+                2017-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<h2 id="转：http-www-cnblogs-com-daoluanxiaozi-p-3340382-html"><a href="#转：http-www-cnblogs-com-daoluanxiaozi-p-3340382-html" class="headerlink" title="转：http://www.cnblogs.com/daoluanxiaozi/p/3340382.html"></a>转：<a href="http://www.cnblogs.com/daoluanxiaozi/p/3340382.html" target="_blank" rel="external">http://www.cnblogs.com/daoluanxiaozi/p/3340382.html</a></h2><h2 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h2><blockquote>
+<p>性质1 节点是红色或黑色<br>性质2 根是黑色<br>性质3 所有叶子都是黑色（叶子是NIL节点）<br>性质4 每个红色节点的两个子节点都是黑色 (从每个叶子到根的所有路径上不能有两个连续的红色节点)<br>性质5 从任一节点到其每个叶子的所有简单路径 都包含相同数目的黑色节点</p>
+</blockquote>
+
           
         
       
@@ -1565,7 +1564,7 @@
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1578,7 +1577,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -1629,11 +1628,11 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

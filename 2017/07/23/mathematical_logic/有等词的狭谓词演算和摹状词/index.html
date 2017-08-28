@@ -307,7 +307,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -371,7 +371,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T16:44:44+08:00">
                 2017-07-23
@@ -461,13 +461,13 @@
 <li>至少有若干个体：用等词、存在量词及合取表示</li>
 </ol>
 <ul>
-<li>至少有n个体可表示为 $(\exists x<em>1)(\exists x_2)…(\exists x_n)(x_1 \not= x_2 \bigwedge … \bigwedge x_1 \not=x_n \bigwedge … \bigwedge x</em>{n-1} \not= x_n)$</li>
+<li>至少有n个体可表示为 $(\exists x_1)(\exists x_2)…(\exists x_n)(x_1 \not= x_2 \bigwedge … \bigwedge x_1 \not=x<em>n \bigwedge … \bigwedge x</em>{n-1} \not= x_n)$</li>
 </ul>
 <ol>
 <li>至多有若干个体：用等词、全称量词及析取表示</li>
 </ol>
 <ul>
-<li>至多有n个体可表示为 $(x<em>1)(x_2)…(x</em>{n+1})(x<em>1 = x_2) \bigvee … \bigvee x_1 = x</em>{n+1} \bigvee … \bigvee x<em>n = x</em>{n+1}$</li>
+<li>至多有n个体可表示为 $(x_1)(x<em>2)…(x</em>{n+1})(x_1 = x_2) \bigvee … \bigvee x<em>1 = x</em>{n+1} \bigvee … \bigvee x<em>n = x</em>{n+1}$</li>
 <li><ul>
 <li>任给n+1个必有2个相等，就是至多有n个</li>
 </ul>
@@ -489,7 +489,7 @@
 <li>至多有n个体是F</li>
 </ol>
 <ul>
-<li>至多有n个F：$(x<em>1)…(x</em>{n+1})(F(x<em>1) \bigwedge … \bigwedge F(x</em>{n+1}) \rightarrow x<em>1 = x_2 \bigwedge … \bigvee x_1 = x</em>{n+1} \bigvee … \bigvee x<em>n = x</em>{n+1})$ </li>
+<li>至多有n个F：$(x<em>1)…(x</em>{n+1})(F(x<em>1) \bigwedge … \bigwedge F(x</em>{n+1}) \rightarrow x_1 = x_2 \bigwedge … \bigvee x<em>1 = x</em>{n+1} \bigvee … \bigvee x<em>n = x</em>{n+1})$ </li>
 </ul>
 <ol>
 <li>恰好有n个体是F</li>
@@ -501,11 +501,11 @@
 <ul>
 <li>至少有n个F</li>
 </ul>
-<p>$(\exists <em>{n}x)F(x) = \begin{cases} (\exists x_1)F(x_1),  \ \ \text{当n=1} \ (\exists x_1)…(\exists x_n)(F(x_1) \bigwedge … \bigwedge F(x_n) \rightarrow x_1 \not=x_2 \bigwedge … \bigwedge x_1 \not= x_n \bigwedge … \bigwedge x</em>{n-1} \not= x_n) \ \ \text{当n &gt; 1}\end{cases}$</p>
+<p>$(\exists _{n}x)F(x) = \begin{cases} (\exists x_1)F(x_1),  \ \ \text{当n=1} \ (\exists x_1)…(\exists x_n)(F(x_1) \bigwedge … \bigwedge F(x_n) \rightarrow x_1 \not=x_2 \bigwedge … \bigwedge x_1 \not= x<em>n \bigwedge … \bigwedge x</em>{n-1} \not= x_n) \ \ \text{当n &gt; 1}\end{cases}$</p>
 <ul>
 <li>至多有n个F</li>
 </ul>
-<p>$(<em>{n+1}x)F(x) = \begin{cases} (x_1)F(x_1),  \ \ \text{当n=1} \ (x_1)…(x</em>{n+1})(F(x<em>1) \bigvee … \bigvee F(x</em>{n+1}) \rightarrow x<em>1 = x_2 \bigvee … \bigvee x_1 = x</em>{n+1} \bigvee … \bigvee x<em>{n} = x</em>{n+1}) \ \ \text{当n &gt; 1}\end{cases}$</p>
+<p>$(_{n+1}x)F(x) = \begin{cases} (x_1)F(x_1),  \ \ \text{当n=1} \ (x<em>1)…(x</em>{n+1})(F(x<em>1) \bigvee … \bigvee F(x</em>{n+1}) \rightarrow x_1 = x_2 \bigvee … \bigvee x<em>1 = x</em>{n+1} \bigvee … \bigvee x<em>{n} = x</em>{n+1}) \ \ \text{当n &gt; 1}\end{cases}$</p>
 <ul>
 <li>恰好有n个F可表示为 $(\exists <em>n x)F(x) \bigwedge (</em>{n+1}x)F(x)$</li>
 </ul>
@@ -794,10 +794,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -820,7 +820,7 @@
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -833,7 +833,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -900,11 +900,11 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

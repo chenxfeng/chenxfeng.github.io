@@ -96,26 +96,20 @@
 
 <meta name="description" content="一个小程序，使用不同类型迭代器做不同的事
 
-1234567// 复制顺序的数据结构template &amp;lt;class In, class Out&amp;gt;Out copy(In start, In end, Out dest) &amp;#123;    while (start != end)        *dest++ = *start++;    return dest;&amp;#125;
-
-调用例子">
+1234567// 复制顺序的数据结构template &amp;lt;class In, class Out&amp;gt;Out copy(In start, In end, Out dest) &amp;#123;    while (start != end)        *dest++ = *start++;    return dest;&amp;#125;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模板之泛型迭代器的使用">
 <meta property="og:url" content="https://chenfeng.github.io/2017/07/05/c_plus_plus_thinking/模板之使用泛型迭代器/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
 <meta property="og:description" content="一个小程序，使用不同类型迭代器做不同的事
 
-1234567// 复制顺序的数据结构template &amp;lt;class In, class Out&amp;gt;Out copy(In start, In end, Out dest) &amp;#123;    while (start != end)        *dest++ = *start++;    return dest;&amp;#125;
-
-调用例子">
+1234567// 复制顺序的数据结构template &amp;lt;class In, class Out&amp;gt;Out copy(In start, In end, Out dest) &amp;#123;    while (start != end)        *dest++ = *start++;    return dest;&amp;#125;">
 <meta property="og:updated_time" content="2017-07-07T14:51:44.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模板之泛型迭代器的使用">
 <meta name="twitter:description" content="一个小程序，使用不同类型迭代器做不同的事
 
-1234567// 复制顺序的数据结构template &amp;lt;class In, class Out&amp;gt;Out copy(In start, In end, Out dest) &amp;#123;    while (start != end)        *dest++ = *start++;    return dest;&amp;#125;
-
-调用例子">
+1234567// 复制顺序的数据结构template &amp;lt;class In, class Out&amp;gt;Out copy(In start, In end, Out dest) &amp;#123;    while (start != end)        *dest++ = *start++;    return dest;&amp;#125;">
 
 
 
@@ -211,7 +205,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -275,7 +269,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
                 2017-07-05
@@ -323,47 +317,47 @@
 <li>调用例子</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">char</span>* hello = <span class="string">"Hello "</span>;</div><div class="line">    <span class="keyword">char</span>* world = <span class="string">"world"</span>;</div><div class="line">    <span class="keyword">char</span> message[<span class="number">15</span>];</div><div class="line">    <span class="keyword">char</span>* p = message;</div><div class="line"></div><div class="line">    p = copy(hello, hello + <span class="number">6</span>, p);</div><div class="line">    p = copy(world, world + <span class="number">5</span>, p);</div><div class="line">    *p = <span class="string">'\0'</span>;</div><div class="line"></div><div class="line">    <span class="built_in">cout</span> &lt;&lt; message &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<a id="more"></a>C++
-
-### 迭代器类型
-
-- 模板参数类型In和Out分别作为输入迭代器和输出迭代器
-- 支持相等(==/!=)比较和++自增操作符(前置/后置)
-- 作为函数的参数被传递、返回、保存在数据结构中等
-
-- 区别在于各自如何访问迭代器所代表的数据
-- - 通过一元操作符*支持间接引用
-- - 输入迭代器只需要能读取一个值
-- - 输出迭代器只需要能够赋值
-- - ``*out = *in``必须按照预想工作，``*in = *out``则不必
-
-- 输出迭代器表示定位时都必须给迭代器赋一个值，且只能赋一次
-
-- 输入迭代器增加到超过某个特定的输入值，那么这个值将再也不能被访问
-
-### 虚拟序列
-
-- 创建一个用来读取相同常量值序列的输入迭代器
-
-- 设置数组的元素为某个特定值(把x的元素都设成0):
-
+<a id="more"></a>
+<p>C++</p>
+<h3 id="迭代器类型">迭代器类型</h3>
+<ul>
+<li>模板参数类型In和Out分别作为输入迭代器和输出迭代器</li>
+<li>支持相等(==/!=)比较和++自增操作符(前置/后置)</li>
+<li><p>作为函数的参数被传递、返回、保存在数据结构中等</p></li>
+<li>区别在于各自如何访问迭代器所代表的数据</li>
+<li><ul>
+<li>通过一元操作符*支持间接引用</li>
+</ul></li>
+<li><ul>
+<li>输入迭代器只需要能读取一个值</li>
+</ul></li>
+<li><ul>
+<li>输出迭代器只需要能够赋值</li>
+</ul></li>
+<li><ul>
+<li><code>*out = *in</code>必须按照预想工作，<code>*in = *out</code>则不必</li>
+</ul></li>
+<li><p>输出迭代器表示定位时都必须给迭代器赋一个值，且只能赋一次</p></li>
+<li><p>输入迭代器增加到超过某个特定的输入值，那么这个值将再也不能被访问</p></li>
+</ul>
+<h3 id="虚拟序列">虚拟序列</h3>
+<ul>
+<li><p>创建一个用来读取相同常量值序列的输入迭代器</p></li>
+<li><p>设置数组的元素为某个特定值(把x的元素都设成0):</p></li>
+</ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> x[<span class="number">100</span>];</div><div class="line"><span class="function">Constant_iterator <span class="title">c</span><span class="params">(<span class="number">0</span>)</span></span>;</div><div class="line"></div><div class="line">copy(c, c + <span class="number">100</span>, x);</div></pre></td></tr></table></figure>
 <ul>
 <li>c的行为类似指向一个无界“数组”的“指针”</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Constant_iterator &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Constant_iterator(<span class="keyword">int</span> k=<span class="number">0</span>);</div><div class="line">    <span class="keyword">int</span> <span class="keyword">operator</span>*() <span class="keyword">const</span>;</div><div class="line">    Constant_iterator&amp; <span class="keyword">operator</span>++();</div><div class="line">    Constant_iterator <span class="keyword">operator</span>++(<span class="keyword">int</span>);</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> n;</div><div class="line">    <span class="keyword">int</span> count;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">int</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Constant_iterator&amp;, <span class="keyword">const</span> Constant_iterator&amp;);</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">int</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> Constant_iterator&amp;, <span class="keyword">const</span> Constant_iterator&amp;);</div><div class="line">    <span class="keyword">friend</span> Constant_iterator <span class="keyword">operator</span>+(<span class="keyword">const</span> Constant_iterator&amp;, <span class="keyword">int</span>);</div><div class="line">    <span class="keyword">friend</span> Constant_iterator <span class="keyword">operator</span>+(<span class="keyword">int</span>, <span class="keyword">const</span> Constant_iterator&amp;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>缺省拷贝构造函数和赋值操作符</p>
-</li>
-<li><p>成员count跟踪产生的值的数量，比较操作符可以判断何时到达“序列”尾部</p>
-</li>
+<li><p>缺省拷贝构造函数和赋值操作符</p></li>
+<li><p>成员count跟踪产生的值的数量，比较操作符可以判断何时到达“序列”尾部</p></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Constant_iterator::Constant_iterator(<span class="keyword">int</span> k=<span class="number">0</span>): n(k) &#123; &#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Constant_iterator::<span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">return</span> n;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>构造函数记住迭代器生成的值，解引用(dereference)操作符返回这个值</p>
-</li>
-<li><p>自增操作符递增遍历过的值的数目的计数</p>
-</li>
+<li><p>构造函数记住迭代器生成的值，解引用(dereference)操作符返回这个值</p></li>
+<li><p>自增操作符递增遍历过的值的数目的计数</p></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Constant_iterator&amp; Constant_iterator::<span class="keyword">operator</span>++() &#123;</div><div class="line">    ++count;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Constant_iterator Constant_iterator::<span class="keyword">operator</span>++(<span class="keyword">int</span>) &#123;</div><div class="line">    Constant_iterator r = *<span class="keyword">this</span>;</div><div class="line">    ++count;</div><div class="line">    <span class="keyword">return</span> r;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
@@ -375,49 +369,39 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Constant_iterator&amp; p, <span class="keyword">const</span> Constant_iterator&amp; q) &#123;</div><div class="line">    <span class="keyword">return</span> p.count == q.count &amp;&amp; p.n == q.n;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> Constant_iterator&amp; p, <span class="keyword">const</span> Constant_iterator&amp; q) &#123;</div><div class="line">    <span class="keyword">return</span> !(p == q);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>创建了一个迭代器，表示包含相等值的“虚拟数组”(实际上并不存在)</p>
-</li>
-<li><p>可以创建类似的起点和步长固定的迭代器</p>
-</li>
+<li><p>创建了一个迭代器，表示包含相等值的“虚拟数组”(实际上并不存在)</p></li>
+<li><p>可以创建类似的起点和步长固定的迭代器</p></li>
 </ul>
-<h3 id="输出流迭代器"><a href="#输出流迭代器" class="headerlink" title="输出流迭代器"></a>输出流迭代器</h3><ul>
-<li><p>定义一个可以把值打印出来的输出迭代器(类ostream_iterator的一个对象)</p>
-</li>
-<li><p><code>ostream_iterator&lt;int&gt; out(cout)</code></p>
-</li>
+<h3 id="输出流迭代器">输出流迭代器</h3>
+<ul>
+<li><p>定义一个可以把值打印出来的输出迭代器(类ostream_iterator的一个对象)</p></li>
+<li><code>ostream_iterator&lt;int&gt; out(cout)</code></li>
 <li><ul>
 <li><code>*out++ = x;</code> 打印x到cout上</li>
-</ul>
-</li>
-<li><p>ostream_iterator类设计构造函数设计为接受两个参数: ostream对象和const char*对象</p>
-</li>
+</ul></li>
+<li><p>ostream_iterator类设计构造函数设计为接受两个参数: ostream对象和const char*对象</p></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> ostream_iterator &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    ostream_iterator(ostream&amp; os, <span class="keyword">const</span> <span class="keyword">char</span>* s): strm(&amp;os), str(s) &#123; &#125;</div><div class="line"></div><div class="line">    ostream_iterator&amp; <span class="keyword">operator</span>++() &#123;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    ostream_iterator&amp; <span class="keyword">operator</span>++(<span class="keyword">int</span>) &#123;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    ostream_iterator&amp; <span class="keyword">operator</span>*() &#123;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    ostream_iterator&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> T&amp; t) &#123;</div><div class="line">        *strm &lt;&lt; t &lt;&lt; str;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    ostream* strm;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* str;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
 <li>用例: 将42重复10次打印到标准输出上</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    ostream_iterator&lt;<span class="keyword">int</span>&gt; oi(<span class="built_in">cout</span>, <span class="string">" \n"</span>);</div><div class="line">    <span class="function">Constant_iterator <span class="title">c</span><span class="params">(<span class="number">42</span>)</span></span>;</div><div class="line"></div><div class="line">    copy(c, c + <span class="number">10</span>, oi);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="输入流迭代器"><a href="#输入流迭代器" class="headerlink" title="输入流迭代器"></a>输入流迭代器</h3><ul>
-<li><p>创建一个从某个istream中取值的输入迭代器</p>
-</li>
+<h3 id="输入流迭代器">输入流迭代器</h3>
+<ul>
+<li><p>创建一个从某个istream中取值的输入迭代器</p></li>
 <li><ul>
 <li>输入迭代器必须实现比较操作以判断是否到达文件尾部</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>进行尝试性地读取才能判断是否已经到达文件尾部，而读取值很耗费系统资源</li>
-</ul>
-</li>
-<li><p>“惰性读取”策略</p>
-</li>
+</ul></li>
+<li>“惰性读取”策略</li>
 <li><ul>
 <li>每个istream_iterator对象有一个只能容纳一个元素的缓冲区和一个表明缓冲区是否已满的标志</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>另一个标志说明是否到达文件尾部</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> istream_iterator &#123;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    T buffer;</div><div class="line">    istream* strm;</div><div class="line">    <span class="keyword">int</span> full;</div><div class="line">    <span class="keyword">int</span> eof;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
@@ -430,10 +414,8 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> istream_iterator &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    istream_iterator&amp; <span class="keyword">operator</span>++() &#123;</div><div class="line">        full = <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    istream_iterator <span class="keyword">operator</span>++(<span class="keyword">int</span>) &#123;</div><div class="line">        istream_iterator r = *<span class="keyword">this</span>;</div><div class="line">        full = <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> r;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>必须预读以便判断是否到达文件尾部</p>
-</li>
-<li><p>惰性计算策略，首先检查是否需要输入，若需要则读取数据并适当地设置状态</p>
-</li>
+<li><p>必须预读以便判断是否到达文件尾部</p></li>
+<li><p>惰性计算策略，首先检查是否需要输入，若需要则读取数据并适当地设置状态</p></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">class</span> istream_iterator &#123;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fill</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!full &amp;&amp; !eof) &#123;</div><div class="line">            <span class="keyword">if</span> (*strm &gt;&gt; buffer)</div><div class="line">                full = <span class="number">1</span>;</div><div class="line">            <span class="keyword">else</span> </div><div class="line">                eof = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T <span class="keyword">operator</span>*() &#123;</div><div class="line">        fill();</div><div class="line">        assert(full);</div><div class="line">        <span class="keyword">return</span> buffer;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
@@ -444,16 +426,14 @@
 <li>将一个输入文件复制值到一个输出文件中去</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    ostream_iterator&lt;<span class="keyword">int</span>&gt; output(<span class="built_in">cout</span>, <span class="string">" \n"</span>);</div><div class="line">    istream_iterator&lt;<span class="keyword">int</span>&gt; input(<span class="built_in">cin</span>);</div><div class="line">    istream_iterator&lt;<span class="keyword">int</span>&gt; eof;</div><div class="line"></div><div class="line">    copy(input, eof, output);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<h3 id="summary">Summary</h3>
+<ul>
 <li>看上去像指针的结构，容易被设想成仅仅是一个指针</li>
-<li><p>深入研究某个算法使用到的指针操作会发现可以针对其他的数据结构模拟指针</p>
-</li>
-<li><p>istream_iterator和ostream_iterator类标准模板库的组成部分</p>
-</li>
+<li><p>深入研究某个算法使用到的指针操作会发现可以针对其他的数据结构模拟指针</p></li>
+<li>istream_iterator和ostream_iterator类标准模板库的组成部分</li>
 <li><ul>
 <li>而Constan_iterator不是(Why capital)</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 
       
@@ -485,8 +465,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/04/c_plus_plus_thinking/模板之抽象接口/" rel="next" title="模板之抽象接口">
-                <i class="fa fa-chevron-left"></i> 模板之抽象接口
+              <a href="/2017/07/05/c_plus_plus_thinking/模板之泛型迭代器/" rel="next" title="模板之泛型迭代器">
+                <i class="fa fa-chevron-left"></i> 模板之泛型迭代器
               </a>
             
           </div>
@@ -495,8 +475,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/c_plus_plus_thinking/模板之泛型迭代器/" rel="prev" title="模板之泛型迭代器">
-                模板之泛型迭代器 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/06/c_plus_plus_thinking/模板之迭代器配接器/" rel="prev" title="模板之迭代器配接器">
+                模板之迭代器配接器 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -551,10 +531,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -577,7 +557,7 @@
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -590,7 +570,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -624,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#输出流迭代器"><span class="nav-number">1.</span> <span class="nav-text">输出流迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入流迭代器"><span class="nav-number">2.</span> <span class="nav-text">输入流迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">3.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器类型"><span class="nav-number">1.</span> <span class="nav-text">迭代器类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟序列"><span class="nav-number">2.</span> <span class="nav-text">虚拟序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出流迭代器"><span class="nav-number">3.</span> <span class="nav-text">输出流迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入流迭代器"><span class="nav-number">4.</span> <span class="nav-text">输入流迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary"><span class="nav-number">5.</span> <span class="nav-text">Summary</span></a></li></ol></div>
             
 
           </div>
@@ -657,11 +637,11 @@
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

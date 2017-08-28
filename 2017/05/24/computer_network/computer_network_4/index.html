@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="transport segment from sending to receiving host 
+<meta name="description" content="transport segment from sending to receiving host
 on sending side encapsulates segments into datagrams
 on receiving side, delivers segments to transport layer
-network layer protocols in every host, r">
+network layer protocols in every host">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络层(Network Layer)">
 <meta property="og:url" content="https://chenfeng.github.io/2017/05/24/computer_network/computer_network_4/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
-<meta property="og:description" content="transport segment from sending to receiving host 
+<meta property="og:description" content="transport segment from sending to receiving host
 on sending side encapsulates segments into datagrams
 on receiving side, delivers segments to transport layer
-network layer protocols in every host, r">
+network layer protocols in every host">
 <meta property="og:image" content="https://chenfeng.github.io/\img\pre_router.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\centralized_control_plane.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\router_architecture.png">
@@ -168,10 +168,10 @@ network layer protocols in every host, r">
 <meta property="og:updated_time" content="2017-05-28T06:37:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络层(Network Layer)">
-<meta name="twitter:description" content="transport segment from sending to receiving host 
+<meta name="twitter:description" content="transport segment from sending to receiving host
 on sending side encapsulates segments into datagrams
 on receiving side, delivers segments to transport layer
-network layer protocols in every host, r">
+network layer protocols in every host">
 <meta name="twitter:image" content="https://chenfeng.github.io/\img\pre_router.png">
 
 
@@ -268,7 +268,7 @@ network layer protocols in every host, r">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -332,7 +332,7 @@ network layer protocols in every host, r">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-24T00:00:00+08:00">
                 2017-05-24
@@ -373,7 +373,7 @@ network layer protocols in every host, r">
 
       
         <ul>
-<li>transport segment from sending to receiving host </li>
+<li>transport segment from sending to receiving host</li>
 <li>on sending side encapsulates segments into datagrams</li>
 <li>on receiving side, delivers segments to transport layer</li>
 <li>network layer protocols in every host, router</li>
@@ -403,21 +403,25 @@ network layer protocols in every host, r">
 <li>two control-plane approaches:</li>
 <li><ul>
 <li><strong>traditional routing algorithms</strong>: implemented in routers</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><strong>software-defined networking (SDN)</strong>: implemented in (remote) servers</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><strong>Per-router control plane</strong></p>
 <p>Individual routing algorithm components <strong>in each and every router</strong> interact in the control plane</p>
 <blockquote>
-<p><img src="\img\pre_router.png" alt="pre_router.png"></p>
+<div class="figure">
+<img src="\img\pre_router.png" alt="pre_router.png">
+<p class="caption">pre_router.png</p>
+</div>
 </blockquote>
 <p><strong>Logically centralized control plane</strong></p>
 <blockquote>
-<p><img src="\img\centralized_control_plane.png" alt="centralized_control_plane.png"></p>
+<div class="figure">
+<img src="\img\centralized_control_plane.png" alt="centralized_control_plane.png">
+<p class="caption">centralized_control_plane.png</p>
+</div>
 </blockquote>
 <p>Q: What service model for “channel” transporting datagrams from sender to receiver?</p>
 <p>example services for individual datagrams:</p>
@@ -431,11 +435,18 @@ network layer protocols in every host, r">
 <li>guaranteed minimum bandwidth to flow</li>
 <li>restrictions on changes in inter-packet spacing</li>
 </ul>
-<h1 id="Data-plane"><a href="#Data-plane" class="headerlink" title="Data plane"></a>Data plane</h1><h2 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h2><h3 id="Router-architecture-overview"><a href="#Router-architecture-overview" class="headerlink" title="Router architecture overview"></a>Router architecture overview</h3><p>high-level view of generic router architecture:</p>
+<h1 id="data-plane">Data plane</h1>
+<h2 id="router">Router</h2>
+<h3 id="router-architecture-overview">Router architecture overview</h3>
+<p>high-level view of generic router architecture:</p>
 <blockquote>
-<p><img src="\img\router_architecture.png" alt="router_architecture.png"></p>
+<div class="figure">
+<img src="\img\router_architecture.png" alt="router_architecture.png">
+<p class="caption">router_architecture.png</p>
+</div>
 </blockquote>
-<h3 id="Input-port-functions"><a href="#Input-port-functions" class="headerlink" title="Input port functions"></a>Input port functions</h3><p>decentralized switching: </p>
+<h3 id="input-port-functions">Input port functions</h3>
+<p>decentralized switching:</p>
 <ul>
 <li>using header field values, lookup output port using forwarding table in input port memory (“match plus action”)</li>
 <li>goal: complete input port processing at ‘line speed’</li>
@@ -444,41 +455,46 @@ network layer protocols in every host, r">
 <li>generalized forwarding: forward based on any set of header field values</li>
 </ul>
 <blockquote>
-<p><img src="\img\router_architecture_inputPort.png" alt="router_architecture_inputPort.png"></p>
+<div class="figure">
+<img src="\img\router_architecture_inputPort.png" alt="router_architecture_inputPort.png">
+<p class="caption">router_architecture_inputPort.png</p>
+</div>
 </blockquote>
-<h3 id="Longest-prefix-matching"><a href="#Longest-prefix-matching" class="headerlink" title="Longest prefix matching"></a>Longest prefix matching</h3><p>when looking for forwarding table entry for given destination address, use longest address prefix that matches destination address.</p>
+<h3 id="longest-prefix-matching">Longest prefix matching</h3>
+<p>when looking for forwarding table entry for given destination address, use longest address prefix that matches destination address.</p>
 <blockquote>
-<p><img src="\img\router_forwardTable.png" alt="router_forwardTable.png"></p>
+<div class="figure">
+<img src="\img\router_forwardTable.png" alt="router_forwardTable.png">
+<p class="caption">router_forwardTable.png</p>
+</div>
 </blockquote>
 <ul>
-<li><p>we’ll see why longest prefix matching is used shortly, when we study addressing</p>
-</li>
-<li><p>longest prefix matching: often performed using ternary content addressable memories (TCAMs)</p>
-</li>
+<li><p>we’ll see why longest prefix matching is used shortly, when we study addressing</p></li>
+<li>longest prefix matching: often performed using ternary content addressable memories (TCAMs)</li>
 <li><ul>
 <li><strong>content addressable</strong>: present address to TCAM: retrieve address in one clock cycle, regardless of table size</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>Cisco Catalyst: can up ~1M routing table entries in TCAM</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="Switching-fabrics"><a href="#Switching-fabrics" class="headerlink" title="Switching fabrics"></a>Switching fabrics</h3><p>transfer packet from input buffer to appropriate output buffer</p>
+<h3 id="switching-fabrics">Switching fabrics</h3>
+<p>transfer packet from input buffer to appropriate output buffer</p>
 <ul>
 <li>switching rate: rate at which packets can be transfer from inputs to outputs</li>
 <li><ul>
 <li>often measured as multiple of input/output line rate</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>N inputs: switching rate N times line rate desirable</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>three types of switching fabrics</p>
 <blockquote>
-<p><img src="\img\router_switching_fabric.png" alt="router_switching_fabric.png"></p>
+<div class="figure">
+<img src="\img\router_switching_fabric.png" alt="router_switching_fabric.png">
+<p class="caption">router_switching_fabric.png</p>
+</div>
 </blockquote>
 <p><strong>memory</strong></p>
 <p>first generation routers:</p>
@@ -495,37 +511,46 @@ network layer protocols in every host, r">
 </ul>
 <p><strong>interconnection network</strong></p>
 <ul>
-<li>overcome  bus bandwidth limitations</li>
+<li>overcome bus bandwidth limitations</li>
 <li>banyan networks, crossbar, other interconnection nets initially developed to connect processors in multiprocessor</li>
-<li>advanced design: fragmenting datagram into fixed length cells, switch cells through the fabric. </li>
+<li>advanced design: fragmenting datagram into fixed length cells, switch cells through the fabric.</li>
 <li>Cisco 12000: switches 60 Gbps through the interconnection network</li>
 </ul>
-<h3 id="Input-port-queuing"><a href="#Input-port-queuing" class="headerlink" title="Input port queuing"></a>Input port queuing</h3><p>fabric slower than input ports combined -&gt; queueing may occur at input queues </p>
+<h3 id="input-port-queuing">Input port queuing</h3>
+<p>fabric slower than input ports combined -&gt; queueing may occur at input queues</p>
 <ul>
 <li>queueing delay and loss due to input buffer overflow!</li>
 <li>Head-of-the-Line (HOL) blocking: queued datagram at front of queue prevents others in queue from moving forward</li>
 </ul>
 <blockquote>
-<p><img src="\img\router_headOfLineBlock.png" alt="router_headOfLineBlock.png"></p>
+<div class="figure">
+<img src="\img\router_headOfLineBlock.png" alt="router_headOfLineBlock.png">
+<p class="caption">router_headOfLineBlock.png</p>
+</div>
 </blockquote>
-<h3 id="Output-ports-This-slide-in-HUGELY-important"><a href="#Output-ports-This-slide-in-HUGELY-important" class="headerlink" title="Output ports(This slide in HUGELY important!)"></a>Output ports(This slide in HUGELY important!)</h3><blockquote>
-<p><img src="\img\router_output_port.png" alt="router_output_port.png"></p>
+<h3 id="output-portsthis-slide-in-hugely-important">Output ports(This slide in HUGELY important!)</h3>
+<blockquote>
+<div class="figure">
+<img src="\img\router_output_port.png" alt="router_output_port.png">
+<p class="caption">router_output_port.png</p>
+</div>
 </blockquote>
 <ul>
 <li>buffering required when datagrams arrive from fabric faster than the transmission rate</li>
 <li><ul>
 <li>Datagram (packets) can be lost due to congestion, lack of buffers</li>
-</ul>
-</li>
-<li><p>scheduling discipline chooses among queued datagrams for transmission</p>
-</li>
+</ul></li>
+<li>scheduling discipline chooses among queued datagrams for transmission</li>
 <li><ul>
 <li>Priority scheduling – who gets best performance, network neutrality</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="Output-port-queueing"><a href="#Output-port-queueing" class="headerlink" title="Output port queueing"></a>Output port queueing</h3><blockquote>
-<p><img src="\img\router_output_port_queueing.png" alt="router_output_port_queueing.png"></p>
+<h3 id="output-port-queueing">Output port queueing</h3>
+<blockquote>
+<div class="figure">
+<img src="\img\router_output_port_queueing.png" alt="router_output_port_queueing.png">
+<p class="caption">router_output_port_queueing.png</p>
+</div>
 </blockquote>
 <ul>
 <li>buffering when arrival rate via switch exceeds output line speed</li>
@@ -536,55 +561,49 @@ network layer protocols in every host, r">
 <ul>
 <li>e.g., C = 10 Gpbs link: 2.5 Gbit buffer</li>
 </ul>
-<p>recent recommendation: with N flows, buffering equal to </p>
-<script type="math/tex; mode=display">\frac{RTT * C}{\sqrt{N}}</script><h3 id="Scheduling-mechanisms"><a href="#Scheduling-mechanisms" class="headerlink" title="Scheduling mechanisms"></a>Scheduling mechanisms</h3><p>scheduling: choose next packet to send on link</p>
+<p>recent recommendation: with N flows, buffering equal to <span class="math display">\[\frac{RTT * C}{\sqrt{N}}\]</span></p>
+<h3 id="scheduling-mechanisms">Scheduling mechanisms</h3>
+<p>scheduling: choose next packet to send on link</p>
 <ul>
 <li><strong>FIFO (first in first out) scheduling</strong>: send in order of arrival to queue</li>
 <li><ul>
 <li>real-world example?</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><strong>discard policy</strong>: if packet arrives to full queue: who to discard?</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><ul>
 <li><strong>tail drop</strong>: drop arriving packet</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 <li><ul>
 <li><ul>
 <li><strong>priority</strong>: drop/remove on priority basis</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 <li><ul>
 <li><ul>
 <li><strong>random</strong>: drop/remove randomly</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 </ul>
 <p><strong>Scheduling policies</strong></p>
-<p><strong>priority scheduling</strong>: send highest priority queued packet </p>
+<p><strong>priority scheduling</strong>: send highest priority queued packet</p>
 <ul>
 <li>multiple classes, with different priorities</li>
 <li><ul>
-<li>class may depend on marking or other header info, e.g. IP source/dest, port numbers, etc.</li>
-</ul>
-</li>
+<li>class may depend on marking or other header info, e.g. IP source/dest, port numbers, etc.</li>
+</ul></li>
 <li><ul>
-<li>real world example? </li>
-</ul>
-</li>
+<li>real world example?</li>
+</ul></li>
 </ul>
 <blockquote>
-<p><img src="\img\router_schedule_priority.png" alt="router_schedule_priority.png"></p>
+<div class="figure">
+<img src="\img\router_schedule_priority.png" alt="router_schedule_priority.png">
+<p class="caption">router_schedule_priority.png</p>
+</div>
 </blockquote>
 <p><strong>Round Robin (RR) scheduling</strong>:</p>
 <ul>
@@ -593,49 +612,55 @@ network layer protocols in every host, r">
 <li>real world example?</li>
 </ul>
 <blockquote>
-<p><img src="\img\router_schedule_roundRobin.png" alt="router_schedule_roundRobin.png"></p>
+<div class="figure">
+<img src="\img\router_schedule_roundRobin.png" alt="router_schedule_roundRobin.png">
+<p class="caption">router_schedule_roundRobin.png</p>
+</div>
 </blockquote>
-<p><strong>Weighted Fair Queuing (WFQ)</strong>: </p>
-<ul>
-<li>generalized Round Robin</li>
-<li>each class gets weighted amount of service in each cycle</li>
-<li>real-world example?</li>
-</ul>
+<p><strong>Weighted Fair Queuing (WFQ)</strong>: - generalized Round Robin - each class gets weighted amount of service in each cycle - real-world example?</p>
 <blockquote>
-<p><img src="\img\router_schedule_weightedFairQueue.png" alt="router_schedule_weightedFairQueue.png"></p>
+<div class="figure">
+<img src="\img\router_schedule_weightedFairQueue.png" alt="router_schedule_weightedFairQueue.png">
+<p class="caption">router_schedule_weightedFairQueue.png</p>
+</div>
 </blockquote>
-<h2 id="IP-Internet-Protocol"><a href="#IP-Internet-Protocol" class="headerlink" title="IP: Internet Protocol"></a>IP: Internet Protocol</h2><p>host, router network layer functions:</p>
+<h2 id="ip-internet-protocol">IP: Internet Protocol</h2>
+<p>host, router network layer functions:</p>
 <blockquote>
-<p><img src="\img\IP.png" alt="IP.png"></p>
+<div class="figure">
+<img src="\img\IP.png" alt="IP.png">
+<p class="caption">IP.png</p>
+</div>
 </blockquote>
 <p>IP datagram format</p>
 <blockquote>
-<p><img src="\img\IP_datagram_format.png" alt="IP_datagram_format.png"></p>
+<div class="figure">
+<img src="\img\IP_datagram_format.png" alt="IP_datagram_format.png">
+<p class="caption">IP_datagram_format.png</p>
+</div>
 </blockquote>
 <p><strong>IP fragmentation, reassembly</strong></p>
 <ul>
 <li>network links have MTU (max.transfer size) - largest possible link-level frame</li>
 <li><ul>
-<li>different link types, different MTUs </li>
-</ul>
-</li>
-<li><p>large IP datagram divided (“fragmented”) within net</p>
-</li>
+<li>different link types, different MTUs</li>
+</ul></li>
+<li>large IP datagram divided (“fragmented”) within net</li>
 <li><ul>
 <li>one datagram becomes several datagrams</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>“reassembled” only at final destination</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>IP header bits used to identify, order related fragments</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <blockquote>
-<p><img src="\img\IP_fragmentation_reassembly.png" alt="IP_fragmentation_reassembly.png"></p>
+<div class="figure">
+<img src="\img\IP_fragmentation_reassembly.png" alt="IP_fragmentation_reassembly.png">
+<p class="caption">IP_fragmentation_reassembly.png</p>
+</div>
 </blockquote>
 <p>example:</p>
 <ul>
@@ -643,9 +668,13 @@ network layer protocols in every host, r">
 <li>MTU = 1500 bytes</li>
 </ul>
 <blockquote>
-<p><img src="\img\IP_fragmentation_reassembly_eg.png" alt="IP_fragmentation_reassembly_eg.png"></p>
+<div class="figure">
+<img src="\img\IP_fragmentation_reassembly_eg.png" alt="IP_fragmentation_reassembly_eg.png">
+<p class="caption">IP_fragmentation_reassembly_eg.png</p>
+</div>
 </blockquote>
-<h3 id="IP-addressing"><a href="#IP-addressing" class="headerlink" title="IP addressing"></a>IP addressing</h3><p>IP address: 32-bit identifier for host, router interface </p>
+<h3 id="ip-addressing">IP addressing</h3>
+<p>IP address: 32-bit identifier for host, router interface</p>
 <p>interface: connection between host/router and physical link</p>
 <ul>
 <li>router’s typically have multiple interfaces</li>
@@ -656,42 +685,37 @@ network layer protocols in every host, r">
 <ul>
 <li>A: we’ll learn about that in chapter 5, 6.</li>
 <li>A: wired Ethernet interfaces connected by Ethernet switches</li>
-<li><p>A: wireless WiFi interfaces connected by WiFi base station</p>
-</li>
-<li><p>For now: don’t need to worry about how one interface is connected to another (with no intervening router) </p>
-</li>
+<li><p>A: wireless WiFi interfaces connected by WiFi base station</p></li>
+<li><p>For now: don’t need to worry about how one interface is connected to another (with no intervening router)</p></li>
 </ul>
 <p><strong>Subnets</strong></p>
 <ul>
-<li>IP address: </li>
+<li>IP address:</li>
 <li><ul>
 <li>subnet part - high order bits</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
-<li>host part - low order bits </li>
-</ul>
-</li>
+<li>host part - low order bits</li>
+</ul></li>
 <li>what’s a subnet?</li>
 <li><ul>
 <li>device interfaces with same subnet part of IP address</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>can physically reach each other <strong>without intervening router</strong></li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>to determine the subnets, detach each interface from its host or router, creating islands of isolated networks</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>each isolated network is called a <strong>subnet</strong></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <blockquote>
-<p><img src="\img\IP_subnet.png" alt="IP_subnet.png"></p>
+<div class="figure">
+<img src="\img\IP_subnet.png" alt="IP_subnet.png">
+<p class="caption">IP_subnet.png</p>
+</div>
 </blockquote>
 <p><strong>CIDR</strong></p>
 <p>CIDR: Classless InterDomain Routing</p>
@@ -700,28 +724,27 @@ network layer protocols in every host, r">
 <li>address format: a.b.c.d/x, where x is # bits in subnet portion of address</li>
 </ul>
 <blockquote>
-<p><img src="\img\IP_addressing_CIDR.png" alt="IP_addressing_CIDR.png"></p>
+<div class="figure">
+<img src="\img\IP_addressing_CIDR.png" alt="IP_addressing_CIDR.png">
+<p class="caption">IP_addressing_CIDR.png</p>
+</div>
 </blockquote>
 <p>Q: How does a host get IP address?</p>
 <ul>
 <li>hard-coded by system admin in a file</li>
 <li><ul>
 <li>Windows: control-panel-&gt;network-&gt;configuration-&gt;tcp/ip-&gt;properties</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>UNIX: /etc/rc.config</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>DHCP</strong>: Dynamic Host Configuration Protocol</li>
 <li><ul>
 <li>dynamically get address from as server</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
-<li>“plug-and-play” </li>
-</ul>
-</li>
+<li>“plug-and-play”</li>
+</ul></li>
 </ul>
 <p><strong>DHCP: Dynamic Host Configuration Protocol</strong></p>
 <p>goal: allow host to dynamically obtain its IP address from network server when it joins network</p>
@@ -735,11 +758,19 @@ network layer protocols in every host, r">
 <li>host broadcasts “DHCP discover” msg [optional]</li>
 <li>DHCP server responds with “DHCP offer” msg [optional]</li>
 <li>host requests IP address: “DHCP request” msg</li>
-<li>DHCP server sends address: “DHCP ack” msg </li>
+<li>DHCP server sends address: “DHCP ack” msg</li>
 </ul>
 <blockquote>
-<p><img src="\img\IP_DHCP_client_server_scenario.png" alt="IP_DHCP_client_server_scenario.png"></p>
-<p><img src="\img\IP_DHCP_client_server_scenario1.png" alt="IP_DHCP_client_server_scenario1.png"></p>
+<div class="figure">
+<img src="\img\IP_DHCP_client_server_scenario.png" alt="IP_DHCP_client_server_scenario.png">
+<p class="caption">IP_DHCP_client_server_scenario.png</p>
+</div>
+</blockquote>
+<blockquote>
+<div class="figure">
+<img src="\img\IP_DHCP_client_server_scenario1.png" alt="IP_DHCP_client_server_scenario1.png">
+<p class="caption">IP_DHCP_client_server_scenario1.png</p>
+</div>
 </blockquote>
 <p>DHCP can return more than just allocated IP address on subnet:</p>
 <ul>
@@ -753,39 +784,48 @@ network layer protocols in every host, r">
 <li>A: gets allocated portion of its provider ISP’s address space</li>
 </ul>
 <blockquote>
-<p><img src="\img\IP_addressing_get_subnetPart.png" alt="IP_addressing_get_subnetPart.png"></p>
+<div class="figure">
+<img src="\img\IP_addressing_get_subnetPart.png" alt="IP_addressing_get_subnetPart.png">
+<p class="caption">IP_addressing_get_subnetPart.png</p>
+</div>
 </blockquote>
-<p>hierarchical addressing allows efficient advertisement of routing<br>information:</p>
+<p>hierarchical addressing allows efficient advertisement of routing information:</p>
 <blockquote>
-<p><img src="\img\IP_hierarchical_addressing.png" alt="IP_hierarchical_addressing.png"></p>
+<div class="figure">
+<img src="\img\IP_hierarchical_addressing.png" alt="IP_hierarchical_addressing.png">
+<p class="caption">IP_hierarchical_addressing.png</p>
+</div>
 </blockquote>
 <p>ISPs-R-Us has a more specific route to Organization 1</p>
 <blockquote>
-<p><img src="\img\IP_hierarchical_addressing1.png" alt="IP_hierarchical_addressing1.png"></p>
+<div class="figure">
+<img src="\img\IP_hierarchical_addressing1.png" alt="IP_hierarchical_addressing1.png">
+<p class="caption">IP_hierarchical_addressing1.png</p>
+</div>
 </blockquote>
 <p>Q: how does an ISP get block of addresses?</p>
 <ul>
-<li>A: ICANN: Internet Corporation for Assigned Names and Numbers <a href="http://www.icann.org/" target="_blank" rel="external">http://www.icann.org/</a></li>
+<li>A: ICANN: Internet Corporation for Assigned Names and Numbers http://www.icann.org/</li>
 <li><ul>
 <li>allocates addresses</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>manages DNS</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>assigns domain names, resolves disputes</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><strong>NAT: network address translation</strong></p>
 <blockquote>
-<p><img src="\img\IP_NAT.png" alt="IP_NAT.png"></p>
+<div class="figure">
+<img src="\img\IP_NAT.png" alt="IP_NAT.png">
+<p class="caption">IP_NAT.png</p>
+</div>
 </blockquote>
 <p>motivation: local network uses just one IP address as far as outside world is concerned:</p>
 <ul>
-<li>range of addresses not needed from ISP:  just one IP address for all devices</li>
+<li>range of addresses not needed from ISP: just one IP address for all devices</li>
 <li>can change addresses of devices in local network without notifying outside world</li>
 <li>can change ISP without changing addresses of devices in local network</li>
 <li>devices inside local net not explicitly addressable, visible by outside world (a security plus)</li>
@@ -795,60 +835,60 @@ network layer protocols in every host, r">
 <li>outgoing datagrams: replace(source IP address, port #) of every outgoing datagram to (NAT IP address, new port #)</li>
 <li><ul>
 <li>remote clients/servers will respond using (NAT IP address, new port #) as destination addr</li>
-</ul>
-</li>
-<li>remember (in NAT translation table) every (source IP address, port #)  to (NAT IP address, new port #) translation pair</li>
+</ul></li>
+<li>remember (in NAT translation table) every (source IP address, port #) to (NAT IP address, new port #) translation pair</li>
 <li>incoming datagrams: replace (NAT IP address, new port #) in dest fields of every incoming datagram with corresponding (source IP address, port #) stored in NAT table</li>
 </ul>
 <blockquote>
-<p><img src="\img\IP_NAT1.png" alt="IP_NAT1.png"></p>
+<div class="figure">
+<img src="\img\IP_NAT1.png" alt="IP_NAT1.png">
+<p class="caption">IP_NAT1.png</p>
+</div>
 </blockquote>
 <ul>
-<li>16-bit port-number field: </li>
+<li>16-bit port-number field:</li>
 <li><ul>
 <li>60,000 simultaneous connections with a single LAN-side address!</li>
-</ul>
-</li>
+</ul></li>
 <li>NAT is controversial:</li>
 <li><ul>
 <li>routers should only process up to layer 3</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>address shortage should be solved by IPv6</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>violates end-to-end argument</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>NAT possibility must be taken into account by app designers, e.g., P2P applications</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>NAT traversal: what if client wants to connect to server behind NAT?</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h3><p><strong>initial motivation</strong>: 32-bit address space soon to be completely allocated.  </p>
+<h3 id="ipv6">IPv6</h3>
+<p><strong>initial motivation</strong>: 32-bit address space soon to be completely allocated.</p>
 <p><strong>additional motivation</strong>:</p>
 <ul>
 <li>header format helps speed processing/forwarding</li>
-<li>header changes to facilitate QoS </li>
+<li>header changes to facilitate QoS</li>
 </ul>
-<p>IPv6 datagram format: </p>
+<p>IPv6 datagram format:</p>
 <ul>
 <li>fixed-length 40 byte header</li>
 <li>no fragmentation allowed</li>
 </ul>
 <blockquote>
-<p><img src="\img\IPv6_datagram_format.png" alt="IPv6_datagram_format.png"></p>
+<div class="figure">
+<img src="\img\IPv6_datagram_format.png" alt="IPv6_datagram_format.png">
+<p class="caption">IPv6_datagram_format.png</p>
+</div>
 </blockquote>
 <ul>
-<li><strong>priority</strong>:  identify priority among datagrams in flow</li>
+<li><strong>priority</strong>: identify priority among datagrams in flow</li>
 <li><strong>flow Label</strong>: identify datagrams in same “flow.” (concept of“flow” not well defined).</li>
-<li><strong>next header</strong>: identify upper layer protocol for data </li>
+<li><strong>next header</strong>: identify upper layer protocol for data</li>
 </ul>
 <p><strong>Other changes from IPv4</strong></p>
 <ul>
@@ -857,43 +897,49 @@ network layer protocols in every host, r">
 <li><strong>ICMPv6</strong>: new version of ICMP</li>
 <li><ul>
 <li>additional message types, e.g. “Packet Too Big”</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>multicast group management functions</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><strong>Transition from IPv4 to IPv6</strong></p>
 <ul>
 <li>not all routers can be upgraded simultaneously</li>
 <li>no “flag days”</li>
-<li>how will network operate with mixed IPv4 and IPv6 routers? </li>
+<li>how will network operate with mixed IPv4 and IPv6 routers?</li>
 </ul>
 <p>tunneling: IPv6 datagram carried as payload in IPv4 datagram among IPv4 routers</p>
 <blockquote>
-<p><img src="\img\IP_v4Tov6.png" alt="IP_v4Tov6.png"></p>
-<p><img src="\img\IP_v4Tov6_tunneling.png" alt="IP_v4Tov6_tunneling.png"></p>
+<div class="figure">
+<img src="\img\IP_v4Tov6.png" alt="IP_v4Tov6.png">
+<p class="caption">IP_v4Tov6.png</p>
+</div>
+</blockquote>
+<blockquote>
+<div class="figure">
+<img src="\img\IP_v4Tov6_tunneling.png" alt="IP_v4Tov6_tunneling.png">
+<p class="caption">IP_v4Tov6_tunneling.png</p>
+</div>
 </blockquote>
 <p><strong>IPv6 adoption</strong></p>
 <ul>
 <li>Google: 8% of clients access services via IPv6</li>
-<li><p>NIST: 1/3 of all US government domains are IPv6 capable</p>
-</li>
-<li><p>Long (long!) time for deployment, use</p>
-</li>
+<li><p>NIST: 1/3 of all US government domains are IPv6 capable</p></li>
+<li>Long (long!) time for deployment, use</li>
 <li><ul>
 <li>20 years and counting!</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>think of application-level changes in last 20 years: WWW, Facebook, streaming media, Skype, …</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="Generalized-Forwarding-and-SDN"><a href="#Generalized-Forwarding-and-SDN" class="headerlink" title="Generalized Forwarding and SDN"></a>Generalized Forwarding and SDN</h3><p>Each router contains a flow table that is computed and distributed by a logically centralized routing controller</p>
+<h3 id="generalized-forwarding-and-sdn">Generalized Forwarding and SDN</h3>
+<p>Each router contains a flow table that is computed and distributed by a logically centralized routing controller</p>
 <blockquote>
-<p><img src="\img\generalized_forwarding.png" alt="generalized_forwarding.png"></p>
+<div class="figure">
+<img src="\img\generalized_forwarding.png" alt="generalized_forwarding.png">
+<p class="caption">generalized_forwarding.png</p>
+</div>
 </blockquote>
 <p><strong>OpenFlow data plane abstraction</strong></p>
 <ul>
@@ -901,32 +947,42 @@ network layer protocols in every host, r">
 <li>generalized forwarding: simple packet-handling rules</li>
 <li><ul>
 <li><strong>Pattern</strong>: match values in packet header fields</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
-<li><strong>Actions: for matched packet</strong>: drop, forward, modify, matched packet or send matched packet to controller </li>
-</ul>
-</li>
+<li><strong>Actions: for matched packet</strong>: drop, forward, modify, matched packet or send matched packet to controller</li>
+</ul></li>
 <li><ul>
 <li><strong>Priority</strong>: disambiguate overlapping patterns</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><strong>Counters</strong>: #bytes and #packets</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>Flow table in a router (computed and distributed by controller) define router’s match+action rules</p>
-<ol>
-<li>src=1.2.<em>.</em>, dest=3.4.5.* -&gt; drop                        </li>
+<ol style="list-style-type: decimal">
+<li>src=1.2.<em>.</em>, dest=3.4.5.* -&gt; drop<br>
+</li>
 <li>src = <em>.</em>.<em>.</em>, dest=3.4.<em>.</em> -&gt; forward(2)</li>
 <li>src=10.1.2.3, dest=<em>.</em>.<em>.</em> -&gt; send to controller</li>
 </ol>
 <p><strong>Flow Table Entries</strong></p>
 <blockquote>
-<p><img src="\img\OpenFlow_flowTableEntries.png" alt="OpenFlow_flowTableEntries.png"></p>
-<p><img src="\img\OpenFlow_flowTableEntries_eg.png" alt="OpenFlow_flowTableEntries_eg.png"></p>
-<p><img src="\img\OpenFlow_flowTableEntries_eg1.png" alt="OpenFlow_flowTableEntries_eg1.png"></p>
+<div class="figure">
+<img src="\img\OpenFlow_flowTableEntries.png" alt="OpenFlow_flowTableEntries.png">
+<p class="caption">OpenFlow_flowTableEntries.png</p>
+</div>
+</blockquote>
+<blockquote>
+<div class="figure">
+<img src="\img\OpenFlow_flowTableEntries_eg.png" alt="OpenFlow_flowTableEntries_eg.png">
+<p class="caption">OpenFlow_flowTableEntries_eg.png</p>
+</div>
+</blockquote>
+<blockquote>
+<div class="figure">
+<img src="\img\OpenFlow_flowTableEntries_eg1.png" alt="OpenFlow_flowTableEntries_eg1.png">
+<p class="caption">OpenFlow_flowTableEntries_eg1.png</p>
+</div>
 </blockquote>
 <p><strong>OpenFlow abstraction</strong></p>
 <p>match+action: unifies different kinds of devices</p>
@@ -943,7 +999,7 @@ network layer protocols in every host, r">
 <p>Firewall</p>
 <ul>
 <li>match: IP addresses and TCP/UDP port numbers</li>
-<li>action: permit or deny </li>
+<li>action: permit or deny</li>
 </ul>
 <p>NAT</p>
 <ul>
@@ -952,9 +1008,14 @@ network layer protocols in every host, r">
 </ul>
 <p>Example: datagrams from hosts h5 and h6 should be sent to h3 or h4, via s1 and from there to s2</p>
 <blockquote>
-<p><img src="\img\OpenFlow_flowTableEntries_eg2.png" alt="OpenFlow_flowTableEntries_eg2.png"></p>
+<div class="figure">
+<img src="\img\OpenFlow_flowTableEntries_eg2.png" alt="OpenFlow_flowTableEntries_eg2.png">
+<p class="caption">OpenFlow_flowTableEntries_eg2.png</p>
+</div>
 </blockquote>
-<h1 id="Control-plane"><a href="#Control-plane" class="headerlink" title="Control plane"></a>Control plane</h1><h2 id="Routing-protocols"><a href="#Routing-protocols" class="headerlink" title="Routing protocols"></a>Routing protocols</h2><p>Routing protocol goal: determine “good” paths (equivalently, routes), from sending hosts to receiving host, through network of routers</p>
+<h1 id="control-plane">Control plane</h1>
+<h2 id="routing-protocols">Routing protocols</h2>
+<p>Routing protocol goal: determine “good” paths (equivalently, routes), from sending hosts to receiving host, through network of routers</p>
 <ul>
 <li>path: sequence of routers packets will traverse in going from given initial source host to given final destination host</li>
 <li>“good”: least “cost”, “fastest”, “least congested”</li>
@@ -965,8 +1026,13 @@ network layer protocols in every host, r">
 <p>N = set of routers = { u, v, w, x, y, z }</p>
 <p>E = set of links ={ (u,v), (u,x), (v,x), (v,w), (x,w), (x,y), (w,y), (w,z), (y,z) }</p>
 <blockquote>
-<p><img src="\img\routing_graph.png" alt="routing_graph.png"></p>
-<p>aside: graph abstraction is useful in other network contexts, e.g.,<br>P2P, where N is set of peers and E is set of TCP connections</p>
+<div class="figure">
+<img src="\img\routing_graph.png" alt="routing_graph.png">
+<p class="caption">routing_graph.png</p>
+</div>
+</blockquote>
+<blockquote>
+<p>aside: graph abstraction is useful in other network contexts, e.g., P2P, where N is set of peers and E is set of TCP connections</p>
 </blockquote>
 <p><em>costs</em></p>
 <p>c(x,x’) = cost of link (x,x’); e.g., c(w,z) = 5</p>
@@ -981,83 +1047,71 @@ network layer protocols in every host, r">
 <li>global:</li>
 <li><ul>
 <li>all routers have complete topology, link cost info</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><strong>“link state” algorithms</strong></li>
-</ul>
-</li>
-<li>decentralized: </li>
+</ul></li>
+<li>decentralized:</li>
 <li><ul>
 <li>router knows physically-connected neighbors, link costs to neighbors</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>iterative process of computation, exchange of info with neighbors</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><strong>“distance vector” algorithms</strong></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>Q: static or dynamic?</p>
 <ul>
-<li>static: </li>
+<li>static:</li>
 <li><ul>
 <li>routes change slowly over time</li>
-</ul>
-</li>
-<li>dynamic: </li>
+</ul></li>
+<li>dynamic:</li>
 <li><ul>
 <li>routes change more quickly</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><ul>
 <li>periodic update</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 <li><ul>
 <li><ul>
 <li>in response to link cost changes</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="link-state"><a href="#link-state" class="headerlink" title="link state"></a>link state</h3><p><strong>A link-state routing algorithm</strong></p>
+<h3 id="link-state">link state</h3>
+<p><strong>A link-state routing algorithm</strong></p>
 <p>Dijkstra’s algorithm</p>
 <ul>
 <li>net topology, link costs known to all nodes</li>
 <li><ul>
-<li>accomplished via “link state broadcast” </li>
-</ul>
-</li>
+<li>accomplished via “link state broadcast”</li>
+</ul></li>
 <li><ul>
 <li>all nodes have same info</li>
-</ul>
-</li>
+</ul></li>
 <li>computes least cost paths from one node (‘source”) to all other nodes</li>
 <li><ul>
 <li>gives <strong>forwarding table</strong> for that node</li>
-</ul>
-</li>
-<li><p>iterative: after k iterations, know least cost path to k dest.’s</p>
-</li>
-<li><p>notation:</p>
-</li>
-<li>c(x,y): link cost from node x to y;  = ∞ if not direct neighbors</li>
+</ul></li>
+<li><p>iterative: after k iterations, know least cost path to k dest.’s</p></li>
+<li>notation:</li>
+<li>c(x,y): link cost from node x to y; = ∞ if not direct neighbors</li>
 <li>D(v): current value of cost of path from source to dest. v</li>
 <li>p(v): predecessor node along path from source to v</li>
-<li>N’: set of nodes whose least cost path definitively known</li>
+<li><p>N’: set of nodes whose least cost path definitively known</p></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">1  Initialization: </div><div class="line">2    N&apos; = &#123;u&#125; </div><div class="line">3    for all nodes v </div><div class="line">4      if v adjacent to u </div><div class="line">5          then D(v) = c(u,v) </div><div class="line">6      else D(v) = ∞ </div><div class="line">7 </div><div class="line">8   Loop </div><div class="line">9     find w not in N&apos; such that D(w) is a minimum </div><div class="line">10    add w to N&apos; </div><div class="line">11    update D(v) for all v adjacent to w and not in N&apos; : </div><div class="line">12       D(v) = min( D(v), D(w) + c(w,v) ) </div><div class="line">13    /* new cost to v is either old cost to v or known </div><div class="line">14     shortest path cost to w plus cost from w to v */ </div><div class="line">15  until all nodes in N&apos;</div></pre></td></tr></table></figure>
 <p>Dijkstra’s algorithm example</p>
 <blockquote>
-<p><img src="\img\dijkstraAlgorithm_eg.png" alt="dijkstraAlgorithm_eg.png"></p>
+<div class="figure">
+<img src="\img\dijkstraAlgorithm_eg.png" alt="dijkstraAlgorithm_eg.png">
+<p class="caption">dijkstraAlgorithm_eg.png</p>
+</div>
 </blockquote>
 <ul>
 <li>notes:</li>
@@ -1073,12 +1127,10 @@ network layer protocols in every host, r">
 </ul>
 <p>oscillations possible:</p>
 <ul>
-<li>e.g., support link cost equals amount of carried traffic:<blockquote>
-<p><img src="\img\dijkstraAlgorithm_discussion.png" alt="dijkstraAlgorithm_discussion.png"></p>
-</blockquote>
-</li>
+<li>e.g., support link cost equals amount of carried traffic: &gt; <img src="\img\dijkstraAlgorithm_discussion.png" alt="dijkstraAlgorithm_discussion.png"></li>
 </ul>
-<h3 id="Distance-vector-algorithm"><a href="#Distance-vector-algorithm" class="headerlink" title="Distance vector algorithm"></a>Distance vector algorithm</h3><p><strong>Bellman-Ford equation (dynamic programming)</strong></p>
+<h3 id="distance-vector-algorithm">Distance vector algorithm</h3>
+<p><strong>Bellman-Ford equation (dynamic programming)</strong></p>
 <ul>
 <li>min taken over all neighbors v of x</li>
 <li>c(x,v): cost to neighbor v</li>
@@ -1087,191 +1139,167 @@ network layer protocols in every host, r">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let</div><div class="line">   dx(y) := cost of least-cost path from x to y</div><div class="line">then</div><div class="line">   dx(y) = min &#123;c(x,v) + dv(y)&#125;</div></pre></td></tr></table></figure>
 <p>Bellman-Ford example</p>
 <blockquote>
-<p><img src="\img\bellmanFord_eg.png" alt="bellmanFord_eg.png"></p>
+<div class="figure">
+<img src="\img\bellmanFord_eg.png" alt="bellmanFord_eg.png">
+<p class="caption">bellmanFord_eg.png</p>
+</div>
 </blockquote>
 <p>node achieving minimum is next hop in shortest path, used in forwarding table</p>
 <ul>
 <li>Dx(y) = estimate of least cost from x to y</li>
 <li><ul>
-<li>x maintains  distance vector Dx = [Dx(y): y є N ]</li>
-</ul>
-</li>
+<li>x maintains distance vector Dx = [Dx(y): y є N ]</li>
+</ul></li>
 <li>node x:</li>
 <li><ul>
 <li>knows cost to each neighbor v: c(x,v)</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>maintains its neighbors’ distance vectors. For each neighbor v, x maintains Dv = [Dv(y): y є N ]</li>
-</ul>
-</li>
-<li><p><strong>key idea</strong>:</p>
-</li>
+</ul></li>
+<li><strong>key idea</strong>:</li>
 <li><ul>
 <li>from time-to-time, each node sends its own distance vector estimate to neighbors</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
-<li>when x receives new DV estimate from neighbor, it updates its own DV using B-F equation: <script type="math/tex; mode=display">D_x(y) ← min_v{c(x,v) + D_v(y)}  for each node y \in N</script></li>
-</ul>
-</li>
+<li>when x receives new DV estimate from neighbor, it updates its own DV using B-F equation: <span class="math display">\[D_x(y) ← min_v{c(x,v) + D_v(y)}  for each node y \in N\]</span></li>
+</ul></li>
 </ul>
 <blockquote>
-<p>under minor, natural conditions, the estimate Dx(y) converge to the actual least cost dx(y) </p>
+<p>under minor, natural conditions, the estimate Dx(y) converge to the actual least cost dx(y)</p>
 </blockquote>
 <ul>
-<li><strong>iterative, asynchronous</strong>: each local iteration caused by: </li>
+<li><strong>iterative, asynchronous</strong>: each local iteration caused by:</li>
 <li><ul>
-<li>local link cost change </li>
-</ul>
-</li>
+<li>local link cost change</li>
+</ul></li>
 <li><ul>
 <li>DV update message from neighbor</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>distributed</strong>:</li>
 <li><ul>
 <li>each node notifies neighbors only when its DV changes</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>neighbors then notify their neighbors if necessary</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <blockquote>
-<p><img src="\img\distance_vector_nodeState.png" alt="distance_vector_nodeState.png"></p>
-<p><img src="\img\distance_vector_eg.png" alt="distance_vector_eg.png"></p>
+<div class="figure">
+<img src="\img\distance_vector_nodeState.png" alt="distance_vector_nodeState.png">
+<p class="caption">distance_vector_nodeState.png</p>
+</div>
+</blockquote>
+<blockquote>
+<div class="figure">
+<img src="\img\distance_vector_eg.png" alt="distance_vector_eg.png">
+<p class="caption">distance_vector_eg.png</p>
+</div>
 </blockquote>
 <p><strong>Distance vector: link cost changes</strong></p>
 <ul>
 <li><strong>link cost changes</strong>:</li>
 <li><ul>
-<li>node detects local link cost change </li>
-</ul>
-</li>
+<li>node detects local link cost change</li>
+</ul></li>
 <li><ul>
 <li>updates routing info, recalculates distance vector</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>if DV changes, notify neighbors</li>
-</ul>
-</li>
-<li><p>“good news travels fast”</p>
-</li>
+</ul></li>
+<li>“good news travels fast”</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">t0 : y detects link-cost change, updates its DV, informs its neighbors.</div><div class="line"></div><div class="line">t1 : z receives update from y, updates its table, computes new least cost to x , sends its neighbors its DV.</div><div class="line"></div><div class="line">t2 : y receives z’s update, updates its distance table.  y’s least costs do not change, so y  does not send a message to z.</div></pre></td></tr></table></figure>
 <ul>
 <li>bad news travels slow - “count to infinity” problem!</li>
 <li><ul>
 <li>44 iterations before algorithm stabilizes: see text</li>
-</ul>
-</li>
-<li><p><strong>poisoned reverse</strong>: </p>
-</li>
+</ul></li>
+<li><strong>poisoned reverse</strong>:</li>
 <li><ul>
 <li>If Z routes through Y to get to X :</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>Z tells Y its (Z’s) distance to X is infinite (so Y won’t route to X via Z)</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>will this completely solve count to infinity problem?</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="Comparison-of-LS-and-DV-algorithms"><a href="#Comparison-of-LS-and-DV-algorithms" class="headerlink" title="Comparison of LS and DV algorithms"></a>Comparison of LS and DV algorithms</h3><p>message complexity</p>
+<h3 id="comparison-of-ls-and-dv-algorithms">Comparison of LS and DV algorithms</h3>
+<p>message complexity</p>
 <ul>
-<li>LS: with n nodes, E links, O(nE) msgs sent  </li>
+<li>LS: with n nodes, E links, O(nE) msgs sent<br>
+</li>
 <li>DV: exchange between neighbors only</li>
 <li><ul>
 <li>convergence time varies</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>speed of convergence</p>
 <ul>
 <li>LS: O(n^2) algorithm requires O(nE) msgs</li>
 <li><ul>
 <li>may have oscillations</li>
-</ul>
-</li>
+</ul></li>
 <li>DV: convergence time varies</li>
 <li><ul>
 <li>may be routing loops</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>count-to-infinity problem</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>robustness: what happens if router malfunctions?</p>
 <ul>
-<li>LS: </li>
+<li>LS:</li>
 <li><ul>
 <li>node can advertise incorrect <em>link</em> cost</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>each node computes only its own table</li>
-</ul>
-</li>
+</ul></li>
 <li>DV:</li>
 <li><ul>
 <li>DV node can advertise incorrect <em>path</em> cost</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
-<li>each node’s table used by others </li>
-</ul>
-</li>
+<li>each node’s table used by others</li>
+</ul></li>
 <li><ul>
 <li><ul>
 <li>error propagate thru network</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="intra-AS-routing-in-the-Internet-OSPF"><a href="#intra-AS-routing-in-the-Internet-OSPF" class="headerlink" title="intra-AS routing in the Internet: OSPF"></a>intra-AS routing in the Internet: OSPF</h2><p><strong>Making routing scalable</strong></p>
+<h2 id="intra-as-routing-in-the-internet-ospf">intra-AS routing in the Internet: OSPF</h2>
+<p><strong>Making routing scalable</strong></p>
 <ul>
-<li>our routing study thus far - idealized </li>
+<li>our routing study thus far - idealized</li>
 <li><ul>
 <li>all routers identical</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>network “flat”</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>… not true in practice</li>
-</ul>
-</li>
-<li><p>scale: with billions of destinations:</p>
-</li>
+</ul></li>
+<li>scale: with billions of destinations:</li>
 <li><ul>
 <li>can’t store all destinations in routing tables!</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>routing table exchange would swamp links!</li>
-</ul>
-</li>
-<li><p>administrative autonomy</p>
-</li>
+</ul></li>
+<li>administrative autonomy</li>
 <li><ul>
 <li>internet = network of networks</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>each network admin may want to control routing in its own network</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><strong>Internet approach to scalable routing</strong></p>
 <p>aggregate routers into regions known as “autonomous systems” (AS) (a.k.a. “domains”)</p>
@@ -1279,65 +1307,54 @@ network layer protocols in every host, r">
 <li>intra-AS routing</li>
 <li><ul>
 <li>routing among hosts, routers in same AS (“network”)</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>all routers in AS must run <strong>same</strong> intra-domain protocol</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>routers in different AS can run different intra-domain routing protocol</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>gateway router: at “edge” of its own AS, has link(s) to router(s) in other AS’es</li>
-</ul>
-</li>
-<li><p>inter-AS routing</p>
-</li>
+</ul></li>
+<li>inter-AS routing</li>
 <li><ul>
 <li>routing among AS’es</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>gateways perform inter-domain routing (as well as intra-domain routing)</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><strong>Interconnected ASes</strong></p>
 <ul>
 <li>forwarding table configured by both intra- and inter-AS routing algorithm</li>
 <li><ul>
 <li>intra-AS routing determine entries for destinations within AS</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>inter-AS &amp; intra-AS determine entries for external destinations</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>Inter-AS tasks：</p>
 <ul>
 <li>suppose router in AS1 receives datagram destined outside of AS1:</li>
-<li><p>router should forward packet to gateway router, but which one?</p>
-</li>
-<li><p>AS1 must:</p>
-</li>
+<li><p>router should forward packet to gateway router, but which one?</p></li>
+<li>AS1 must:</li>
 <li><ul>
 <li>learn which dests are reachable through AS2, which through AS3</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>propagate this reachability info to all routers in AS1</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>job of inter-AS routing!</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <blockquote>
-<p><img src="\img\interAS_task.png" alt="interAS_task.png"></p>
+<div class="figure">
+<img src="\img\interAS_task.png" alt="interAS_task.png">
+<p class="caption">interAS_task.png</p>
+</div>
 </blockquote>
 <p>Intra-AS Routing:</p>
 <ul>
@@ -1345,154 +1362,149 @@ network layer protocols in every host, r">
 <li>most common intra-AS routing protocols:</li>
 <li><ul>
 <li>RIP: Routing Information Protocol</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>OSPF: Open Shortest Path First (IS-IS protocol essentially same as OSPF)</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>IGRP: Interior Gateway Routing Protocol (Cisco proprietary for decades, until 2016)</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="OSPF-Open-Shortest-Path-First"><a href="#OSPF-Open-Shortest-Path-First" class="headerlink" title="OSPF (Open Shortest Path First)"></a>OSPF (Open Shortest Path First)</h3><ul>
+<h3 id="ospf-open-shortest-path-first">OSPF (Open Shortest Path First)</h3>
+<ul>
 <li>“open”: publicly available</li>
-<li>uses link-state algorithm </li>
+<li>uses link-state algorithm</li>
 <li><ul>
 <li>link state packet dissemination</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>topology map at each node</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>route computation using Dijkstra’s algorithm</li>
-</ul>
-</li>
+</ul></li>
 <li>router floods OSPF link-state advertisements to all other routers in <strong>entire</strong> AS</li>
 <li><ul>
 <li>carried in OSPF messages directly over IP (rather than TCP or UDP)</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>link state: for each attached link</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>IS-IS routing protocol</strong>: nearly identical to OSPF</li>
 </ul>
 <p>OSPF “advanced” features:</p>
 <ul>
-<li><strong>security</strong>: all OSPF messages authenticated (to prevent malicious intrusion) </li>
+<li><strong>security</strong>: all OSPF messages authenticated (to prevent malicious intrusion)</li>
 <li><strong>multiple</strong> same-cost <strong>paths</strong> allowed (only one path in RIP)</li>
 <li>for each link, multiple cost metrics for different <strong>TOS</strong> (e.g., satellite link cost set low for best effort ToS; high for real-time ToS)</li>
-<li>integrated uni- and <strong>multi-</strong>cast support: </li>
+<li>integrated uni- and <strong>multi-</strong>cast support:</li>
 <li><ul>
 <li>Multicast OSPF (MOSPF) uses same topology data base as OSPF</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>hierarchical</strong> OSPF in large domains.</li>
 </ul>
 <p>Hierarchical OSPF:</p>
 <blockquote>
-<p><img src="\img\Hierarchical_OSPF.png" alt="Hierarchical_OSPF.png"></p>
+<div class="figure">
+<img src="\img\Hierarchical_OSPF.png" alt="Hierarchical_OSPF.png">
+<p class="caption">Hierarchical_OSPF.png</p>
+</div>
 </blockquote>
 <ul>
 <li><strong>two-level hierarchy</strong>: local area, backbone.</li>
 <li><ul>
-<li>link-state advertisements only in area </li>
-</ul>
-</li>
+<li>link-state advertisements only in area</li>
+</ul></li>
 <li><ul>
 <li>each nodes has detailed area topology; only know direction (shortest path) to nets in other areas.</li>
-</ul>
-</li>
-<li><strong>area border routers</strong>: “summarize” distances  to nets in own area, advertise to other Area Border routers.</li>
+</ul></li>
+<li><strong>area border routers</strong>: “summarize” distances to nets in own area, advertise to other Area Border routers.</li>
 <li><strong>backbone routers</strong>: run OSPF routing limited to backbone.</li>
 <li><strong>boundary routers</strong>: connect to other AS’es.</li>
 </ul>
-<h2 id="routing-among-the-ISPs-BGP"><a href="#routing-among-the-ISPs-BGP" class="headerlink" title="routing among the ISPs: BGP"></a>routing among the ISPs: BGP</h2><p>Internet inter-AS routing: BGP</p>
+<h2 id="routing-among-the-isps-bgp">routing among the ISPs: BGP</h2>
+<p>Internet inter-AS routing: BGP</p>
 <ul>
 <li><strong>BGP (Border Gateway Protocol)</strong>: the de facto inter-domain routing protocol</li>
 <li><ul>
 <li>“glue that holds the Internet together”</li>
-</ul>
-</li>
+</ul></li>
 <li>BGP provides each AS a means to:</li>
 <li><ul>
 <li><strong>eBGP</strong>: obtain subnet reachability information from neighboring ASes</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><strong>iBGP</strong>: propagate reachability information to all AS-internal routers.</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>determine “good” routes to other networks based on reachability information and policy</li>
-</ul>
-</li>
+</ul></li>
 <li>allows subnet to advertise its existence to rest of Internet: “I am here”</li>
 </ul>
 <p><strong>eBGP, iBGP connections</strong></p>
 <blockquote>
-<p><img src="\img\BGP.png" alt="BGP.png"></p>
+<div class="figure">
+<img src="\img\BGP.png" alt="BGP.png">
+<p class="caption">BGP.png</p>
+</div>
 </blockquote>
 <p>BGP basics</p>
 <ul>
 <li><strong>BGP session</strong>: two BGP routers (“peers”) exchange BGP messages over semi-permanent TCP connection:</li>
 <li><ul>
 <li>advertising paths to different destination network prefixes (BGP is a “path vector” protocol)</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <blockquote>
-<p><img src="\img\BGP1.png" alt="BGP1.png"></p>
+<div class="figure">
+<img src="\img\BGP1.png" alt="BGP1.png">
+<p class="caption">BGP1.png</p>
+</div>
 </blockquote>
 <ul>
 <li>when AS3 gateway router 3a advertises path AS3,X to AS2 gateway router 2c:</li>
 <li><ul>
 <li>AS3 promises to AS2 it will forward datagrams towards X</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><strong>Path attributes and BGP routes</strong></p>
 <ul>
-<li>advertised prefix includes BGP attributes </li>
+<li>advertised prefix includes BGP attributes</li>
 <li><ul>
 <li>prefix + attributes = “route”</li>
-</ul>
-</li>
+</ul></li>
 <li>two important attributes:</li>
 <li><ul>
 <li><em>AS-PATH</em>: list of ASes through which prefix advertisement has passed</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li><em>NEXT-HOP</em>: indicates specific internal-AS router to next-hop AS</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>Policy-based routing</strong>:</li>
 <li><ul>
 <li>gateway receiving route advertisement uses <strong>import policy</strong> to accept/decline path (e.g., never route through AS Y).</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>AS policy also determines whether to advertise path to other neighboring ASes</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><strong>BGP path advertisement</strong></p>
 <blockquote>
-<p><img src="\img\BGP2.png" alt="BGP2.png"></p>
+<div class="figure">
+<img src="\img\BGP2.png" alt="BGP2.png">
+<p class="caption">BGP2.png</p>
+</div>
 </blockquote>
 <ul>
 <li>AS2 router 2c receives path advertisement AS3,X (via eBGP) from AS3 router 3a</li>
 <li>Based on AS2 policy, AS2 router 2c accepts path AS3,X, propagates (via iBGP) to all AS2 routers</li>
-<li>Based on AS2 policy,  AS2 router 2a advertises (via eBGP)  path AS2, AS3, X   to AS1 router 1c</li>
+<li>Based on AS2 policy, AS2 router 2a advertises (via eBGP) path AS2, AS3, X to AS1 router 1c</li>
 </ul>
 <blockquote>
-<p><img src="\img\BGP3.png" alt="BGP3.png"></p>
+<div class="figure">
+<img src="\img\BGP3.png" alt="BGP3.png">
+<p class="caption">BGP3.png</p>
+</div>
 </blockquote>
 <ul>
 <li>gateway router may learn about multiple paths to destination:</li>
@@ -1511,19 +1523,18 @@ network layer protocols in every host, r">
 </ul>
 <p><strong>BGP route selection</strong></p>
 <p>router may learn about more than one route to destination AS, selects route based on:</p>
-<ol>
-<li><p>local preference value attribute: policy decision</p>
-</li>
-<li><p>shortest AS-PATH </p>
-</li>
-<li><p>closest NEXT-HOP router: hot potato routing</p>
-</li>
-<li><p>additional criteria </p>
-</li>
+<ol style="list-style-type: decimal">
+<li><p>local preference value attribute: policy decision</p></li>
+<li><p>shortest AS-PATH</p></li>
+<li><p>closest NEXT-HOP router: hot potato routing</p></li>
+<li><p>additional criteria</p></li>
 </ol>
 <p><em>Hot Potato Routing</em></p>
 <blockquote>
-<p><img src="\img\hot_potato_routing.png" alt="hot_potato_routing.png"></p>
+<div class="figure">
+<img src="\img\hot_potato_routing.png" alt="hot_potato_routing.png">
+<p class="caption">hot_potato_routing.png</p>
+</div>
 </blockquote>
 <ul>
 <li>2d learns (via iBGP) it can route to X via 2a or 2c</li>
@@ -1531,68 +1542,61 @@ network layer protocols in every host, r">
 </ul>
 <p><strong>BGP: achieving policy via advertisements</strong></p>
 <blockquote>
-<p><img src="\img\BGP_achieving_policy.png" alt="BGP_achieving_policy.png"></p>
+<div class="figure">
+<img src="\img\BGP_achieving_policy.png" alt="BGP_achieving_policy.png">
+<p class="caption">BGP_achieving_policy.png</p>
+</div>
 </blockquote>
 <ul>
 <li>A advertises path A w to B and to C</li>
-<li>B <strong>chooses not to advertise</strong> BAw to C:  </li>
-<li><ul>
-<li>B gets no “revenue” for routing CBAw, since none of  C, A, w are B’s customers</li>
-</ul>
+<li>B <strong>chooses not to advertise</strong> BAw to C:<br>
 </li>
+<li><ul>
+<li>B gets no “revenue” for routing CBAw, since none of C, A, w are B’s customers</li>
+</ul></li>
 <li><ul>
 <li>C does not learn about CBAw path</li>
-</ul>
-</li>
-<li><p>C will route CAw (not using B) to get to w</p>
-</li>
-<li><p>A,B,C are <strong>provider networks</strong></p>
-</li>
+</ul></li>
+<li><p>C will route CAw (not using B) to get to w</p></li>
+<li>A,B,C are <strong>provider networks</strong></li>
 <li>X,W,Y are customer (of provider networks)</li>
 <li>X is <strong>dual-homed</strong>: attached to two networks</li>
-<li>policy to enforce: X does not want to route from B to C via X </li>
+<li>policy to enforce: X does not want to route from B to C via X</li>
 <li><ul>
 <li>.. so X will not advertise to B a route to C</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><em>Why different Intra-, Inter-AS routing ?</em></p>
 <ul>
-<li><strong>policy</strong>: </li>
+<li><strong>policy</strong>:</li>
 <li><ul>
-<li>inter-AS: admin wants control over how its traffic routed, who routes through its net. </li>
-</ul>
-</li>
+<li>inter-AS: admin wants control over how its traffic routed, who routes through its net.</li>
+</ul></li>
 <li><ul>
 <li>intra-AS: single admin, so no policy decisions needed</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>scale</strong>:</li>
 <li><ul>
 <li>hierarchical routing saves table size, reduced update traffic</li>
-</ul>
-</li>
-<li><strong>performance</strong>: </li>
+</ul></li>
+<li><strong>performance</strong>:</li>
 <li><ul>
 <li>intra-AS: can focus on performance</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>inter-AS: policy may dominate over performance</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="The-SDN-control-plane"><a href="#The-SDN-control-plane" class="headerlink" title="The SDN control plane"></a>The SDN control plane</h2><p>Software defined networking (SDN)</p>
+<h2 id="the-sdn-control-plane">The SDN control plane</h2>
+<p>Software defined networking (SDN)</p>
 <ul>
 <li>Internet network layer: historically has been implemented via distributed, per-router approach</li>
 <li><ul>
 <li><strong>monolithic</strong> router contains switching hardware, runs proprietary implementation of Internet standard protocols (IP, RIP, IS-IS, OSPF, BGP) in proprietary router OS (e.g., Cisco IOS)</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>different “middleboxes” for different network layer functions: firewalls, load balancers, NAT boxes, ..</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <blockquote>
 <p>~2005: renewed interest in rethinking network control plane</p>
@@ -1603,17 +1607,18 @@ network layer protocols in every host, r">
 <li>table-based forwarding (recall OpenFlow API) allows “programming” routers</li>
 <li><ul>
 <li>centralized “programming” easier: compute tables centrally and distribute</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
-<li>distributed “programming: more difficult: compute tables as result of distributed algorithm (protocol) implemented in each and every router </li>
-</ul>
-</li>
+<li>distributed “programming: more difficult: compute tables as result of distributed algorithm (protocol) implemented in each and every router</li>
+</ul></li>
 <li>open (non-proprietary) implementation of control plane</li>
 </ul>
 <p><strong>Traffic engineering: difficult traditional routing</strong></p>
 <blockquote>
-<p><img src="\img\traffic_engineering.png" alt="traffic_engineering.png"></p>
+<div class="figure">
+<img src="\img\traffic_engineering.png" alt="traffic_engineering.png">
+<p class="caption">traffic_engineering.png</p>
+</div>
 </blockquote>
 <p>Q: what if network operator wants u-to-z traffic to flow along uvwz, x-to-z traffic to flow xwyz?</p>
 <ul>
@@ -1627,18 +1632,27 @@ network layer protocols in every host, r">
 <li>A: can’t do it (or need a new routing algorithm)</li>
 </ul>
 <blockquote>
-<p><img src="\img\traffic_engineering1.png" alt="traffic_engineering1.png"></p>
+<div class="figure">
+<img src="\img\traffic_engineering1.png" alt="traffic_engineering1.png">
+<p class="caption">traffic_engineering1.png</p>
+</div>
 </blockquote>
 <p>Q: what if w wants to route blue and red traffic differently?</p>
 <ul>
 <li>A: can’t do it (with destination based forwarding, and LS, DV routing)</li>
 </ul>
 <blockquote>
-<p><img src="\img\sdn.png" alt="sdn.png"></p>
+<div class="figure">
+<img src="\img\sdn.png" alt="sdn.png">
+<p class="caption">sdn.png</p>
+</div>
 </blockquote>
 <p><strong>SDN perspective</strong></p>
 <blockquote>
-<p><img src="\img\sdn_perspective.png" alt="sdn_perspective.png"></p>
+<div class="figure">
+<img src="\img\sdn_perspective.png" alt="sdn_perspective.png">
+<p class="caption">sdn_perspective.png</p>
+</div>
 </blockquote>
 <p><em>Data plane switches</em></p>
 <ul>
@@ -1647,11 +1661,10 @@ network layer protocols in every host, r">
 <li>API for table-based switch control (e.g., OpenFlow)</li>
 <li><ul>
 <li>defines what is controllable and what is not</li>
-</ul>
-</li>
+</ul></li>
 <li>protocol for communicating with controller (e.g., OpenFlow)</li>
 </ul>
-<p><em>SDN controller (network OS)</em>: </p>
+<p><em>SDN controller (network OS)</em>:</p>
 <ul>
 <li>maintain network state information</li>
 <li>interacts with network control applications “above” via northbound API</li>
@@ -1665,7 +1678,10 @@ network layer protocols in every host, r">
 </ul>
 <p><strong>Components of SDN controller</strong></p>
 <blockquote>
-<p><img src="\img\sdn_controller.png" alt="sdn_controller.png"></p>
+<div class="figure">
+<img src="\img\sdn_controller.png" alt="sdn_controller.png">
+<p class="caption">sdn_controller.png</p>
+</div>
 </blockquote>
 <p><strong>OpenFlow protocol</strong></p>
 <ul>
@@ -1673,30 +1689,26 @@ network layer protocols in every host, r">
 <li>TCP used to exchange messages</li>
 <li><ul>
 <li>optional encryption</li>
-</ul>
-</li>
-<li>three classes of  OpenFlow messages:</li>
+</ul></li>
+<li>three classes of OpenFlow messages:</li>
 <li><ul>
 <li>controller-to-switch</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>asynchronous (switch to controller)</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>symmetric (misc)</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<p><em>controller-to-switch messages</em>: </p>
+<p><em>controller-to-switch messages</em>:</p>
 <ul>
 <li>Key controller-to-switch messages</li>
 <li>features: controller queries switch features, switch replies</li>
 <li>configure: controller queries/sets switch configuration parameters</li>
 <li>modify-state: add, delete, modify flow entries in the OpenFlow tables</li>
 <li>packet-out: controller can send this packet out of specific switch port</li>
-<li>packet-in: transfer packet (and its control) to controller.  See packet-out message from controller</li>
+<li>packet-in: transfer packet (and its control) to controller. See packet-out message from controller</li>
 <li>flow-removed: flow table entry deleted at switch</li>
 <li>port status: inform controller of a change on a port.</li>
 </ul>
@@ -1705,21 +1717,18 @@ network layer protocols in every host, r">
 </blockquote>
 <p><strong>control/data plane interaction example</strong></p>
 <blockquote>
-<p><img src="\img\sdn_eg.png" alt="sdn_eg.png"></p>
+<div class="figure">
+<img src="\img\sdn_eg.png" alt="sdn_eg.png">
+<p class="caption">sdn_eg.png</p>
+</div>
 </blockquote>
-<ol>
-<li><p>S1, experiencing link failure using OpenFlow port status message to notify controller</p>
-</li>
-<li><p>SDN controller receives OpenFlow message, updates link status info</p>
-</li>
-<li><p>Dijkstra’s routing algorithm application has previously registered to be called when ever link status changes. It is called.</p>
-</li>
-<li><p>Dijkstra’s routing algorithm access network graph info, link state info in controller, computes new routes</p>
-</li>
-<li><p>link state routing app interacts with flow-table-computation component in SDN controller, which computes new flow tables needed</p>
-</li>
-<li><p>Controller uses OpenFlow to install new tables in switches that need updating</p>
-</li>
+<ol style="list-style-type: decimal">
+<li><p>S1, experiencing link failure using OpenFlow port status message to notify controller</p></li>
+<li><p>SDN controller receives OpenFlow message, updates link status info</p></li>
+<li><p>Dijkstra’s routing algorithm application has previously registered to be called when ever link status changes. It is called.</p></li>
+<li><p>Dijkstra’s routing algorithm access network graph info, link state info in controller, computes new routes</p></li>
+<li><p>link state routing app interacts with flow-table-computation component in SDN controller, which computes new flow tables needed</p></li>
+<li><p>Controller uses OpenFlow to install new tables in switches that need updating</p></li>
 </ol>
 <p><strong>OpenDaylight (ODL) controller</strong></p>
 <ul>
@@ -1728,7 +1737,10 @@ network layer protocols in every host, r">
 <li>Service Abstraction Layer: interconnects internal, external applications and services</li>
 </ul>
 <blockquote>
-<p><img src="\img\sdn_openDaylight_controller.png" alt="sdn_openDaylight_controller.png"></p>
+<div class="figure">
+<img src="\img\sdn_openDaylight_controller.png" alt="sdn_openDaylight_controller.png">
+<p class="caption">sdn_openDaylight_controller.png</p>
+</div>
 </blockquote>
 <p><strong>ONOS controller</strong></p>
 <ul>
@@ -1737,70 +1749,66 @@ network layer protocols in every host, r">
 <li>considerable emphasis on distributed core: service reliability, replication performance scaling</li>
 </ul>
 <blockquote>
-<p><img src="\img\sdn_ONOS_controller.png" alt="sdn_ONOS_controller.png"></p>
+<div class="figure">
+<img src="\img\sdn_ONOS_controller.png" alt="sdn_ONOS_controller.png">
+<p class="caption">sdn_ONOS_controller.png</p>
+</div>
 </blockquote>
 <p><strong>SDN: selected challenges</strong></p>
 <ul>
 <li>hardening the control plane: dependable, reliable, performance-scalable, secure distributed system</li>
 <li><ul>
 <li>robustness to failures: leverage strong theory of reliable distributed system for control plane</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
-<li>dependability, security: “baked in” from day one? </li>
-</ul>
-</li>
+<li>dependability, security: “baked in” from day one?</li>
+</ul></li>
 <li>networks, protocols meeting mission-specific requirements</li>
 <li><ul>
 <li>e.g., real-time, ultra-reliable, ultra-secure</li>
+</ul></li>
+<li>Internet-scaling</li>
 </ul>
-</li>
-<li>Internet-scaling </li>
-</ul>
-<h2 id="ICMP-The-Internet-Control-Message-Protocol"><a href="#ICMP-The-Internet-Control-Message-Protocol" class="headerlink" title="ICMP: The Internet Control Message Protocol"></a>ICMP: The Internet Control Message Protocol</h2><ul>
+<h2 id="icmp-the-internet-control-message-protocol">ICMP: The Internet Control Message Protocol</h2>
+<ul>
 <li>used by hosts &amp; routers to communicate network-level information</li>
 <li><ul>
 <li>error reporting: unreachable host, network, port, protocol</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>echo request/reply (used by ping)</li>
-</ul>
-</li>
+</ul></li>
 <li>network-layer “above” IP:</li>
 <li><ul>
 <li>ICMP msgs carried in IP datagrams</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>ICMP message</strong>: type, code plus first 8 bytes of IP datagram causing error</li>
 </ul>
 <blockquote>
-<p><img src="\img\ICMP_message.png" alt="ICMP_message.png"></p>
+<div class="figure">
+<img src="\img\ICMP_message.png" alt="ICMP_message.png">
+<p class="caption">ICMP_message.png</p>
+</div>
 </blockquote>
 <p><strong>Traceroute and ICMP</strong></p>
 <ul>
 <li>source sends series of UDP segments to destination</li>
 <li><ul>
 <li>first set has TTL =1</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>second set has TTL=2, etc.</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>unlikely port number</li>
-</ul>
-</li>
+</ul></li>
 <li>when datagram in nth set arrives to nth router:</li>
 <li><ul>
 <li>router discards datagram and sends source ICMP message (type 11, code 0)(TTL expired)</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>ICMP message include name of router &amp; IP address</li>
-</ul>
-</li>
+</ul></li>
 <li>when ICMP message arrives, source records RTTs</li>
 </ul>
 <p><strong>stopping criteria</strong>:</p>
@@ -1809,39 +1817,46 @@ network layer protocols in every host, r">
 <li>destination returns ICMP “port unreachable” message (type 3, code 3)</li>
 <li>source stops</li>
 </ul>
-<h2 id="Network-management-and-SNMP"><a href="#Network-management-and-SNMP" class="headerlink" title="Network management and SNMP"></a>Network management and SNMP</h2><p>What is network management?</p>
+<h2 id="network-management-and-snmp">Network management and SNMP</h2>
+<p>What is network management?</p>
 <ul>
 <li>autonomous systems (aka “network”): 1000s of interacting hardware/software components</li>
 <li>other complex systems requiring monitoring, control:</li>
 <li><ul>
 <li>jet airplane</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>nuclear power plant</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>others?</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <blockquote>
-<p>“Network management includes the deployment, integration<br>and coordination of the hardware, software, and human<br>elements to monitor, test, poll, configure, analyze, evaluate,<br>and control the network and element resources to meet the<br>real-time, operational performance, and Quality of Service<br>requirements at a reasonable cost.” </p>
+<p>“Network management includes the deployment, integration and coordination of the hardware, software, and human elements to monitor, test, poll, configure, analyze, evaluate, and control the network and element resources to meet the real-time, operational performance, and Quality of Service requirements at a reasonable cost.”</p>
 </blockquote>
 <p><strong>Infrastructure for network management</strong></p>
-<p>managed devices contain managed objects whose  data is gathered into a Management Information Base (MIB) </p>
+<p>managed devices contain managed objects whose data is gathered into a Management Information Base (MIB)</p>
 <blockquote>
-<p><img src="\img\network_management.png" alt="network_management.png"></p>
+<div class="figure">
+<img src="\img\network_management.png" alt="network_management.png">
+<p class="caption">network_management.png</p>
+</div>
 </blockquote>
 <p><strong>SNMP protocol</strong>: simple network management protocol</p>
 <p>Two ways to convey MIB info, commands:</p>
 <blockquote>
-<p><img src="\img\SNMP.png" alt="SNMP.png"></p>
+<div class="figure">
+<img src="\img\SNMP.png" alt="SNMP.png">
+<p class="caption">SNMP.png</p>
+</div>
 </blockquote>
 <p><strong>SNMP protocol: message types</strong></p>
 <blockquote>
-<p><img src="\img\SNMP_message_type.png" alt="SNMP_message_type.png"></p>
+<div class="figure">
+<img src="\img\SNMP_message_type.png" alt="SNMP_message_type.png">
+<p class="caption">SNMP_message_type.png</p>
+</div>
 </blockquote>
 <p><strong>SNMP protocol: message formats</strong></p>
 <blockquote>
@@ -1943,10 +1958,10 @@ network layer protocols in every host, r">
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -1969,7 +1984,7 @@ network layer protocols in every host, r">
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1982,7 +1997,7 @@ network layer protocols in every host, r">
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -2016,7 +2031,7 @@ network layer protocols in every host, r">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-plane"><span class="nav-number">1.</span> <span class="nav-text">Data plane</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Router"><span class="nav-number">1.1.</span> <span class="nav-text">Router</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Router-architecture-overview"><span class="nav-number">1.1.1.</span> <span class="nav-text">Router architecture overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-port-functions"><span class="nav-number">1.1.2.</span> <span class="nav-text">Input port functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Longest-prefix-matching"><span class="nav-number">1.1.3.</span> <span class="nav-text">Longest prefix matching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Switching-fabrics"><span class="nav-number">1.1.4.</span> <span class="nav-text">Switching fabrics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-port-queuing"><span class="nav-number">1.1.5.</span> <span class="nav-text">Input port queuing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-ports-This-slide-in-HUGELY-important"><span class="nav-number">1.1.6.</span> <span class="nav-text">Output ports(This slide in HUGELY important!)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-port-queueing"><span class="nav-number">1.1.7.</span> <span class="nav-text">Output port queueing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scheduling-mechanisms"><span class="nav-number">1.1.8.</span> <span class="nav-text">Scheduling mechanisms</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP-Internet-Protocol"><span class="nav-number">1.2.</span> <span class="nav-text">IP: Internet Protocol</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IP-addressing"><span class="nav-number">1.2.1.</span> <span class="nav-text">IP addressing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6"><span class="nav-number">1.2.2.</span> <span class="nav-text">IPv6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generalized-Forwarding-and-SDN"><span class="nav-number">1.2.3.</span> <span class="nav-text">Generalized Forwarding and SDN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Control-plane"><span class="nav-number">2.</span> <span class="nav-text">Control plane</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Routing-protocols"><span class="nav-number">2.1.</span> <span class="nav-text">Routing protocols</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#link-state"><span class="nav-number">2.1.1.</span> <span class="nav-text">link state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distance-vector-algorithm"><span class="nav-number">2.1.2.</span> <span class="nav-text">Distance vector algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comparison-of-LS-and-DV-algorithms"><span class="nav-number">2.1.3.</span> <span class="nav-text">Comparison of LS and DV algorithms</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#intra-AS-routing-in-the-Internet-OSPF"><span class="nav-number">2.2.</span> <span class="nav-text">intra-AS routing in the Internet: OSPF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSPF-Open-Shortest-Path-First"><span class="nav-number">2.2.1.</span> <span class="nav-text">OSPF (Open Shortest Path First)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#routing-among-the-ISPs-BGP"><span class="nav-number">2.3.</span> <span class="nav-text">routing among the ISPs: BGP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-SDN-control-plane"><span class="nav-number">2.4.</span> <span class="nav-text">The SDN control plane</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ICMP-The-Internet-Control-Message-Protocol"><span class="nav-number">2.5.</span> <span class="nav-text">ICMP: The Internet Control Message Protocol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-management-and-SNMP"><span class="nav-number">2.6.</span> <span class="nav-text">Network management and SNMP</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#data-plane"><span class="nav-number">1.</span> <span class="nav-text">Data plane</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#router"><span class="nav-number">1.1.</span> <span class="nav-text">Router</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#router-architecture-overview"><span class="nav-number">1.1.1.</span> <span class="nav-text">Router architecture overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#input-port-functions"><span class="nav-number">1.1.2.</span> <span class="nav-text">Input port functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#longest-prefix-matching"><span class="nav-number">1.1.3.</span> <span class="nav-text">Longest prefix matching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switching-fabrics"><span class="nav-number">1.1.4.</span> <span class="nav-text">Switching fabrics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#input-port-queuing"><span class="nav-number">1.1.5.</span> <span class="nav-text">Input port queuing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#output-portsthis-slide-in-hugely-important"><span class="nav-number">1.1.6.</span> <span class="nav-text">Output ports(This slide in HUGELY important!)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#output-port-queueing"><span class="nav-number">1.1.7.</span> <span class="nav-text">Output port queueing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scheduling-mechanisms"><span class="nav-number">1.1.8.</span> <span class="nav-text">Scheduling mechanisms</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ip-internet-protocol"><span class="nav-number">1.2.</span> <span class="nav-text">IP: Internet Protocol</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-addressing"><span class="nav-number">1.2.1.</span> <span class="nav-text">IP addressing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ipv6"><span class="nav-number">1.2.2.</span> <span class="nav-text">IPv6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#generalized-forwarding-and-sdn"><span class="nav-number">1.2.3.</span> <span class="nav-text">Generalized Forwarding and SDN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#control-plane"><span class="nav-number">2.</span> <span class="nav-text">Control plane</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#routing-protocols"><span class="nav-number">2.1.</span> <span class="nav-text">Routing protocols</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#link-state"><span class="nav-number">2.1.1.</span> <span class="nav-text">link state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distance-vector-algorithm"><span class="nav-number">2.1.2.</span> <span class="nav-text">Distance vector algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#comparison-of-ls-and-dv-algorithms"><span class="nav-number">2.1.3.</span> <span class="nav-text">Comparison of LS and DV algorithms</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#intra-as-routing-in-the-internet-ospf"><span class="nav-number">2.2.</span> <span class="nav-text">intra-AS routing in the Internet: OSPF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ospf-open-shortest-path-first"><span class="nav-number">2.2.1.</span> <span class="nav-text">OSPF (Open Shortest Path First)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#routing-among-the-isps-bgp"><span class="nav-number">2.3.</span> <span class="nav-text">routing among the ISPs: BGP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-sdn-control-plane"><span class="nav-number">2.4.</span> <span class="nav-text">The SDN control plane</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#icmp-the-internet-control-message-protocol"><span class="nav-number">2.5.</span> <span class="nav-text">ICMP: The Internet Control Message Protocol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#network-management-and-snmp"><span class="nav-number">2.6.</span> <span class="nav-text">Network management and SNMP</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -2049,11 +2064,11 @@ network layer protocols in every host, r">
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

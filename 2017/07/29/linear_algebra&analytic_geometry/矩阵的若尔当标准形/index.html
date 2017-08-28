@@ -217,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -281,7 +281,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T11:00:00+08:00">
                 2017-07-29
@@ -344,7 +344,7 @@
 </ul>
 <a id="more"></a>
 <blockquote>
-<p>$E<em>{ij}，E_i(k)(k \not= 0)，E</em>{ij}(\phi(\lambda))$ 分别表达以上三种变换的初等矩阵</p>
+<p>$E_{ij}，E<em>i(k)(k \not= 0)，E</em>{ij}(\phi(\lambda))$ 分别表达以上三种变换的初等矩阵</p>
 </blockquote>
 <ul>
 <li>定义：若 $\lambda$-矩阵 $A(\lambda)$ 经过有限次初等变换变到 $\lambda$-矩阵 $B(\lambda)$，则称 $A(\lambda)$ 与 $B(\lambda)$ 等价，记作 $A(\lambda) \cong B(\lambda)$</li>
@@ -353,19 +353,7 @@
 <p>$\lambda$-矩阵间的等价关系也有自反性、对称性和传递性</p>
 </blockquote>
 <ul>
-<li><p>定理：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，则 $A(\lambda)$ 等价于对角形矩阵(矩阵$A(\lambda)$的标准形) <script type="math/tex">\left[ \begin{matrix} 
-d_1(\lambda) & & & & & & & & & & \\
-& d_2(\lambda) & & & & & & & & & \\
-& & . & & & & & & & & \\
-& & & . & & & & & & & \\
-& & & & . & & & & & & \\
-& & & & & d_r(\lambda) & & & & & \\
-& & & & & & 0            & & & & \\
-& & & & & & & . & & & \\
-& & & & & & & & . & & \\
-& & & & & & & & & . & \\
-& & & & & & & & & & 0
-\end{matrix} \right]</script><br>其中 $d<em>1(\lambda)|d_2(\lambda), …, d</em>{r-1}(\lambda)|d_r(\lambda)$，且 $d_i(\lambda)(1, 2, …, r)$ 是首一多项式</p>
+<li><p>定理：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，则 $A(\lambda)$ 等价于对角形矩阵(矩阵$A(\lambda)$的标准形) $$\left[ \begin{matrix}<br>d_1(\lambda) &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; d_2(\lambda) &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; . &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; . &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; . &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; d_r(\lambda) &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; 0            &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; . &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; . &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; . &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; 0<br>\end{matrix} \right]$$<br>其中 $d_1(\lambda)|d<em>2(\lambda), …, d</em>{r-1}(\lambda)|d_r(\lambda)$，且 $d_i(\lambda)(1, 2, …, r)$ 是首一多项式</p>
 </li>
 <li><p>定义：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，于是对任何正整数k，只要 $1 \leq k \leq r$，$A(\lambda)$ 中必有非零的k阶子式存在，$A(\lambda)$ 中所有k阶子式的首一最高公因式，叫 $A(\lambda)$ 的k阶行列式因式，记作 $D_k^A{\lambda}$ 或 $\lambda_k(\lambda)$. 可见当 $A(\lambda)$ 中共有r个行列式因式 $D_1(\lambda), D_2(\lambda), …, D_r(\lambda)$</p>
 </li>
@@ -377,24 +365,11 @@ d_1(\lambda) & & & & & & & & & & \\
 </li>
 <li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$</p>
 </li>
-<li><p>定义：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，$d<em>1(\lambda), d_2(\lambda), …, d_r(\lambda)$ 是它的不变因子，在复数域内分别把它们分解成一次因式的幂的乘积，即 $$<br>\begin{matrix}<br>d_1(\lambda) = (\lambda - \lambda_1)^{k</em>{11}}(\lambda - \lambda<em>2)^{k</em>{12}}…(\lambda - \lambda<em>s)^{k</em>{1s}} \<br>d<em>2(\lambda) = (\lambda - \lambda_1)^{k</em>{21}}(\lambda - \lambda<em>2)^{k</em>{22}}…(\lambda - \lambda<em>s)^{k</em>{2s}} \<br>…… \<br>d<em>r(\lambda) = (\lambda - \lambda_1)^{k</em>{r1}}(\lambda - \lambda<em>2)^{k</em>{r2}}…(\lambda - \lambda<em>s)^{k</em>{rs}} \<br>\end{matrix}<br>$$ 则所有的 $(\lambda - \lambda<em>j)^{k</em>{ij}}(k_{ij} \geq 1)$ 称为 $A(\lambda)$ 的初等因子</p>
+<li><p>定义：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，$d_1(\lambda), d_2(\lambda), …, d_r(\lambda)$ 是它的不变因子，在复数域内分别把它们分解成一次因式的幂的乘积，即 $$<br>\begin{matrix}<br>d_1(\lambda) = (\lambda - \lambda<em>1)^{k</em>{11}}(\lambda - \lambda<em>2)^{k</em>{12}}…(\lambda - \lambda<em>s)^{k</em>{1s}} \<br>d_2(\lambda) = (\lambda - \lambda<em>1)^{k</em>{21}}(\lambda - \lambda<em>2)^{k</em>{22}}…(\lambda - \lambda<em>s)^{k</em>{2s}} \<br>…… \<br>d_r(\lambda) = (\lambda - \lambda<em>1)^{k</em>{r1}}(\lambda - \lambda<em>2)^{k</em>{r2}}…(\lambda - \lambda<em>s)^{k</em>{rs}} \<br>\end{matrix}<br>$$ 则所有的 $(\lambda - \lambda<em>j)^{k</em>{ij}}(k_{ij} \geq 1)$ 称为 $A(\lambda)$ 的初等因子</p>
 </li>
 <li><p>定理：设 $A(\lambda)$ 与 $B(\lambda)$ 是两个 $\lambda$-矩阵，则 $A(\lambda) \cong B(\lambda)$ 的充要条件是它们有相同的秩和相同的初等因子</p>
 </li>
-<li><p>定理：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，且 </p>
-<script type="math/tex; mode=display">A(\lambda) \cong \left[ \begin{matrix} 
-f_1(\lambda) & & & & & & & & & & \\
-& f_2(\lambda) & & & & & & & & & \\
-& & . & & & & & & & & \\
-& & & . & & & & & & & \\
-& & & & . & & & & & & \\
-& & & & & f_r(\lambda) & & & & & \\
-& & & & & & 0            & & & & \\
-& & & & & & & . & & & \\
-& & & & & & & & . & & \\
-& & & & & & & & & . & \\
-& & & & & & & & & & 0
-\end{matrix} \right] = B(\lambda)</script><p>则 $f_1(\lambda), f_2(\lambda), …, \f_r(\lambda)$ 的所有一次因式的幂就是 $A(\lambda)$ 的全部初等因子</p>
+<li><p>定理：设 $\lambda$-矩阵 $A(\lambda)$ 的秩为r，且<br>$$A(\lambda) \cong \left[ \begin{matrix}<br>f_1(\lambda) &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; f_2(\lambda) &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; . &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; . &amp; &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; . &amp; &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; f_r(\lambda) &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; 0            &amp; &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; . &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; . &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; . &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; 0<br>\end{matrix} \right] = B(\lambda)$$<br>则 $f_1(\lambda), f_2(\lambda), …, \f_r(\lambda)$ 的所有一次因式的幂就是 $A(\lambda)$ 的全部初等因子</p>
 </li>
 <li><p>定义：设 $A(\lambda)$ 是n阶 $\lambda$-矩阵，若存在n阶 $\lambda$-矩阵 $B(\lambda)$，使 $A(\lambda)B(\lambda) = B(\lambda)A(\lambda) = E$，则称 $A(\lambda)$ 为可逆矩阵，$B(\lambda)$ 是 $A(\lambda)$ 的逆矩阵</p>
 </li>
@@ -433,26 +408,7 @@ f_1(\lambda) & & & & & & & & & & \\
 </ul>
 <p>……</p>
 <h3 id="矩阵的若尔当标准形"><a href="#矩阵的若尔当标准形" class="headerlink" title="矩阵的若尔当标准形"></a>矩阵的若尔当标准形</h3><ul>
-<li><p>定理：设 A 是复数域上的n阶方阵，它的特征矩阵 $\lambda E - A$ 的初等因子为 $(\lambda - \lambda_1)^{m_1}, (\lambda - \lambda_2)^{m_2}, …, (\lambda - \lambda_s)^{m_s}$，则 </p>
-<script type="math/tex; mode=display">A \sim J = \left[ \begin{matrix} 
-J_1 & & & & & \\
-& J_2 & & & & \\
-& & .   & & & \\
-& & & .   & & \\
-& & & & .   & \\
-& & & & & J_s
-\end{matrix} \right]</script><p>其中</p>
-<script type="math/tex; mode=display">J_i = \left[ \begin{matrix} 
-\lambda_i & 1 & & & & & &  \\
-& \lambda_i & 1 & & & & & \\
-& & . & .& & & &  \\
-& & & . & . & & & \\
-& & & & . & . & & \\
-& & & & & . & 1 & \\
-& & & & & & \lambda_i & 1 \\
-& & & & & & & \lambda_i
-\end{matrix} \right]
-(i = 1, 2, ..., s)</script><p>是 $m_i$阶方阵. 这J称为A的<strong>若尔当标准形</strong>，$J_i$ 称为对应于 $(\lambda - \lambda_i)^{m_i}$ 的若尔当块，并且这若尔当标准形除去诸 $J_i$ 的顺序外是被 A 唯一决定的</p>
+<li><p>定理：设 A 是复数域上的n阶方阵，它的特征矩阵 $\lambda E - A$ 的初等因子为 $(\lambda - \lambda_1)^{m_1}, (\lambda - \lambda_2)^{m_2}, …, (\lambda - \lambda_s)^{m_s}$，则<br>$$ A \sim J = \left[ \begin{matrix}<br>J_1 &amp; &amp; &amp; &amp; &amp; \<br>&amp; J_2 &amp; &amp; &amp; &amp; \<br>&amp; &amp; .   &amp; &amp; &amp; \<br>&amp; &amp; &amp; .   &amp; &amp; \<br>&amp; &amp; &amp; &amp; .   &amp; \<br>&amp; &amp; &amp; &amp; &amp; J_s<br>\end{matrix} \right]<br>$$<br>其中<br>$$ J_i = \left[ \begin{matrix}<br>\lambda_i &amp; 1 &amp; &amp; &amp; &amp; &amp; &amp;  \<br>&amp; \lambda_i &amp; 1 &amp; &amp; &amp; &amp; &amp; \<br>&amp; &amp; . &amp; .&amp; &amp; &amp; &amp;  \<br>&amp; &amp; &amp; . &amp; . &amp; &amp; &amp; \<br>&amp; &amp; &amp; &amp; . &amp; . &amp; &amp; \<br>&amp; &amp; &amp; &amp; &amp; . &amp; 1 &amp; \<br>&amp; &amp; &amp; &amp; &amp; &amp; \lambda_i &amp; 1 \<br>&amp; &amp; &amp; &amp; &amp; &amp; &amp; \lambda_i<br>\end{matrix} \right]<br>(i = 1, 2, …, s)$$<br>是 $m_i$阶方阵. 这J称为A的<strong>若尔当标准形</strong>，$J_i$ 称为对应于 $(\lambda - \lambda_i)^{m_i}$ 的若尔当块，并且这若尔当标准形除去诸 $J_i$ 的顺序外是被 A 唯一决定的</p>
 </li>
 <li><p>定理：设 $\sigma$ 是数域 K 上n维线性空间 V 的线性变换，则在 V 中必存在一组基，使 $\sigma$ 对这基的矩阵是若尔当标准形，并且这若尔当标准形除去诸 $J_i$ 的顺序外是被 $\sigma$ 唯一决定的</p>
 </li>
@@ -560,10 +516,10 @@ J_1 & & & & & \\
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -586,7 +542,7 @@ J_1 & & & & & \\
               <a href="/archives">
             
                 <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -599,7 +555,7 @@ J_1 & & & & & \\
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -666,11 +622,11 @@ J_1 & & & & & \\
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

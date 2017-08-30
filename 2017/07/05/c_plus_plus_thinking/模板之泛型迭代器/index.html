@@ -97,10 +97,9 @@
 <meta name="description" content="了解另外的算法，分析各自对相应模板参数类型强加的行为
 
 一个不同的算法
-
 颠倒一个序列中的所有元素的顺序
 
-1234567891011// 不是很正确template &amp;lt;class P, class T&amp;gt;void reverse(P start, P beyond) &amp;#123;    while (start &amp;lt; beyond) &amp;#123;        T">
+1234567891011// 不是很正确template &amp;lt;class P, class T&amp;gt;void reverse(P start, P beyond) &amp;#123;    while (start &amp;lt; beyond) &amp;#123;        T t = *sta">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模板之泛型迭代器">
 <meta property="og:url" content="https://chenfeng.github.io/2017/07/05/c_plus_plus_thinking/模板之泛型迭代器/index.html">
@@ -108,20 +107,18 @@
 <meta property="og:description" content="了解另外的算法，分析各自对相应模板参数类型强加的行为
 
 一个不同的算法
-
 颠倒一个序列中的所有元素的顺序
 
-1234567891011// 不是很正确template &amp;lt;class P, class T&amp;gt;void reverse(P start, P beyond) &amp;#123;    while (start &amp;lt; beyond) &amp;#123;        T">
+1234567891011// 不是很正确template &amp;lt;class P, class T&amp;gt;void reverse(P start, P beyond) &amp;#123;    while (start &amp;lt; beyond) &amp;#123;        T t = *sta">
 <meta property="og:updated_time" content="2017-07-07T14:50:56.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模板之泛型迭代器">
 <meta name="twitter:description" content="了解另外的算法，分析各自对相应模板参数类型强加的行为
 
 一个不同的算法
-
 颠倒一个序列中的所有元素的顺序
 
-1234567891011// 不是很正确template &amp;lt;class P, class T&amp;gt;void reverse(P start, P beyond) &amp;#123;    while (start &amp;lt; beyond) &amp;#123;        T">
+1234567891011// 不是很正确template &amp;lt;class P, class T&amp;gt;void reverse(P start, P beyond) &amp;#123;    while (start &amp;lt; beyond) &amp;#123;        T t = *sta">
 
 
 
@@ -217,7 +214,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -281,7 +278,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
                 2017-07-05
@@ -324,22 +321,26 @@
         <ul>
 <li>了解另外的算法，分析各自对相应模板参数类型强加的行为</li>
 </ul>
-<h3 id="一个不同的算法">一个不同的算法</h3>
-<ul>
+<h3 id="一个不同的算法"><a href="#一个不同的算法" class="headerlink" title="一个不同的算法"></a>一个不同的算法</h3><ul>
 <li>颠倒一个序列中的所有元素的顺序</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 不是很正确</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> P, <span class="keyword">class</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(P start, P beyond)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start &lt; beyond) &#123;</div><div class="line">        T t = *start;</div><div class="line">        --beyond;</div><div class="line">        *start = *beyond;</div><div class="line">        *beyond = t;</div><div class="line">        ++start;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>需要定义++p、p!=beyond和*p</li>
-<li><p>需要定义p&lt;beyond和–p，并且确保*p是一个左值</p></li>
-<li>比较难以保证: p &lt; beyond</li>
+<li><p>需要定义p&lt;beyond和–p，并且确保*p是一个左值</p>
+</li>
+<li><p>比较难以保证: p &lt; beyond</p>
+</li>
 <li><ul>
 <li>判断两个值是否相等和判断两者的先后次序之间存在很大的差别</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>例如放在一个单向链表之中</li>
-</ul></li>
-<li><p>用 p != beyond 替换 p &lt; beyond</p></li>
+</ul>
+</li>
+<li><p>用 p != beyond 替换 p &lt; beyond</p>
+</li>
 </ul>
 <a id="more"></a>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> P, <span class="keyword">class</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse2</span><span class="params">(P start, P beyond)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != beyond) &#123;</div><div class="line">        --beyond;</div><div class="line">        <span class="keyword">if</span> (start != beyond) &#123;</div><div class="line">            T t = *start;</div><div class="line">            *start = *beyond;</div><div class="line">            *beyond = t;</div><div class="line">            ++start;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -347,66 +348,84 @@
 <li>用两个(不)等于检查替换了一个次序检查</li>
 <li><ul>
 <li>输入有效的前提下，start与beyond不会擦肩而过</li>
-</ul></li>
-<li><p>双重检查消耗资源，但所耗不多，且使得该算法能在更多种类的数据结构中使用</p></li>
-<li>考虑对类型P的递减操作要求</li>
+</ul>
+</li>
+<li><p>双重检查消耗资源，但所耗不多，且使得该算法能在更多种类的数据结构中使用</p>
+</li>
+<li><p>考虑对类型P的递减操作要求 </p>
+</li>
 <li>两种方法不用递减(辅助存储区、开销大)</li>
 <li><ul>
 <li>分配一个辅助的T数组，把数据复制到这个数组中，按逆序复制回去</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>分配一个辅助的P数组</li>
-</ul></li>
 </ul>
-<h3 id="需求的分类">需求的分类</h3>
-<ul>
+</li>
+</ul>
+<h3 id="需求的分类"><a href="#需求的分类" class="headerlink" title="需求的分类"></a>需求的分类</h3><ul>
 <li>针对不同算法，可行的数据结构面临的问题不同</li>
 <li><ul>
 <li>在一个不同向后读取(逆向读取)的顺序文件中找出一条特定的记录，支持operator–的要求显得过于苛刻</li>
-</ul></li>
-<li><p>不能对不同目标使用同一套需求</p></li>
-<li><p>必须对需求进行适当的分类: 找出一套能很好的适合某个算法集的需求以及另一套适合另一个算法集的需求</p></li>
 </ul>
-<h3 id="输入迭代器">输入迭代器</h3>
-<ul>
+</li>
+<li><p>不能对不同目标使用同一套需求</p>
+</li>
+<li><p>必须对需求进行适当的分类: 找出一套能很好的适合某个算法集的需求以及另一套适合另一个算法集的需求</p>
+</li>
+</ul>
+<h3 id="输入迭代器"><a href="#输入迭代器" class="headerlink" title="输入迭代器"></a>输入迭代器</h3><ul>
 <li>一个对象希望完全模拟指向序列的指针，能够使用p取出序列元素，使p指向序列下一个元素，能够判断是否到达最后一个元素</li>
 <li><ul>
 <li>需要*p、++P、p!=q</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>p++、p==q</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>复制p</li>
-</ul></li>
-<li>满足这些需求的类型允许按照某个预先规定的顺序读(<strong>但不是写</strong>)序列中的元素</li>
+</ul>
+</li>
+<li><p>满足这些需求的类型允许按照某个预先规定的顺序读(<strong>但不是写</strong>)序列中的元素</p>
+</li>
 <li><ul>
 <li><strong>输入迭代器(input iterator)</strong>: 一类迭代器</li>
-</ul></li>
 </ul>
-<h3 id="输出迭代器">输出迭代器</h3>
-<ul>
-<li><p>可以读取一个序列，能够对该序列进行读写操作</p></li>
-<li><p>输出迭代器</p></li>
-<li>输入迭代器和输出迭代器之间的唯一区别在*p的行为</li>
+</li>
+</ul>
+<h3 id="输出迭代器"><a href="#输出迭代器" class="headerlink" title="输出迭代器"></a>输出迭代器</h3><ul>
+<li><p>可以读取一个序列，能够对该序列进行读写操作</p>
+</li>
+<li><p>输出迭代器</p>
+</li>
+<li><p>输入迭代器和输出迭代器之间的唯一区别在*p的行为</p>
+</li>
 <li><ul>
 <li>输入迭代器可以读取但不一定允许修改</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>输出迭代器允许改变但不一定允许读取(p在改变前定位的存储空间可能包括一个不能被合法复制的无效值)</li>
-</ul></li>
-<li><p>使用输入和输出迭代器可以写出泛型复制函数</p></li>
+</ul>
+</li>
+<li><p>使用输入和输出迭代器可以写出泛型复制函数</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> In, <span class="keyword">class</span> Out&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(In start, In beyond, Out result)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != beyond) &#123;</div><div class="line">        *result = *start;</div><div class="line">        ++result;</div><div class="line">        ++start;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>精简版</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> In, <span class="keyword">class</span> Out&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(In start, In beyond, Out result)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != beyond)</div><div class="line">        *result++ = *start++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="前向迭代器">前向迭代器</h3>
-<ul>
-<li><p>能够遍历序列的元素，以某种方式改变每个元素，一旦接触某个元素之后就再也不能访问这个元素</p></li>
-<li><p>将输入迭代器和输出迭代器的操作结合在一起的迭代器</p></li>
-<li><p>前向迭代器(forward iterator)</p></li>
+<h3 id="前向迭代器"><a href="#前向迭代器" class="headerlink" title="前向迭代器"></a>前向迭代器</h3><ul>
+<li><p>能够遍历序列的元素，以某种方式改变每个元素，一旦接触某个元素之后就再也不能访问这个元素</p>
+</li>
+<li><p>将输入迭代器和输出迭代器的操作结合在一起的迭代器</p>
+</li>
+<li><p>前向迭代器(forward iterator)</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> Iter, <span class="keyword">class</span> Function&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">apply</span><span class="params">(Iter start, Iter beyond, Function f)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != beyond) &#123;</div><div class="line">        *start = f(*start);</div><div class="line">        ++start;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
@@ -414,59 +433,69 @@
 <li>类型Function: 可以使任何能够像函数一样运行的对象的类型</li>
 <li><ul>
 <li>函数对象: 重载了函数调用操作符operator()</li>
-</ul></li>
 </ul>
-<h3 id="双向迭代器">双向迭代器</h3>
-<ul>
+</li>
+</ul>
+<h3 id="双向迭代器"><a href="#双向迭代器" class="headerlink" title="双向迭代器"></a>双向迭代器</h3><ul>
 <li>支持operator–</li>
 </ul>
-<h3 id="随机存取迭代器">随机存取迭代器</h3>
-<ul>
+<h3 id="随机存取迭代器"><a href="#随机存取迭代器" class="headerlink" title="随机存取迭代器"></a>随机存取迭代器</h3><ul>
 <li>p指向序列第一个元素，到达第1000个元素的方式</li>
 <li><ul>
 <li>执行1000次++p？</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>p += 1000</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>p指向数组元素或者行为类似于指向链表元素的指针的类</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>可能简单方便而效率极差</li>
-</ul></li>
-<li>有些算法必须能够高效访问数据结构的任何元素，如折半查找</li>
+</ul>
+</li>
+<li><p>有些算法必须能够高效访问数据结构的任何元素，如折半查找</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> P, <span class="keyword">class</span> X&gt;</div><div class="line"><span class="function">P <span class="title">binsearch</span><span class="params">(P start, P beyond, X x)</span> </span>&#123;</div><div class="line">    P low = start, high = beyond;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (low != high) &#123;</div><div class="line">        P mid = low + (high - low) / <span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span> (x == *mid)</div><div class="line">            <span class="keyword">return</span> mid;</div><div class="line">        <span class="keyword">if</span> (x &lt; *mid)</div><div class="line">            high = mid;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            low = mid + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> beyond;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>关键是能够快速计算指向某个序列中间元素的指针</p></li>
-<li><p>随机访问迭代器增加了操作：+、-、+=、-=和[]</p></li>
+<li><p>关键是能够快速计算指向某个序列中间元素的指针</p>
+</li>
+<li><p>随机访问迭代器增加了操作：+、-、+=、-=和[]</p>
+</li>
 </ul>
-<h3 id="是否用继承关联">是否用继承关联</h3>
-<ul>
+<h3 id="是否用继承关联"><a href="#是否用继承关联" class="headerlink" title="是否用继承关联"></a>是否用继承关联</h3><ul>
 <li>前向迭代器能作为输入迭代器或者输出迭代器工作</li>
 <li>双向迭代器能像前向迭代器、输入迭代器和输出迭代器一样工作</li>
-<li><p>随机访问迭代器可以像任何其他的迭代器一样工作</p></li>
-<li>但是迭代器不属于继承这种关联类型的范畴</li>
+<li><p>随机访问迭代器可以像任何其他的迭代器一样工作</p>
+</li>
+<li><p>但是迭代器不属于继承这种关联类型的范畴</p>
+</li>
 <li><ul>
 <li>一系列类型应该满足或者不应该满足的需求的集合</li>
-</ul></li>
-<li>继承增加了更多地需求</li>
+</ul>
+</li>
+<li><p>继承增加了更多地需求</p>
+</li>
 <li><ul>
 <li>一个特殊的基类</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>迭代器必须是类而不是內建类型(不能把指针当作迭代器使用了)</li>
-</ul></li>
-<li><p>概念继承(conceptual inheritance): 构建C++库的概念框架的一部分</p></li>
 </ul>
-<h3 id="性能">性能</h3>
-<ul>
+</li>
+<li><p>概念继承(conceptual inheritance): 构建C++库的概念框架的一部分</p>
+</li>
+</ul>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><ul>
 <li>效率是使用C++的原因之一</li>
 <li>STL赋予迭代器 强的性能要求: 特定类型的迭代器要支持的每种操作都要快(分摊执行时间必须是O(1))</li>
 </ul>
-<h3 id="summary">Summary</h3>
-<p>泛型算法: 对于所操作数的数据结构的细节信息只加入最低限度的了解</p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>泛型算法: 对于所操作数的数据结构的细节信息只加入最低限度的了解</p>
 <ul>
 <li>将用来访问数据结构的类型分类</li>
 </ul>
@@ -566,10 +595,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -592,7 +621,7 @@
               <a href="/archives">
             
                 <span class="site-state-item-count">82</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -605,7 +634,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -639,7 +668,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个不同的算法"><span class="nav-number">1.</span> <span class="nav-text">一个不同的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需求的分类"><span class="nav-number">2.</span> <span class="nav-text">需求的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入迭代器"><span class="nav-number">3.</span> <span class="nav-text">输入迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出迭代器"><span class="nav-number">4.</span> <span class="nav-text">输出迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前向迭代器"><span class="nav-number">5.</span> <span class="nav-text">前向迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向迭代器"><span class="nav-number">6.</span> <span class="nav-text">双向迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机存取迭代器"><span class="nav-number">7.</span> <span class="nav-text">随机存取迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是否用继承关联"><span class="nav-number">8.</span> <span class="nav-text">是否用继承关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能"><span class="nav-number">9.</span> <span class="nav-text">性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary"><span class="nav-number">10.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个不同的算法"><span class="nav-number">1.</span> <span class="nav-text">一个不同的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需求的分类"><span class="nav-number">2.</span> <span class="nav-text">需求的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入迭代器"><span class="nav-number">3.</span> <span class="nav-text">输入迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出迭代器"><span class="nav-number">4.</span> <span class="nav-text">输出迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前向迭代器"><span class="nav-number">5.</span> <span class="nav-text">前向迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向迭代器"><span class="nav-number">6.</span> <span class="nav-text">双向迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机存取迭代器"><span class="nav-number">7.</span> <span class="nav-text">随机存取迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是否用继承关联"><span class="nav-number">8.</span> <span class="nav-text">是否用继承关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能"><span class="nav-number">9.</span> <span class="nav-text">性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">10.</span> <span class="nav-text">Summary</span></a></li></ol></div>
             
 
           </div>
@@ -672,7 +701,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 

@@ -208,7 +208,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -272,7 +272,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T13:00:00+08:00">
                 2017-07-20
@@ -318,35 +318,43 @@
 <li>使应用程序性与I/O之间的耦合度降低</li>
 </ul>
 <a id="more"></a>
-<h3 id="问题">问题</h3>
-<ul>
-<li><p>表示变长字符串的String类，应该能够用关惯用符号打印String：<code>cout &lt;&lt; fullname &lt;&lt; endl;</code></p></li>
-<li><p>传统方法：</p></li>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
+<li><p>表示变长字符串的String类，应该能够用关惯用符号打印String：<code>cout &lt;&lt; fullname &lt;&lt; endl;</code></p>
+</li>
+<li><p>传统方法：</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; o, <span class="keyword">const</span> String&amp; s) &#123;</div><div class="line">    <span class="comment">// 在输出流中打印字符串s</span></div><div class="line">    <span class="keyword">return</span> o;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>两个潜在的严重问题</li>
 <li><ul>
 <li>使用String类的不得不同时使用iostream类</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li><ul>
 <li>不是用iostream类而使用另一种I/O机制的程序也不得不包括两个完整的I/O库，带来不必要的空间开销</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><ul>
 <li>没有简单方法在另一种I/O机制中打印String</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li><ul>
 <li>使用专用库如用于进程间通信的库，就很难用这个库打印String的内容</li>
-</ul></li>
-</ul></li>
 </ul>
-<h3 id="解决方案1技巧加蛮力">解决方案1：技巧加蛮力</h3>
-<ul>
-<li><p>具体问题具体对待：通过将依赖于iostream库的代码划分为各个编译模块，从而把iostream库带来的开销从String中分离出来</p></li>
-<li><p>String.h头文件</p></li>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="解决方案1：技巧加蛮力"><a href="#解决方案1：技巧加蛮力" class="headerlink" title="解决方案1：技巧加蛮力"></a>解决方案1：技巧加蛮力</h3><ul>
+<li><p>具体问题具体对待：通过将依赖于iostream库的代码划分为各个编译模块，从而把iostream库带来的开销从String中分离出来</p>
+</li>
+<li><p>String.h头文件</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> ostream;</div><div class="line"></div><div class="line"><span class="keyword">class</span> String &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">ostrean&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp;, <span class="keyword">const</span> String&amp;);</div></pre></td></tr></table></figure>
 <ul>
@@ -359,21 +367,27 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;String.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream.h&gt;</span></span></div><div class="line"></div><div class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; o, <span class="keyword">const</span> String&amp; s) &#123;</div><div class="line">    <span class="comment">// 在输出流中打印字符串s</span></div><div class="line">    <span class="keyword">return</span> o;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>单独编译这个函数可以避免iostream类带来的开销</p></li>
-<li><p>不能解决另一个问题：在不是ostream的I/O机制上打印String</p></li>
+<li><p>单独编译这个函数可以避免iostream类带来的开销</p>
+</li>
+<li><p>不能解决另一个问题：在不是ostream的I/O机制上打印String</p>
+</li>
 </ul>
-<h3 id="解决方案2抽象输出">解决方案2：抽象输出</h3>
-<ul>
+<h3 id="解决方案2：抽象输出"><a href="#解决方案2：抽象输出" class="headerlink" title="解决方案2：抽象输出"></a>解决方案2：抽象输出</h3><ul>
 <li>String类设计者不可能知道怎样对某种可能的输出设备产生输出</li>
-<li><p>I/O库作者不可能知道每一种将会依赖于该I/O库的对象类型</p></li>
-<li><p>抽象出输出操作的最基本的部分，提供连接String和I/O库的纽带</p></li>
-<li><code>dest.send(ptr, n);</code></li>
+<li><p>I/O库作者不可能知道每一种将会依赖于该I/O库的对象类型</p>
+</li>
+<li><p>抽象出输出操作的最基本的部分，提供连接String和I/O库的纽带</p>
+</li>
+<li><p><code>dest.send(ptr, n);</code></p>
+</li>
 <li><ul>
 <li>不同的dest：需要一个类继承体系</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>send()纯虚函数，虚析构函数</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Writer &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">virtual</span> ~Write();</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>*, <span class="keyword">int</span>)</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
@@ -384,10 +398,14 @@
 <li>运行得较慢</li>
 <li><ul>
 <li>令该函数为String类的友元函数，获得String的特殊实现细节，一次调用send发送完整的String</li>
-</ul></li>
-<li><p>String类必须知道Writer是如何工作的，仍存在不适当的耦合</p></li>
-<li><p>为特定的目的地定义特定的Writer类</p></li>
-<li><p>为C类型的FILE指针定义的Writer类</p></li>
+</ul>
+</li>
+<li><p>String类必须知道Writer是如何工作的，仍存在不适当的耦合</p>
+</li>
+<li><p>为特定的目的地定义特定的Writer类</p>
+</li>
+<li><p>为C类型的FILE指针定义的Writer类</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> FileWriter: <span class="keyword">public</span> Writer &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    FileWriter(FILE* f): fp(f) &#123; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">send</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</div><div class="line">            putc(*p++, fp);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    FILE* fp;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
@@ -395,37 +413,49 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">FileWriter <span class="title">s</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</div><div class="line">String hello = <span class="string">"Hello\n"</span>;</div><div class="line">s &lt;&lt; hello;</div></pre></td></tr></table></figure>
 <blockquote>
-<p>定义一个表示写任意字符序列到任意目的地的抽象积累Writer 使用继承为每个向使用的I/O库创建一个特殊的Writer类 为每个知道如何使用何种Writer写该类对象的应用类定义输出操作</p>
+<p>定义一个表示写任意字符序列到任意目的地的抽象积累Writer<br>使用继承为每个向使用的I/O库创建一个特殊的Writer类<br>为每个知道如何使用何种Writer写该类对象的应用类定义输出操作</p>
 </blockquote>
-<h3 id="解决方案3技巧而无蛮力">解决方案3：技巧而无蛮力</h3>
-<ul>
+<h3 id="解决方案3：技巧而无蛮力"><a href="#解决方案3：技巧而无蛮力" class="headerlink" title="解决方案3：技巧而无蛮力"></a>解决方案3：技巧而无蛮力</h3><ul>
 <li>设计一个小I/O库，唯一目的是作为其他I/O库的接口</li>
 <li><ul>
 <li>目前的不足之处：应用库需要知道Writer类本身特性</li>
-</ul></li>
-<li>不能编写：</li>
+</ul>
+</li>
+<li><p>不能编写：</p>
+</li>
 <li><ul>
-<li><code>String hello = &quot;Hello\n</code>, goodbye = “Goodbye”;</li>
-</ul></li>
+<li><code>String hello = &quot;Hello\n</code>, goodbye = “Goodbye\n”;</li>
+</ul>
+</li>
 <li><ul>
 <li><code>FileWriter(stdout) &lt;&lt; hello &lt;&lt; goodbye;</code></li>
-</ul></li>
-<li><code>FileWriter(stdout)</code> 是一个临时值，第一个 &lt;&lt; 完成后可能就被销毁</li>
+</ul>
+</li>
+<li><p><code>FileWriter(stdout)</code> 是一个临时值，第一个 &lt;&lt; 完成后可能就被销毁</p>
+</li>
 <li><ul>
 <li>在某些C++编译器实现中会出现这种情况</li>
-</ul></li>
-<li><p>一种方法：禁止Writer生成临时对象(可以通过显式声明Writer类做到)</p></li>
-<li>另一种方法：完全不用引用</li>
+</ul>
+</li>
+<li><p>一种方法：禁止Writer生成临时对象(可以通过显式声明Writer类做到)</p>
+</li>
+<li><p>另一种方法：完全不用引用</p>
+</li>
 <li><ul>
 <li>句柄类：WriterSurrogate</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>指向某个继承自类Writer的底层类</li>
-</ul></li>
-<li><p>新方法：利用编译期间能得到的关于类的信息</p></li>
-<li><p>将write当作一个概念，一个write属于一个类型族</p></li>
-<li>不使send作为成员函数：<code>send(dest, ptr, n);</code></li>
-<li><p>把写入程序与应用类联系起来</p></li>
+</ul>
+</li>
+<li><p>新方法：利用编译期间能得到的关于类的信息</p>
+</li>
+<li><p>将write当作一个概念，一个write属于一个类型族</p>
+</li>
+<li><p>不使send作为成员函数：<code>send(dest, ptr, n);</code></p>
+</li>
+<li>把写入程序与应用类联系起来</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> W&gt;</div><div class="line">W&amp; <span class="keyword">operator</span>&lt;&lt;(W&amp; w, <span class="keyword">const</span> String&amp; s) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n;; i++) &#123;</div><div class="line">        <span class="keyword">char</span> c = s[i];</div><div class="line">        send(w, &amp;c, <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
@@ -435,25 +465,30 @@
 <ul>
 <li>可以以如下方式调用</li>
 <li><ul>
-<li><code>String hello = &quot;Hello\n</code>, goodbye = “Goodbye”;</li>
-</ul></li>
+<li><code>String hello = &quot;Hello\n</code>, goodbye = “Goodbye\n”;</li>
+</ul>
+</li>
 <li><ul>
 <li><code>FileWriter(stdout) &lt;&lt; hello &lt;&lt; goodbye;</code></li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <blockquote>
-<p>提供I/O独立性方式： 约定应用程序中的类采用使用send模板进行所有的输出操作 每个I/O包都需要一个专为写的适当的send函数(用户提供) 应用程序的库除了要知道如何使用send函数，不必知道任何输出操作的细节</p>
+<p>提供I/O独立性方式：<br>约定应用程序中的类采用使用send模板进行所有的输出操作<br>每个I/O包都需要一个专为写的适当的send函数(用户提供)<br>应用程序的库除了要知道如何使用send函数，不必知道任何输出操作的细节</p>
 </blockquote>
-<h3 id="summary">Summary</h3>
-<ul>
-<li><p>模板可以提供对操作进行抽象化的方法，就像类对数据结构提供抽象化</p></li>
-<li>可以在编译时利用已知的特定I/O包的信息，而不必等到执行时</li>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li><p>模板可以提供对操作进行抽象化的方法，就像类对数据结构提供抽象化</p>
+</li>
+<li><p>可以在编译时利用已知的特定I/O包的信息，而不必等到执行时</p>
+</li>
 <li><ul>
 <li>编译时就进行类型检查</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>避免动态绑定在运行时的开销</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
       
@@ -551,10 +586,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -577,7 +612,7 @@
               <a href="/archives">
             
                 <span class="site-state-item-count">82</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -590,7 +625,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -624,7 +659,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案1技巧加蛮力"><span class="nav-number">2.</span> <span class="nav-text">解决方案1：技巧加蛮力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案2抽象输出"><span class="nav-number">3.</span> <span class="nav-text">解决方案2：抽象输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案3技巧而无蛮力"><span class="nav-number">4.</span> <span class="nav-text">解决方案3：技巧而无蛮力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary"><span class="nav-number">5.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案1：技巧加蛮力"><span class="nav-number">2.</span> <span class="nav-text">解决方案1：技巧加蛮力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案2：抽象输出"><span class="nav-number">3.</span> <span class="nav-text">解决方案2：抽象输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案3：技巧而无蛮力"><span class="nav-number">4.</span> <span class="nav-text">解决方案3：技巧而无蛮力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">5.</span> <span class="nav-text">Summary</span></a></li></ol></div>
             
 
           </div>
@@ -657,7 +692,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 

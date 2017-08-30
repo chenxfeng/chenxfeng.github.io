@@ -94,20 +94,12 @@
 
 
 
-<meta name="description" content="Infrastructure for network management
-
-
-
-network_management_infrastructure.png">
+<meta name="description" content="Infrastructure for network management">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络管理(Network Management)">
 <meta property="og:url" content="https://chenfeng.github.io/2017/07/01/computer_network/computer_network_9/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
-<meta property="og:description" content="Infrastructure for network management
-
-
-
-network_management_infrastructure.png">
+<meta property="og:description" content="Infrastructure for network management">
 <meta property="og:image" content="https://chenfeng.github.io/\img\network_management_infrastructure.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\SNMP_MIB.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\MIB_eg_UDP_module.png">
@@ -120,11 +112,7 @@ network_management_infrastructure.png">
 <meta property="og:updated_time" content="2017-07-01T14:04:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络管理(Network Management)">
-<meta name="twitter:description" content="Infrastructure for network management
-
-
-
-network_management_infrastructure.png">
+<meta name="twitter:description" content="Infrastructure for network management">
 <meta name="twitter:image" content="https://chenfeng.github.io/\img\network_management_infrastructure.png">
 
 
@@ -221,7 +209,7 @@ network_management_infrastructure.png">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -285,7 +273,7 @@ network_management_infrastructure.png">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-01T00:00:00+08:00">
                 2017-07-01
@@ -325,58 +313,57 @@ network_management_infrastructure.png">
       
 
       
-        <h2 id="infrastructure-for-network-management">Infrastructure for network management</h2>
-<blockquote>
-<div class="figure">
-<img src="\img\network_management_infrastructure.png" alt="network_management_infrastructure.png">
-<p class="caption">network_management_infrastructure.png</p>
-</div>
+        <h2 id="Infrastructure-for-network-management"><a href="#Infrastructure-for-network-management" class="headerlink" title="Infrastructure for network management"></a>Infrastructure for network management</h2><blockquote>
+<p><img src="\img\network_management_infrastructure.png" alt="network_management_infrastructure.png"></p>
 </blockquote>
 <a id="more"></a>
-<h2 id="internet-standard-management-framework">Internet-standard management framework</h2>
-<h3 id="snmp-overview-4-key-parts">SNMP overview: 4 key parts</h3>
-<ul>
+<h2 id="Internet-standard-management-framework"><a href="#Internet-standard-management-framework" class="headerlink" title="Internet-standard management framework"></a>Internet-standard management framework</h2><h3 id="SNMP-overview-4-key-parts"><a href="#SNMP-overview-4-key-parts" class="headerlink" title="SNMP overview: 4 key parts"></a>SNMP overview: 4 key parts</h3><ul>
 <li><strong>Management information base (MIB)</strong>:</li>
 <li><ul>
 <li>distributed information store of network management data</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>Structure of Management Information (SMI)</strong>:</li>
 <li><ul>
 <li>data definition language for MIB objects</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>SNMP protocol</strong></li>
 <li><ul>
 <li>convey manager&lt;-&gt;managed object info, commands</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>security, administration capabilities</strong></li>
 <li><ul>
 <li>major addition in SNMPv3</li>
-</ul></li>
 </ul>
-<h3 id="smi-data-definition-language">SMI: data definition language</h3>
-<ul>
-<li><p>Purpose: syntax, semantics of management data well-defined, unambiguous</p></li>
-<li>base data types:</li>
+</li>
+</ul>
+<h3 id="SMI-data-definition-language"><a href="#SMI-data-definition-language" class="headerlink" title="SMI: data definition language"></a>SMI: data definition language</h3><ul>
+<li><p>Purpose: syntax, semantics of management data well-defined, unambiguous</p>
+</li>
+<li><p>base data types: </p>
+</li>
 <li><ul>
 <li>straightforward, boring</li>
-</ul></li>
+</ul>
+</li>
 <li>OBJECT-TYPE</li>
 <li><ul>
 <li>data type, status, semantics of managed object</li>
-</ul></li>
+</ul>
+</li>
 <li>MODULE-IDENTITY</li>
 <li><ul>
 <li>groups related objects into MIB module</li>
-</ul></li>
 </ul>
-<p>Basic Data Types:</p>
+</li>
+</ul>
+<p>Basic Data Types: </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">INTEGER</div><div class="line">Integer32</div><div class="line">Unsigned32</div><div class="line">OCTET STRING</div><div class="line">OBJECT IDENTIFIED</div><div class="line">IPaddress</div><div class="line">Counter32</div><div class="line">Counter64</div><div class="line">Guage32</div><div class="line">Time Ticks</div><div class="line">Opaque</div></pre></td></tr></table></figure>
 <p><strong>SNMP MIB</strong>:</p>
 <blockquote>
-<div class="figure">
-<img src="\img\SNMP_MIB.png" alt="SNMP_MIB.png">
-<p class="caption">SNMP_MIB.png</p>
-</div>
+<p><img src="\img\SNMP_MIB.png" alt="SNMP_MIB.png"></p>
 </blockquote>
 <p><strong>SMI: object, module examples</strong></p>
 <ul>
@@ -387,91 +374,75 @@ network_management_infrastructure.png">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">ipMIB MODULE-IDENTITY</div><div class="line">  LAST-UPDATED “941101000Z”</div><div class="line">  ORGANZATION “IETF SNPv2</div><div class="line">             Working Group”</div><div class="line">  CONTACT-INFO</div><div class="line">     “ Keith McCloghrie</div><div class="line">     ……”</div><div class="line">  DESCRIPTION</div><div class="line">     “The MIB module for managing IP</div><div class="line">     and ICMP implementations, but</div><div class="line">     excluding their management of</div><div class="line">     IP routes.”</div><div class="line">  REVISION “019331000Z”</div><div class="line"> ………</div><div class="line">::= &#123;mib-2 48&#125;</div></pre></td></tr></table></figure>
 <p><strong>MIB example: UDP module</strong></p>
 <blockquote>
-<div class="figure">
-<img src="\img\MIB_eg_UDP_module.png" alt="MIB_eg_UDP_module.png">
-<p class="caption">MIB_eg_UDP_module.png</p>
-</div>
+<p><img src="\img\MIB_eg_UDP_module.png" alt="MIB_eg_UDP_module.png"></p>
 </blockquote>
-<h3 id="snmp-naming">SNMP naming</h3>
-<ul>
+<h3 id="SNMP-naming"><a href="#SNMP-naming" class="headerlink" title="SNMP naming"></a>SNMP naming</h3><ul>
 <li>question: how to name every possible standard object (protocol, data, more..) in every possible network standard??</li>
-<li>answer: ISO Object Identifier tree:</li>
+<li>answer: ISO Object Identifier tree: </li>
 <li><ul>
 <li>hierarchical naming of all objects</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>each branchpoint has name, number</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <blockquote>
-<div class="figure">
-<img src="\img\SNMP_naming.png" alt="SNMP_naming.png">
-<p class="caption">SNMP_naming.png</p>
-</div>
+<p><img src="\img\SNMP_naming.png" alt="SNMP_naming.png"></p>
 </blockquote>
-<p>OSI Object Identifier Tree:</p>
+<p>OSI Object Identifier Tree: </p>
 <blockquote>
-<div class="figure">
-<img src="\img\OSI_Object_Identifier_Tree.png" alt="OSI_Object_Identifier_Tree.png">
-<p class="caption">OSI_Object_Identifier_Tree.png</p>
-</div>
+<p><img src="\img\OSI_Object_Identifier_Tree.png" alt="OSI_Object_Identifier_Tree.png"></p>
 </blockquote>
-<h3 id="snmp-protocol">SNMP protocol</h3>
-<p>Two ways to convey MIB info, commands:</p>
+<h3 id="SNMP-protocol"><a href="#SNMP-protocol" class="headerlink" title="SNMP protocol"></a>SNMP protocol</h3><p>Two ways to convey MIB info, commands:</p>
 <blockquote>
-<div class="figure">
-<img src="\img\SNMP_convey_MIB_info.png" alt="SNMP_convey_MIB_info.png">
-<p class="caption">SNMP_convey_MIB_info.png</p>
-</div>
+<p><img src="\img\SNMP_convey_MIB_info.png" alt="SNMP_convey_MIB_info.png"></p>
 </blockquote>
 <p><strong>SNMP protocol: message types</strong></p>
 <blockquote>
-<div class="figure">
-<img src="\img\SNMP_message_type.png" alt="SNMP_message_type.png">
-<p class="caption">SNMP_message_type.png</p>
-</div>
+<p><img src="\img\SNMP_message_type.png" alt="SNMP_message_type.png"></p>
 </blockquote>
 <p><strong>SNMP security and administration</strong></p>
 <ul>
-<li><strong>encryption</strong>: DES-encrypt SNMP message</li>
-<li><strong>authentication</strong>: compute, send MIC(m,k):</li>
+<li><strong>encryption</strong>: DES-encrypt SNMP message </li>
+<li><strong>authentication</strong>: compute, send  MIC(m,k): </li>
 <li><ul>
 <li>compute hash (MIC) over message (m), secret shared key (k)</li>
-</ul></li>
+</ul>
+</li>
 <li><strong>protection against playback</strong>: use nonce</li>
 <li><strong>view-based access control</strong>:</li>
 <li><ul>
 <li>SNMP entity maintains database of access rights, policies for various users</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>database itself accessible as managed object!</li>
-</ul></li>
 </ul>
-<h2 id="tlv-encoding">TLV Encoding</h2>
-<ul>
+</li>
+</ul>
+<h2 id="TLV-Encoding"><a href="#TLV-Encoding" class="headerlink" title="TLV Encoding"></a>TLV Encoding</h2><ul>
 <li>Idea: transmitted data is self-identifying</li>
 <li><ul>
 <li>T: data type, one of ASN.1-defined types</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>L: length of data in bytes</li>
-</ul></li>
+</ul>
+</li>
 <li><ul>
 <li>V: value of data, encoded according to ASN.1 standard</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <blockquote>
-<div class="figure">
-<img src="\img\TLV_encoding.png" alt="TLV_encoding.png">
-<p class="caption">TLV_encoding.png</p>
-</div>
+<p><img src="\img\TLV_encoding.png" alt="TLV_encoding.png"></p>
 </blockquote>
 <p>TLV encoding: example</p>
 <blockquote>
-<div class="figure">
-<img src="\img\TLV_encoding_eg.png" alt="TLV_encoding_eg.png">
-<p class="caption">TLV_encoding_eg.png</p>
-</div>
+<p><img src="\img\TLV_encoding_eg.png" alt="TLV_encoding_eg.png"></p>
 </blockquote>
 
       
@@ -569,10 +540,10 @@ network_management_infrastructure.png">
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -595,7 +566,7 @@ network_management_infrastructure.png">
               <a href="/archives">
             
                 <span class="site-state-item-count">82</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -608,7 +579,7 @@ network_management_infrastructure.png">
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -642,7 +613,7 @@ network_management_infrastructure.png">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#infrastructure-for-network-management"><span class="nav-number">1.</span> <span class="nav-text">Infrastructure for network management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#internet-standard-management-framework"><span class="nav-number">2.</span> <span class="nav-text">Internet-standard management framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#snmp-overview-4-key-parts"><span class="nav-number">2.1.</span> <span class="nav-text">SNMP overview: 4 key parts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#smi-data-definition-language"><span class="nav-number">2.2.</span> <span class="nav-text">SMI: data definition language</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#snmp-naming"><span class="nav-number">2.3.</span> <span class="nav-text">SNMP naming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#snmp-protocol"><span class="nav-number">2.4.</span> <span class="nav-text">SNMP protocol</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tlv-encoding"><span class="nav-number">3.</span> <span class="nav-text">TLV Encoding</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Infrastructure-for-network-management"><span class="nav-number">1.</span> <span class="nav-text">Infrastructure for network management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Internet-standard-management-framework"><span class="nav-number">2.</span> <span class="nav-text">Internet-standard management framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMP-overview-4-key-parts"><span class="nav-number">2.1.</span> <span class="nav-text">SNMP overview: 4 key parts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMI-data-definition-language"><span class="nav-number">2.2.</span> <span class="nav-text">SMI: data definition language</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMP-naming"><span class="nav-number">2.3.</span> <span class="nav-text">SNMP naming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMP-protocol"><span class="nav-number">2.4.</span> <span class="nav-text">SNMP protocol</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLV-Encoding"><span class="nav-number">3.</span> <span class="nav-text">TLV Encoding</span></a></li></ol></div>
             
 
           </div>
@@ -675,7 +646,7 @@ network_management_infrastructure.png">
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 

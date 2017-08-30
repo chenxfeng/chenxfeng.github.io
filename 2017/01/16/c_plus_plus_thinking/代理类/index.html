@@ -94,23 +94,23 @@
 
 
 
-<meta name="description" content="如何设计C++容器，能够包含类型不同而彼此相关的对象 如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？ (将容器和继承运用在一起)
-代理 surrogate 允许将整个派生层次压缩在一个对象类型中
+<meta name="description" content="如何设计C++容器，能够包含类型不同而彼此相关的对象如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？(将容器和继承运用在一起)
+代理 surrogate允许将整个派生层次压缩在一个对象类型中
 
 surrogate是handle(句柄)类中最简单的一种">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代理类">
 <meta property="og:url" content="https://chenfeng.github.io/2017/01/16/c_plus_plus_thinking/代理类/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
-<meta property="og:description" content="如何设计C++容器，能够包含类型不同而彼此相关的对象 如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？ (将容器和继承运用在一起)
-代理 surrogate 允许将整个派生层次压缩在一个对象类型中
+<meta property="og:description" content="如何设计C++容器，能够包含类型不同而彼此相关的对象如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？(将容器和继承运用在一起)
+代理 surrogate允许将整个派生层次压缩在一个对象类型中
 
 surrogate是handle(句柄)类中最简单的一种">
 <meta property="og:updated_time" content="2017-07-04T10:41:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代理类">
-<meta name="twitter:description" content="如何设计C++容器，能够包含类型不同而彼此相关的对象 如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？ (将容器和继承运用在一起)
-代理 surrogate 允许将整个派生层次压缩在一个对象类型中
+<meta name="twitter:description" content="如何设计C++容器，能够包含类型不同而彼此相关的对象如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？(将容器和继承运用在一起)
+代理 surrogate允许将整个派生层次压缩在一个对象类型中
 
 surrogate是handle(句柄)类中最简单的一种">
 
@@ -208,7 +208,7 @@ surrogate是handle(句柄)类中最简单的一种">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -272,7 +272,7 @@ surrogate是handle(句柄)类中最简单的一种">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T00:00:00+08:00">
                 2017-01-16
@@ -312,38 +312,36 @@ surrogate是handle(句柄)类中最简单的一种">
       
 
       
-        <p>如何设计C++容器，能够包含类型不同而彼此相关的对象 如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？ (将容器和继承运用在一起)</p>
-<p>代理 surrogate 允许将整个派生层次压缩在一个对象类型中</p>
+        <p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
+<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
 <ul>
 <li>surrogate是handle(句柄)类中最简单的一种</li>
 </ul>
 <a id="more"></a>
-<h2 id="一个表示不同交通工具的类派生层次">一个表示不同交通工具的类派生层次</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="comment">// pure virtual function</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> RoadVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> AutoVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Aircraft : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Helicopter : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div></pre></td></tr></table></figure>
-<h2 id="一个容器">一个容器</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle parking_lot[<span class="number">1000</span>]; <span class="comment">// error</span></div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = x;</div></pre></td></tr></table></figure>
+<h2 id="一个表示不同交通工具的类派生层次"><a href="#一个表示不同交通工具的类派生层次" class="headerlink" title="一个表示不同交通工具的类派生层次"></a>一个表示不同交通工具的类派生层次</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="comment">// pure virtual function</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> RoadVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> AutoVehicle: <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Aircraft : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div><div class="line"><span class="keyword">class</span> Helicopter : <span class="keyword">public</span> Vehicle &#123;<span class="comment">/*...*/</span>&#125;</div></pre></td></tr></table></figure>
+<h2 id="一个容器"><a href="#一个容器" class="headerlink" title="一个容器"></a>一个容器</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle parking_lot[<span class="number">1000</span>]; <span class="comment">// error</span></div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = x;</div></pre></td></tr></table></figure>
 <ul>
 <li>Vehicle是虚基类，不能实例化</li>
 <li>子类对象转化为父类对象会丢失父类中没有的成员</li>
 <li>parking_lot是Vehicle的集合而不是所有继承自Vehicle的对象的集合</li>
 </ul>
-<h2 id="间接层-indirection">间接层 indirection</h2>
-<p>存储指针替代存储对象本身 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* parking_lot[<span class="number">1000</span>];</div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = &amp;x;</div></pre></td></tr></table></figure></p>
+<h2 id="间接层-indirection"><a href="#间接层-indirection" class="headerlink" title="间接层 indirection"></a>间接层 indirection</h2><p>存储指针替代存储对象本身<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* parking_lot[<span class="number">1000</span>];</div><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = &amp;x;</div></pre></td></tr></table></figure></p>
 <ul>
-<li><p>x是局部变量，释放之后parking_pot指向未知</p></li>
-<li><p>存储副本的指针而非原对象的指针</p></li>
+<li><p>x是局部变量，释放之后parking_pot指向未知</p>
+</li>
+<li><p>存储副本的指针而非原对象的指针</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AutoVehicle x;</div><div class="line">parking_lot[num_vehicles++] = <span class="keyword">new</span> AutoVehicle(x);</div></pre></td></tr></table></figure>
 <ul>
 <li>带来动态内存管理的负担</li>
-<li>必须知道要放入parking_lot中的对象的静态类型 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (p != q) &#123;</div><div class="line">    <span class="keyword">delete</span> parking_pot[p];</div><div class="line">    parking_pot[p] = <span class="keyword">new</span> Vehicle(parking_pot[q]);</div><div class="line">&#125;   <span class="comment">// virtual base class has no instance</span></div></pre></td></tr></table></figure></li>
+<li>必须知道要放入parking_lot中的对象的静态类型<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (p != q) &#123;</div><div class="line">    <span class="keyword">delete</span> parking_pot[p];</div><div class="line">    parking_pot[p] = <span class="keyword">new</span> Vehicle(parking_pot[q]);</div><div class="line">&#125;   <span class="comment">// virtual base class has no instance</span></div></pre></td></tr></table></figure>
+</li>
 </ul>
-<h2 id="虚复制函数">虚复制函数</h2>
-<p>在Vehicle中增加合适的纯虚函数来复制编译时类型未知的对象 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="function"><span class="keyword">virtual</span> Vehicle* <span class="title">copy</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="keyword">virtual</span> ~Vehicle() &#123;&#125; <span class="comment">// virtual destructor</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在Vehicle的所有派生类中添加成员函数copy，若vp指向Vehicle不确定的子类的对象，vp-&gt;copy()返回指向该对象新建副本的指针。 例如： <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* Trunk::copy() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Truck(*<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="定义代理类">定义代理类</h2>
-<ul>
-<li>用类表示概念 避免显示处理内存分配且能保持父类在运行时绑定的属性</li>
+<h2 id="虚复制函数"><a href="#虚复制函数" class="headerlink" title="虚复制函数"></a>虚复制函数</h2><p>在Vehicle中增加合适的纯虚函数来复制编译时类型未知的对象<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>= <span class="number">0</span>; </div><div class="line">    <span class="function"><span class="keyword">virtual</span> Vehicle* <span class="title">copy</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">    <span class="keyword">virtual</span> ~Vehicle() &#123;&#125; <span class="comment">// virtual destructor</span></div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在Vehicle的所有派生类中添加成员函数copy，若vp指向Vehicle不确定的子类的对象，vp-&gt;copy()返回指向该对象新建副本的指针。<br>例如：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Vehicle* Trunk::copy() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Truck(*<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="定义代理类"><a href="#定义代理类" class="headerlink" title="定义代理类"></a>定义代理类</h2><ul>
+<li>用类表示概念<br>避免显示处理内存分配且能保持父类在运行时绑定的属性</li>
 <li>定义一个行为与Vehicle对象相似而又潜在地表示所有继承自Vehicle对象的东西 —— 代理（surrogate）</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> VehicleSurrogate &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    VehicleSurrogate();</div><div class="line">    VehicleSurrogate(<span class="keyword">const</span> Vehicle&amp;); </div><div class="line">    ~VehicleSurrogate();</div><div class="line">    VehicleSurrogate(<span class="keyword">const</span> VehicleSurrogate&amp;);</div><div class="line">    VehicleSurrogate&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> VehicleSurrogate&amp;);</div><div class="line">    <span class="comment">// object fuctions of Vehicle</span></div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">weight</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">// ...</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Vehicle* vp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -351,14 +349,12 @@ surrogate是handle(句柄)类中最简单的一种">
 <li>空代理(empty surrogate)的行为类似于空指针</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">VehicleSurrogate::VehicleSurrogate(): vp(<span class="number">0</span>) &#123;&#125; <span class="comment">// empty surrogate</span></div><div class="line"></div><div class="line">VehicleSurrogate::VehicleSurrogate(<span class="keyword">const</span> Vehicle&amp; v): vp(v.copy()) &#123;&#125;</div><div class="line"></div><div class="line">VehicleSurrogate::~VehicleSurrogate() &#123;</div><div class="line">    <span class="keyword">delete</span> vp;</div><div class="line">&#125;</div><div class="line"></div><div class="line">VehicleSurrogate::VehicleSurrogate(<span class="keyword">const</span> VehicleSurrogate&amp; v): vp(v.vp ? v.vp-&gt;copy() : <span class="number">0</span>) &#123;&#125;</div><div class="line"></div><div class="line">VehicleSurrogate&amp; VehicleSurrogate::<span class="keyword">operator</span>=(<span class="keyword">const</span> VehicleSurrogate&amp; v) &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;v) &#123;</div><div class="line">        <span class="keyword">delete</span> vp;</div><div class="line">        vp = (v.vp ? v.vp-&gt;copy() : <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// call the corresponding object functions</span></div><div class="line"><span class="keyword">double</span> VehicleSurrogate::weight() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">if</span> (vp == <span class="number">0</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="string">"empty VehicleSurrogate.weight()"</span>;</div><div class="line">    <span class="keyword">return</span> vp-&gt;weight();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> VehicleSurrogate::start() &#123;</div><div class="line">    <span class="keyword">if</span> (vp == <span class="number">0</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="string">"empty VehicleSurrogate.start()"</span>;</div><div class="line">    vp-&gt;start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="tip">tip:</h3>
-<ul>
+<h3 id="tip"><a href="#tip" class="headerlink" title="tip:"></a>tip:</h3><ul>
 <li>每次对copy的调用都是一个虚拟调用。类Vehicle的对象并不存在</li>
 <li>赋值构造函数和赋值操作符中v.vp非零的检测是必需的</li>
 <li>赋值操作符确保没有将代理赋值给自身</li>
 </ul>
-<h2 id="总结">总结</h2>
-<p>最开始的parking_pot容器可设计为：</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最开始的parking_pot容器可设计为：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">VehicleSurrogate parking_lot[<span class="number">1000</span>];</div><div class="line">Automobile x;</div><div class="line">parking_pot[num_vehicles++] = x;</div></pre></td></tr></table></figure>
 <p>将继承和容器共用需要处理两个问题：</p>
 <ul>
@@ -462,10 +458,10 @@ surrogate是handle(句柄)类中最简单的一种">
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -488,7 +484,7 @@ surrogate是handle(句柄)类中最简单的一种">
               <a href="/archives">
             
                 <span class="site-state-item-count">82</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -501,7 +497,7 @@ surrogate是handle(句柄)类中最简单的一种">
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -568,7 +564,7 @@ surrogate是handle(句柄)类中最简单的一种">
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 

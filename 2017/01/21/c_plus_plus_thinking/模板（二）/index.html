@@ -94,11 +94,12 @@
 
 
 
-<meta name="description" content="访问容器中的元素
-保留Array和一个指向T的指针之间的密切关系要付出一定的代价
+<meta name="description" content="访问容器中的元素保留Array和一个指向T的指针之间的密切关系要付出一定的代价
 
 用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留
+
 不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误
+
 
 
 增加防止出错的中间层">
@@ -106,22 +107,24 @@
 <meta property="og:title" content="模板之访问容器中的元素">
 <meta property="og:url" content="https://chenfeng.github.io/2017/01/21/c_plus_plus_thinking/模板（二）/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
-<meta property="og:description" content="访问容器中的元素
-保留Array和一个指向T的指针之间的密切关系要付出一定的代价
+<meta property="og:description" content="访问容器中的元素保留Array和一个指向T的指针之间的密切关系要付出一定的代价
 
 用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留
+
 不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误
+
 
 
 增加防止出错的中间层">
 <meta property="og:updated_time" content="2017-07-04T10:47:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模板之访问容器中的元素">
-<meta name="twitter:description" content="访问容器中的元素
-保留Array和一个指向T的指针之间的密切关系要付出一定的代价
+<meta name="twitter:description" content="访问容器中的元素保留Array和一个指向T的指针之间的密切关系要付出一定的代价
 
 用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留
+
 不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误
+
 
 
 增加防止出错的中间层">
@@ -220,7 +223,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -284,7 +287,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
                 2017-01-21
@@ -324,23 +327,22 @@
       
 
       
-        <h2 id="访问容器中的元素">访问容器中的元素</h2>
-<p>保留Array<t>和一个指向T的指针之间的密切关系要付出一定的代价</t></p>
-<ol style="list-style-type: decimal">
-<li><p>用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留</p></li>
-<li><p>不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误</p></li>
+        <h2 id="访问容器中的元素"><a href="#访问容器中的元素" class="headerlink" title="访问容器中的元素"></a>访问容器中的元素</h2><p>保留Array<t>和一个指向T的指针之间的密切关系要付出一定的代价</t></p>
+<ol>
+<li><p>用户能够轻易得到一个指向Array内部的指针，即使Array本身不存在了，这个指针仍被保留</p>
+</li>
+<li><p>不得不暴露类的内部机制，一旦内存变化肯定导致用户错误；resize之类的扩展有诸多潜在错误</p>
+</li>
 </ol>
 <ul>
 <li>增加防止出错的中间层</li>
 </ul>
 <a id="more"></a>
-<h3 id="模拟指针">模拟指针</h3>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Pointer &#123;</div><div class="line"><span class="keyword">public</span>：</div><div class="line">    Pointer(Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): ap(&amp;a), sub(n) &#123;&#125;</div><div class="line">    Pointer(): ap(<span class="number">0</span>), sub(<span class="number">0</span>) &#123;&#125;</div><div class="line">    <span class="comment">// Array&lt;T&gt; cann't be default: reference should bind a object</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array&lt;T&gt;* ap;</div><div class="line">    <span class="keyword">unsigned</span> sub;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="模拟指针"><a href="#模拟指针" class="headerlink" title="模拟指针"></a>模拟指针</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Pointer &#123;</div><div class="line"><span class="keyword">public</span>：</div><div class="line">    Pointer(Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): ap(&amp;a), sub(n) &#123;&#125;</div><div class="line">    Pointer(): ap(<span class="number">0</span>), sub(<span class="number">0</span>) &#123;&#125;</div><div class="line">    <span class="comment">// Array&lt;T&gt; cann't be default: reference should bind a object</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array&lt;T&gt;* ap;</div><div class="line">    <span class="keyword">unsigned</span> sub;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
 <li>复制一个Pointer之后，原Pointer和其副本都指向一个位置</li>
 </ul>
-<h3 id="获取元素">获取元素</h3>
-<ul>
+<h3 id="获取元素"><a href="#获取元素" class="headerlink" title="获取元素"></a>获取元素</h3><ul>
 <li>最直接的方法会面临上述问题：</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Pointer &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Pointer"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
@@ -362,30 +364,31 @@
 <blockquote>
 <p>选择何种方法取决于类会被确切地怎样使用</p>
 </blockquote>
-<h3 id="遗留问题">遗留问题</h3>
-<ul>
+<h3 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h3><ul>
 <li>如果Array不存在了还可能存在一个指向它的空悬Pointer</li>
 </ul>
 <blockquote>
 <p>“软件工程基本定理”(though it isn’t a real theory): 通过引进一个额外的中间层能够解决任何问题。’</p>
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array_data &#123;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Array&lt;T&gt;;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Pointer&lt;T&gt;;</div><div class="line"></div><div class="line">    Array_data(<span class="keyword">unsigned</span> size = <span class="number">0</span>): data(<span class="keyword">new</span> T[size]), sz(size), use(<span class="number">1</span>) &#123;&#125;</div><div class="line">    ~Array_data() &#123; <span class="keyword">delete</span> [] data; &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">        <span class="keyword">if</span> (n &gt;= sz)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"Array subscript out of range"</span>;</div><div class="line">        <span class="keyword">return</span> data[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// no implement that copy is no allowed</span></div><div class="line">    Array_data(<span class="keyword">const</span> Array_data&amp;);</div><div class="line">    Array_data&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array_data&amp;);</div><div class="line"></div><div class="line">    T* data;</div><div class="line">    <span class="keyword">unsigned</span> sz;</div><div class="line">    <span class="keyword">int</span> use;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array &#123;</div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Pointer&lt;T&gt;;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Array(<span class="keyword">unsigned</span> size): data(<span class="keyword">new</span> Array_data&lt;T&gt;(size)) &#123;&#125;</div><div class="line">    ~Array() &#123;</div><div class="line">        <span class="keyword">if</span> (--data-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">return</span> (*data)[n];</div><div class="line">    &#125;</div><div class="line">    T* <span class="keyword">operator</span>[](<span class="keyword">unsigned</span> n) &#123;</div><div class="line">        <span class="keyword">return</span> (*data)[n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array(<span class="keyword">const</span> Array&amp;);</div><div class="line">    Array&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array&amp;);</div><div class="line">    Array_data&lt;T&gt;* data;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Poiter: <span class="keyword">public</span> Ptr_to_const&lt;T&gt; &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Pointer(Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): ap(a.data), sub(n) &#123;</div><div class="line">        ++ap-&gt;use;</div><div class="line">    &#125;</div><div class="line">    Pointer(): ap(<span class="number">0</span>), sub(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Pointer(<span class="keyword">const</span> Pointer&lt;T&gt;&amp; p): ap(p.ap), sub(p.sub) &#123;</div><div class="line">        <span class="keyword">if</span> (ap)</div><div class="line">            ++ap-&gt;use;</div><div class="line">    &#125;</div><div class="line">    ~Pointer() &#123;</div><div class="line">        <span class="keyword">if</span> (ap &amp;&amp; --ap-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> ap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Pointer&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Pointer&lt;T&gt;&amp; p) &#123;</div><div class="line">        <span class="keyword">if</span> (p.ap)</div><div class="line">            ++p.ap-&gt;use;</div><div class="line">        <span class="keyword">if</span> (ap &amp;&amp; --ap-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> ap;</div><div class="line">        ap = p.ap;</div><div class="line">        sub = p.sub;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Ptr_to_const"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array_data&lt;T&gt;* ap;</div><div class="line">    <span class="keyword">unsigned</span> sub;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// the following code does work</span></div><div class="line">Array&lt;<span class="keyword">int</span>&gt;* ap = <span class="keyword">new</span> Array&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>);</div><div class="line">Pointer&lt;<span class="keyword">int</span>&gt; p(*ap, <span class="number">5</span>);</div><div class="line"><span class="keyword">delete</span> ap;</div><div class="line">*p = <span class="number">42</span>;</div></pre></td></tr></table></figure>
-<h3 id="指向const-array的pointer">指向const Array的Pointer</h3>
-<ul>
+<h3 id="指向const-Array的Pointer"><a href="#指向const-Array的Pointer" class="headerlink" title="指向const Array的Pointer"></a>指向const Array的Pointer</h3><ul>
 <li>还无法使Pointer指向const Array的元素</li>
 </ul>
 <p>const Array的实际对象很少，但通过引用传递Array参数(const Array&amp;)时还是有用的</p>
 <ul>
-<li><p>定义独立的类，提供类型转换操作符给这个类，通过继承获得两种类型间的相似性</p></li>
-<li><p>类Pointer从Ptr_to_const继承而来，即使对象不是const类型也能把指针保存在Array_data中</p></li>
+<li><p>定义独立的类，提供类型转换操作符给这个类，通过继承获得两种类型间的相似性</p>
+</li>
+<li><p>类Pointer从Ptr_to_const继承而来，即使对象不是const类型也能把指针保存在Array_data中</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Ptr_to_const &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">// catch a argument const Array&lt;T&gt;&amp; instead of Array&lt;T&gt;&amp;</span></div><div class="line">    Ptr_to_const(<span class="keyword">const</span> Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): ap(a.data), sub(n) &#123;</div><div class="line">        ++ap-&gt;use;</div><div class="line">    &#125;</div><div class="line">    Ptr_to_const(): ap(<span class="number">0</span>), sub(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Ptr_to_const(<span class="keyword">const</span> Ptr_to_const&lt;T&gt;&amp; p): ap(p.ap), sub(p.sub) &#123;</div><div class="line">        <span class="keyword">if</span> (ap)</div><div class="line">            ++ap-&gt;use;</div><div class="line">    &#125;</div><div class="line">    ~Ptr_to_const() &#123;</div><div class="line">        <span class="keyword">if</span> (ap &amp;&amp; --ap-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> ap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Ptr_to_const&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Ptr_to_const&lt;T&gt;&amp; p) &#123;</div><div class="line">        <span class="keyword">if</span> (p.ap)</div><div class="line">            ++p.ap-&gt;use;</div><div class="line">        <span class="keyword">if</span> (ap &amp;&amp; --ap-&gt;use == <span class="number">0</span>)</div><div class="line">            <span class="keyword">delete</span> ap;</div><div class="line">        ap = p.ap;</div><div class="line">        sub = p.sub;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Ptr_to_const"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Array_data&lt;T&gt;* ap;</div><div class="line">    <span class="keyword">unsigned</span> sub;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// redefine class Pointer to keep something about constant</span></div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Poiter: <span class="keyword">public</span> Ptr_to_const&lt;T&gt; &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Pointer(Array&lt;T&gt;&amp; a, <span class="keyword">unsigned</span> n = <span class="number">0</span>): Ptr_to_const&lt;T&gt;(a, n) &#123;&#125;</div><div class="line">    Pointer() &#123;&#125;</div><div class="line"></div><div class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">if</span> (ap == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="string">"* of unbound Ptr_to_const"</span>;</div><div class="line">        <span class="keyword">return</span> (*ap)[sub];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h3 id="增强操作">增强操作</h3>
-<p>重新设置Array大小</p>
+<h3 id="增强操作"><a href="#增强操作" class="headerlink" title="增强操作"></a>增强操作</h3><p>重新设置Array大小</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">resize</span><span class="params">(<span class="keyword">unsigned</span> n)</span> </span>&#123;</div><div class="line">        <span class="comment">// Array_data do the real operation</span></div><div class="line">        data-&gt;resize(n);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> Array_data&lt;T&gt;::resize(<span class="keyword">unsigned</span> n) &#123;</div><div class="line">    <span class="keyword">if</span> (n == sz) <span class="keyword">return</span> ;</div><div class="line">    T* odata = data;</div><div class="line">    data = <span class="keyword">new</span> T[n];</div><div class="line">    copy(odata, sz &gt; n ? n : sz);</div><div class="line">    <span class="keyword">delete</span> [] odata;</div><div class="line">    sz = n;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> Array_data&lt;T&gt;::copy(T* arr, <span class="keyword">unsigned</span> n) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</div><div class="line">        data[i] = arr[i];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// another way of changing Array size</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">unsigned</span> new_sz)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (new_sz &gt;= data-&gt;sz)</div><div class="line">            data-&gt;grow(new_sz);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> Array_data&lt;T&gt;::grow(<span class="keyword">unsigned</span> new_sz) &#123;</div><div class="line">    <span class="keyword">unsigned</span> nsz = sz;</div><div class="line">    <span class="keyword">if</span> (nsz == <span class="number">0</span>)</div><div class="line">        nsz = <span class="number">1</span>;</div><div class="line">    whiel (nsz &lt;= new_sz)</div><div class="line">        nsz *= <span class="number">2</span>;</div><div class="line">    resize(nsz);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>实现对Array的复制和赋值使包含Array的Array有效</p></li>
-<li><p>不允许对Array_data对象复制，故不定义operator=调用Array_data::operator=</p></li>
+<li><p>实现对Array的复制和赋值使包含Array的Array有效</p>
+</li>
+<li><p>不允许对Array_data对象复制，故不定义operator=调用Array_data::operator=</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">class</span> Array &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Array(<span class="keyword">const</span> Array&amp; a): data(<span class="keyword">new</span> Array_data&lt;T&gt;(a.data-&gt;sz)) &#123;</div><div class="line">        data-&gt;copy(a.data-&gt;data, a.data-&gt;sz);</div><div class="line">    &#125;</div><div class="line">    Array&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Array&amp; a) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;a)</div><div class="line">            data-&gt;clone(*a.data, a.data-&gt;data);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div><div class="line"><span class="keyword">void</span> Array_data&lt;T&gt;::clone(<span class="keyword">const</span> Array_data&amp; a, <span class="keyword">unsigned</span> n) &#123;</div><div class="line">    <span class="keyword">delete</span> [] data;</div><div class="line">    data = <span class="keyword">new</span> T[sz = a.sz];</div><div class="line">    copy(a.data, sz);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
@@ -421,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/21/economics/经济学基础知识/" rel="next" title="经济学基础知识">
-                <i class="fa fa-chevron-left"></i> 经济学基础知识
+              <a href="/2017/01/21/economics/宏观经济学鸟瞰/" rel="next" title="宏观经济学鸟瞰">
+                <i class="fa fa-chevron-left"></i> 宏观经济学鸟瞰
               </a>
             
           </div>
@@ -431,8 +434,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/21/economics/供给与需求的基本原理/" rel="prev" title="供给与需求的基本原理">
-                供给与需求的基本原理 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/01/21/economics/宏观经济现象鸟瞰/" rel="prev" title="宏观经济现象鸟瞰">
+                宏观经济现象鸟瞰 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -487,10 +490,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -513,7 +516,7 @@
               <a href="/archives">
             
                 <span class="site-state-item-count">82</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -526,7 +529,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -560,7 +563,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#访问容器中的元素"><span class="nav-number">1.</span> <span class="nav-text">访问容器中的元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟指针"><span class="nav-number">1.1.</span> <span class="nav-text">模拟指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取元素"><span class="nav-number">1.2.</span> <span class="nav-text">获取元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遗留问题"><span class="nav-number">1.3.</span> <span class="nav-text">遗留问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指向const-array的pointer"><span class="nav-number">1.4.</span> <span class="nav-text">指向const Array的Pointer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增强操作"><span class="nav-number">1.5.</span> <span class="nav-text">增强操作</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#访问容器中的元素"><span class="nav-number">1.</span> <span class="nav-text">访问容器中的元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟指针"><span class="nav-number">1.1.</span> <span class="nav-text">模拟指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取元素"><span class="nav-number">1.2.</span> <span class="nav-text">获取元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遗留问题"><span class="nav-number">1.3.</span> <span class="nav-text">遗留问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指向const-Array的Pointer"><span class="nav-number">1.4.</span> <span class="nav-text">指向const Array的Pointer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增强操作"><span class="nav-number">1.5.</span> <span class="nav-text">增强操作</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -593,7 +596,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 

@@ -95,30 +95,39 @@
 
 
 <meta name="description" content="迭代器
+已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用指针
 
-已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用 指针
 进一步取代指针，需实现加法、减法和关系运算符
 
-1234567void f() &amp;#123;    int a[10];    int* pa = a;    int* end = pa + 10;    while (pa != end)        *pa++ = 0;&amp;#12">
+
+1234567void f() &amp;#123;    int a[10];    int* pa = a;    int* end = pa + 10;    while (pa != end)        *pa++ = 0;&amp;#125;
+
+基">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模板之迭代器">
 <meta property="og:url" content="https://chenfeng.github.io/2017/01/22/c_plus_plus_thinking/模板（三）/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
 <meta property="og:description" content="迭代器
+已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用指针
 
-已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用 指针
 进一步取代指针，需实现加法、减法和关系运算符
 
-1234567void f() &amp;#123;    int a[10];    int* pa = a;    int* end = pa + 10;    while (pa != end)        *pa++ = 0;&amp;#12">
+
+1234567void f() &amp;#123;    int a[10];    int* pa = a;    int* end = pa + 10;    while (pa != end)        *pa++ = 0;&amp;#125;
+
+基">
 <meta property="og:updated_time" content="2017-07-07T15:05:23.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="模板之迭代器">
 <meta name="twitter:description" content="迭代器
+已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用指针
 
-已经定义Array、Pointer和Ptr_to_const使得能部分确保安全性避免使用 指针
 进一步取代指针，需实现加法、减法和关系运算符
 
-1234567void f() &amp;#123;    int a[10];    int* pa = a;    int* end = pa + 10;    while (pa != end)        *pa++ = 0;&amp;#12">
+
+1234567void f() &amp;#123;    int a[10];    int* pa = a;    int* end = pa + 10;    while (pa != end)        *pa++ = 0;&amp;#125;
+
+基">
 
 
 
@@ -214,7 +223,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -278,7 +287,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-22T00:00:00+08:00">
                 2017-01-22
@@ -318,10 +327,11 @@
       
 
       
-        <h2 id="迭代器">迭代器</h2>
-<ul>
-<li><p>已经定义Array<t>、Pointer<t>和Ptr_to_const<t>使得能部分确保安全性避免使用 指针</t></t></t></p></li>
-<li><p>进一步取代指针，需实现加法、减法和关系运算符</p></li>
+        <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><ul>
+<li><p>已经定义Array<t>、Pointer<t>和Ptr_to_const<t>使得能部分确保安全性避免使用<br>指针</t></t></t></p>
+</li>
+<li><p>进一步取代指针，需实现加法、减法和关系运算符</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> a[<span class="number">10</span>];</div><div class="line">    <span class="keyword">int</span>* pa = a;</div><div class="line">    <span class="keyword">int</span>* end = pa + <span class="number">10</span>;</div><div class="line">    <span class="keyword">while</span> (pa != end)</div><div class="line">        *pa++ = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
@@ -336,21 +346,29 @@
 <ul>
 <li>迭代器能在不暴露容器内部结构的情况下访问容器的元素</li>
 </ul>
-<h3 id="删除元素">删除元素</h3>
-<ul>
-<li><p>当元素不存在时的处理方法</p></li>
-<li><p>禁止从容器中删除单个元素(可以删除整个容器)</p></li>
-<li><p>在每个容器对象中保存一个有效迭代器的列表，删除一个元素则正好删除刚好指向这个 被删除元素的迭代器</p></li>
-<li><p>对容器中每个元素采用引用计数，删除任何一个元素都必须等到最后一个指向该元素的 引用都不存在</p></li>
-<li><p>让迭代器指向容器中元素与元素之间的位置上(难以实现；影响先有代码)</p></li>
+<h3 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h3><ul>
+<li><p>当元素不存在时的处理方法</p>
+</li>
+<li><p>禁止从容器中删除单个元素(可以删除整个容器)</p>
+</li>
+<li><p>在每个容器对象中保存一个有效迭代器的列表，删除一个元素则正好删除刚好指向这个<br>被删除元素的迭代器</p>
+</li>
+<li><p>对容器中每个元素采用引用计数，删除任何一个元素都必须等到最后一个指向该元素的<br>引用都不存在</p>
+</li>
+<li><p>让迭代器指向容器中元素与元素之间的位置上(难以实现；影响先有代码)</p>
+</li>
 </ul>
-<h3 id="删除容器">删除容器</h3>
-<ul>
-<li><p>容器本身已不存在，还有活动的迭代器的解决方法</p></li>
-<li><p>删除操作延后到最后一个迭代器失效</p></li>
-<li><p>采用处理删除单个元素的思想</p></li>
-<li><p>用户确保一旦容器删除就不再使用迭代器</p></li>
-<li><p>只要有活动迭代器存在就禁止删除容器本身</p></li>
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><ul>
+<li><p>容器本身已不存在，还有活动的迭代器的解决方法</p>
+</li>
+<li><p>删除操作延后到最后一个迭代器失效</p>
+</li>
+<li><p>采用处理删除单个元素的思想</p>
+</li>
+<li><p>用户确保一旦容器删除就不再使用迭代器</p>
+</li>
+<li><p>只要有活动迭代器存在就禁止删除容器本身</p>
+</li>
 </ul>
 
       
@@ -382,8 +400,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/21/economics/现代经济中的市场和政府/" rel="next" title="现代经济中的市场和政府">
-                <i class="fa fa-chevron-left"></i> 现代经济中的市场和政府
+              <a href="/2017/01/21/economics/经济学基础知识/" rel="next" title="经济学基础知识">
+                <i class="fa fa-chevron-left"></i> 经济学基础知识
               </a>
             
           </div>
@@ -392,8 +410,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/28/computer_network/computer_network_1/" rel="prev" title="计算机网络和因特网">
-                计算机网络和因特网 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/28/parellel_and_distributed_computing/paralell_compute1&2/" rel="prev" title="并行计算基础知识及基本并行算法">
+                并行计算基础知识及基本并行算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -448,10 +466,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -474,7 +492,7 @@
               <a href="/archives">
             
                 <span class="site-state-item-count">82</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -487,7 +505,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -554,7 +572,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a></div>
 
   <span class="post-meta-divider">|</span>
 

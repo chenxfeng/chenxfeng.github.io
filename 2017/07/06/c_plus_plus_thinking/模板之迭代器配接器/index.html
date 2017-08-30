@@ -199,7 +199,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Accueil
+            Home
           </a>
         </li>
       
@@ -263,7 +263,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-06T00:00:00+08:00">
                 2017-07-06
@@ -305,62 +305,55 @@
       
         <p>迭代器配接器(iterator adaptor): 把迭代器作为参数并转换为其他迭代器的模板</p>
 <a id="more"></a>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><ul>
+<h3 id="例子">例子</h3>
+<ul>
 <li>一个泛型函数: 找出第一次出现某个值的位置</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> X&gt;</div><div class="line"><span class="function">T <span class="title">find</span><span class="params">(T start, T beyond, <span class="keyword">const</span> X&amp; x)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != beyond &amp;&amp; *start != x)</div><div class="line">        ++*start;</div><div class="line">    <span class="keyword">return</span> start;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>普通指针可以充当输入迭代器</p>
-</li>
-<li><p>找出最后一个与某个特定值相等的实例</p>
-</li>
+<li><p>普通指针可以充当输入迭代器</p></li>
+<li><p>找出最后一个与某个特定值相等的实例</p></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> X&gt;</div><div class="line"><span class="function">T <span class="title">find</span><span class="params">(T start, T beyond, <span class="keyword">const</span> X&amp; x)</span> </span>&#123;</div><div class="line">    T result = beyond;</div><div class="line">    <span class="keyword">while</span> (start != beyond) &#123;</div><div class="line">        <span class="keyword">if</span> (*start == x) </div><div class="line">            result = start;</div><div class="line">        ++start;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>T是输入迭代器，只能这样实现</li>
-<li><p>缺陷: 总是需要查找数据结构中的所有元素，即使要查找的值就在尾部</p>
-</li>
-<li><p>采用双向迭代器: 可以使用–操作符</p>
-</li>
+<li><p>缺陷: 总是需要查找数据结构中的所有元素，即使要查找的值就在尾部</p></li>
+<li><p>采用双向迭代器: 可以使用–操作符</p></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> X&gt;</div><div class="line"><span class="function">T <span class="title">rfind</span><span class="params">(T start, T beyond, <span class="keyword">const</span> X&amp; x)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (start != beyond) &#123;</div><div class="line">        T p = beyond;</div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            <span class="keyword">if</span> (*--p == x) <span class="keyword">return</span> p;</div><div class="line">        &#125; <span class="keyword">while</span> (p != start)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> beyond;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="方向不对称性"><a href="#方向不对称性" class="headerlink" title="方向不对称性"></a>方向不对称性</h3><ul>
-<li><p>反转某个算法的方向时并不能总是精确地保持原有的对称性</p>
-</li>
+<h3 id="方向不对称性">方向不对称性</h3>
+<ul>
+<li><p>反转某个算法的方向时并不能总是精确地保持原有的对称性</p></li>
 <li><ul>
 <li>Cpp语言定义的迭代器的特性: 通常迭代器确保逾尾值有效但对超出头部的值没有相应的保障</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span>* p = a; p &lt; a + <span class="number">10</span>; ++p)</div><div class="line">    *p = <span class="number">0</span>;</div></pre></td></tr></table></figure>
 <ul>
 <li>循环结束时p等于a+10</li>
 <li><ul>
 <li>C/Cpp语言保证(且只保证)能够定位任何超出数组尾部之后的那一个元素的地址</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>a+10是合法的，a+11是非法的，a-1是非法的</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 无效的代码</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span>* p = a+<span class="number">9</span>; p &gt;= a; p--)</div><div class="line">    *p = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="comment">// 有效的代码</span></div><div class="line"><span class="keyword">int</span>* p = a + <span class="number">10</span>;</div><div class="line"><span class="keyword">while</span> (p &gt; a)</div><div class="line">    *--p = <span class="number">0</span>;</div></pre></td></tr></table></figure>
-<h3 id="一致性和不对称性"><a href="#一致性和不对称性" class="headerlink" title="一致性和不对称性"></a>一致性和不对称性</h3><ul>
+<h3 id="一致性和不对称性">一致性和不对称性</h3>
+<ul>
 <li>后向查找不到时返回超出头部的指针</li>
-<li><p>每个迭代器指向数据结构中正要查找的元素的后面的位置</p>
-</li>
-<li><p>rnfind(reverse neighbor find): </p>
-</li>
+<li><p>每个迭代器指向数据结构中正要查找的元素的后面的位置</p></li>
+<li><p>rnfind(reverse neighbor find):</p></li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> X&gt;</div><div class="line"><span class="function">T <span class="title">rnfind</span><span class="params">(T start, T beyond, <span class="keyword">const</span> X&amp; x)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (beyond != start &amp;&amp; beyond[<span class="number">-1</span>] != x)</div><div class="line">        --beyond;</div><div class="line">    <span class="keyword">return</span> beyond;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>beyond[-1] : *(beyond-1)</li>
 <li><ul>
 <li>T必须是一个随机存取迭代器而不仅仅是双向迭代器</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="自动反向"><a href="#自动反向" class="headerlink" title="自动反向"></a>自动反向</h3><ul>
+<h3 id="自动反向">自动反向</h3>
+<ul>
 <li>新类型TR(T reverse): 将T转换为TR，指向T所指向的元素的前一个元素</li>
 <li>迭代器适配器</li>
 </ul>
@@ -373,25 +366,19 @@
 <li>可以通过与迭代器相关联的容器，将一个双向迭代器由前向遍历迭代器转变为后向遍历迭代器</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> Rev&lt;<span class="keyword">int</span>*, <span class="keyword">int</span>&gt; R</div><div class="line"></div><div class="line"><span class="keyword">int</span>* p = find(x, x+<span class="number">100</span>, <span class="number">42</span>);</div><div class="line">R r = find(R(x+<span class="number">100</span>), R(x), <span class="number">42</span>);</div></pre></td></tr></table></figure>
-<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
-<li><p>取决于描述数据结构的双向迭代器的可用性</p>
-</li>
-<li><p>编写进行接口适配的模板</p>
-</li>
-<li><p>STL的更通用的模板: reverse_bidirectional_iterator</p>
-</li>
-<li><p>随机存取迭代器: 可以使用reverse_iterator</p>
-</li>
-<li><p>迭代器配接器的其他应用</p>
-</li>
+<h3 id="summary">Summary</h3>
+<ul>
+<li><p>取决于描述数据结构的双向迭代器的可用性</p></li>
+<li><p>编写进行接口适配的模板</p></li>
+<li><p>STL的更通用的模板: reverse_bidirectional_iterator</p></li>
+<li><p>随机存取迭代器: 可以使用reverse_iterator</p></li>
+<li>迭代器配接器的其他应用</li>
 <li><ul>
 <li>边界检查配接器</li>
-</ul>
-</li>
+</ul></li>
 <li><ul>
 <li>被生成的迭代器类型可以将源迭代器的值限定在由创建该类型的对象时确定的一对边界中</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 
       
@@ -423,8 +410,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/c_plus_plus_thinking/模板之使用泛型迭代器/" rel="next" title="模板之泛型迭代器的使用">
-                <i class="fa fa-chevron-left"></i> 模板之泛型迭代器的使用
+              <a href="/2017/07/05/c_plus_plus_thinking/模板之泛型迭代器/" rel="next" title="模板之泛型迭代器">
+                <i class="fa fa-chevron-left"></i> 模板之泛型迭代器
               </a>
             
           </div>
@@ -489,10 +476,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table Des Matières
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Ensemble
+            Overview
           </li>
         </ul>
       
@@ -514,8 +501,8 @@
             
               <a href="/archives">
             
-                <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">articles</span>
+                <span class="site-state-item-count">82</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -562,7 +549,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方向不对称性"><span class="nav-number">2.</span> <span class="nav-text">方向不对称性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性和不对称性"><span class="nav-number">3.</span> <span class="nav-text">一致性和不对称性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动反向"><span class="nav-number">4.</span> <span class="nav-text">自动反向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">5.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方向不对称性"><span class="nav-number">2.</span> <span class="nav-text">方向不对称性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性和不对称性"><span class="nav-number">3.</span> <span class="nav-text">一致性和不对称性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动反向"><span class="nav-number">4.</span> <span class="nav-text">自动反向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary"><span class="nav-number">5.</span> <span class="nav-text">Summary</span></a></li></ol></div>
             
 
           </div>
@@ -599,7 +586,7 @@
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

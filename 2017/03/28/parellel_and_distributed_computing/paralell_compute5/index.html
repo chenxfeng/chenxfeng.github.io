@@ -95,25 +95,17 @@
 
 
 <meta name="description" content="(并行与分布式计算三)
-并行搜索的基本思想在升序数组中采用与二分搜索类似的p+1分搜索: 
-
-使用递归按比例缩小搜索范围的办法
-二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较
-上述的每层p次比较可以用p个处理器同时进行
-
-长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$">
+并行搜索的基本思想
+在升序数组中采用与二分搜索类似的p+1分搜索: - 使用递归按比例缩小搜索范围的办法 - 二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较 - 上述的每层p次比较可以用p个处理器同时进行
+长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为\(O(log_{p+1}(n+1))\)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搜索、归并与排序的并行算法">
 <meta property="og:url" content="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute5/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
 <meta property="og:description" content="(并行与分布式计算三)
-并行搜索的基本思想在升序数组中采用与二分搜索类似的p+1分搜索: 
-
-使用递归按比例缩小搜索范围的办法
-二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较
-上述的每层p次比较可以用p个处理器同时进行
-
-长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$">
+并行搜索的基本思想
+在升序数组中采用与二分搜索类似的p+1分搜索: - 使用递归按比例缩小搜索范围的办法 - 二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较 - 上述的每层p次比较可以用p个处理器同时进行
+长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为\(O(log_{p+1}(n+1))\)">
 <meta property="og:image" content="https://chenfeng.github.io/img/merging1.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\merge_fast.png">
 <meta property="og:image" content="https://chenfeng.github.io/\img\merge_fast2.png">
@@ -123,13 +115,9 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搜索、归并与排序的并行算法">
 <meta name="twitter:description" content="(并行与分布式计算三)
-并行搜索的基本思想在升序数组中采用与二分搜索类似的p+1分搜索: 
-
-使用递归按比例缩小搜索范围的办法
-二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较
-上述的每层p次比较可以用p个处理器同时进行
-
-长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$">
+并行搜索的基本思想
+在升序数组中采用与二分搜索类似的p+1分搜索: - 使用递归按比例缩小搜索范围的办法 - 二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较 - 上述的每层p次比较可以用p个处理器同时进行
+长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为\(O(log_{p+1}(n+1))\)">
 <meta name="twitter:image" content="https://chenfeng.github.io/img/merging1.png">
 
 
@@ -226,7 +214,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Accueil
+            Home
           </a>
         </li>
       
@@ -290,7 +278,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">
                 2017-03-28
@@ -331,108 +319,122 @@
 
       
         <p>(并行与分布式计算三<rev2>)</rev2></p>
-<h2 id="并行搜索的基本思想"><a href="#并行搜索的基本思想" class="headerlink" title="并行搜索的基本思想"></a>并行搜索的基本思想</h2><p>在升序数组中采用与二分搜索类似的p+1分搜索: </p>
-<ul>
-<li>使用递归按比例缩小搜索范围的办法</li>
-<li>二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较</li>
-<li>上述的每层p次比较可以用p个处理器同时进行</li>
-</ul>
-<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$</p>
+<h2 id="并行搜索的基本思想">并行搜索的基本思想</h2>
+<p>在升序数组中采用与二分搜索类似的p+1分搜索: - 使用递归按比例缩小搜索范围的办法 - 二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较 - 上述的每层p次比较可以用p个处理器同时进行</p>
+<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为<span class="math inline">\(O(log_{p+1}(n+1))\)</span></p>
 <a id="more"></a>
 <blockquote>
-<p>例：p+1分并行搜索:<br>X=(2,4,6,…,30)，X[1]=2, X[15]=30; Y=9</p>
+<p>例：p+1分并行搜索: X=(2,4,6,…,30)，X[1]=2, X[15]=30; Y=9</p>
+</blockquote>
+<blockquote>
 <p>作p+1分并行搜索，p=2:</p>
+</blockquote>
+<blockquote>
 <ul>
 <li>迭代1：q0=0, <strong>q1=5</strong>, <strong>q2=10</strong>, q3=16</li>
 <li>迭代2：q0=5, q1=6, <strong>q2=7</strong>, <strong>q3=10</strong></li>
 <li>迭代3：q0=7, q1=8, <strong>q2=9</strong>, <strong>q3=10</strong></li>
 </ul>
 </blockquote>
-<h3 id="快速并行搜索算法"><a href="#快速并行搜索算法" class="headerlink" title="快速并行搜索算法"></a>快速并行搜索算法</h3><p>Algorithm 4.1<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">(Parallel Search <span class="keyword">for</span> Processor P_j)</div><div class="line">Input: (<span class="number">1</span>)An <span class="built_in">array</span> X = (x_1, x_2, ..., x_n) such that x_1 &lt; x_2 &lt;       ... &lt; x_n;</div><div class="line">       (<span class="number">2</span>)an element y;</div><div class="line">       (<span class="number">3</span>)the number p of processors, where p &lt;= n;</div><div class="line">       (<span class="number">4</span>)the processor number j, where <span class="number">1</span> &lt;= j &lt;= p.</div><div class="line">Output: An index i such that x_i &lt;= y &lt; x_i+<span class="number">1.</span></div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">if</span> (j = <span class="number">1</span>) then <span class="keyword">do</span></div><div class="line">    <span class="number">1.1</span> Set l := <span class="number">0</span>; r := n + <span class="number">1</span>; x_0 := -∞; x_n+<span class="number">1</span> := +∞</div><div class="line">    <span class="number">1.2</span> Set c_0 := <span class="number">0</span>; c_p+<span class="number">1</span> := <span class="number">1</span></div><div class="line"><span class="number">2.</span> <span class="keyword">while</span> (r - <span class="number">1</span> &gt; p) <span class="keyword">do</span></div><div class="line">    <span class="number">2.1</span> <span class="keyword">if</span> (j = <span class="number">1</span>) then &#123;<span class="built_in">set</span> q_0 := l; q_p+<span class="number">1</span> := r&#125;</div><div class="line">    <span class="number">2.2</span> Set q_j := l + j*<span class="built_in">floor</span>((r<span class="number">-1</span>)/(p+<span class="number">1</span>))</div><div class="line">    <span class="number">2.3</span> <span class="keyword">if</span> (y = x_q_j) then &#123;<span class="keyword">return</span> (q_j); <span class="built_in">exit</span>&#125;</div><div class="line">        <span class="keyword">else</span> &#123;<span class="built_in">set</span> c_j := <span class="number">0</span> <span class="keyword">if</span> y &gt; x_q_j and c_j := <span class="number">1</span> <span class="keyword">if</span> y &lt; x_q_j&#125;</div><div class="line">    <span class="number">2.4</span> <span class="keyword">if</span> (c_j &lt; c_j+<span class="number">1</span>) then &#123;<span class="built_in">set</span> l := q_j; r := q_j+<span class="number">1</span>&#125;</div><div class="line">    <span class="number">2.5</span> <span class="keyword">if</span> (j = <span class="number">1</span> and c_0 &lt; c_1) then &#123;<span class="built_in">set</span> l := q_0; r := q_1&#125;</div><div class="line"><span class="number">3.</span> <span class="keyword">if</span> (j &lt;= r - l) then <span class="keyword">do</span></div><div class="line">    <span class="number">3.1</span> Case statement:</div><div class="line">        y = x_l+j : &#123;<span class="keyword">return</span> (l + j); <span class="built_in">exit</span>&#125;</div><div class="line">        y &gt; x_l+j : <span class="built_in">set</span> c_j := <span class="number">0</span></div><div class="line">        y &lt; x_l+j : <span class="built_in">set</span> c_j := <span class="number">1</span></div><div class="line">    <span class="number">3.2</span> <span class="keyword">if</span> (c_j<span class="number">-1</span> &lt; c_j) then <span class="keyword">return</span> (l + j - <span class="number">1</span>)</div><div class="line">end</div></pre></td></tr></table></figure></p>
-<ol>
+<h3 id="快速并行搜索算法">快速并行搜索算法</h3>
+<p>Algorithm 4.1 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">(Parallel Search <span class="keyword">for</span> Processor P_j)</div><div class="line">Input: (<span class="number">1</span>)An <span class="built_in">array</span> X = (x_1, x_2, ..., x_n) such that x_1 &lt; x_2 &lt;       ... &lt; x_n;</div><div class="line">       (<span class="number">2</span>)an element y;</div><div class="line">       (<span class="number">3</span>)the number p of processors, where p &lt;= n;</div><div class="line">       (<span class="number">4</span>)the processor number j, where <span class="number">1</span> &lt;= j &lt;= p.</div><div class="line">Output: An index i such that x_i &lt;= y &lt; x_i+<span class="number">1.</span></div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">if</span> (j = <span class="number">1</span>) then <span class="keyword">do</span></div><div class="line">    <span class="number">1.1</span> Set l := <span class="number">0</span>; r := n + <span class="number">1</span>; x_0 := -∞; x_n+<span class="number">1</span> := +∞</div><div class="line">    <span class="number">1.2</span> Set c_0 := <span class="number">0</span>; c_p+<span class="number">1</span> := <span class="number">1</span></div><div class="line"><span class="number">2.</span> <span class="keyword">while</span> (r - <span class="number">1</span> &gt; p) <span class="keyword">do</span></div><div class="line">    <span class="number">2.1</span> <span class="keyword">if</span> (j = <span class="number">1</span>) then &#123;<span class="built_in">set</span> q_0 := l; q_p+<span class="number">1</span> := r&#125;</div><div class="line">    <span class="number">2.2</span> Set q_j := l + j*<span class="built_in">floor</span>((r<span class="number">-1</span>)/(p+<span class="number">1</span>))</div><div class="line">    <span class="number">2.3</span> <span class="keyword">if</span> (y = x_q_j) then &#123;<span class="keyword">return</span> (q_j); <span class="built_in">exit</span>&#125;</div><div class="line">        <span class="keyword">else</span> &#123;<span class="built_in">set</span> c_j := <span class="number">0</span> <span class="keyword">if</span> y &gt; x_q_j and c_j := <span class="number">1</span> <span class="keyword">if</span> y &lt; x_q_j&#125;</div><div class="line">    <span class="number">2.4</span> <span class="keyword">if</span> (c_j &lt; c_j+<span class="number">1</span>) then &#123;<span class="built_in">set</span> l := q_j; r := q_j+<span class="number">1</span>&#125;</div><div class="line">    <span class="number">2.5</span> <span class="keyword">if</span> (j = <span class="number">1</span> and c_0 &lt; c_1) then &#123;<span class="built_in">set</span> l := q_0; r := q_1&#125;</div><div class="line"><span class="number">3.</span> <span class="keyword">if</span> (j &lt;= r - l) then <span class="keyword">do</span></div><div class="line">    <span class="number">3.1</span> Case statement:</div><div class="line">        y = x_l+j : &#123;<span class="keyword">return</span> (l + j); <span class="built_in">exit</span>&#125;</div><div class="line">        y &gt; x_l+j : <span class="built_in">set</span> c_j := <span class="number">0</span></div><div class="line">        y &lt; x_l+j : <span class="built_in">set</span> c_j := <span class="number">1</span></div><div class="line">    <span class="number">3.2</span> <span class="keyword">if</span> (c_j<span class="number">-1</span> &lt; c_j) then <span class="keyword">return</span> (l + j - <span class="number">1</span>)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ol style="list-style-type: decimal">
 <li>初始化</li>
 <li>外层搜索递归调用内层搜索</li>
 <li>最内层搜索</li>
 </ol>
-<p>$T = O(log_{p+1}(n+1)) = O(\frac{log(n+1)}{log(p+1)}) = O(1)$</p>
-<h2 id="并行归并的基本思想"><a href="#并行归并的基本思想" class="headerlink" title="并行归并的基本思想"></a>并行归并的基本思想</h2><blockquote>
-<p>并行地归并两个升序数组，可以等价为计算：<br>1.归并序=自序+交叉序<br>2.自序=数组元素在自己所在数组中的序<br>3.交叉序=数组元素在另一个数组中的序</p>
+<p><span class="math inline">\(T = O(log_{p+1}(n+1)) = O(\frac{log(n+1)}{log(p+1)}) = O(1)\)</span></p>
+<h2 id="并行归并的基本思想">并行归并的基本思想</h2>
+<blockquote>
+<p>并行地归并两个升序数组，可以等价为计算： 1.归并序=自序+交叉序 2.自序=数组元素在自己所在数组中的序 3.交叉序=数组元素在另一个数组中的序</p>
 </blockquote>
 <ul>
 <li>自序是已知的，交叉序可以用快速并行搜索算法来计算</li>
 </ul>
-<p>交叉序的并行搜索的两层并行性: </p>
-<ul>
-<li>单个元素的快速搜索内部并行</li>
-<li>不同元素的搜索之间并行</li>
-</ul>
+<p>交叉序的并行搜索的两层并行性: - 单个元素的快速搜索内部并行 - 不同元素的搜索之间并行</p>
 <blockquote>
 <p>例：并行归并中的交叉序计算</p>
-<p>A=(-5,0,3,4,17,18,24,28)<br>B=(1,2,15,21)<br>分两个迭代并行搜索</p>
-<p>迭代1：定位b2和b4。b_2=2在a_2=0和a_3=3之间，b_4=21在a_6=18和a_7=24之间(rank(b_2:A)=2, rank(b_4:A)=6)<br>迭代2：在b_2前的A元素中搜索b_1的位置，在b_2后、b_4前的A元素中搜索b_3的位置(rank(b_1:A)=2, rank(b_3:A)=4)</p>
 </blockquote>
-<h3 id="并行归并的加速技巧"><a href="#并行归并的加速技巧" class="headerlink" title="并行归并的加速技巧"></a>并行归并的加速技巧</h3><p>思路：双层对数树，利用处理器的冗余性加速</p>
+<blockquote>
+<p>A=(-5,0,3,4,17,18,24,28) B=(1,2,15,21) 分两个迭代并行搜索</p>
+</blockquote>
+<blockquote>
+<p>迭代1：定位b2和b4。b_2=2在a_2=0和a_3=3之间，b_4=21在a_6=18和a_7=24之间(rank(b_2:A)=2, rank(b_4:A)=6) 迭代2：在b_2前的A元素中搜索b_1的位置，在b_2后、b_4前的A元素中搜索b_3的位置(rank(b_1:A)=2, rank(b_3:A)=4)</p>
+</blockquote>
+<h3 id="并行归并的加速技巧">并行归并的加速技巧</h3>
+<p>思路：双层对数树，利用处理器的冗余性加速</p>
 <ul>
-<li><p>设要计算长度为m的数组B的元素在长度为n的数组A中的交叉序，则由加速层叠法：</p>
-</li>
-<li><p>最上层分叉成长度为$\sqrt{m}$的段计算，每往下一层长度再开根号</p>
-</li>
-<li>最上层每段使用\sqrt{n}个处理器来并行搜索(共\sqrt{mn}个处理器)，从而分划数组A供下层递归使用</li>
-<li>全局来说，每一层都使用不超过(m+n)/2个处理器，并且每层搜索时间T=O(1)</li>
+<li><p>设要计算长度为m的数组B的元素在长度为n的数组A中的交叉序，则由加速层叠法：</p></li>
+<li>最上层分叉成长度为<span class="math inline">\(\sqrt{m}\)</span>的段计算，每往下一层长度再开根号</li>
+<li>最上层每段使用个处理器来并行搜索(共个处理器)，从而分划数组A供下层递归使用</li>
+<li><p>全局来说，每一层都使用不超过(m+n)/2个处理器，并且每层搜索时间T=O(1)</p></li>
 </ul>
 <blockquote>
-<p><img src="/img/merging1.png" alt="merging1.png"></p>
+<div class="figure">
+<img src="/img/merging1.png" alt="merging1.png">
+<p class="caption">merging1.png</p>
+</div>
 </blockquote>
 <ul>
 <li>迭代1分割的A段长短不一不会影响加速算法中的处理器上界</li>
 </ul>
-<p>最上层$\sqrt(m)$段，对段的右端点在长度为n的A中搜索，求交叉序(能用$\sqrt(n)$个处理器)</p>
-<ol>
-<li>$T = O(log<em>{\sqrt(n)+1}(n+1)) = O(log</em>{\sqrt(n)}n) = O(2) = O(1)$</li>
-<li>处理器个数$\sqrt m\sqrt n \leqslant \frac{m+n}{2}$</li>
+<p>最上层<span class="math inline">\(\sqrt(m)\)</span>段，对段的右端点在长度为n的A中搜索，求交叉序(能用<span class="math inline">\(\sqrt(n)\)</span>个处理器)</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(T = O(log_{\sqrt(n)+1}(n+1)) = O(log_{\sqrt(n)}n) = O(2) = O(1)\)</span></li>
+<li>处理器个数<span class="math inline">\(\sqrt m\sqrt n \leqslant \frac{m+n}{2}\)</span></li>
 </ol>
-<p>第二层设B中第i段的右端点切到的A的段的长度为n，B分成$m^{\frac{1}{4}}n^{\frac{1}{4}}$段。第i段用$\sqrt{n_{|\frac{i-1}{\sqrt{m}}|+1}}$个处理器</p>
+<p>第二层设B中第i段的右端点切到的A的段的长度为n，B分成<span class="math inline">\(m^{\frac{1}{4}}n^{\frac{1}{4}}\)</span>段。第i段用<span class="math inline">\(\sqrt{n_{|\frac{i-1}{\sqrt{m}}|+1}}\)</span>个处理器</p>
 <ul>
-<li>总处理器数 = $\sum<em>{i=1}^{m^{\frac{3}{4}}}\sqrt{n</em>{|\frac{i-1}{\sqrt{m}}|+1}} = \sum_{j=1}^{\sqrt{m}}m^{\frac{1}{4}}\sqrt{n<em>j} \leqslant \sum</em>{j=1}^{\sqrt{m}}\frac{\sqrt{m}+n<em>j}{2} = (\sum</em>{j=1}^{\sqrt{m}}\sqrt{m} + \sum_{j=1}^{\sqrt{m}}n_j)/2 = (m+n)/2$</li>
+<li>总处理器数 = <span class="math inline">\(\sum_{i=1}^{m^{\frac{3}{4}}}\sqrt{n_{|\frac{i-1}{\sqrt{m}}|+1}} = \sum_{j=1}^{\sqrt{m}}m^{\frac{1}{4}}\sqrt{n_j} \leqslant \sum_{j=1}^{\sqrt{m}}\frac{\sqrt{m}+n_j}{2} = (\sum_{j=1}^{\sqrt{m}}\sqrt{m} + \sum_{j=1}^{\sqrt{m}}n_j)/2 = (m+n)/2\)</span></li>
 </ul>
-<p>第三层处理器个数 = $\sum_{j=1}^{m^{\frac{3}{4}}}m^{\frac{1}{8}}\sqrt{n_j^{(1)}} \leqslant  = (\sum m^{\frac{1}{4}} + n_j^{(1)})/2 = (m+n)/2$</p>
+<p>第三层处理器个数 = <span class="math inline">\(\sum_{j=1}^{m^{\frac{3}{4}}}m^{\frac{1}{8}}\sqrt{n_j^{(1)}} \leqslant = (\sum m^{\frac{1}{4}} + n_j^{(1)})/2 = (m+n)/2\)</span></p>
 <ul>
-<li>其中$n^(1)$是第二层分出的A的$m^{\frac{3}{4}}$段的长度</li>
+<li>其中<span class="math inline">\(n^(1)\)</span>是第二层分出的A的<span class="math inline">\(m^{\frac{3}{4}}\)</span>段的长度</li>
 </ul>
-<h3 id="并行求交叉序"><a href="#并行求交叉序" class="headerlink" title="并行求交叉序"></a>并行求交叉序</h3><p>Algorithm 4.2<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(Ranking a Sorted Sequence in Another Sorted Sequence)</div><div class="line">Input: Two arrays A = (a_1, ..., a_n) and B = (b_1, ..., b_m) in increasing order. Assume that sqrt(m) is an integer; otherwise, replace sqrt(m) whenever it occur by floor(sqrt(m)).</div><div class="line">Output: The array rank(B : A)</div><div class="line">begin</div><div class="line">1. If m &lt; 4, then rank the elements of B by applying the parallel-search algorithm(Algorithm 4.1) with p = n, and exit.</div><div class="line">2. Concurrently rank the elements b_sqrt(m), b_2sqrt(m), ..., b_i*sqrt(m), ..., b_m in A by using the parallel-search algorithm(Algorithm 4.1) with p = sqrt(n). Let rank(b_i*sqrt(m) : A) = j(i), for 1 &lt;= i &lt;= sqrt(m). set j(0) = 0.</div><div class="line">3. For 0 &lt;= i &lt;= sqrt(m)-1, let B_i = (b_i*sqrt(m)+1, ..., b_(i+1)*sqrt(m)-1) and let A_i = (a_j(i)+1, ..., a_j(i+1)); if j(i) = j(i+1), then set rank(B_i : A_i) = (0, ..., 0), else recursively compute rank(B_i: A_i).</div><div class="line">4. Let 1 &lt;= k &lt;= m be an arbitrary index that is not a multiple of sqrt(m), and let i = floor(k/sqrt(m)). Then rank(b_k : A) = j(i) + rank(b_k : A_i)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<h3 id="并行求交叉序">并行求交叉序</h3>
+<p>Algorithm 4.2 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(Ranking a Sorted Sequence in Another Sorted Sequence)</div><div class="line">Input: Two arrays A = (a_1, ..., a_n) and B = (b_1, ..., b_m) in increasing order. Assume that sqrt(m) is an integer; otherwise, replace sqrt(m) whenever it occur by floor(sqrt(m)).</div><div class="line">Output: The array rank(B : A)</div><div class="line">begin</div><div class="line">1. If m &lt; 4, then rank the elements of B by applying the parallel-search algorithm(Algorithm 4.1) with p = n, and exit.</div><div class="line">2. Concurrently rank the elements b_sqrt(m), b_2sqrt(m), ..., b_i*sqrt(m), ..., b_m in A by using the parallel-search algorithm(Algorithm 4.1) with p = sqrt(n). Let rank(b_i*sqrt(m) : A) = j(i), for 1 &lt;= i &lt;= sqrt(m). set j(0) = 0.</div><div class="line">3. For 0 &lt;= i &lt;= sqrt(m)-1, let B_i = (b_i*sqrt(m)+1, ..., b_(i+1)*sqrt(m)-1) and let A_i = (a_j(i)+1, ..., a_j(i+1)); if j(i) = j(i+1), then set rank(B_i : A_i) = (0, ..., 0), else recursively compute rank(B_i: A_i).</div><div class="line">4. Let 1 &lt;= k &lt;= m be an arbitrary index that is not a multiple of sqrt(m), and let i = floor(k/sqrt(m)). Then rank(b_k : A) = j(i) + rank(b_k : A_i)</div><div class="line">end</div></pre></td></tr></table></figure></p>
 <ul>
 <li>|A| = n, |B| = m, T = O(log logm), W = O((n + m)log logm)</li>
 </ul>
-<h3 id="最优的并行求交叉序"><a href="#最优的并行求交叉序" class="headerlink" title="最优的并行求交叉序"></a>最优的并行求交叉序</h3><p>前一个算法的问题：</p>
-<ul>
-<li>运算量O((m+n)log log m)不是最优</li>
-<li>最优运算量应该是O(m+n)</li>
-</ul>
-<p>解决办法：</p>
-<ul>
-<li>在两边数组均匀步长地抽取元素，缩短求交叉序的并行算法的输入数组</li>
-<li>用前述并行算法求交叉序</li>
-<li>利用抽取的点把两边的数组分段，这边的段一一对应地归并</li>
-</ul>
+<h3 id="最优的并行求交叉序">最优的并行求交叉序</h3>
+<p>前一个算法的问题： - 运算量O((m+n)log log m)不是最优 - 最优运算量应该是O(m+n)</p>
+<p>解决办法： - 在两边数组均匀步长地抽取元素，缩短求交叉序的并行算法的输入数组 - 用前述并行算法求交叉序 - 利用抽取的点把两边的数组分段，这边的段一一对应地归并</p>
 <p>两个长度都为n的升序数组，可以在O(log log n)的并行时间内用O(n)的运算量归并</p>
 <blockquote>
-<p><img src="\img\merge_fast.png" alt="merge_fast.png"></p>
-<p><img src="\img\merge_fast2.png" alt="merge_fast2.png"></p>
+<div class="figure">
+<img src="\img\merge_fast.png" alt="merge_fast.png">
+<p class="caption">merge_fast.png</p>
+</div>
+</blockquote>
+<blockquote>
+<div class="figure">
+<img src="\img\merge_fast2.png" alt="merge_fast2.png">
+<p class="caption">merge_fast2.png</p>
+</div>
 </blockquote>
 <ul>
 <li>在A和B中都先均匀采样，对两边采样点计算缩短的数组的交叉序，然后再利用该交叉序来进一步计算原来的数组的交叉序</li>
 </ul>
 <blockquote>
-<p><img src="\img\merging2.png" alt="merging2.png"></p>
-<p><img src="\img\merging3.png" alt="merging3.png"></p>
+<div class="figure">
+<img src="\img\merging2.png" alt="merging2.png">
+<p class="caption">merging2.png</p>
+</div>
+</blockquote>
+<blockquote>
+<div class="figure">
+<img src="\img\merging3.png" alt="merging3.png">
+<p class="caption">merging3.png</p>
+</div>
 </blockquote>
 <p>T = O(log logn), W = O(n)</p>
-<h2 id="一个快速并行归并排序算法"><a href="#一个快速并行归并排序算法" class="headerlink" title="一个快速并行归并排序算法"></a>一个快速并行归并排序算法</h2><ul>
+<h2 id="一个快速并行归并排序算法">一个快速并行归并排序算法</h2>
+<ul>
 <li>从长度为较小常数的数组开始，逐层两两归并，共log n层</li>
 <li>每层用O(log log n)的并行时间和O(n)的运算量来归并</li>
 <li>总共O(log n log log n)的并行时间和O(n log n)的运算量</li>
 </ul>
-<p>Algorithm 4.3<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(Simple Merge Sort)</div><div class="line">Input: An <span class="built_in">array</span> X of order n, where n = <span class="number">2</span>^l <span class="keyword">for</span> sime integer l.</div><div class="line">Output: A balanced binary tree with n leaves such that, <span class="keyword">for</span> each <span class="number">0</span> &lt;= h &lt;= logn, L(h, j) contains the sorted subsequence consisting of the elements stored in the subtree rooted at node(h, j), <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h. That is node(h, j) contains the sorted <span class="built_in">list</span> of the elements X(<span class="number">2</span>^h*(j<span class="number">-1</span>) + <span class="number">1</span>), X(<span class="number">2</span>^h*(j<span class="number">-1</span>) + <span class="number">2</span>), ..., X(<span class="number">2</span>^h*j)</div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n pardo</div><div class="line">    Set L(<span class="number">0</span>, j) := X(j)</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> h = <span class="number">1</span> to logn <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        Merge L(h<span class="number">-1</span>, <span class="number">2</span>j<span class="number">-1</span>) and L(h<span class="number">-1</span>, <span class="number">2</span>j) into the sorted <span class="built_in">list</span> L(h, j)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>Algorithm 4.3 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(Simple Merge Sort)</div><div class="line">Input: An <span class="built_in">array</span> X of order n, where n = <span class="number">2</span>^l <span class="keyword">for</span> sime integer l.</div><div class="line">Output: A balanced binary tree with n leaves such that, <span class="keyword">for</span> each <span class="number">0</span> &lt;= h &lt;= logn, L(h, j) contains the sorted subsequence consisting of the elements stored in the subtree rooted at node(h, j), <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h. That is node(h, j) contains the sorted <span class="built_in">list</span> of the elements X(<span class="number">2</span>^h*(j<span class="number">-1</span>) + <span class="number">1</span>), X(<span class="number">2</span>^h*(j<span class="number">-1</span>) + <span class="number">2</span>), ..., X(<span class="number">2</span>^h*j)</div><div class="line">begin</div><div class="line"><span class="number">1.</span> <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n pardo</div><div class="line">    Set L(<span class="number">0</span>, j) := X(j)</div><div class="line"><span class="number">2.</span> <span class="keyword">for</span> h = <span class="number">1</span> to logn <span class="keyword">do</span></div><div class="line">    <span class="keyword">for</span> <span class="number">1</span> &lt;= j &lt;= n/<span class="number">2</span>^h pardo</div><div class="line">        Merge L(h<span class="number">-1</span>, <span class="number">2</span>j<span class="number">-1</span>) and L(h<span class="number">-1</span>, <span class="number">2</span>j) into the sorted <span class="built_in">list</span> L(h, j)</div><div class="line">end</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -463,8 +465,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/" rel="next" title="平面几何的并行算法">
-                <i class="fa fa-chevron-left"></i> 平面几何的并行算法
+              <a href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/" rel="next" title="图的并行算法">
+                <i class="fa fa-chevron-left"></i> 图的并行算法
               </a>
             
           </div>
@@ -473,8 +475,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/11/parellel_and_distributed_computing/paralell_compute7/" rel="prev" title="字符串匹配的并行算法">
-                字符串匹配的并行算法 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/" rel="prev" title="平面几何的并行算法">
+                平面几何的并行算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -529,10 +531,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table Des Matières
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Ensemble
+            Overview
           </li>
         </ul>
       
@@ -554,8 +556,8 @@
             
               <a href="/archives">
             
-                <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">articles</span>
+                <span class="site-state-item-count">82</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -639,7 +641,7 @@
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

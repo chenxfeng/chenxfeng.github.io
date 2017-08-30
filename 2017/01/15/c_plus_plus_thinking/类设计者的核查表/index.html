@@ -94,22 +94,31 @@
 
 
 
-<meta name="description" content="构造函数简单的类 结构就是接口 不需要构造函数
-数据成员私有阻止类的使用者私自改动提供相应接口 供使用者执行修改或访问等操作
-无参构造函数声明对象数组必需">
+<meta name="description" content="构造函数
+简单的类 结构就是接口 不需要构造函数
+数据成员私有
+阻止类的使用者私自改动 提供相应接口 供使用者执行修改或访问等操作
+无参构造函数
+声明对象数组必需">
 <meta property="og:type" content="article">
 <meta property="og:title" content="类设计者的核查表">
 <meta property="og:url" content="https://chenfeng.github.io/2017/01/15/c_plus_plus_thinking/类设计者的核查表/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
-<meta property="og:description" content="构造函数简单的类 结构就是接口 不需要构造函数
-数据成员私有阻止类的使用者私自改动提供相应接口 供使用者执行修改或访问等操作
-无参构造函数声明对象数组必需">
+<meta property="og:description" content="构造函数
+简单的类 结构就是接口 不需要构造函数
+数据成员私有
+阻止类的使用者私自改动 提供相应接口 供使用者执行修改或访问等操作
+无参构造函数
+声明对象数组必需">
 <meta property="og:updated_time" content="2017-07-04T10:40:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="类设计者的核查表">
-<meta name="twitter:description" content="构造函数简单的类 结构就是接口 不需要构造函数
-数据成员私有阻止类的使用者私自改动提供相应接口 供使用者执行修改或访问等操作
-无参构造函数声明对象数组必需">
+<meta name="twitter:description" content="构造函数
+简单的类 结构就是接口 不需要构造函数
+数据成员私有
+阻止类的使用者私自改动 提供相应接口 供使用者执行修改或访问等操作
+无参构造函数
+声明对象数组必需">
 
 
 
@@ -205,7 +214,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Accueil
+            Home
           </a>
         </li>
       
@@ -269,7 +278,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-15T00:00:00+08:00">
                 2017-01-15
@@ -309,37 +318,47 @@
       
 
       
-        <h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>简单的类 结构就是接口 不需要构造函数</p>
-<h2 id="数据成员私有"><a href="#数据成员私有" class="headerlink" title="数据成员私有"></a>数据成员私有</h2><p>阻止类的使用者私自改动<br>提供相应接口 供使用者执行修改或访问等操作</p>
-<h2 id="无参构造函数"><a href="#无参构造函数" class="headerlink" title="无参构造函数"></a>无参构造函数</h2><p>声明对象数组必需</p>
+        <h2 id="构造函数">构造函数</h2>
+<p>简单的类 结构就是接口 不需要构造函数</p>
+<h2 id="数据成员私有">数据成员私有</h2>
+<p>阻止类的使用者私自改动 提供相应接口 供使用者执行修改或访问等操作</p>
+<h2 id="无参构造函数">无参构造函数</h2>
+<p>声明对象数组必需</p>
 <a id="more"></a>
-<h2 id="初始化数据成员"><a href="#初始化数据成员" class="headerlink" title="初始化数据成员"></a>初始化数据成员</h2><p>每个构造函数都要负责为所有的数据成员设置经过明确定义的值<br>除非该数据成员在类的对象存在一定时间后才有意义或其它特殊情况</p>
-<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>该类分配了不会被成员函数自动释放的资源（动态内存）时必需</p>
-<h2 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h2><p>(类B派生的子类D，若可能对D类型对象的B*指针执行delete表达式时必需)<br>例如:</p>
+<h2 id="初始化数据成员">初始化数据成员</h2>
+<p>每个构造函数都要负责为所有的数据成员设置经过明确定义的值 除非该数据成员在类的对象存在一定时间后才有意义或其它特殊情况</p>
+<h2 id="析构函数">析构函数</h2>
+<p>该类分配了不会被成员函数自动释放的资源（动态内存）时必需</p>
+<h2 id="虚析构函数">虚析构函数</h2>
+<p>(类B派生的子类D，若可能对D类型对象的B*指针执行delete表达式时必需) 例如:</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> B &#123;</div><div class="line">    <span class="built_in">string</span> s;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">class</span> D : <span class="keyword">public</span> B &#123;</div><div class="line">    <span class="built_in">string</span> t;</div><div class="line">    <span class="comment">// virtual ~B() &#123;&#125;;</span></div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    B* bp = <span class="keyword">new</span> D; <span class="comment">// no problem</span></div><div class="line">    <span class="keyword">delete</span> bp;     <span class="comment">// unless B has a virtual destructor</span></div><div class="line">                   <span class="comment">// or the wrong dstructor would be called</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><p>当复制类的对象并非复制其数据成员和基类对象时必需</p>
+<h2 id="拷贝构造函数">拷贝构造函数</h2>
+<p>当复制类的对象并非复制其数据成员和基类对象时必需</p>
 <ul>
 <li>若不想使用者能够复制类的对象，就声明复制构造函数(赋值操作符)为私有的</li>
 </ul>
-<h2 id="赋值操作符"><a href="#赋值操作符" class="headerlink" title="赋值操作符"></a>赋值操作符</h2><p>当赋值类的对象并非复制其数据成员和基类对象时必需</p>
+<h2 id="赋值操作符">赋值操作符</h2>
+<p>当赋值类的对象并非复制其数据成员和基类对象时必需</p>
 <ul>
-<li>考虑赋值给对象本身的情况<br>例如:</li>
+<li>考虑赋值给对象本身的情况 例如:</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> String &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">string</span>&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> String &amp;s);</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">char</span> *data;</div><div class="line">&#125;;</div><div class="line">String&amp; String::<span class="keyword">operator</span>=(<span class="keyword">const</span> String&amp; s) &#123;</div><div class="line">    <span class="keyword">if</span> (&amp;s != <span class="keyword">this</span>) &#123; <span class="comment">// do nothing with self-assignment</span></div><div class="line">        <span class="keyword">delete</span> [] data; <span class="comment">// delete old array</span></div><div class="line">        data = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(s.data) + <span class="number">1</span>];</div><div class="line">        <span class="built_in">strcpy</span>(data, s.data);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>若不想使用者能够设置类中的对象，就将赋值操作符私有化</p>
-</li>
-<li><p>析构函数、拷贝构造函数、赋值操作符= 通常为同时必需的</p>
-</li>
+<li><p>若不想使用者能够设置类中的对象，就将赋值操作符私有化</p></li>
+<li><p>析构函数、拷贝构造函数、赋值操作符= 通常为同时必需的</p></li>
 </ul>
-<p>关系操作符<br>类逻辑上支持相等操作则提供 operator== 和 operator!=<br>类具有某种排序关系则提供余下的关系操作符(&lt; &gt; &lt;= &gt;=)</p>
-<h2 id="拷贝构造函数和赋值操作符的参数类型加上const"><a href="#拷贝构造函数和赋值操作符的参数类型加上const" class="headerlink" title="拷贝构造函数和赋值操作符的参数类型加上const"></a>拷贝构造函数和赋值操作符的参数类型加上const</h2><p>like X::X(const X&amp;) X::operator=(const X&amp;)</p>
-<h2 id="函数的const引用参数"><a href="#函数的const引用参数" class="headerlink" title="函数的const引用参数"></a>函数的const引用参数</h2><p>除非函数用来改变参数的值否则应为const引用<br>例如:<br>    Complex operator+(const Complex&amp; x, const Complex&amp; y);</p>
-<h2 id="适当声明成员函数为const"><a href="#适当声明成员函数为const" class="headerlink" title="适当声明成员函数为const"></a>适当声明成员函数为const</h2><p>成员函数不用修改它的对象时</p>
+<p>关系操作符 类逻辑上支持相等操作则提供 operator== 和 operator!= 类具有某种排序关系则提供余下的关系操作符(&lt; &gt; &lt;= &gt;=)</p>
+<h2 id="拷贝构造函数和赋值操作符的参数类型加上const">拷贝构造函数和赋值操作符的参数类型加上const</h2>
+<p>like X::X(const X&amp;) X::operator=(const X&amp;)</p>
+<h2 id="函数的const引用参数">函数的const引用参数</h2>
+<p>除非函数用来改变参数的值否则应为const引用 例如: Complex operator+(const Complex&amp; x, const Complex&amp; y);</p>
+<h2 id="适当声明成员函数为const">适当声明成员函数为const</h2>
+<p>成员函数不用修改它的对象时</p>
 <ul>
 <li>const对象只能使用声明为const的函数</li>
 </ul>
-<h1 id="设计理念："><a href="#设计理念：" class="headerlink" title="设计理念："></a>设计理念：</h1><p>C++不可能自动处理所有这些事情(难以保证做得对)<br>始终加入的话增加太多的额外负担，开销过大<br>如给所有类自动添加一个虚析构函数，当类较小时开销明显<br>作为变通方法，让编译器指出什么时候类该有什么必需的</p>
+<h1 id="设计理念">设计理念：</h1>
+<p>C++不可能自动处理所有这些事情(难以保证做得对) 始终加入的话增加太多的额外负担，开销过大 如给所有类自动添加一个虚析构函数，当类较小时开销明显 作为变通方法，让编译器指出什么时候类该有什么必需的</p>
 
       
     </div>
@@ -432,10 +451,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table Des Matières
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Ensemble
+            Overview
           </li>
         </ul>
       
@@ -457,8 +476,8 @@
             
               <a href="/archives">
             
-                <span class="site-state-item-count">81</span>
-                <span class="site-state-item-name">articles</span>
+                <span class="site-state-item-count">82</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -505,7 +524,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-number">1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据成员私有"><span class="nav-number">2.</span> <span class="nav-text">数据成员私有</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无参构造函数"><span class="nav-number">3.</span> <span class="nav-text">无参构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化数据成员"><span class="nav-number">4.</span> <span class="nav-text">初始化数据成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#析构函数"><span class="nav-number">5.</span> <span class="nav-text">析构函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚析构函数"><span class="nav-number">6.</span> <span class="nav-text">虚析构函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝构造函数"><span class="nav-number">7.</span> <span class="nav-text">拷贝构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值操作符"><span class="nav-number">8.</span> <span class="nav-text">赋值操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝构造函数和赋值操作符的参数类型加上const"><span class="nav-number">9.</span> <span class="nav-text">拷贝构造函数和赋值操作符的参数类型加上const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的const引用参数"><span class="nav-number">10.</span> <span class="nav-text">函数的const引用参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适当声明成员函数为const"><span class="nav-number">11.</span> <span class="nav-text">适当声明成员函数为const</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计理念："><span class="nav-number"></span> <span class="nav-text">设计理念：</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-number">1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据成员私有"><span class="nav-number">2.</span> <span class="nav-text">数据成员私有</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无参构造函数"><span class="nav-number">3.</span> <span class="nav-text">无参构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化数据成员"><span class="nav-number">4.</span> <span class="nav-text">初始化数据成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#析构函数"><span class="nav-number">5.</span> <span class="nav-text">析构函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚析构函数"><span class="nav-number">6.</span> <span class="nav-text">虚析构函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝构造函数"><span class="nav-number">7.</span> <span class="nav-text">拷贝构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值操作符"><span class="nav-number">8.</span> <span class="nav-text">赋值操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝构造函数和赋值操作符的参数类型加上const"><span class="nav-number">9.</span> <span class="nav-text">拷贝构造函数和赋值操作符的参数类型加上const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的const引用参数"><span class="nav-number">10.</span> <span class="nav-text">函数的const引用参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适当声明成员函数为const"><span class="nav-number">11.</span> <span class="nav-text">适当声明成员函数为const</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计理念"><span class="nav-number"></span> <span class="nav-text">设计理念：</span></a></div>
             
 
           </div>
@@ -542,7 +561,7 @@
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

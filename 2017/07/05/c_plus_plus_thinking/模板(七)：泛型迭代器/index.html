@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="了解其他的算法，分析各自对相应模板参数类型强加的行为
+区分各类不同的泛型算法所要求的不同泛型迭代器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模板(七)：泛型迭代器">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/05/c_plus_plus_thinking/模板(七)：泛型迭代器/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="了解其他的算法，分析各自对相应模板参数类型强加的行为
+区分各类不同的泛型算法所要求的不同泛型迭代器">
+<meta property="og:updated_time" content="2017-10-04T07:57:07.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模板(七)：泛型迭代器">
+<meta name="twitter:description" content="了解其他的算法，分析各自对相应模板参数类型强加的行为
+区分各类不同的泛型算法所要求的不同泛型迭代器">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/05/c_plus_plus_thinking/模板(七)：泛型迭代器/"/>
+
+
+
+
+
+  <title>模板(七)：泛型迭代器 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Accueil
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/05/c_plus_plus_thinking/模板(七)：泛型迭代器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">模板(七)：泛型迭代器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-05T00:00:00+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>了解其他的算法，分析各自对相应模板参数类型强加的行为</li>
+<li>区分各类不同的泛型算法所要求的不同泛型迭代器</li>
+</ul>
+<a id="more"></a>
+<h3 id="一个不同的算法"><a href="#一个不同的算法" class="headerlink" title="一个不同的算法"></a>一个不同的算法</h3><ul>
+<li>颠倒一个序列中的所有元素的顺序</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 不是很正确</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> P, <span class="keyword">class</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(P start, P beyond)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start &lt; beyond) &#123;</div><div class="line">        T t = *start;</div><div class="line">        --beyond;</div><div class="line">        *start = *beyond;</div><div class="line">        *beyond = t;</div><div class="line">        ++start;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>需要定义<code>++p</code>, <code>p != beyond</code>和<code>*p</code></li>
+<li><p>需要定义<code>p &lt; beyond</code>和``–p<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 比较难以保证: ``p &lt; beyond``</div><div class="line">- - 判断两个值是否相等和判断两者的先后次序之间存在很大的差别</div><div class="line">- - 例如 在一个单向链表之中</div><div class="line"></div><div class="line">- 用 ``p != beyond`` 替换 ``p &lt; beyond``</div><div class="line"></div><div class="line">```C++</div><div class="line">template &lt;class P, class T&gt;</div><div class="line">void reverse2(P start, P beyond) &#123;</div><div class="line">    while (start != beyond) &#123;</div><div class="line">        --beyond;</div><div class="line">        if (start != beyond) &#123;</div><div class="line">            T t = *start;</div><div class="line">            *start = *beyond;</div><div class="line">            *beyond = t;</div><div class="line">            ++start;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</li>
+<li><p>用两个(不)等于检查替换了一个次序检查</p>
+</li>
+<li><ul>
+<li>输入有效的前提下，start与beyond不会擦肩而过</li>
+</ul>
+</li>
+<li><p>双重检查消耗资源，但所耗不多，且使得该算法能在更多种类的数据结构中使用</p>
+</li>
+<li><p>考虑对类型P的递减操作要求 </p>
+</li>
+<li>两种方法不用递减(辅助存储区、开销大)</li>
+<li><ul>
+<li>分配一个辅助的T数组，把数据复制到这个数组中，按逆序复制回去</li>
+</ul>
+</li>
+<li><ul>
+<li>分配一个辅助的P数组</li>
+</ul>
+</li>
+</ul>
+<h3 id="需求的分类"><a href="#需求的分类" class="headerlink" title="需求的分类"></a>需求的分类</h3><ul>
+<li>针对不同算法，可行的数据结构面临的问题不同</li>
+<li><ul>
+<li>在一个不同向后读取(逆向读取)的顺序文件中找出一条特定的记录，支持<code>operator--</code>的要求显得过于苛刻</li>
+</ul>
+</li>
+<li><p>不能对不同目标使用同一套需求</p>
+</li>
+<li><p>必须对需求进行适当的分类: 找出一套能很好的适合某个算法集的需求以及另一套适合另一个算法集的需求</p>
+</li>
+</ul>
+<h3 id="输入迭代器"><a href="#输入迭代器" class="headerlink" title="输入迭代器"></a>输入迭代器</h3><ul>
+<li>一个对象希望完全模拟指向序列的指针，能够使用p取出序列元素，使p指向序列下一个元素，能够判断是否到达最后一个元素</li>
+<li><ul>
+<li>需要<code>*p</code>, <code>++P</code>, <code>p != q</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>p++</code>, <code>p == q</code></li>
+</ul>
+</li>
+<li><ul>
+<li>复制p</li>
+</ul>
+</li>
+<li><p>满足这些需求的类型允许按照某个预先规定的顺序读(<strong>但不是写</strong>)序列中的元素</p>
+</li>
+<li><ul>
+<li><strong>输入迭代器(input iterator)</strong>: 一类迭代器</li>
+</ul>
+</li>
+</ul>
+<h3 id="输出迭代器"><a href="#输出迭代器" class="headerlink" title="输出迭代器"></a>输出迭代器</h3><blockquote>
+<p>可以读取一个序列，能够对该序列进行读写操作</p>
+</blockquote>
+<ul>
+<li><p>输出迭代器</p>
+</li>
+<li><p>输入迭代器和输出迭代器之间的唯一区别在<code>*p</code>的行为</p>
+</li>
+<li><ul>
+<li>输入迭代器可以读取但不一定允许修改</li>
+</ul>
+</li>
+<li><ul>
+<li>输出迭代器允许改变但不一定允许读取(p在改变前定位的存储空间可能包括一个不能被合法复制的无效值)</li>
+</ul>
+</li>
+<li><p>使用输入和输出迭代器可以写出泛型复制函数</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> In, <span class="keyword">class</span> Out&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(In start, In beyond, Out result)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != beyond) &#123;</div><div class="line">        *result = *start;</div><div class="line">        ++result;</div><div class="line">        ++start;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>精简版</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> In, <span class="keyword">class</span> Out&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(In start, In beyond, Out result)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != beyond)</div><div class="line">        *result++ = *start++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="前向迭代器"><a href="#前向迭代器" class="headerlink" title="前向迭代器"></a>前向迭代器</h3><blockquote>
+<p>能够遍历序列的元素，以某种方式改变每个元素，一旦接触某个元素之后就再也不能访问这个元素</p>
+</blockquote>
+<ul>
+<li><p>将输入迭代器和输出迭代器的操作结合在一起的迭代器</p>
+</li>
+<li><p>前向迭代器(forward iterator)</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> Iter, <span class="keyword">class</span> Function&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">apply</span><span class="params">(Iter start, Iter beyond, Function f)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (start != beyond) &#123;</div><div class="line">        *start = f(*start);</div><div class="line">        ++start;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>*start</code>进行读取和写入: 前向迭代器</li>
+<li>类型Function: 可以使任何能够像函数一样运行的对象的类型</li>
+<li><ul>
+<li>函数对象: 重载了函数调用操作符<code>operator()</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="双向迭代器"><a href="#双向迭代器" class="headerlink" title="双向迭代器"></a>双向迭代器</h3><ul>
+<li>支持<code>operator--</code></li>
+</ul>
+<h3 id="随机存取迭代器"><a href="#随机存取迭代器" class="headerlink" title="随机存取迭代器"></a>随机存取迭代器</h3><ul>
+<li>p指向序列第一个元素，到达第1000个元素的方式</li>
+<li><ul>
+<li>执行1000次<code>++p</code>？</li>
+</ul>
+</li>
+<li><ul>
+<li><code>p += 1000</code></li>
+</ul>
+</li>
+<li><ul>
+<li>p指向数组元素或者行为类似于指向链表元素的指针的类</li>
+</ul>
+</li>
+<li><ul>
+<li>可能简单方便而效率极差</li>
+</ul>
+</li>
+<li><p>有些算法必须能够高效访问数据结构的任何元素，如折半查找</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> P, <span class="keyword">class</span> X&gt;</div><div class="line"><span class="function">P <span class="title">binsearch</span><span class="params">(P start, P beyond, X x)</span> </span>&#123;</div><div class="line">    P low = start, high = beyond;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (low != high) &#123;</div><div class="line">        P mid = low + (high - low) / <span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span> (x == *mid)</div><div class="line">            <span class="keyword">return</span> mid;</div><div class="line">        <span class="keyword">if</span> (x &lt; *mid)</div><div class="line">            high = mid;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            low = mid + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> beyond;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>关键是能够快速计算指向某个序列中间元素的指针</p>
+</li>
+<li><p>随机访问迭代器增加了操作：<code>+</code>, <code>-</code>, <code>+=</code>, <code>-=</code>和<code>[]</code></p>
+</li>
+</ul>
+<h3 id="是否用继承关联"><a href="#是否用继承关联" class="headerlink" title="是否用继承关联"></a>是否用继承关联</h3><ul>
+<li>前向迭代器能作为输入迭代器或者输出迭代器工作</li>
+<li>双向迭代器能像前向迭代器、输入迭代器和输出迭代器一样工作</li>
+<li><p>随机访问迭代器可以像任何其他的迭代器一样工作</p>
+</li>
+<li><p>但是迭代器不属于继承这种关联类型的范畴</p>
+</li>
+<li><ul>
+<li>一系列类型应该满足或者不应该满足的需求的集合</li>
+</ul>
+</li>
+<li><p>继承增加了更多地需求</p>
+</li>
+<li><ul>
+<li>一个特殊的基类</li>
+</ul>
+</li>
+<li><ul>
+<li>迭代器必须是类而不是內建类型(不能把指针当作迭代器使用了)</li>
+</ul>
+</li>
+<li><p>概念继承(conceptual inheritance): 构建C++库的概念框架的一部分</p>
+</li>
+</ul>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><ul>
+<li>效率是使用C++的原因之一</li>
+<li>STL赋予迭代器 强的性能要求: 特定类型的迭代器要支持的每种操作都要快(分摊执行时间必须是<code>O(1)</code>)</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><blockquote>
+<p>泛型算法: 对于所操作数的数据结构的细节信息只加入最低限度的了解</p>
+</blockquote>
+<ul>
+<li>将用来访问数据结构的类型分类</li>
+</ul>
+<hr>
+<blockquote>
+<p>《C++沉思录(Cplusplus Thinking)》笔记</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/05/c_plus_plus_thinking/模板(八)：泛型迭代器的使用/" rel="next" title="模板(八)：泛型迭代器的使用">
+                <i class="fa fa-chevron-left"></i> 模板(八)：泛型迭代器的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/06/c_plus_plus_thinking/模板(九)：迭代器配接器/" rel="prev" title="模板(九)：迭代器配接器">
+                模板(九)：迭代器配接器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Des Matières
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Ensemble
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">86</span>
+                <span class="site-state-item-name">articles</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个不同的算法"><span class="nav-number">1.</span> <span class="nav-text">一个不同的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需求的分类"><span class="nav-number">2.</span> <span class="nav-text">需求的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入迭代器"><span class="nav-number">3.</span> <span class="nav-text">输入迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出迭代器"><span class="nav-number">4.</span> <span class="nav-text">输出迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前向迭代器"><span class="nav-number">5.</span> <span class="nav-text">前向迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向迭代器"><span class="nav-number">6.</span> <span class="nav-text">双向迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机存取迭代器"><span class="nav-number">7.</span> <span class="nav-text">随机存取迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是否用继承关联"><span class="nav-number">8.</span> <span class="nav-text">是否用继承关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能"><span class="nav-number">9.</span> <span class="nav-text">性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">10.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" href="https://hexo.io">Hexo</a></div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

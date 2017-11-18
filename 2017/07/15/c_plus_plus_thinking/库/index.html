@@ -94,12 +94,13 @@
 
 
 
-<meta name="description" content="C++正则表达式……
+<meta name="description" content="C++正则表达式......
+
 一个库接口设计实例
 一个能够检查文件系统目录的内容的C库例程集
 
-对不直接支持数据抽象的语言通用的约定，使用数据抽象自动进行管理
 
+对不直接支持数据抽象的语言通用的约定，使用数据抽象自动进行管理
 
 在类中隐藏这些约定，使用户免于处理
 
@@ -110,27 +111,29 @@
 <meta property="og:title" content="库">
 <meta property="og:url" content="https://chenfeng.github.io/2017/07/15/c_plus_plus_thinking/库/index.html">
 <meta property="og:site_name" content="chenxfeng's blog">
-<meta property="og:description" content="C++正则表达式……
+<meta property="og:description" content="C++正则表达式......
+
 一个库接口设计实例
 一个能够检查文件系统目录的内容的C库例程集
 
-对不直接支持数据抽象的语言通用的约定，使用数据抽象自动进行管理
 
+对不直接支持数据抽象的语言通用的约定，使用数据抽象自动进行管理
 
 在类中隐藏这些约定，使用户免于处理
 
 
 
 使类更简单，增强类的健壮性">
-<meta property="og:updated_time" content="2017-07-15T09:35:05.443Z">
+<meta property="og:updated_time" content="2017-10-04T07:58:25.718Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="库">
-<meta name="twitter:description" content="C++正则表达式……
+<meta name="twitter:description" content="C++正则表达式......
+
 一个库接口设计实例
 一个能够检查文件系统目录的内容的C库例程集
 
-对不直接支持数据抽象的语言通用的约定，使用数据抽象自动进行管理
 
+对不直接支持数据抽象的语言通用的约定，使用数据抽象自动进行管理
 
 在类中隐藏这些约定，使用户免于处理
 
@@ -232,7 +235,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Accueil
           </a>
         </li>
       
@@ -296,7 +299,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-15T17:00:00+08:00">
                 2017-07-15
@@ -336,12 +339,13 @@
       
 
       
-        <h1 id="C-正则表达式"><a href="#C-正则表达式" class="headerlink" title="C++正则表达式"></a>C++正则表达式</h1><p>……</p>
-<h1 id="一个库接口设计实例"><a href="#一个库接口设计实例" class="headerlink" title="一个库接口设计实例"></a>一个库接口设计实例</h1><ul>
-<li><p>一个能够检查文件系统目录的内容的C库例程集</p>
-</li>
-<li><p>对不直接支持数据抽象的语言通用的约定，使用数据抽象自动进行管理</p>
-</li>
+        <h1 id="C-正则表达式"><a href="#C-正则表达式" class="headerlink" title="C++正则表达式"></a>C++正则表达式</h1><p><code>......</code></p>
+<hr>
+<h1 id="一个库接口设计实例"><a href="#一个库接口设计实例" class="headerlink" title="一个库接口设计实例"></a>一个库接口设计实例</h1><blockquote>
+<p>一个能够检查文件系统目录的内容的C库例程集</p>
+</blockquote>
+<ul>
+<li>对不直接支持数据抽象的语言通用的约定，使用数据抽象自动进行管理</li>
 <li><ul>
 <li>在类中隐藏这些约定，使用户免于处理</li>
 </ul>
@@ -405,10 +409,7 @@
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d1 = readdir(dp1);</div><div class="line">d2 = readdir(dp2);</div><div class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>, d1-&gt;d_name);</div></pre></td></tr></table></figure>
 <ul>
-<li><ul>
 <li>怎样知道调用<code>readdir(dp2)</code>后指针d1是否指向一个有效的位置</li>
-</ul>
-</li>
 </ul>
 <h2 id="优化接口"><a href="#优化接口" class="headerlink" title="优化接口"></a>优化接口</h2><ul>
 <li>重新设计C++接口：用对象取代神奇cookies，取消对指针的使用</li>
@@ -487,8 +488,11 @@
 <li>通过赋值和初始私有化使对Dir对象复制无效</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Dir &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Dir(<span class="keyword">const</span> <span class="keyword">char</span>*);</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(dirent&amp;)</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">seek</span><span class="params">(Dir_offset)</span></span>;</div><div class="line">    <span class="function">Dir_offfset <span class="title">tell</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    DIR* dp;</div><div class="line"></div><div class="line">    Dir(<span class="keyword">const</span> Dir&amp;);</div><div class="line">    Dir&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Dir&amp;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Dir::Dir(<span class="keyword">const</span> <span class="keyword">char</span>* file): dp(opendir(file)) &#123; &#125;</div><div class="line"></div><div class="line"><span class="comment">// 调用closedir除非打开失败(dp为空)</span></div><div class="line">Dir::~Dir() &#123;</div><div class="line">    <span class="keyword">if</span> (dp)</div><div class="line">        closedir(dp);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> Dir::seek(Dir_offset pos) &#123;</div><div class="line">    <span class="keyword">if</span> (dp)</div><div class="line">        seekdir(dp, pos);</div><div class="line">&#125;</div><div class="line"></div><div class="line">Dir_offset Dir::tell() <span class="keyword">const</span> &#123;</div><div class="line">    <span class="keyword">if</span> (dp)</div><div class="line">        <span class="keyword">return</span> telldir(dp);</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Dir::read(dirent&amp; d) &#123;</div><div class="line">    <span class="keyword">if</span> (dp) &#123;</div><div class="line">        dirent* r = readdir(dp);</div><div class="line">        <span class="keyword">if</span> (r) &#123;</div><div class="line">            d = *r;</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="库设计就是语言设计"><a href="#库设计就是语言设计" class="headerlink" title="库设计就是语言设计"></a>库设计就是语言设计</h1><p>C++的一个重要思想：用户自定义类型可以很容易当作內建类型使用</p>
+<hr>
+<h1 id="库设计就是语言设计"><a href="#库设计就是语言设计" class="headerlink" title="库设计就是语言设计"></a>库设计就是语言设计</h1><blockquote>
+<p>C++的一个重要思想：用户自定义类型可以很容易当作內建类型使用</p>
 <p>用户可以定制语言：语法与常规不同时会引起混淆(类设计者应当避免)</p>
+</blockquote>
 <h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><ul>
 <li>例子：变长字符串的通用类</li>
 </ul>
@@ -504,11 +508,11 @@
 </ul>
 </li>
 </ul>
-<h2 id="内存耗尽"><a href="#内存耗尽" class="headerlink" title="内存耗尽"></a>内存耗尽</h2><ul>
-<li><p>用户请求很大的String，没有足够的内存空间</p>
-</li>
-<li><p>构造函数中的new表达式失败</p>
-</li>
+<h2 id="内存耗尽"><a href="#内存耗尽" class="headerlink" title="内存耗尽"></a>内存耗尽</h2><blockquote>
+<p>用户请求很大的String，没有足够的内存空间</p>
+</blockquote>
+<ul>
+<li>构造函数中的new表达式失败</li>
 <li><ul>
 <li>库抛出异常</li>
 </ul>
@@ -528,32 +532,32 @@
 </ul>
 </li>
 <li><ul>
-<li>对零指针运用delete是无操作(no-op)，析构函数无问题</li>
+<li>对零指针运用<code>delete</code>是无操作(no-op)，析构函数无问题</li>
 </ul>
 </li>
 <li><ul>
-<li>对分配失败的String运用operator char*()会返回一个零指针</li>
+<li>对分配失败的String运用<code>operator char*()</code>会返回一个零指针</li>
 </ul>
 </li>
 <li><ul>
 <li>得到垃圾数据，或者内核转储(core dump)</li>
 </ul>
 </li>
-</ul>
-<p>解决方法：</p>
-<ul>
-<li>声明内存耗尽的结果是不确定的</li>
+<li><p>解决方法：</p>
+</li>
+<li><p>1.声明内存耗尽的结果是不确定的：</p>
+</li>
 <li><ul>
-<li>将负担转移给用户：检测operator char*的返回值</li>
+<li>将负担转移给用户：检测<code>operator char*</code>的返回值</li>
 </ul>
 </li>
 <li><ul>
 <li>容易被忽视</li>
 </ul>
 </li>
-<li><p>在构造函数中检查内存分配是否成功</p>
+<li><p>2.在构造函数中检查内存分配是否成功</p>
 </li>
-<li>在operator char*()内部检查对象是否有效</li>
+<li>3.在<code>operator char*()</code>内部检查对象是否有效</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> String &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    String(<span class="keyword">char</span>* p) &#123;</div><div class="line">        sz = <span class="built_in">strlen</span>(p);</div><div class="line">        data = <span class="keyword">new</span> <span class="keyword">char</span>[sz + <span class="number">1</span>];</div><div class="line">        <span class="keyword">if</span> (data == <span class="number">0</span>)</div><div class="line">            error;</div><div class="line">        <span class="keyword">else</span> </div><div class="line">            <span class="built_in">strcpy</span>(data, p);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">operator</span> <span class="keyword">char</span>*() &#123;</div><div class="line">        <span class="keyword">if</span> (data == <span class="number">0</span>)</div><div class="line">            error();</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <ul>
@@ -571,19 +575,19 @@
 <li>带错误检测的代码</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="function">String <span class="title">s</span><span class="params">(p)</span></span>;</div><div class="line">    <span class="comment">// ... : regular code</span></div><div class="line">&#125; <span class="keyword">catch</span>(<span class="built_in">std</span>::bad_alloc) &#123;</div><div class="line">    <span class="comment">// ... : memory run-out</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h2><ul>
-<li><p>缺省的复制构造函数和赋值操作符会使data成员指向相同内存(会被析构函数释放两次)</p>
-</li>
-<li><p>通过私有化复制构造函数和赋值操作符规定不能复制String</p>
-</li>
+<h2 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h2><blockquote>
+<p>缺省的复制构造函数和赋值操作符会使data成员指向相同内存(会被析构函数释放两次)</p>
+</blockquote>
+<ul>
+<li>通过私有化复制构造函数和赋值操作符规定不能复制String</li>
 <li><ul>
 <li>声明而不定义相关不是虚函数的函数(复制构造函数不能是虚函数，赋值操作符可以使)</li>
 </ul>
 </li>
-</ul>
-<p>考虑允许复制String</p>
-<ul>
-<li>将某个长度的String赋给一个长度不同的String</li>
+<li><p>考虑允许复制String</p>
+</li>
+<li><p>将某个长度的String赋给一个长度不同的String</p>
+</li>
 <li><ul>
 <li>一种可能：改变目标String的长度</li>
 </ul>
@@ -591,51 +595,33 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> String &#123;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    String(<span class="keyword">char</span>* p) &#123;</div><div class="line">        assign(p, <span class="built_in">strlen</span>(p));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    String(<span class="keyword">const</span> String&amp; s) &#123;</div><div class="line">        assign(s.data, s.sz);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~String() &#123;</div><div class="line">        <span class="keyword">delete</span> [] data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    String&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> String&amp; s) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;s) &#123;</div><div class="line">            <span class="keyword">delete</span> [] data;</div><div class="line">            assign(s.data, s.sz);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">operator</span> <span class="keyword">char</span>*() &#123;</div><div class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> sz;</div><div class="line">    <span class="keyword">char</span>* data;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">assign</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* s, <span class="keyword">unsigned</span> len)</span> </span>&#123;</div><div class="line">        data = <span class="keyword">new</span> <span class="keyword">char</span>[len + <span class="number">1</span>];</div><div class="line">        <span class="keyword">if</span> (data == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="built_in">std</span>::bad_alloc();</div><div class="line">        sz = len;</div><div class="line">        <span class="built_in">strcpy</span>(data, s);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="隐藏实现"><a href="#隐藏实现" class="headerlink" title="隐藏实现"></a>隐藏实现</h2><ul>
-<li><p>public的operator char*()暴露了3个漏洞</p>
+<li><p>public的<code>operator char*()</code>暴露了3个漏洞</p>
 </li>
-<li><ul>
 <li><ol>
 <li>用户可以获得一个指针，修改保存在data中的字符</li>
 </ol>
 </li>
-</ul>
-</li>
-<li><ul>
 <li><ul>
 <li>String类没有真正控制自己的资源</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><ul>
 <li><ol>
 <li>释放String时所占用内存也被释放，任何指向String的指针都会失效</li>
 </ol>
 </li>
-</ul>
-</li>
-<li><ul>
 <li><ul>
 <li>任何指针都会有的同样的问题</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><ul>
 <li><ol>
 <li>通过释放和重新分配目标String使用的内存将一个String的赋值实现为另一个</li>
 </ol>
 </li>
-</ul>
-</li>
-<li><ul>
 <li><ul>
 <li>导致任何指向String内部的指针失效</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p>定义一个向const char<em>的类型转换而不是向char</em>的类型转换可以解决第一个问题</p>
+<li><p>定义一个向<code>const char*</code>的类型转换而不是向<code>char*</code>的类型转换可以解决第一个问题</p>
 </li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> String &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">operator</span> <span class="keyword">const</span> <span class="keyword">char</span>*() <span class="keyword">const</span> &#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
@@ -645,7 +631,7 @@
 <li><p>放弃类型转换可以彻底解决这个问题</p>
 </li>
 <li><ul>
-<li>但与存在的无数个操纵char*的非标准函数不兼容</li>
+<li>但与存在的无数个操纵<code>char*</code>的非标准函数不兼容</li>
 </ul>
 </li>
 <li><p>通过显式函数操作得到C串而不是隐式进行</p>
@@ -666,7 +652,7 @@
 <h3 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h3><ul>
 <li><p>重载操作符为比较和合并操作提供更自然的接口</p>
 </li>
-<li><p>+=修改左边的String，作为类String的成员</p>
+<li><p><code>+=</code>修改左边的String，作为类String的成员</p>
 </li>
 <li><ul>
 <li>防止把一个String与自身连接：调用assign前保存指向旧值的指针</li>
@@ -675,7 +661,7 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">String&amp; String::<span class="keyword">operator</span>+=(<span class="keyword">const</span> String&amp; s) &#123;</div><div class="line">    <span class="keyword">char</span>* odata = data;</div><div class="line"></div><div class="line">    assign(data, sz + s.sz + <span class="number">1</span>);</div><div class="line">    <span class="built_in">strcat</span>(data, s.data);</div><div class="line">    <span class="keyword">delete</span> [] odata;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li>operator+：二元操作符定义为非成员函数</li>
+<li><code>operator+</code>：二元操作符定义为非成员函数</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">String <span class="keyword">operator</span>+(<span class="keyword">const</span> String&amp; op1, <span class="keyword">const</span> String&amp; op2) &#123;</div><div class="line">    <span class="function">String <span class="title">ret</span><span class="params">(op1)</span></span>;</div><div class="line">    ret += op2;</div><div class="line">    <span class="keyword">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
@@ -695,21 +681,29 @@
 <li>将第一次出现的某个字符或者所有该字符替换为某个其他字符</li>
 <li>将第一个出现的某个子字符串或者所有该子字符串替换为某个其他子字符串，长度不必相同</li>
 </ul>
-<p>Substring类：</p>
+<blockquote>
+<p>Substring类</p>
+</blockquote>
 <ul>
 <li>指向包含它的String的指针和某个长度</li>
 <li><p>或者两个指向String内部的指针：头和尾</p>
 </li>
 <li><p>提供遍历、返回下一个符合规定的Substring等操作</p>
 </li>
+<li><ul>
 <li>类似迭代器</li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <p>相关问题既影响库设计者，也影响语言设计者</p>
 </blockquote>
-<h1 id="语言设计就是库设计"><a href="#语言设计就是库设计" class="headerlink" title="语言设计就是库设计"></a>语言设计就是库设计</h1><p>C++中简化库设计的部分</p>
+<hr>
+<h1 id="语言设计就是库设计"><a href="#语言设计就是库设计" class="headerlink" title="语言设计就是库设计"></a>语言设计就是库设计</h1><blockquote>
+<p>C++中简化库设计的部分</p>
+</blockquote>
 <ul>
-<li>设计一个好程序库的要求之一就是彻底隔离接口和实现</li>
+<li>设计一个好程序库的要求之一就是<strong>彻底隔离接口和实现</strong></li>
 </ul>
 <h2 id="抽象数据类型"><a href="#抽象数据类型" class="headerlink" title="抽象数据类型"></a>抽象数据类型</h2><h3 id="构造函数和析构函数"><a href="#构造函数和析构函数" class="headerlink" title="构造函数和析构函数"></a>构造函数和析构函数</h3><ul>
 <li><p>C++语言中将接口与实现分隔开的最基本的方法之一：采用构造函数和析构函数</p>
@@ -726,17 +720,21 @@
 </li>
 </ul>
 <h3 id="成员函数与可见度控制"><a href="#成员函数与可见度控制" class="headerlink" title="成员函数与可见度控制"></a>成员函数与可见度控制</h3><ul>
-<li><p>要能够防止用户访问不应被看到的类成员</p>
-</li>
+<li>要能够防止用户访问不应被看到的类成员</li>
 <li><ul>
 <li>私有成员</li>
 </ul>
 </li>
 </ul>
-<h2 id="库和抽象数据类型"><a href="#库和抽象数据类型" class="headerlink" title="库和抽象数据类型"></a>库和抽象数据类型</h2><h3 id="类型安全的链接-linkage"><a href="#类型安全的链接-linkage" class="headerlink" title="类型安全的链接(linkage)"></a>类型安全的链接(linkage)</h3><p>例子：C++曾要求程序员在重载全局函数是显式编写类似下面的语句</p>
-<ul>
+<h2 id="库和抽象数据类型"><a href="#库和抽象数据类型" class="headerlink" title="库和抽象数据类型"></a>库和抽象数据类型</h2><h3 id="类型安全的链接-linkage"><a href="#类型安全的链接-linkage" class="headerlink" title="类型安全的链接(linkage)"></a>类型安全的链接(linkage)</h3><ul>
+<li>例子：C++曾要求程序员在重载全局函数是显式编写类似下面的语句</li>
+<li><ul>
 <li><code>extern double sqrt(double);</code></li>
-<li><p><code>extern float sqrt(float);</code> // 曾经是错误</p>
+</ul>
+</li>
+<li><ul>
+<li><code>extern float sqrt(float); // 曾经是错误</code></li>
+</ul>
 </li>
 <li><p>使C和C++函数在单个程序中共存更简单：C不允许两个函数共用同一个名字</p>
 </li>
@@ -745,7 +743,7 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">overload <span class="built_in">sqrt</span>;</div><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">double</span>)</span></span>;</div><div class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">float</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">float</span>)</span></span>;</div></pre></td></tr></table></figure>
 <ul>
-<li><p>C++89版本废弃overload声明，解决多个头文件中的声明的先后问题</p>
+<li><p>C++89版本废弃overload声明，<strong>解决多个头文件中的声明的先后问题</strong></p>
 </li>
 <li><p>与C程序通信的问题依旧存在：引进新的声明语法</p>
 </li>
@@ -833,7 +831,7 @@
 </ul>
 </li>
 <li><ul>
-<li>new(p) Foo将现在由p定址的内存中分配一个Foo对象，即使类Foo有自己的内存分配器(allocator)</li>
+<li><code>new(p) Foo</code>将现在由p定址的内存中分配一个Foo对象，即使类Foo有自己的内存分配器(allocator)</li>
 </ul>
 </li>
 </ul>
@@ -844,10 +842,7 @@
 </ul>
 </li>
 <li><ul>
-<li><ul>
 <li>对于具有复杂类成员的简单类较麻烦</li>
-</ul>
-</li>
 </ul>
 </li>
 <li><ul>
@@ -862,11 +857,15 @@
 <ul>
 <li>创建长度为负的向量</li>
 <li>没有足够大的内存保存长向量</li>
-<li>小标越界</li>
+<li>下标越界</li>
 <li>元素构造函数内部出错</li>
 </ul>
 <blockquote>
 <p>出现错误时能够继续执行程序<br>返回错误标志不起作用：检查所有错误值使程序过于复杂<br>C++异常处理机制用于说明出现不应该被忽视的错误，用户如果愿意可以进行检查</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>《C++沉思录(Cplusplus Thinking)》笔记</p>
 </blockquote>
 
       
@@ -964,10 +963,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Ensemble
           </li>
         </ul>
       
@@ -989,8 +988,8 @@
             
               <a href="/archives">
             
-                <span class="site-state-item-count">87</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">86</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1074,7 +1073,7 @@
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

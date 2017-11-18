@@ -197,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Accueil
           </a>
         </li>
       
@@ -234,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/21/economics/供给与需求的基本原理/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/20/c_plus_plus_thinking/模板(一)：设计容器类/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -253,7 +253,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/21/economics/供给与需求的基本原理/" itemprop="url">供给与需求的基本原理</a></h1>
+                <a class="post-title-link" href="/2017/01/20/c_plus_plus_thinking/模板(一)：设计容器类/" itemprop="url">模板(一)：设计容器类</a></h1>
         
 
         <div class="post-meta">
@@ -263,139 +263,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-21T00:00:00+08:00">
-                2017-01-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="需求表"><a href="#需求表" class="headerlink" title="需求表"></a>需求表</h3><ul>
-<li><p>在其他条件相同时，一种物品的价格越高，人们愿意购买的数量就越少；而市场价格越低，人们愿意购买的数量就越多</p>
-</li>
-<li><p>价格与需求之间的关系可以用一张需求表(demand schedule)或一条需求曲线(demand curve)表示</p>
-</li>
-</ul>
-<ul>
-<li>需求曲线：数量和价格呈反比关系</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/21/economics/供给与需求的基本原理/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/20/c_plus_plus_thinking/模板（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenxf">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="chenxfeng's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/20/c_plus_plus_thinking/模板（一）/" itemprop="url">模板之设计容器类</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-20T00:00:00+08:00">
                 2017-01-20
@@ -436,26 +304,17 @@
 
       
         
-          <h2 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h2><p>容器：保存值的集合的数据结构</p>
+          <h3 id="容器类设计"><a href="#容器类设计" class="headerlink" title="容器类设计"></a>容器类设计</h3><blockquote>
+<p>容器：保存值的集合的数据结构</p>
+</blockquote>
 <ul>
 <li>语言内建容器：数组、结构体</li>
-<li><p>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</p>
-</li>
-<li><p>容器包含对象</p>
-</li>
-<li><p>复制容器意味复制存储在容器中的值(而不是容器本身)</p>
-</li>
-<li><p>函数传参数方式 void f(const Container<T>&amp;)避免大对象的复制</p>
-</li>
-<li><p>区分读和写</p>
-</li>
+<li>C++没有提供更多的内建容器：不将容器的设计限定到某种单一的方法上(可能不存在唯一正确的方法)</li>
 </ul>
-<p>operator[]只用于取数</p>
-<p>用成员函数update(i, x)修改索引为i的元素为x</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/20/c_plus_plus_thinking/模板（一）/#more" rel="contents">
-              Read more &raquo;
+            <a class="btn" href="/2017/01/20/c_plus_plus_thinking/模板(一)：设计容器类/#more" rel="contents">
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -505,7 +364,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/19/c_plus_plus_thinking/不应当使用虚函数的情况/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/19/c_plus_plus_thinking/类和继承(五)：不应当使用虚函数的情况/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -524,7 +383,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/19/c_plus_plus_thinking/不应当使用虚函数的情况/" itemprop="url">不应当使用虚函数的情况</a></h1>
+                <a class="post-title-link" href="/2017/01/19/c_plus_plus_thinking/类和继承(五)：不应当使用虚函数的情况/" itemprop="url">类和继承(五)：不应当使用虚函数的情况</a></h1>
         
 
         <div class="post-meta">
@@ -534,7 +393,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T00:00:00+08:00">
                 2017-01-19
@@ -575,23 +434,30 @@
 
       
         
-          <p>关于是否应该所有成员函数缺省为虚函数的争论</p>
+          <blockquote>
+<p>关于是否应该所有成员函数缺省为虚函数的争论</p>
 <p><em>只有涉及继承时，才需要考虑与此相关的问题</em></p>
-<h2 id="适用的情况"><a href="#适用的情况" class="headerlink" title="适用的情况"></a>适用的情况</h2><ul>
+</blockquote>
+<ul>
+<li>适用的情况</li>
+<li><ul>
 <li>基类派生出的子类需要重写(or 覆盖，override)，基类中相应的成员和函数应声明为虚函数</li>
 </ul>
-<h2 id="不适用的情况"><a href="#不适用的情况" class="headerlink" title="不适用的情况"></a>不适用的情况</h2><ul>
-<li><p>虚函数代价并不是非常高，当时会带来一定的额外开销</p>
 </li>
-<li><p>有些情况下非虚函数能够正确运行而虚函数不能</p>
-</li>
-<li><p>有些类并非为继承而设计(设计时并不兼容被继承)</p>
+<li>不适用的情况</li>
+<li><ul>
+<li>虚函数代价并不是非常高，当时会带来一定的额外开销</li>
+</ul>
 </li>
 </ul>
+<blockquote>
+<p>有些情况下非虚函数能够正确运行而虚函数不能</p>
+<p>有些类并非为继承而设计(设计时并不兼容被继承)</p>
+</blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/19/c_plus_plus_thinking/不应当使用虚函数的情况/#more" rel="contents">
-              Read more &raquo;
+            <a class="btn" href="/2017/01/19/c_plus_plus_thinking/类和继承(五)：不应当使用虚函数的情况/#more" rel="contents">
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -641,7 +507,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/18/c_plus_plus_thinking/面向对象编程/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/18/c_plus_plus_thinking/类和继承(四)：面向对象编程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -660,7 +526,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/18/c_plus_plus_thinking/面向对象编程/" itemprop="url">面向对象编程</a></h1>
+                <a class="post-title-link" href="/2017/01/18/c_plus_plus_thinking/类和继承(四)：面向对象编程/" itemprop="url">类和继承(四)：面向对象编程</a></h1>
         
 
         <div class="post-meta">
@@ -670,7 +536,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-18T00:00:00+08:00">
                 2017-01-18
@@ -711,19 +577,32 @@
 
       
         
-          <p><strong>一个面向对象程序范例</strong></p>
-<p>面向对象对象编程三要素：</p>
-<ol>
+          <blockquote>
+<p>一个面向对象程序范例</p>
+</blockquote>
+<ul>
+<li>面向对象对象编程三要素：</li>
+<li><ol>
 <li>数据抽象</li>
+</ol>
+</li>
+<li><ol>
 <li>继承</li>
+</ol>
+</li>
+<li><ol>
 <li>动态绑定</li>
 </ol>
-<p><strong>适用于大型程序</strong></p>
-<h3 id="以算术表达式树形表示的面向对象解决方案为例"><a href="#以算术表达式树形表示的面向对象解决方案为例" class="headerlink" title="以算术表达式树形表示的面向对象解决方案为例"></a>以算术表达式树形表示的面向对象解决方案为例</h3>
+</li>
+</ul>
+<blockquote>
+<p>适用于大型程序</p>
+</blockquote>
+<h2 id="以算术表达式树形表示的面向对象解决方案为例"><a href="#以算术表达式树形表示的面向对象解决方案为例" class="headerlink" title="以算术表达式树形表示的面向对象解决方案为例"></a>以算术表达式树形表示的面向对象解决方案为例</h2>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/18/c_plus_plus_thinking/面向对象编程/#more" rel="contents">
-              Read more &raquo;
+            <a class="btn" href="/2017/01/18/c_plus_plus_thinking/类和继承(四)：面向对象编程/#more" rel="contents">
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -773,7 +652,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/17/c_plus_plus_thinking/句柄类(handle)/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/17/c_plus_plus_thinking/类和继承(三)：句柄类(handle)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -792,7 +671,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/17/c_plus_plus_thinking/句柄类(handle)/" itemprop="url">句柄类(handle)</a></h1>
+                <a class="post-title-link" href="/2017/01/17/c_plus_plus_thinking/类和继承(三)：句柄类(handle)/" itemprop="url">类和继承(三)：句柄类(handle)</a></h1>
         
 
         <div class="post-meta">
@@ -802,7 +681,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-17T00:00:00+08:00">
                 2017-01-17
@@ -843,18 +722,36 @@
 
       
         
-          <p>创建代理会复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
-<h3 id="某些类应当避免复制："><a href="#某些类应当避免复制：" class="headerlink" title="某些类应当避免复制："></a>某些类应当避免复制：</h3><ul>
+          <blockquote>
+<p>代理的创建 会 复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
+</blockquote>
+<ul>
+<li>某些类应当避免复制</li>
+<li><ul>
 <li>对象很大，资源消耗多</li>
+</ul>
+</li>
+<li><ul>
 <li>每个对象代表一种不能被轻易复制的资源，如文件</li>
+</ul>
+</li>
+<li><ul>
 <li>其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大</li>
+</ul>
+</li>
+<li><ul>
 <li>对象代表位于网络连接另一端的其他对象</li>
+</ul>
+</li>
+<li><ul>
 <li>多态性环境中只知对象基类类型而不知对象本身类型</li>
+</ul>
+</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/17/c_plus_plus_thinking/句柄类(handle)/#more" rel="contents">
-              Read more &raquo;
+            <a class="btn" href="/2017/01/17/c_plus_plus_thinking/类和继承(三)：句柄类(handle)/#more" rel="contents">
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -904,7 +801,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/16/c_plus_plus_thinking/代理类/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/16/c_plus_plus_thinking/类和继承(二)：代理类/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -923,7 +820,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/16/c_plus_plus_thinking/代理类/" itemprop="url">代理类</a></h1>
+                <a class="post-title-link" href="/2017/01/16/c_plus_plus_thinking/类和继承(二)：代理类/" itemprop="url">类和继承(二)：代理类</a></h1>
         
 
         <div class="post-meta">
@@ -933,7 +830,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T00:00:00+08:00">
                 2017-01-16
@@ -974,15 +871,19 @@
 
       
         
-          <p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
-<p>代理 surrogate<br>允许将整个派生层次压缩在一个对象类型中</p>
+          <blockquote>
+<p>如何设计C++容器，能够包含类型不同而彼此相关的对象<br>如何将继承自同一父类的属于不同子类的对象装入同一个容器（如vector）之中？<br>(将容器和继承运用在一起)</p>
+</blockquote>
 <ul>
-<li>surrogate是handle(句柄)类中最简单的一种</li>
+<li>代理 (surrogate) 允许将整个派生层次压缩在一个对象类型中</li>
 </ul>
+<blockquote>
+<p>surrogate是handle(句柄)类中最简单的一种</p>
+</blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/16/c_plus_plus_thinking/代理类/#more" rel="contents">
-              Read more &raquo;
+            <a class="btn" href="/2017/01/16/c_plus_plus_thinking/类和继承(二)：代理类/#more" rel="contents">
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1032,7 +933,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/15/c_plus_plus_thinking/类设计者的核查表/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/15/c_plus_plus_thinking/类和继承(一)：类设计者的核查表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -1051,7 +952,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/15/c_plus_plus_thinking/类设计者的核查表/" itemprop="url">类设计者的核查表</a></h1>
+                <a class="post-title-link" href="/2017/01/15/c_plus_plus_thinking/类和继承(一)：类设计者的核查表/" itemprop="url">类和继承(一)：类设计者的核查表</a></h1>
         
 
         <div class="post-meta">
@@ -1061,7 +962,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-15T00:00:00+08:00">
                 2017-01-15
@@ -1102,13 +1003,20 @@
 
       
         
-          <h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>简单的类 结构就是接口 不需要构造函数</p>
-<h2 id="数据成员私有"><a href="#数据成员私有" class="headerlink" title="数据成员私有"></a>数据成员私有</h2><p>阻止类的使用者私自改动<br>提供相应接口 供使用者执行修改或访问等操作</p>
-<h2 id="无参构造函数"><a href="#无参构造函数" class="headerlink" title="无参构造函数"></a>无参构造函数</h2><p>声明对象数组必需</p>
+          <h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><ul>
+<li>简单的类，结构就是接口，不需要构造函数</li>
+</ul>
+<h3 id="数据成员私有"><a href="#数据成员私有" class="headerlink" title="数据成员私有"></a>数据成员私有</h3><ul>
+<li>阻止类的使用者私自改动</li>
+<li>提供相应接口，供使用者执行修改或访问等操作</li>
+</ul>
+<h3 id="无参构造函数"><a href="#无参构造函数" class="headerlink" title="无参构造函数"></a>无参构造函数</h3><ul>
+<li>声明对象数组必需</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/15/c_plus_plus_thinking/类设计者的核查表/#more" rel="contents">
-              Read more &raquo;
+            <a class="btn" href="/2017/01/15/c_plus_plus_thinking/类和继承(一)：类设计者的核查表/#more" rel="contents">
+              Lire la suite &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1197,8 +1105,8 @@
             
               <a href="/archives">
             
-                <span class="site-state-item-count">87</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">86</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1266,7 +1174,7 @@
 
   <span class="post-meta-divider">|</span>
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         

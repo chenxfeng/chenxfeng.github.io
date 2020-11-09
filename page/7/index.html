@@ -1527,7 +1527,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute5/">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/28/parellel_and_distributed_computing/paralell_compute6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chenxf">
@@ -1546,7 +1546,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" itemprop="url">搜索、归并与排序的并行算法</a></h1>
+                <a class="post-title-link" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/" itemprop="url">平面几何的并行算法</a></h1>
         
 
         <div class="post-meta">
@@ -1597,17 +1597,18 @@
 
       
         
-          <p>(并行与分布式计算三<rev2>)</p>
-<h2 id="并行搜索的基本思想"><a href="#并行搜索的基本思想" class="headerlink" title="并行搜索的基本思想"></a>并行搜索的基本思想</h2><p>在升序数组中采用与二分搜索类似的p+1分搜索: </p>
+          <p>(并行与分布式计算五)</p>
+<p>computational geometry: design efficient algorithms to handle computational problems dealing with collections of objects in Euclidean space</p>
+<p>three technique: </p>
 <ul>
-<li>使用递归按比例缩小搜索范围的办法</li>
-<li>二分搜索每层递归中加入一次比较，p+1分搜索每层递归中加入p次比较</li>
-<li>上述的每层p次比较可以用p个处理器同时进行</li>
+<li>divide-and-conquer 分治</li>
+<li>plane-sweep tree 平面扫描树</li>
+<li><em>pipelined divide-and-conquer</em></li>
 </ul>
-<p>长度为n的升序数组，用p个处理器做p+1分搜索，并行时间为$O(log_{p+1}(n+1))$</p>
+<h2 id="凸包-Convex-Hull-计算"><a href="#凸包-Convex-Hull-计算" class="headerlink" title="凸包(Convex-Hull)计算"></a>凸包(Convex-Hull)计算</h2>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/#more" rel="contents">
+            <a class="btn" href="/2017/03/28/parellel_and_distributed_computing/paralell_compute6/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1776,7 +1777,7 @@
         <div class="copyright" >
   
   &copy;  2017 &mdash; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

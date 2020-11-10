@@ -130,7 +130,7 @@
 使用openmp编写一些并行行为更容易
 很难对一些底层的线程交互进行编程
 共享内存">
-<meta property="og:updated_time" content="2020-11-09T15:54:06.717Z">
+<meta property="og:updated_time" content="2020-11-10T02:07:08.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高性能计算">
 <meta name="twitter:description" content="三种主要的并行编程模型
@@ -974,21 +974,19 @@
 <li>缓存行/缓存块</li>
 <li>写缺失(write-miss)、读缺失(read-miss)、伪共享(false sharing)</li>
 </ul>
-<h2 id="MPI"><a href="#MPI" class="headerlink" title="MPI"></a>MPI</h2><p>使用消息传递对分布式内存进行编程</p>
-<p>MPI：消息传递接口(Message-Passing Interface)</p>
-<p>运行在一个核-内存对上的程序为一个<strong>进程</strong>，两个进程间通过发送和接收函数进行通信</p>
-<h3 id="编译与运行"><a href="#编译与运行" class="headerlink" title="编译与运行"></a>编译与运行</h3><ul>
+<h2 id="MPI"><a href="#MPI" class="headerlink" title="MPI"></a>MPI</h2><p>MPI：消息传递接口(Message-Passing Interface)</p>
+<ul>
+<li>使用消息传递对分布式内存进行编程</li>
+<li>运行在一个核-内存对上的程序为一个<strong>进程</strong>，两个进程间通过发送和接收函数进行通信</li>
+</ul>
+<p>编译与运行</p>
+<ul>
 <li>编译：<code>mpicc</code>; <code>mpic++</code>; <code>mpicxx</code></li>
 <li><ul>
-<li>C/C++语言的包装脚本(wrapper script)</li>
+<li>C/C++语言的包装脚本(wrapper script)；使用<code>GUN gcc/g++</code>编译器</li>
 </ul>
 </li>
-<li><ul>
-<li>使用<code>GUN gcc/g++</code>编译器</li>
-</ul>
-</li>
-<li><p>运行：</p>
-</li>
+<li>运行：</li>
 <li><ul>
 <li><code>mpirun -np numOfProcess ./xxx</code></li>
 </ul>
@@ -998,14 +996,10 @@
 </ul>
 </li>
 </ul>
-<h3 id="MPI程序"><a href="#MPI程序" class="headerlink" title="MPI程序"></a>MPI程序</h3><ul>
-<li>头文件：<code>mpi.h</code></li>
-<li><ul>
+<h3 id="MPI程序"><a href="#MPI程序" class="headerlink" title="MPI程序"></a>MPI程序</h3><p>MPI头文件：<code>mpi.h</code></p>
+<ul>
 <li>包括了MPI函数的原型、宏定义、类型定义等以及编译MPI程序所需要的全部定义与声明</li>
-</ul>
-</li>
-<li><p>MPI定义的标识符都由字符串<code>MPI_</code>开始</p>
-</li>
+<li>MPI定义的标识符都由字符串<code>MPI_</code>开始</li>
 <li><ul>
 <li>下划线后第一个字母大写表示函数名与MPI定义类型</li>
 </ul>
@@ -1014,44 +1008,23 @@
 <li>MPI定义的宏和常量的所有字母都是大写的</li>
 </ul>
 </li>
-<li><p><code>MPI_Init</code>：告知MPI系统进行所有必要的初始化设置</p>
-</li>
-<li><ul>
+</ul>
+<p><code>MPI_Init</code>：告知MPI系统进行所有必要的初始化设置</p>
+<ul>
 <li>语法结构：<code>int MPI_Init(int* argc_p /* in/out */, char *** arg_p /* in/out */);</code></li>
-</ul>
-</li>
-<li><ul>
 <li>不适用参数时指定为 <code>NULL</code></li>
-</ul>
-</li>
-<li><ul>
 <li>为消息缓冲区分配存储空间；为进程指定进程号</li>
-</ul>
-</li>
-<li><ul>
 <li>程序调用<code>MPI_Init</code>之前不应该调用其他MPI函数</li>
 </ul>
-</li>
-<li><p><code>MPI_Finalize</code>告知MPI系统使用完毕，为MPI分配的任何资源都可以释放</p>
-</li>
-<li><ul>
+<p><code>MPI_Finalize</code>告知MPI系统使用完毕，为MPI分配的任何资源都可以释放</p>
+<ul>
 <li>语法结构：<code>MPI_Finalize(void);</code></li>
-</ul>
-</li>
-<li><ul>
 <li>程序调用<code>MPI_Finalize</code>后不应该再调用MPI函数</li>
 </ul>
-</li>
-<li><p>MPI程序基本框架：</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// ......</div><div class="line">#include &lt;mpi.h&gt;</div><div class="line"></div><div class="line">int main(int argc, char **argv) &#123;</div><div class="line">    // ...</div><div class="line">    MPI_Init(&amp;argc, &amp;argv);</div><div class="line">    //...</div><div class="line">    MPI_Finalize();</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="通信子"><a href="#通信子" class="headerlink" title="通信子"></a>通信子</h3><ul>
-<li>通信子(communicator)：一组可以互相发送消息的进程集合</li>
-<li><ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///MPI程序基本框架</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">    MPI_Init(&amp;argc, &amp;argv);</div><div class="line">    <span class="comment">//...</span></div><div class="line">    MPI_Finalize();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="通信子"><a href="#通信子" class="headerlink" title="通信子"></a>通信子</h3><p>通信子(communicator)：一组可以互相发送消息的进程集合</p>
+<ul>
 <li>MPI_Init在用户启动程序时定义由用户启动的所有进程组成的通信子：<code>MPI_COMM_WORLD</code></li>
-</ul>
-</li>
 <li><ul>
 <li>获取进程数：<code>int MPI_Comm_size(MPI_Comm comm /* in */, int* comm_sz_p /* out */);</code></li>
 </ul>
@@ -1065,46 +1038,21 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int commSize, commRank;</div><div class="line">MPI_Comm_rank(MPI_COMM_WORLD, &amp;commRank);</div><div class="line">MPI_Comm_size(MPI_COMM_WORLD, &amp;commSize);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> commSize, commRank;</div><div class="line">MPI_Comm_rank(MPI_COMM_WORLD, &amp;commRank);</div><div class="line">MPI_Comm_size(MPI_COMM_WORLD, &amp;commSize);</div></pre></td></tr></table></figure>
+<p>SPMD：单程序多数据流(Single Program, Multiple Data, SPMD)</p>
 <ul>
-<li>SPMD：单程序多数据流(Single Program, Multiple Data, SPMD)</li>
-<li><ul>
 <li>简单地让进程按照其进程号匹配程序分支</li>
 </ul>
-</li>
-</ul>
-<h3 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h3><ul>
-<li><p>MPI_Send和MPI_Recv称为<strong>点对点通信</strong>(point-to-point communication)</p>
-</li>
-<li><p>点对点消息发送</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">MPI_Send(</div><div class="line">    void*        msg_buf_p    /* in */, </div><div class="line">    int          msg_size     /* in */,</div><div class="line">    MPI_Datatype msg_type     /* in */,</div><div class="line">    int          dest         /* in */,</div><div class="line">    int          tag          /* in */,</div><div class="line">    MPI_Comm     communicator /* in */</div><div class="line">);</div></pre></td></tr></table></figure>
+<h3 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h3><p>MPI_Send和MPI_Recv称为<strong>点对点通信</strong>(point-to-point communication)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">MPI_Send(</div><div class="line">    <span class="keyword">void</span>*        msg_buf_p    <span class="comment">/* in */</span>, </div><div class="line">    <span class="keyword">int</span>          msg_size     <span class="comment">/* in */</span>,</div><div class="line">    MPI_Datatype msg_type     <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          dest         <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          tag          <span class="comment">/* in */</span>,</div><div class="line">    MPI_Comm     communicator <span class="comment">/* in */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>点对点消息发送</p>
 <ul>
-<li><ul>
 <li>第一个参数指向包含消息内容的内存块的指针</li>
-</ul>
-</li>
-<li><ul>
 <li>第二个参数指定发送的消息数据量(字符串要长度加1&lt;’\0’占一个字符&gt;)</li>
-</ul>
-</li>
-<li><ul>
 <li>第三个参数指定发送的数据类型</li>
-</ul>
-</li>
-<li><ul>
 <li>第四个参数指定接收消息的进程号</li>
-</ul>
-</li>
-<li><ul>
 <li>第五个参数指定标签以区分不同消息</li>
-</ul>
-</li>
-<li><ul>
 <li>第六个参数指定通信子(指定通信范围)</li>
-</ul>
-</li>
 </ul>
 <table>
 <thead>
@@ -1171,122 +1119,61 @@
 </tr>
 </tbody>
 </table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">MPI_Recv(</div><div class="line">    <span class="keyword">void</span>*        msg_buf_p    <span class="comment">/* in  */</span>, </div><div class="line">    <span class="keyword">int</span>          buf_size     <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Datatype buf_type     <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">int</span>          source       <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">int</span>          tag          <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Comm     communicator <span class="comment">/* in  */</span>, </div><div class="line">    MPI_Status*  status_p     <span class="comment">/* out */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>点对点消息接收</p>
 <ul>
-<li>点对点消息接收</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">MPI_Recv(</div><div class="line">    void*        msg_buf_p    /* in  */, </div><div class="line">    int          buf_size     /* in  */,</div><div class="line">    MPI_Datatype buf_type     /* in  */,</div><div class="line">    int          source       /* in  */,</div><div class="line">    int          tag          /* in  */,</div><div class="line">    MPI_Comm     communicator /* in  */, </div><div class="line">    MPI_Status*  status_p     /* out */</div><div class="line">);</div></pre></td></tr></table></figure>
-<ul>
-<li><ul>
 <li>第一个参数指向用于接收消息的内存块的指针</li>
-</ul>
-</li>
-<li><ul>
 <li>第二个参数指定内存块中可存储对象的数量</li>
-</ul>
-</li>
-<li><ul>
 <li>第三个参数指定对象类型</li>
-</ul>
-</li>
-<li><ul>
 <li>第四个参数指定发送消息的进程号</li>
-</ul>
-</li>
-<li><ul>
 <li>第五个参数指定匹配要接收的消息的tag</li>
-</ul>
-</li>
-<li><ul>
 <li>第六个参数指定通信子(指定通信范围)</li>
-</ul>
-</li>
-<li><ul>
 <li>第七个参数可以不使用，赋予<code>MPI_STATUS_IGNORE</code></li>
 </ul>
-</li>
-<li><p>消息匹配</p>
-</li>
-<li><ul>
+<p>消息匹配</p>
+<ul>
 <li>q号进程调用<code>MPI_Send(send_buf_p, send_buf_sz, send_type, dest, send_tag, send_comm);</code></li>
-</ul>
-</li>
-<li><ul>
 <li>r号进程调用<code>MPI_Recv(recv_buf_p, recv_buf_sz, recv_type, src, recv_tag, recv_comm, &amp;status);</code></li>
-</ul>
-</li>
-<li><ul>
-<li>消息能够被接收当且仅当：</li>
-</ul>
-</li>
-<li><ul>
+<li>消息能够被接收当且仅当满足一下条件：</li>
 <li><ol>
 <li><code>recv_comm = send_comm</code></li>
 </ol>
 </li>
-</ul>
-</li>
-<li><ul>
 <li><ol>
 <li><code>recv_tag  = send_tag</code></li>
 </ol>
 </li>
-</ul>
-</li>
-<li><ul>
 <li><ol>
 <li><code>dest = r</code></li>
 </ol>
 </li>
-</ul>
-</li>
-<li><ul>
 <li><ol>
 <li><code>src  = q</code></li>
 </ol>
 </li>
-</ul>
-</li>
-<li><ul>
 <li><ol>
 <li>兼容的缓冲区：<code>recv = send_type</code> 同时 <code>recv_sz &gt;= send_buf_sz</code></li>
 </ol>
 </li>
 </ul>
-</li>
-</ul>
-<blockquote>
-<p>MPI_Recv通配符(wildcard)：特殊常量<br>接收来自任何源的消息：MPI_ANY_SOURCE<br>接收来自任何标签的消息：MPI_ANY_TAG<br>1.只有接受者可以使用通配符参数(MPI通信机制“推”(push)而非“拉”(pull))<br>2.通信子参数没有通配符</p>
-</blockquote>
+<p>MPI_Recv通配符(wildcard)是预定义的特殊常量</p>
 <ul>
-<li><code>status_p</code>参数</li>
-<li><ul>
+<li>接收来自任何源的消息：MPI_ANY_SOURCE</li>
+<li>接收来自任何标签的消息：MPI_ANY_TAG</li>
+<li>1.只有接受者可以使用通配符参数(MPI通信机制“推”(push)而非“拉”(pull))</li>
+<li>2.通信子参数没有通配符</li>
+</ul>
+<p>关于<code>status_p</code>参数</p>
+<ul>
 <li>MPI类型<code>MPI_Status</code>是一个有至少三个成员的结构：<code>MPI_SOURCE</code>, <code>MPI_TAG</code>, <code>MPI_ERROR</code></li>
-</ul>
-</li>
-<li><ul>
 <li><code>MPI_Status status</code>作参数传入</li>
-</ul>
-</li>
-<li><ul>
 <li>消息接收者确定发送者和标签：<code>status.MPI_SOURCE</code>; <code>status.MPI_TAG</code></li>
-</ul>
-</li>
-<li><ul>
 <li>消息接收者确定接收到的数据量：<code>MPI_Get_count(&amp;status, recv_type, &amp;count)</code></li>
 </ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">int MPI_Get_count(</div><div class="line">    MPI_Status*  status_p /* in */,</div><div class="line">    MPI_Datatype type     /* in */,</div><div class="line">    int*         count_p  /* out */</div><div class="line">);</div></pre></td></tr></table></figure>
-<h3 id="MPI-Send和MPI-Recv的细节"><a href="#MPI-Send和MPI-Recv的细节" class="headerlink" title="MPI_Send和MPI_Recv的细节"></a>MPI_Send和MPI_Recv的细节</h3><ul>
-<li>MPI具体实现指定MPI_Send</li>
-<li><ul>
-<li><strong>缓冲</strong>发送消息</li>
-</ul>
-</li>
-<li><ul>
-<li><strong>阻塞</strong>(block)发送消息</li>
-</ul>
-</li>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Get_count</span><span class="params">(</span></span></div><div class="line">    MPI_Status*  status_p <span class="comment">/* in */</span>,</div><div class="line">    MPI_Datatype type     <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>*         count_p  <span class="comment">/* out */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>MPI_Send和MPI_Recv的细节</p>
+<ul>
+<li>MPI_Send具体实现由MPI实现指定：<strong>缓冲</strong>发送消息 或者 <strong>阻塞</strong>(block)发送消息</li>
 </ul>
 <blockquote>
 <p>典型的实现方法：<br>默认的消息截止大小(“cutoff” message size)<br>消息长度小于截止大小则缓冲<br>消息长度大于截止大小则阻塞</p>
@@ -1294,58 +1181,33 @@
 <ul>
 <li>MPI_Recv总是<strong>阻塞</strong>的</li>
 </ul>
+<p><strong>MPI消息是不可逾越的(nonovertaking)：同一进程发送的多条消息必须是按发送顺序到达的</strong></p>
 <blockquote>
+<p>注意:<br>试图接收消息的进程接收不到匹配的消息会永久阻塞(进程<strong>悬挂</strong>)<br>缓冲发送消息没有匹配的接受则消息会丢失</p>
+</blockquote>
 <p>有指定缓冲/阻塞的替代函数</p>
-</blockquote>
 <ul>
-<li>MPI消息是不可逾越的(nonovertaking)</li>
-<li><ul>
-<li>同一进程发送的多条消息必须是按发送顺序到达的</li>
+<li><em>MPI_Isend和MPI_Irecv是非阻塞方式发送/接收消息</em></li>
 </ul>
-</li>
-</ul>
-<blockquote>
-<p>注意点:<br>试图接收消息的进程接收不到匹配的消息会永久阻塞(进程<strong>悬挂</strong>)<br>缓冲发送消息没有匹配的接受则消息会丢失</p>
-</blockquote>
-<h3 id="I-O处理"><a href="#I-O处理" class="headerlink" title="I/O处理"></a>I/O处理</h3><ul>
-<li>几乎所有的MPI实现都允许MPI_COMM_WORLD里的所有进程访问<code>stdout</code>和<code>stderr</code></li>
+<h3 id="I-O处理"><a href="#I-O处理" class="headerlink" title="I/O处理"></a>I/O处理</h3><p>几乎所有的MPI实现都允许MPI_COMM_WORLD里的所有进程访问<code>stdout</code>和<code>stderr</code></p>
+<ul>
 <li>但不提供对I/O设备访问的自动调度：多个进程写标准输出的顺序是无法预测的(甚至是可抢占的)</li>
 </ul>
 <blockquote>
 <p>0号进程接收其他进程的消息，统一由0号进程输出</p>
 </blockquote>
-<ul>
-<li>多部分MPI实现只允许MPI_COMM_WORLD里的0号进程访问<code>stdin</code></li>
-</ul>
+<p>多部分MPI实现只允许MPI_COMM_WORLD里的0号进程访问<code>stdin</code></p>
 <blockquote>
 <p>0号进程负责读取数据，发送给其它进程</p>
 </blockquote>
-<h3 id="集合通信"><a href="#集合通信" class="headerlink" title="集合通信"></a>集合通信</h3><ul>
-<li><p>树形通信结构能减少需要“归约”的通信过程中某个进程(通信瓶颈的进程)接收的消息数和计算量</p>
-</li>
-<li><p>MPI中涉及通信子中所有进程的通信函数称为<strong>集合通信</strong>(collective communication)</p>
-</li>
-<li><p>MPI_Reduce : 归约</p>
-</li>
-<li><ul>
-<li>函数形式：</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">int MPI_Reduce(</div><div class="line">    void*        input_data_p  /* in */, </div><div class="line">    void*        output_data_p /* out */, </div><div class="line">    int          count         /* in */,</div><div class="line">    MPI_Datatype datatype      /* in */,</div><div class="line">    MPI_Op       operator      /* in */,</div><div class="line">    int          dest_process  /* in */,</div><div class="line">    MPI_Comm     comm          /* in */</div><div class="line">);</div></pre></td></tr></table></figure>
+<h3 id="集合通信"><a href="#集合通信" class="headerlink" title="集合通信"></a>集合通信</h3><p>MPI中涉及通信子中所有进程的通信函数称为<strong>集合通信</strong>(collective communication)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Reduce</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*        input_data_p  <span class="comment">/* in */</span>, </div><div class="line">    <span class="keyword">void</span>*        output_data_p <span class="comment">/* out */</span>, </div><div class="line">    <span class="keyword">int</span>          count         <span class="comment">/* in */</span>,</div><div class="line">    MPI_Datatype datatype      <span class="comment">/* in */</span>,</div><div class="line">    MPI_Op       <span class="keyword">operator</span>      <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          dest_process  <span class="comment">/* in */</span>,</div><div class="line">    MPI_Comm     comm          <span class="comment">/* in */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>MPI_Reduce : 归约</p>
 <ul>
-<li><ul>
 <li>count参数大于0，MPI_Reduce函数可以应用到数组上</li>
 </ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">MPI_Reduce(&amp;local_int, &amp;local_int, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);</div><div class="line"></div><div class="line">double local_x[N], sum[N];</div><div class="line">// do something</div><div class="line">MPI_Reduce(local_x, sum, N, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);</div></pre></td></tr></table></figure>
-<ul>
-<li><ul>
-<li>MPI中预定义的归约操作符</li>
-</ul>
-</li>
-</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">MPI_Reduce(&amp;local_int, &amp;local_int, <span class="number">1</span>, MPI_DOUBLE, MPI_SUM, <span class="number">0</span>, MPI_COMM_WORLD);</div><div class="line"></div><div class="line"><span class="keyword">double</span> local_x[N], sum[N];</div><div class="line"><span class="comment">// do something</span></div><div class="line">MPI_Reduce(local_x, sum, N, MPI_DOUBLE, MPI_SUM, <span class="number">0</span>, MPI_COMM_WORLD);</div></pre></td></tr></table></figure>
+<p>MPI中预定义的归约操作符</p>
 <table>
 <thead>
 <tr>
@@ -1404,126 +1266,76 @@
 </tr>
 </tbody>
 </table>
-<blockquote>
 <p>集合通信相对于点对点通信的特点</p>
-<ol>
+<ul>
+<li><ol>
 <li>通信子中所有进程必须调用相同的集合通信函数</li>
+</ol>
+</li>
+<li><ol>
 <li>每个进程传递给MPI集合通信函数的参数必须是相容的，如接收进程号一致</li>
+</ol>
+</li>
+<li><ol>
 <li>参数output_data_p只用在进程dest_process，其他进程只需传递一个可为NULL的相应类型的实际参数</li>
+</ol>
+</li>
+<li><ol>
 <li>集合通信函数不使用标签，只通过通信子和调用顺序匹配消息(符合同一通信子的消息按函数的实际调用顺序接收，和其他因素无关)；而点对点通信通过标签和通信子匹配</li>
 </ol>
-<p>一个非法的调用方式，结果不可预测：MPI禁止输入或输出参数作为其他参数的别名</p>
+</li>
+</ul>
+<blockquote>
+<p>一个非法(???)的调用方式，结果不可预测：MPI禁止输入或输出参数作为其他参数的别名<br><code>MPI_Reduce(&amp;x, &amp;x, 1, MPI_DOUBLE, MPI_SUM, 0, comm);</code></p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MPI_Reduce(&amp;x, &amp;x, 1, MPI_DOUBLE, MPI_SUM, 0, comm);</div></pre></td></tr></table></figure>
+<p>全局通信结构：树形、蝶形</p>
 <ul>
+<li>树形通信结构能减少需要“归约”的通信过程中某个进程(通信瓶颈的进程)接收的消息数和计算量</li>
 <li>蝶形通信结构可以让进程之间互换部分结果</li>
-<li><ul>
 <li>对于全局归约操作，树形通信结构需要6层通信，蝶形通信结构需要3层通信</li>
 </ul>
-</li>
-<li><p>MPI_Allreduce : 全局归约</p>
-</li>
-<li><ul>
-<li>函数形式：</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">int MPI_Allreduce(</div><div class="line">    void*        input_data_p  /* in */, </div><div class="line">    void*        output_data_p /* out */, </div><div class="line">    int          count         /* in */,</div><div class="line">    MPI_Datatype datatype      /* in */,</div><div class="line">    MPI_Op       operator      /* in */,</div><div class="line">    MPI_Comm     comm          /* in */</div><div class="line">);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Allreduce</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*        input_data_p  <span class="comment">/* in */</span>, </div><div class="line">    <span class="keyword">void</span>*        output_data_p <span class="comment">/* out */</span>, </div><div class="line">    <span class="keyword">int</span>          count         <span class="comment">/* in */</span>,</div><div class="line">    MPI_Datatype datatype      <span class="comment">/* in */</span>,</div><div class="line">    MPI_Op       <span class="keyword">operator</span>      <span class="comment">/* in */</span>,</div><div class="line">    MPI_Comm     comm          <span class="comment">/* in */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>MPI_Allreduce : 全局归约</p>
 <ul>
-<li><p>相比MPI_Reduce少了dest_process参数：所有进程都能得到结果</p>
-</li>
-<li><p>广播(broadcast)</p>
-</li>
-<li><ul>
-<li>函数形式：</li>
+<li>相比MPI_Reduce少了dest_process参数：所有进程都能得到结果</li>
 </ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">int MPI_Bcast(</div><div class="line">    void*         data_p      /* in/out */, </div><div class="line">    int           count       /* in     */,</div><div class="line">    MPI_Datatype  datatype    /* in     */,</div><div class="line">    int           source_proc /* in     */,</div><div class="line">    MPI_Comm      comm        /* in     */</div><div class="line">);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Bcast</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*         data_p      <span class="comment">/* in/out */</span>, </div><div class="line">    <span class="keyword">int</span>           count       <span class="comment">/* in     */</span>,</div><div class="line">    MPI_Datatype  datatype    <span class="comment">/* in     */</span>,</div><div class="line">    <span class="keyword">int</span>           source_proc <span class="comment">/* in     */</span>,</div><div class="line">    MPI_Comm      comm        <span class="comment">/* in     */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>MPI_Bcast：广播broadcast</p>
 <ul>
-<li><ul>
 <li>属于一个进程的数据被发送到通信子中的所有进程；采用树形通信结构</li>
 </ul>
-</li>
-<li><p>数据分发</p>
-</li>
-<li><ul>
-<li>划分方式</li>
-</ul>
-</li>
-<li><ul>
-<li><ol>
+<blockquote>
+<p>数据分发的划分方式</p>
+<ol>
 <li>块划分：按顺序分配一定数目的块到各进程</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ol>
 <li>循环划分：依次分给一个进程一个块，直到分完</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><ul>
-<li><ol>
 <li>块-循环划分：依次分给一个进程多个块，直到分完</li>
 </ol>
-</li>
-</ul>
-</li>
-<li><p>散射函数：Scatter</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">int MPI_Scatter(</div><div class="line">    void*        send_buf_p /* in  */,</div><div class="line">    int          send_count /* in  */,</div><div class="line">    MPI_Datatype send_type  /* in  */,</div><div class="line">    void*        recv_buf_p /* out */, </div><div class="line">    int          recv_count /* in  */,</div><div class="line">    MPI_Datatype recv_type  /* in  */,</div><div class="line">    int          src_proc   /* in  */,</div><div class="line">    MPI_Comm     comm       /* in  */</div><div class="line">);</div></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Scatter</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*        send_buf_p <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">int</span>          send_count <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Datatype send_type  <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">void</span>*        recv_buf_p <span class="comment">/* out */</span>, </div><div class="line">    <span class="keyword">int</span>          recv_count <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Datatype recv_type  <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">int</span>          src_proc   <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Comm     comm       <span class="comment">/* in  */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>散射函数：Scatter</p>
 <ul>
-<li><ul>
 <li>将send_buf_p引用的数据分成通信子comm进程数的分数，依次分发给0, 1, 2…号进程</li>
-</ul>
-</li>
-<li><ul>
 <li>send_count 和 recv_count 都为每份的数据量</li>
-</ul>
-</li>
-<li><ul>
 <li>块划分方式</li>
-</ul>
-</li>
-<li><ul>
 <li>其他划分方式：重排发送缓冲数组的数据</li>
 </ul>
-</li>
-<li><p>聚集函数：Gather</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">int MPI_Gather(</div><div class="line">    void*        send_buf_p /* in  */,</div><div class="line">    int          send_count /* in  */,</div><div class="line">    MPI_Datatype send_type  /* in  */,</div><div class="line">    void*        recv_buf_p /* out */, </div><div class="line">    int          recv_count /* in  */,</div><div class="line">    MPI_Datatype recv_type  /* in  */,</div><div class="line">    int          dest_proc  /* in  */,</div><div class="line">    MPI_Comm     comm       /* in  */</div><div class="line">);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Gather</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*        send_buf_p <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">int</span>          send_count <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Datatype send_type  <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">void</span>*        recv_buf_p <span class="comment">/* out */</span>, </div><div class="line">    <span class="keyword">int</span>          recv_count <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Datatype recv_type  <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">int</span>          dest_proc  <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Comm     comm       <span class="comment">/* in  */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>聚集函数：Gather</p>
 <ul>
-<li><ul>
 <li>将通信子comm中所有进程的数据聚集到dest_proc进程recv_buf_p中</li>
-</ul>
-</li>
-<li><ul>
 <li>recv_count为接收到的一个进程的数据量</li>
 </ul>
-</li>
-<li><p>全局聚集：Allgather</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">int MPI_Allgather(</div><div class="line">    void*        send_buf_p /* in  */,</div><div class="line">    int          send_count /* in  */,</div><div class="line">    MPI_Datatype send_type  /* in  */,</div><div class="line">    void*        recv_buf_p /* out */, </div><div class="line">    int          recv_count /* in  */,</div><div class="line">    MPI_Datatype recv_type  /* in  */,</div><div class="line">    MPI_Comm     comm       /* in  */</div><div class="line">);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Allgather</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*        send_buf_p <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">int</span>          send_count <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Datatype send_type  <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">void</span>*        recv_buf_p <span class="comment">/* out */</span>, </div><div class="line">    <span class="keyword">int</span>          recv_count <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Datatype recv_type  <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Comm     comm       <span class="comment">/* in  */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>全局聚集：Allgather</p>
 <ul>
-<li><ul>
 <li>将通信子comm中每个进程的send_buf_p串联起来分发到每个进程的recv_buf_p中</li>
-</ul>
-</li>
-<li><ul>
 <li>recv_count = send_count</li>
 </ul>
-</li>
-</ul>
-<h3 id="MPI派生数据类型"><a href="#MPI派生数据类型" class="headerlink" title="MPI派生数据类型"></a>MPI派生数据类型</h3><blockquote>
-<p>几乎所有的分布式内存系统中通信比本地开销大很多<br>提高程序性能：减少收发消息数量</p>
-</blockquote>
+<h3 id="MPI派生数据类型"><a href="#MPI派生数据类型" class="headerlink" title="MPI派生数据类型"></a>MPI派生数据类型</h3><p>几乎所有的分布式内存系统中通信比本地开销大很多</p>
 <ul>
+<li>提高程序性能的关键在于<strong>减少收发消息数量</strong></li>
+<li>减少收发消息的几种方式：</li>
 <li><ol>
 <li>count参数：用于将连续的数组元素集合起来组成一条单独的消息</li>
 </ol>
@@ -1536,173 +1348,95 @@
 <li>MPI_Pack/MPI_Unpack函数</li>
 </ol>
 </li>
-<li><p>MPI中<strong>派生数据类型</strong>通过同时存储数据项的类型及其在内存中的相对位置，可以表示内存中数据项的任意集合</p>
-</li>
-<li><ul>
-<li>一个派生数据类型是由系列MPI基本数据类型和每个数据类型的偏移所组成的</li>
 </ul>
-</li>
-<li><ul>
-<li>创建</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">int MPI_Type_create_struct(</div><div class="line">    int           count                    /* in  */,</div><div class="line">    int           array_of_blocklengths[]  /* in  */, </div><div class="line">    MPI_Aint      array_of_displacements[] /* in  */,</div><div class="line">    MPI_Datatype  array_of_types[]         /* in  */,</div><div class="line">    MPI_Datatype* new_type_p               /* out */</div><div class="line">);</div></pre></td></tr></table></figure>
+<p><strong>MPI派生数据类型</strong></p>
 <ul>
-<li><ul>
+<li>通过同时存储数据项的类型及其在内存中的相对位置，可以表示内存中数据项的任意集合</li>
+<li>一个派生数据类型是由一系列MPI基本数据类型和每个数据类型的偏移所组成的</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Type_create_struct</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">int</span>           count                    <span class="comment">/* in  */</span>,</div><div class="line">    <span class="keyword">int</span>           array_of_blocklengths[]  <span class="comment">/* in  */</span>, </div><div class="line">    MPI_Aint      array_of_displacements[] <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Datatype  array_of_types[]         <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Datatype* new_type_p               <span class="comment">/* out */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>派生数据类型的创建</p>
+<ul>
 <li>参数count指定数据类型中元素个数</li>
+<li><code>array_of_blocklengths</code>指定每个元素的数据个数(1个或多个元素可以是数组)</li>
+<li><code>array_of_displacements</code>指定每个元素距离消息起始位置的偏移量(单位为字节)</li>
 </ul>
-</li>
-<li><ul>
-<li>array_of_blocklengths指定每个元素的数据个数(1个或多个元素可以是数组)</li>
-</ul>
-</li>
-<li><ul>
-<li>array_of_displacements指定每个元素距离消息起始位置的偏移量(单位为字节)</li>
-</ul>
-</li>
-<li><ul>
-<li>找到内存单元的地址</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">itn MPI_Get_address(</div><div class="line">    void*     location_p /* in  */,</div><div class="line">    MPI_Aint* address_p  /* out */</div><div class="line">);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Get_address</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*     location_p <span class="comment">/* in  */</span>,</div><div class="line">    MPI_Aint* address_p  <span class="comment">/* out */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>找到内存单元的地址</p>
 <ul>
-<li><ul>
 <li><code>MPI_Aint</code>是足以表示系统地址的整数类型</li>
-</ul>
-</li>
-<li><ul>
 <li>将<code>location_p</code>指向的内存单元的地址保存在<code>address_p</code>中</li>
 </ul>
-</li>
-<li><ul>
-<li>例：</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">MPI_Aint a_addr, b_addr, n_addr;</div><div class="line"></div><div class="line">MPI_Get_address(&amp;a, &amp;a_addr);</div><div class="line">array_of_displacements[0] = 0;</div><div class="line">MPI_Get_address(&amp;b, &amp;b_addr);</div><div class="line">array_of_displacements[1] = b_addr - a_addr;</div><div class="line">MPI_Get_address(&amp;n, &amp;n_addr);</div><div class="line">array_of_displacements[2] = n_addr - a_addr;</div><div class="line"></div><div class="line">MPI_Datatype array_of_types[3] = &#123;MPI_DOUBLE, MPI_DOUBLE, MPI_INT&#125;;</div><div class="line"></div><div class="line">MPI_Datatype input_mpi_t;</div><div class="line">MPI_Type_create_struct(3, array_of_blocklengths, array_of_displacements, array_of_types, &amp;input_mpi_t);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Type_commit</span><span class="params">(MPI_Datatype* new_mpi_t_p <span class="comment">/* in/out */</span>)</span></span>;</div></pre></td></tr></table></figure>
+<p>指定派生数据类型</p>
 <ul>
-<li><ul>
-<li>指定派生数据类型使之可用</li>
+<li>commit后才可以像使用MPI基本数据类型一样使用派生数据类型</li>
 </ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">int MPI_Type_commit(MPI_Datatype* new_mpi_t_p /* in/out */);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Type_free</span><span class="params">(MPI_Datatype* old_mpi_t_p <span class="comment">/* in/out */</span>)</span></span>;</div></pre></td></tr></table></figure>
+<p>释放派生数据类型</p>
 <ul>
-<li><ul>
-<li>可以像使用MPI基本数据类型一样使用派生数据类型</li>
+<li>使用完后free，释放派生数据类型可能占据的额外存储空间</li>
 </ul>
-</li>
-<li><ul>
-<li>释放派生数据类型可能所占的额外的存储空间</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">int MPI_Type_free(MPI_Datatype* old_mpi_t_p /* in/out */);</div></pre></td></tr></table></figure>
-<h3 id="MPI程序性能"><a href="#MPI程序性能" class="headerlink" title="MPI程序性能"></a>MPI程序性能</h3><ul>
-<li>计时函数：<code>double MPI_Wtime(void);</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">double start_time = MPI_Wtime();</div><div class="line">//...</div><div class="line"></div><div class="line">double end_time = MPI_Wtime();</div></pre></td></tr></table></figure>
-<ul>
-<li>串行程序计时：<code>gettimeofday();</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#include &lt;sys/time.h&gt;</div><div class="line">struct timeval tv0, tv1;</div><div class="line">gettimeofday(&amp;tv0, NULL);</div><div class="line">// ...</div><div class="line">gettimeofday(&amp;tv1, NULL);</div><div class="line"></div><div class="line">double t = tv1.tv_sec - tv0.tv_sec + 1e-6 * (tv1.tv_usec - tv0.tv_usec);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///例子</span></div><div class="line">MPI_Aint a_addr, b_addr, n_addr;</div><div class="line"></div><div class="line">MPI_Get_address(&amp;a, &amp;a_addr);</div><div class="line">array_of_displacements[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">MPI_Get_address(&amp;b, &amp;b_addr);</div><div class="line">array_of_displacements[<span class="number">1</span>] = b_addr - a_addr;</div><div class="line">MPI_Get_address(&amp;n, &amp;n_addr);</div><div class="line">array_of_displacements[<span class="number">2</span>] = n_addr - a_addr;</div><div class="line"></div><div class="line">MPI_Datatype array_of_types[<span class="number">3</span>] = &#123;MPI_DOUBLE, MPI_DOUBLE, MPI_INT&#125;;</div><div class="line"></div><div class="line">MPI_Datatype <span class="keyword">input_mpi_t</span>;</div><div class="line">MPI_Type_create_struct(<span class="number">3</span>, array_of_blocklengths, array_of_displacements, array_of_types, &amp;<span class="keyword">input_mpi_t</span>);</div><div class="line"></div><div class="line">MPI_Type_commit(&amp;<span class="keyword">input_mpi_t</span>);</div><div class="line"></div><div class="line"><span class="comment">//......</span></div><div class="line"></div><div class="line">MPI_Type_free(&amp;<span class="keyword">input_mpi_t</span>);</div></pre></td></tr></table></figure>
+<h3 id="MPI程序性能测量"><a href="#MPI程序性能测量" class="headerlink" title="MPI程序性能测量"></a>MPI程序性能测量</h3><p>计时函数：<code>double MPI_Wtime(void);</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> start_time = MPI_Wtime();</div><div class="line"><span class="comment">//...</span></div><div class="line"></div><div class="line"><span class="keyword">double</span> end_time = MPI_Wtime();</div></pre></td></tr></table></figure>
+<p>串行程序计时：<code>gettimeofday();</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/time.h&gt;</span></span></div><div class="line"><span class="keyword">struct</span> timeval tv0, tv1;</div><div class="line">gettimeofday(&amp;tv0, <span class="literal">NULL</span>);</div><div class="line"><span class="comment">// ...</span></div><div class="line">gettimeofday(&amp;tv1, <span class="literal">NULL</span>);</div><div class="line"></div><div class="line"><span class="keyword">double</span> t = tv1.tv_sec - tv0.tv_sec + <span class="number">1e-6</span> * (tv1.tv_usec - tv0.tv_usec);</div></pre></td></tr></table></figure>
 <blockquote>
 <p>MPI_Wtime()返回墙上时钟时间(所经历的全部时间，包括空闲等待时间)<br>C语言中的clock函数返回的是CPU时间(用户代码、库函数以及系统调用函数所消耗的时间)，但不包括空闲时间<br>并行程序中许多情况下都是空闲等待状态</p>
 </blockquote>
+<p>MPI路障：<code>int MPI_Barrier(MPI_Comm comm /* in */);</code></p>
 <ul>
-<li>MPI路障：<code>int MPI_Barrier(MPI_Comm comm /* in */);</code></li>
-<li><ul>
-<li>可在开始计时之前调用</li>
+<li>可在开始计时之前调用，确保通信子全部进程同步后才记下时钟</li>
 </ul>
-</li>
-<li><p>加速比：衡量串行运算和并行运算时间之间关系</p>
-</li>
-<li><ul>
+<p>加速比：衡量串行运算和并行运算时间之间关系</p>
+<ul>
 <li>$S(n, p) = \frac{T<em>{serial(n)}}{T</em>{parallel(n, p)}}$</li>
-</ul>
-</li>
-<li><ul>
-<li><code>n</code>：数据规模</li>
-</ul>
-</li>
-<li><ul>
-<li><code>p</code>：进程数</li>
-</ul>
-</li>
+<li><code>n</code>：数据规模；<code>p</code>：进程数</li>
 </ul>
 <blockquote>
-<p>最理想的加速比是<code>p</code>：<strong>线性加速比</strong></p>
+<p>最理想的加速比是达到<code>p</code>，即<strong>线性加速比</strong></p>
 </blockquote>
+<p>并行效率：“每个进程”的加速比</p>
 <ul>
-<li><p>并行效率：“每个进程”的加速比</p>
-</li>
-<li><ul>
 <li>$E(n, p) = \frac{S(n, p)}{p} = \frac{T<em>{setial(n)}}{p * T</em>{parallel(n, p)}}$</li>
-</ul>
-</li>
-<li><ul>
 <li>线性加速比相当于并行效率为1.0</li>
-</ul>
-</li>
-<li><ul>
 <li>通常效率小于1</li>
 </ul>
-</li>
-</ul>
-<blockquote>
 <p>并行开销：</p>
-<ol>
+<ul>
+<li><ol>
 <li>不同线程/进程间的通信开销</li>
+</ol>
+</li>
+<li><ol>
 <li>分解任务产生的额外开销(计算)</li>
 </ol>
-</blockquote>
-<ul>
-<li><p>可扩展性：如果问题的规模以一定的速率增大，但效率没有随着进程数的增加而降低，那么程序就可认为是可扩展的</p>
 </li>
-<li><ul>
-<li>强可扩展性：程序可以在不增加问题规模的前提下维持恒定效率(n固定，p增大)</li>
 </ul>
-</li>
-<li><ul>
+<p>可扩展性：</p>
+<ul>
+<li>如果问题的规模以一定的速率增大，但效率没有随着进程数的增加而降低，那么程序就可认为是可扩展的</li>
+<li>强可扩展性：程序可以在不增加问题规模的前提下维持恒定效率(n固定，p增大)</li>
 <li>弱可扩展性：问题规模增加需要通过增大进程数维持程序效率的(n固定，p固定)</li>
 </ul>
-</li>
-</ul>
-<h3 id="MPI程序安全性"><a href="#MPI程序安全性" class="headerlink" title="MPI程序安全性"></a>MPI程序安全性</h3><ul>
-<li><code>MPI_PROC_NULL</code>：由MPI库定义的一个常量</li>
-<li><ul>
+<h3 id="MPI程序安全性"><a href="#MPI程序安全性" class="headerlink" title="MPI程序安全性"></a>MPI程序安全性</h3><p><code>MPI_PROC_NULL</code>：由MPI库定义的一个常量</p>
+<ul>
 <li>在点对点通信中作为源进程号或目标进程号，调用后会直接返回而不产生任何通信</li>
 </ul>
-</li>
-</ul>
 <blockquote>
-<p>MPI允许MPI_Send函数以两种不同的方式实现，阻塞或异步，或导致死锁或进程挂起<br>可能所有进程都阻塞在MPI_Send上而无法调用MPI_Recv<br>不安全</p>
+<p>MPI允许MPI_Send函数以两种不同的方式实现，阻塞或异步，或导致死锁或进程挂起<br>可能所有进程都阻塞在MPI_Send上而无法调用MPI_Recv；这是一种不安全状态</p>
 </blockquote>
+<p>MPI提供替代的send通信函数(s代表同步)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Ssend</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*        msg_buf_p    <span class="comment">/* in */</span>, </div><div class="line">    <span class="keyword">int</span>          msg_size     <span class="comment">/* in */</span>,</div><div class="line">    MPI_Datatype msg_type     <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          dest         <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          tag          <span class="comment">/* in */</span>,</div><div class="line">    MPI_Comm     communicator <span class="comment">/* in */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>MPI提供调度通信的方法，可以使程序不再挂起或崩溃</p>
 <ul>
-<li>MPI提供替代的send通信函数(s代表同步)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">int MPI_Ssend(</div><div class="line">    void*        msg_buf_p    /* in */, </div><div class="line">    int          msg_size     /* in */,</div><div class="line">    MPI_Datatype msg_type     /* in */,</div><div class="line">    int          dest         /* in */,</div><div class="line">    int          tag          /* in */,</div><div class="line">    MPI_Comm     communicator /* in */</div><div class="line">);</div></pre></td></tr></table></figure>
-<ul>
-<li>MPI提供调度通信的方法：使程序不再挂起或崩溃</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">int MPI_Sendrecv(</div><div class="line">    void*        send_buf_p    /* in */,</div><div class="line">    int          send_buf_size /* in */,</div><div class="line">    MPI_Datatype send_buf_type /* in */,</div><div class="line">    int          dest          /* in */,</div><div class="line">    int          send_tag      /* in */,</div><div class="line">     void*        recv_buf_p    /* out */,</div><div class="line">     int          recv_buf_size /* in */,</div><div class="line">     MPI_Datatype recv_buf_type /* in */,</div><div class="line">     int          source        /* in */,</div><div class="line">     int          recv_tag      /* in */,</div><div class="line">     MPI_Comm     communicator  /* in */,</div><div class="line">     MPI_Status*  status_p      /* in */</div><div class="line">);</div></pre></td></tr></table></figure>
-<ul>
-<li><ul>
 <li>分别执行一次阻塞式消息发送和一次消息接收</li>
-</ul>
-</li>
-<li><ul>
 <li>dest，source参数可以相同也可以不同</li>
 </ul>
-</li>
-<li><ul>
-<li>若发送和接收使用同一个缓冲区</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">int MPI_Sendrecv_replace(</div><div class="line">    void*        buf_p    /* in */,</div><div class="line">    int          buf_size /* in */,</div><div class="line">    MPI_Datatype buf_type /* in */,</div><div class="line">    int          dest          /* in */,</div><div class="line">    int          send_tag      /* in */,</div><div class="line">    int          source        /* in */,</div><div class="line">    int          recv_tag      /* in */,</div><div class="line">    MPI_Comm     communicator  /* in */,</div><div class="line">    MPI_Status*  status_p      /* in */</div><div class="line">);</div></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Sendrecv</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*        send_buf_p    <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          send_buf_size <span class="comment">/* in */</span>,</div><div class="line">    MPI_Datatype send_buf_type <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          dest          <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          send_tag      <span class="comment">/* in */</span>,</div><div class="line">     <span class="keyword">void</span>*        recv_buf_p    <span class="comment">/* out */</span>,</div><div class="line">     <span class="keyword">int</span>          recv_buf_size <span class="comment">/* in */</span>,</div><div class="line">     MPI_Datatype recv_buf_type <span class="comment">/* in */</span>,</div><div class="line">     <span class="keyword">int</span>          source        <span class="comment">/* in */</span>,</div><div class="line">     <span class="keyword">int</span>          recv_tag      <span class="comment">/* in */</span>,</div><div class="line">     MPI_Comm     communicator  <span class="comment">/* in */</span>,</div><div class="line">     MPI_Status*  status_p      <span class="comment">/* in */</span></div><div class="line">);</div></pre></td></tr></table></figure>
+<p>MPI调度通信的另一种：发送和接收可以使用同一个缓冲区</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Sendrecv_replace</span><span class="params">(</span></span></div><div class="line">    <span class="keyword">void</span>*        buf_p    <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          buf_size <span class="comment">/* in */</span>,</div><div class="line">    MPI_Datatype buf_type <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          dest          <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          send_tag      <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          source        <span class="comment">/* in */</span>,</div><div class="line">    <span class="keyword">int</span>          recv_tag      <span class="comment">/* in */</span>,</div><div class="line">    MPI_Comm     communicator  <span class="comment">/* in */</span>,</div><div class="line">    MPI_Status*  status_p      <span class="comment">/* in */</span></div><div class="line">);</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -1892,7 +1626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#openmp"><span class="nav-number">1.</span> <span class="nav-text">openmp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#openmp的一些重要概念"><span class="nav-number">1.1.</span> <span class="nav-text">openmp的一些重要概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#openmp的循环并行化"><span class="nav-number">1.2.</span> <span class="nav-text">openmp的循环并行化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生产者和消费者问题"><span class="nav-number">1.3.</span> <span class="nav-text">生产者和消费者问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存、缓存一致性、伪共享"><span class="nav-number">1.4.</span> <span class="nav-text">缓存、缓存一致性、伪共享</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread"><span class="nav-number">2.</span> <span class="nav-text">pthread</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动、运行和停止线程"><span class="nav-number">2.1.</span> <span class="nav-text">启动、运行和停止线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#忙等待"><span class="nav-number">2.2.</span> <span class="nav-text">忙等待</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#互斥量"><span class="nav-number">2.3.</span> <span class="nav-text">互斥量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量"><span class="nav-number">2.4.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路障和条件变量"><span class="nav-number">2.5.</span> <span class="nav-text">路障和条件变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁"><span class="nav-number">2.6.</span> <span class="nav-text">读写锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI"><span class="nav-number">3.</span> <span class="nav-text">MPI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译与运行"><span class="nav-number">3.1.</span> <span class="nav-text">编译与运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MPI程序"><span class="nav-number">3.2.</span> <span class="nav-text">MPI程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通信子"><span class="nav-number">3.3.</span> <span class="nav-text">通信子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通信"><span class="nav-number">3.4.</span> <span class="nav-text">通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MPI-Send和MPI-Recv的细节"><span class="nav-number">3.5.</span> <span class="nav-text">MPI_Send和MPI_Recv的细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O处理"><span class="nav-number">3.6.</span> <span class="nav-text">I/O处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合通信"><span class="nav-number">3.7.</span> <span class="nav-text">集合通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MPI派生数据类型"><span class="nav-number">3.8.</span> <span class="nav-text">MPI派生数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MPI程序性能"><span class="nav-number">3.9.</span> <span class="nav-text">MPI程序性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MPI程序安全性"><span class="nav-number">3.10.</span> <span class="nav-text">MPI程序安全性</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#openmp"><span class="nav-number">1.</span> <span class="nav-text">openmp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#openmp的一些重要概念"><span class="nav-number">1.1.</span> <span class="nav-text">openmp的一些重要概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#openmp的循环并行化"><span class="nav-number">1.2.</span> <span class="nav-text">openmp的循环并行化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生产者和消费者问题"><span class="nav-number">1.3.</span> <span class="nav-text">生产者和消费者问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存、缓存一致性、伪共享"><span class="nav-number">1.4.</span> <span class="nav-text">缓存、缓存一致性、伪共享</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread"><span class="nav-number">2.</span> <span class="nav-text">pthread</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动、运行和停止线程"><span class="nav-number">2.1.</span> <span class="nav-text">启动、运行和停止线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#忙等待"><span class="nav-number">2.2.</span> <span class="nav-text">忙等待</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#互斥量"><span class="nav-number">2.3.</span> <span class="nav-text">互斥量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量"><span class="nav-number">2.4.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路障和条件变量"><span class="nav-number">2.5.</span> <span class="nav-text">路障和条件变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁"><span class="nav-number">2.6.</span> <span class="nav-text">读写锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPI"><span class="nav-number">3.</span> <span class="nav-text">MPI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MPI程序"><span class="nav-number">3.1.</span> <span class="nav-text">MPI程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通信子"><span class="nav-number">3.2.</span> <span class="nav-text">通信子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通信"><span class="nav-number">3.3.</span> <span class="nav-text">通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O处理"><span class="nav-number">3.4.</span> <span class="nav-text">I/O处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合通信"><span class="nav-number">3.5.</span> <span class="nav-text">集合通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MPI派生数据类型"><span class="nav-number">3.6.</span> <span class="nav-text">MPI派生数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MPI程序性能测量"><span class="nav-number">3.7.</span> <span class="nav-text">MPI程序性能测量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MPI程序安全性"><span class="nav-number">3.8.</span> <span class="nav-text">MPI程序安全性</span></a></li></ol></li></ol></div>
             
 
           </div>

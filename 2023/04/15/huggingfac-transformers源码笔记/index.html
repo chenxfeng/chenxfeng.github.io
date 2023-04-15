@@ -105,7 +105,7 @@
 
 官网Docsgithub">
 <meta property="og:image" content="https://chenfeng.github.io/img/GradientCheckpoint.png">
-<meta property="og:updated_time" content="2023-04-15T13:03:45.171Z">
+<meta property="og:updated_time" content="2023-04-15T14:33:14.086Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="huggingface-transformers源码阅读笔记">
 <meta name="twitter:description" content="Huggingface：Build, train and deploy state of the art models powered by the reference open source in machine learning.
@@ -379,11 +379,11 @@
 <li>transformers : model.enable_gradient_checkpoint()</li>
 <li>神经网络的前向传播过程需要保存层与层之间的中间状态参数immediate result，用于反向传播时梯度的计算</li>
 <li><ul>
-<li>前向传播：$$ y = f(x) $$</li>
+<li>前向传播：$ y = f(x) $</li>
 </ul>
 </li>
 <li><ul>
-<li>反向传播：$$ x^{‘} = y^{‘} f^{‘}(x) $$</li>
+<li>反向传播：$ x^{‘} = y^{‘} f^{‘}(x) $</li>
 </ul>
 </li>
 <li><p>部分计算量小，但中间状态参数大的神经网络层，在前向传播时将其中间状态参数释放</p>
@@ -422,8 +422,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2023/04/14/colossal-ai_unable_to_accumulate_grad/" rel="next" title="colossal-ai无法累积梯度">
-                <i class="fa fa-chevron-left"></i> colossal-ai无法累积梯度
+              <a href="/2023/04/15/神经网络训练的底层原理/" rel="next" title="神经网络训练的底层原理 代码/数学">
+                <i class="fa fa-chevron-left"></i> 神经网络训练的底层原理 代码/数学
               </a>
             
           </div>
@@ -509,7 +509,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-count">93</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

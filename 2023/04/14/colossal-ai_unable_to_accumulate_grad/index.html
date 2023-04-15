@@ -104,12 +104,14 @@
 <meta property="og:description" content="colossal-ai：Making large AI models cheaper, faster and more accessible
 
 官网github">
-<meta property="og:updated_time" content="2023-04-15T11:18:41.592Z">
+<meta property="og:image" content="https://chenfeng.github.io/img/gradient_accumulation.png">
+<meta property="og:updated_time" content="2023-04-15T13:23:38.880Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="colossal-ai无法累积梯度">
 <meta name="twitter:description" content="colossal-ai：Making large AI models cheaper, faster and more accessible
 
 官网github">
+<meta name="twitter:image" content="https://chenfeng.github.io/img/gradient_accumulation.png">
 
 
 
@@ -405,9 +407,32 @@
 <li>PyTorch扩展：<code>CUDA_EXT=1 pip install colossalai</code></li>
 <li>最新版：<code>pip install colossalai-nightly</code></li>
 </ul>
-<h3 id="梯度累计"><a href="#梯度累计" class="headerlink" title="梯度累计"></a>梯度累计</h3><p>&gt;</p>
+<h3 id="梯度累计"><a href="#梯度累计" class="headerlink" title="梯度累计"></a>梯度累计</h3><p>训练模型时由于显存大小有限，batch_size大小受到限制</p>
+<ul>
+<li>多个batch执行多次前向计算，累积反向传播的梯度，只执行一次梯度更新</li>
+<li><ul>
+<li>相当于将batch_size 分成 MICRO_batch_size 和 MACRO_batch_size</li>
+</ul>
+</li>
+<li><ul>
+<li>每MICRO_batch_size个样本做一次前向计算和反向传播，梯度累积在层参数的grad中，不执行梯度更新</li>
+</ul>
+</li>
+<li><ul>
+<li>每MACRO_batch_size个MICRO_batch_size执行一次梯度更新，与此同时，优化器更新/学习率步进/梯度归零</li>
+</ul>
+</li>
+</ul>
+<p><img src="/img/gradient_accumulation.png" alt="Gradient-Accumulation"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">accum_iter = <span class="number">4</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> batch_idx, (input, lables) <span class="keyword">in</span> enumerate(data_loader):</div><div class="line">    <span class="comment"># forward pass</span></div><div class="line">    preds = model(input)</div><div class="line">    loss = criterion(preds, labels)</div><div class="line">    <span class="comment"># scale the loss to the mean of the accumulated batch size</span></div><div class="line">    loss = loss / accum_iter</div><div class="line">    <span class="comment"># backward pass</span></div><div class="line">    loss.backward()</div><div class="line">    <span class="comment"># weights update</span></div><div class="line">    <span class="keyword">if</span> ((batch_idx + <span class="number">1</span>) % accum_iter == <span class="number">0</span>) <span class="keyword">or</span> (batch_idx + <span class="number">1</span>)== len(data_loader):</div><div class="line">        optimizer.step()</div><div class="line">        optimizer.zero_grad()</div></pre></td></tr></table></figure>
-<p>按这种逻辑，colossal-ai和pytorch代码只有一处不同</p>
+<blockquote>
+<p>能否保存多个batch的loss，然后只执行一次反向传播，然后再梯度更新？不能<br>以随机梯度下降 Stochastic Gradient Decent为例，参数 $V$，学习率 $lr$，梯度 $grad$<br>参数更新公式：$ V<em>t = V</em>{t-1} - lr <em> grad $<br>使用梯度累加时：$ V<em>{t} = V</em>{t-1} - lr </em> \sum<em>{i=0}^{N}grad</em>{i} $</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">total_loss = <span class="number">0</span></div><div class="line">loss = criterion(outputs, labels)</div><div class="line">total_loss += loss / accumulation_steps</div><div class="line"><span class="keyword">if</span> ...:</div><div class="line">    total_loss.backward()</div></pre></td></tr></table></figure>
+<blockquote>
+<p>若采用累加多个batch的loss的写法<br>数学上发生了改变：<br>$ \patial loss / \patial w $ 变成 $ \patial \sum<em>{t=1}^{N} loss</em>{t} / \patial w $</p>
+</blockquote>
+<p>按正确的pytorch代码的逻辑，colossal-ai和pytorch代码只有一处不同</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">accum_iter = <span class="number">4</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> batch_idx, (input, lables) <span class="keyword">in</span> enumerate(data_loader):</div><div class="line">    <span class="comment"># forward pass</span></div><div class="line">    preds = model(input)</div><div class="line">    loss = criterion(preds, labels)</div><div class="line">    <span class="comment"># scale the loss to the mean of the accumulated batch size</span></div><div class="line">    loss = loss / accum_iter</div><div class="line">    <span class="comment"># backward pass</span></div><div class="line">    optimizer.backward(loss) <span class="comment">#loss.backward() 此处不同</span></div><div class="line">    <span class="comment"># weights update</span></div><div class="line">    <span class="keyword">if</span> ((batch_idx + <span class="number">1</span>) % accum_iter == <span class="number">0</span>) <span class="keyword">or</span> (batch_idx + <span class="number">1</span>)== len(data_loader):</div><div class="line">        optimizer.step()</div><div class="line">        optimizer.zero_grad()</div></pre></td></tr></table></figure>
 <p>然而这种方式训练的网络收敛性有问题</p>
 <h3 id="colossal-ai的问题"><a href="#colossal-ai的问题" class="headerlink" title="colossal-ai的问题"></a>colossal-ai的问题</h3><p>以上训练过程使用colossalai的GeminiAdamOptimizer</p>
@@ -491,7 +516,7 @@
 <blockquote>
 <p>区别在于有时候会冻结模型部分参数进行训练，因此只传入优化器需要训练的部分网络层的参数</p>
 </blockquote>
-
+<h3 id="colossal的优化器"><a href="#colossal的优化器" class="headerlink" title="colossal的优化器"></a>colossal的优化器</h3>
       
     </div>
     
@@ -684,7 +709,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行环境"><span class="nav-number">1.</span> <span class="nav-text">运行环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度累计"><span class="nav-number">2.</span> <span class="nav-text">梯度累计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#colossal-ai的问题"><span class="nav-number">3.</span> <span class="nav-text">colossal-ai的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展"><span class="nav-number">4.</span> <span class="nav-text">扩展</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行环境"><span class="nav-number">1.</span> <span class="nav-text">运行环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度累计"><span class="nav-number">2.</span> <span class="nav-text">梯度累计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#colossal-ai的问题"><span class="nav-number">3.</span> <span class="nav-text">colossal-ai的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展"><span class="nav-number">4.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#colossal的优化器"><span class="nav-number">5.</span> <span class="nav-text">colossal的优化器</span></a></li></ol></div>
             
 
           </div>

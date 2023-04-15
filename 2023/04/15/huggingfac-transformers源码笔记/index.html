@@ -104,12 +104,14 @@
 <meta property="og:description" content="Huggingface：Build, train and deploy state of the art models powered by the reference open source in machine learning.
 
 官网Docsgithub">
-<meta property="og:updated_time" content="2023-04-15T06:06:16.886Z">
+<meta property="og:image" content="https://chenfeng.github.io/img/GradientCheckpoint.png">
+<meta property="og:updated_time" content="2023-04-15T13:03:45.171Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="huggingface-transformers源码阅读笔记">
 <meta name="twitter:description" content="Huggingface：Build, train and deploy state of the art models powered by the reference open source in machine learning.
 
 官网Docsgithub">
+<meta name="twitter:image" content="https://chenfeng.github.io/img/GradientCheckpoint.png">
 
 
 
@@ -372,6 +374,23 @@
 <blockquote>
 <p>Trainer封装了什么<br>梯度累计的实现<br>gradient_checkpoint的实现<br>LoRA的实现/PEFT的实现 <a href="https://mp.weixin.qq.com/s/x2mQBE0pfTv8w3Czp8JkDg" target="_blank" rel="external">https://mp.weixin.qq.com/s/x2mQBE0pfTv8w3Czp8JkDg</a></p>
 </blockquote>
+<p>grandient checkpoint</p>
+<ul>
+<li>transformers : model.enable_gradient_checkpoint()</li>
+<li>神经网络的前向传播过程需要保存层与层之间的中间状态参数immediate result，用于反向传播时梯度的计算</li>
+<li><ul>
+<li>前向传播：$$ y = f(x) $$</li>
+</ul>
+</li>
+<li><ul>
+<li>反向传播：$$ x^{‘} = y^{‘} f^{‘}(x) $$</li>
+</ul>
+</li>
+<li><p>部分计算量小，但中间状态参数大的神经网络层，在前向传播时将其中间状态参数释放</p>
+</li>
+<li>反向传播需要时重新由前向计算得到这一部分中间状态参数</li>
+</ul>
+<p><img src="/img/GradientCheckpoint.png" alt="gradient_checkpoint"></p>
 <p>### </p>
 
       

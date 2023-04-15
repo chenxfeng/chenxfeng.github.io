@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="algorithm," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="[转]整理自http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html
+
+递推
+[例题1]在一个3 X N的长方形方格中，铺满1X2的骨牌（骨牌个数不限制），给定N，求方案数（图一 -1-1为N=2的所有方案），所以N=2时方案数为3。
+
+二维状态
+
+状态转移方程
+
+
+f[i][0] = f[i-2][0] + f[i-1]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划题目">
+<meta property="og:url" content="https://chenfeng.github.io/2017/06/03/algoDesign/dynamic_programming/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="[转]整理自http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html
+
+递推
+[例题1]在一个3 X N的长方形方格中，铺满1X2的骨牌（骨牌个数不限制），给定N，求方案数（图一 -1-1为N=2的所有方案），所以N=2时方案数为3。
+
+二维状态
+
+状态转移方程
+
+
+f[i][0] = f[i-2][0] + f[i-1]">
+<meta property="og:image" content="https://chenfeng.github.io/\img\donggui_5.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\donggui_7.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\donggui_11.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\donggui_12.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\donggui_14.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\donggui_16.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\donggui_17.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\donggui_18.png">
+<meta property="og:updated_time" content="2018-12-04T08:29:29.200Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划题目">
+<meta name="twitter:description" content="[转]整理自http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html
+
+递推
+[例题1]在一个3 X N的长方形方格中，铺满1X2的骨牌（骨牌个数不限制），给定N，求方案数（图一 -1-1为N=2的所有方案），所以N=2时方案数为3。
+
+二维状态
+
+状态转移方程
+
+
+f[i][0] = f[i-2][0] + f[i-1]">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\donggui_5.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/06/03/algoDesign/dynamic_programming/"/>
+
+
+
+
+
+  <title>动态规划题目 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/06/03/algoDesign/dynamic_programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">动态规划题目</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-03T00:00:00+08:00">
+                2017-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>[转]整理自<a href="http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html" target="_blank" rel="external">http://www.cppblog.com/menjitianya/archive/2015/10/23/212084.html</a></p>
+</blockquote>
+<h2 id="递推"><a href="#递推" class="headerlink" title="递推"></a>递推</h2><ul>
+<li><p>[例题1]在一个3 X N的长方形方格中，铺满1X2的骨牌（骨牌个数不限制），给定N，求方案数（图一 -1-1为N=2的所有方案），所以N=2时方案数为3。</p>
+</li>
+<li><p>二维状态</p>
+</li>
+<li><p>状态转移方程</p>
+</li>
+<li><ul>
+<li><code>f[i][0] = f[i-2][0] + f[i-1][1] + f[i-2][2]</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>f[i][1] = f[i-1][2]</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>f[i][2] = f[i][0] + f[i-1][1]</code></li>
+</ul>
+</li>
+<li>边界条件 :</li>
+<li><ul>
+<li><code>f[0][0] = f[1][1] = f[0][2] = 1</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\donggui_5.png" alt="donggui_5.png"></p>
+</blockquote>
+<a id="more"></a>
+<ul>
+<li><p>[例题2]对一个“01”串进行一次μ变换被定义为：将其中的”0”变成”10”，”1”变成”01”，初始串为”1”，求经过N(N &lt;= 1000)次μ变换后的串中有多少对”00”</p>
+</li>
+<li><p>要出现”00”，一定是”10”和”01”相邻产生的</p>
+</li>
+<li><p>设A = “10”, B = “01”，构造出的树形递推图如图所示，如果要出现”00”，一定是AB（”1001”）</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\donggui_7.png" alt="donggui_7.png"></p>
+</blockquote>
+<ul>
+<li><code>FA[i]</code>为A经过i次μ变换后”00”的数量，<code>FA[0] = 0</code>;</li>
+<li><p><code>FB[i]</code>为B经过i次μ变换后”00”的数量，<code>FB[0] = 0</code></p>
+</li>
+<li><p>以A为根的树，它的左子树的最右端点一定是B，也就是说无论经过多少次变换，两棵子树的交界处都不可能产生AB，所以<code>FA[i] = FB[i-1] + FA[i-1]</code>（直接累加两棵子树的”00”的数量）；而以B为根的树，它的左子树的右端点一定是A，而右子树的左端点呈BABABA…交替排布，所以隔代产生一次AB，于是<code>FB[i] = FA[i-1] + FB[i-1] + (i mod 2)</code> 。最后要求的答案就是<code>FB[N-1]</code>，递推求解</p>
+</li>
+</ul>
+<h2 id="记忆化搜索"><a href="#记忆化搜索" class="headerlink" title="记忆化搜索"></a>记忆化搜索</h2><ul>
+<li>[例题3]这个问题直接给出了一段求函数<code>w(a, b, c)</code>的伪代码：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function w(a, b, c):</div><div class="line">    if a &lt;=0 or b &lt;=0 or c &lt;=0, then returns:1</div><div class="line">    if a &gt;20or b &gt;20or c &gt;20, then returns: w(20,20,20)</div><div class="line">    if a &lt; b and b &lt; c, then returns: w(a, b, c-1)+ w(a, b-1, c-1)- w(a, b-1, c)</div><div class="line">    otherwise it returns: w(a-1, b, c)+ w(a-1, b-1, c)+ w(a-1, b, c-1)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>要求给定a, b, c，求<code>w(a, b, c)</code>的值</p>
+<ul>
+<li>这个函数的时间复杂度是指数级的（尽管这个三元组的最大元素只有20，这是个陷阱）。对于任意一个三元组<code>(a, b, c)</code>，<code>w(a, b, c)</code>可能被计算多次，而对于固定的<code>(a, b, c)</code>，<code>w(a, b, c)</code>其实是个固定的值，没必要多次计算，所以只要将计算过的值保存在<code>f[a][b][c]</code>中，整个计算就只有一次了，总的时间复杂度就是<code>O(n^3)</code>，这个问题的n只有20</li>
+</ul>
+<h2 id="状态和状态转移"><a href="#状态和状态转移" class="headerlink" title="状态和状态转移"></a>状态和状态转移</h2><h3 id="最优化原理和最优子结构"><a href="#最优化原理和最优子结构" class="headerlink" title="最优化原理和最优子结构"></a>最优化原理和最优子结构</h3><ul>
+<li>【例题4】给定一个长度为<code>n(1 &lt;= n &lt;= 1000)</code>的整数序列a[i]，求它的一个子序列(子序列即在原序列任意位置删除0或多个元素后的序列)，满足如下条件：</li>
+<li><ul>
+<li><ol>
+<li>该序列单调递增；</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>在所有满足条件1的序列中长度是最长的；</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>最长单调子序列</p>
+</li>
+<li><p>枚举（DFS），即枚举a[i]这个元素取或不取，所有取的元素组成一个合法的子序列，枚举的时候需要满足单调递增这个限制，那么对于一个n个元素的序列，最坏时间复杂度自然就是O(2^n)</p>
+</li>
+<li><p>假设第i个数取的情况下已经搜索出的最大长度记录在数组d中，即用<code>d[i]</code>表示当前搜索到的以<code>a[i]</code>结尾的最长单调子序列的长度，那么如果下次搜索得到的序列长度小于等于<code>d[i]</code>，就不必往下搜索了（因为即便继续往后枚举，能够得到的解必定不会比之前更长）；反之，则需要更新<code>d[i]</code>的值</p>
+</li>
+<li><p>对于任意的i，<code>d[i]</code>一定等于<code>d[j] + 1 ( j &lt; i )</code>，而且还得满足<code>a[j] &lt; a[i]</code></p>
+</li>
+<li><p>状态转移方程：</p>
+</li>
+<li><ul>
+<li><code>d[i] = max{ d[j] | j &lt; i &amp;&amp; a[j] &lt; a[i] } + 1</code></li>
+</ul>
+</li>
+<li><p>时间复杂度是<code>O(n^2)</code></p>
+</li>
+</ul>
+<blockquote>
+<p><strong>决策和无后效性</strong>： 一个状态演变到另一个状态，往往是通过“决策”来进行的。有了“决策”，就会有状态转移。而无后效性，就是一旦某个状态确定后，它之前的状态无法对它之后的状态产生“效应”（影响）</p>
+</blockquote>
+<ul>
+<li><p>[例题5]老王想在未来的n年内每年都持有电脑，m(y, z)表示第y年到第z年的电脑维护费用，其中y的范围为[1, n]，z的范围为[y, n]，c表示买一台新的电脑的固定费用。 给定矩阵m，固定费用c，求在未来n年都有电脑的最少花费</p>
+</li>
+<li><p>考虑第 i 年是否要换电脑，换和不换是不一样的决策，那么我们定义一个二元组(a, b)，其中 a &lt; b，它表示了第a年和第b年都要换电脑（第a年和第b年之间不再换电脑），如果假设我们到第a年为止换电脑的最优方案已经确定，那么第a年以前如何换电脑的一些列步骤变得不再重要，因为它并不会影响第b年的情况，这就是无后效性</p>
+</li>
+<li><p>令d[i]表示在第i年买了一台电脑的最小花费(由于这台电脑能用多久不确定，所以第i年的维护费用暂时不计在这里面)，如果上一次更换电脑的时间在第j年，那么第j年更换电脑到第i年之前的总开销就是<code>c + m(j, i-1)</code>，于是有状态转移方程：</p>
+</li>
+<li><p><code>d[i] = min{ d[j] + m(j, i-1) |  1 &lt;=  j &lt; i  } + c</code></p>
+</li>
+<li><p>漏算了第i年到第n年的维护费用，所以最后问题的答案：</p>
+</li>
+<li><ul>
+<li><code>ans = min{ d[i] + m(i, n)  | 1 &lt;= i &lt; n }</code></li>
+</ul>
+</li>
+<li><p>可以假设第n+1年必须换电脑，并且第n+1年换电脑的费用为0，那么整个阶段的状态转移方程就是：</p>
+</li>
+<li><ul>
+<li><code>d[i] = min{ d[j] + m(j, i-1) | 1 &lt;= j &lt; i } + w(i)</code>, 其中<code>w(i) = (i==n+1)?0:c</code>;</li>
+</ul>
+</li>
+<li><ul>
+<li><code>d[n+1]</code>就是需要求的最小费用</li>
+</ul>
+</li>
+</ul>
+<h2 id="经典模型"><a href="#经典模型" class="headerlink" title="经典模型"></a>经典模型</h2><h3 id="线性模型"><a href="#线性模型" class="headerlink" title="线性模型"></a>线性模型</h3><blockquote>
+<p>线性模型的是动态规划中最常用的模型，上文讲到的最长单调子序列就是经典的线性模型，这里的线性指的是状态的排布是呈线性的</p>
+</blockquote>
+<ul>
+<li><p>[例题6]在一个夜黑风高的晚上，有<code>n（n &lt;= 50）</code>个小朋友在桥的这边，现在他们需要过桥，但是由于桥很窄，每次只允许不大于两人通过，他们只有一个手电筒，所以每次过桥的两个人需要把手电筒带回来，i号小朋友过桥的时间为T[i]，两个人过桥的总时间为二者中时间长者。问所有小朋友过桥的总时间最短是多少</p>
+</li>
+<li><p>先将所有人按花费时间递增进行排序，假设前i个人过河花费的最少时间为opt[i]</p>
+</li>
+<li><p>考虑前i-1个人过河的情况，即河这边还有1个人，河那边有i-1个人，并且这时候手电筒肯定在对岸，所以</p>
+</li>
+<li><ul>
+<li><code>opt[i] = opt[i-1] + a[1] + a[i]</code></li>
+</ul>
+</li>
+<li><ul>
+<li>(让花费时间最少的人把手电筒送过来，然后和第i个人一起过河)</li>
+</ul>
+</li>
+<li><p>如果河这边还有两个人，一个是第i号，另外一个无所谓，河那边有i-2个人，并且手电筒肯定在对岸，所以</p>
+</li>
+<li><ul>
+<li><code>opt[i] = opt[i-2] + a[1] + a[i] + 2*a[2]</code></li>
+</ul>
+</li>
+<li><ul>
+<li>(让花费时间最少的人把电筒送过来，然后第i个人和另外一个人一起过河，由于花费时间最少的人在这边，所以下一次送手电筒过来的一定是花费次少的，送过来后花费最少的和花费次少的一起过河，解决问题)</li>
+</ul>
+</li>
+<li><p><code>opt[i] = min{ opt[i-1] + a[1] + a[i] , opt[i-2] + a[1] + a[i] + 2*a[2] }</code></p>
+</li>
+</ul>
+<h3 id="区间模型"><a href="#区间模型" class="headerlink" title="区间模型"></a>区间模型</h3><blockquote>
+<p>区间模型的状态表示一般为<code>d[i][j]</code>，表示区间<code>[i, j]</code>上的最优解，然后通过状态转移计算出<code>[i+1, j]</code>或者<code>[i, j+1]</code>上的最优解，逐步扩大区间的范围，最终求得[1, len]的最优解</p>
+</blockquote>
+<ul>
+<li><p>典型的区间模型，回文串拥有很明显的子结构特征，即当字符串X是一个回文串时，在X两边各添加一个字符’a’后，aXa仍然是一个回文串</p>
+</li>
+<li><p>用<code>d[i][j]</code>来表示<code>A[i...j]</code>这个子串变成回文串所需要添加的最少的字符数</p>
+</li>
+<li><ul>
+<li>对于<code>A[i] == A[j]</code>的情况，很明显有<code>d[i][j] = d[i+1][j-1]</code>（这里需要明确一点，当<code>i+1 &gt; j-1</code>时也是有意义的，它代表的是空串，空串也是一个回文串，所以这种情况下<code>d[i+1][j-1] = 0）</code></li>
+</ul>
+</li>
+<li><ul>
+<li>当<code>A[i] != A[j]</code>时，我们将它变成更小的子问题求解，我们有两种决策：</li>
+</ul>
+</li>
+<li><ul>
+<li>1、在A[j]后面添加一个字符A[i]；</li>
+</ul>
+</li>
+<li><ul>
+<li>2、在A[i]前面添加一个字符A[j]；</li>
+</ul>
+</li>
+<li><ul>
+<li>根据两种决策列出状态转移方程为：</li>
+</ul>
+</li>
+<li><ul>
+<li><code>d[i][j] = min{ d[i+1][j], d[i][j-1] } + 1</code>;(每次状态转移，区间长度增加1)</li>
+</ul>
+</li>
+<li><p>空间复杂度O(n^2)，时间复杂度O(n^2)</p>
+</li>
+</ul>
+<h3 id="背包模型"><a href="#背包模型" class="headerlink" title="背包模型"></a>背包模型</h3><h4 id="0-1背包"><a href="#0-1背包" class="headerlink" title="0/1背包"></a>0/1背包</h4><ul>
+<li><p>有N种物品（每种物品1件）和一个容量为V的背包。放入第i种物品耗费的空间是Ci，得到的价值是Wi。求解将哪些物品装入背包可使价值总和最大。</p>
+</li>
+<li><p><code>f[i][v]</code>表示前i种物品恰好放入一个容量为v的背包可以获得的最大价值</p>
+</li>
+<li>决策为第i个物品在前i-1个物品放置完毕后，是选择放还是不放，状态转移方程为： </li>
+<li><ul>
+<li><code>f[i][v] = max{ f[i-1][v], f[i-1][v - Ci] +Wi }</code></li>
+</ul>
+</li>
+<li>时间复杂度<code>O(VN)</code>，空间复杂度<code>O(VN)</code> （空间复杂度可利用滚动数组进行优化达到<code>O(V)</code>，下文会介绍滚动数组优化）</li>
+</ul>
+<h4 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h4><ul>
+<li><p>有N种物品（每种物品无限件）和一个容量为V的背包。放入第i种物品耗费的空间是Ci，得到的价值是Wi。求解将哪些物品装入背包可使价值总和最大。</p>
+</li>
+<li><p><code>f[i][v]</code>表示前i种物品恰好放入一个容量为v的背包可以获得的最大价值。</p>
+</li>
+<li><ul>
+<li><code>f[i][v] = max{ f[i-1][v - kCi] + kWi  | 0 &lt;= k &lt;= v/Ci }</code> (当k的取值为0,1时，这就是01背包的状态转移方程）</li>
+</ul>
+</li>
+<li>时间复杂度<code>O(VNsum{V/Ci})</code>，空间复杂度在用滚动数组优化后可以达到<code>O(V)</code>。</li>
+<li>进行优化后（此处省略500字），状态转移方程变成：</li>
+<li><ul>
+<li><code>f[i][v] = max{ f[i-1][v],  f[i][v - Ci] +Wi }</code>，时间复杂度降为<code>O(VN)</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h4><ul>
+<li><p>有N种物品（每种物品Mi件）和一个容量为V的背包。放入第i种物品耗费的空间是Ci，得到的价值是Wi。求解将哪些物品装入背包可使价值总和最大。</p>
+</li>
+<li><p><code>f[i][v]</code>表示前i种物品恰好放入一个容量为v的背包可以获得的最大价值。</p>
+</li>
+<li><ul>
+<li><code>f[i][v] = max{ f[i-1][v - kCi] + kWi  | 0 &lt;= k &lt;= Mi }</code></li>
+</ul>
+</li>
+<li><p>时间复杂度O( Vsum(Mi) )，空间复杂度仍然可以用滚动数组优化后可以达到O(V)。</p>
+</li>
+<li><p>优化：采用二进制拆分物品，将Mi个物品拆分成容量为<code>1、2、4、8、... 2^k、Mi-( 2^(k+1) - 1 )</code>个对应价值为<code>Wi、2Wi、4Wi、8Wi、...、2^kWi、（Mi-( 2^(k+1) - 1 )）Wi</code>的物品，然后采用01背包求解。</p>
+</li>
+<li>这样做的时间复杂度降为<code>O(Vsum(logMi))</code></li>
+</ul>
+<ul>
+<li><p>[例题8]一群强盗想要抢劫银行，总共N(N &lt;= 100)个银行，第i个银行的资金为Bi亿，抢劫该银行被抓概率Pi，问在被抓概率小于p的情况下能够抢劫的最大资金是多少？</p>
+</li>
+<li><p>p表示的是强盗在抢银行时至少有一次被抓概率的上限，那么选择一些银行，并且计算抢劫这些银行都不被抓的的概率pc，则需要满足<code>1 - pc &lt; p</code></p>
+</li>
+<li><ul>
+<li>这里的pc是所有选出来的银行的抢劫时不被抓概率（即<code>1 - Pi</code>）的乘积，于是我们用资金作为背包物品的容量，概率作为背包物品的价值，求01背包</li>
+</ul>
+</li>
+<li><ul>
+<li>状态转移方程为：<code>f[j] = max{ f[j], f[j - pack[i].B] * (1-pack[i].p) }</code></li>
+</ul>
+</li>
+<li><ul>
+<li>最后得到的f[i]表示的是抢劫到i亿资金的最大不被抓概率。</li>
+</ul>
+</li>
+<li><ul>
+<li>令所有银行资金总和为V，那么从V-0进行枚举，第一个满足<code>1 - f[i] &lt; p</code>的i就是我们所要求的被抓概率小于p的最大资金。</li>
+</ul>
+</li>
+</ul>
+<h3 id="状态压缩模型"><a href="#状态压缩模型" class="headerlink" title="状态压缩模型"></a>状态压缩模型</h3><ul>
+<li><p>[例题9]对于一条n(n &lt;= 11)个点的哈密尔顿路径C1C2…CN（经过每个点一次的路径）的值由三部分组成：</p>
+</li>
+<li><p>1、每个顶点的权值Vi的和</p>
+</li>
+<li>2、对于路径上相邻的任意两个顶点<code>C_iC_{i+1}</code>，累加权值乘积<code>V_i*V_{i+1}</code></li>
+<li><p>3、对于相邻的三个顶点<code>CiC_{i+1}C_{i+2}</code>，如果Ci和C<em>{i+2}之间有边，那么累加权值三乘积``Vi*V</em>{i+1}*V_{i+2}``</p>
+</li>
+<li><p>求值最大的哈密尔顿路径的权值 和 这样的路径的个数。</p>
+</li>
+<li><p>枚举所有路径，判断找出值最大的，复杂度为<code>O(n!)</code>，不可行</p>
+</li>
+<li><p>由于点数较少，采用二进制表示状态，用<code>d[i][j][k]</code>表示某条哈密尔顿路径的最大权值，其中i是一个二进制整数，它的第t位为1表示t这个顶点在这条哈密尔顿路径上，为0表示不在路径上。j和k分别为路径的最后两个顶点</p>
+</li>
+<li><p>状态转移方程：<code>d[i][j][k] = max{ d[i ^ (1&lt;&lt;k)][t][j] + w(t, j, k) | (i &amp; (1&lt;&lt;t)) != 0 }</code></p>
+</li>
+<li><p>几个位运算:<code>i ^ (1&lt;&lt;k)</code>表示将i的二进制的第k位从1变成<code>0，i &amp; (1&lt;&lt;t)</code>则为判断i的二进制表示的第t位是否为1，即该路径中是否存在t这个点。这个状态转移的实质就是将原本的<code>...-&gt;j -&gt; k</code>转化成更加小规模的去掉k点后的子问题<code>... -&gt; t -&gt; j</code>求解。而<code>w(t, j, k)</code>则表示<code>t-&gt;j-&gt;k</code>这条子路径上产生的权值和，这个可以由定义在O(1)的时间计算出来</p>
+</li>
+<li><p><code>d[ (1&lt;&lt;j) | (1&lt;&lt;k) ][j][k]</code>为所有的两个点的路径的最大值，即最小的子问题。这个问题的状态并非线性的，所以用记忆化搜索来求解状态的值会事半功倍</p>
+</li>
+</ul>
+<ul>
+<li>[例题10]利用以下两种积木（任意数量，可进行旋转和翻转），拼出一个m*n( 1&lt;= m &lt;= 9, 1 &lt;= n &lt;= 9 )的矩形，问这样的方式有多少种。</li>
+</ul>
+<blockquote>
+<p><img src="\img\donggui_11.png" alt="donggui_11.png"><br><img src="\img\donggui_12.png" alt="donggui_12.png"></p>
+</blockquote>
+<ul>
+<li>m = 2, n = 3的情况有以下5种拼接方式:</li>
+</ul>
+<blockquote>
+<p><img src="\img\donggui_14.png" alt="donggui_14.png"></p>
+</blockquote>
+<ul>
+<li><p>经典问题，2进制状态压缩</p>
+</li>
+<li><p>因为第M行的情况总共有2^n，按照这个思路下去，我们发现第i (1 &lt;= i &lt;= m)行的状态顶多也就2^n种，这里的状态可以用一个二进制整数来表示，对于第i行，如果这一行的第j个格子被骨牌填充则这个二进制整数的第j位为1，否则为0</p>
+</li>
+<li><p>如果我们已知第i行的状态k对应的方案数，并且状态k放置几个骨牌后能够将i+1行的状态变成k’，那么第i+1行的k’这个状态的方案数必然包含了第i行的状态k的方案数，这个放置骨牌的过程就是状态转移</p>
+</li>
+<li><p>用一个二维数组DP[i][j] 表示第i行的状态为j的骨牌放置方案数(其中 1&lt;=i&lt;=m, 0 &lt;= j &lt; 2n)</p>
+</li>
+<li><p>为了将问题简化，我们虚拟出一个第0行，则有<code>DP[0][j] = (j == 2n-1) ? 1 : 0</code>；这个就是我们的初始状态，它的含义是这样的，因为第0行是我们虚拟出来的，所以第0行只有完全放满的时候才有意义，也就是第0行全部放满（状态的二进制表示全为1，即十进制表示的2n-1 ）的方案数为1，其它情况均为0</p>
+</li>
+<li><p>如何进行状态转移呢？假设第3行的某个状态(101000)2的方案数<code>DP[3][(101000)2 ] = 5</code>，如图所示：</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\donggui_16.png" alt="donggui_16.png"></p>
+</blockquote>
+<ul>
+<li><p>需要做的就是通过各种方法将第3行填满，从而得到一系列第4行可能的状态集合S，并且对于每一个在S中的状态s，执行<code>DP[4][s] += DP[3][(101000)2 ]</code>（两个状态可达，所以方案数是可传递的，又因为多个不同的状态可能到达同一个状态，所以采用累加的方式）</p>
+</li>
+<li><p>根据给定的骨牌，我们可以枚举它的摆放方式，下图展示了三种骨牌的摆放方式以及能够转移到的状态，但是这里的状态转移还没结束，因为第3行尚未放满，问题求的是将整个棋盘铺满的方案数，所以只有当第i行全部放满后，才能将状态转移给i+1行</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\donggui_17.png" alt="donggui_17.png"></p>
+</blockquote>
+<ul>
+<li>枚举摆放的这一步可以采用dfs递归枚举列，递归出口为列数col == N时。dfs函数的原型可以写成如下的形式：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void dfs( int col, int nextrow, int nowstate, int nextstate, LL cnt);</div><div class="line">// col       表示当前枚举到的列编号</div><div class="line">// nextrow   表示下一行的行编号</div><div class="line">// nowstate  表示当前枚举骨牌摆放时第i  行的状态（随着放置骨后会更新）</div><div class="line">// nextstate 表示当前枚举骨牌摆放时第i+1行的状态（随着放置骨后会更新）</div><div class="line">// cnt       状态转移前的方案数，即第i行在放置骨牌前的方案数</div></pre></td></tr></table></figure>
+<ul>
+<li>对骨牌进行归类，旋转之后得到如下六种情况：</li>
+</ul>
+<blockquote>
+<p><img src="\img\donggui_18.png" alt="donggui_18.png"></p>
+</blockquote>
+<ul>
+<li>都被圈定在一个2X2的格子里，所以每个骨牌都可以用2个2位的2进制整数来表示，编码方式类似上面的状态表示法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">int blockMask[6][2] = &#123;</div><div class="line">    &#123;1, 1&#125;,    // 竖向2X1</div><div class="line">    &#123;3, 0&#125;,    // 横向1X2</div><div class="line">    &#123;3, 1&#125;,    // 枪</div><div class="line">    &#123;3, 2&#125;,    // 7</div><div class="line">    &#123;1, 3&#125;,    // L</div><div class="line">    &#123;2, 3&#125;,    // J</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li><p><code>blockMask[k][0]</code>表示骨牌第一行的状态，<code>blockMask[k][1]</code>表示骨牌第二行的状态。这样一来就可以通过简单的位运算来判断第k块骨牌是否可以放在(i, col)这个格子上，这里的i表示行编号，col则表示列编号</p>
+</li>
+<li><p>几种常用的位运算：</p>
+</li>
+<li><ul>
+<li>a. <code>x &amp; (1&lt;&lt;i)</code>值如果非0，表示x这个数字的二进制表示的第i(i &gt;= 0)位为1，否则为0；</li>
+</ul>
+</li>
+<li><ul>
+<li>b. <code>x &amp; (y&lt;&lt;i)</code>值如果非0，表示存在一个p(i &lt;= p &lt; i+k)，使得x这个数字的二进制表示的第p位和y的p-i位均为1（k为y的二进制表示的位数）；</li>
+</ul>
+</li>
+<li><ul>
+<li>c. <code>x | (1&lt;&lt;i)</code>将x的第i位变成1（当然，有可能原本就为1，这个不影响）；</li>
+</ul>
+</li>
+<li><ul>
+<li>d. <code>x | (y&lt;&lt;i)</code>将x的第i~i+k-1位和y进行位或运算（k为y的二进制表示的位数），这一步就是模拟了骨牌摆放；</li>
+</ul>
+</li>
+<li><p>这个格子可以放置第k个骨牌的条件有如下几个：</p>
+</li>
+<li><ul>
+<li>1、当前骨牌横向长度记为w，那么w必须满足 col + w &lt;= N，否则就超出右边界了。</li>
+</ul>
+</li>
+<li><ul>
+<li>2、 <code>nowstate &amp; (blockMask[k][0]&lt;&lt;col)  == 0</code>，即第i行，骨牌放入前对应的格子为空（对应的格子表示骨牌占据的格子，下同）</li>
+</ul>
+</li>
+<li><ul>
+<li>3、<code>nextstate &amp; (blockMask[k][1]&lt;&lt;col)  == 0</code>，即第i+1行，骨牌放入前对应的格子为空</li>
+</ul>
+</li>
+<li><ul>
+<li>4、最容易忽略的一点是，“J”骨牌放置时，它的缺口部分之前必须要被骨牌铺满，否则就无法满足第i行全铺满这个条件了</li>
+</ul>
+</li>
+<li><p>当四个条件都满足就可以递归进入下一层了，递归的时候也是采用位运算，实现如下：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dfs( col+1, nextrow, nowstate|(blockMask[k][0]&lt;&lt;col), nextstate|(blockMask[k][1]&lt;&lt;col), cnt );</div></pre></td></tr></table></figure>
+<ul>
+<li><p>这里的位或运算（|）就是模拟将一个骨牌摆放到指定位置的操作（参见位运算d）</p>
+</li>
+<li><p>在枚举到第col列的时候，有可能<code>(i, col)</code>这个格子已经被上一行的骨牌给“占据”了（是否被占据可以通过 <code>(1&lt;&lt;col) &amp; nowstate</code> 得到），这时候我们只需要继续递归下一层，只递增col，其它量都不变即可，这表示了这个格子什么都不放的情况</p>
+</li>
+</ul>
+<h3 id="树状模型"><a href="#树状模型" class="headerlink" title="树状模型"></a>树状模型</h3><blockquote>
+<p>树形动态规划（树形DP），是指状态图是一棵树，状态转移也发生在树上，父结点的值通过所有子结点计算完毕后得出。</p>
+</blockquote>
+<ul>
+<li><p>[例题11]给定一颗树，和树上每个结点的权值，求一颗非空子树，使得权和最大。</p>
+</li>
+<li><p>用<code>d[1][i]</code>表示i这个结点选中的情况下，以i为根的子树的权和最大值;</p>
+</li>
+<li><p>用<code>d[0][i]</code>表示i这个结点不选中的情况下，以i为根的子树的权和最大值;</p>
+</li>
+<li><p>状态转移方程：</p>
+</li>
+<li><ul>
+<li><code>d[1][i] = v[i] + sum{ d[1][v] | v是i的直接子结点 &amp;&amp; d[1][v] &gt; 0 }</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>d[0][i] = max( 0, max{ max( d[0][v], d[1][v] ) | v是i的直接子结点 } )</code></li>
+</ul>
+</li>
+<li><p>构造一个以1为根结点的树，然后就可以通过dfs求解</p>
+</li>
+<li><p>题目要求求出的树为非空树，所以当所有权值都为负数的情况下需要特殊处理，选择所有权值中最大的那个作为答案</p>
+</li>
+</ul>
+<h2 id="动态规划的常用状态转移方程"><a href="#动态规划的常用状态转移方程" class="headerlink" title="动态规划的常用状态转移方程"></a>动态规划的常用状态转移方程</h2><blockquote>
+<p>如果子问题的数目为<code>O(n^t)</code>，每个子问题需要用到<code>O(n^e)</code>个子问题的结果，那么我们称它为tD/eD的问题，于是可以总结出四类常用的动态规划方程：（下面会把opt作为取最优值的函数（一般取min或max）, <code>w(j, i)</code>为一个实函数，其它变量都可以在常数时间计算出来）。)</p>
+</blockquote>
+<ul>
+<li><ol>
+<li>1D/1D : <code>d[i] = opt{ d[j] + w(j, i) | 0 &lt;= i &lt; j } (1 &lt;= i &lt;= n)</code></li>
+</ol>
+</li>
+<li><ul>
+<li>[例题4]和[例题5]都是这类方程。</li>
+</ul>
+</li>
+<li><ol>
+<li>2D/0D : <code>d[i][j] = opt{ d[i-1][j] + xi, d[i][j-1] + yj, d[i-1][j-1] + zij } (1&lt;= i, j &lt;= n)</code></li>
+</ol>
+</li>
+<li><ul>
+<li>[例题7]是这类方程的变形，最典型的见最长公共子序列问题</li>
+</ul>
+</li>
+<li><ol>
+<li>2D/1D : <code>d[i][j] = w(i, j) + opt{ d[i][k-1] + d[k][j] }, (1 &lt;= i &lt; j &lt;= n)</code></li>
+</ol>
+</li>
+<li><ul>
+<li>区间模型常用方程。</li>
+</ul>
+</li>
+<li><ul>
+<li>另外一种常用的2D/1D的方程为： <code>d[i][j] = opt{ d[i-1][k] + w(i, j, k) | k &lt; j }    (1&lt;= i &lt;= n, 1 &lt;= j &lt;= m)</code></li>
+</ul>
+</li>
+<li><ol>
+<li>2D/2D : <code>d[i][j] = opt{ d[i&#39;][j&#39;] + w(i&#39;, j&#39;, i, j) |  0 &lt;= i&#39; &lt; i, 0 &lt;= j&#39; &lt; j}</code></li>
+</ol>
+</li>
+<li><ul>
+<li>常见于二维的迷宫问题，由于复杂度比较大，所以一般配合数据结构优化，如线段树、树状数组等</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>对于一个tD/eD 的动态规划问题，在不经过任何优化的情况下，可以粗略得到一个时间复杂度是O(nt+e)，空间复杂度是O(nt)的算法，大多数情况下空间复杂度是很容易优化的，难点在于时间复杂度</p>
+</blockquote>
+<h2 id="动态规划和数据结构结合的常用优化"><a href="#动态规划和数据结构结合的常用优化" class="headerlink" title="动态规划和数据结构结合的常用优化"></a>动态规划和数据结构结合的常用优化</h2><p>滚动数组（空间优化）</p>
+<p>……</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/31/computer_network/computer_network_5：数据链路层和局域网(The Link Layer and LANs)/" rel="next" title="数据链路层和局域网(The Link Layer and LANs)">
+                <i class="fa fa-chevron-left"></i> 数据链路层和局域网(The Link Layer and LANs)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/03/algoDesign/backpack/" rel="prev" title="背包">
+                背包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenxfeng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3034124347" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#递推"><span class="nav-number">1.</span> <span class="nav-text">递推</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记忆化搜索"><span class="nav-number">2.</span> <span class="nav-text">记忆化搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#状态和状态转移"><span class="nav-number">3.</span> <span class="nav-text">状态和状态转移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最优化原理和最优子结构"><span class="nav-number">3.1.</span> <span class="nav-text">最优化原理和最优子结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#经典模型"><span class="nav-number">4.</span> <span class="nav-text">经典模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性模型"><span class="nav-number">4.1.</span> <span class="nav-text">线性模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区间模型"><span class="nav-number">4.2.</span> <span class="nav-text">区间模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#背包模型"><span class="nav-number">4.3.</span> <span class="nav-text">背包模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0-1背包"><span class="nav-number">4.3.1.</span> <span class="nav-text">0/1背包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完全背包"><span class="nav-number">4.3.2.</span> <span class="nav-text">完全背包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多重背包"><span class="nav-number">4.3.3.</span> <span class="nav-text">多重背包</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态压缩模型"><span class="nav-number">4.4.</span> <span class="nav-text">状态压缩模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树状模型"><span class="nav-number">4.5.</span> <span class="nav-text">树状模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态规划的常用状态转移方程"><span class="nav-number">5.</span> <span class="nav-text">动态规划的常用状态转移方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态规划和数据结构结合的常用优化"><span class="nav-number">6.</span> <span class="nav-text">动态规划和数据结构结合的常用优化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

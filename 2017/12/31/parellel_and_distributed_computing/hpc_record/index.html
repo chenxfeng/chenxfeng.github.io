@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="并行计算," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="MPI 跨节点并行，并行度高
+
+分布式系统
+
+
+pThread 接近底层，灵活
+
+
+提供虚拟地编写任何可知线程行为的能力
+
+
+
+共享内存
+
+
+openmp 隐藏底层细节
+
+
+允许编译器和运行时系统决定线程行为的一些细节
+
+
+
+使用openmp编写一些并行行为更容易
+
+
+
+很难对一些底层的线程交互进行编程
+
+
+
+共享内存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高性能计算">
+<meta property="og:url" content="https://chenfeng.github.io/2017/12/31/parellel_and_distributed_computing/hpc_record/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="MPI 跨节点并行，并行度高
+
+分布式系统
+
+
+pThread 接近底层，灵活
+
+
+提供虚拟地编写任何可知线程行为的能力
+
+
+
+共享内存
+
+
+openmp 隐藏底层细节
+
+
+允许编译器和运行时系统决定线程行为的一些细节
+
+
+
+使用openmp编写一些并行行为更容易
+
+
+
+很难对一些底层的线程交互进行编程
+
+
+
+共享内存">
+<meta property="og:updated_time" content="2017-12-31T01:47:29.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高性能计算">
+<meta name="twitter:description" content="MPI 跨节点并行，并行度高
+
+分布式系统
+
+
+pThread 接近底层，灵活
+
+
+提供虚拟地编写任何可知线程行为的能力
+
+
+
+共享内存
+
+
+openmp 隐藏底层细节
+
+
+允许编译器和运行时系统决定线程行为的一些细节
+
+
+
+使用openmp编写一些并行行为更容易
+
+
+
+很难对一些底层的线程交互进行编程
+
+
+
+共享内存">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/12/31/parellel_and_distributed_computing/hpc_record/"/>
+
+
+
+
+
+  <title>高性能计算 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/12/31/parellel_and_distributed_computing/hpc_record/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">高性能计算</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-31T00:00:00+08:00">
+                2017-12-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>MPI 跨节点并行，并行度高</li>
+<li><ul>
+<li>分布式系统</li>
+</ul>
+</li>
+<li><p>pThread 接近底层，灵活</p>
+</li>
+<li><ul>
+<li>提供虚拟地编写任何可知线程行为的能力</li>
+</ul>
+</li>
+<li><ul>
+<li>共享内存</li>
+</ul>
+</li>
+<li><p>openmp 隐藏底层细节</p>
+</li>
+<li><ul>
+<li>允许编译器和运行时系统决定线程行为的一些细节</li>
+</ul>
+</li>
+<li><ul>
+<li>使用openmp编写一些并行行为更容易</li>
+</ul>
+</li>
+<li><ul>
+<li>很难对一些底层的线程交互进行编程</li>
+</ul>
+</li>
+<li><ul>
+<li>共享内存</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="openmp"><a href="#openmp" class="headerlink" title="openmp"></a>openmp</h2><ul>
+<li>特征：</li>
+<li><ul>
+<li>任务并行化</li>
+</ul>
+</li>
+<li><ul>
+<li>显式线程同步</li>
+</ul>
+</li>
+<li><p>编译选项(打开编译器支持) : <code>-fopenmp</code></p>
+</li>
+<li><p>头文件 : <code>#include &lt;omp.h&gt;</code></p>
+</li>
+<li><p>最基本的parallel指令 : <code>#pragma omp parallel</code></p>
+</li>
+<li><ul>
+<li>表明之后的结构化代码块(structured block, 基本块)应被多个线程并行执行</li>
+</ul>
+</li>
+<li><ul>
+<li>一个结构化代码块是一条C语句或者只有一个入口和一个出口的一组复合C语句，代码中允许调用exit函数</li>
+</ul>
+</li>
+<li><ul>
+<li>(简单地禁止分支语句或离开结构化代码块)</li>
+</ul>
+</li>
+<li><p>线程(thread) : 执行线程(thread of execution)</p>
+</li>
+<li><ul>
+<li>共享派生(fork)它们的进行的大部分资源(如标准输入输出)</li>
+</ul>
+</li>
+<li><ul>
+<li>每个线程有自己的栈和计数器</li>
+</ul>
+</li>
+<li><ul>
+<li>完成执行后合并(join)到启动它的进程</li>
+</ul>
+</li>
+<li><p>指定线程数 : <code>#pragma omp parallel num_threads(thread_count)</code></p>
+</li>
+<li><ul>
+<li><code>num_threads</code>子句，其中thread_count为并发执行的线程数</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>note</strong> : 程序可以启动的线程数可能受系统定义的限制，openmp不保证实际能够启动thread_count个线程(大部分系统能够启动数百、数千个线程)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>程序开始执行时，进程启动<br>程序到达parallel指令时，原线程继续执行，启动另外<code>thread_count - 1</code>个线程</p>
+</blockquote>
+<ul>
+<li>原线程为<strong>主线程</strong>(master)，额外的线程为<strong>从线程</strong>(slave)</li>
+<li><p>执行并行块的线程集合(主线程 和 从线程)为<strong>线程组</strong></p>
+</li>
+<li><p><strong>隐式路障</strong> : 完成代码块的线程将等待线程组中的所有其他线程完成代码块</p>
+</li>
+<li><ul>
+<li>之后从线程终止，主线程继续执行之后的(非并行)代码</li>
+</ul>
+</li>
+<li><p>获取线程编号 : <code>int omp_get_thread_num(void);</code></p>
+</li>
+<li><ul>
+<li>[0, 1, …, thread_count-1]</li>
+</ul>
+</li>
+<li><p>获取线程组中的线程数 : <code>int omp_get_num_threads(void);</code></p>
+</li>
+<li><p>错误检查 ： 检查编译器对OpenMP的支持</p>
+</li>
+<li><ul>
+<li>不支持OpenMP的编译器只忽略 <code>parallel</code> 指令</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> _OPENMP</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>临界区</strong> : <code>#pragma omp critical</code></li>
+<li><ul>
+<li>临界区 : 一个被多个更新共享资源的线程执行的代码(块)，一次只能被一个线程更新</li>
+</ul>
+</li>
+<li><ul>
+<li>竞争条件(race condition) : 多个线程试图访问一个共享资源，并且至少其中一个访问是更新该共享资源(可能会导致错误)</li>
+</ul>
+</li>
+<li><ul>
+<li>将引起竞争条件的代码声明为临界区</li>
+</ul>
+</li>
+<li><p>一个能够被线程组中的所有线程访问的变量拥有<strong>共享</strong>作用域，一个只能被单个线程访问的变量拥有<strong>私有</strong>作用域</p>
+</li>
+<li><ul>
+<li>在parallel块中声明的变量在线程的(私有)栈中分配，都是私有变量(拥有私有作用域)</li>
+</ul>
+</li>
+<li><ul>
+<li>在parallel块之前声明的变量的<em>缺省</em>作用域是共享的</li>
+</ul>
+</li>
+<li><p><strong>归约</strong>子句 : <code>reduction(&lt;operator&gt; : &lt;variable list&gt;)</code></p>
+</li>
+<li><ul>
+<li>如 : <code>#pragma omp parallel reduction(+ : global_result)</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>operator</code> : <code>+</code>, <code>*</code>, <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>&amp;&amp;</code>, <code>||</code>之一</li>
+</ul>
+</li>
+<li><ul>
+<li>即 <strong>归约操作符</strong>，满足交换律和结合律的二元运算符(减法不满足，需将减法转成加法)</li>
+</ul>
+</li>
+<li><ul>
+<li><code>variable list</code> : 归约变量</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>归约就是将相同的归约操作符重复地应用到操作数序列得到一个结果的运算<br>所有操作的中间结果存储在同一个变量(归约变量, reduction variable)中</p>
+<p>note : 浮点型数据的运算不满足结合律(截断误差的影响)</p>
+</blockquote>
+<ul>
+<li>循环并行化 : <code>#pragma omp parallel for</code></li>
+<li><ul>
+<li>结构化代码块必须是for循环</li>
+</ul>
+</li>
+<li><ul>
+<li>系统通过在线程间划分循环迭代并行化for循环</li>
+</ul>
+</li>
+<li><ul>
+<li>线程间的缺省划分方式是由系统决定的，大部分粗略地使用块划分</li>
+</ul>
+</li>
+<li><ul>
+<li>和parallel指令的不同 : </li>
+</ul>
+</li>
+<li><ul>
+<li>(1)parallel的块的具体工作一般须线程本身在线程之间划分</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)parallel指令之前声明的变量缺省作用域是共享的，parallel for指令循环变量的缺省作用域是私有的</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>warning :<br>OpenMP只会并行化for循环，不会并行化while或do-while循环(需转成等效的for循环)<br>OpenMP只能并行化在以下情况下确定迭代次数的for循环<br>(1)由for语句本身(<code>for (...;...;...)</code>)确定<br>(2)在循环之前确定<br>— 无限循环不能并行化<br>— 有break语句的循环不能并行化(break添加了另一个从循环退出的出口)<br>OpenMP只能并行化具有典型结构的for循环<br>(1)变量index必须是整型或指针类型(非float型浮点数)<br>(2)表达式start、end、incr必须有一个兼容的类型<br>(3)表达式start、end、incr不能在循环执行期间改变<br>(4)在循环期间变量index只能够被for语句的增量表达式修改</p>
+<p>note : 循环体中可以有一个exit调用</p>
+</blockquote>
+<ul>
+<li>数据依赖性 : 循环中，迭代中的计算依赖于一个或多个先前的迭代结果</li>
+<li><ul>
+<li>OpenMP编译器不检查被parallel for指令并行化的循环所包含的迭代间的依赖关系(由程序员识别)</li>
+</ul>
+</li>
+<li><ul>
+<li>一个或多个迭代结果依赖于其它迭代的循环，一般不能被OpenMP正确地并行化</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>循环依赖(loop-carried dependence)<br>注意缺省情况下任何在循环前声明的变量(除了例外的循环变量)在线程间都是共享的</p>
+<p>不可并行化的数据依赖：Read-after-Write、Write-after-Write</p>
+</blockquote>
+<ul>
+<li>private子句 : <code>private(&lt;variable list&gt;)</code></li>
+<li><ul>
+<li>在private子句内列举的变量在每个线程上都有一个私有副本被创建</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>note : 一个私有作用域的变量的值在parallel块或者parallel for块开始处是未指定的，在parallel块或parallel for块完成之后也是未指定的<br>例如一个在块之前声明并初始化的变量，在private子句声明为私有作用域的块中一开始的值是非确定的</p>
+</blockquote>
+<ul>
+<li>shared子句 : <code>shared(&lt;variable list&gt;)</code></li>
+<li><ul>
+<li>明确变量的作用域为共享的</li>
+</ul>
+</li>
+<li><p><code>default(none)</code> : 显式要求变量的作用域显式指定</p>
+</li>
+<li><ul>
+<li>编译器将要求程序员明确在这个块中使用的每个变量和已经在块之外声明的变量的作用域</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>对于并行化for循环而言，parallel for指令不是一个通用的解决方案(数据依赖/循环依赖)</p>
+</blockquote>
+<ul>
+<li>循环调度 : 各次循环分配给线程的操作(操作系统完成)</li>
+<li><ul>
+<li>大部分OpenMP实现粗略地使用块分割 : 如果在串行循环中有n次迭代，那么在并行循环中，前<code>n/thread_count</code>个迭代分配给线程0，接下来的<code>n/thread_count</code>个迭代分配给线程1，以此类推</li>
+</ul>
+</li>
+<li><ul>
+<li>不是最优的分配方式 : 如果循环首尾的运算量不同，会造成负载不均衡</li>
+</ul>
+</li>
+<li><ul>
+<li>适合<strong>循环</strong>划分(轮流分配线程的工作)：各次迭代被轮流地一次一个地分配给线程</li>
+</ul>
+</li>
+<li><p>schedule子句 : <code>schedule(&lt;type&gt;[, &lt;chunksize&gt;])</code></p>
+</li>
+<li><ul>
+<li>type : </li>
+</ul>
+</li>
+<li><ul>
+<li>(1)static : 迭代在循环执行前分配给线程(循环划分)</li>
+</ul>
+</li>
+<li><ul>
+<li>(2)dynamic/guided : 迭代在循环执行时分配给线程，在一个线程完成了当前迭代集合后能从运行时系统中请求更多</li>
+</ul>
+</li>
+<li><ul>
+<li>(3)auto : 编译器和运行时系统决定调度方式</li>
+</ul>
+</li>
+<li><ul>
+<li>(4)runtime : 调度在运行时决定</li>
+</ul>
+</li>
+<li><ul>
+<li>chunkszie : 迭代块大小，正整数(迭代块是在顺序循环中连续执行的一块迭代语句)</li>
+</ul>
+</li>
+<li><p>static调度类型 ： 系统以轮转的方式分配chunksize块个迭代给每个线程</p>
+</li>
+<li><ul>
+<li>例如，12个迭代，三个线程</li>
+</ul>
+</li>
+<li><ul>
+<li><code>schedule(static, 1)</code></li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Thread 0: 0, 3, 6, 9</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Thread 1: 1, 4, 7, 10</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Thread 2: 2, 5, 8, 11</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><code>schedule(static, 2)</code></li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Thread 0: 0, 1, 6, 7</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Thread 1: 2, 3, 8, 9</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Thread 2: 4, 5, 10, 11</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code>schedule(static, total_iterations/thread_count)</code>相当于大部分OpenMP实现所使用的缺省调度<br>note : 块大小调整至并行时间最短(均衡点)</p>
+</blockquote>
+<ul>
+<li>dynamic调度类型</li>
+<li><ul>
+<li>迭代被分成块大小为chunksize连续的块</li>
+</ul>
+</li>
+<li><ul>
+<li>每个线程执行一块，当一个线程完成一块时它将从运行时系统请求另一块，直到所有的迭代完成</li>
+</ul>
+</li>
+<li>guided调度类型</li>
+<li><ul>
+<li>迭代分成块，块大小近似等于剩下的迭代数除以线程数(当块完成后新块的大小会变小)</li>
+</ul>
+</li>
+<li><ul>
+<li>若无指定chunksize，则块的大小最小为1；</li>
+</ul>
+</li>
+<li><ul>
+<li>若指定chunksize，则块的最小大小为chunksize，除了最后一块的大小可以比chunksize小</li>
+</ul>
+</li>
+<li><p>runtim调度类型</p>
+</li>
+<li><ul>
+<li>调度类型由环境变量<code>OMP_SCHEDULE</code>指定线程数</li>
+</ul>
+</li>
+<li><ul>
+<li><code>$export OMP_SCHEDULE=&quot;static, 1&quot;</code></li>
+</ul>
+</li>
+<li><ul>
+<li>可以通过改变环境变量的值而不用更改源代码达到改变调度类型的目的</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>调度选择 : 平衡调度开销和负载均衡<br>(1)如果循环的每次迭代需要几乎相同的计算量，可能默认的调度方式能提供最好的性能<br>(2)如果随着循环的进行，迭代的计算量线性递增/减，采用较小的chunksize的static调度可能提供最好的性能<br>(3)如果每次迭代的开销不能事先确定，需要尝试多种不同的调度策略：使用<code>schedule(runtime)</code>子句，赋予环境变量<code>OMP_SCHEDULE</code>不同的值，比较不同调度策略下程序的性能</p>
+</blockquote>
+<h3 id="生产者和消费者问题"><a href="#生产者和消费者问题" class="headerlink" title="生产者和消费者问题"></a>生产者和消费者问题</h3><blockquote>
+<p>不适合用parallel for指令或者for指令并行化的问题</p>
+</blockquote>
+<ul>
+<li>使用的数据结构 : <strong>队列</strong></li>
+<li><ul>
+<li><strong>生产者线程</strong>产生对服务器数据的请求，将请求<strong>入队</strong></li>
+</ul>
+</li>
+<li><ul>
+<li><strong>消费者线程</strong>发现和生成数据消费请求，将请求<strong>出队</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>应用 : 共享内存系统上实现消息传递<br>每一个线程有一个共享消息队列，当一个线程要向另一个线程“发送消息”时，将消息放入目标线程的消息队列<br>一个线程接收消息只需从它的消息队列的头部取出消息</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">for (sent_msgs = 0; sent_msgs &lt; send_max; ++sent_msgs) &#123;</div><div class="line">    Send_msg();</div><div class="line">    Try_receive();</div><div class="line">&#125;</div><div class="line">while (!Done()) </div><div class="line">    Try_receive();</div><div class="line"></div><div class="line">// 发送消息</div><div class="line">// 访问消息队列，将消息入队是一个临界区</div><div class="line">// 两个线程同时试图检查和更新队尾指针可能会丢失一条由其中一个线程入队的消息</div><div class="line">Send_msg() :</div><div class="line">    mesg = generate_mesg(); // 产生消息</div><div class="line">    dest = determine_dest_thread(); // 目的进程</div><div class="line">#pragma omp critical</div><div class="line">    Enqueue(queue, dest, my_rank, mesg); // 消息入队</div><div class="line"></div><div class="line">// 接收消息</div><div class="line">// 只用一个变量存储队列大小，对该变量的操作就形成临界区 : 两个变量</div><div class="line">// 只有消息队列的拥有者能出队</div><div class="line">Try_receive() :</div><div class="line">    queue_size = enqueued - dequeued;</div><div class="line">    if (queue_size == 0) </div><div class="line">        return ;</div><div class="line">    else if (queue_size == 1)</div><div class="line">#pragma omp critical</div><div class="line">        Dequeue(queue, &amp;src, &amp;mesg);</div><div class="line">    else </div><div class="line">        Dequeue(queue, &amp;src, &amp;mesg);</div><div class="line">    Print_message(src, mesg);</div><div class="line"></div><div class="line">// 终止检测</div><div class="line">// 每个线程在for循环结束后将done_sending加1</div><div class="line">Done() :</div><div class="line">    queue_size = enqueued - dequeued;</div><div class="line">    if (queue_size == 0 &amp;&amp; done_sending == thread_count)</div><div class="line">        return true;</div><div class="line">    esle </div><div class="line">        return false;</div></pre></td></tr></table></figure>
+<ul>
+<li>显式路障 : <code>#pragma omp barrier</code></li>
+<li><ul>
+<li>线程遇到路障时被阻塞，直到组中所有线程都到达了这个路障，才能继续往下执行</li>
+</ul>
+</li>
+<li><p>原子操作 : <code>#pragma omp atomic</code></p>
+</li>
+<li><ul>
+<li>保护一条C语言赋值语句所形成的临界区</li>
+</ul>
+</li>
+<li><ul>
+<li>修改相同变量的不同语句被视为同一临界区</li>
+</ul>
+</li>
+<li><ul>
+<li><code>x &lt;op&gt;= &lt;expression&gt;</code>;</li>
+</ul>
+</li>
+<li><ul>
+<li><code>x++;</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>x--;</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>++x;</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>--x;</code></li>
+</ul>
+</li>
+<li><ul>
+<li><op> : <code>+</code>, <code>*</code>, <code>-</code>, <code>/</code>, <code>&amp;</code>, <code>^</code>, <code>|</code>, <code>&lt;&lt;</code>, <code>&gt;&gt;</code></op></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>note : <expression>不能引用x<br>只有x的装载和存储确保受保护，对于<expression>中含有的不受保护的变量的更新，会使程序结果不可预测<br>如 <expression> 为 <code>x += y++;</code></expression></expression></expression></p>
+</blockquote>
+<ul>
+<li>命名临界区 : <code>#pragma omp critical(name)</code></li>
+<li><ul>
+<li>OpenMP默认的做法是将所有的临界区代码块作为复合临界区的一部分，可能非常不利于程序的性能</li>
+</ul>
+</li>
+<li><ul>
+<li>强制线程间的互斥会使程序的执行串行化</li>
+</ul>
+</li>
+<li><ul>
+<li>两个用不同名字而定critical指令保护的代码块就可以同时执行</li>
+</ul>
+</li>
+<li><p>锁(lock) : 一个数据结构和定义在其上的函数组成</p>
+</li>
+<li><ul>
+<li>可以显式地强制对临界区进行互斥访问</li>
+</ul>
+</li>
+<li><ul>
+<li>一个线程进入临界区前尝试调用锁函数上锁(set)</li>
+</ul>
+</li>
+<li><ul>
+<li>如果没有其他的线程正在执行临界区的代码，则此线程获得锁并进入临界区</li>
+</ul>
+</li>
+<li><ul>
+<li>该线程执行完临界区的代码后调用解锁函数释放(unset/relinquish)锁，以便其他线程可以获得锁</li>
+</ul>
+</li>
+<li><ul>
+<li>当一个线程拥有锁时其他线程都不能进入该临界区</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">/* executed by one thread */</div><div class="line"></div><div class="line">initialize the lock data structure;</div><div class="line"></div><div class="line">/* executed by multiple threads */</div><div class="line"></div><div class="line">attempt to lock or set the lock data structure;</div><div class="line">critical section;</div><div class="line">unlock or unset the lock data structure;</div><div class="line"></div><div class="line">/* executed by one thread */</div><div class="line"></div><div class="line">destroy the lock data structure;</div></pre></td></tr></table></figure>
+<ul>
+<li>OpenMP有两种锁 : <strong>简单</strong>(simple)锁 和 <strong>嵌套</strong>(nested)锁</li>
+<li><ul>
+<li>简单锁在被释放前只能获得一次</li>
+</ul>
+</li>
+<li><ul>
+<li>嵌套锁在被释放前可以被同一个线程获得多次</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// OpenMP simple lock</div><div class="line">void omp_init_lock(omp_lock_t*     lock_p  /* out */);</div><div class="line">void omp_set_lock(omp_lock_t*      lock_p  /* in/out */);</div><div class="line">void omp_unset_lock(omp_lock_t*    lock_p  /* in/out */);</div><div class="line">void omp_destroy_lock(omp_lock_t*  lock_p  /* in/out */);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>atomic指令是实现互斥访问最快的访问(处理器专门的装载-修改-存储<load-modify-store>指令)<br>OpenMP规范允许atomic指令对程序中所有的atomic指令标记的临界区进行强制互斥访问(类似未命名的critical指令)，可能导致不必要的互斥(有些实现把两条修改不同变量的被atomic指令保护的语句视为相同的临界区)<br>此时可以选择命名的critical指令或者锁</load-modify-store></p>
+</blockquote>
+<ul>
+<li>互斥可能会引起一些严重的编程问题</li>
+<li><ul>
+<li>对同一临界区混用不同的机制不能保证互斥执行</li>
+</ul>
+</li>
+<li><ul>
+<li>互斥不一定保证公平性，某线程可能一直阻塞等待对某个临界区的执行(<strong>饥饿</strong>现象)</li>
+</ul>
+</li>
+<li><ul>
+<li>嵌套互斥结构或线程以不同的顺序进入多个临界区可能会产生<strong>死锁</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="缓存、缓存一致性、伪共享"><a href="#缓存、缓存一致性、伪共享" class="headerlink" title="缓存、缓存一致性、伪共享"></a>缓存、缓存一致性、伪共享</h3><ul>
+<li>缓存(cache)：解决主存速度比处理器慢而拖慢计算速度的问题</li>
+<li><ul>
+<li>原理：时间和空间局部性</li>
+</ul>
+</li>
+<li><ul>
+<li>结构：缓存行和缓存块</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>现代的微处理器架构使用缓存以减少主存访问时间</p>
+</blockquote>
+<ul>
+<li><p>典型的体系结构都有专门的硬件确保在不同的处理器芯片上的缓存是<strong>一致的</strong></p>
+</li>
+<li><p>写缺失(write-miss)：核试图修改不在缓存中的变量时发生</p>
+</li>
+<li><ul>
+<li>内核必须访问主存</li>
+</ul>
+</li>
+<li><p>读缺失(read-miss)：核试图读取不在缓存中的变量时发生</p>
+</li>
+<li><ul>
+<li>内核必须访问主存</li>
+</ul>
+</li>
+<li><p>伪共享：两个线程可能访问内存中的不同位置，但是当这两个位置属于同一个缓存行时缓存一致性硬件所表现出来的处理方式就好像这两个线程访问的是内存中的同一个位置</p>
+</li>
+<li><ul>
+<li>如果其中一个线程更新了它所访问的主存地址的值，则另外一个变量试图读取它要访问的主存地址时不得不从主存获取该值</li>
+</ul>
+</li>
+<li><ul>
+<li>硬件强制该线程表现得好像它共享了变量(实际上没有共享任何变量)</li>
+</ul>
+</li>
+<li><ul>
+<li>会大大降低共享内存程序的性能</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>两种可行的避免伪共享的解决方案<br>1.用伪变量填充以确保任意一个线程的更新不会影响其他线程的缓存行<br>2.每个线程在迭代期间使用私有存储，在计算完成后更新共享存储</p>
+</blockquote>
+<h3 id="线程安全性"><a href="#线程安全性" class="headerlink" title="线程安全性"></a>线程安全性</h3><ul>
+<li><p>一个代码块被多个线程同时执行时不会产生错误，则是<strong>线程安全的</strong></p>
+</li>
+<li><p>某些C函数通过声明static存储类型的变量存储输入行，会导致存储在此变量中的值从上一个调用保留到下一个调用；这个变量是共享的，一个线程可以写覆盖另外一个线程的数据</p>
+</li>
+<li><ul>
+<li>这些函数不是线程安全的</li>
+</ul>
+</li>
+</ul>
+<h2 id="pthread"><a href="#pthread" class="headerlink" title="pthread"></a>pthread</h2><blockquote>
+<p>共享内存编程：<br>不同的处理器尝试更新共享内存区域上同一位置的数据会导致共享区域的内容无法预测。<br>更新共享区域内存的代码段：临界区(critical section)</p>
+</blockquote>
+<ul>
+<li>进程</li>
+<li><ul>
+<li>可执行代码</li>
+</ul>
+</li>
+<li><ul>
+<li>栈段</li>
+</ul>
+</li>
+<li><ul>
+<li>堆段</li>
+</ul>
+</li>
+<li><ul>
+<li>资源描述符(操作系统分配，如文件描述符)</li>
+</ul>
+</li>
+<li><ul>
+<li>安全信息(如进程被允许访问的软硬件资源)</li>
+</ul>
+</li>
+<li><ul>
+<li>进程状态信息(运行/等待资源、寄存器/程序计数器值)</li>
+</ul>
+</li>
+<li><p>大多数操作系统默认状态下一个进程的内存块是私有的</p>
+</li>
+<li><ul>
+<li>其他进程无法绕过OS直接访问</li>
+</ul>
+</li>
+<li><p>线程：轻量级进程</p>
+</li>
+<li><p>POSIX线程库：Pthreads</p>
+</li>
+<li><p>链接Pthreads线程库： <code>-lpthread</code></p>
+</li>
+<li><ul>
+<li>某些系统无需添加链接选项编译器会自动链接</li>
+</ul>
+</li>
+<li><ul>
+<li>如： <code>$gcc src.c -o exec.out -lpthread</code></li>
+</ul>
+</li>
+<li><p>源代码包含Pthreads线程库头文件： <code>pthread.h</code></p>
+</li>
+</ul>
+<blockquote>
+<p>全局变量为所有线程所共享</p>
+</blockquote>
+<h3 id="启动线程"><a href="#启动线程" class="headerlink" title="启动线程"></a>启动线程</h3><ul>
+<li><code>pthread_t</code> 数据结构存储线程的专有信息</li>
+<li><ul>
+<li>pthread_t对象是不透明对象，其中的数据由OS绑定，用户级代码无法直接访问</li>
+</ul>
+</li>
+<li><ul>
+<li>pthread_t对象是线程的唯一标识</li>
+</ul>
+</li>
+<li><p><code>pthread_create</code> 函数生成线程</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int pthread_create(</div><div class="line">    pthread_t*             thread_p                /*out*/, </div><div class="line">    const pthread_attr_t*  attr_p                  /*in*/, </div><div class="line">    void*                  (*start_routine)(void*) /*in*/, </div><div class="line">    void*                  arg_p                   /*in*/</div><div class="line">);</div></pre></td></tr></table></figure>
+<ul>
+<li><ul>
+<li>第一个参数为<code>pthread_t</code>指针，需在<strong>调用前就分配好内存空间</strong></li>
+</ul>
+</li>
+<li><ul>
+<li>第二个参数忽略，<code>NULL</code></li>
+</ul>
+</li>
+<li><ul>
+<li>第三个参数为线程函数</li>
+</ul>
+</li>
+<li><ul>
+<li>第四个参数为传递给线程函数的参数</li>
+</ul>
+</li>
+<li><ul>
+<li>返回值用于表示线程调用过程是否正确</li>
+</ul>
+</li>
+<li><p>线程函数 <code>void* thread_function(void* args_p);</code></p>
+</li>
+<li><ul>
+<li>常用参数传递方式，包含在<code>struct thread_data_t</code>中</li>
+</ul>
+</li>
+<li><ul>
+<li>线程函数通过<code>thread_data_t *my_data = (thread_data_t*)args_p;</code>获取参数</li>
+</ul>
+</li>
+<li><p>参数转换成<code>void*</code>型指针再传进去</p>
+</li>
+</ul>
+<blockquote>
+<p>“单程序，多数据”并行模式<br>不同线程可以指定不同线程函数运行</p>
+</blockquote>
+<h3 id="运行线程"><a href="#运行线程" class="headerlink" title="运行线程"></a>运行线程</h3><ul>
+<li>主线程运行main函数</li>
+</ul>
+<blockquote>
+<p>Pthreads不允许程序员控制线程在哪个核上运行(允许指定核心的实现是不可移植的)<br>线程调度有OS指定</p>
+</blockquote>
+<h3 id="停止线程"><a href="#停止线程" class="headerlink" title="停止线程"></a>停止线程</h3><ul>
+<li><code>pthread_join</code>函数等待pthread_t对象关联的线程结束</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int pthread_join(</div><div class="line">    pthread_t   thread     /*in*/;</div><div class="line">    void**      ret_val_p  /*out*/</div><div class="line">);</div></pre></td></tr></table></figure>
+<ul>
+<li><ul>
+<li>第二个参数接受任意由pthread_t对象所关联的线程产生的返回值</li>
+</ul>
+</li>
+<li><ul>
+<li>通常的接受返回值方法，包含在<code>struct thread_result</code>中</li>
+</ul>
+</li>
+<li><ul>
+<li>线程函数返回该结构类型的对象的指针</li>
+</ul>
+</li>
+</ul>
+<h3 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a>临界区</h3><ul>
+<li>竞争条件(race condition)：</li>
+<li><ul>
+<li><strong>多个线程</strong>都要访问共享变量或共享文件等<strong>共享资源</strong>时</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>至少一个访问是更新操作</strong></li>
+</ul>
+</li>
+<li><ul>
+<li>这些访问就可能会导致某种错误</li>
+</ul>
+</li>
+</ul>
+<h3 id="忙等待"><a href="#忙等待" class="headerlink" title="忙等待"></a>忙等待</h3><ul>
+<li>使用共享的标志变量阻塞防止多个线程进入临界区</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">循环(无穷) &#123;</div><div class="line">    判断标志变量: </div><div class="line">        标志忙: continue;</div><div class="line">        标志闲: 进入临界区(如写共享变量); break;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>在忙等待中线程不停地测试某个条件</li>
+<li>在某个条件满足之前测试都是徒劳的</li>
+</ul>
+<blockquote>
+<p>忙等待有效的前提是严格按照书写顺写执行代码<br>有些编译器优化会破坏这个条件</p>
+</blockquote>
+<ul>
+<li>忙等待不是控制临界区最好的方法</li>
+<li><ul>
+<li>浪费CPU周期不停进行循环条件测试</li>
+</ul>
+</li>
+<li><ul>
+<li>对性能可能有极大影响</li>
+</ul>
+</li>
+<li><ul>
+<li>关闭编译器优化会降低性能</li>
+</ul>
+</li>
+</ul>
+<h3 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h3><ul>
+<li>mutex : mutually exclusive</li>
+</ul>
+<blockquote>
+<p>处于忙等待状态的线程持续使用CPU造成资源浪费</p>
+</blockquote>
+<ul>
+<li>互斥量 : 互斥锁</li>
+<li><ul>
+<li>特殊类型的变量</li>
+</ul>
+</li>
+<li><ul>
+<li>通过特殊类型的函数</li>
+</ul>
+</li>
+<li><ul>
+<li>用来限制每次只有一个线程能进入临界区</li>
+</ul>
+</li>
+<li><p>Pthreads标准为互斥量提供的类型：<code>pthread_mutex_t</code></p>
+</li>
+<li><p>以及一些相关操作：</p>
+</li>
+<li><ul>
+<li>初始化(变量使用前):</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int pthread_mutex_init(</div><div class="line">    pthread_mutex_t*            mutex_p  /*out*/,</div><div class="line">    const pthread_mutexattr_t*  attr_p   /*in*/</div><div class="line">);</div></pre></td></tr></table></figure>
+<ul>
+<li><ul>
+<li>第二个参数忽略，赋值<code>NULL</code></li>
+</ul>
+</li>
+<li><ul>
+<li>销毁(变量使用完之后):</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">int pthread_mutex_destroy(pthread_mutex_t* mutex_p /* in/out */);</div><div class="line">``` </div><div class="line"></div><div class="line">- - 获得临界区的使用权:</div></pre></td></tr></table></figure>
+<p>int pthread_mutex_lock(pthread_mutex_t<em> mutex_p /</em> in/out */);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 退出临界区:</div></pre></td></tr></table></figure></p>
+<p>int pthread_mutex_unlock(pthread_mutex_t<em> mutex_p /</em> in/out */);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&gt; 调用 ``pthread_mutex_lock`` 会使线程**阻塞**等待直到没有其他线程在临界区</div><div class="line">&gt; 调用 ``pthread_mutex_unlock`` 会通知系统，线程已完成临界区代码的执行</div><div class="line"></div><div class="line">&gt; Pthreads无法保证线程按调用 ``pthread_mutex_lock`` 的顺序获得进入临界区的锁</div><div class="line">&gt; 有限个线程尝试获得锁的所有权，理论上每一个线程都会获得锁</div><div class="line"></div><div class="line">&gt; 使用忙等待的多线程程序在线程数超过核心个数时性能会下降</div><div class="line"></div><div class="line">### 信号量</div><div class="line"></div><div class="line">- 信号量 : semaphore</div><div class="line">- - 一种特殊类型的unsigned int无符号整型变量</div><div class="line">- - ``#include &lt;semaphore.h&gt;``</div><div class="line">- - 信号量函数</div></pre></td></tr></table></figure></p>
+<p>int sem_init(<br>    sem_t<em>    semaphore_p    /</em> out <em>/,<br>    int       shared         /</em> in  <em>/,<br>    unsigned  initial_val    /</em> in  */   // 信号量初始值<br>);</p>
+<p>int sem_destroy(sem_t<em> semaphore_p  /</em> in/out */);</p>
+<p>int sem_post(sem_t<em> semaphore_p  /</em> in/out */);</p>
+<p>int sem_wait(sem_t<em> semaphore_p  /</em> in/out */);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 忽略 ``sem_init`` 的第二个参数，只需传入常数0</div><div class="line"></div><div class="line">&gt; 生产者-消费者同步模型：一个线程需要等待另一个线程执行某种操作的同步方式</div><div class="line"></div><div class="line">### 路障和条件变量</div><div class="line"></div><div class="line">- 路障(barrier)：同步点</div><div class="line">- - 通过保证所有线程在程序中处于同一个位置来同步线程</div><div class="line">- - 有线程未抵达同一个路障时其它线程阻塞在路障处</div><div class="line">- - 应用：记录“最慢”的线程的时间、调试程序</div><div class="line"></div><div class="line">- Pthreads实现路障的四种方法：</div><div class="line">- - 忙等待 + 互斥量</div><div class="line">- - 信号量</div><div class="line">- - 条件变量(conditional variable)</div><div class="line">- - pthread路障对象</div><div class="line"></div><div class="line">- **忙等待+互斥量**实现路障</div></pre></td></tr></table></figure></p>
+<p>void barrier1() {<br>    pthread_mutex_lock(&amp;barrier_mutex);<br>    counter ++;<br>    pthread_mutex_unlock(&amp;barrier_mutex);<br>    while (counter &lt; thread_count) sleep(0);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 存在问题：线程处于忙等待循环时浪费CPU周期；程序中线程数多于CPU核心数时程序性能会直线下降</div><div class="line">- - 有多少个路障就必须有多少个不同的共享``counter``变量来计数</div><div class="line"></div><div class="line">- **信号量+互斥量**实现路障</div></pre></td></tr></table></figure></p>
+<p>void barrier2(int i_round) {<br>    pthread_mutex_lock(&amp;barrier_mutex);<br>    counter ++;<br>    bool to_post = (counter == thread_count <em> (i_round + 1));<br>    pthread_mutex_unlock(&amp;barrier_mutex);<br>    sem_t </em>barrier_sem = &amp;barrier_sem_even;<br>    if (i_round % 2 == 1)<br>        barrier_sem = &amp;barrier_sem_odd;<br>    if (to_post) {<br>        for (int i = 0; i + 1 &lt; thread_count; ++ i)<br>            sem_post(barrier_sem);<br>    } else {<br>        sem_wait(barrier_sem);<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 使用两个信号量实现多个路障，消除重复使用单个信号量存在的竞争条件</div><div class="line">- - 线程被阻塞在``sem_wait``不会消耗CPU周期，性能更佳</div><div class="line"></div><div class="line">- **条件变量+互斥量**实现路障</div></pre></td></tr></table></figure></p>
+<p>void barrier3(int i_round) {<br>    pthread_mutex_lock(&amp;barrier_mutex);<br>    counter ++;<br>    if (counter == thread_count * (i_round + 1)) {<br>        pthread_cond_broadcast(&amp;barrier_cond);<br>    } else {<br>        while (pthread_cond_wait(&amp;barrier_cond, &amp;barrier_mutex) != 0) sleep(0);<br>    }<br>    pthread_mutex_unlock(&amp;barrier_mutex);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - **条件变量**是一个数据对象，允许线程在某个特定条件或事件发生前都处于挂起状态；事件/条件发生时另一个线程可以通过*信号*唤醒挂起的线程</div><div class="line">- - 一个条件变量总是和一个互斥量相关联</div></pre></td></tr></table></figure></p>
+<p>// 解锁一个阻塞的线程<br>int pthread_cond_signal(pthread_cond_t<em> cond_var_p /</em> in/out */);</p>
+<p>// 解锁所有被阻塞的线程<br>int pthread_cond_broadcast(pthread_cond_t<em> cond_var_p /</em> in/out */);</p>
+<p>// 通过互斥量mutex_p阻塞线程，直到其他线程解锁它<br>int pthread_cond_wait(<br>    pthread_cond_t<em>  cond_var_p  /</em> in/out <em>/,<br>    pthread_mutex_t</em> mutex_p     /<em> in/out </em>/<br>);</p>
+<p>// 初始化：第二个常数通常传递NULL<br>int pthread_cond_init(<br>    pthread_cond_t<em>           cond_p /</em> out <em>/,<br>    const pthread_condattr_t</em> cond_attr_p /<em> in </em>/<br>);<br>// 销毁<br>int pthread_cond_destroy(pthread_cond_t<em> cond_p /</em> out */);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - pthread_cond_wait相当于调用了：</div></pre></td></tr></table></figure></p>
+<p>pthread_mutex_unlock(&amp;mutex_p);<br>wait_on_signal(&amp;cond_var_p);<br>pthread_mutex_lock(&amp;mutex_p);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 若被*pthread_cond_broadcast*和*pthread_cond_signal*以外的事件解除阻塞，则*pthread_cond_wait*的返回值不为0</div><div class="line"></div><div class="line">- **pthreads路障**实现路障</div></pre></td></tr></table></figure></p>
+<p>pthread_barrier_t b;<br>pthread_barrier_init(&amp;b, NULL, thread_count);</p>
+<p>void barrier4(int i_round) {<br>    pthread_barrier_wait(&amp;b);<br>}</p>
+<p>pthread_barrier_destroy(&amp;b);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 读写锁</div><div class="line"></div><div class="line">- 初始化读写锁：</div></pre></td></tr></table></figure></p>
+<p>// 不使用第二个参数，传递NULL值<br>int pthread_rwlock_init(<br>    pthread_rwlock_t<em>           rwlock_p  /</em> out <em>/,<br>    const pthread_rwlockattr_t</em> attr_p    /<em> in </em>/<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 释放读写锁：</div></pre></td></tr></table></figure></p>
+<p>int pthread_rwlock_destroy(pthread_rwlock_t<em> rwlock_p /</em> in/out */);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 加锁、解锁：</div></pre></td></tr></table></figure></p>
+<p>// 加读锁<br>int pthread_rwlock_rdlock(pthread_rwlock_t<em> rwlock_p /</em> in/out <em>/);<br>// 加写锁<br>int pthread_rwlock_wrlock(pthread_rwlock_t</em> rwlock_p /<em> in/out </em>/);<br>// 解锁<br>int pthread_rwlock_unlock(pthread_rwlock_t<em> rwlock_p /</em> in/out */);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- rdlock 为**读操作**对读写锁加锁，多个线程能通过调用这个函数同时获得锁，但任何请求**写锁**的线程都将阻塞在写锁函数的调用上，</div><div class="line">- wrlock 为**写操作**对读写锁加锁，同一时间内只有一个线程能获得写锁，并且当写锁生效时会阻塞其他**读写锁**的获得</div><div class="line"></div><div class="line">- 三种方法确保链表的并发读写的正确性</div><div class="line">- 1. 全局互斥量：读和写操作都先锁再执行操作，后解锁</div><div class="line">- 2. 每个结点一个互斥量：分开加解锁</div><div class="line">- 3. 全局读写锁</div><div class="line"></div><div class="line">&gt; 缓冲、缓冲一致性和伪共享</div><div class="line">&gt; 线程安全性</div><div class="line"></div><div class="line">- 不同维度(8000000 x 8; 8000 x 8000; 8 x 8000000)矩阵向量乘的运行时间和效率的差异：</div><div class="line">- - 缓存的时间和空间局部性原理</div><div class="line">- - 缓存行/缓存块</div><div class="line">- - 写缺失(write-miss)、读缺失(read-miss)、伪共享(false sharing)</div><div class="line"></div><div class="line"></div><div class="line">## MPI</div><div class="line"></div><div class="line">使用消息传递对分布式内存进行编程</div><div class="line"></div><div class="line">MPI：消息传递接口(Message-Passing Interface)</div><div class="line"></div><div class="line">运行在一个核-内存对上的程序为一个**进程**，两个进程间通过发送和接收函数进行通信</div><div class="line"></div><div class="line">### 编译与运行</div><div class="line"></div><div class="line">- 编译：``mpicc``; ``mpic++``; ``mpicxx``</div><div class="line">- - C/C++语言的包装脚本(wrapper script)</div><div class="line">- - 使用``GUN gcc/g++``编译器</div><div class="line"></div><div class="line">- 运行：</div><div class="line">- - ``mpirun -np numOfProcess ./xxx``</div><div class="line">- - ``mpiexec -n numOfProcess ./xxx``</div><div class="line"></div><div class="line">### MPI程序</div><div class="line"></div><div class="line">- 头文件：``mpi.h``</div><div class="line">- - 包括了MPI函数的原型、宏定义、类型定义等以及编译MPI程序所需要的全部定义与声明</div><div class="line"></div><div class="line">- MPI定义的标识符都由字符串``MPI_``开始</div><div class="line">- - 下划线后第一个字母大写表示函数名与MPI定义类型</div><div class="line">- - MPI定义的宏和常量的所有字母都是大写的</div><div class="line"></div><div class="line">- ``MPI_Init``：告知MPI系统进行所有必要的初始化设置</div><div class="line">- - 语法结构：``int MPI_Init(int* argc_p /* in/out */, char *** arg_p /* in/out */);``</div><div class="line">- - 不适用参数时指定为 ``NULL``</div><div class="line">- - 为消息缓冲区分配存储空间；为进程指定进程号</div><div class="line">- - 程序调用``MPI_Init``之前不应该调用其他MPI函数</div><div class="line"></div><div class="line">- ``MPI_Finalize``告知MPI系统使用完毕，为MPI分配的任何资源都可以释放</div><div class="line">- - 语法结构：``MPI_Finalize(void);``</div><div class="line">- - 程序调用``MPI_Finalize``后不应该再调用MPI函数</div><div class="line"></div><div class="line">- MPI程序基本框架：</div></pre></td></tr></table></figure></p>
+<p>// ……</p>
+<p>#include <mpi.h></mpi.h></p>
+<p>int main(int argc, char **argv) {<br>    // …<br>    MPI_Init(&amp;argc, &amp;argv);<br>    //…<br>    MPI_Finalize();<br>    return 0;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 通信子</div><div class="line"></div><div class="line">- 通信子(communicator)：一组可以互相发送消息的进程集合</div><div class="line">- - MPI_Init在用户启动程序时定义由用户启动的所有进程组成的通信子：``MPI_COMM_WORLD``</div><div class="line">- - 获取进程数：``int MPI_Comm_size(MPI_Comm comm /* in */, int* comm_sz_p /* out */);``</div><div class="line">- - 获取进程编号：``int MPI_Comm_rank(MPI_Comm comm /* in */, int* my_rank_p /* out */);``</div><div class="line">- - ``MPI_Comm``：通信子</div></pre></td></tr></table></figure></p>
+<p>int commSize, commRank;<br>MPI_Comm_rank(MPI_COMM_WORLD, &amp;commRank);<br>MPI_Comm_size(MPI_COMM_WORLD, &amp;commSize);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- SPMD：单程序多数据流(Single Program, Multiple Data, SPMD)</div><div class="line">- - 简单地让进程按照其进程号匹配程序分支</div><div class="line"></div><div class="line">### 通信</div><div class="line"></div><div class="line">- MPI_Send和MPI_Recv称为**点对点通信**(point-to-point communication)</div><div class="line"></div><div class="line">- 点对点消息发送</div></pre></td></tr></table></figure></p>
+<p>MPI_Send(<br>    void<em>        msg_buf_p    /</em> in <em>/,<br>    int          msg_size     /</em> in <em>/,<br>    MPI_Datatype msg_type     /</em> in <em>/,<br>    int          dest         /</em> in <em>/,<br>    int          tag          /</em> in <em>/,<br>    MPI_Comm     communicator /</em> in */<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 第一个参数指向包含消息内容的内存块的指针</div><div class="line">- - 第二个参数指定发送的消息数据量(字符串要长度加1&lt;&apos;\0&apos;占一个字符&gt;)</div><div class="line">- - 第三个参数指定发送的数据类型</div><div class="line">- - 第四个参数指定接收消息的进程号</div><div class="line">- - 第五个参数指定标签以区分不同消息</div><div class="line">- - 第六个参数指定通信子(指定通信范围)</div><div class="line"></div><div class="line">| MPI数据类型 | C语言数据类型 |</div><div class="line">| :------   |  :------      |</div><div class="line">| MPI_CHAR   | signed char      |</div><div class="line">| MPI_SHORT  | signed short int |</div><div class="line">| MPI_INT    | signed int       |</div><div class="line">| MPI_LONG   | signed long int  |</div><div class="line">| MPI_LONG_LONG      | signed long long   |</div><div class="line">| MPI_UNSIGNED_CHAR  | unsigned char      |</div><div class="line">| MPI_UNSIGNED_SHORT | unsigned short int |</div><div class="line">| MPI_UNSIGNED       | unsigned int       |</div><div class="line">| MPI_UNSIGNED_LONG  | unsigned long int  |</div><div class="line">| MPI_FLOAT          | float         |</div><div class="line">| MPI_DOUBLE         | double        |</div><div class="line">| MPI_LONG_DOUBLE    | long double   |</div><div class="line">| MPI_BYTE           | |</div><div class="line">| MPI_PACKED         | |</div><div class="line"></div><div class="line">- 点对点消息接收</div></pre></td></tr></table></figure></p>
+<p>MPI_Recv(<br>    void<em>        msg_buf_p    /</em> in  <em>/,<br>    int          buf_size     /</em> in  <em>/,<br>    MPI_Datatype buf_type     /</em> in  <em>/,<br>    int          source       /</em> in  <em>/,<br>    int          tag          /</em> in  <em>/,<br>    MPI_Comm     communicator /</em> in  <em>/,<br>    MPI_Status</em>  status_p     /<em> out </em>/<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 第一个参数指向用于接收消息的内存块的指针</div><div class="line">- - 第二个参数指定内存块中可存储对象的数量</div><div class="line">- - 第三个参数指定对象类型</div><div class="line">- - 第四个参数指定发送消息的进程号</div><div class="line">- - 第五个参数指定匹配要接收的消息的tag</div><div class="line">- - 第六个参数指定通信子(指定通信范围)</div><div class="line">- - 第七个参数可以不使用，赋予``MPI_STATUS_IGNORE``</div><div class="line"></div><div class="line">- 消息匹配</div><div class="line">- - q号进程调用``MPI_Send(send_buf_p, send_buf_sz, send_type, dest, send_tag, send_comm);``</div><div class="line">- - r号进程调用``MPI_Recv(recv_buf_p, recv_buf_sz, recv_type, src, recv_tag, recv_comm, &amp;status);``</div><div class="line">- - 消息能够被接收当且仅当：</div><div class="line">- - 1. ``recv_comm = send_comm``</div><div class="line">- - 2. ``recv_tag  = send_tag``</div><div class="line">- - 3. ``dest = r``</div><div class="line">- - 4. ``src  = q``</div><div class="line">- - 5. 兼容的缓冲区：``recv = send_type`` 同时 ``recv_sz &gt;= send_buf_sz``</div><div class="line"></div><div class="line">&gt; MPI_Recv通配符(wildcard)：特殊常量</div><div class="line">&gt; 接收来自任何源的消息：MPI_ANY_SOURCE</div><div class="line">&gt; 接收来自任何标签的消息：MPI_ANY_TAG</div><div class="line">&gt; 1.只有接受者可以使用通配符参数(MPI通信机制“推”(push)而非“拉”(pull))</div><div class="line">&gt; 2.通信子参数没有通配符</div><div class="line"></div><div class="line">- ``status_p``参数</div><div class="line">- - MPI类型``MPI_Status``是一个有至少三个成员的结构：``MPI_SOURCE``, ``MPI_TAG``, ``MPI_ERROR``</div><div class="line">- - ``MPI_Status status``作参数传入</div><div class="line">- - 消息接收者确定发送者和标签：``status.MPI_SOURCE``; ``status.MPI_TAG``</div><div class="line">- - 消息接收者确定接收到的数据量：``MPI_Get_count(&amp;status, recv_type, &amp;count)``</div></pre></td></tr></table></figure></p>
+<p>int MPI_Get_count(<br>    MPI_Status<em>  status_p /</em> in <em>/,<br>    MPI_Datatype type     /</em> in <em>/,<br>    int</em>         count_p  /<em> out </em>/<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### MPI_Send和MPI_Recv的细节</div><div class="line"></div><div class="line">- MPI具体实现指定MPI_Send</div><div class="line">- - **缓冲**发送消息</div><div class="line">- - **阻塞**(block)发送消息</div><div class="line"></div><div class="line">&gt; 典型的实现方法：</div><div class="line">&gt; 默认的消息截止大小(&quot;cutoff&quot; message size)</div><div class="line">&gt; 消息长度小于截止大小则缓冲</div><div class="line">&gt; 消息长度大于截止大小则阻塞</div><div class="line"></div><div class="line">- MPI_Recv总是**阻塞**的</div><div class="line"></div><div class="line">&gt; 有指定缓冲/阻塞的替代函数</div><div class="line"></div><div class="line">- MPI消息是不可逾越的(nonovertaking)</div><div class="line">- - 同一进程发送的多条消息必须是按发送顺序到达的</div><div class="line"></div><div class="line">&gt; 注意点: </div><div class="line">&gt; 试图接收消息的进程接收不到匹配的消息会永久阻塞(进程**悬挂**)</div><div class="line">&gt; 缓冲发送消息没有匹配的接受则消息会丢失</div><div class="line"></div><div class="line">### I/O处理</div><div class="line"></div><div class="line">- 几乎所有的MPI实现都允许MPI_COMM_WORLD里的所有进程访问``stdout``和``stderr``</div><div class="line">- 但不提供对I/O设备访问的自动调度：多个进程写标准输出的顺序是无法预测的(甚至是可抢占的)</div><div class="line"></div><div class="line">&gt; 0号进程接收其他进程的消息，统一由0号进程输出</div><div class="line"></div><div class="line">- 多部分MPI实现只允许MPI_COMM_WORLD里的0号进程访问``stdin``</div><div class="line"></div><div class="line">&gt; 0号进程负责读取数据，发送给其它进程</div><div class="line"></div><div class="line">### 集合通信</div><div class="line"></div><div class="line">- 树形通信结构能减少需要“归约”的通信过程中某个进程(通信瓶颈的进程)接收的消息数和计算量</div><div class="line"></div><div class="line">- MPI中涉及通信子中所有进程的通信函数称为**集合通信**(collective communication)</div><div class="line"></div><div class="line">- MPI_Reduce : 归约</div><div class="line">- - 函数形式：</div></pre></td></tr></table></figure></p>
+<p>int MPI_Reduce(<br>    void<em>        input_data_p  /</em> in <em>/,<br>    void</em>        output_data_p /<em> out </em>/,<br>    int          count         /<em> in </em>/,<br>    MPI_Datatype datatype      /<em> in </em>/,<br>    MPI_Op       operator      /<em> in </em>/,<br>    int          dest_process  /<em> in </em>/,<br>    MPI_Comm     comm          /<em> in </em>/<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - count参数大于0，MPI_Reduce函数可以应用到数组上</div></pre></td></tr></table></figure></p>
+<p>MPI_Reduce(&amp;local_int, &amp;local_int, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);</p>
+<p>double local_x[N], sum[N];<br>// do something<br>MPI_Reduce(local_x, sum, N, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - MPI中预定义的归约操作符</div><div class="line"></div><div class="line">| 运算符值    | 含义        |</div><div class="line">| :------    | :------     |</div><div class="line">| MPI_MAX    | 最大值      |</div><div class="line">| MPI_MIN    | 最小值      |</div><div class="line">| MPI_SUM    | 累加和      |</div><div class="line">| MPI_PROD   | 累成积      |</div><div class="line">| MPI_LAND   | 逻辑与      |</div><div class="line">| MPI_BAND   | 按位与      |</div><div class="line">| MPI_LOR    | 逻辑或      |</div><div class="line">| MPI_BOR    | 按位或      |</div><div class="line">| MPI_LXOR   | 逻辑异或    |</div><div class="line">| MPI_BXOR   | 按位异或    |</div><div class="line">| MPI_MAXLOC | 最大值和最大值所在位置   |</div><div class="line">| MPI_MINLOC | 最小值和最小值所在位置   |</div><div class="line"></div><div class="line">&gt; 集合通信相对于点对点通信的特点</div><div class="line">&gt; 1. 通信子中所有进程必须调用相同的集合通信函数</div><div class="line">&gt; 2. 每个进程传递给MPI集合通信函数的参数必须是相容的，如接收进程号一致</div><div class="line">&gt; 3. 参数output_data_p只用在进程dest_process，其他进程只需传递一个可为NULL的相应类型的实际参数</div><div class="line">&gt; 4. 集合通信函数不使用标签，只通过通信子和调用顺序匹配消息(符合同一通信子的消息按函数的实际调用顺序接收，和其他因素无关)；而点对点通信通过标签和通信子匹配</div><div class="line"></div><div class="line">&gt; 一个非法的调用方式，结果不可预测：MPI禁止输入或输出参数作为其他参数的别名</div></pre></td></tr></table></figure></p>
+<p>MPI_Reduce(&amp;x, &amp;x, 1, MPI_DOUBLE, MPI_SUM, 0, comm);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 蝶形通信结构可以让进程之间互换部分结果</div><div class="line">- - 对于全局归约操作，树形通信结构需要6层通信，蝶形通信结构需要3层通信</div><div class="line"></div><div class="line">- MPI_Allreduce : 全局归约</div><div class="line">- - 函数形式：</div></pre></td></tr></table></figure></p>
+<p>int MPI_Allreduce(<br>    void<em>        input_data_p  /</em> in <em>/,<br>    void</em>        output_data_p /<em> out </em>/,<br>    int          count         /<em> in </em>/,<br>    MPI_Datatype datatype      /<em> in </em>/,<br>    MPI_Op       operator      /<em> in </em>/,<br>    MPI_Comm     comm          /<em> in </em>/<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 相比MPI_Reduce少了dest_process参数：所有进程都能得到结果</div><div class="line"></div><div class="line">- 广播(broadcast)</div><div class="line">- - 函数形式：</div></pre></td></tr></table></figure></p>
+<p>int MPI_Bcast(<br>    void<em>         data_p      /</em> in/out <em>/,<br>    int           count       /</em> in     <em>/,<br>    MPI_Datatype  datatype    /</em> in     <em>/,<br>    int           source_proc /</em> in     <em>/,<br>    MPI_Comm      comm        /</em> in     */<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 属于一个进程的数据被发送到通信子中的所有进程；采用树形通信结构</div><div class="line"></div><div class="line">- 数据分发</div><div class="line">- - 划分方式</div><div class="line">- - 1. 块划分：按顺序分配一定数目的块到各进程</div><div class="line">- - 2. 循环划分：依次分给一个进程一个块，直到分完</div><div class="line">- - 3. 块-循环划分：依次分给一个进程多个块，直到分完</div><div class="line"></div><div class="line">- 散射函数：Scatter</div></pre></td></tr></table></figure></p>
+<p>int MPI_Scatter(<br>    void<em>        send_buf_p /</em> in  <em>/,<br>    int          send_count /</em> in  <em>/,<br>    MPI_Datatype send_type  /</em> in  <em>/,<br>    void</em>        recv_buf_p /<em> out </em>/,<br>    int          recv_count /<em> in  </em>/,<br>    MPI_Datatype recv_type  /<em> in  </em>/,<br>    int          src_proc   /<em> in  </em>/,<br>    MPI_Comm     comm       /<em> in  </em>/<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 将send_buf_p引用的数据分成通信子comm进程数的分数，依次分发给0, 1, 2...号进程</div><div class="line">- - send_count 和 recv_count 都为每份的数据量</div><div class="line">- - 块划分方式</div><div class="line">- - 其他划分方式：重排发送缓冲数组的数据</div><div class="line"></div><div class="line">- 聚集函数：Gather</div></pre></td></tr></table></figure></p>
+<p>int MPI_Gather(<br>    void<em>        send_buf_p /</em> in  <em>/,<br>    int          send_count /</em> in  <em>/,<br>    MPI_Datatype send_type  /</em> in  <em>/,<br>    void</em>        recv_buf_p /<em> out </em>/,<br>    int          recv_count /<em> in  </em>/,<br>    MPI_Datatype recv_type  /<em> in  </em>/,<br>    int          dest_proc  /<em> in  </em>/,<br>    MPI_Comm     comm       /<em> in  </em>/<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 将通信子comm中所有进程的数据聚集到dest_proc进程recv_buf_p中</div><div class="line">- - recv_count为接收到的一个进程的数据量</div><div class="line"></div><div class="line">- 全局聚集：Allgather</div></pre></td></tr></table></figure></p>
+<p>int MPI_Allgather(<br>    void<em>        send_buf_p /</em> in  <em>/,<br>    int          send_count /</em> in  <em>/,<br>    MPI_Datatype send_type  /</em> in  <em>/,<br>    void</em>        recv_buf_p /<em> out </em>/,<br>    int          recv_count /<em> in  </em>/,<br>    MPI_Datatype recv_type  /<em> in  </em>/,<br>    MPI_Comm     comm       /<em> in  </em>/<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 将通信子comm中每个进程的send_buf_p串联起来分发到每个进程的recv_buf_p中</div><div class="line">- - recv_count = send_count</div><div class="line"></div><div class="line">### MPI派生数据类型</div><div class="line"></div><div class="line">&gt; 几乎所有的分布式内存系统中通信比本地开销大很多</div><div class="line">&gt; 提高程序性能：减少收发消息数量</div><div class="line"></div><div class="line">- 1. count参数：用于将连续的数组元素集合起来组成一条单独的消息</div><div class="line">- 2. 派生数据类型</div><div class="line">- 3. MPI_Pack/MPI_Unpack函数</div><div class="line"></div><div class="line">- MPI中**派生数据类型**通过同时存储数据项的类型及其在内存中的相对位置，可以表示内存中数据项的任意集合</div><div class="line">- - 一个派生数据类型是由系列MPI基本数据类型和每个数据类型的偏移所组成的</div><div class="line"></div><div class="line">- - 创建</div></pre></td></tr></table></figure></p>
+<p>int MPI_Type_create_struct(<br>    int           count                    /<em> in  </em>/,<br>    int           array_of_blocklengths[]  /<em> in  </em>/,<br>    MPI_Aint      array_of_displacements[] /<em> in  </em>/,<br>    MPI_Datatype  array_of_types[]         /<em> in  </em>/,<br>    MPI_Datatype<em> new_type_p               /</em> out */<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 参数count指定数据类型中元素个数</div><div class="line">- - array_of_blocklengths指定每个元素的数据个数(1个或多个元素可以是数组)</div><div class="line">- - array_of_displacements指定每个元素距离消息起始位置的偏移量(单位为字节)</div><div class="line"></div><div class="line">- - 找到内存单元的地址</div></pre></td></tr></table></figure></p>
+<p>itn MPI_Get_address(<br>    void<em>     location_p /</em> in  <em>/,<br>    MPI_Aint</em> address_p  /<em> out </em>/<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - ``MPI_Aint``是足以表示系统地址的整数类型</div><div class="line">- - 将``location_p``指向的内存单元的地址保存在``address_p``中</div><div class="line"></div><div class="line">- - 例：</div></pre></td></tr></table></figure></p>
+<p>MPI_Aint a_addr, b_addr, n_addr;</p>
+<p>MPI_Get_address(&amp;a, &amp;a_addr);<br>array_of_displacements[0] = 0;<br>MPI_Get_address(&amp;b, &amp;b_addr);<br>array_of_displacements[1] = b_addr - a_addr;<br>MPI_Get_address(&amp;n, &amp;n_addr);<br>array_of_displacements[2] = n_addr - a_addr;</p>
+<p>MPI_Datatype array_of_types[3] = {MPI_DOUBLE, MPI_DOUBLE, MPI_INT};</p>
+<p>MPI_Datatype input_mpi_t;<br>MPI_Type_create_struct(3, array_of_blocklengths, array_of_displacements, array_of_types, &amp;input_mpi_t);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 指定派生数据类型使之可用</div></pre></td></tr></table></figure></p>
+<p>int MPI_Type_commit(MPI_Datatype<em> new_mpi_t_p /</em> in/out */);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 可以像使用MPI基本数据类型一样使用派生数据类型</div><div class="line"></div><div class="line">- - 释放派生数据类型可能所占的额外的存储空间</div></pre></td></tr></table></figure></p>
+<p>int MPI_Type_free(MPI_Datatype<em> old_mpi_t_p /</em> in/out */);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### MPI程序性能</div><div class="line"></div><div class="line">- 计时函数：``double MPI_Wtime(void);``</div></pre></td></tr></table></figure></p>
+<p>double start_time = MPI_Wtime();<br>//…</p>
+<p>double end_time = MPI_Wtime();<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 串行程序计时：``gettimeofday();``</div></pre></td></tr></table></figure></p>
+<p>#include <sys time.h=""><br>struct timeval tv0, tv1;<br>gettimeofday(&amp;tv0, NULL);<br>// …<br>gettimeofday(&amp;tv1, NULL);</sys></p>
+<p>double t = tv1.tv_sec - tv0.tv_sec + 1e-6 * (tv1.tv_usec - tv0.tv_usec);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&gt; MPI_Wtime()返回墙上时钟时间(所经历的全部时间，包括空闲等待时间)</div><div class="line">&gt; C语言中的clock函数返回的是CPU时间(用户代码、库函数以及系统调用函数所消耗的时间)，但不包括空闲时间</div><div class="line">&gt; 并行程序中许多情况下都是空闲等待状态</div><div class="line"></div><div class="line">- MPI路障：``int MPI_Barrier(MPI_Comm comm /* in */);``</div><div class="line">- - 可在开始计时之前调用</div><div class="line"></div><div class="line">- 加速比：衡量串行运算和并行运算时间之间关系</div><div class="line"></div><div class="line">- - $S(n, p) = \frac&#123;T_&#123;serial(n)&#125;&#125;&#123;T_&#123;parallel(n, p)&#125;&#125;$</div><div class="line">- - ``n``：数据规模</div><div class="line">- - ``p``：进程数</div><div class="line"></div><div class="line">&gt; 最理想的加速比是``p``：**线性加速比**</div><div class="line"></div><div class="line">- 并行效率：“每个进程”的加速比</div><div class="line"></div><div class="line">- - $E(n, p) = \frac&#123;S(n, p)&#125;&#123;p&#125; = \frac&#123;T_&#123;setial(n)&#125;&#125;&#123;p * T_&#123;parallel(n, p)&#125;&#125;$</div><div class="line">- - 线性加速比相当于并行效率为1.0</div><div class="line">- - 通常效率小于1</div><div class="line"></div><div class="line">&gt; 并行开销：</div><div class="line">&gt; 1. 不同线程/进程间的通信开销</div><div class="line">&gt; 2. 分解任务产生的额外开销(计算)</div><div class="line"></div><div class="line">- 可扩展性：如果问题的规模以一定的速率增大，但效率没有随着进程数的增加而降低，那么程序就可认为是可扩展的</div><div class="line"></div><div class="line">- - 强可扩展性：程序可以在不增加问题规模的前提下维持恒定效率(n固定，p增大)</div><div class="line">- - 弱可扩展性：问题规模增加需要通过增大进程数维持程序效率的(n固定，p固定)</div><div class="line"></div><div class="line">### MPI程序安全性</div><div class="line"></div><div class="line">- ``MPI_PROC_NULL``：由MPI库定义的一个常量</div><div class="line">- - 在点对点通信中作为源进程号或目标进程号，调用后会直接返回而不产生任何通信</div><div class="line"></div><div class="line">&gt; MPI允许MPI_Send函数以两种不同的方式实现，阻塞或异步，或导致死锁或进程挂起</div><div class="line">&gt; 可能所有进程都阻塞在MPI_Send上而无法调用MPI_Recv</div><div class="line">&gt; 不安全</div><div class="line"></div><div class="line">- MPI提供替代的send通信函数(s代表同步)</div></pre></td></tr></table></figure></p>
+<p>int MPI_Ssend(<br>    void<em>        msg_buf_p    /</em> in <em>/,<br>    int          msg_size     /</em> in <em>/,<br>    MPI_Datatype msg_type     /</em> in <em>/,<br>    int          dest         /</em> in <em>/,<br>    int          tag          /</em> in <em>/,<br>    MPI_Comm     communicator /</em> in */<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- MPI提供调度通信的方法：使程序不再挂起或崩溃</div></pre></td></tr></table></figure></p>
+<p>int MPI_Sendrecv(<br>    void<em>        send_buf_p    /</em> in <em>/,<br>    int          send_buf_size /</em> in <em>/,<br>    MPI_Datatype send_buf_type /</em> in <em>/,<br>    int          dest          /</em> in <em>/,<br>    int          send_tag      /</em> in <em>/,<br>     void</em>        recv_buf_p    /<em> out </em>/,<br>     int          recv_buf_size /<em> in </em>/,<br>     MPI_Datatype recv_buf_type /<em> in </em>/,<br>     int          source        /<em> in </em>/,<br>     int          recv_tag      /<em> in </em>/,<br>     MPI_Comm     communicator  /<em> in </em>/,<br>     MPI_Status<em>  status_p      /</em> in */<br>);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- - 分别执行一次阻塞式消息发送和一次消息接收</div><div class="line">- - dest，source参数可以相同也可以不同</div><div class="line"></div><div class="line">- - 若发送和接收使用同一个缓冲区</div></pre></td></tr></table></figure></p>
+<p>int MPI_Sendrecv_replace(<br>    void<em>        buf_p    /</em> in <em>/,<br>    int          buf_size /</em> in <em>/,<br>    MPI_Datatype buf_type /</em> in <em>/,<br>    int          dest          /</em> in <em>/,<br>    int          send_tag      /</em> in <em>/,<br>    int          source        /</em> in <em>/,<br>    int          recv_tag      /</em> in <em>/,<br>    MPI_Comm     communicator  /</em> in <em>/,<br>    MPI_Status</em>  status_p      /<em> in </em>/<br>);<br>```</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/并行计算/" rel="tag"># 并行计算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/06/转载/Qt图形界面开发/" rel="next" title="C++GUI开发 Qt(转)">
+                <i class="fa fa-chevron-left"></i> C++GUI开发 Qt(转)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/15/KNN算法的MapReduce实现/" rel="prev" title="云计算项目设计：KNN算法的MapReduce实现">
+                云计算项目设计：KNN算法的MapReduce实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenxfeng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3034124347" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#openmp"><span class="nav-number">1.</span> <span class="nav-text">openmp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生产者和消费者问题"><span class="nav-number">1.1.</span> <span class="nav-text">生产者和消费者问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存、缓存一致性、伪共享"><span class="nav-number">1.2.</span> <span class="nav-text">缓存、缓存一致性、伪共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程安全性"><span class="nav-number">1.3.</span> <span class="nav-text">线程安全性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread"><span class="nav-number">2.</span> <span class="nav-text">pthread</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动线程"><span class="nav-number">2.1.</span> <span class="nav-text">启动线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行线程"><span class="nav-number">2.2.</span> <span class="nav-text">运行线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停止线程"><span class="nav-number">2.3.</span> <span class="nav-text">停止线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#临界区"><span class="nav-number">2.4.</span> <span class="nav-text">临界区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#忙等待"><span class="nav-number">2.5.</span> <span class="nav-text">忙等待</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#互斥量"><span class="nav-number">2.6.</span> <span class="nav-text">互斥量</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

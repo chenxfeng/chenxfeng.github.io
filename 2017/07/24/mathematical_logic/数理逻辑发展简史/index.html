@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数理逻辑," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="数理逻辑五个部分：逻辑演算、证明论、公理集合论、递归论、模型论
+逻辑演算 古典二值外延系统、非古典的构造性逻辑、多值逻辑、模态逻辑、规范逻辑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数理逻辑发展简史">
+<meta property="og:url" content="https://chenfeng.github.io/2017/07/24/mathematical_logic/数理逻辑发展简史/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="数理逻辑五个部分：逻辑演算、证明论、公理集合论、递归论、模型论
+逻辑演算 古典二值外延系统、非古典的构造性逻辑、多值逻辑、模态逻辑、规范逻辑">
+<meta property="og:updated_time" content="2017-07-24T06:00:53.665Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数理逻辑发展简史">
+<meta name="twitter:description" content="数理逻辑五个部分：逻辑演算、证明论、公理集合论、递归论、模型论
+逻辑演算 古典二值外延系统、非古典的构造性逻辑、多值逻辑、模态逻辑、规范逻辑">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/07/24/mathematical_logic/数理逻辑发展简史/"/>
+
+
+
+
+
+  <title>数理逻辑发展简史 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/07/24/mathematical_logic/数理逻辑发展简史/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数理逻辑发展简史</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T14:00:00+08:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>数理逻辑五个部分：逻辑演算、证明论、公理集合论、递归论、模型论</p>
+<p>逻辑演算 古典二值外延系统、非古典的构造性逻辑、多值逻辑、模态逻辑、规范逻辑</p>
+<a id="more"></a>
+<h2 id="第一阶段-用数学的方法研究思维的规律"><a href="#第一阶段-用数学的方法研究思维的规律" class="headerlink" title="第一阶段 用数学的方法研究思维的规律"></a>第一阶段 用数学的方法研究思维的规律</h2><blockquote>
+<p>逻辑代数/布尔代数</p>
+<p>关系逻辑</p>
+</blockquote>
+<p><strong>如何用数学方法处理古典形式逻辑</strong></p>
+<p>古典形式逻辑(源自亚里士多德)</p>
+<ul>
+<li>每一简单命题分析为只有一个主词和一个谓词；主谓词逻辑</li>
+<li>使用符号表示命题和推理的结果</li>
+<li>基本内容是关于三段论结构和假言推理、选言推理的结构等的理论</li>
+<li>不足：不能包括关系推理、不区别单称和全称命题等</li>
+</ul>
+<p>莱布尼茨：表意的符号语言和思维的演算</p>
+<ul>
+<li>将命题形式表达为符号公式</li>
+<li>构成一个关于两个概念相结合的演算 $$</li>
+</ul>
+<p>布尔代数：构造一个演绎思维的演算</p>
+<ul>
+<li><p>逻辑关系和某些数学运算甚为类似，代数系统可以有不同的解释，把解释推广到逻辑领域就可以构成一思维的演算</p>
+</li>
+<li><p>构成一抽象代数系统</p>
+</li>
+<li><ul>
+<li>四种解释：一种类的演算、两种命题演算、一种概率演算</li>
+</ul>
+</li>
+</ul>
+<p>关系逻辑与德摩根</p>
+<ul>
+<li><p>提出并研究类似三段论而不能包括在亚里士多德三段论中的推理形式</p>
+</li>
+<li><p>提出关系命题和关系推理，突破古典主谓词逻辑的局限性</p>
+</li>
+</ul>
+<h2 id="第二阶段"><a href="#第二阶段" class="headerlink" title="第二阶段"></a>第二阶段</h2><p>集合论：关于无穷集合和超穷数的数学理论</p>
+<p>康托尔</p>
+<h3 id="无穷集的分类"><a href="#无穷集的分类" class="headerlink" title="无穷集的分类"></a>无穷集的分类</h3><ul>
+<li><p>“函数展开为三角级数的唯一性”</p>
+</li>
+<li><p>数学分析中间断函数求积分问题和三角级数收敛性问题</p>
+</li>
+<li><ul>
+<li>从某一区间的所有点分离出另一无穷点集</li>
+</ul>
+</li>
+<li><ul>
+<li>无穷点集的性质各不相同</li>
+</ul>
+</li>
+<li><p>设给定的集合P，使P的一阶导出集为 P’，二阶导出集为 P’’，v阶导出集为 $P^{(v)}$</p>
+</li>
+<li><ul>
+<li>定义一：P为第二种集合，若 $P’, P’’, …, P^{(v)}, …$ 皆为无穷</li>
+</ul>
+</li>
+<li><ul>
+<li>P’ 可不包含与P，但P’’，P’’’，…中的点皆属于 P’</li>
+</ul>
+</li>
+<li><ul>
+<li>定义二：P为第一种第v类集合，若 $P^{(v)}$ 只含有有穷多个点</li>
+</ul>
+</li>
+<li><p>康托尔的第二种分类法：</p>
+</li>
+<li><ul>
+<li>一切代数实数和一切正整数有一一对应</li>
+</ul>
+</li>
+<li><ul>
+<li>一线段上的实数与正整数没有一一对应</li>
+</ul>
+</li>
+<li><p>证明了一切代数数是可数的</p>
+</li>
+<li>证明了一线段上的实数不可数</li>
+<li>证明了超越数不可数</li>
+<li>说明了并非一切无穷集都可数，无穷集是有区别的，有大小的</li>
+<li>应用一一对应的概念</li>
+</ul>
+<h3 id="多维连续统"><a href="#多维连续统" class="headerlink" title="多维连续统"></a>多维连续统</h3><p>自然数集和连续统是两个不同的无穷集</p>
+<p>康托尔得出 <strong>线性连续统n维空间有一一对应</strong> 的结果</p>
+<blockquote>
+<p>一维连续统不能和二维连续统有连续的一一对应</p>
+</blockquote>
+<p>n维空间不是更大的无穷</p>
+<h3 id="更大的无穷"><a href="#更大的无穷" class="headerlink" title="更大的无穷"></a>更大的无穷</h3><p>从已知的无穷集根据确凿的数学运算形成更大的无穷</p>
+<ul>
+<li>根据序数理论从序数集形成更大的无穷</li>
+<li>用一集合的幂集形成较原结合更大的无穷</li>
+</ul>
+<p>有穷集和无穷集的重要差别在于：在有穷集的情况下，不论其中元素的顺序如何，所得的序数相同；对无穷集，由于元素顺序不同，从一无穷集可以形成无穷多个不同的良序集，得到不同的序数</p>
+<ul>
+<li>第一数类是一切有穷序数的类</li>
+<li>第二数类包括其“权”或基数为可数($\aleph_0$)的超穷序数</li>
+<li>由此逐步上升可得第三数类、第四数类等</li>
+</ul>
+<p>从给定序数得出新序数，引入两个构成原则：</p>
+<ul>
+<li>第一构成原则：对一给定的数，可增加一单位；如从 $\omega$ 可得 $\omega + 1$</li>
+<li>第二构成原则：给定任一已有特定顺序，但其中无最大元素的集合，可以作为原集合的极限或后继者而得一新数</li>
+</ul>
+<p>根据此二原则从 $\omega$ 开始可构成无穷多个序数如 $\omega, \omega+1, …, \nu_0 \omega^{\mu} + \nu<em>1 \omega^{\mu - 1} + … + \nu</em>{\mu - 1} \omega + \nu_{\mu}, …, \omega^{\omega}, …$</p>
+<ul>
+<li>这些序数的权都是可数的</li>
+<li>一切这些序数的集合就是第二数类</li>
+</ul>
+<h3 id="康托尔定理"><a href="#康托尔定理" class="headerlink" title="康托尔定理"></a>康托尔定理</h3><p>利用幂集构成一个比一个大的集合和权</p>
+<p>用对角线法证明</p>
+<ul>
+<li>没有最大的权，即给定任一集合L，总有另一集合M，其权较L之权为强</li>
+<li>一切只取0或1为值的单值实变函数 $f(x)(0 \leq x \leq 1)$ 的权大于线性连续统的权。 如果把这类函数的权记作f，把线性连续统的权看作c，则f&gt;c</li>
+</ul>
+<p>康托尔定理：一集合的一切子集所构成的集合，即一集合的幂集，其权较原集合的权为大</p>
+<ul>
+<li>没有最大的集合，也没有最大的权</li>
+</ul>
+<p>两个系列的权或无穷基数：</p>
+<ul>
+<li>第一系列： $\aleph_0, \aleph_1, \aleph_2, …$</li>
+<li>第二系列： $\aleph_0, 2^{\aleph_0}(=c), 2^{2^{\aleph_0}}(=f), …$</li>
+</ul>
+<h3 id="良序定理-连续统假设"><a href="#良序定理-连续统假设" class="headerlink" title="良序定理 连续统假设"></a>良序定理 连续统假设</h3><p>凡良序即都能比较，若一切集合都能良序，则一切集合都能比较</p>
+<p>良序定理：每一集合都能良序</p>
+<p>连续统假设：$\aleph_0$和c之间是否还有一无穷数，即 $2^{\aleph_0}$ 是否就等于 $\aleph_1$</p>
+<h3 id="实无穷与潜无穷"><a href="#实无穷与潜无穷" class="headerlink" title="实无穷与潜无穷"></a>实无穷与潜无穷</h3><p>实无穷论：无穷(在数学中表现为无穷集)是一个现实的、完成的、存在着的整体，是可以认识的</p>
+<p>潜无穷论：否认实无穷，认为无穷并不是已完成的而是就其发展来说是无穷的，无穷只是潜在的</p>
+<p>有关实无穷问题康托尔的观点：</p>
+<ul>
+<li><ol>
+<li>数学理论必须肯定实无穷</li>
+</ol>
+</li>
+<li><ol>
+<li>不能把有穷所具有的性质强加于无穷，无穷有其固有的本质</li>
+</ol>
+</li>
+<li><ol>
+<li>有穷的认识能力可以认识无穷，哲学的无穷和数学的无穷</li>
+</ol>
+</li>
+</ul>
+<h2 id="公理方法的发展"><a href="#公理方法的发展" class="headerlink" title="公理方法的发展"></a>公理方法的发展</h2><p>源自欧几里得《几何原本》：实质公理学；所处理的对象(公理的对象域)已先于公理而给定，公理是关于这类对象的认识，表达这类对象的重要性质</p>
+<p>到希尔伯特《几何基础》充分发展：形式公理学；基本上也是从某类对象得到，但公理本身并不要求先给定一类具体的对象，可以没有或许多个对象域，表示可能对象域的重要性质和关系</p>
+<h3 id="《几何原本》"><a href="#《几何原本》" class="headerlink" title="《几何原本》"></a>《几何原本》</h3><p>实质公理系统</p>
+<p>23个定义，五条公设，五条公理</p>
+<ul>
+<li>证明有欠严谨，定义不够恰当</li>
+</ul>
+<h3 id="非欧几何"><a href="#非欧几何" class="headerlink" title="非欧几何"></a>非欧几何</h3><p>《几何原本》的第五公设(平行公设)并不自明</p>
+<ul>
+<li>平面上通过不在已知直线上的一点，只能有一条直线与已知直线平行</li>
+</ul>
+<p>换之以相反的公设：</p>
+<ul>
+<li>通过已知直线外一点，不只有一直线与已知直线平行。等价于“三角形三角之和小于二直角”，锐角假设</li>
+<li><p>通过直线外一点，不存在与已知直线平行的直线。等价于“三角形三角之和大于二直角”，钝角假设</p>
+</li>
+<li><ul>
+<li>锐角假设未导致矛盾，与其他公理、公设可能是一致的</li>
+</ul>
+</li>
+</ul>
+<h3 id="射影几何和度量几何"><a href="#射影几何和度量几何" class="headerlink" title="射影几何和度量几何"></a>射影几何和度量几何</h3><p>经过射影而不变的空间性质称为射影性质</p>
+<p>研究射影性质的几何是射影几何</p>
+<p>度量性质经过射影不能保留，欧氏集合和非欧几何都是度量几何</p>
+<ul>
+<li>可以在射影性质的基础上陈述和定义度量性质，角度和长度；射影几何在逻辑上更为根本</li>
+</ul>
+<h3 id="几何基础"><a href="#几何基础" class="headerlink" title="几何基础"></a>几何基础</h3><p>具体解决公理方法的一些逻辑理论问题</p>
+<ul>
+<li><p>几何概念的直观意义不作为推导的根据，看重公理赋予它们的各种联系</p>
+</li>
+<li><p>三种事物体系：点、线和面(没下定义)</p>
+</li>
+<li><p>相互关系(严格涵义)：“在…之上”，“在…之间”，“合同于”，“平行”和“连续”</p>
+</li>
+<li><p>五组公理：联结公理(8个)，顺序公理(4个)，合同公理(5个)，平行公理，连续性公理(2个)</p>
+</li>
+</ul>
+<p>逻辑理论问题</p>
+<ul>
+<li><p>公理的一致性问题：希尔伯特在实数算术理论中为欧式集合构造一模型(笛卡尔几何)，证明欧氏几何对实数算术的相对一致性</p>
+</li>
+<li><p>公理的相互独立性：希尔伯特利用克莱因的一个非欧几何模型说明了平行公理独立于其它公理</p>
+</li>
+</ul>
+<blockquote>
+<p>模型方法：若能给出一模型使得对此模型而言，某一公理为假而其它公理皆真，则此特定公理独立于其它公理</p>
+</blockquote>
+<h2 id="逻辑演算"><a href="#逻辑演算" class="headerlink" title="逻辑演算"></a>逻辑演算</h2><h3 id="数学的严格性和数学基础问题"><a href="#数学的严格性和数学基础问题" class="headerlink" title="数学的严格性和数学基础问题"></a>数学的严格性和数学基础问题</h3><p>弗雷格(德)，皮亚诺(意)和罗素(英) 建立一个<strong>初步自足</strong>的<strong>完全</strong>的逻辑演算：一个二值外延逻辑的公理系统</p>
+<ul>
+<li><p>完全：包括在此范围内的一切逻辑规律和推理形式；也包括除模态逻辑以外的古典三段论和假言推理</p>
+</li>
+<li><p>初步自足：以数学的逻辑为研究对象，不能再用数学定理作为推导根据，只能按照少数逻辑原则或语言变形规则进行推导</p>
+</li>
+</ul>
+<p>推理的严格性：不是简单的逻辑错误，主要之点在于数学论证不能以几何或物理直观为依据</p>
+<h3 id="弗雷格"><a href="#弗雷格" class="headerlink" title="弗雷格"></a>弗雷格</h3><ul>
+<li><p>分析的算术化最后必然建立在自然数理论之上，而自然数理论的探讨又必然要研究数的概念以及正整数命题的性质</p>
+</li>
+<li><p>弗雷格严格区分对于命题的表达与断定。命题表达思想</p>
+</li>
+<li>明确提出真值蕴涵的思想并指出与日常语言的不同</li>
+<li>把数学中的函数概念引入逻辑演算从而建立量词的理论</li>
+<li>构成一个初步自足的逻辑演算，一阶谓词演算</li>
+</ul>
+<h3 id="皮亚诺"><a href="#皮亚诺" class="headerlink" title="皮亚诺"></a>皮亚诺</h3><ul>
+<li>发明一种表意语言，符号简单清晰，易于辨认和阅读</li>
+<li><p>用此语言进行大量数学各分支的命题，说明此语言表达数学思维和内容是足够而可行的</p>
+</li>
+<li><p>算术公理</p>
+</li>
+</ul>
+<h3 id="罗素"><a href="#罗素" class="headerlink" title="罗素"></a>罗素</h3><ul>
+<li>建立一个完全的命题演算和谓词演算</li>
+<li>发展并给出一个完全的关系逻辑和抽象的关系理论</li>
+<li>摹状词理论</li>
+<li>悖论和类型论</li>
+<li><ul>
+<li>“一切不是自己分子的类所合成的类”所引起的自相矛盾</li>
+</ul>
+</li>
+<li><ul>
+<li>悖论产生的根源在于假定：一类事物可以包括本类的整体作为分子</li>
+</ul>
+</li>
+<li><ul>
+<li>简单类型论 把类和谓词分别为不同的类型，不能考虑某一类是否为其本身的分子</li>
+</ul>
+</li>
+<li><ul>
+<li>简单类型论可以排除康托尔悖论和罗素悖论，但不能排除瑞恰德悖论(一切可以用有穷字母来定义的小数)</li>
+</ul>
+</li>
+<li><ul>
+<li>类型支论：同一类型的谓词可以分别为不同的层次，高层次谓词不能再作为低层次谓词看待，否则将造成“不合法全体”，导致恶性循环的错误</li>
+</ul>
+</li>
+<li>逻辑与数学</li>
+<li><ul>
+<li>无穷公理：若n为一归纳基数，则至少有一n元的个体类。(一个关于客观世界的断定而不是一个思维规律)</li>
+</ul>
+</li>
+<li><ul>
+<li>乘法公理(选择公理)：设给定互不相交的子类所构成的一类，其中无一为空类，则至少存在一类，此类和每一子类恰好有一分子相同(与无穷有关的断定，和数量有关的存在假定，而不是思维的规律)</li>
+</ul>
+</li>
+<li><ul>
+<li>单纯从逻辑推不出数学，必须再增加这两个公理</li>
+</ul>
+</li>
+</ul>
+<h2 id="构造主义和证明论"><a href="#构造主义和证明论" class="headerlink" title="构造主义和证明论"></a>构造主义和证明论</h2><h3 id="数学基础问题的争论"><a href="#数学基础问题的争论" class="headerlink" title="数学基础问题的争论"></a>数学基础问题的争论</h3><p>希尔伯特提出如何论证形式公理系统的一致性的证明论理论，即用有穷方法去论证具有无穷对象域的古典数学的形式系统不可能导致逻辑矛盾</p>
+<p>证明论中心思想：如果从符号组合的形式方面考虑，某一组公理都具有某种“均齐性”，且推理规则保留此种“均齐性”，则此组公理构成一无矛盾的系统</p>
+<p>H.Poincare(法)的思想：</p>
+<ul>
+<li>数学归纳法是一种直观的数学思维方法，是对于无穷递进可能性的直观认识</li>
+<li>数学不能归结为逻辑</li>
+<li>悖论由于恶性循环</li>
+<li>没有实无穷</li>
+</ul>
+<p>20世纪初数学基础问题：</p>
+<ul>
+<li>如何解决已发现的悖论和如何进一步保证在公理系统中不出现任何形式的自相矛盾</li>
+<li>如何理解“数学的存在”</li>
+<li>有没有实无穷和如何认识实无穷</li>
+<li>数学的基础是什么</li>
+</ul>
+<h3 id="直觉主义-构造主义和构造倾向"><a href="#直觉主义-构造主义和构造倾向" class="headerlink" title="直觉主义 构造主义和构造倾向"></a>直觉主义 构造主义和构造倾向</h3><p>构造主义：自然数及其某些规律，尤其是数学归纳法，是数学最根本的和直观(不附带有鲜明的或系统的哲学见解)上最可信的出发点，其它一切数学对象都必须能从自然数构造出来，否则不能作为数学对象</p>
+<p>直觉主义：直觉或直接感知是认识的根本来源，是必然性知识的保证(哲学范畴)</p>
+<p>构造倾向：致力于构造性数学的研究和发展，不否认非构造性数学的科学性</p>
+<p>布劳维尔(荷)的思想：</p>
+<ul>
+<li>直觉主义的数学观</li>
+<li><ul>
+<li>基本上承袭康德的理论，数学来源于“直觉的先验形式”</li>
+</ul>
+</li>
+<li><ul>
+<li>数学的直观主义必然导致构造主义的数学观</li>
+</ul>
+</li>
+<li>排中律不普遍有效</li>
+<li><ul>
+<li>古典逻辑来源于有穷事物的思维，对于无穷事物不见得适用</li>
+</ul>
+</li>
+<li><ul>
+<li>否认排中律对古典数学的影响很大；波尔察诺-魏尔斯特思定理、戴德金实数连续性定理的证明都是运用了古典的排中律</li>
+</ul>
+</li>
+<li>数学对象必须是可构造</li>
+<li><ul>
+<li>能具体地给出或者能给出一个可以得到某一对象的计算方法</li>
+</ul>
+</li>
+<li><ul>
+<li>否认间接的存在证明，不承认不能具体给出的纯存在定理</li>
+</ul>
+</li>
+<li>直觉主义的逻辑</li>
+</ul>
+<h3 id="希尔伯特方案"><a href="#希尔伯特方案" class="headerlink" title="希尔伯特方案"></a>希尔伯特方案</h3><ul>
+<li>形式化</li>
+<li><ul>
+<li>形式公理学的对象及其性质和关系并不先行给定，而完全通过一组公理或假设得到精确的刻画；公理限制了对象域及其中关系的解释，同时还必须包括在本系统里定理的推导过程中所需要的一切前提</li>
+</ul>
+</li>
+<li><ul>
+<li>语法规则：先有一系列关于符号的规定，规定初始符号或称字母表，规定何种类型的符号序列是合式的序列或称公式，规定一些作为出发点的公式或称公理，最后给出如何变换公式的规则</li>
+</ul>
+</li>
+<li><ul>
+<li>语义规则：符号解释的规则</li>
+</ul>
+</li>
+<li><ul>
+<li>必须能在有穷步骤内根据已给定的机械方法判定几个问题</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>一符号是否为本系统的初始符号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>一符号序列是否合式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>一公式是否为一公理</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>从一组公式是否可以变换为某一公式</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>思想或命题是抽象的，语言为思想的外壳，语言必须用符号，而符号是具体的事物，符号序列根据语法规则一步一步地形成，是一个可数无穷集，适用于用有穷观点研究</p>
+</blockquote>
+<ul>
+<li>有穷观点</li>
+<li><ul>
+<li>古典数学的一致性问题由于实无穷引起，古典的逻辑演算也假定了实无穷，因而在论证古典数学无矛盾时，不能应用以实无穷为前提的思想方法或工具，而只能依赖直观上明显可靠的于古典逻辑和一般数论不同的方法，否则就有循环论证的错误</li>
+</ul>
+</li>
+<li><ul>
+<li>有穷方法：所谓的能行方法，较一般递归为狭</li>
+</ul>
+</li>
+<li><p>理想元素和理想命题</p>
+</li>
+<li><ul>
+<li>无穷不能在经验中直接验证(在思维过程被嵌入或外推的，不可缺少的)，理想元素</li>
+</ul>
+</li>
+<li><ul>
+<li>理想命题以实无穷的存在为前提，现实(real)命题则是有直观意义的</li>
+</ul>
+</li>
+<li><ul>
+<li>如果一理想元素不导致逻辑矛盾，它就是数学的存在</li>
+</ul>
+</li>
+</ul>
+<h2 id="哥德尔定理-数理逻辑发展的第三阶段"><a href="#哥德尔定理-数理逻辑发展的第三阶段" class="headerlink" title="哥德尔定理 数理逻辑发展的第三阶段"></a>哥德尔定理 数理逻辑发展的第三阶段</h2><h3 id="过渡时期"><a href="#过渡时期" class="headerlink" title="过渡时期"></a>过渡时期</h3><p>希尔伯特提出试图解决数学基础问题的证明论方案：用能行的有穷方法研究包括古典逻辑和古典数学的形式系统，并论证其一致性等</p>
+<h3 id="哥德尔定理"><a href="#哥德尔定理" class="headerlink" title="哥德尔定理"></a>哥德尔定理</h3><p>完全性定理：逻辑谓词演算公理的完全性</p>
+<p>不完全性定理：</p>
+<ul>
+<li>PM及其有关系统中的形式不可判定命题</li>
+<li><ul>
+<li>第一不完全性定理：一个包括初等数论的形式系统P，如果是一致的，那么就是不完全的</li>
+</ul>
+</li>
+<li><ul>
+<li>第二不完全性定理：如果这样的系统是一致的，那么其一致性在本系统中不可证</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>直观初等数论不可能完全形式化，形式系统固有的局限性(如何把元数学表示在数学系统本身之中)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>一般递归和能行可计算：</p>
+<p>递归函数和谓词是能行可计算的或能行可判定的，合乎有穷观点</p>
+<ul>
+<li>能行可计算理论：</li>
+<li><ul>
+<li>一般递归(艾尔伯朗-哥德尔-克林尼)</li>
+</ul>
+</li>
+<li><ul>
+<li>$\lambda$-转换演算(丘奇、克林尼)</li>
+</ul>
+</li>
+<li><ul>
+<li>理想计算机理论(图灵)</li>
+</ul>
+</li>
+<li><ul>
+<li>几个严格定义几乎全被证明为相等</li>
+</ul>
+</li>
+</ul>
+<h3 id="数理逻辑发展的第三阶段"><a href="#数理逻辑发展的第三阶段" class="headerlink" title="数理逻辑发展的第三阶段"></a>数理逻辑发展的第三阶段</h3><p>证明论、集合论、递归论、模型论</p>
+<p>逻辑演算</p>
+<hr>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><ol>
+<li>《数理逻辑引论》，王宪钧，北京大学出版社</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数理逻辑/" rel="tag"># 数理逻辑</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/mathematical_logic/有等词的狭谓词演算和摹状词/" rel="next" title="狭谓词逻辑的不同系统 有等词的狭谓词演算 摹状词">
+                <i class="fa fa-chevron-left"></i> 狭谓词逻辑的不同系统 有等词的狭谓词演算 摹状词
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/25/linear_algebra&analytic_geometry/复系数和实系数多项式的因式分解/" rel="prev" title="多项式与复系数和实系数多项式的因式分解">
+                多项式与复系数和实系数多项式的因式分解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenxfeng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3034124347" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一阶段-用数学的方法研究思维的规律"><span class="nav-number">1.</span> <span class="nav-text">第一阶段 用数学的方法研究思维的规律</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二阶段"><span class="nav-number">2.</span> <span class="nav-text">第二阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无穷集的分类"><span class="nav-number">2.1.</span> <span class="nav-text">无穷集的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多维连续统"><span class="nav-number">2.2.</span> <span class="nav-text">多维连续统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更大的无穷"><span class="nav-number">2.3.</span> <span class="nav-text">更大的无穷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#康托尔定理"><span class="nav-number">2.4.</span> <span class="nav-text">康托尔定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#良序定理-连续统假设"><span class="nav-number">2.5.</span> <span class="nav-text">良序定理 连续统假设</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实无穷与潜无穷"><span class="nav-number">2.6.</span> <span class="nav-text">实无穷与潜无穷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公理方法的发展"><span class="nav-number">3.</span> <span class="nav-text">公理方法的发展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#《几何原本》"><span class="nav-number">3.1.</span> <span class="nav-text">《几何原本》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非欧几何"><span class="nav-number">3.2.</span> <span class="nav-text">非欧几何</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#射影几何和度量几何"><span class="nav-number">3.3.</span> <span class="nav-text">射影几何和度量几何</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几何基础"><span class="nav-number">3.4.</span> <span class="nav-text">几何基础</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑演算"><span class="nav-number">4.</span> <span class="nav-text">逻辑演算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数学的严格性和数学基础问题"><span class="nav-number">4.1.</span> <span class="nav-text">数学的严格性和数学基础问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#弗雷格"><span class="nav-number">4.2.</span> <span class="nav-text">弗雷格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#皮亚诺"><span class="nav-number">4.3.</span> <span class="nav-text">皮亚诺</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#罗素"><span class="nav-number">4.4.</span> <span class="nav-text">罗素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造主义和证明论"><span class="nav-number">5.</span> <span class="nav-text">构造主义和证明论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数学基础问题的争论"><span class="nav-number">5.1.</span> <span class="nav-text">数学基础问题的争论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直觉主义-构造主义和构造倾向"><span class="nav-number">5.2.</span> <span class="nav-text">直觉主义 构造主义和构造倾向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#希尔伯特方案"><span class="nav-number">5.3.</span> <span class="nav-text">希尔伯特方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哥德尔定理-数理逻辑发展的第三阶段"><span class="nav-number">6.</span> <span class="nav-text">哥德尔定理 数理逻辑发展的第三阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过渡时期"><span class="nav-number">6.1.</span> <span class="nav-text">过渡时期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哥德尔定理"><span class="nav-number">6.2.</span> <span class="nav-text">哥德尔定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数理逻辑发展的第三阶段"><span class="nav-number">6.3.</span> <span class="nav-text">数理逻辑发展的第三阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">6.4.</span> <span class="nav-text">引用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

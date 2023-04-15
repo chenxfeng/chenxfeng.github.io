@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="分布式计算," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="(并行与分布式计算十一)
+最短路径问题研究范围: 有权图
+
+有权图
+
+通常对边与端附于一定权值，表示某种性质
+
+
+
+权值：在不同实际问题中表示不同的物理意义, 例：距离、代价、费用、流量、容量、转接容量、电流、电位……
+
+
+最短路径问题
+
+以有权图为基础，求解最短路径
+
+
+
+目的：通信路由选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向网络拓扑的通信优化">
+<meta property="og:url" content="https://chenfeng.github.io/2017/05/16/parellel_and_distributed_computing/distributed_compute3/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="(并行与分布式计算十一)
+最短路径问题研究范围: 有权图
+
+有权图
+
+通常对边与端附于一定权值，表示某种性质
+
+
+
+权值：在不同实际问题中表示不同的物理意义, 例：距离、代价、费用、流量、容量、转接容量、电流、电位……
+
+
+最短路径问题
+
+以有权图为基础，求解最短路径
+
+
+
+目的：通信路由选择">
+<meta property="og:image" content="https://chenfeng.github.io/\img\cut.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\cut_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\\img\path.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\max_flow.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\max_flow1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\max_flow2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\max_flow_eg.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\max_flow_eg1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\max_flow_eg2.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\M_algo.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\M_algo1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\min_cost_flow.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\negative_circle.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\negative_circle1.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\negative_circle2.png">
+<meta property="og:updated_time" content="2017-05-19T08:02:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面向网络拓扑的通信优化">
+<meta name="twitter:description" content="(并行与分布式计算十一)
+最短路径问题研究范围: 有权图
+
+有权图
+
+通常对边与端附于一定权值，表示某种性质
+
+
+
+权值：在不同实际问题中表示不同的物理意义, 例：距离、代价、费用、流量、容量、转接容量、电流、电位……
+
+
+最短路径问题
+
+以有权图为基础，求解最短路径
+
+
+
+目的：通信路由选择">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\cut.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/05/16/parellel_and_distributed_computing/distributed_compute3/"/>
+
+
+
+
+
+  <title>面向网络拓扑的通信优化 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/05/16/parellel_and_distributed_computing/distributed_compute3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">面向网络拓扑的通信优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T00:00:00+08:00">
+                2017-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>(并行与分布式计算十一)</p>
+<h2 id="最短路径问题"><a href="#最短路径问题" class="headerlink" title="最短路径问题"></a>最短路径问题</h2><p>研究范围: 有权图</p>
+<ul>
+<li>有权图</li>
+<li><ul>
+<li>通常对边与端附于一定权值，表示某种性质</li>
+</ul>
+</li>
+<li><ul>
+<li>权值：在不同实际问题中表示不同的物理意义, 例：距离、代价、费用、流量、容量、转接容量、电流、电位……</li>
+</ul>
+</li>
+<li>最短路径问题</li>
+<li><ul>
+<li>以有权图为基础，求解最短路径</li>
+</ul>
+</li>
+<li><ul>
+<li>目的：通信路由选择</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="最小生成树-MST-Minimum-Spanning-Tree"><a href="#最小生成树-MST-Minimum-Spanning-Tree" class="headerlink" title="最小生成树(MST, Minimum Spanning Tree)"></a>最小生成树(MST, Minimum Spanning Tree)</h2><ul>
+<li>给定连通图G=(V, E), w(e)是定义在E上的非负函数, $T=(V, E_r)$为G的一个生成树</li>
+<li>定义树T的权为 $w(T) = \sum_{e \in E_r} w(e)$</li>
+<li>MST问题：求生成树 $T^{<em>}$，使得 $w(T^{</em>})$ 最小。</li>
+<li>应用</li>
+<li><ul>
+<li>求连接n个城市之间的、通讯线路最短或造价最低的n-1条线路</li>
+</ul>
+</li>
+<li><ul>
+<li>多播和广播问题的通信优化</li>
+</ul>
+</li>
+</ul>
+<h3 id="求最小生成树算法"><a href="#求最小生成树算法" class="headerlink" title="求最小生成树算法"></a>求最小生成树算法</h3><ul>
+<li>Prim算法    : 反圈法(从点开始)</li>
+<li>Kruskal算法 : 避圈法(从边开始)</li>
+<li>管梅谷破圈法 : (从圈开始)</li>
+</ul>
+<p><strong>Prim算法(P算法)</strong></p>
+<ul>
+<li>将图的端点集合V分成A和V-A两部分</li>
+<li>从图中任选一个端点$v_i$，令$A={v_i}$</li>
+<li>从A和V-A的连线中找出最短(权最小)边$e_{ij}=(v_i, v_j)$，令$A=A \bigcup {v_j}$，并从V-A中去掉$v_j$</li>
+<li>重复上述过程，直至所有端点都在A中</li>
+</ul>
+<p><strong>Kruskal算法(K算法)</strong></p>
+<ul>
+<li>Prim算法注意顶点，kruskal算法更关心边。</li>
+<li>思想：</li>
+<li><p>将所有边排序，然后由小到大选边，只要保持所选边不成圈，选了n-1条边后就可以证明形成一个最小生成树。</p>
+</li>
+<li><p>赋权的连通图G=(V,E)中$m=|E|,n=|V|$, </p>
+</li>
+<li>S1:对E中各边的权排序，设$w_1 \leq w_2 \leq … \leq w_m, w_i=w(e_i)$</li>
+<li>S2:初始化：$w \leftarrow 0,T \leftarrow \phi, k \leftarrow 1,t \leftarrow 0$</li>
+<li>S3:若t=n-1则转S6，否则转S4</li>
+<li>S4:若$T \bigcup {e_k}$有圈则$k \leftarrow k+1$转S4，否则转S5</li>
+<li>S5: $T \leftarrow T \bigcup {e_k}, w \leftarrow w+w_k, t \leftarrow t+1, k \leftarrow k+1$,转S3</li>
+<li>S6:输出T及w，结束。</li>
+<li>T为最小树，w为T的权。</li>
+</ul>
+<h2 id="网络流量问题"><a href="#网络流量问题" class="headerlink" title="网络流量问题"></a>网络流量问题</h2><ul>
+<li>网的工作：把一定的业务流从源送出</li>
+<li>网的控制：流量控制、路由控制、计费控制</li>
+<li>流量：泛指传输速率</li>
+<li>控制目标：流量最大(网运行的重要指标之一)、分配合理、提高效率、充分利用资源</li>
+<li>特点：不任意性，受限于网络的拓扑结构，边和端的容量，流量分配和路由规划关系密切</li>
+<li>优化问题：最大流，最小代价</li>
+</ul>
+<p><strong>有向图，单商品流问题(网络中只需要安排的只有一种商品或业务)</strong></p>
+<ul>
+<li><p>有向图G = {V, E}, $c<em>{ij}$为边容量，$f</em>{ij}$为边流量，${f<em>{ij}}$为一组流，F为源宿之间${f</em>{ij}}$的总流量</p>
+</li>
+<li><p>流满足两个条件：</p>
+</li>
+<li><ul>
+<li><ol>
+<li>非负、有界(对任意边): $0 \leq f<em>{i,j} \leq c</em>{i,j}$</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ol>
+<li>连续(对于任意端)</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>$$<br>\sum<em>{(i,j)\in E} f</em>{ij} = \sum<em>{(j, i)\in E} f</em>{ji} =\begin{cases}<br>F&amp;\text{$v_i$ 为源端}\<br>-F&amp;\text{$v_i$ 为宿端}\<br>0&amp; \text{其他}<br>\end{cases}<br>$$</p>
+<p><strong>可行流的条件</strong></p>
+<ul>
+<li>具有m条(有向)边、n个端的图共有2m+n-1个限制条件，包括</li>
+<li><ul>
+<li>m个非负性条件</li>
+</ul>
+</li>
+<li><ul>
+<li>m个有限性条件</li>
+</ul>
+</li>
+<li><ul>
+<li>n-1个连续性条件(连续性条件中有一个不是独立的)</li>
+</ul>
+</li>
+<li><p>满足此二限制条件的流称为可行流；可行流不止一个(流量为0也是一个可行流)</p>
+</li>
+<li><p>v(f) = F 为源宿间流的总流量</p>
+</li>
+<li>需要解决的基本问题分为两类：</li>
+<li><ul>
+<li>最大流问题：在确定流的源和宿的情况下求一个可行流是v(f) = F为最大</li>
+</ul>
+</li>
+<li><ul>
+<li>网络拓扑已定，$c_{ij}$已知，给定源$v_s$与宿$v_t$，在二限制条件下求$v_s \to v_t$的最大流量$F_max$</li>
+</ul>
+</li>
+<li><ul>
+<li>最小费用流问题：如果边$e<em>{i,j}$的单位流费用为$d</em>{i,j}$，流f的费用为$C = \sum<em>{(i,j)\in E}d</em>{i,j}f_{i,j}$，在确定流的源和宿的情况下求一个可行流f使C最小</li>
+</ul>
+</li>
+<li><ul>
+<li>网络拓扑已定，$c_{ij}$已知，单位流量通过边$(v_i, v<em>j)$所需的代价$\alpha</em>{ij}$(代价系数)已知，给定流量F，寻求总代价中最小的可行流${f<em>{ij}}$，其中总费用定义为：$\phi = \sum \alpha</em>{ij}*f_{ij}$</li>
+</ul>
+</li>
+</ul>
+<p><strong>割量</strong></p>
+<ul>
+<li>设X是V的真子集，且$v_s \in X$, $v_t \in \overline X$。$(X, \overline X)$表示两者界上的边，显然是使$v_s$,$v_t$分离的割集，定义方向$v_s \to v_t$。</li>
+<li>其边分二类：</li>
+<li><ul>
+<li>前向边：与割方向一致的边</li>
+</ul>
+</li>
+<li><ul>
+<li>反向边：与割方向相反的边</li>
+</ul>
+</li>
+<li><p>割量：前向边容量和 $c(X, \overline X) = \sum_{v_i \in X, v<em>j \in \overline X} c</em>{ij}$</p>
+</li>
+<li>对可行流${f_{ij}}$</li>
+<li><ul>
+<li>$f(X, \overline X)$表示前向边的流量$\sum f_{ij}$</li>
+</ul>
+</li>
+<li><ul>
+<li>$f(\overline X, X)$表示反向边的流量$\sum f_{ji}$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\cut.png" alt="cut_s.png"></p>
+</blockquote>
+<ul>
+<li>总流量 = 正向 - 反向</li>
+</ul>
+<p><em>性质</em></p>
+<ul>
+<li>$F = f(X, \overline X) - f(\overline X, X)$</li>
+<li>example:</li>
+</ul>
+<blockquote>
+<p><img src="\img\cut_eg.png" alt="cut_eg.png"></p>
+</blockquote>
+<ul>
+<li>$F \leq c(X, \overline X)$</li>
+<li>$ F = f(X, \overline X) - f(\overline X, X) \leq f(X, \overline X) \leq c(X, \overline X) $</li>
+</ul>
+<p><strong>可增流路</strong></p>
+<ul>
+<li>可增流路径：</li>
+<li><ul>
+<li>前向边均不饱和($f<em>{ij} &lt; c</em>{ij}$)</li>
+</ul>
+</li>
+<li><ul>
+<li>反向边均有非0流量($f_{ij} \not= 0$)</li>
+</ul>
+</li>
+<li><p>在可增流路上增流不影响连续性条件也不影响其它边上的流量，同时可以使从源端到宿端的流量增大</p>
+</li>
+<li><p>在可增流路上所有正向边的流量均可增加不致于破坏流量的有限性，所有反向边上均可减流(相当于正向增流)不致于破坏非负性。整体的增流量应为这些正向边上能增流(或反向边上能减流)的最小值，即可增量为<br>$$<br>\delta = min[min<em>{e</em>{ij} \in P}(c<em>{ij} - f</em>{ij}), min_{e<em>ji} \in P(f</em>{ji})]<br>$$</p>
+</li>
+<li><p>在可增流路上各边均增加$\delta$(对于反向边即为减流$\delta$)，不会破坏流量的非负性、有限性，并不影响连续性条件，从而得到一个新的可行流，并使源宿端间的流量增加</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="\\img\path.png" alt="path.png"></p>
+</blockquote>
+<ul>
+<li>最大流问题</li>
+</ul>
+<blockquote>
+<p><img src="\img\max_flow.png" alt="max_flow.png"></p>
+</blockquote>
+<p><strong>求解最大流问题</strong></p>
+<ul>
+<li>在找到一个可行流的基础上，找$v_s$到$v_t$的可增流路</li>
+<li>在此路上增流直至无可增流路时停止</li>
+</ul>
+<blockquote>
+<p><img src="\img\max_flow1.png" alt="max_flow1.png"></p>
+<p><img src="\img\max_flow2.png" alt="max_flow2.png"></p>
+<p><img src="\img\max_flow_eg.png" alt="max_flow_eg.png"></p>
+<p><img src="\img\max_flow_eg1.png" alt="max_flow_eg1.png"></p>
+<p><img src="\img\max_flow_eg2.png" alt="max_flow_eg2.png"></p>
+</blockquote>
+<ul>
+<li><p>此为<strong>最大流的M算法</strong></p>
+</li>
+<li><p>M算法所得结果必为最佳解</p>
+</li>
+<li><p>由于选择已标而未查端的次序是任意的，各种次序可能得不同的可行流，因此分配结果不是唯一的，但最大流量的值一定是一样的</p>
+</li>
+<li><p>在M算法中若令所有边容量$c_{ij} = 1$，则最大流量即源宿间完全不共边之有向径数目，也是使源宿分离而应去除的最少边数：图的结合度</p>
+</li>
+</ul>
+<p><em>M算法的推广</em></p>
+<blockquote>
+<p><img src="\img\M_algo.png" alt="M_algo.png"></p>
+<p><img src="\img\M_algo1.png" alt="M_algo1.png"></p>
+</blockquote>
+<p><strong>最小费用流(最佳流)问题</strong></p>
+<blockquote>
+<p><img src="\img\min_cost_flow.png" alt="min_cost_flow.png"></p>
+</blockquote>
+<p><strong>负权环算法</strong></p>
+<blockquote>
+<p><img src="\img\negative_circle.png" alt="negative_circle.png"></p>
+<p><img src="\img\negative_circle1.png" alt="negative_circle1.png"></p>
+<p><img src="\img\negative_circle2.png" alt="negative_circle2.png"></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分布式计算/" rel="tag"># 分布式计算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/15/economics/经济增长(economic growth)/" rel="next" title="经济增长(economic growth)">
+                <i class="fa fa-chevron-left"></i> 经济增长(economic growth)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/23/parellel_and_distributed_computing/distributed_compute4/" rel="prev" title="同步与互斥">
+                同步与互斥 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenxfeng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3034124347" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#最短路径问题"><span class="nav-number">1.</span> <span class="nav-text">最短路径问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最小生成树-MST-Minimum-Spanning-Tree"><span class="nav-number">2.</span> <span class="nav-text">最小生成树(MST, Minimum Spanning Tree)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#求最小生成树算法"><span class="nav-number">2.1.</span> <span class="nav-text">求最小生成树算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络流量问题"><span class="nav-number">3.</span> <span class="nav-text">网络流量问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

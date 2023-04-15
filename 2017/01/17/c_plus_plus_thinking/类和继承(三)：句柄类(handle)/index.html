@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="代理的创建 会 复制所代理的对象，如何避免复制(保持多态性的前提下避免复制对象的代价)
+
+
+某些类应当避免复制
+
+对象很大，资源消耗多
+
+
+
+每个对象代表一种不能被轻易复制的资源，如文件
+
+
+
+其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大
+
+
+
+对象代表位于网络连接另一端的其他对象
+
+
+
+多态性环境中只知对象基类类型而不知对象本身类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类和继承(三)：句柄类(handle)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/01/17/c_plus_plus_thinking/类和继承(三)：句柄类(handle)/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="代理的创建 会 复制所代理的对象，如何避免复制(保持多态性的前提下避免复制对象的代价)
+
+
+某些类应当避免复制
+
+对象很大，资源消耗多
+
+
+
+每个对象代表一种不能被轻易复制的资源，如文件
+
+
+
+其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大
+
+
+
+对象代表位于网络连接另一端的其他对象
+
+
+
+多态性环境中只知对象基类类型而不知对象本身类型">
+<meta property="og:updated_time" content="2017-10-04T07:58:12.267Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="类和继承(三)：句柄类(handle)">
+<meta name="twitter:description" content="代理的创建 会 复制所代理的对象，如何避免复制(保持多态性的前提下避免复制对象的代价)
+
+
+某些类应当避免复制
+
+对象很大，资源消耗多
+
+
+
+每个对象代表一种不能被轻易复制的资源，如文件
+
+
+
+其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大
+
+
+
+对象代表位于网络连接另一端的其他对象
+
+
+
+多态性环境中只知对象基类类型而不知对象本身类型">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/01/17/c_plus_plus_thinking/类和继承(三)：句柄类(handle)/"/>
+
+
+
+
+
+  <title>类和继承(三)：句柄类(handle) | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/01/17/c_plus_plus_thinking/类和继承(三)：句柄类(handle)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">类和继承(三)：句柄类(handle)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-17T00:00:00+08:00">
+                2017-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>代理的创建 会 复制所代理的对象，如何避免复制<br>(保持多态性的前提下避免复制对象的代价)</p>
+</blockquote>
+<ul>
+<li>某些类应当避免复制</li>
+<li><ul>
+<li>对象很大，资源消耗多</li>
+</ul>
+</li>
+<li><ul>
+<li>每个对象代表一种不能被轻易复制的资源，如文件</li>
+</ul>
+</li>
+<li><ul>
+<li>其它数据结构已经存储对象的地址，把副本地址插入那些数据结构中代价会非常大</li>
+</ul>
+</li>
+<li><ul>
+<li>对象代表位于网络连接另一端的其他对象</li>
+</ul>
+</li>
+<li><ul>
+<li>多态性环境中只知对象基类类型而不知对象本身类型</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li>避免使用指针复制对象</li>
+<li><ul>
+<li>使用对象指针比直接使用对象要困难</li>
+</ul>
+</li>
+<li><ul>
+<li>未初始化的指针非常危险且难以防范</li>
+</ul>
+</li>
+<li><ul>
+<li>管理内存的硬件总要检查被复制的指针是否真的指向程序所分配的内存位置上</li>
+</ul>
+</li>
+<li><ul>
+<li>复制未初始化的指针会导致硬件陷阱</li>
+</ul>
+</li>
+<li><p>例如: </p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// copy a pointer without initialization</span></div><div class="line">    <span class="comment">// would crash a program</span></div><div class="line">    <span class="keyword">int</span>* p;  <span class="comment">// without initialization</span></div><div class="line">    <span class="keyword">int</span>* q = p; <span class="comment">// not being definited</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>多个指针指向同一个对象时应考虑何时删除此对象</li>
+</ul>
+<h2 id="handle-classe-句柄类"><a href="#handle-classe-句柄类" class="headerlink" title="handle classe(句柄类)"></a>handle classe(句柄类)</h2><blockquote>
+<p>有时也称为smart pointer(智能指针)<br>绑定到所控制的类的对象上</p>
+</blockquote>
+<h3 id="简单示例类"><a href="#简单示例类" class="headerlink" title="简单示例类"></a>简单示例类</h3><ul>
+<li>表示点平面坐标的类</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Point &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Point(): xval(<span class="number">0</span>), yval(<span class="number">0</span>) &#123;&#125;</div><div class="line">    Point(<span class="keyword">int</span> x, <span class="keyword">int</span> y): xval(x), yval(y) &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> xval; &#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> yval; &#125;</div><div class="line">    <span class="function">Point&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span> xv)</span> </span>&#123; xval = xv; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</div><div class="line">    <span class="function">Point&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span> yv)</span> </span>&#123; yval = yv; <span class="keyword">return</span> *<span class="keyword">this</span>; &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>使用一个无参构造函数和一个两个参数的构造函数而非一个缺省参数的构造函数</strong>：<code>Point(int x = 0, int y = 0): xval(x), yval(y) {}</code></li>
+<li><ul>
+<li>后者允许只用一个参数(另一个缺省为零)构造Point对象，而这几乎是错的</li>
+</ul>
+</li>
+</ul>
+<h3 id="绑定到句柄"><a href="#绑定到句柄" class="headerlink" title="绑定到句柄"></a>绑定到句柄</h3><ul>
+<li>将句柄h直接绑定到对象上</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Point p;</div><div class="line"><span class="function">Handle <span class="title">h</span><span class="params">(p)</span></span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>删除p后应该使handle无效</li>
+<li>handle应该控制它所绑定的对象(创建和销毁)</li>
+<li>从效果上说handle就是一种只包含单个对象的容器</li>
+</ul>
+<h3 id="获取对象"><a href="#获取对象" class="headerlink" title="获取对象"></a>获取对象</h3><ul>
+<li>handle行为上类似一个指针</li>
+<li><ul>
+<li>应阻止使用者直接获得对象的实际地址</li>
+</ul>
+</li>
+<li><ul>
+<li>过多暴露内存分配策略，不利于改变分配的策略</li>
+</ul>
+</li>
+<li><ul>
+<li>隐蔽真正的对象地址，避免直接重载 <code>operator-&gt;</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Handle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Point* <span class="keyword">operator</span>-&gt;();</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">Point* addr = h.<span class="keyword">operator</span>-&gt;(); <span class="comment">// get the object address</span></div><div class="line">                              <span class="comment">// overloading operator-&gt; is to blame</span></div></pre></td></tr></table></figure>
+<h3 id="引用计数型句柄-UPoint"><a href="#引用计数型句柄-UPoint" class="headerlink" title="引用计数型句柄(UPoint)"></a><strong>引用计数</strong>型句柄(UPoint)</h3><blockquote>
+<p>了解有多少句柄绑定在同一个对象上以确定何时删除对象<br>引用计数(use count)不能是句柄的一部分或对象的一部分</p>
+</blockquote>
+<ul>
+<li>定义新的类容纳引用计数和Point对象</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> UPoint &#123;</div><div class="line">    <span class="comment">// all the members are private</span></div><div class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> Handle;</div><div class="line">    Point p;</div><div class="line">    <span class="keyword">int</span> u;</div><div class="line"></div><div class="line">    UPoint(): u(<span class="number">1</span>) &#123;&#125;</div><div class="line">    UPoint(<span class="keyword">int</span> x, <span class="keyword">int</span> y): P(x, y), u(<span class="number">1</span>) &#123;&#125;</div><div class="line">    UPoint(<span class="keyword">const</span> Point&amp; p0): p(p0), u(<span class="number">1</span>) &#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>一个简单的Handle类实现</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Handle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Handle();</div><div class="line">    Handle(<span class="keyword">int</span>, <span class="keyword">int</span>);</div><div class="line">    Handle(<span class="keyword">const</span> Point&amp;);</div><div class="line">    Handle(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    Handle&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    ~Handle();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Upoint * up;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Handle::Handle(): up(<span class="keyword">new</span> UPoint) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">int</span> x, <span class="keyword">int</span> y): up(<span class="keyword">new</span> UPoint(x, y)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">const</span> Point&amp; p): up(<span class="keyword">new</span> UPoint(p)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::~Handle() &#123;</div><div class="line">    <span class="keyword">if</span> (--up-&gt;u == <span class="number">0</span>)</div><div class="line">        <span class="keyword">delete</span> up;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// just increase the use count by 1</span></div><div class="line">Handle::Handle(<span class="keyword">const</span> Handle&amp; h): up(h.up) &#123; ++up-&gt;up; &#125;</div><div class="line"></div><div class="line"><span class="comment">// make sure it works when two handles use the same UPoint object</span></div><div class="line">Handle&amp; Handle::<span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp; h) &#123;</div><div class="line">    ++h.up-&gt;u;</div><div class="line">    <span class="keyword">if</span> (--up-&gt;u == <span class="number">0</span>)</div><div class="line">        <span class="keyword">delete</span> up;</div><div class="line">    up = h.up;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Handle::x() <span class="keyword">const</span> &#123; <span class="keyword">return</span> up-&gt;p.x(); &#125;</div><div class="line"><span class="keyword">int</span> Handle::y() <span class="keyword">const</span> &#123; <span class="keyword">return</span> up-&gt;p.y(); &#125;</div></pre></td></tr></table></figure>
+<h3 id="写时复制-copy-on-write"><a href="#写时复制-copy-on-write" class="headerlink" title="写时复制(copy on write)"></a>写时复制(copy on write)</h3><ul>
+<li>handle改动性函数两种不同语义</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function">Handle <span class="title">h</span><span class="params">(<span class="number">3</span>, <span class="number">4</span>)</span></span>;</div><div class="line">Handle h2 = h;</div><div class="line">h2.x(<span class="number">5</span>);</div><div class="line"><span class="keyword">int</span> n = h.x(); <span class="comment">// 3 or 5 ?</span></div></pre></td></tr></table></figure>
+<ul>
+<li>若句柄为<strong>指针语义</strong>，n = 5</li>
+<li><ul>
+<li>handle表现像指针或引用，h和h2绑定到同一对象</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Handle&amp; Handle::x(<span class="keyword">int</span> x0) &#123;</div><div class="line">    up-&gt;p.x(x0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Handle&amp; Handle::y(<span class="keyword">int</span> y0) &#123;</div><div class="line">    up-&gt;p.y(y0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>若句柄为<strong>值语义</strong>，n = 3</li>
+<li><ul>
+<li>改变h2的内容不该影响h的值</li>
+</ul>
+</li>
+<li><ul>
+<li>必须保证所改动的UPont对象不同时被其它Handle所引用，否则复制UPoint</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Handle&amp; Handle::x(<span class="keyword">int</span> x0) &#123;</div><div class="line">    <span class="keyword">if</span> (up-&gt;u != <span class="number">1</span>) &#123;</div><div class="line">        --up-&gt;u;</div><div class="line">        up = <span class="keyword">new</span> UPoint(up-&gt;p);</div><div class="line">    &#125;</div><div class="line">    up-&gt;p.x(x0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Handle&amp; Handle::y(<span class="keyword">int</span> y0) &#123;</div><div class="line">    <span class="keyword">if</span> (up-&gt;u != <span class="number">1</span>) &#123;</div><div class="line">        --up-&gt;u;</div><div class="line">        up = <span class="keyword">new</span> UPoint(up-&gt;p);</div><div class="line">    &#125;</div><div class="line">    up-&gt;p.y(y0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>以下代码片段需要在每个改变UPoint对象的成员函数中重复(可设计为Handle的私有成员函数)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (up-&gt;u != <span class="number">1</span>) &#123;</div><div class="line">    --up-&gt;u;</div><div class="line">    up = <span class="keyword">new</span> UPoint(up-&gt;p);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>写时复制优点：在绝对必要时才进行复制，额外开销小</p>
+</blockquote>
+<h2 id="句柄类的改进"><a href="#句柄类的改进" class="headerlink" title="句柄类的改进"></a>句柄类的改进</h2><ul>
+<li>前述实现的缺点：把句柄捆绑到类T的对象上必须先定义具有类型T的成员的新类</li>
+<li>当捆绑句柄到继承自T的静态类型未知的类的对象上时难以实现</li>
+</ul>
+<h3 id="将应用计数从数据中分离出来作为独立的对象"><a href="#将应用计数从数据中分离出来作为独立的对象" class="headerlink" title="将应用计数从数据中分离出来作为独立的对象"></a>将应用计数从数据中分离出来作为独立的对象</h3><ul>
+<li>抽象地表示应用计数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> UseCount &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    UseCount();</div><div class="line">    UseCount(<span class="keyword">const</span> UseCount&amp;);</div><div class="line">    ~UseCount();</div><div class="line"></div><div class="line">    <span class="comment">// judge whether use count would become zero</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">only</span><span class="params">()</span></span>; </div><div class="line"></div><div class="line">    <span class="comment">// judge whether use count should be deleted</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">reattach</span><span class="params">(<span class="keyword">const</span> UseCount&amp;)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">// provide a method to make this handle to be the only one</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">makeonly</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span>* p;</div><div class="line">    <span class="comment">// make assignment illegal</span></div><div class="line">    UseCount&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> UseCount&amp;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">UseCount::UseCount(): p(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>)) &#123;&#125;</div><div class="line"></div><div class="line">UseCount::UseCount(<span class="keyword">const</span> UseCount&amp; u): p(u.p) &#123; ++*p; &#125;</div><div class="line"></div><div class="line">UseCount::~UseCount() &#123;</div><div class="line">    <span class="keyword">if</span> (--*p == <span class="number">0</span>)</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> UseCount::only() &#123; <span class="keyword">return</span> *p == <span class="number">1</span>; &#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> UseCount::reattach(<span class="keyword">const</span> UseCount&amp; u) &#123;</div><div class="line">    <span class="comment">// increase u.p first to make it work when self-assignment</span></div><div class="line">    ++*u.p; </div><div class="line">    <span class="keyword">if</span> (--*p == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">        p = u.p;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    p = u.p;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> UseCount::makeonly() &#123;</div><div class="line">    <span class="keyword">if</span> (*p == <span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    --*p;</div><div class="line">    p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>);</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>重写Handle类</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Handle &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">// the same with previous definition</span></div><div class="line">    Handle();</div><div class="line">    Handle(<span class="keyword">int</span>, <span class="keyword">int</span>);</div><div class="line">    Handle(<span class="keyword">const</span> Point&amp;);</div><div class="line">    Handle(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    Handle&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp;);</div><div class="line">    ~Handle();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">x</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line">    <span class="function">Handle&amp; <span class="title">y</span><span class="params">(<span class="keyword">int</span>)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Point* p;</div><div class="line">    UseCount u;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Handle::Handle(): p(<span class="keyword">new</span> Point) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">int</span> x, <span class="keyword">int</span> y): p(<span class="keyword">new</span> Point(x, y)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">const</span> Point&amp; p0): p(<span class="keyword">new</span> Point(p0)) &#123;&#125;</div><div class="line"></div><div class="line">Handle::Handle(<span class="keyword">const</span> Handle&amp; h): u(h.u), p(h.p) &#123;&#125;</div><div class="line"></div><div class="line">Handle::~Handle() &#123;</div><div class="line">    <span class="keyword">if</span> (u.only())</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Handle&amp; Handle::<span class="keyword">operator</span>=(<span class="keyword">const</span> Handle&amp; h) &#123;</div><div class="line">    <span class="keyword">if</span> (u.reattach(h.u))</div><div class="line">        <span class="keyword">delete</span> p;</div><div class="line">    p = h.p;</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Handle::x() <span class="keyword">const</span> () &#123;</div><div class="line">    <span class="keyword">return</span> p-&gt;x();</div><div class="line">&#125;</div><div class="line"><span class="keyword">int</span> Handle::y() <span class="keyword">const</span> () &#123;</div><div class="line">    <span class="keyword">return</span> p-&gt;y();</div><div class="line">&#125;</div><div class="line"></div><div class="line">Handle&amp; Handle::x(<span class="keyword">int</span> x0) &#123;</div><div class="line">    <span class="keyword">if</span> (u.makeonly())</div><div class="line">        p = <span class="keyword">new</span> Point(*P);</div><div class="line">    p-&gt;x(x0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Handle&amp; Handle::y(<span class="keyword">int</span> y0) &#123;</div><div class="line">    <span class="keyword">if</span> (u.makeonly())</div><div class="line">        p = <span class="keyword">new</span> Point(*P);</div><div class="line">    p-&gt;y(y0);</div><div class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>通过引入引用计数使得handle类能灵活地设计出来，而将引用计数抽象化表示使handle类能协同不同数据结构工作</p>
+<p>UseCount类简化了实现中特定的子问题：接口设计只为简化引用计算句柄实现，而不为终端用户(end user)所用</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>《C++沉思录(Cplusplus Thinking)》笔记</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/16/c_plus_plus_thinking/类和继承(二)：代理类/" rel="next" title="类和继承(二)：代理类">
+                <i class="fa fa-chevron-left"></i> 类和继承(二)：代理类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/18/c_plus_plus_thinking/类和继承(四)：面向对象编程/" rel="prev" title="类和继承(四)：面向对象编程">
+                类和继承(四)：面向对象编程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenxfeng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3034124347" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#handle-classe-句柄类"><span class="nav-number">1.</span> <span class="nav-text">handle classe(句柄类)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单示例类"><span class="nav-number">1.1.</span> <span class="nav-text">简单示例类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定到句柄"><span class="nav-number">1.2.</span> <span class="nav-text">绑定到句柄</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取对象"><span class="nav-number">1.3.</span> <span class="nav-text">获取对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用计数型句柄-UPoint"><span class="nav-number">1.4.</span> <span class="nav-text">引用计数型句柄(UPoint)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写时复制-copy-on-write"><span class="nav-number">1.5.</span> <span class="nav-text">写时复制(copy on write)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#句柄类的改进"><span class="nav-number">2.</span> <span class="nav-text">句柄类的改进</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将应用计数从数据中分离出来作为独立的对象"><span class="nav-number">2.1.</span> <span class="nav-text">将应用计数从数据中分离出来作为独立的对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

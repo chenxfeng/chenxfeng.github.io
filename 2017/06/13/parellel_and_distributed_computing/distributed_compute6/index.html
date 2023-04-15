@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="分布式计算," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="(并行与分布式计算十四)
+故障模型和拜占庭故障的概念故障模型
+初始死进程: 如果在局部算法中没执行过一步，则称进程为初始死进程
+
+损毁模型(crash model): 如果进程正确地执行局部算法到某一时刻，此后并不进一步执行，则称它是损毁的
+
+Byzantine行为(Byzantine behavior): 如果进程执行了与局部算法不一致的任意步，则称进程是Byzantine的。尤其是Byzant">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式系统的容错技术(下)">
+<meta property="og:url" content="https://chenfeng.github.io/2017/06/13/parellel_and_distributed_computing/distributed_compute6/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="(并行与分布式计算十四)
+故障模型和拜占庭故障的概念故障模型
+初始死进程: 如果在局部算法中没执行过一步，则称进程为初始死进程
+
+损毁模型(crash model): 如果进程正确地执行局部算法到某一时刻，此后并不进一步执行，则称它是损毁的
+
+Byzantine行为(Byzantine behavior): 如果进程执行了与局部算法不一致的任意步，则称进程是Byzantine的。尤其是Byzant">
+<meta property="og:image" content="https://chenfeng.github.io/\img\process_group_structure.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\consistence_error_stop.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\process_Byzantine.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\consistency_algo.png">
+<meta property="og:image" content="https://chenfeng.github.io/\img\inconsistence_error_stop.png">
+<meta property="og:updated_time" content="2017-06-29T09:29:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式系统的容错技术(下)">
+<meta name="twitter:description" content="(并行与分布式计算十四)
+故障模型和拜占庭故障的概念故障模型
+初始死进程: 如果在局部算法中没执行过一步，则称进程为初始死进程
+
+损毁模型(crash model): 如果进程正确地执行局部算法到某一时刻，此后并不进一步执行，则称它是损毁的
+
+Byzantine行为(Byzantine behavior): 如果进程执行了与局部算法不一致的任意步，则称进程是Byzantine的。尤其是Byzant">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\process_group_structure.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/06/13/parellel_and_distributed_computing/distributed_compute6/"/>
+
+
+
+
+
+  <title>分布式系统的容错技术(下) | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/06/13/parellel_and_distributed_computing/distributed_compute6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">分布式系统的容错技术(下)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-13T00:00:00+08:00">
+                2017-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>(并行与分布式计算十四)</p>
+<h2 id="故障模型和拜占庭故障的概念"><a href="#故障模型和拜占庭故障的概念" class="headerlink" title="故障模型和拜占庭故障的概念"></a>故障模型和拜占庭故障的概念</h2><h3 id="故障模型"><a href="#故障模型" class="headerlink" title="故障模型"></a>故障模型</h3><ol>
+<li><p>初始死进程: 如果在局部算法中没执行过一步，则称进程为初始死进程</p>
+</li>
+<li><p>损毁模型(crash model): 如果进程正确地执行局部算法到某一时刻，此后并不进一步执行，则称它是损毁的</p>
+</li>
+<li><p>Byzantine行为(Byzantine behavior): 如果进程执行了与局部算法不一致的任意步，则称进程是Byzantine的。尤其是Byzantine进发送的消息可能包含任意内容</p>
+</li>
+</ol>
+<a id="more"></a>
+<blockquote>
+<p>健壮算法提出的正确性要求总是指正确进程的局部状态(或者输出)。初始死进程从不会产生输出，且它的状态总是等于它的初始状态。如果损毁进程有输出，则它的输出是正确的，因为到损毁发生时，进程的行为是正确的。一个Byzantine进程的局部状态或者输出可以使任意的，任何算法都不满足Byzantine进程的非平凡性要求</p>
+</blockquote>
+<h3 id="故障模型的层次"><a href="#故障模型的层次" class="headerlink" title="故障模型的层次"></a>故障模型的层次</h3><ul>
+<li>可将错误模型分为三个层次</li>
+<li>初始死进程课看作损毁进程的特例</li>
+<li><ul>
+<li>损毁出现在进程的第一个事件之前</li>
+</ul>
+</li>
+<li>损毁进程可看作Byzantine进程的特例</li>
+<li><ul>
+<li>对Byzantine进程假设的任意行为包括根本不执行任何一步</li>
+</ul>
+</li>
+<li><p>容忍损毁要比容忍初始死进程要困难，容忍Byzantine进程更困难</p>
+</li>
+<li>由于规定不同，健壮Byzantine算法也是健壮损毁算法，健壮损毁算法也是健壮初始死进程算法</li>
+<li>健壮初始死进程算法的不可能性蕴含着健壮损毁算法的不可能性，而健壮损毁算法的不可能性蕴含着健壮Byzantine算法的不可能性。</li>
+</ul>
+<h2 id="拜占庭故障的恢复"><a href="#拜占庭故障的恢复" class="headerlink" title="拜占庭故障的恢复"></a>拜占庭故障的恢复</h2><ul>
+<li>进程组的内部结构：</li>
+<li><ul>
+<li>平面结构：所有的进程是平等的，没有任何一个进程处于领导地位，任何决定都是共同做出的。</li>
+</ul>
+</li>
+<li><ul>
+<li>层次结构：在最简单的层次结构的进程组中，一个进程是协调者，其他所有的进程为工作者。无论是进程组外的一个顾客，还是进程组中的一个工作者向进程组发出一个工作请求，由协调者决定哪一个工作者最适合这项工作，并且将此工作请求转交给它。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><img src="\img\process_group_structure.png" alt="process_group_structure.png"></p>
+</blockquote>
+<ul>
+<li><p>进程组管理：对于进程组通信来说，需要一定的办法进行进程组的创建和删除，同时还要允许进程能加入到一个进程组中去以及允许一个进程离开一个进程组。</p>
+</li>
+<li><ul>
+<li>集中式管理：设置一个进程组服务员，所有的服务请求都发送给进程组服务员。进程组服务员使用一个数据库来保存所有进程组的信息和一个进程组中所有成员的有关信息。</li>
+</ul>
+</li>
+<li><ul>
+<li>分布式管理：另外一个进程组管理的办法是采用分布式的方式管理进程组。例如当一个组外的进程要加入到这个进程组时，它向这个进程组中的所有成员发送一个报文，申明自己要加入到这个进程组。</li>
+</ul>
+</li>
+<li><p><strong>利用进程组屏蔽错误</strong>：进程组是构造容错系统问题的一部分。特别是，如果用相同的进程来构成一个进程组，那么就能够屏蔽进程组中一个或多个出错的进程。也就是说，我们可以用多个相同的进程构造一个进程组，用这个容错的进程组取代相对脆弱的单个进程。</p>
+</li>
+<li><p>利用进程组进行容错需要多少个进程副本：</p>
+</li>
+<li><ul>
+<li>故障—停止型故障：如果进程组中有k+1个进程，那么就足以提供k故障容错。  </li>
+</ul>
+</li>
+<li><ul>
+<li>拜占庭式故障：那么为了取得k故障容错，那么至少需要2k+1个进程。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>利用进程副本实现的分布式容错:<br>  对于本质上不是分布式却要求高可靠性的计算机应用设计，部分故障性质使得利用分布式(“复制的”)体系结构称为有吸引力的选择。航天飞机的主计算机系统就是一个例子。Spector和Gifford[SG84]描述了它的研制。飞机主要由不需定制的微处理器控制，在设计中主要关注的是它在航行过程中处理器发生故障的可能性。最终控制系统由4个相同处理器组成。<br>  每个处理器只进行同样的计算，激励者号对结果进行投票，即使一个处理器发生故障，也能完全控制系统。(激励者号的物理实现表明，即使第二个处理器后来发生故障，系统也能继续运行。)尽管复制是增加可靠性的有吸引力的一种选择，但是需要协调一群(不可靠)的处理器的算法设计远非那么简单。</p>
+</blockquote>
+<h2 id="容错系统中的一致性算法简介"><a href="#容错系统中的一致性算法简介" class="headerlink" title="容错系统中的一致性算法简介"></a>容错系统中的一致性算法简介</h2><ul>
+<li><strong>分布式一致算法基本目标</strong>：是使得对于某个问题来说，所有非出错的进程能够达成一致，并且能够在有限的步骤内达成一致。</li>
+</ul>
+<blockquote>
+<p><img src="\img\consistence_error_stop.png" alt="consistence_error_stop.png"></p>
+<p><img src="\img\process_Byzantine.png" alt="process_Byzantine.png"></p>
+</blockquote>
+<ul>
+<li>分布式一致算法的正确性条件：</li>
+<li><ul>
+<li>(1) 一致性。所有正确的进程取得一致的结果，而且是最后的结果；</li>
+</ul>
+</li>
+<li><ul>
+<li>(2) 合法性。所有进程同意的结果必须来自某个正确的进程的输入；</li>
+</ul>
+</li>
+<li><ul>
+<li>(3) 有限性。每个进程在有限的步骤内取得一致的结果。</li>
+</ul>
+</li>
+<li><p><strong>交互一致性</strong>：系统中的每个非出错进程都使用来自进程Pi的同样的值来进行决策。这样，一般的一致性问题就变为系统中的进程都同意一个特殊的进程(比如P0)的值。确切地说：</p>
+</li>
+<li><ul>
+<li>所有非出错进程都使用进程P0的同样的值v0。</li>
+</ul>
+</li>
+<li><ul>
+<li>如果发送进程P0是非出错的，那么所有非出错进程都使用P0发送的值。</li>
+</ul>
+</li>
+<li>结论：在有k个出错节点的情况下，只有进程的总数至少为3k+1时才能获得一致。</li>
+</ul>
+<h2 id="LAMPORT交互一致性算法IC"><a href="#LAMPORT交互一致性算法IC" class="headerlink" title="LAMPORT交互一致性算法IC"></a>LAMPORT交互一致性算法IC</h2><ul>
+<li><p>该算法是一个递归算法，存在多个递归轮次。</p>
+</li>
+<li><p>算法IC(m)，m&lt;k，开始时m=0，S={}：</p>
+</li>
+</ul>
+<ol>
+<li><p>发送者将它的值和发送者列表S发送给其他的进程，共(n-1-m)个；</p>
+</li>
+<li><p>设v_i是进程P_i从发送者接收到的值或者是如果没有收到值时使用的缺省值。在IC(m+1≠k)时进程P_i作为发送者，将结果v_i和发送者列表S∪{P_i}发送给其他不在发送者列表中的n-2-m个进程。如果m+1=k，则调用IC(k)；</p>
+</li>
+<li><p>对每个进程P_i，设v_j是进程P_j接收到的值(但是由P_j转发给P_i)。节点使用值majority(v_j)，$j \in S$；</p>
+</li>
+</ol>
+<ul>
+<li>算法IC(k)：</li>
+</ul>
+<ol>
+<li><p>发送者将它的值发送给其他n-k-1个进程；</p>
+</li>
+<li><p>每个进程使用从接收者收到的值，或者，如果它没有收到任何值，就使用缺省值。</p>
+</li>
+</ol>
+<ul>
+<li>结论：上述算法中，被交换的报文总数为(n-1)(n-2)…(n-k-1)，其复杂度为O(n^k)，k可以是(n-1)/3。</li>
+</ul>
+<hr>
+<ul>
+<li><p>实例：具有7个进程的例子，P_i，0≤i≤6。假定k=2，即最多有2个故障，n=7。设P_0是初始发送者，发送值为1。不妨设P_5和P_6是出错进程，它向其他进程发送不确定的值。在这个例子中共需要k+1=3轮信息交换：</p>
+</li>
+<li><ul>
+<li>P_0将{V_0,S}={1,{P_0}}发送给进程P_1，P_2，…，P_6</li>
+</ul>
+</li>
+<li><ul>
+<li>P_1至P_6中每个进程都接收到报文{1,{P_0}} ，它们将所收到的报文转发给除了开始的发送者和它本身之外的所有其他的进程。例如P_1向P_2至P_6发送报文{1,{P_0,P_1}}。它分别从P_2至P_6处接收到报文{1,{P_0,P_2}}、{1,{P_0,P_3}}、{1,{P_0,P_4}}、{d,{P_0,P_5}}、{d,{P_0,P_6}}</li>
+</ul>
+</li>
+<li><ul>
+<li>在第三轮中，P_1将报文{1,{P_0,P_2}}以{1,{P_0,P_2,P_1}}的形式分别发送给进程P_3、P_4、P_5、P_6，将报文{1,{P_0,P_3}}以{1,{P_0,P_3,P_1}}的形式分别发送给进程P_2、P_4、P_5、P_6，将报文{1,{P_0,P_4}}以{1,{P_0,P_4,P_1}}的形式分别发送给进程P_2、P_3、P_5、P_6，将报文{d,{P_0,P_5}}以{d,{P_0,P_5,P_1}}的形式分别发送给进程P_2、P_3、P_4、P_6，将报文{d,{P_0,P_6}}以{d,{P_0,P_6,P_1}}的形式分别发送给进程P_2、P_3、P_4、P_5。第三轮递归结束，返回第二轮</li>
+</ul>
+</li>
+<li><ul>
+<li>进程P1收到报文{1,{P_0,P_2,P_3}}、{1,{P_0,P_2,P_4}}、{d,{P_0,P_2,P_5}}、{d,{P_0,P_2,P_6}}，连同在第二轮中收到的报文{1,{P_0,P_2}}，将这5个报文中的值执行majority(1,1,d,d,1)=1，得到的这个新值1作为报文{1,{P_0,P_2}}的新值，记为新报文{1,{P_0,P_2}}’。同样的道理，得到新报文{1,{P_0,P_3}}’、{1,{P_0,P_4}}’、{1,{P_0,P_5}}’、{1,{P_0,P_6}}’。第二轮递归结束，返回第1轮</li>
+</ul>
+</li>
+<li><ul>
+<li>P1对6个报文{1,{P_0}}、{1,{P_0,P_2}}’、{1,{P_0,P_3}}’、{1,{P_0,P_4}}’、{1,{P_0,P_5}}’、{1,{P_0,P_6}}’ 中的值执行majority(1,1,1,1,1,1)=1，这个新值是P1所确信的最终值。</li>
+</ul>
+</li>
+<li><p>可以通过对每个发送者都重复同样的协议将交互一致性扩展到多个发送者的情况。 扩展的方法：在第k轮收到的值将被发送到所有的其他节点，而不仅仅是那些没有被发送过的节点。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>实例：假定有4位将军，其中有一个叛徒。将军之间相互通报自己的人数，忠诚的将军说实话，叛徒恶意地将不同的值通报给其他将军。不失一般性，设将军P1是叛徒，它分别向其他3位将军谎报自己军队的人数是x、y、z，将军P2向所有的将军通报自己的人数是4000，将军P3向所有的将军通报自己的人数是5000，将军P4向所有的将军通报自己的人数是6000。</li>
+</ul>
+<blockquote>
+<p><img src="\img\consistency_algo.png" alt="consistency_algo.png"></p>
+<p><img src="\img\inconsistence_error_stop.png" alt="inconsistence_error_stop.png"></p>
+</blockquote>
+<hr>
+<ul>
+<li>分析：</li>
+<li><ul>
+<li>P_i要对每个P_j的值做判定</li>
+</ul>
+</li>
+<li><ul>
+<li>判定的方法是根据其它进程的内一轮的判定来取多数值（majority）</li>
+</ul>
+</li>
+<li><ul>
+<li>P_i对于每个P_j来做的判定，如果系统中存在k个错误，则在IC算法的最内轮次至少需要2k+1个进程的投票才能实现可靠的判定（因为有k个投票可能是错的）</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分布式计算/" rel="tag"># 分布式计算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/06/parellel_and_distributed_computing/distributed_compute5/" rel="next" title="分布式系统的容错技术(上)">
+                <i class="fa fa-chevron-left"></i> 分布式系统的容错技术(上)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/28/computer_network/computer_network_6：无线网络和移动网络(Wireless and Mobile Networks)/" rel="prev" title="无线网络和移动网络(Wireless and Mobile Networks)">
+                无线网络和移动网络(Wireless and Mobile Networks) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenxfeng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3034124347" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#故障模型和拜占庭故障的概念"><span class="nav-number">1.</span> <span class="nav-text">故障模型和拜占庭故障的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#故障模型"><span class="nav-number">1.1.</span> <span class="nav-text">故障模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#故障模型的层次"><span class="nav-number">1.2.</span> <span class="nav-text">故障模型的层次</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拜占庭故障的恢复"><span class="nav-number">2.</span> <span class="nav-text">拜占庭故障的恢复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容错系统中的一致性算法简介"><span class="nav-number">3.</span> <span class="nav-text">容错系统中的一致性算法简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LAMPORT交互一致性算法IC"><span class="nav-number">4.</span> <span class="nav-text">LAMPORT交互一致性算法IC</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

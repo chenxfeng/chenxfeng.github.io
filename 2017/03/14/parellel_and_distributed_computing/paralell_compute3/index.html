@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="并行计算," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="(并行与分布式计算二)
+列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
+指针跳转法(pointer jumping technique)思想：
+
+链表中的指针跳转可以由一次跳转一步改为一次跳转多步
+如果能在O（1）时间内一次跳转k步，那么一次跳转2k步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="列表和树">
+<meta property="og:url" content="https://chenfeng.github.io/2017/03/14/parellel_and_distributed_computing/paralell_compute3/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="(并行与分布式计算二)
+列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
+指针跳转法(pointer jumping technique)思想：
+
+链表中的指针跳转可以由一次跳转一步改为一次跳转多步
+如果能在O（1）时间内一次跳转k步，那么一次跳转2k步">
+<meta property="og:image" content="https://chenfeng.github.io/img/list_rank_pointer_jump.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/shrink_list1.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/shrink_list2.png">
+<meta property="og:image" content="https://chenfeng.github.io/img/coloring.png">
+<meta property="og:updated_time" content="2017-03-25T03:39:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="列表和树">
+<meta name="twitter:description" content="(并行与分布式计算二)
+列表排序The list-ranking problem is to determine the distance of each node i from the end of the list
+指针跳转法(pointer jumping technique)思想：
+
+链表中的指针跳转可以由一次跳转一步改为一次跳转多步
+如果能在O（1）时间内一次跳转k步，那么一次跳转2k步">
+<meta name="twitter:image" content="https://chenfeng.github.io/img/list_rank_pointer_jump.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/03/14/parellel_and_distributed_computing/paralell_compute3/"/>
+
+
+
+
+
+  <title>列表和树 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/03/14/parellel_and_distributed_computing/paralell_compute3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">列表和树</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-14T00:00:00+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>(并行与分布式计算二)</p>
+<h2 id="列表排序"><a href="#列表排序" class="headerlink" title="列表排序"></a>列表排序</h2><p>The list-ranking problem is to determine the distance of each node i from the end of the list</p>
+<h3 id="指针跳转法-pointer-jumping-technique"><a href="#指针跳转法-pointer-jumping-technique" class="headerlink" title="指针跳转法(pointer jumping technique)"></a>指针跳转法(pointer jumping technique)</h3><p>思想：</p>
+<ul>
+<li>链表中的指针跳转可以由一次跳转一步改为一次跳转多步</li>
+<li>如果能在O（1）时间内一次跳转k步，那么一次跳转2k步只需要双倍时间</li>
+<li>如果为每个节点，把一次跳转2k步的跳转结果记录下来，那么以后一次跳转2k步也只需要O（1）时间</li>
+<li>反复利用跳转步数翻倍和跳转结果记录的技巧，可以在O（log N）的时间内把跳转步数扩大为N</li>
+</ul>
+<a id="more"></a>
+<p>T = O(logn); W = O(nlogn)<br>并不比串行算法(linear, O(n))更优</p>
+<blockquote>
+<p><img src="/img/list_rank_pointer_jump.png" alt="list_rank_pointer_jump.png"></p>
+</blockquote>
+<p>Algorithm 3.1<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># List Ranking Using Pointer Jumping</div><div class="line"></div><div class="line">Input: A linked list of n nodes such that (1)the successor of each node i is given by S(i), and (2)the S value of the last node on the list is euqal to 0.</div><div class="line"></div><div class="line">Output: For each 1 &lt;= i &lt;= n, the distance R(i) of node i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= n pardo</div><div class="line">    if (S(i) != 0) then set R(i):= 1</div><div class="line">                   else set R(i):= 0</div><div class="line">2. for 1 &lt;= i &lt;= n pardo</div><div class="line">    set Q(i) := S(i)</div><div class="line">    while (Q(i) ！= 0 and Q(Q(i)) != 0) do</div><div class="line">        set R(i) := R(i) + R(Q(i))</div><div class="line">        set Q(i) := Q(Q(i))</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>优化思路: </p>
+<ul>
+<li>用快速并行算法把链表长度缩短为n/log n</li>
+<li>要求：缩短和恢复都可以用很小的T，并且W=O(n)</li>
+<li>方法：通过删除链表中的独立顶点集来缩短链表</li>
+<li>在缩短的链表上用指针跳转法来求序，只需W=O(n)</li>
+<li>最后用快速并行算法来恢复链表的长度</li>
+</ul>
+<p>也即：</p>
+<ol>
+<li>把列表分成约n/logn块{ $B_{i}$ }, 每块包含O(logn)个节点</li>
+<li>在每块内对每个节点用最优串行算法求序(preliminary rank)</li>
+<li>用O(logn)的平行算法把所有排好序的块组合</li>
+</ol>
+<p>List-Ranking Strategy</p>
+<ol>
+<li>Shrink the linked list L until only O(n/logn) nodes remain.</li>
+<li>Apply the pointer jumping technique(Algorithm 3.1) on the short list of the remaining nodes.</li>
+<li>Restore the original list and rank all the nodes removed in step 1.</li>
+</ol>
+<p>independent sets</p>
+<ul>
+<li>A set I of nodes is independent if, whenever i belongs to I, S(i) not belongs to I.</li>
+</ul>
+<p>缩减的列表结点必须构成一个独立集，即不相邻</p>
+<blockquote>
+<p><img src="/img/shrink_list1.png" alt="shrink_list1.png"></p>
+<p><img src="/img/shrink_list2.png" alt="shrink_list2.png"></p>
+</blockquote>
+<p>Algorithm 3.2<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># removing nodes of an independent set</div><div class="line"></div><div class="line">Input: (1)Arrays S and P of length n representing, respectively, the successor and predecessor relations of linked list; (2)an independent set I of nodes such that P(i), S(i) != 0; (3)a value R(i) for each node i.</div><div class="line"></div><div class="line">Output: The list obtained after removal of all the nodes in I with the updated R values.</div><div class="line"></div><div class="line">begin</div><div class="line">1. Assign consecutive serial numbers N(i) to the elements of I, where 1 &lt;= N(i) &lt;= |I| = n'.</div><div class="line">2. for for all i belongs to I pardo </div><div class="line">    set U(N(i)) := (i, S(i), R(i))</div><div class="line">    set R(P(i)) := R(P(i) + R(i))</div><div class="line">    set S(P(i)) := S(i)</div><div class="line">    set P(S(i)) := P(i)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>删除独立顶点集并合并其权重到剩余顶点的并行复杂度: T=O(1) W=O(n)</p>
+<h3 id="Determination-of-an-Independent-Set"><a href="#Determination-of-an-Independent-Set" class="headerlink" title="Determination of an Independent Set"></a>Determination of an Independent Set</h3><p>独立集合充分大：存在常数c，c属于(0, 1)，使集合包含顶点数不少于c×n</p>
+<ul>
+<li>保证快速地迭代缩短链表</li>
+<li>把长度为n的链表缩短为n/logn只需不超过log_1-c(logn)的T</li>
+</ul>
+<p>最理想但没有快速算法：用序的奇偶性确定独立顶点集合，c=1/2</p>
+<p>(存在快速算法)对链表使用三色着色算法，把局部最小色数(或最大)的节点作为独立集元素</p>
+<blockquote>
+<p><img src="/img/coloring.png" alt="coloring.png"></p>
+</blockquote>
+<ul>
+<li>从一个局部极小到下一个局部极小着色点，中间经过的点数最多为3，因此C=1/4</li>
+<li>3-color 算法收敛很快，每次调用算法，<br>着色的色数都变小为原色数的对数比例，这里的对数以2为基底</li>
+<li>要把色数变小为3，T几乎是O(1)</li>
+</ul>
+<p>Algorithm 3.3<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># simple optimal list ranking</div><div class="line"></div><div class="line">Input: A linked list with n nodes suc that the successor of each node i is given by S(i).</div><div class="line"></div><div class="line">Output: For each node i, the distance of i from the end of the list.</div><div class="line"></div><div class="line">begin</div><div class="line">1. set n_0 := n, k := 0</div><div class="line">2. while n_k &gt; n/logn do</div><div class="line">    2.1 set k := k + 1</div><div class="line">    2.2 color the list with three colors and identify the set I of local minima.</div><div class="line">    2.3 remove the nodes in I, and store the appropriate information regarding the removed nodes(Algorithm 3.2).</div><div class="line">    2.4 let n_k be the size of the remaining list. compact the list into consecutive memory locations.</div><div class="line">3. apply the pointer jumping technique (Algorithm 3.1) to the resulting list.</div><div class="line">4. restore the original list and rank all the removed nodes by reversing the process performed in step2.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>缩短链表和恢复链表：T = O(log logn), W = O(n)</p>
+<ul>
+<li>把长度为n的链表缩短为n/logn，只需不超过log_1-c(logn)的T</li>
+<li>第一次迭代W = O(n), 第二次迭代W = O((1 - c)*c), …</li>
+<li>W = O(n + (1 - c)n + (1 - c)^2 *n + …) = O(n/c) = O(n)</li>
+<li>恢复和缩短是对称的，T和W都相同</li>
+</ul>
+<p>指针跳转是在长度为n/logn的已缩短链表上zuo做的，T = O(logn), W = O(n)</p>
+<p>算法的并行复杂度: T = O(loglogn); W = (n)</p>
+<ul>
+<li>*一个优化的时间复杂度为O(logn)的列表求序算法……</li>
+</ul>
+<h2 id="欧拉回路-the-Euler-Tour-Technique"><a href="#欧拉回路-the-Euler-Tour-Technique" class="headerlink" title="欧拉回路(the Euler-Tour Technique)"></a>欧拉回路(the Euler-Tour Technique)</h2><p>树的欧拉回路是指：<br>将一棵树的每一条边换成两条指向相反的有向边，成为一个欧拉图，就存在欧拉回路；<br>可以定义一个论域为所有有向边的函数s(successor function)，描述这棵树的欧拉回路</p>
+<p>Lemma 3.6: Given a tree T = (V, E) and an ordering of the set of vertices adjacent to each vertex v belongs to V, the function s defined previously specifies an Euler circuit in the directed graph T’ = (V, E’), where E’ is obtained by replacement of each e belongs to E by two arcs of opposite directions.</p>
+<ul>
+<li><p>we call the Euler circuit of T’ the <strong>Euler tour</strong> of T</p>
+</li>
+<li><p>每棵树都有欧拉回路</p>
+</li>
+<li>如果欧拉回路从树的根节点出发，则它实际上是树的节点深度优先遍历路径</li>
+</ul>
+<p>给出一个由邻接表及附加的指针信息描述的树，求得一条欧拉回路的T = O(1), W = O(n), |V| = n<br>(指针信息: data field + pointer * 2(描述下一个邻接点 + 描述该点在邻接表中指向此顶点的item))</p>
+<ul>
+<li><p>树求根(rooting a tree): 树根结点为r，对于每个非根结点v，寻找其父父结点p(v)</p>
+</li>
+<li><p>一对顶点之间的两条弧，先出后进的顶点是父节点，先进后出的是子节点</p>
+</li>
+</ul>
+<p>弧的顺序的确定：<br>-把欧拉回路从其中一点处断开（例如去除回路路径列表中的最前与最后的弧的相邻关系）</p>
+<ul>
+<li>用链表求序来对这些弧定序</li>
+</ul>
+<p>树的一个欧拉回路为L[r] = &lt; u_0, u_1, … , u_d-1 &gt;</p>
+<p>设s(&lt; u_d-1, r &gt;) = 0，将欧拉回路从r处截断，得到一条始于r，遍历所有顶点一次，终于r的欧拉路径</p>
+<p>Algorithm 3.5<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># rooting a tree</span></div><div class="line"></div><div class="line">Input: (<span class="number">1</span>)a tree T defined by the adjacency lists of its vertices, (<span class="number">2</span>)an Euler tour defined by the successor function s, and (<span class="number">3</span>)a special vertex r</div><div class="line"></div><div class="line">Output: For each vertex v != r, the parent p(v) of v in the tree rooted at r.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> Identify the last vertex u appearing on the adjacency <span class="built_in">list</span> of r. <span class="built_in">set</span> s(&lt;u, r&gt;) = <span class="number">0</span></div><div class="line"><span class="number">2.</span> Assign a weight of <span class="number">1</span> to each arc &lt;x, y&gt;, and apply parallel prefix on the <span class="built_in">list</span> of arcs defined by s.</div><div class="line"><span class="number">3.</span> For each arc &lt;x, y&gt;, <span class="built_in">set</span> x = p(y) whenever the prefix sum of &lt;x, y&gt; is smaller than the prefix sum of &lt;y, x&gt;.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>并行复杂度与链表求序相同：</p>
+<ul>
+<li>T=O(log n log log n) ？？？</li>
+<li>W=O(n)</li>
+<li>这里n是顶点数（树的边数是顶点数减一）</li>
+</ul>
+<p>1、Postorder Numbering 后序遍历的序数</p>
+<p>往下走的弧的权重为0，往上走的弧的权重为1，然后用链表中求前缀和的方法来算出后序遍历编号</p>
+<p>Algorithm 3.6<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Postorder Numbering</div><div class="line"></div><div class="line">Input: (1)A rooted binary tree with root r, and (2)the coresponding Euler path defined by the function s</div><div class="line"></div><div class="line">Output: The postorder number post(v) of each vertex v</div><div class="line"></div><div class="line">begin</div><div class="line">1. For each vertex v != r, assign the weights w(&lt;v, p(v)&gt;) = 1 and w(&lt;p(v&gt;, v) = 0</div><div class="line">2. Perform parallel prefix on the list of arcs defined by s.</div><div class="line">3. For each vertex v != r, set post(v) equal to the prefix sum of &lt;v, p(v)&gt;. For v = r, set post(v) = n, where n is the number of vertices in the given tree.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>2、Computing the Vertex level 结点层数</p>
+<p>可用类似Algorithm 3.6的算法，1和3做改动: w(<p(v), v="">) = +1; w(<v, p(v)="">) = -1。level(v) = <p(v), v="">的前缀和</p(v),></v,></p(v),></p>
+<p>3、Computing the preorder Number </p>
+<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0; </p>
+<p>preorder(v) = &lt; p(v), v &gt;前缀和 + 1;  preorder(r) = 1</p>
+<p>4、Computing the Number of Descendants</p>
+<p>w(&lt; p(v), v &gt;) = 1; w(&lt; v, p(v) &gt;) = 0;</p>
+<p>desc(v) = &lt; v, p(v) &gt;前缀和 - &lt; p(v), v &gt;前缀和; desc(r) = n - 1</p>
+<p>以上四个并行算法:<br>T = O(logn); W = O(n)（由平衡树方法求前缀和的平行算法所决定）</p>
+<ul>
+<li>*Tree Contraction(树收缩) ……</li>
+</ul>
+<ul>
+<li>*Lowest Common Ancestors ……</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/并行计算/" rel="tag"># 并行计算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/28/computer_network/computer_network_1：计算机网络和因特网/" rel="next" title="计算机网络和因特网">
+                <i class="fa fa-chevron-left"></i> 计算机网络和因特网
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/21/parellel_and_distributed_computing/paralell_compute4/" rel="prev" title="图的并行算法">
+                图的并行算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenxfeng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3034124347" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#列表排序"><span class="nav-number">1.</span> <span class="nav-text">列表排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指针跳转法-pointer-jumping-technique"><span class="nav-number">1.1.</span> <span class="nav-text">指针跳转法(pointer jumping technique)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Determination-of-an-Independent-Set"><span class="nav-number">1.2.</span> <span class="nav-text">Determination of an Independent Set</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#欧拉回路-the-Euler-Tour-Technique"><span class="nav-number">2.</span> <span class="nav-text">欧拉回路(the Euler-Tour Technique)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

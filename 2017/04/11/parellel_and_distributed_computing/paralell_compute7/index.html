@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="并行计算," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="(并行与分布式计算六)
+字符串的预备知识字符串: 有限长度的字符序列
+字符表(或字母表 alphabet)
+字符串Y的长度: |Y|
+两条字符串X和Y的连接为 XY
+字符串Y中第i个字符: Y(i)(1 &amp;lt;= i &amp;lt;= |Y|)
+字符串Y的子字符串: Y(i:j)(1 &amp;lt;= i &amp;lt;= j &amp;lt;= |Y|)
+字符串Y的前缀(prefix): Y(1:i)(1 &amp;lt;=">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符串匹配的并行算法">
+<meta property="og:url" content="https://chenfeng.github.io/2017/04/11/parellel_and_distributed_computing/paralell_compute7/index.html">
+<meta property="og:site_name" content="chenxfeng's blog">
+<meta property="og:description" content="(并行与分布式计算六)
+字符串的预备知识字符串: 有限长度的字符序列
+字符表(或字母表 alphabet)
+字符串Y的长度: |Y|
+两条字符串X和Y的连接为 XY
+字符串Y中第i个字符: Y(i)(1 &amp;lt;= i &amp;lt;= |Y|)
+字符串Y的子字符串: Y(i:j)(1 &amp;lt;= i &amp;lt;= j &amp;lt;= |Y|)
+字符串Y的前缀(prefix): Y(1:i)(1 &amp;lt;=">
+<meta property="og:image" content="https://chenfeng.github.io/\img\witness.jpg">
+<meta property="og:image" content="https://chenfeng.github.io/\img\pattern_analysis.jpg">
+<meta property="og:updated_time" content="2017-04-16T07:49:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字符串匹配的并行算法">
+<meta name="twitter:description" content="(并行与分布式计算六)
+字符串的预备知识字符串: 有限长度的字符序列
+字符表(或字母表 alphabet)
+字符串Y的长度: |Y|
+两条字符串X和Y的连接为 XY
+字符串Y中第i个字符: Y(i)(1 &amp;lt;= i &amp;lt;= |Y|)
+字符串Y的子字符串: Y(i:j)(1 &amp;lt;= i &amp;lt;= j &amp;lt;= |Y|)
+字符串Y的前缀(prefix): Y(1:i)(1 &amp;lt;=">
+<meta name="twitter:image" content="https://chenfeng.github.io/\img\witness.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenfeng.github.io/2017/04/11/parellel_and_distributed_computing/paralell_compute7/"/>
+
+
+
+
+
+  <title>字符串匹配的并行算法 | chenxfeng's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">chenxfeng's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenfeng.github.io/2017/04/11/parellel_and_distributed_computing/paralell_compute7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenxf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="chenxfeng's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">字符串匹配的并行算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T00:00:00+08:00">
+                2017-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>(并行与分布式计算六)</p>
+<h3 id="字符串的预备知识"><a href="#字符串的预备知识" class="headerlink" title="字符串的预备知识"></a>字符串的预备知识</h3><p>字符串: 有限长度的字符序列</p>
+<p>字符表(或字母表 alphabet)</p>
+<p>字符串Y的长度: |Y|</p>
+<p>两条字符串X和Y的连接为 XY</p>
+<p>字符串Y中第i个字符: Y(i)(1 &lt;= i &lt;= |Y|)</p>
+<p>字符串Y的子字符串: Y(i:j)(1 &lt;= i &lt;= j &lt;= |Y|)</p>
+<p>字符串Y的前缀(prefix): Y(1:i)(1 &lt;= i &lt;= m)</p>
+<p>字符串Y的后缀(suffix): Y(j:m)(1 &lt;= j &lt;= m)</p>
+<a id="more"></a>
+<h3 id="字符串匹配问题及其串行算法"><a href="#字符串匹配问题及其串行算法" class="headerlink" title="字符串匹配问题及其串行算法"></a>字符串匹配问题及其串行算法</h3><blockquote>
+<p>字符串X在字符串Y中出现，是指存在位置i，使得X(j)=Y(i+j-1)对所有1 &lt;= j &lt;= |X|成立</p>
+</blockquote>
+<ul>
+<li>字符串X在位置i与Y匹配(match)</li>
+</ul>
+<p><strong>KMP算法</strong>：O(|X|+|Y|)复杂度</p>
+<h3 id="字符串的周期性-periodicities-in-string"><a href="#字符串的周期性-periodicities-in-string" class="headerlink" title="字符串的周期性(periodicities in string)"></a>字符串的周期性(periodicities in string)</h3><ul>
+<li><p>如果$Y = X^kX’$，其中$X’$是$X$的一个前缀，则$|X|$是$Y$的一个周期</p>
+</li>
+<li><p>如果p是Y的<strong>最短周期</strong>，则简称p是Y的周期(没有加“一个”在前面): The period(周期)，a period(一个周期)</p>
+</li>
+<li><p>如果Y的周期不大于|Y|/2，就称Y是周期的(periodic)</p>
+</li>
+<li><p>e.g: abcaabcab不是周期的(最短周期是abcaabc)，abcabcab是周期的(周期p = 3)</p>
+</li>
+</ul>
+<p>字符串的周期引理: </p>
+<blockquote>
+<p>如果p和q都是Y的一个周期且p+q &lt;= |Y|, 则p和q的最大公约数也是Y的一个周期</p>
+<p>证明: </p>
+<ul>
+<li>由p和q都是Y的一个周期，可得|p-q|也是Y的一个周期: Y(i) = Y(i-p) = Y(i-q) ==&gt; Y(j) = Y(j+p-q)</li>
+<li>由最大公约数的欧几里德算法gcd(p, q) = gcd(p-q, q)可以得到结论</li>
+</ul>
+<p>推论1：如果X的周期为p且X在Y的i和j位置出现，则|i-j| &gt;= p<br>推论2：如果X的周期为p且在Y的i和i+d(d &lt;= m-p)位置出现, 则d是p的倍数; 如果0 &lt;= d &lt;= |X|/2, 则X也在i+kp出现(其中k是满足kp &lt;= d的整数)</p>
+</blockquote>
+<h3 id="区别-见证数组-Witness-Array"><a href="#区别-见证数组-Witness-Array" class="headerlink" title="(区别)见证数组(Witness Array)"></a>(区别)见证数组(Witness Array)</h3><ul>
+<li>长度为m，周期为p的字符串Y，定义Pi(Y) = min{p, $\lceil \frac{m}{2} \rceil$}</li>
+<li>见证函数Wit(i)定义：</li>
+<li>Wit(1) = 0</li>
+<li><p>Wit(i) = k($2 \leq i \leq Pi(Y)$), k是满足$Y(k) \not= Y(i + k - 1)$的一个下标</p>
+</li>
+<li><p>见证函数数组WITNESS(1:r)(r = Pi(Y))</p>
+</li>
+<li><p>e.g: abcaabcab，见证数组WITNESS = (0,3,2,2,5)</p>
+</li>
+<li>e.g: abcabcab，见证数组WITNESS = (0,3,2)</li>
+</ul>
+<p>(区别)见证数组的基本思想: </p>
+<ul>
+<li>如果匹配两个位置的子字符串时，可以由某个特定的位置排除这两个位置的其中一个的匹配性，就可以减少字符串匹配的复杂度</li>
+<li>这个特定的位置，称为（区别）见证位置(如果在见证位置不同，则不可能匹配)</li>
+</ul>
+<ul>
+<li>见证位置与对决</li>
+</ul>
+<p>Z字符串为文本字符串，Y为模式；利用见证位置排除掉Z中两处潜在的匹配中的一处的过程称为对决：</p>
+<blockquote>
+<p><img src="\img\witness.jpg" alt="witness.jpg"></p>
+</blockquote>
+<p>对决算法 Algorithm 7.1<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(Duel(i, j))</div><div class="line">Input:</div><div class="line">(<span class="number">1</span>)A <span class="built_in">string</span> Z of length n;</div><div class="line">(<span class="number">2</span>)a WITNESS <span class="built_in">array</span> of another <span class="built_in">string</span> Y of length m &lt;= n;</div><div class="line">(<span class="number">3</span>)two indices i and j, where <span class="number">1</span> &lt;= i &lt; j &lt;= n - m, such that j - i &lt; Pi(Y) = min&#123;p, $\lceil \frac&#123;m&#125;&#123;<span class="number">2</span>&#125; \rceil$&#125; and p is the period of Y.</div><div class="line">Output: One of i or j(that may match); <span class="built_in">string</span> Y cannot occur in Z at the eliminated position.</div><div class="line"></div><div class="line">begin</div><div class="line"><span class="number">1.</span> Set k := WITNESS(j - i + <span class="number">1</span>)</div><div class="line"><span class="number">2.</span> <span class="keyword">if</span> Z(j + k - <span class="number">1</span>) != Y(k) then <span class="keyword">return</span>(i)</div><div class="line">                           <span class="keyword">else</span> <span class="keyword">return</span>(j)</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>T = O(1), W = O(1)</li>
+</ul>
+<p>e.g. (example 7.5)</p>
+<ul>
+<li>字符串Y = abcabcab, 见证数组WITNESS = (0, 3, 2)</li>
+<li>字符串Z = abcaabcabaa</li>
+<li>考虑Z的位置i = 5和j = 7</li>
+<li>WITNESS(7 - 5 + 1) = 2, Y(2) = b != Z(8) = a, 对决算法输出下标i = 5(可能匹配的位置)</li>
+</ul>
+<h3 id="字符串匹配-string-matching-的两种分析"><a href="#字符串匹配-string-matching-的两种分析" class="headerlink" title="字符串匹配(string matching)的两种分析"></a>字符串匹配(string matching)的两种分析</h3><p>string-matching problem: 在Y中找X的所有出现的位置</p>
+<ul>
+<li>称Y为待匹配的文本(text)，X为待匹配的模式(pattern)</li>
+</ul>
+<p>解决字符串匹配问题的经典范式包含两个步骤: </p>
+<ul>
+<li>模式分析 Pattern Analysis</li>
+<li><ul>
+<li>只对模式进行处理</li>
+</ul>
+</li>
+<li><ul>
+<li>将模式的部分信息压缩并保存在一个表中</li>
+</ul>
+</li>
+<li>文本分析 Text Analysis</li>
+<li><ul>
+<li>用模式以及模式分析中产生的信息对文本进行处理</li>
+</ul>
+</li>
+</ul>
+<p>文本分析</p>
+<ul>
+<li>文本T(1:n)，模式P(1:m)，模式的见证数组WITNESS(1:r)(r = Pi(P) = min{p, $\lceil \frac{m}{2} \rceil$})，P周期为p</li>
+</ul>
+<p>文本分析算法：非周期模式<br>Algorithm 7.2<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(Text Analysis, Nonperiodic Pattern)</div><div class="line">Input: Three arrays T(1:n), P(1:m), and WITNESS(1:m/2) corressponding to a text, a pattern and a witness function of the pattern, respectively. It is assumed that P is nonperiodic, and m is even.</div><div class="line">Output: The array MATCH, indicating all the positions where the pattern occurs in the text.</div><div class="line"></div><div class="line">begin</div><div class="line">1. Partition T into $\lceil 2n/m \rceil$(up integer) blocks T_i, each block containing no more than m/2 consecutive characters.</div><div class="line">2. For each block T_i, eliminate all but one position as a possible candidate for matching by using a balanced binary tree, where each internal node u contains the index returned by the function duel(i, j), and i and j are the indices stored in the children of u.</div><div class="line">3. For each candidate position, verify where P occurs at that position in T by using the brute-force algorithm.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>T = O(log m)  W = O(n)</p>
+<ul>
+<li>e.g: </li>
+<li>T = babaababaaba, P = abaab</li>
+<li>见证数组WITNESS = (0,1,2)</li>
+<li>分块: $T_1 = bab,T_2 = aab,T_3 = aba,T_4 = aba$, 对每个块并发处理</li>
+<li>第一轮对决(WINESS(2) = 1): Duel(1,2)=2, Duel(4,5)=5, Duel(7,8)=7, Duel(10,11)=10</li>
+<li>第二轮对决: Duel(2,3)=2, Duel(5,6)=5,<br>Duel(7,9)=7, Duel(10,12)=10</li>
+<li>对T的位置2, 5, 7, 10用暴力算法尝试匹配: 2和7能匹配</li>
+</ul>
+<p>文本分析算法：周期模式</p>
+<p>基本思想：</p>
+<ul>
+<li>用周期模式的最大非周期前缀来作为初始模式</li>
+<li>查找文本中初始模式的位置</li>
+<li>要找出文本中周期模式的位置，可以用初始模式的位置来筛选</li>
+<li>只有周期重复次数足够的位置才能在筛选中存活下来</li>
+<li><p>周期重复次数可以用分段后缀和算法来并行计算</p>
+</li>
+<li><p>P(1:m) = $u^kv$, v是u的一个前缀(可空), |u| = p是P的周期, 见证数组WITNESS长度为p</p>
+</li>
+<li><p>将P(1:2p-1)作为一个新的模式(P的最大非周期前缀)在T中在O(logp)时间内用O(n)操作找出所有匹配</p>
+</li>
+<li><p>检查$u^2v$是否出现在(T的)位置i, i+p, …, i+(k-2)p(k是P(1:m)=$u^kv$中的k)</p>
+</li>
+</ul>
+<p>Algorithm 7.3<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(Text Analysis, Periodic Case)</div><div class="line">Input: Three arrays T(1:n), P(1:m), and WITNESS(1:p) representing respectively a text, a pattern, and a WITNESS array corresponding to P(1:2p-1). We also know that the pattern is periodic and has period p.</div><div class="line">Output: The array MATCH identifying all the positions in the text where the pattern occurs.</div><div class="line"></div><div class="line">begin</div><div class="line">1. Use Algorithm 7.2 to determine the occurrences of the prefix P(1:2p-1) in T.</div><div class="line">2. For each occurence of P(1:2p-1) in T(at position i), find whether u^2v occurs at i, where u = P(1:p), v = P(kp+1:m, and k = $\lfloor m/p \rfloor$(lower integer)). If it does, set M(i) := 1. For all the other positions i such that 1 &lt;= i &lt;= n, set M(i) := 0. </div><div class="line">3. For each i such that 1 &lt;= i &lt;= p, let S_i be the subarray of M consisting of the bits (M(i), M(i+p), M(i+2p), ...). For each position l of S_i that contains a 1, set C(i, l) := 1 if there are at least k-1 consecutive 1's starting at this position. For all the remaining positions l of S_i, set C(i, l) := 0.</div><div class="line">4. For each 1 &lt;= j &lt;= n - m + 1, let j = i + lp, where 1 &lt;= i &lt;= p and l &gt;= 0. Then, set MATCH(j) := C(i, l+1).</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>T = O(logm), W = O(n)</p>
+</li>
+<li><p>e.g. (example 7.8)</p>
+</li>
+<li>T = babababababaabab = (ba)^6(ab)^2, P = abababa = (ab)^3a</li>
+<li>p = 2, P(1:2p-1) = P(1:3) = aba</li>
+<li>T中出现P(1:3)的位置2, 4, 6, 8, 10, 13</li>
+<li>(ab)^2a在T中出现位置2, 4, 6, 8; M = (0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0)</li>
+<li>S_1 = (0, 0, 0, 0, 0, 0, 0, 0), S_2 = (1, 1, 1, 1, 0, 0, 0, 0)</li>
+<li>C(1, l) = 0(1 &lt;= l &lt;= 8)</li>
+<li>C(2, 1) = C(2, 2) = C(2, 3) = 1, C(2, l) = 0(4 &lt;= l &lt;= 8)</li>
+<li>MATCH(2) := C(2, 1) = 1, MATCH(4) := C(2, 2) = 1, MATCH(6) := C(2, 3) = 1, MATCH(i) := 0 otherwise.</li>
+<li>P 出现在T的2, 4, 6位置</li>
+</ul>
+<p>模式分析算法</p>
+<ul>
+<li>目标：计算见证数组WITNESS</li>
+<li>WITNESS(i)(1 &lt;= i &lt;= r, r = min{p, $\lceilm/2\rceil$}) = k != 0, k满足P(i + k - 1)</li>
+<li><p>P(1:i-1)不是模式的周期</p>
+</li>
+<li><p>基本思想: </p>
+</li>
+<li><ul>
+<li>迭代算法，每一迭代令模式的短子模式长度翻倍</li>
+</ul>
+</li>
+<li><ul>
+<li>从模式的短子模式开始，通过短子模式来计算长子模式见证数组的部分元素</li>
+</ul>
+</li>
+<li><ul>
+<li>剩余的元素在后面的迭代中计算</li>
+</ul>
+</li>
+</ul>
+<p>简单算法</p>
+<p>lemma 7.7:<br>Suppose that we are given WITNESS(2:t) of the string P(1:m), for some t &lt; min(p, m/2), where p is the period of P. Then, given any pair of distinct indices i and j, such that t &lt; i, j &lt;= $\lceil\frac{m}{2}\rceil$ and |j - i| &lt; t, we can compute at least one of WITNESS(i) or WITNESS(j) in O(1) sequential time.</p>
+<blockquote>
+<p><img src="\img\pattern_analysis.jpg" alt="pattern_analysis.jpg"></p>
+</blockquote>
+<p>Algorithm 7.5<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">(Simple Pattern Analysis)</div><div class="line">Input: A pattern P(1:m), where m = 2^s.</div><div class="line">Output: The array WITNESS(1:r), where r = min(p, 2^(s-1)), and p is the period of P.</div><div class="line"></div><div class="line">begin</div><div class="line">1. for 1 &lt;= i &lt;= m/2 pardo</div><div class="line">    Set WITNESS(i) := 0</div><div class="line">2. for i = 1 to s - 1 do</div><div class="line">    2.1 Let j != 1 be the candidate in the first i-block. Compute WITNESS(j) using the brute force algorithm.</div><div class="line">    2.2 if WITNESS(j) = 0 then exit</div><div class="line">    2.3 for all i_blocks B(except the first) pardo</div><div class="line">        Apply duel(k, s), where k and s are the candidates in B.</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<ul>
+<li>T = O(log m)  W = O(m log m)</li>
+</ul>
+<p>…</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/并行计算/" rel="tag"># 并行计算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/28/parellel_and_distributed_computing/paralell_compute5/" rel="next" title="搜索、归并与排序的并行算法">
+                <i class="fa fa-chevron-left"></i> 搜索、归并与排序的并行算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/18/parellel_and_distributed_computing/paralell_compute8/" rel="prev" title="数值计算中的并行算法">
+                数值计算中的并行算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/avatar.jpg"
+               alt="chenxf" />
+          <p class="site-author-name" itemprop="name">chenxf</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">92</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenxfeng" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/3034124347" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串的预备知识"><span class="nav-number">1.</span> <span class="nav-text">字符串的预备知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串匹配问题及其串行算法"><span class="nav-number">2.</span> <span class="nav-text">字符串匹配问题及其串行算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串的周期性-periodicities-in-string"><span class="nav-number">3.</span> <span class="nav-text">字符串的周期性(periodicities in string)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区别-见证数组-Witness-Array"><span class="nav-number">4.</span> <span class="nav-text">(区别)见证数组(Witness Array)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串匹配-string-matching-的两种分析"><span class="nav-number">5.</span> <span class="nav-text">字符串匹配(string matching)的两种分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenxf</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

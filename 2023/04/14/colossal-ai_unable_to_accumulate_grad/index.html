@@ -105,7 +105,7 @@
 
 官网github">
 <meta property="og:image" content="https://chenfeng.github.io/img/gradient_accumulation.png">
-<meta property="og:updated_time" content="2023-04-15T15:18:59.273Z">
+<meta property="og:updated_time" content="2023-04-16T13:56:43.124Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="colossal-ai无法累积梯度">
 <meta name="twitter:description" content="colossal-ai：Making large AI models cheaper, faster and more accessible
@@ -374,7 +374,7 @@
 <p>Docker运行</p>
 </blockquote>
 <ul>
-<li>需要nvidia-container-runtime支持，没成功构建</li>
+<li>需要nvidia-container-runtime支持，WSL不支持，没成功构建</li>
 <li><ul>
 <li><a href="https://github.com/hpcaitech/ColossalAI/tree/v0.2.8#use-docker" target="_blank" rel="external">https://github.com/hpcaitech/ColossalAI/tree/v0.2.8#use-docker</a></li>
 </ul>
@@ -403,13 +403,22 @@
 </blockquote>
 <ul>
 <li>仅Linux支持</li>
+<li><ul>
 <li>稳定版：<code>pip install colossalai</code></li>
+</ul>
+</li>
+<li><ul>
 <li>PyTorch扩展：<code>CUDA_EXT=1 pip install colossalai</code></li>
+</ul>
+</li>
+<li><ul>
 <li>最新版：<code>pip install colossalai-nightly</code></li>
 </ul>
-<h3 id="梯度累计"><a href="#梯度累计" class="headerlink" title="梯度累计"></a>梯度累计</h3><p>训练模型时由于显存大小有限，batch_size大小受到限制</p>
+</li>
+</ul>
+<h3 id="梯度累计"><a href="#梯度累计" class="headerlink" title="梯度累计"></a>梯度累计</h3><p>训练模型时由于显存大小有限，batch_size大小会受到限制：可通过多个梯度累积的方法扩大batch_size</p>
 <ul>
-<li>多个batch执行多次前向计算，累积反向传播的梯度，只执行一次梯度更新</li>
+<li>多个batch执行前向计算，每次前向计算累积反向传播的梯度，但只执行一次梯度更新</li>
 <li><ul>
 <li>相当于将batch_size 分成 MICRO_batch_size 和 MACRO_batch_size</li>
 </ul>
@@ -426,11 +435,11 @@
 <p><img src="/img/gradient_accumulation.png" alt="Gradient-Accumulation"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">accum_iter = <span class="number">4</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> batch_idx, (input, lables) <span class="keyword">in</span> enumerate(data_loader):</div><div class="line">    <span class="comment"># forward pass</span></div><div class="line">    preds = model(input)</div><div class="line">    loss = criterion(preds, labels)</div><div class="line">    <span class="comment"># scale the loss to the mean of the accumulated batch size</span></div><div class="line">    loss = loss / accum_iter</div><div class="line">    <span class="comment"># backward pass</span></div><div class="line">    loss.backward()</div><div class="line">    <span class="comment"># weights update</span></div><div class="line">    <span class="keyword">if</span> ((batch_idx + <span class="number">1</span>) % accum_iter == <span class="number">0</span>) <span class="keyword">or</span> (batch_idx + <span class="number">1</span>)== len(data_loader):</div><div class="line">        optimizer.step()</div><div class="line">        optimizer.zero_grad()</div></pre></td></tr></table></figure>
 <blockquote>
-<p>能否保存多个batch的loss，然后只执行一次反向传播，然后再梯度更新？不能<br>以随机梯度下降 Stochastic Gradient Decent为例，参数 $V$，学习率 $lr$，梯度 $grad$<br>参数更新公式：$ V<em>t = V</em>{t-1} - lr <em> grad $；<br>使用梯度累加时：$ V<em>{t} = V</em>{t-1} - lr </em> \sum<em>{i=0}^{N} grad</em>{i} $。</p>
+<p>能否保存多个batch的loss，然后只执行一次反向传播以及梯度更新？不能<br>以随机梯度下降 Stochastic Gradient Decent 为例，参数 $V$，学习率 $lr$，梯度 $grad$<br>参数更新公式：$ V<em>t = V</em>{t-1} - lr <em> grad $；<br>使用梯度累加时：$ V<em>{t} = V</em>{t-1} - lr </em> \sum<em>{i=0}^{N} grad</em>{i} $。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">total_loss = <span class="number">0</span></div><div class="line">loss = criterion(outputs, labels)</div><div class="line">total_loss += loss / accumulation_steps</div><div class="line"><span class="keyword">if</span> ...:</div><div class="line">    total_loss.backward()</div></pre></td></tr></table></figure>
 <blockquote>
-<p>若采用累加多个batch的loss的写法<br>数学上发生了改变：<br>$ \partial{loss} / \partial{w} $ 变成 $ \partial{\sum<em>{t=1}^{N} loss</em>{t}} / \partial{w} $；<br>注意：多个batch的loss累加之后，此时再算梯度的话，由于各网络层的输入x已经发生了改变，算出来的梯度是不准确的<br>前向传播：<code>x -&gt; f(x) -&gt; y</code><br>反向传播：<code>x, y&#39; -&gt; f&#39;(x) -&gt; x&#39;</code></p>
+<p>若采用累加多个batch的loss的写法<br>数学上发生了改变：<br>$ \partial{loss} / \partial{w} $ 转变成<br>$ \partial{\sum<em>{t=1}^{N} loss</em>{t}} / \partial{w} $<br>注意：多个batch的loss累加之后，此时再算梯度的话，由于各网络层的输入x已经发生了改变，算出来的梯度是不准确的<br>前向传播：<code>x -&gt; f(x) -&gt; y</code><br>反向传播：<code>x, y&#39; -&gt; f&#39;(x) -&gt; x&#39;</code></p>
 </blockquote>
 <p>按正确的pytorch梯度累积代码的逻辑，colossal-ai梯度累积的代码只有一处不同</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">accum_iter = <span class="number">4</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> batch_idx, (input, lables) <span class="keyword">in</span> enumerate(data_loader):</div><div class="line">    <span class="comment"># forward pass</span></div><div class="line">    preds = model(input)</div><div class="line">    loss = criterion(preds, labels)</div><div class="line">    <span class="comment"># scale the loss to the mean of the accumulated batch size</span></div><div class="line">    loss = loss / accum_iter</div><div class="line">    <span class="comment"># backward pass</span></div><div class="line">    optimizer.backward(loss) <span class="comment">#loss.backward() 此处不同</span></div><div class="line">    <span class="comment"># weights update</span></div><div class="line">    <span class="keyword">if</span> ((batch_idx + <span class="number">1</span>) % accum_iter == <span class="number">0</span>) <span class="keyword">or</span> (batch_idx + <span class="number">1</span>)== len(data_loader):</div><div class="line">        optimizer.step()</div><div class="line">        optimizer.zero_grad()</div></pre></td></tr></table></figure>
@@ -516,8 +525,114 @@
 <blockquote>
 <p>区别在于有时候会冻结模型部分参数进行训练，因此只传入优化器需要训练的部分网络层的参数</p>
 </blockquote>
-<h3 id="colossal的优化器"><a href="#colossal的优化器" class="headerlink" title="colossal的优化器"></a>colossal的优化器</h3><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
-<li>知乎专栏-聊聊梯度累加(Gradient Accumulation)[<a href="https://zhuanlan.zhihu.com/p/595716023" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/595716023</a>]</li>
+<h3 id="colossal的优化器"><a href="#colossal的优化器" class="headerlink" title="colossal的优化器"></a>colossal的优化器</h3><p>torch.optim.Optimizer </p>
+<ul>
+<li><strong>Lars</strong>：Implements the LARS optimizer</li>
+<li><ul>
+<li>Adapted from <a href="https://github.com/NUS-HPC-AI-Lab/LARS-ImageNet-PyTorch/blob/main/lars.py" target="_blank" rel="external">https://github.com/NUS-HPC-AI-Lab/LARS-ImageNet-PyTorch/blob/main/lars.py</a></li>
+</ul>
+</li>
+<li><ul>
+<li><code>[Large batch training of convolutional networks](https://arxiv.org/pdf/1708.03888.pdf)</code></li>
+</ul>
+</li>
+<li><strong>Lamb</strong>：Implements Lamb algorithm </li>
+<li><ul>
+<li>Adapted from the pytorch-lamb library at <a href="https://github.com/cybertronai/pytorch-lamb" target="_blank" rel="external">https://github.com/cybertronai/pytorch-lamb</a></li>
+</ul>
+</li>
+<li><ul>
+<li><code>[Large Batch Optimization for Deep Learning: Training BERT in 76 minutes](https://arxiv.org/abs/1904.00962)</code></li>
+</ul>
+</li>
+<li><strong>FusedLAMB</strong>：Implements LAMB algorithm.</li>
+<li><ul>
+<li>modified from <a href="https://github.com/NVIDIA/apex/blob/master/apex/optimizers/fused_lamb.py" target="_blank" rel="external">https://github.com/NVIDIA/apex/blob/master/apex/optimizers/fused_lamb.py</a></li>
+</ul>
+</li>
+<li><ul>
+<li>Fusion of the LAMB update’s elementwise operations</li>
+</ul>
+</li>
+<li><ul>
+<li>A multi-tensor apply launch that batches the elementwise updates applied to all the model’s parameters into one or a few kernel launches.</li>
+</ul>
+</li>
+<li><strong>FusedSGD</strong>：Implements stochastic gradient descent (optionally with momentum). </li>
+<li><ul>
+<li>modified from <a href="https://github.com/NVIDIA/apex/blob/master/apex/optimizers/fused_sgd.py" target="_blank" rel="external">https://github.com/NVIDIA/apex/blob/master/apex/optimizers/fused_sgd.py</a></li>
+</ul>
+</li>
+<li><ul>
+<li>Nesterov momentum is based on the formula from <code>[On the importance of initialization and momentum in deep learning](http://www.cs.toronto.edu/%7Ehinton/absps/momentum.pdf)</code></li>
+</ul>
+</li>
+<li><strong>NVMeOptimizer</strong>：A base class for offloading optimizer states.</li>
+<li><ul>
+<li><strong>HybridAdam</strong>：Implements Adam algorithm. </li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Supports parameters updating on both GPU and CPU, the parameters and gradients should on the same device</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>an hybrid of CPUAdam and FusedAdam</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><code>[Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><code>[On the Convergence of Adam and Beyond](https://openreview.net/forum?id=ryQu7f-RZ)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><strong>CPUAdam</strong>：Implements Adam algorithm. </li>
+</ul>
+</li>
+<li><ul>
+<li>This version of CPU Adam accelates parameters updating on CPU with SIMD. Support of AVX2 or AVX512 is required.</li>
+</ul>
+</li>
+<li><strong>FusedAdam</strong>：Implements Adam algorithm. adapted from fused adam in NVIDIA/apex, commit a109f85</li>
+<li><ul>
+<li>Fusion of the Adam update’s elementwise operations</li>
+</ul>
+</li>
+<li><ul>
+<li>A multi-tensor apply launch that batches the elementwise updates applied to all the model’s parameters into one or a few kernel launches.</li>
+</ul>
+</li>
+<li><strong>ColossalaiOptimizer</strong></li>
+<li><ul>
+<li><strong>ZeroOptimizer</strong>：A wrapper for optimizer. <code>ZeroDDP</code> and <code>ZeroOptimizer</code> implement Zero Redundancy Optimizer (ZeRO state-3)</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li><strong>GeminiAdamOptimizer</strong>：combine <strong>HybridAdam</strong> with <strong>ZeroOptimizer</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/595716023" target="_blank" rel="external">知乎专栏-聊聊梯度累加(Gradient Accumulation)</a></li>
+<li><a href="https://github.com/hpcaitech/ColossalAI/tree/v0.2.8" target="_blank" rel="external">Colossal-AI源码</a></li>
 </ol>
 
       
@@ -559,8 +674,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2023/04/15/神经网络训练的底层原理/" rel="prev" title="神经网络训练的底层原理 代码/数学">
-                神经网络训练的底层原理 代码/数学 <i class="fa fa-chevron-right"></i>
+              <a href="/2023/04/15/huggingfac-transformers源码笔记/" rel="prev" title="huggingface-transformers源码阅读笔记">
+                huggingface-transformers源码阅读笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
